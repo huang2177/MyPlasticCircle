@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/fb_listview_shj"
+            android:text="2017-02-25"/>
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="重发"
+            android:id="@+id/fb_listview_chf"
+            android:textColor="#f04633"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:ellipsize="end"
+        android:id="@+id/fb_listview_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#383838"
+        android:text="价格9000.00左右/PVC/上海/出售">
+    </TextView>
+</LinearLayout>

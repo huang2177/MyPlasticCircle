@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:paddingLeft="5dp">
+    <com.myplas.q.common.view.MyImageView
+        android:id="@+id/supdem_qq_item2_img"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/my_fans"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/supdem_qq_item2_text"
+        android:textColor="@color/color_balank"
+        android:text="Blank Mamba"/>
+</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/fx_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fx_tt_title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/color_balank"
+            android:textSize="16.0sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fx_tt_title_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:maxLines="2"
+            android:textSize="15.0sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_gravity="right">
+
+            <TextView
+                android:id="@+id/fx_tt_title_author"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textSize="14.0sp" />
+
+            <TextView
+                android:id="@+id/fx_tt_title_shj"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="0.7"
+                android:drawableLeft="@drawable/icon_time1"
+                android:singleLine="true"
+                android:textSize="14.0sp" />
+
+            <TextView
+                android:id="@+id/fx_tt_title_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="0.5"
+                android:drawableLeft="@drawable/icon_see1"
+                android:singleLine="true"
+                android:textColor="@color/color_red"
+                android:textSize="13.0sp" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:layout_marginTop="2dp"
+            android:background="@color/color_lightgray"></View>
+    </LinearLayout>
+</LinearLayout>

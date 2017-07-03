@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/supdem_qq_layout_zx">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:layout_weight="1"
+                android:text="查看资讯"
+                android:textSize="16.0sp"
+                android:textColor="#171717" />
+
+            <ImageView
+                android:id="@+id/supdem_qq_img_zx"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="13dp"
+                android:src="@drawable/icon_more"></ImageView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_lightgray"></View>
+
+        <com.myplas.q.common.view.MyListview
+            android:id="@+id/supdem_qq_listview_zx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f2f3f4"
+            android:visibility="gone"></com.myplas.q.common.view.MyListview>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="#f2f3f4"
+            android:orientation="vertical"
+            android:id="@+id/supdem_qq_layout_zx_more">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_lightgray"></View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/icon_news"
+                    android:text="  查看更多牌号资讯"
+                    android:textSize="16.0sp"
+                    android:textColor="@color/color_red" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_margin="13dp"
+                    android:src="@drawable/icon_more"></ImageView>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_lightgray"></View>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/supdem_qq_layout_find">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:layout_weight="1"
+                android:textSize="16.0sp"
+                android:text="他(她)们在找"
+                android:textColor="#171717" />
+
+            <ImageView
+                android:id="@+id/supdem_qq_img_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="13dp"
+                android:src="@drawable/icon_more"></ImageView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_lightgray"></View>
+
+        <com.myplas.q.common.view.MyListview
+            android:id="@+id/supdem_qq_listview_find"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f2f3f4"
+            android:visibility="gone"></com.myplas.q.common.view.MyListview>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/supdem_qq_layout_wx">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:layout_weight="1"
+                android:textSize="16.0sp"
+                android:text="查看物性表"
+                android:textColor="#171717" />
+
+            <ImageView
+                android:id="@+id/supdem_qq_img_wx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="13dp"
+                android:src="@drawable/icon_more"></ImageView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#edeeef"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/supdem_qq_layout_tell">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:layout_weight="1"
+                android:text="联系电话"
+                android:textSize="16.0sp"
+                android:textColor="#171717" />
+
+            <ImageView
+                android:id="@+id/supdem_qq_img_tell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_margin="13dp"
+                android:src="@drawable/icon_more"></ImageView>
+        </LinearLayout>
+
+        <com.myplas.q.common.view.MyListview
+            android:id="@+id/supdem_qq_listview_tell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:background="#f2f3f4"
+            android:visibility="gone"></com.myplas.q.common.view.MyListview>
+    </LinearLayout>
+</LinearLayout>

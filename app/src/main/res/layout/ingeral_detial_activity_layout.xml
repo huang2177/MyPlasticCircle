@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_red">
+
+        <TextView
+            android:id="@+id/title_rs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="塑豆明细"
+            android:textColor="@color/color_white"
+            android:textSize="18.0sp" />
+
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/btn_back" />
+        </LinearLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_red"
+            android:textSize="24.0sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:id="@+id/integral_detial_text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="1"
+            android:textSize="18.0sp"
+            android:text="塑豆"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="bottom"/>
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:id="@+id/integral_detial_btn"
+            android:textColor="@color/color_white"
+            android:text="去兑换"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_xq_chujian" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/color_lightgray"></View>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/color_lightgray"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="塑豆收支明细"
+        android:textColor="@color/color_balank"
+        android:textSize="18.0sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/color_lightgray"></View>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/integral_detial_listview"
+        android:scrollbars="none"
+        android:layout_margin="10dp">
+    </ListView>
+</LinearLayout>

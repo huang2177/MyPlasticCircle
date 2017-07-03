@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+
+android {
+    //使用h5的签名，项目运行的时候可以直接改变签名
+    signingConfigs {
+        sign {
+            keyAlias 'hbuilder'
+            keyPassword '123456'
+            storeFile file('C:/Users/Administrator/Desktop/H5签名/HBuilder.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "com.myplas.q"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 89
+        versionName "3.3.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.sign//这个很重要 打包时使用h5签名
+        }
+        release {
+            signingConfig signingConfigs.sign//这个很重要 使用h5签名
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okio:okio:1.5.0'
+    compile files('libs/libammsdk.jar')
+    compile 'io.github.openfeign:feign-gson:9.4.0'
+    compile files('libs/glide-3.6.1.jar')
+    compile 'com.github.chrisbanes.photoview:library:1.2.3'
+    compile files('libs/libammsdk.jar')
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile('com.sobot.chat:sobotsdk:2.1.0') {
+        exclude group: 'com.android.support'
+    }
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    compile 'com.optimus:editTextField:0.2.0'
+}

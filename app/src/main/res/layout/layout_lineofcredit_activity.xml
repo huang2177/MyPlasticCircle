@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e6e7e9"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+
+    <include layout="@layout/layout_edu_titlebar"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/banner_credit" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="信用额度查询："
+                    android:textColor="@color/color_white"
+                    android:textSize="18.0sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="45dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edu_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/toplines_shape_edit"
+                        android:drawableLeft="@drawable/icon_search"
+                        android:gravity="center_vertical"
+                        android:hint=" 请输入企业名称"
+                        android:imeOptions="actionSearch"
+                        android:paddingLeft="5dp"
+                        android:textColor="#4b4b4b"
+                        android:textCursorDrawable="@drawable/text_cursor_shape"
+                        android:textSelectHandle="@drawable/textselecthandle"
+                        android:textSelectHandleLeft="@drawable/textselecthandle"
+                        android:textSelectHandleRight="@drawable/textselecthandle"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:id="@+id/search_src_text"
+                        android:layout_width="65dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/toplines_shape_text1"
+                        android:gravity="center"
+                        android:text="查询"
+                        android:textColor="@color/color_white" />
+                </LinearLayout>
+                <LinearLayout
+                    android:alpha="0.8"
+                    android:id="@+id/linear_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/color_lightgray"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="您所属企业："
+                        android:textColor="@color/color_balank"
+                        android:textSize="16.0sp" />
+
+                    <TextView
+                        android:id="@+id/text_company"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:background="@color/color_lightgray"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:text="上海中晨电子商务有限公司"
+                        android:textColor="@color/color_red"
+                        android:textSize="16.0sp" />
+                </LinearLayout>
+
+            </FrameLayout>
+            <com.myplas.q.common.view.MyListview
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:id="@+id/edu_listview">
+            </com.myplas.q.common.view.MyListview>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

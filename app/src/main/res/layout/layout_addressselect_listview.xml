@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="14.0sp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:background="#0484da"
+
+        android:textColor="@color/color_white"
+        android:id="@+id/address_textview"/>
+</LinearLayout>

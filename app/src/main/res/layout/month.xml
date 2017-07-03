@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.myplas.q.myinfo.mydatepicker.MonthView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1.0dip"
+      android:background="#b4b5b6" />
+  <TextView
+      android:id="@+id/title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="5dp"
+      android:gravity="center"
+      style="@style/CalendarTitle"
+      />
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1.0dip"
+      android:background="#b4b5b6" />
+  <com.myplas.q.myinfo.mydatepicker.CalendarGridView
+      android:id="@+id/calendar_grid"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+    <com.myplas.q.myinfo.mydatepicker.CalendarRowView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@style/CalendarCell.DayHeader"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@style/CalendarCell.DayHeader"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@style/CalendarCell.DayHeader"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@style/CalendarCell.DayHeader"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@style/CalendarCell.DayHeader"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@style/CalendarCell.DayHeader"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@style/CalendarCell.DayHeader"
+          />
+    </com.myplas.q.myinfo.mydatepicker.CalendarRowView>
+    <include layout="@layout/week"/>
+    <include layout="@layout/week"/>
+    <include layout="@layout/week"/>
+    <include layout="@layout/week"/>
+    <include layout="@layout/week"/>
+    <include layout="@layout/week"/>
+  </com.myplas.q.myinfo.mydatepicker.CalendarGridView>
+</com.myplas.q.myinfo.mydatepicker.MonthView>

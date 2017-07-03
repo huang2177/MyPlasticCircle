@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/time_imgview"
+            android:layout_marginLeft="10dp"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16.0sp"
+            android:text="最近3天"
+            android:textColor="@color/color_balank"
+            android:id="@+id/time_textview"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearlayout_care_fans"
+                android:visibility="visible"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/color_lightgray"></View>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/my_pay"
+                            android:id="@+id/img_wgz"
+                            android:layout_alignParentTop="true"
+                            android:layout_toLeftOf="@+id/text_wgz"
+                            android:layout_toStartOf="@+id/text_wgz" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/text_wgz"
+                            android:text="  我关注的人"
+                            android:textSize="16.0sp"
+                            android:textColor="@color/color_balank"
+                            android:gravity="center"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="25dp"
+                            android:layout_marginEnd="25dp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/my_pay"
+                            android:id="@+id/img_gzw"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="31dp"
+                            android:layout_marginStart="31dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/text_gzw"
+                            android:text="  关注我的人"
+                            android:textSize="16.0sp"
+                            android:textColor="@color/color_balank"
+                            android:gravity="center"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/img_gzw"
+                            android:layout_toEndOf="@+id/img_gzw" />
+                    </RelativeLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2.5px"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/color_lightgray"></View>
+
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="2dp"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                android:id="@+id/contact_img"/>
+        </LinearLayout>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="8dp"-->
+        <!--android:background="@color/color_lightgray"></View>-->
+</LinearLayout>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="23dp"
+        android:background="@color/color_red"></View>
+    <include layout="@layout/layout_titlebar_gq"></include>
+
+    <include layout="@layout/layout_titlebar_gq_down"></include>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#acadaf"></View>
+    <com.myplas.q.common.view.MyViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/supdem_viewpager">
+    </com.myplas.q.common.view.MyViewPager>
+</LinearLayout>
+

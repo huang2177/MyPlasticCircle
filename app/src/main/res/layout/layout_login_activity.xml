@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_red">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="普通登录"
+            android:textColor="@color/color_white"
+            android:textSize="18.0sp"
+            android:id="@+id/title_rs"
+            android:gravity="center"/>
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/btn_back" />
+        </LinearLayout>
+    </FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/btn_switch_common"
+                    android:id="@+id/imageView3" />
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:alpha="0"
+                    android:id="@+id/btn_login_nomal"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignLeft="@+id/imageView3"
+                    android:layout_alignStart="@+id/imageView3" />
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:alpha="0"
+                    android:id="@+id/btn_login_phone"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_alignBottom="@+id/imageView3"
+                    android:layout_alignRight="@+id/imageView3"
+                    android:layout_alignEnd="@+id/imageView3" />
+            </RelativeLayout>
+            <include layout="@layout/layout_login_nomal"></include>
+            <include layout="@layout/layout_login_phone"></include>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

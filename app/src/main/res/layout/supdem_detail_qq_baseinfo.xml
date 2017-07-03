@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="13dp"
+                android:text="公司名"
+                android:textSize="16.0sp"
+                android:textColor="#171717" />
+
+            <TextView
+                android:id="@+id/supdem_qq_text_gs"
+                style="@style/wd_zl_text_style"
+                android:gravity="right"
+                android:layout_margin="13dp"
+                android:text="974102893"></TextView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_lightgray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="13dp"
+                android:text="货物位置"
+                android:textSize="16.0sp"
+                android:textColor="#171717" />
+
+            <TextView
+                android:id="@+id/supdem_qq_text_wz"
+                style="@style/wd_zl_text_style"
+                android:gravity="right"
+                android:layout_margin="13dp"
+                android:text="974102893"></TextView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_lightgray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="13dp"
+                android:text="牌号"
+                android:textSize="16.0sp"
+                android:textColor="#171717" />
+
+            <TextView
+                android:id="@+id/supdem_qq_text_ph"
+                style="@style/wd_zl_text_style"
+                android:gravity="right"
+                android:layout_margin="13dp"
+                android:text="974102893"></TextView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_lightgray"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="13dp"
+                android:text="价格"
+                android:textSize="16.0sp"
+                android:textColor="#171717" />
+
+            <TextView
+                android:id="@+id/supdem_qq_text_chd"
+                style="@style/wd_zl_text_style"
+                android:gravity="right"
+                android:layout_margin="13dp"
+                android:text="974102893"></TextView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_lightgray"></View>
+
+        <LinearLayout
+            android:id="@+id/linear_show_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginTop="13dp"
+                    android:text="价格"
+                    android:textSize="16.0sp"
+                    android:textColor="#171717" />
+
+                <TextView
+                    android:id="@+id/supdem_qq_text_jg"
+                    style="@style/wd_zl_text_style"
+                    android:gravity="right"
+                    android:layout_margin="13dp"
+                    android:text="974102893"></TextView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_lightgray"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginTop="13dp"
+                    android:text="现货/期货"
+                    android:textSize="16.0sp"
+                    android:textColor="#171717" />
+
+                <TextView
+                    android:id="@+id/supdem_qq_text_xq"
+                    style="@style/wd_zl_text_style"
+                    android:gravity="right"
+                    android:layout_margin="13dp"
+                    android:text="974102893"></TextView>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_lightgray"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginTop="13dp"
+                    android:text="QQ名称"
+                    android:textSize="16.0sp"
+                    android:textColor="#171717" />
+
+                <TextView
+                    android:id="@+id/supdem_qq_text_qq"
+                    style="@style/wd_zl_text_style"
+                    android:gravity="right"
+                    android:layout_margin="13dp"
+                    android:text="974102893"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

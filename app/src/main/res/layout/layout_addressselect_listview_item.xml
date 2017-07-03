@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:textSize="16.0sp"
+        android:text="上海"
+        android:gravity="center"
+        android:textColor="@color/color_balank"
+        android:id="@+id/address_textview"/>
+</LinearLayout>

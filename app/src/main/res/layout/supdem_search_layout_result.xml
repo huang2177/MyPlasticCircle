@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_result_linear"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <RelativeLayout
+            android:id="@+id/relative_result_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/text_result_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:drawableRight="@drawable/btn_xiala"
+                android:text="最近3天  "
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_result_add"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/text_result_add"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
+                android:drawableRight="@drawable/btn_xiala"
+                android:text="全国  "
+                android:textSize="16.0sp"
+                android:textColor="@color/color_balank" />
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/divider_result"
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="@color/color_lightgray"></View>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/search_listview_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+        <TextView
+            android:id="@+id/text_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/coner_toast"
+            android:alpha="0.9"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:textColor="@color/color_white"
+            android:text="为你搜索30条信息"/>
+    </FrameLayout>
+</LinearLayout>
