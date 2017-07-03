@@ -561,8 +561,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                     wgz.setOnClickListener(this);
                     gzw.setOnClickListener(this);
                 }
-
-
+                //测试Git
                 //判断图层是否显示
                 boolean isshow = sharedUtils.getBoolean(getActivity(), "isshow");
                 if (txlBean.getIs_show_cover() == 1 && isshow) {
