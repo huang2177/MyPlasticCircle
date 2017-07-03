@@ -563,8 +563,6 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 }
                 //判断图层是否显示
                 boolean isshow = sharedUtils.getBoolean(getActivity(), "isshow");
-                boolean isshow = sharedUtils.getBoolean(getActivity(), "isshow");
-
                 if (txlBean.getIs_show_cover() == 1 && isshow) {
                     Intent intent = new Intent(getActivity(), AD_DialogActivtiy.class);
                     intent.putExtra("url", txlBean.getCover_jump_url());
