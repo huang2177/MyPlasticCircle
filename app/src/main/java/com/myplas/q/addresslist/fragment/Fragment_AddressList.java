@@ -525,6 +525,9 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
 
     public void parse_ShowData(Gson gson,String json,boolean isShowCover){
         try {
+
+
+            
             txlBean = gson.fromJson(json, TXL_Bean.class);
             list = txlBean.getPersons();
             //展示头部
