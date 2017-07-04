@@ -52,8 +52,4 @@ public class SplashActivity extends BaseActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
-
-    public void onResum() {
-        //测试Git
-    }
 }
