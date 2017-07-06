@@ -177,6 +177,8 @@ public class API {
     public final static String PLASTIC_SEARCH = "releaseMsg/plasticSearch";
     //供求信息置顶之搜索选项配置栏目
     public final static String GET_TAB_CONFIG = "releaseMsg/getTabConfig";
+    //删除搜索历史记录
+    public final static String DEL_SEARCH_RECORD = "releaseMsg/delSearchRecord";
 
 
     /*toutiao*/
