@@ -206,6 +206,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     startActivity(intent);
                 } else {//来自供求
                     try {
+
                         Intent intent = new Intent(this, SupDem_Detail_Activity.class);
                         String id_ = list.get(position).getId();
                         String userid = list.get(position).getUser_id();
