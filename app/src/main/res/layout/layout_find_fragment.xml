@@ -5,10 +5,10 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="23dp"
-        android:background="@color/color_red"></View>
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="23dp"-->
+    <!--android:background="@color/color_red"></View>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"

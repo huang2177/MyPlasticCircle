@@ -1,18 +1,12 @@
 package com.myplas.q.myinfo.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.DownloadListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -62,7 +56,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, DialogShowUtils.DialogShowInterface ,DownloadApk.InstallInterface {
+public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, DialogShowUtils.DialogShowInterface, DownloadApk.InstallInterface {
     private View view;
     private MyZone myZone;
     private Button linear_tc;
@@ -72,6 +66,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private ScrollView scrollingView;
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
     private TextView text_gj, text_qg, text_yj, text_fs, text_gz, text_ly, text_xx, text_gx, text_gs, text_name_tel;
+    private TextView text_title_gj, text_title_qg, text_title_ly, text_title_yj, text_title_fs, text_title_gz, text_title_jf;
     private LinearLayout linear_changepass, linear_title, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_ly, linear_xx, linear_jf, linear_bz, linear_gx, linear_edu, linear_pz, linear_share;
 
     @Override
@@ -82,8 +77,15 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         image_tx = f(R.id.xq_tx);
         image_rz = f(R.id.xq_rz);
         text_gs = f(R.id.wd_title_gs);
-       // linear_share = f(R.id.wd_linear_share);
+        linear_share = f(R.id.wd_linear_share);
         text_name_tel = f(R.id.wd_title_name);
+        text_title_gj = f(R.id.wd_title_gj);
+        text_title_qg = f(R.id.wd_title_qg);
+        text_title_ly = f(R.id.wd_title_ly);
+        text_title_yj = f(R.id.wd_title_yj);
+        text_title_fs = f(R.id.wd_title_fs);
+        text_title_gz = f(R.id.wd_title_gz);
+        text_title_jf = f(R.id.wd_title_jf);
 
         text_gj = f(R.id.wd_text_gj);
         text_qg = f(R.id.wd_text_qg);
@@ -113,7 +115,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_changepass = f(R.id.wd_linear_changepass);
 
         linear_changepass.setOnClickListener(this);
-        //linear_share.setOnClickListener(this);
+        linear_share.setOnClickListener(this);
         linear_title.setOnClickListener(this);
         linear_gj.setOnClickListener(this);
         linear_qg.setOnClickListener(this);
@@ -130,7 +132,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_edu.setOnClickListener(this);
         imageButton.setOnClickListener(this);
         //请求数据
-        //getLoginInfo();
+        //getLoginInfo(false);
         text_gx.setText("当前版本 " + VersionUtils.getVersionName(getActivity()) + "  ");
     }
     @Nullable
@@ -150,13 +152,15 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                 case R.id.img_reload:
                     getLoginInfo(true);
                     break;
-//                case R.id.wd_linear_share:
-//                    Intent in = new Intent(getActivity(), ShareActivity.class);
-//                    in.putExtra("type", "5");
-//                    startActivity(in);
-//                    break;
+                case R.id.wd_linear_share:
+                    Intent in = new Intent(getActivity(), ShareActivity.class);
+                    in.putExtra("type", "5");
+                    startActivity(in);
+                    break;
                 case R.id.wd_linear_changepass:
-                    startActivity(new Intent(getActivity(), FindPSWActivity.class));
+                    Intent i = new Intent(getActivity(), FindPSWActivity.class);
+                    i.putExtra("title", "修改密码");
+                    startActivity(i);
                     break;
                 case R.id.wd_linear_gj:
                     Intent intent = new Intent(getActivity(), MySupplyDemandActivity.class);
@@ -221,23 +225,19 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         }
     }
 
-    private String buildTransaction(final String type) {
-        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
-    }
-
-    public void resquestNetData(String method, Map map, int type,boolean a) {
+    public void resquestNetData(String method, Map map, int type, boolean isShow) {
         try {
             String url = API.BASEURL + method;
-            BaseActivity.postAsyn1(getActivity(), url, map, this, type,a);
+            new BaseActivity().postAsyn1(getActivity(), url, map, this, type, isShow);
         } catch (Exception e) {
         }
     }
 
-    public void getLoginInfo(boolean a) {
+    public void getLoginInfo(boolean isShow) {
         try {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("token", sharedUtils.getData(getActivity(), "token"));
-            resquestNetData(API.MY_ZONE, map, 2,a);
+            resquestNetData(API.MY_ZONE, map, 2, isShow);
         } catch (Exception e) {
         }
     }
@@ -284,8 +284,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                     String url = new JSONObject(object.toString()).getString("url");
                     //比较版本号
                     if (version_now > version_last) {
+                        //如果手机是否安装apk
                         DownloadApk downloadApk=new DownloadApk(this);
-                        DownloadApk.downloadApk(getActivity(), url, "塑料圈通讯录更新...", "塑料圈通讯录");
+                        downloadApk.downloadApk(getActivity(), url, "塑料圈通讯录更新...", "塑料圈通讯录");
                     }
                 }
                 if (s.equals("0")) {
@@ -319,6 +320,13 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             image_rz.setImageResource((ispass.equals("0")) ? (R.drawable.icon_identity) : (R.drawable.icon_identity_hl));
             text_gs.setText(myZone.getData().getC_name());
             text_name_tel.setText(myZone.getData().getName() + "  " + myZone.getData().getMobile());
+            text_title_gj.setText(myZone.getS_out_count() + "\n供给");
+            text_title_qg.setText(myZone.getS_in_count() + "\n求购");
+            text_title_ly.setText(myZone.getLeaveword() + "\n留言");
+            text_title_yj.setText(myZone.getIntroduction() + "\n引荐");
+            text_title_fs.setText(myZone.getMyfans() + "\n粉丝");
+            text_title_gz.setText(myZone.getMyconcerns() + "\n关注");
+            text_title_jf.setText(myZone.getPoints() + "\n塑豆");
 
             text_gj.setText(myZone.getS_out_count() + "  ");
             text_qg.setText(myZone.getS_in_count() + "  ");

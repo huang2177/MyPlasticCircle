@@ -2,8 +2,6 @@ package com.myplas.q.myinfo.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Application;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -39,15 +37,14 @@ import com.myplas.q.common.utils.SystemUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myinfo.beans.MySelfInfo;
-import com.tencent.mm.algorithm.MD5;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * 编写： 黄双
@@ -61,10 +58,10 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private String imgurl, string;
     private SharedUtils sharedUtils;
     private int head_card, cilick_num;
-    private String address = "EC", sex = "0",filePath="mnt/sdcard/DCIM/Camera/";
+    private String address = "EC", sex = "0";
     private ImageView image_tx, image_shch, image_show;
     private TextView text_name, text_dj, text_gs, text_dh, text_gj, text_px, textView_save;
-    private TextView text_xb, textView_dzh, textView_zhy, textView_ph, textView_num, textView_product, textView_address, textView_company;
+    private TextView text_xb, textView_dzh, textView_zhy, textView_ph, textView_num, textView_product, textView_address, textView_company, my_main_prod, my_main_prod_save;
     private EditText textView_dzh_save, textView_zhy_save, textView_ph_save, textView_num_save, textView_product_save;
     private String allow_sendmsg_gz = "1", allow_sendmsg_hf = "1", allow_sendmsg_gk = "1";
     private Map<String, String> map = new HashMap<String, String>();
@@ -85,7 +82,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     }
 
     public void initView() {
-
         sharedUtils = SharedUtils.getSharedUtils();
         linearLayout_save_edit = f(R.id.linearlayout_edit_save);
         view_edit = View.inflate(this, R.layout.wd_zl_layout_edit, null);
@@ -103,6 +99,8 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         text_name = f(R.id.wd_zl_name);
         image_show = f(R.id.wd_zl_show);
         image_shch = f(R.id.wd_zl_shch);
+        my_main_prod = f(R.id.my_main_prod);
+        my_main_prod_save = f(R.id.my_main_prod_save);
 
         image_tx.setOnClickListener(this);
         image_shch.setOnClickListener(this);
@@ -328,14 +326,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 case "1":
                     linearLayout.setVisibility(View.VISIBLE);
                     textView_company.setText("塑料制品厂");
+                    my_main_prod.setText("我的需求：");
                     textView_product.setText(mySelfInfo.getData().getMain_product());
                     textView_num.setText("  " + mySelfInfo.getData().getMonth_consum());
                     break;
-                case "2":
-                    linearLayout.setVisibility(View.GONE);
-                    textView_company.setText("原料供应商");
-                    break;
                 default:
+                    my_main_prod.setText("我的主营：");
                     linearLayout.setVisibility(View.GONE);
                     textView_company.setText("物流服务商");
                     break;
@@ -381,13 +377,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             switch (mySelfInfo.getData().getType()) {
                 case "1":
                     linearLayout.setVisibility(View.VISIBLE);
+                    my_main_prod_save.setText("我的需求：");
                     textView_product_save.setText(mySelfInfo.getData().getMain_product());
                     textView_num_save.setText(mySelfInfo.getData().getMonth_consum());
                     break;
-//                case "2":
-//                    linearLayout.setVisibility(View.GONE);
-//                    break;
                 default:
+                    my_main_prod_save.setText("我的主营：");
                     linearLayout.setVisibility(View.GONE);
                     break;
             }
@@ -431,48 +426,11 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    private void showImage(String imaePath, ImageView imageView, int type) {
-        Glide.with(this).load(imaePath).into(imageView);
-        upLoadImg((head_card == 1) ? (API.SAVE_PIC_TO_SERVER) : (API.SAVE_CARD_IMG), imaePath, type);
-    }
-
-    public void startCheckPic(){
-        int api = SystemUtils.getSystemInfo();
-        if (api<23){
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//            startActivityForResult(intent, (head_card == 1) ? (100) : (200));
-        }
-//
-//            if (requestCode==100) {
-//            } else {
-//
-//            }
-//
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
-        filePath += File.separator + String.valueOf(System.currentTimeMillis()) + "camera" + ".png";
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(filePath)));
-        startActivityForResult(intent, 101);
-
-//            ContentValues contentValues = new ContentValues(1);
-//            contentValues.put(MediaStore.Images.Media.DATA, filePath);
-//            Uri uri =getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-//            startActivityForResult(intent, 100);
-    }
-    public void checkPic() {
-        int api = SystemUtils.getSystemInfo();
-        if (api >= 23) {
-            checkPremission();
-        } else {
-            startCheckPic();
-        }
-    }
-
     //选择照片返回结果
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==100||requestCode==200&&resultCode == Activity.RESULT_OK ) {//相机
+        if (resultCode == Activity.RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
             String[] filePathColumns = {MediaStore.Images.Media.DATA};
             Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
@@ -486,25 +444,36 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             }
             c.close();
         }
-        if (requestCode==101||requestCode==201&&resultCode == Activity.RESULT_OK ){//拍照
-            if (requestCode == 101) {
-                showImage(filePath, image_tx, 5);
-            } else {
-                showImage(filePath, image_show, 6);
-            }
+    }
+
+    private void showImage(String imaePath, ImageView imageView, int type) {
+        Bitmap bitmap = BitmapFactory.decodeFile(imaePath);
+        Bitmap bp = BitmapUtils.ratio(imaePath, 70, 400);
+        //imageView.setImageBitmap(bitmap);
+        Glide.with(this).load(imaePath).into(imageView);
+        upLoadImg((head_card == 1) ? (API.SAVE_PIC_TO_SERVER) : (API.SAVE_CARD_IMG), imaePath, type);
+    }
+
+    public void checkPic() {
+        int api = SystemUtils.getSystemInfo();
+        if (api >= 23) {
+            checkPremission();
+        } else {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, (head_card == 1) ? (100) : (200));
         }
     }
 
     //动态申请权限
     private void checkPremission() {
-        final String permission1 = Manifest.permission.CAMERA;
-        final String permission2 = Manifest.permission.READ_EXTERNAL_STORAGE; //写入数据权限
+        final String permission1 = Manifest.permission.READ_EXTERNAL_STORAGE; //写入数据权限
         if (ContextCompat.checkSelfPermission(this, permission1) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this, permission2) != PackageManager.PERMISSION_GRANTED) {  //先判断是否被赋予权限，没有则申请权限
+                || ContextCompat.checkSelfPermission(this, permission1) != PackageManager.PERMISSION_GRANTED) {  //先判断是否被赋予权限，没有则申请权限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, 300);
         } else {
             //赋予过权限，则直接调用相册
-            startCheckPic();
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, (head_card == 1) ? (100) : (200));
         }
     }
 
@@ -516,7 +485,8 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 int length = grantResults.length;
                 final boolean isGranted = length >= 1 && PackageManager.PERMISSION_GRANTED == grantResults[length - 1];
                 if (isGranted) {//如果用户赋予权限，则调用相册
-                    startCheckPic();
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, (head_card == 1) ? (100) : (200));
                 }
                 break;
             default:
