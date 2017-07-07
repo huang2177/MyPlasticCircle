@@ -12,7 +12,6 @@
         android:background="@drawable/corner_titlebar"
         android:gravity="center"
         android:padding="12dp"
-        android:text="400-6129-965"
         android:textColor="#0672df"
         android:textSize="16.0sp" />
 </LinearLayout>

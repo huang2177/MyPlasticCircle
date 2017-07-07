@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.RoundImageView;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.headlines.activity.Head_Lines_DetailActivity;
 import com.myplas.q.supdem.Beans.SearchResultDetailBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_QQ_Detail_Adapter;
 import com.umeng.analytics.MobclickAgent;
@@ -27,6 +29,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.R.id.list;
+import static com.myplas.q.R.id.supdem_qq_listview_find;
+import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
@@ -34,8 +40,7 @@ import java.util.Map;
  * 时间：2017/3/19 15:44
  */
 
-public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
-    private SharedUtils sharedUtils;
+public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnClickListener, ResultCallBack, AdapterView.OnItemClickListener {
     private RoundImageView roundImagView;
     private ImageView img_tell, img_zx, img_find;
     private MyListview listview_tell, listView_zx, listView_find;
@@ -60,7 +65,6 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         isClicked1 = false;
         isClicked2 = false;
         isClicked3 = false;
-        sharedUtils = SharedUtils.getSharedUtils();
 
         title_rs = F(R.id.title_rs);
         text_qq_num = F(R.id.qq_number);
@@ -78,7 +82,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         roundImagView = F(R.id.roundimagviewutil);
 
         listView_zx = F(R.id.supdem_qq_listview_zx);
-        listView_find = F(R.id.supdem_qq_listview_find);
+        listView_find = F(supdem_qq_listview_find);
         listview_tell = F(R.id.supdem_qq_listview_tell);
 
         layout_zx = F(R.id.supdem_qq_layout_zx);
@@ -91,6 +95,9 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         layout_find.setOnClickListener(this);
         layout_wx.setOnClickListener(this);
         layout_tell.setOnClickListener(this);
+        layout_zx_more.setOnClickListener(this);
+        listView_zx.setOnItemClickListener(this);
+        listview_tell.setOnItemClickListener(this);
     }
 
     //获取数据
@@ -107,63 +114,96 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
             TextUtils.Toast(this, "没有相关数据！");
             return;
         }
-        switch (v.getId()) {
-            case R.id.supdem_qq_layout_zx:
-                if (!isClicked1) {
-                    isClicked1 = true;
-                    listView_zx.setVisibility(View.VISIBLE);
-                    layout_zx_more.setVisibility(View.VISIBLE);
-                    img_zx.setImageResource(R.drawable.icon_more_hl);
-                    adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
-                    listView_zx.setAdapter(adapter);
-                } else {
-                    isClicked1 = false;
-                    listView_zx.setVisibility(View.GONE);
-                    layout_zx_more.setVisibility(View.GONE);
-                    img_zx.setImageResource(R.drawable.icon_more);
-                }
-                break;
-            case R.id.supdem_qq_layout_find:
-                if (!isClicked2) {
-                    isClicked2 = true;
-                    img_find.setImageResource(R.drawable.icon_more_hl);
-                    if (detailBean.getFriendSearch().size() != 0) {
-                        listView_find.setVisibility(View.VISIBLE);
-                        adapter = new SupDem_Search_QQ_Detail_Adapter(this, 2);
-                        adapter.setList_friend(detailBean.getFriendSearch());
-                        listView_find.setAdapter(adapter);
+        try {
+            switch (v.getId()) {
+                case R.id.supdem_qq_layout_zx:
+                    if (!isClicked1) {
+                        isClicked1 = true;
+                        img_zx.setImageResource(R.drawable.icon_more_hl);
+                        if (detailBean.getShowInformation().size() != 0) {
+                            listView_zx.setVisibility(View.VISIBLE);
+                            layout_zx_more.setVisibility(View.VISIBLE);
+                            adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
+                            adapter.setList_showinfo(detailBean.getShowInformation());
+                            listView_zx.setAdapter(adapter);
+                        } else {
+                            TextUtils.Toast(this, "没有相关数据！");
+                        }
                     } else {
-                        TextUtils.Toast(this, "没有相关数据！");
+                        isClicked1 = false;
+                        listView_zx.setVisibility(View.GONE);
+                        layout_zx_more.setVisibility(View.GONE);
+                        img_zx.setImageResource(R.drawable.icon_more);
                     }
-                } else {
-                    isClicked2 = false;
-                    listView_find.setVisibility(View.GONE);
-                    img_find.setImageResource(R.drawable.icon_more);
-                }
-                break;
-            case R.id.supdem_qq_layout_wx:
-                Intent intent = new Intent(this, Physical_Property_Activity.class);
-                startActivity(intent);
-                break;
-            case R.id.supdem_qq_layout_tell:
-                if (!isClicked3) {
-                    isClicked3 = true;
-                    img_tell.setImageResource(R.drawable.icon_more_hl);
-                    if (detailBean.getIphoneList().size() != 0) {
-                        listview_tell.setVisibility(View.VISIBLE);
-                        listview_tell.setSelection(layout_tell.getChildCount());
-                        adapter = new SupDem_Search_QQ_Detail_Adapter(this, 3);
-                        adapter.setList_phone(detailBean.getIphoneList());
-                        listview_tell.setAdapter(adapter);
+                    break;
+                case R.id.supdem_qq_layout_find:
+                    if (!isClicked2) {
+                        isClicked2 = true;
+                        img_find.setImageResource(R.drawable.icon_more_hl);
+                        if (detailBean.getFriendSearch().size() != 0) {
+                            listView_find.setVisibility(View.VISIBLE);
+                            adapter = new SupDem_Search_QQ_Detail_Adapter(this, 2);
+                            adapter.setList_friend(detailBean.getFriendSearch());
+                            listView_find.setAdapter(adapter);
+                        } else {
+                            TextUtils.Toast(this, "没有相关数据！");
+                        }
                     } else {
-                        TextUtils.Toast(this, "没有相关数据！");
+                        isClicked2 = false;
+                        listView_find.setVisibility(View.GONE);
+                        img_find.setImageResource(R.drawable.icon_more);
                     }
-                } else {
-                    isClicked3 = false;
-                    listview_tell.setVisibility(View.GONE);
-                    img_tell.setImageResource(R.drawable.icon_more);
-                }
-                break;
+                    break;
+                case R.id.supdem_qq_layout_wx:
+                    Intent intent = new Intent(this, Physical_Property_Activity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.supdem_qq_layout_tell:
+                    if (!isClicked3) {
+                        isClicked3 = true;
+                        img_tell.setImageResource(R.drawable.icon_more_hl);
+                        if (detailBean.getIphoneList().size() != 0) {
+                            listview_tell.setVisibility(View.VISIBLE);
+                            listview_tell.setSelection(layout_tell.getChildCount());
+                            adapter = new SupDem_Search_QQ_Detail_Adapter(this, 3);
+                            adapter.setList_phone(detailBean.getIphoneList());
+                            listview_tell.setAdapter(adapter);
+                        } else {
+                            TextUtils.Toast(this, "没有相关数据！");
+                        }
+                    } else {
+                        isClicked3 = false;
+                        listview_tell.setVisibility(View.GONE);
+                        img_tell.setImageResource(R.drawable.icon_more);
+                    }
+                    break;
+                case R.id.supdem_qq_layout_zx_more:
+                    SharedUtils.getSharedUtils().setBooloean(this, "fromsearch", true);
+                    finish();
+                    break;
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        try {
+            switch (parent.getId()) {
+                case R.id.supdem_qq_listview_zx:
+                    Intent intent = new Intent(this, Head_Lines_DetailActivity.class);
+                    intent.putExtra("title", detailBean.getShowInformation().get(position).getCate_name());
+                    intent.putExtra("id", detailBean.getShowInformation().get(position).getId());
+                    startActivity(intent);
+                    break;
+                case R.id.supdem_qq_listview_find:
+
+                    break;
+                case R.id.supdem_qq_listview_tell:
+                    call(detailBean.getIphoneList().get(position).getIphone());
+                    break;
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -201,10 +241,6 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         text_xq.setText(detailBean.getISForward());
         text_qq.setText(detailBean.getQQName());
         Glide.with(this).load(detailBean.getQQImage()).placeholder(R.drawable.contact_image_defaul_male).into(roundImagView);
-    }
-
-    public <T extends View> T F(int id) {
-        return (T) findViewById(id);
     }
 
     public void onResume() {

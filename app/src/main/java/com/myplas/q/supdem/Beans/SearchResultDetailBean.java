@@ -12,7 +12,7 @@ public class SearchResultDetailBean {
 
     /**
      * err : 0
-     * data : {"Company":"广州金信塑业有限公司","Production":"P-泰国PTT","ISForward":"现货","Price":"9700","PlsticNumber":"7000F","QQName":"广州金信塑业-陈荣基","QQNumber":"1789051421","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1789051421&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","Isbuy":"0","GoodssPosition":"广州","ShowInformation":[false],"FriendSearch":[{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"IphoneList":[{"Iphone":"13502966902","UserName":"黄恒达"},{"Iphone":"13570048089","UserName":"陈R"},{"Iphone":"13660045662","UserName":"刘莉"},{"Iphone":"13825035682","UserName":"陈荣基"},{"Iphone":"13826196041","UserName":"许梓龙"}],"PlasticPhysicalTable":""}
+     * data : {"Company":"广州金信塑业有限公司","Production":"P-泰国PTT","ISForward":"现货","Price":"9700","PlsticNumber":"7000F","QQName":"广州金信塑业-陈荣基","QQNumber":"1789051421","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1789051421&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","Isbuy":"0","GoodssPosition":"广州","ShowInformation":[{"id":"29795","title":"齐鲁石化HDPE装置停车","cate_name":"装置动态"},{"id":"29821","title":"上游早报：原油及PVC单体5月2日收盘价格","cate_name":"上游动态"},{"id":"29820","title":"早盘预测：国际油价下跌  塑料市场如何应对？","cate_name":"早提示"}],"FriendSearch":[{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"IphoneList":[{"Iphone":"13502966902","UserName":"黄恒达"},{"Iphone":"13570048089","UserName":"陈R"},{"Iphone":"13660045662","UserName":"刘莉"},{"Iphone":"13825035682","UserName":"陈荣基"},{"Iphone":"13826196041","UserName":"许梓龙"}],"PlasticPhysicalTable":""}
      */
 
     private int err;
@@ -46,7 +46,7 @@ public class SearchResultDetailBean {
          * QQImage : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1789051421&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
          * Isbuy : 0
          * GoodssPosition : 广州
-         * ShowInformation : [false]
+         * ShowInformation : [{"id":"29795","title":"齐鲁石化HDPE装置停车","cate_name":"装置动态"},{"id":"29821","title":"上游早报：原油及PVC单体5月2日收盘价格","cate_name":"上游动态"},{"id":"29820","title":"早盘预测：国际油价下跌  塑料市场如何应对？","cate_name":"早提示"}]
          * FriendSearch : [{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}]
          * IphoneList : [{"Iphone":"13502966902","UserName":"黄恒达"},{"Iphone":"13570048089","UserName":"陈R"},{"Iphone":"13660045662","UserName":"刘莉"},{"Iphone":"13825035682","UserName":"陈荣基"},{"Iphone":"13826196041","UserName":"许梓龙"}]
          * PlasticPhysicalTable :
@@ -63,7 +63,7 @@ public class SearchResultDetailBean {
         private String Isbuy;
         private String GoodssPosition;
         private String PlasticPhysicalTable;
-        private List<Boolean> ShowInformation;
+        private List<ShowInformationBean> ShowInformation;
         private List<FriendSearchBean> FriendSearch;
         private List<IphoneListBean> IphoneList;
 
@@ -155,11 +155,11 @@ public class SearchResultDetailBean {
             this.PlasticPhysicalTable = PlasticPhysicalTable;
         }
 
-        public List<Boolean> getShowInformation() {
+        public List<ShowInformationBean> getShowInformation() {
             return ShowInformation;
         }
 
-        public void setShowInformation(List<Boolean> ShowInformation) {
+        public void setShowInformation(List<ShowInformationBean> ShowInformation) {
             this.ShowInformation = ShowInformation;
         }
 
@@ -177,6 +177,42 @@ public class SearchResultDetailBean {
 
         public void setIphoneList(List<IphoneListBean> IphoneList) {
             this.IphoneList = IphoneList;
+        }
+
+        public static class ShowInformationBean {
+            /**
+             * id : 29795
+             * title : 齐鲁石化HDPE装置停车
+             * cate_name : 装置动态
+             */
+
+            private String id;
+            private String title;
+            private String cate_name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getCate_name() {
+                return cate_name;
+            }
+
+            public void setCate_name(String cate_name) {
+                this.cate_name = cate_name;
+            }
         }
 
         public static class FriendSearchBean {

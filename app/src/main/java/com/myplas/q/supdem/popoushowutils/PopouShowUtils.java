@@ -70,7 +70,7 @@ public class PopouShowUtils implements View.OnClickListener, AdapterView.OnItemC
         imageView_sd.setOnClickListener(this);
         if (type == 0) {
             String po = sharedUtils.getData(context, "position");
-            initData(4, ("".equals(po)) ? (0) : (Integer.parseInt(po)));
+            initData(list_time.size(), ("".equals(po)) ? (0) : (Integer.parseInt(po)));
             adapter_time = new TimeSelectAdapter(context, list_time,list_IsSelect);
             mListView_time = (ListView) view2.findViewById(R.id.mlistview_time);
 

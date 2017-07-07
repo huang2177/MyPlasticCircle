@@ -11,14 +11,13 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="16.0sp"
-            android:text="装置动态："
             android:textColor="@color/color_balank"
             android:id="@+id/supdem_qq_item1_text_title"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="兰州石化PVC"
+            android:singleLine="true"
             android:id="@+id/supdem_qq_item1_text_content"/>
     </LinearLayout>
 </LinearLayout>

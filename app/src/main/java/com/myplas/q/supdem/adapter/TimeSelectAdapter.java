@@ -1,6 +1,7 @@
 package com.myplas.q.supdem.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,12 @@ public class TimeSelectAdapter extends BaseAdapter {
     Context context;
     Map<Integer, View> map_view;
     Map<Integer, ImageView> map_img;
+    Map<Integer, TextView> map_text;
     List<PopouShowUtils.ItemBean> list;
     List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> list_time;
+
+    private Resources resources;
+    private int redColor, blackColor;
 
     public TimeSelectAdapter(Context context, List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> list_time,List<PopouShowUtils.ItemBean> list) {
         this.list=list;
@@ -36,6 +41,10 @@ public class TimeSelectAdapter extends BaseAdapter {
         this.list_time = list_time;
         map_img = new HashMap<>();
         map_view = new HashMap<>();
+        map_text = new HashMap<>();
+        resources = context.getResources();
+        redColor = resources.getColor(R.color.color_red);
+        blackColor = resources.getColor(R.color.color_balank);
     }
 
     public void setList_isSelect(List<PopouShowUtils.ItemBean> list) {
@@ -69,9 +78,11 @@ public class TimeSelectAdapter extends BaseAdapter {
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.time_imgview);
 
             map_view.put(position, convertView);
+            map_text.put(position, viewHolder.name);
             map_img.put(position, viewHolder.imageView);
             if (list.get(position).isSelected()) {
                 viewHolder.imageView.setImageResource(R.drawable.icon_checked);
+                viewHolder.name.setTextColor(context.getResources().getColor(R.color.color_red));
             }
             convertView.setTag(viewHolder);
         } else {
@@ -86,6 +97,7 @@ public class TimeSelectAdapter extends BaseAdapter {
 
     public void setPosition(int position) {
         for (int i = 0; i < map_img.size(); i++) {
+            map_text.get(position).setTextColor((position == i) ? (redColor) : (blackColor));
             map_img.get(position).setImageResource((position == i) ? (R.drawable.icon_checked) : (-1));
         }
     }

@@ -60,11 +60,11 @@
         android:layout_height="match_parent"
         android:id="@+id/search_result_framelayout">
 
-        <com.myplas.q.common.view.XListView
+        <ListView
             android:id="@+id/search_listview_result"
             android:layout_width="match_parent"
             android:divider="@null"
-            android:layout_height="match_parent"></com.myplas.q.common.view.XListView>
+            android:layout_height="match_parent"></ListView>
 
         <TextView
             android:id="@+id/text_result"

@@ -28,6 +28,7 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.common.view.XListView;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.beans.SelectableBean;
 import com.myplas.q.supdem.Beans.HistoryBean;
 import com.myplas.q.supdem.Beans.SearchResultBean;
@@ -47,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
+import static com.umeng.analytics.pro.x.k;
 import static com.umeng.analytics.pro.x.o;
 
 
@@ -60,7 +62,7 @@ import static com.umeng.analytics.pro.x.o;
 public class SupDem_Search_Activity extends BaseActivity implements View.OnClickListener, ResultCallBack,
         PopouShowUtils.poPouCallBackInterface, AdapterView.OnItemClickListener {
     private Spinner spinner;
-    private XListView listView;
+    private ListView listView;
     private ImageView imageView;
     private EditTextField editText;
     private FrameLayout frameLayout;
@@ -78,6 +80,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private SupDem_Search_List_Adapter adapter_list;
     private List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> list_area;
     private List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> list_time;
+
+    private String keywords = "7000f", is_buy = "2", area, time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +135,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                is_buy = level[position];
             }
 
             @Override
@@ -155,7 +159,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         map.put("size", "30");
         map.put("time", time);
         map.put("is_buy", is_buy);
-        map.put("is_futures", "");
+        map.put("is_futures", "0");
         map.put("area", area);
         postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH, map, this, 2);
     }
@@ -177,7 +181,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.supplydemand_btn_search:
-                getPhysical_Search(editText.getText().toString(), "", "", "");
+                keywords = editText.getText().toString();
+                getPhysical_Search(keywords, time, is_buy, area);
                 break;
             case R.id.img_search_delete:
                 delSearch_Record();
@@ -200,10 +205,12 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.mygrid_search_history:
-                //getPhysical_Search(historyBean.getHistory().get(position));
+                keywords = historyBean.getHistory().get(position);
+                getPhysical_Search(keywords, time, is_buy, area);
                 break;
             case R.id.mygrid_search_subcribe:
-                //getPhysical_Search(historyBean.getHistory().get(position));
+                keywords = historyBean.getHistory().get(position);
+                getPhysical_Search(keywords, time, is_buy, area);
                 break;
             case R.id.search_listview_result:
                 if (list.get(position).getType().equals("9")) {//来自QQ群
@@ -272,9 +279,14 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 list_area = bean.getData().getArea().getData();
                 list_time = bean.getData().getTime().getData();
 
+                //设置默认的时间
+                time = bean.getData().getTime().getCurrentValue();
                 int currentitem_time = Integer.parseInt(bean.getData().getTime().getCurrentItem());
+                SharedUtils.getSharedUtils().setData(this, "position", currentitem_time + "");
                 textView_time.setText(list_time.get(currentitem_time).getShow());
 
+                //设置默认的地区
+                area = bean.getData().getArea().getCurrentValue();
                 int currentitem_add = Integer.parseInt(bean.getData().getArea().getCurrentItem());
                 for (int i = 0; i < list_area.get(currentitem_add).getData().size(); i++) {
                     if (list_area.get(currentitem_add).getData().get(i).getValue().equals(bean.getData().getArea().getCurrentValue())) {
@@ -318,19 +330,30 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     //地区回调
     @Override
     public void addCallBack(int po_pro,int position) {
+        isRefresh = true;
         textView_add.setText(list_area.get(po_pro).getShow()+"-"+list_area.get(po_pro).getData().get(position).getShow());
         textView_add.setTextColor(getResources().getColor(R.color.color_red));
+        area = list_area.get(po_pro).getData().get(position).getValue();
+        getPhysical_Search(keywords, time, is_buy, area);
     }
     //时间回调
     @Override
     public void timeCallBack(int po) {
+        isRefresh = true;
         textView_time.setText(list_time.get(po).getShow());
         textView_time.setTextColor(getResources().getColor(R.color.color_red));
+        time = list_time.get(po).getValue();
+        getPhysical_Search(keywords, time, is_buy, area);
     }
 
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        if (SharedUtils.getSharedUtils().getBoolean(this, "fromsearch")) {
+            SharedUtils.getSharedUtils().setBooloean(this, "fromsearch", false);
+            MainActivity.goToHeadLine();
+            finish();
+        }
     }
 
     public void onPause() {

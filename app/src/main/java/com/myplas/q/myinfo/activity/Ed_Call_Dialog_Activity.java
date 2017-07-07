@@ -71,11 +71,6 @@ public class Ed_Call_Dialog_Activity extends BaseActivity implements View.OnClic
                 break;
         }
     }
-    public void call(String tel){
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);

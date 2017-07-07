@@ -28,10 +28,10 @@ import static android.R.id.list;
  */
 public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
     int type;
-    int resId;
     Context context;
     List<SearchResultDetailBean.DataBean.IphoneListBean> list_phone;
     List<SearchResultDetailBean.DataBean.FriendSearchBean> list_friend;
+    List<SearchResultDetailBean.DataBean.ShowInformationBean> list_showinfo;
 
     public SupDem_Search_QQ_Detail_Adapter(Context context, int type) {
         this.context = context;
@@ -46,11 +46,15 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
         this.list_friend = list_friend;
     }
 
+    public void setList_showinfo(List<SearchResultDetailBean.DataBean.ShowInformationBean> list_showinfo) {
+        this.list_showinfo = list_showinfo;
+    }
+
     @Override
     public int getCount() {
         switch (type) {
             case 1:
-                return (list_phone != null) ? (list_phone.size()) : (0);
+                return (list_showinfo != null) ? (list_showinfo.size()) : (0);
             case 2:
                 return (list_friend != null) ? (list_friend.size()) : (0);
             case 3:
@@ -93,14 +97,15 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         if (type == 1) {  //资讯
-            //viewHolder.textView_zx.setText(list.get(position));
+            viewHolder.textView_zx_content.setText(list_showinfo.get(position).getTitle());
+            viewHolder.textView_zx_title.setText(list_showinfo.get(position).getCate_name());
         } else if (type == 2) {
             viewHolder.textView_find1.setText(list_friend.get(position).getCompany());
             viewHolder.textView_find2.setText(list_friend.get(position).getMobile());
             viewHolder.textView_find3.setText(list_friend.get(position).getContent());
             Glide.with(context).load(list_friend.get(position).getQQImage()).into(viewHolder.imageView);
         } else {
-            viewHolder.textView_tell.setText(list_phone.get(position).getIphone());
+            viewHolder.textView_tell.setText(list_phone.get(position).getUserName() + "  " + list_phone.get(position).getIphone());
         }
         return convertView;
     }
