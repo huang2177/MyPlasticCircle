@@ -8,13 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.supdem.Beans.SearchResultDetailBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import static android.R.id.list;
 
 /**
  * 编写： 黄双
@@ -26,28 +30,33 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
     int type;
     int resId;
     Context context;
-    List<String> list;
+    List<SearchResultDetailBean.DataBean.IphoneListBean> list_phone;
+    List<SearchResultDetailBean.DataBean.FriendSearchBean> list_friend;
 
-    public SupDem_Search_QQ_Detail_Adapter(Context context, List<String> list,int type) {
+    public SupDem_Search_QQ_Detail_Adapter(Context context, int type) {
         this.context = context;
-        this.list = list;
-        this.type=type;
-    }
-
-    public void setType(int type) {
         this.type = type;
     }
 
+    public void setList_phone(List<SearchResultDetailBean.DataBean.IphoneListBean> list_phone) {
+        this.list_phone = list_phone;
+    }
 
-    public void setList(List<String> list) {
-        this.list = list;
+    public void setList_friend(List<SearchResultDetailBean.DataBean.FriendSearchBean> list_friend) {
+        this.list_friend = list_friend;
     }
 
     @Override
     public int getCount() {
-        if (list!=null)
-            return list.size();
-        return 4;
+        switch (type) {
+            case 1:
+                return (list_phone != null) ? (list_phone.size()) : (0);
+            case 2:
+                return (list_friend != null) ? (list_friend.size()) : (0);
+            case 3:
+                return (list_phone != null) ? (list_phone.size()) : (0);
+        }
+        return 0;
     }
 
     @Override
@@ -69,11 +78,13 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
                 convertView = LayoutInflater.from(context).inflate(R.layout.supdem_detail_qq_item1, parent, false);
                 viewHolder.textView_zx_title = (TextView) convertView.findViewById(R.id.supdem_qq_item1_text_title);
                 viewHolder.textView_zx_content = (TextView) convertView.findViewById(R.id.supdem_qq_item1_text_content);
-            } else if (type == 2) {
+            } else if (type == 2) {//他们在找
                 convertView = LayoutInflater.from(context).inflate(R.layout.supdem_detail_qq_item2, parent, false);
-                viewHolder.textView_find = (TextView) convertView.findViewById(R.id.supdem_qq_item2_text);
+                viewHolder.textView_find1 = (TextView) convertView.findViewById(R.id.supdem_qq_item2_text1);
+                viewHolder.textView_find2 = (TextView) convertView.findViewById(R.id.supdem_qq_item2_text2);
+                viewHolder.textView_find3 = (TextView) convertView.findViewById(R.id.supdem_qq_item2_text3);
                 viewHolder.imageView = (ImageView) convertView.findViewById(R.id.supdem_qq_item2_img);
-            } else {
+            } else {//电话
                 convertView = LayoutInflater.from(context).inflate(R.layout.supdem_detail_qq_item3, parent, false);
                 viewHolder.textView_tell = (TextView) convertView.findViewById(R.id.supdem_qq_item3_text);
             }
@@ -84,16 +95,18 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
         if (type == 1) {  //资讯
             //viewHolder.textView_zx.setText(list.get(position));
         } else if (type == 2) {
-
+            viewHolder.textView_find1.setText(list_friend.get(position).getCompany());
+            viewHolder.textView_find2.setText(list_friend.get(position).getMobile());
+            viewHolder.textView_find3.setText(list_friend.get(position).getContent());
+            Glide.with(context).load(list_friend.get(position).getQQImage()).into(viewHolder.imageView);
         } else {
-
+            viewHolder.textView_tell.setText(list_phone.get(position).getIphone());
         }
-
         return convertView;
     }
 
     class viewHolder {
-        TextView textView_zx_title,textView_zx_content,textView_find,textView_tell;
+        TextView textView_zx_title, textView_zx_content, textView_find1, textView_find2, textView_find3, textView_tell;
         ImageView imageView;
     }
 }

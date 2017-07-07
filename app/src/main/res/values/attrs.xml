@@ -10,7 +10,7 @@
         <attr name="state_highlighted" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="RoundImagViewUtil">
+    <declare-styleable name="RoundImageView">
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
     </declare-styleable>

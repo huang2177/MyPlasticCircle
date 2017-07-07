@@ -14,12 +14,31 @@
         android:scaleType="centerCrop"
         android:src="@drawable/my_fans"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:layout_weight="3.5"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:layout_marginLeft="5dp"
-        android:id="@+id/supdem_qq_item2_text"
-        android:textColor="@color/color_balank"
-        android:text="Blank Mamba"/>
+        android:id="@+id/supdem_qq_item2_text1"
+        android:textColor="@color/color_balank" />
+
+    <TextView
+        android:singleLine="true"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:id="@+id/supdem_qq_item2_text2"
+        android:textColor="@color/color_balank" />
+
+    <TextView
+        android:singleLine="true"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:id="@+id/supdem_qq_item2_text3"
+        android:textColor="@color/color_balank" />
 </LinearLayout>
 </LinearLayout>

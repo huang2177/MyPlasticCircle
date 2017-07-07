@@ -1,12 +1,17 @@
 package com.myplas.q.supdem.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -21,6 +26,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
+import com.myplas.q.common.view.XListView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.SelectableBean;
 import com.myplas.q.supdem.Beans.HistoryBean;
@@ -54,13 +60,14 @@ import static com.umeng.analytics.pro.x.o;
 public class SupDem_Search_Activity extends BaseActivity implements View.OnClickListener, ResultCallBack,
         PopouShowUtils.poPouCallBackInterface, AdapterView.OnItemClickListener {
     private Spinner spinner;
-    private ListView listView;
+    private XListView listView;
     private ImageView imageView;
     private EditTextField editText;
+    private FrameLayout frameLayout;
     private RelativeLayout layout_time, layout_add;
-    private MyGridview gridview_history, gridview_subcribe;
-    private LinearLayout search_default_linear, search_result_linear;
-    private TextView textView, textView_time, textView_add, textView_hint;
+    private MyGridview gridview_history, gridview_subcribe, gridview_subcribe_no;
+    private TextView textView, textView_time, textView_add, textView_hint, textView_no;
+    private LinearLayout search_default_linear, search_result_linear, search_result_linear_no;
 
     private Handler handler;
     private String level[];
@@ -94,11 +101,15 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         layout_add = F(R.id.relative_result_add);
         layout_time = F(R.id.relative_result_time);
         textView = F(R.id.supplydemand_btn_search);
+        textView_no = F(R.id.search_result_text_null);
         editText = F(R.id.supplydemand_search_edit);
+        frameLayout = F(R.id.search_result_framelayout);
+        gridview_subcribe_no = F(R.id.mygrid_search_null);
         gridview_history = F(R.id.mygrid_search_history);
         gridview_subcribe = F(R.id.mygrid_search_subcribe);
         search_result_linear = F(R.id.search_result_linear);
         search_default_linear = F(R.id.search_default_linear);
+        search_result_linear_no = F(R.id.search_result_linear_null);
 
         textView.setOnClickListener(this);
         imageView.setOnClickListener(this);
@@ -136,7 +147,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         map.put("keywords", editText.getText().toString());
         postAsyn(this, API.BASEURL + API.SEARCH_RECORD, map, this, 1);
     }
-
     //查询
     public void getPhysical_Search(String keyWords, String time, String is_buy, String area) {
         Map map = new HashMap();
@@ -163,15 +173,11 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         postAsyn(this, API.BASEURL + API.DEL_SEARCH_RECORD, map, this, 4);
     }
 
-    public <T extends View> T F(int id) {
-        return (T) findViewById(id);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.supplydemand_btn_search:
-                //getPhysical_Search(editText.getText().toString());
+                getPhysical_Search(editText.getText().toString(), "", "", "");
                 break;
             case R.id.img_search_delete:
                 delSearch_Record();
@@ -184,7 +190,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 break;
         }
     }
-
     public void showPopou(int type, int resId) {
         PopouShowUtils popouShowUtils1 = new PopouShowUtils(this, resId, type, list_area, list_time);
         popouShowUtils1.showAsDropDown(findViewById(R.id.divider_result));
@@ -203,10 +208,11 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             case R.id.search_listview_result:
                 if (list.get(position).getType().equals("9")) {//来自QQ群
                     Intent intent = new Intent(SupDem_Search_Activity.this, SupDem_QQ_DetailActivity.class);
+                    intent.putExtra("company", list.get(position).getCompany());
+                    intent.putExtra("plastic_number", list.get(position).getPlsticNumber());
                     startActivity(intent);
                 } else {//来自供求
                     try {
-
                         Intent intent = new Intent(this, SupDem_Detail_Activity.class);
                         String id_ = list.get(position).getId();
                         String userid = list.get(position).getUser_id();
@@ -237,15 +243,28 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 gridview_history.setAdapter(adapter_grid);
                 gridview_subcribe.setAdapter(adapter_grid);
             }
-            if (type == 2 && err) {
+            if (type == 2) {
                 Log.e("----->22", object.toString());
                 search_default_linear.setVisibility(View.GONE);
                 search_result_linear.setVisibility(View.VISIBLE);
-                SearchResultBean bean = gson.fromJson(object.toString(), SearchResultBean.class);
-                list = bean.getList();
-                adapter_list = new SupDem_Search_List_Adapter(this, list);
-                listView.setAdapter(adapter_list);
-                showRefreshPopou("为你搜索" + list.size() + "条信息");
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                if (err) {
+                    frameLayout.setVisibility(View.VISIBLE);
+                    search_result_linear_no.setVisibility(View.GONE);
+                    SearchResultBean bean = gson.fromJson(object.toString(), SearchResultBean.class);
+                    list = bean.getList();
+                    adapter_list = new SupDem_Search_List_Adapter(this, list);
+                    listView.setAdapter(adapter_list);
+                    showRefreshPopou("为你搜索" + list.size() + "条信息");
+                } else {
+                    frameLayout.setVisibility(View.GONE);
+                    search_result_linear_no.setVisibility(View.VISIBLE);
+                    textView_no.setText("抱歉，未能找到相关搜索！");
+//                    historyBean = gson.fromJson(object.toString(), HistoryBean.class);
+//                    adapter_grid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
+//                    gridview_subcribe_no.setAdapter(adapter_grid);
+                }
             }
             if (type == 3 && err) {
                 Log.e("----->33", object.toString());

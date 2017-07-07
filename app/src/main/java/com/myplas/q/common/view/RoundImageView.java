@@ -18,7 +18,7 @@ import android.widget.ImageView;
 
 import com.myplas.q.R;
 
-public class RoundImagViewUtil extends ImageView {
+public class RoundImageView extends ImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
@@ -49,22 +49,22 @@ public class RoundImagViewUtil extends ImageView {
     private boolean mReady;
     private boolean mSetupPending;
 
-    public RoundImagViewUtil(Context context) {
+    public RoundImageView(Context context) {
         super(context);
     }
 
-    public RoundImagViewUtil(Context context, AttributeSet attrs) {
+    public RoundImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RoundImagViewUtil(Context context, AttributeSet attrs, int defStyle) {
+    public RoundImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         super.setScaleType(SCALE_TYPE);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImagViewUtil, defStyle, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView, defStyle, 0);
 
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.RoundImagViewUtil_border_width, DEFAULT_BORDER_WIDTH);
-        mBorderColor = a.getColor(R.styleable.RoundImagViewUtil_border_color, DEFAULT_BORDER_COLOR);
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.RoundImageView_border_width, DEFAULT_BORDER_WIDTH);
+        mBorderColor = a.getColor(R.styleable.RoundImageView_border_color, DEFAULT_BORDER_COLOR);
         a.recycle();
         mReady = true;
         if (mSetupPending) {

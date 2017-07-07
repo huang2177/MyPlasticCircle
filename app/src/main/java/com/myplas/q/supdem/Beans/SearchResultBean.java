@@ -80,7 +80,7 @@ public class SearchResultBean {
         private String mobile_province;
         private String is_pass;
         private List<String> QQImage;
-        private List<String> Iphone_list;
+        // private List<String> Iphone_list;
         private List<String> QQName_Number;
 
         public String getCompany() {
@@ -275,13 +275,13 @@ public class SearchResultBean {
             this.QQImage = QQImage;
         }
 
-        public List<String> getIphone_list() {
-            return Iphone_list;
-        }
-
-        public void setIphone_list(List<String> Iphone_list) {
-            this.Iphone_list = Iphone_list;
-        }
+//        public List<String> getIphone_list() {
+//            return Iphone_list;
+//        }
+//
+//        public void setIphone_list(List<String> Iphone_list) {
+//            this.Iphone_list = Iphone_list;
+//        }
 
         public List<String> getQQName_Number() {
             return QQName_Number;

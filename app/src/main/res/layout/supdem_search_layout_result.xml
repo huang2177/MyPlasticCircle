@@ -4,12 +4,12 @@
     android:id="@+id/search_result_linear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp">
+
         <RelativeLayout
             android:id="@+id/relative_result_time"
             android:layout_width="0dp"
@@ -22,8 +22,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:gravity="center"
                 android:drawableRight="@drawable/btn_xiala"
+                android:gravity="center"
                 android:text="最近3天  "
                 android:textColor="@color/color_balank"
                 android:textSize="16.0sp" />
@@ -34,42 +34,84 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <TextView
                 android:id="@+id/text_result_add"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="5dp"
                 android:drawableRight="@drawable/btn_xiala"
+                android:gravity="center"
                 android:text="全国  "
-                android:textSize="16.0sp"
-                android:textColor="@color/color_balank" />
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp" />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:id="@+id/divider_result"
         android:layout_width="match_parent"
         android:layout_height="5px"
         android:background="@color/color_lightgray"></View>
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ListView
+        android:layout_height="match_parent"
+        android:id="@+id/search_result_framelayout">
+
+        <com.myplas.q.common.view.XListView
             android:id="@+id/search_listview_result"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:divider="@null"
+            android:layout_height="match_parent"></com.myplas.q.common.view.XListView>
+
         <TextView
             android:id="@+id/text_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/coner_toast"
-            android:alpha="0.9"
-            android:padding="10dp"
-            android:gravity="center"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
-            android:textColor="@color/color_white"
-            android:text="为你搜索30条信息"/>
+            android:alpha="0.9"
+            android:background="@drawable/coner_toast"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/color_white" />
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/search_result_linear_null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/search_result_text_null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/color_balank"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="相关搜索:"
+            android:textSize="16.0sp" />
+
+        <com.myplas.q.common.view.MyGridview
+            android:id="@+id/mygrid_search_null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginRight="20dp"
+            android:horizontalSpacing="8dp"
+            android:listSelector="@color/color_lightgray"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"></com.myplas.q.common.view.MyGridview>
+    </LinearLayout>
 </LinearLayout>

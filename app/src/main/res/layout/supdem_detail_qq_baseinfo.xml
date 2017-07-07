@@ -29,8 +29,7 @@
                 android:id="@+id/supdem_qq_text_gs"
                 style="@style/wd_zl_text_style"
                 android:gravity="right"
-                android:layout_margin="13dp"
-                android:text="974102893"></TextView>
+                android:layout_margin="13dp"></TextView>
         </LinearLayout>
 
         <View
@@ -55,8 +54,7 @@
                 android:id="@+id/supdem_qq_text_wz"
                 style="@style/wd_zl_text_style"
                 android:gravity="right"
-                android:layout_margin="13dp"
-                android:text="974102893"></TextView>
+                android:layout_margin="13dp"></TextView>
         </LinearLayout>
 
         <View
@@ -81,8 +79,7 @@
                 android:id="@+id/supdem_qq_text_ph"
                 style="@style/wd_zl_text_style"
                 android:gravity="right"
-                android:layout_margin="13dp"
-                android:text="974102893"></TextView>
+                android:layout_margin="13dp"></TextView>
         </LinearLayout>
 
         <View
@@ -100,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="13dp"
                 android:layout_marginTop="13dp"
-                android:text="价格"
+                android:text="产地"
                 android:textSize="16.0sp"
                 android:textColor="#171717" />
 
@@ -108,8 +105,7 @@
                 android:id="@+id/supdem_qq_text_chd"
                 style="@style/wd_zl_text_style"
                 android:gravity="right"
-                android:layout_margin="13dp"
-                android:text="974102893"></TextView>
+                android:layout_margin="13dp"></TextView>
         </LinearLayout>
 
         <View
@@ -141,8 +137,7 @@
                     android:id="@+id/supdem_qq_text_jg"
                     style="@style/wd_zl_text_style"
                     android:gravity="right"
-                    android:layout_margin="13dp"
-                    android:text="974102893"></TextView>
+                    android:layout_margin="13dp"></TextView>
             </LinearLayout>
 
             <View
@@ -167,8 +162,7 @@
                     android:id="@+id/supdem_qq_text_xq"
                     style="@style/wd_zl_text_style"
                     android:gravity="right"
-                    android:layout_margin="13dp"
-                    android:text="974102893"></TextView>
+                    android:layout_margin="13dp"></TextView>
 
             </LinearLayout>
 
@@ -194,8 +188,7 @@
                     android:id="@+id/supdem_qq_text_qq"
                     style="@style/wd_zl_text_style"
                     android:gravity="right"
-                    android:layout_margin="13dp"
-                    android:text="974102893"></TextView>
+                    android:layout_margin="13dp"></TextView>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

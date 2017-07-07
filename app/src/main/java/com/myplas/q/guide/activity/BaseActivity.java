@@ -27,6 +27,10 @@ import java.util.Map;
  * 时间：2017/3/17 11:46
  */
 public class BaseActivity extends Activity{
+    public <T extends View> T F(int id) {
+        return (T) findViewById(id);
+    }
+
     public void goBack(View view){
         view.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -126,7 +126,4 @@ public class Physical_Property_Detail_Activity extends BaseActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
-    private <T extends View> T F(int id) {
-        return (T) findViewById(id);
-    }
 }
