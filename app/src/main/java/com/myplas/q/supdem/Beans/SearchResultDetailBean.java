@@ -1,0 +1,254 @@
+package com.myplas.q.supdem.Beans;
+
+import java.util.List;
+
+/**
+ * 编写：黄双
+ * 邮箱：15378412400@163.com
+ * 时间： 2017/6/291724.
+ */
+
+public class SearchResultDetailBean {
+
+    /**
+     * err : 0
+     * data : {"Company":"广州金信塑业有限公司","Production":"P-泰国PTT","ISForward":"现货","Price":"9700","PlsticNumber":"7000F","QQName":"广州金信塑业-陈荣基","QQNumber":"1789051421","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1789051421&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","Isbuy":"0","GoodssPosition":"广州","ShowInformation":[false],"FriendSearch":[{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"IphoneList":[{"Iphone":"13502966902","UserName":"黄恒达"},{"Iphone":"13570048089","UserName":"陈R"},{"Iphone":"13660045662","UserName":"刘莉"},{"Iphone":"13825035682","UserName":"陈荣基"},{"Iphone":"13826196041","UserName":"许梓龙"}],"PlasticPhysicalTable":""}
+     */
+
+    private int err;
+    private DataBean data;
+
+    public int getErr() {
+        return err;
+    }
+
+    public void setErr(int err) {
+        this.err = err;
+    }
+
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
+    public static class DataBean {
+        /**
+         * Company : 广州金信塑业有限公司
+         * Production : P-泰国PTT
+         * ISForward : 现货
+         * Price : 9700
+         * PlsticNumber : 7000F
+         * QQName : 广州金信塑业-陈荣基
+         * QQNumber : 1789051421
+         * QQImage : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1789051421&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
+         * Isbuy : 0
+         * GoodssPosition : 广州
+         * ShowInformation : [false]
+         * FriendSearch : [{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}]
+         * IphoneList : [{"Iphone":"13502966902","UserName":"黄恒达"},{"Iphone":"13570048089","UserName":"陈R"},{"Iphone":"13660045662","UserName":"刘莉"},{"Iphone":"13825035682","UserName":"陈荣基"},{"Iphone":"13826196041","UserName":"许梓龙"}]
+         * PlasticPhysicalTable :
+         */
+
+        private String Company;
+        private String Production;
+        private String ISForward;
+        private String Price;
+        private String PlsticNumber;
+        private String QQName;
+        private String QQNumber;
+        private String QQImage;
+        private String Isbuy;
+        private String GoodssPosition;
+        private String PlasticPhysicalTable;
+        private List<Boolean> ShowInformation;
+        private List<FriendSearchBean> FriendSearch;
+        private List<IphoneListBean> IphoneList;
+
+        public String getCompany() {
+            return Company;
+        }
+
+        public void setCompany(String Company) {
+            this.Company = Company;
+        }
+
+        public String getProduction() {
+            return Production;
+        }
+
+        public void setProduction(String Production) {
+            this.Production = Production;
+        }
+
+        public String getISForward() {
+            return ISForward;
+        }
+
+        public void setISForward(String ISForward) {
+            this.ISForward = ISForward;
+        }
+
+        public String getPrice() {
+            return Price;
+        }
+
+        public void setPrice(String Price) {
+            this.Price = Price;
+        }
+
+        public String getPlsticNumber() {
+            return PlsticNumber;
+        }
+
+        public void setPlsticNumber(String PlsticNumber) {
+            this.PlsticNumber = PlsticNumber;
+        }
+
+        public String getQQName() {
+            return QQName;
+        }
+
+        public void setQQName(String QQName) {
+            this.QQName = QQName;
+        }
+
+        public String getQQNumber() {
+            return QQNumber;
+        }
+
+        public void setQQNumber(String QQNumber) {
+            this.QQNumber = QQNumber;
+        }
+
+        public String getQQImage() {
+            return QQImage;
+        }
+
+        public void setQQImage(String QQImage) {
+            this.QQImage = QQImage;
+        }
+
+        public String getIsbuy() {
+            return Isbuy;
+        }
+
+        public void setIsbuy(String Isbuy) {
+            this.Isbuy = Isbuy;
+        }
+
+        public String getGoodssPosition() {
+            return GoodssPosition;
+        }
+
+        public void setGoodssPosition(String GoodssPosition) {
+            this.GoodssPosition = GoodssPosition;
+        }
+
+        public String getPlasticPhysicalTable() {
+            return PlasticPhysicalTable;
+        }
+
+        public void setPlasticPhysicalTable(String PlasticPhysicalTable) {
+            this.PlasticPhysicalTable = PlasticPhysicalTable;
+        }
+
+        public List<Boolean> getShowInformation() {
+            return ShowInformation;
+        }
+
+        public void setShowInformation(List<Boolean> ShowInformation) {
+            this.ShowInformation = ShowInformation;
+        }
+
+        public List<FriendSearchBean> getFriendSearch() {
+            return FriendSearch;
+        }
+
+        public void setFriendSearch(List<FriendSearchBean> FriendSearch) {
+            this.FriendSearch = FriendSearch;
+        }
+
+        public List<IphoneListBean> getIphoneList() {
+            return IphoneList;
+        }
+
+        public void setIphoneList(List<IphoneListBean> IphoneList) {
+            this.IphoneList = IphoneList;
+        }
+
+        public static class FriendSearchBean {
+            /**
+             * company : 山东日聚电子商务有限公司
+             * mobile : 15666617220
+             * content : 7000F
+             * QQImage : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
+             */
+
+            private String company;
+            private String mobile;
+            private String content;
+            private String QQImage;
+
+            public String getCompany() {
+                return company;
+            }
+
+            public void setCompany(String company) {
+                this.company = company;
+            }
+
+            public String getMobile() {
+                return mobile;
+            }
+
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public String getQQImage() {
+                return QQImage;
+            }
+
+            public void setQQImage(String QQImage) {
+                this.QQImage = QQImage;
+            }
+        }
+
+        public static class IphoneListBean {
+            /**
+             * Iphone : 13502966902
+             * UserName : 黄恒达
+             */
+
+            private String Iphone;
+            private String UserName;
+
+            public String getIphone() {
+                return Iphone;
+            }
+
+            public void setIphone(String Iphone) {
+                this.Iphone = Iphone;
+            }
+
+            public String getUserName() {
+                return UserName;
+            }
+
+            public void setUserName(String UserName) {
+                this.UserName = UserName;
+            }
+        }
+    }
+}
