@@ -40,6 +40,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="品种"
+            android:textStyle="bold"
             android:textSize="16.0sp" />
 
         <View
@@ -55,6 +56,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="牌号"
+            android:textStyle="bold"
             android:textSize="16.0sp" />
 
         <View
@@ -71,6 +73,7 @@
             android:gravity="left"
             android:padding="5dp"
             android:text="   厂家"
+            android:textStyle="bold"
             android:textSize="16.0sp" />
 
     </LinearLayout>

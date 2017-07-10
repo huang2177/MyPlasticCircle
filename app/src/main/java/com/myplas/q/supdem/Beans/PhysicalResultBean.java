@@ -9,174 +9,58 @@ import java.util.List;
  */
 
 public class PhysicalResultBean {
-    private String err;
-    private String total;
-    private String search;
-    private String combine;
-    private List<ListBean> list;
 
-    public String getErr() {
+    /**
+     * err : 0
+     * data : [{"lid":"638","type":"HDPE","name":"7000F","company":"燕山石化","purpose":"大棚膜、商品袋、废品袋","standard":"其它 薄膜 其它","color":"","remark":"类型：挤塑"},{"lid":"2803","type":"HDPE","name":"7000F","company":"乐天化学","purpose":"用途：一般薄膜，购物袋，农膜，薄膜。","standard":"高强度 薄膜 挤出","color":"","remark":"特性 ：优良的抗撕裂强度"},{"lid":"7731","type":"HDPE","name":"7000F","company":"三井化学","purpose":"挤出薄膜类。其机械强度和刚性十分优良，特别在高速条件下的加工性能尤为优异，产品的耐气候性能也很突出。主要用来制取高强度薄膜、各类商业用袋和易处理废物袋等","standard":"其它 其它 其它","color":"","remark":""},{"lid":"15978","type":"PC/ABS","name":"TN-7000F","company":"日本帝人","purpose":"","standard":"阻燃 其它 其它","color":"","remark":""},{"lid":"19938","type":"HDPE","name":"7000F","company":"日本普瑞曼","purpose":"超薄强化薄膜","standard":"其它 薄膜 其它","color":"","remark":"较好的冲击强度"},{"lid":"36409","type":"HDPE","name":"7000F","company":"齐鲁石化","purpose":"","standard":"其它 其它 其它","color":"","remark":""},{"lid":"59558","type":"HDPE","name":"7000F","company":"伊朗Mehr","purpose":"增强超薄膜","standard":"其它 薄膜 其它","color":"","remark":""}]
+     */
+
+    private int err;
+    private List<DataBean> data;
+
+    public int getErr() {
         return err;
     }
 
-    public void setErr(String err) {
+    public void setErr(int err) {
         this.err = err;
     }
 
-    public String getTotal() {
-        return total;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
-    public String getSearch() {
-        return search;
-    }
+    public static class DataBean {
+        /**
+         * lid : 638
+         * type : HDPE
+         * name : 7000F
+         * company : 燕山石化
+         * purpose : 大棚膜、商品袋、废品袋
+         * standard : 其它 薄膜 其它
+         * color :
+         * remark : 类型：挤塑
+         */
 
-    public void setSearch(String search) {
-        this.search = search;
-    }
-
-    public String getCombine() {
-        return combine;
-    }
-
-    public void setCombine(String combine) {
-        this.combine = combine;
-    }
-
-    public List<ListBean> getList() {
-        return list;
-    }
-
-    public void setList(List<ListBean> list) {
-        this.list = list;
-    }
-
-    public static class ListBean {
-        private String Company;
-        private String Production;
-        private String ISForward;
-        private String Price;
-        private String PlsticNumber;
-        private String QQName;
-        private String QQNumber;
-        private String UpdateTime;
-        private String Isbuy;
-        private String GoodssPosition;
-        private String new_id;
-        private String Production_one;
+        private String lid;
         private String type;
-        private String id;
-        private String p_id;
-        private String user_id;
-        private String content;
         private String name;
-        private String thumb;
-        private String thumbqq;
-        private String sex;
-        private String mobile_province;
-        private String is_pass;
-        private List<String> QQImage;
-        // private List<String> Iphone_list;
-        private List<String> QQName_Number;
+        private String company;
+        private String purpose;
+        private String standard;
+        private String color;
+        private String remark;
 
-        public String getCompany() {
-            return Company;
+        public String getLid() {
+            return lid;
         }
 
-        public void setCompany(String Company) {
-            this.Company = Company;
-        }
-
-        public String getProduction() {
-            return Production;
-        }
-
-        public void setProduction(String Production) {
-            this.Production = Production;
-        }
-
-        public String getISForward() {
-            return ISForward;
-        }
-
-        public void setISForward(String ISForward) {
-            this.ISForward = ISForward;
-        }
-
-        public String getPrice() {
-            return Price;
-        }
-
-        public void setPrice(String Price) {
-            this.Price = Price;
-        }
-
-        public String getPlsticNumber() {
-            return PlsticNumber;
-        }
-
-        public void setPlsticNumber(String PlsticNumber) {
-            this.PlsticNumber = PlsticNumber;
-        }
-
-        public String getQQName() {
-            return QQName;
-        }
-
-        public void setQQName(String QQName) {
-            this.QQName = QQName;
-        }
-
-        public String getQQNumber() {
-            return QQNumber;
-        }
-
-        public void setQQNumber(String QQNumber) {
-            this.QQNumber = QQNumber;
-        }
-
-        public String getUpdateTime() {
-            return UpdateTime;
-        }
-
-        public void setUpdateTime(String UpdateTime) {
-            this.UpdateTime = UpdateTime;
-        }
-
-        public String getIsbuy() {
-            return Isbuy;
-        }
-
-        public void setIsbuy(String Isbuy) {
-            this.Isbuy = Isbuy;
-        }
-
-        public String getGoodssPosition() {
-            return GoodssPosition;
-        }
-
-        public void setGoodssPosition(String GoodssPosition) {
-            this.GoodssPosition = GoodssPosition;
-        }
-
-        public String getNew_id() {
-            return new_id;
-        }
-
-        public void setNew_id(String new_id) {
-            this.new_id = new_id;
-        }
-
-        public String getProduction_one() {
-            return Production_one;
-        }
-
-        public void setProduction_one(String Production_one) {
-            this.Production_one = Production_one;
+        public void setLid(String lid) {
+            this.lid = lid;
         }
 
         public String getType() {
@@ -187,38 +71,6 @@ public class PhysicalResultBean {
             this.type = type;
         }
 
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getP_id() {
-            return p_id;
-        }
-
-        public void setP_id(String p_id) {
-            this.p_id = p_id;
-        }
-
-        public String getUser_id() {
-            return user_id;
-        }
-
-        public void setUser_id(String user_id) {
-            this.user_id = user_id;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
         public String getName() {
             return name;
         }
@@ -227,68 +79,44 @@ public class PhysicalResultBean {
             this.name = name;
         }
 
-        public String getThumb() {
-            return thumb;
+        public String getCompany() {
+            return company;
         }
 
-        public void setThumb(String thumb) {
-            this.thumb = thumb;
+        public void setCompany(String company) {
+            this.company = company;
         }
 
-        public String getThumbqq() {
-            return thumbqq;
+        public String getPurpose() {
+            return purpose;
         }
 
-        public void setThumbqq(String thumbqq) {
-            this.thumbqq = thumbqq;
+        public void setPurpose(String purpose) {
+            this.purpose = purpose;
         }
 
-        public String getSex() {
-            return sex;
+        public String getStandard() {
+            return standard;
         }
 
-        public void setSex(String sex) {
-            this.sex = sex;
+        public void setStandard(String standard) {
+            this.standard = standard;
         }
 
-        public String getMobile_province() {
-            return mobile_province;
+        public String getColor() {
+            return color;
         }
 
-        public void setMobile_province(String mobile_province) {
-            this.mobile_province = mobile_province;
+        public void setColor(String color) {
+            this.color = color;
         }
 
-        public String getIs_pass() {
-            return is_pass;
+        public String getRemark() {
+            return remark;
         }
 
-        public void setIs_pass(String is_pass) {
-            this.is_pass = is_pass;
-        }
-
-        public List<String> getQQImage() {
-            return QQImage;
-        }
-
-        public void setQQImage(List<String> QQImage) {
-            this.QQImage = QQImage;
-        }
-
-//        public List<String> getIphone_list() {
-//            return Iphone_list;
-//        }
-//
-//        public void setIphone_list(List<String> Iphone_list) {
-//            this.Iphone_list = Iphone_list;
-//        }
-
-        public List<String> getQQName_Number() {
-            return QQName_Number;
-        }
-
-        public void setQQName_Number(List<String> QQName_Number) {
-            this.QQName_Number = QQName_Number;
+        public void setRemark(String remark) {
+            this.remark = remark;
         }
     }
 }

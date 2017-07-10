@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.supdem.Beans.PhysicalResultBean;
 
 import java.util.List;
 
@@ -19,14 +20,16 @@ import java.util.List;
  */
 public class Physical_Property_Adapter extends BaseAdapter {
     Context context;
-    List<String> list;
-    public Physical_Property_Adapter(Context context, List<String>list){
-        this.context=context;
-        this.list=list;
+    List<PhysicalResultBean.DataBean> list;
+
+    public Physical_Property_Adapter(Context context, List<PhysicalResultBean.DataBean> list) {
+        this.context = context;
+        this.list = list;
     }
+
     @Override
     public int getCount() {
-        if (list!=null)
+        if (list != null)
             return list.size();
         return 5;
     }
@@ -44,22 +47,25 @@ public class Physical_Property_Adapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder = null;
-        if(convertView==null){
-            viewHolder=new viewHolder();
-            convertView= LayoutInflater.from(context).inflate(R.layout.physical_property_item_layout,null,false);
-            viewHolder.variety= (TextView) convertView.findViewById(R.id.physical_variety);
-            viewHolder.mark= (TextView) convertView.findViewById(R.id.physical_mark);
-            viewHolder.maker= (TextView) convertView.findViewById(R.id.physical_maker);
-            viewHolder.content= (TextView) convertView.findViewById(R.id.physical_content);
+        if (convertView == null) {
+            viewHolder = new viewHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.physical_property_item_layout, null, false);
+            viewHolder.variety = (TextView) convertView.findViewById(R.id.physical_variety);
+            viewHolder.mark = (TextView) convertView.findViewById(R.id.physical_mark);
+            viewHolder.maker = (TextView) convertView.findViewById(R.id.physical_maker);
+            viewHolder.content = (TextView) convertView.findViewById(R.id.physical_content);
             convertView.setTag(viewHolder);
-        }else {
-            viewHolder=(viewHolder)convertView.getTag();
+        } else {
+            viewHolder = (viewHolder) convertView.getTag();
         }
-           // viewHolder.name.setText(list.get(position));
+        viewHolder.variety.setText(list.get(position).getName());
+        viewHolder.mark.setText(list.get(position).getType());
+        viewHolder.maker.setText(list.get(position).getCompany());
+        viewHolder.content.setText(list.get(position).getPurpose());
         return convertView;
     }
 
-    class viewHolder{
-        TextView variety,mark,maker,content;
+    class viewHolder {
+        TextView variety, mark, maker, content;
     }
 }

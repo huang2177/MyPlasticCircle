@@ -156,6 +156,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     break;
                 case R.id.supdem_qq_layout_wx:
                     Intent intent = new Intent(this, Physical_Property_Activity.class);
+                    intent.putExtra("plastic_number", getIntent().getStringExtra("plastic_number"));
                     startActivity(intent);
                     break;
                 case R.id.supdem_qq_layout_tell:
