@@ -77,10 +77,10 @@
             android:textSize="16.0sp" />
 
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:background="@color/color_litlegray"></View>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="4px"-->
+        <!--android:background="@color/color_litlegray"></View>-->
     <ListView
         android:layout_margin="5dp"
         android:id="@+id/physical_listview"

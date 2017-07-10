@@ -183,7 +183,7 @@
             android:name="com.myplas.q.supdem.activity.Physical_Property_Activity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.supdem.activity.Physical_Property_Detail_Activity"
+            android:name="com.myplas.q.supdem.activity.Physical_Detail_Activity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity"

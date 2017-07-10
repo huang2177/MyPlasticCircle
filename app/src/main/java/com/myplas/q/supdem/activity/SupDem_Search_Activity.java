@@ -31,6 +31,7 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.beans.SelectableBean;
 import com.myplas.q.supdem.Beans.HistoryBean;
+import com.myplas.q.supdem.Beans.SearchNoResultBean;
 import com.myplas.q.supdem.Beans.SearchResultBean;
 import com.myplas.q.supdem.Beans.TabCofigBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
@@ -268,9 +269,9 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     frameLayout.setVisibility(View.GONE);
                     search_result_linear_no.setVisibility(View.VISIBLE);
                     textView_no.setText("抱歉，未能找到相关搜索！");
-//                    historyBean = gson.fromJson(object.toString(), HistoryBean.class);
-//                    adapter_grid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
-//                    gridview_subcribe_no.setAdapter(adapter_grid);
+                    SearchNoResultBean bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
+                    adapter_grid = new SupDem_Search_Grid_Adapter(this, bean.getCombine());
+                    gridview_subcribe_no.setAdapter(adapter_grid);
                 }
             }
             if (type == 3 && err) {

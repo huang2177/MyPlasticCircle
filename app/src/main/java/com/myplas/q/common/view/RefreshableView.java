@@ -167,6 +167,7 @@ public class RefreshableView extends LinearLayout {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		Log.d(TAG, "[onTouchEvent]ev action: " + event.getAction());
+		refreshHeaderView.setVisibility(VISIBLE);
 			switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     downY = event.getY();

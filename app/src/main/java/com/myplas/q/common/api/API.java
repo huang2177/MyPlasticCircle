@@ -181,8 +181,8 @@ public class API {
     public final static String DEL_SEARCH_RECORD = "releaseMsg/delSearchRecord";
     //搜塑料app接口22
     public final static String PLASTIC_SEARCH_DETAIL = "releaseMsg/plasticSearchDetail";
-//    //物性表查询列表
-//    public final static String PHYSICAL_SEARCH = "releaseMsg/physicalSearch";
+    //物性表查询详情
+    public final static String PHYSICAL_DETAIL = "releaseMsg/physicalDetail";
 
 
     /*toutiao*/

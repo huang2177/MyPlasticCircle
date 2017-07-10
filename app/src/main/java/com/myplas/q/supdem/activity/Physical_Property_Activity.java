@@ -13,8 +13,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.myinfo.beans.PersonSupplyDemadBean;
-import com.myplas.q.supdem.Beans.PhysicalResultBean;
+import com.myplas.q.supdem.Beans.PhysicalBean;
 import com.myplas.q.supdem.adapter.Physical_Property_Adapter;
 
 import org.json.JSONObject;
@@ -22,8 +21,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.umeng.analytics.pro.x.P;
 
 /**
  * 编写：黄双
@@ -33,7 +30,7 @@ import static com.umeng.analytics.pro.x.P;
 
 public class Physical_Property_Activity extends BaseActivity implements ResultCallBack {
     private ListView listView;
-    private List<PhysicalResultBean.DataBean> list;
+    private List<PhysicalBean.DataBean> list;
     private Physical_Property_Adapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,11 +42,11 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(Physical_Property_Activity.this,Physical_Property_Detail_Activity.class);
+                Intent intent=new Intent(Physical_Property_Activity.this,Physical_Detail_Activity.class);
+                intent.putExtra("lid",list.get(position).getLid());
                 startActivity(intent);
             }
         });
-
         getPhysical_Search();
     }
 
@@ -66,7 +63,7 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
             Log.e("------->", object.toString());
             if (new JSONObject(object.toString()).getString("err").equals("0")) {
                 Gson gson = new Gson();
-                PhysicalResultBean bean = gson.fromJson(object.toString(), PhysicalResultBean.class);
+                PhysicalBean bean = gson.fromJson(object.toString(), PhysicalBean.class);
                 list = bean.getData();
                 adapter = new Physical_Property_Adapter(this, list);
                 listView.setAdapter(adapter);

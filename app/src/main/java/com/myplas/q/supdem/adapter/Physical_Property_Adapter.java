@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.supdem.Beans.PhysicalResultBean;
+import com.myplas.q.supdem.Beans.PhysicalBean;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class Physical_Property_Adapter extends BaseAdapter {
     Context context;
-    List<PhysicalResultBean.DataBean> list;
+    List<PhysicalBean.DataBean> list;
 
-    public Physical_Property_Adapter(Context context, List<PhysicalResultBean.DataBean> list) {
+    public Physical_Property_Adapter(Context context, List<PhysicalBean.DataBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -61,7 +61,7 @@ public class Physical_Property_Adapter extends BaseAdapter {
         viewHolder.variety.setText(list.get(position).getName());
         viewHolder.mark.setText(list.get(position).getType());
         viewHolder.maker.setText(list.get(position).getCompany());
-        viewHolder.content.setText(list.get(position).getPurpose());
+        viewHolder.content.setText("特性备注:"+list.get(position).getRemark());
         return convertView;
     }
 

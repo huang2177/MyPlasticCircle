@@ -61,11 +61,12 @@
         android:id="@+id/physical_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
         android:layout_below="@+id/physical_result_linear"
-        android:maxLines="2" />
+        android:maxLines="2"
+        android:ellipsize="end"/>
 
     <ImageView
         android:layout_width="wrap_content"

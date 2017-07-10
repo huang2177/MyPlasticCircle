@@ -259,10 +259,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exit();
-            return true;
+            if (!fragment_txl.onKeyDown()) {
+                exit();
+                return true;
+            }else {
+                return fragment_txl.onKeyDown();
+            }
+        }else {
+            return super.onKeyDown(keyCode, event);
         }
-        return super.onKeyDown(keyCode, event);
     }
 
     public void exit() {

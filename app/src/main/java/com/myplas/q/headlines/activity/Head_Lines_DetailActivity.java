@@ -1,11 +1,15 @@
 package com.myplas.q.headlines.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.guide.activity.ShareActivity;
@@ -32,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.R.attr.width;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
@@ -41,7 +48,8 @@ import java.util.Map;
 public class Head_Lines_DetailActivity extends BaseActivity implements ResultCallBack, View.OnClickListener {
     private WebView webView;
     private MyListview listview;
-    private  Resources resources;
+    private Resources resources;
+    private WebSettings webSettings;
     private SharedUtils sharedUtils;
     private LinearLayout linearLayout_share;
     private SucribleDetailBean sucribleDetailBean;
@@ -58,10 +66,10 @@ public class Head_Lines_DetailActivity extends BaseActivity implements ResultCal
         setContentView(R.layout.layout_topline_detail_activity);
         goBack(findViewById(R.id.img_back));
 
-        resources=getResources();
+        resources = getResources();
         sharedUtils = SharedUtils.getSharedUtils();
 
-        webView =  F(R.id.find_detail_text);
+        webView = F(R.id.find_detail_text);
         textView_content = F(R.id.hot_search);
         imageView_btn_last = F(R.id.btn_last);
         imageView_btn_next = F(R.id.btn_next);
@@ -97,11 +105,28 @@ public class Head_Lines_DetailActivity extends BaseActivity implements ResultCal
         linearLayout_share.setOnClickListener(this);
 
         textView_title.setText(getIntent().getStringExtra("title"));
-        //支持javascript  
-        webView.getSettings().setJavaScriptEnabled(true);
-        //如果不设置WebViewClient，请求会跳转系统浏览器  
+
+        webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDefaultTextEncodingName("UTF-8");
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webView.setWebViewClient(new WebViewClient());
-        getNetData(getIntent().getStringExtra("id"));
+
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        if (width > 650) {
+            webView.setInitialScale(250);
+        } else if (width > 520) {
+            webView.setInitialScale(200);
+        } else if (width > 450) {
+            webView.setInitialScale(180);
+        } else if (width > 300) {
+            webView.setInitialScale(160);
+        } else {
+            webView.setInitialScale(140);
+        }
+        webView.setWebViewClient(new WebViewClient());
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -110,16 +135,14 @@ public class Head_Lines_DetailActivity extends BaseActivity implements ResultCal
         });
 
         firstInto();
-    }
-    public <T extends View> T F(int id) {
-        return (T) findViewById(id);
+        getNetData(getIntent().getStringExtra("id"));
     }
 
     public void getNetData(String id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", id);
         map.put("token", sharedUtils.getData(this, "token"));
-        new BaseActivity().postAsyn(this, API.BASEURL + API.GET_DETAIL_INFO, map, this, 1);
+        BaseActivity.postAsyn(this, API.BASEURL + API.GET_DETAIL_INFO, map, this, 1);
     }
 
     @Override
@@ -131,8 +154,11 @@ public class Head_Lines_DetailActivity extends BaseActivity implements ResultCal
             textView_shj.setText(Html.fromHtml("作者：" + sucribleDetailBean.getInfo().getAuthor()
                     + "    阅读数量：" + "<font color='#FF5000'>" + sucribleDetailBean.getInfo().getPv() + "</font>"
                     + "    发布时间：" + sucribleDetailBean.getInfo().getInput_time()));
+
             String html = sucribleDetailBean.getInfo().getContent();
-            webView.loadDataWithBaseURL(null, html, "textselecthandle/html", "UTF-8", null);
+            webView.loadData(html, "text/html;charset=UTF-8", null);
+            //webView.loadDataWithBaseURL(null, html, "textselecthandle/html", "UTF-8", null);
+
             List<SucribleDetailBean.InfoBean.SubscribeBean> l = sucribleDetailBean.getInfo().getSubscribe();
             if (l != null) {
                 textView_content.setVisibility(View.VISIBLE);
@@ -210,13 +236,14 @@ public class Head_Lines_DetailActivity extends BaseActivity implements ResultCal
                 break;
         }
     }
-    public void firstInto(){
+
+    public void firstInto() {
         clearColor();
         imageView_fx.setImageResource(R.drawable.tabbar_headlines_hl);
         textView_fx.setTextColor(resources.getColor(R.color.color_red));
     }
 
-    public  void clearColor() {
+    public void clearColor() {
         imageView_wd.setImageResource(R.drawable.tabbar_me);
         imageView_gq.setImageResource(R.drawable.tabbar_trade);
         imageView_fx.setImageResource(R.drawable.tabbar_headlines);
@@ -227,6 +254,7 @@ public class Head_Lines_DetailActivity extends BaseActivity implements ResultCal
         textView_txl.setTextColor(resources.getColor(R.color.color_gray));
         textView_gq.setTextColor(resources.getColor(R.color.color_gray));
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {

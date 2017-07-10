@@ -26,7 +26,6 @@ import com.myplas.q.R;
 
 
 public class XListView extends ListView implements OnScrollListener {
-
 	private float mLastY = -1; // save event y
 	private Scroller mScroller; // used for scroll back
 	private OnScrollListener mScrollListener; // user's scroll listener
@@ -77,27 +76,17 @@ public class XListView extends ListView implements OnScrollListener {
 	}
 	private void initWithContext(Context context) {
 		mScroller = new Scroller(context, new DecelerateInterpolator());
-		// XListView need the scroll event, and it will dispatch the event to
-		// user's listener (as a proxy).
 		super.setOnScrollListener(this);
-		// init header view
 		mHeaderView = new XListViewHeader(context);
-		mHeaderViewContent = (RelativeLayout) mHeaderView
-				.findViewById(R.id.xlistview_header_content);
-		mHeaderTimeView = (TextView) mHeaderView
-				.findViewById(R.id.xlistview_header_time);
+		mHeaderViewContent = (RelativeLayout) mHeaderView.findViewById(R.id.xlistview_header_content);
+		mHeaderTimeView = (TextView) mHeaderView.findViewById(R.id.xlistview_header_time);
 		addHeaderView(mHeaderView);
-		// init footer view
-		//mFooterView = new XListViewFooter(context);
-
-		// init header height
 		mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
 					@Override
 					public void onGlobalLayout() {
 						mHeaderViewHeight = mHeaderViewContent.getHeight();
-						getViewTreeObserver()
-								.removeGlobalOnLayoutListener(this);
+						getViewTreeObserver().removeGlobalOnLayoutListener(this);
 					}
 				});
 	}
@@ -131,19 +120,8 @@ public class XListView extends ListView implements OnScrollListener {
 	public void setPullLoadEnable(boolean enable) {
 		mEnablePullLoad = enable;
 		if (!mEnablePullLoad) {
-//			mFooterView.hide();
-//			mFooterView.setOnClickListener(null);
 		} else {
 			mPullLoading = false;
-//			mFooterView.show();
-//			mFooterView.setState(XListViewFooter.STATE_NORMAL);
-//			// both "pull up" and "click" will invoke load more.
-//			mFooterView.setOnClickListener(new OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					startLoadMore();
-//				}
-//			});
 		}
 	}
 	/**
@@ -211,40 +189,9 @@ public class XListView extends ListView implements OnScrollListener {
 		mScrollBack = SCROLLBACK_HEADER;
 		mScroller.startScroll(0, height, 0, finalHeight - height,
 				SCROLL_DURATION);
-		// trigger computeScroll
 		invalidate();
 	}
 
-//	private void updateFooterHeight(float delta) {
-//		int height = mFooterView.getBottomMargin() + (int) delta;
-//		if (mEnablePullLoad && !mPullLoading) {
-//			if (height > PULL_LOAD_MORE_DELTA) { // height enough to invoke load
-//													// more.
-//				mFooterView.setState(XListViewFooter.STATE_READY);
-//			} else {
-//				mFooterView.setState(XListViewFooter.STATE_NORMAL);
-//			}
-//		}
-//		mFooterView.setBottomMargin(height);
-//
-////		setSelection(mTotalItemCount - date_selected); // scroll to bottom
-//	}
-//	private void resetFooterHeight() {
-//		int bottomMargin = mFooterView.getBottomMargin();
-//		if (bottomMargin > 0) {
-//			mScrollBack = SCROLLBACK_FOOTER;
-//			mScroller.startScroll(0, bottomMargin, 0, -bottomMargin,
-//					SCROLL_DURATION);
-//			invalidate();
-//		}
-//	}
-//	private void startLoadMore() {
-//		mPullLoading = true;
-//		mFooterView.setState(XListViewFooter.STATE_LOADING);
-//		if (mListViewListener != null) {
-//			mListViewListener.onLoadMore();
-//		}
-//	}
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
 		if (mLastY == -1) {
@@ -263,11 +210,6 @@ public class XListView extends ListView implements OnScrollListener {
                     updateHeaderHeight(deltaY / OFFSET_RADIO);
                     invokeOnScrolling();
                 }
-//                else if (getLastVisiblePosition() == mTotalItemCount - 1
-//                        && (mFooterView.getBottomMargin() > 0 || deltaY < 0)) {
-//                    // last item, already pulled up or want to pull up.
-//                    updateFooterHeight(-deltaY / OFFSET_RADIO);
-//                }
                 break;
             default:
                 mLastY = -1; // reset
@@ -284,11 +226,6 @@ public class XListView extends ListView implements OnScrollListener {
                     resetHeaderHeight();
                 } else if (getLastVisiblePosition() == mTotalItemCount - 1) {
                     // invoke load more.
-//                    if (mEnablePullLoad
-//                            && mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
-//                        startLoadMore();
-//                    }
-//                    resetFooterHeight();
                 }
                 break;
             }

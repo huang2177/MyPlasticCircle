@@ -8,7 +8,7 @@ import java.util.List;
  * 时间： 2017/6/291724.
  */
 
-public class PhysicalResultBean {
+public class PhysicalBean {
 
     /**
      * err : 0

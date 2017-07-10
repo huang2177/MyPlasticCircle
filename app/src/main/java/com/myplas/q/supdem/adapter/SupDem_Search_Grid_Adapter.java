@@ -21,7 +21,7 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/19 14:55
  */
-public class SupDem_Search_Grid_Adapter extends BaseAdapter implements ResultCallBack{
+public class SupDem_Search_Grid_Adapter extends BaseAdapter {
     Context context;
     List<String> list;
 
@@ -67,17 +67,5 @@ public class SupDem_Search_Grid_Adapter extends BaseAdapter implements ResultCal
     }
     class viewHolder {
         TextView textView;
-    }
-
-    @Override
-    public void callBack(Object object, int type) {
-        try {
-            String err = new JSONObject(object.toString()).getString("err");
-        } catch (JSONException e) {
-        }
-    }
-    @Override
-    public void failCallBack(int type) {
-
     }
 }
