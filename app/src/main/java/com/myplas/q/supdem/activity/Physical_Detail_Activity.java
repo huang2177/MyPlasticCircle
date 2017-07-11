@@ -137,6 +137,7 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
     @Override
     public void failCallBack(int type) {
 
+
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
