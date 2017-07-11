@@ -33,6 +33,7 @@
         <LinearLayout
             android:id="@+id/share_physical"
             android:layout_width="40dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_gravity="right">
 

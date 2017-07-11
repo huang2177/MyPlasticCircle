@@ -61,7 +61,7 @@ public class Physical_Property_Adapter extends BaseAdapter {
         viewHolder.variety.setText(list.get(position).getName());
         viewHolder.mark.setText(list.get(position).getType());
         viewHolder.maker.setText(list.get(position).getCompany());
-        viewHolder.content.setText("特性备注:"+list.get(position).getRemark());
+        viewHolder.content.setText("特性备注:" + list.get(position).getStandard());
         return convertView;
     }
 

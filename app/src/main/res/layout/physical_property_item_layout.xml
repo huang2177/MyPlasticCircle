@@ -17,7 +17,7 @@
                 android:layout_width="70dp"
                 android:singleLine="true"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="7000F"
                 android:paddingLeft="5dp"
                 android:textSize="16.0sp" />

@@ -76,6 +76,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private String level[];
     private boolean isRefresh;
     private HistoryBean historyBean;
+    private SearchNoResultBean bean;
     private List<SearchResultBean.ListBean> list;
     private SupDem_Search_Grid_Adapter adapter_grid;
     private SupDem_Search_List_Adapter adapter_list;
@@ -123,6 +124,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         listView.setOnItemClickListener(this);
         gridview_history.setOnItemClickListener(this);
         gridview_subcribe.setOnItemClickListener(this);
+        gridview_subcribe_no.setOnItemClickListener(this);
+        editText.setHintTextColor(getResources().getColor(R.color.color_litlegray));
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item);
@@ -138,10 +141,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 is_buy = level[position];
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
@@ -149,7 +150,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     //获取历史搜索
     public void getSearch_Record() {
         Map map = new HashMap();
-        map.put("keywords", editText.getText().toString());
+        map.put("keywords", "");
         postAsyn(this, API.BASEURL + API.SEARCH_RECORD, map, this, 1);
     }
     //查询
@@ -182,6 +183,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.supplydemand_btn_search:
+                isRefresh = true;
                 keywords = editText.getText().toString();
                 getPhysical_Search(keywords, time, is_buy, area);
                 break;
@@ -205,12 +207,16 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
-            case R.id.mygrid_search_history:
+            case R.id.mygrid_search_history://历史搜索
                 keywords = historyBean.getHistory().get(position);
                 getPhysical_Search(keywords, time, is_buy, area);
                 break;
-            case R.id.mygrid_search_subcribe:
-                keywords = historyBean.getHistory().get(position);
+            case R.id.mygrid_search_subcribe://猜你所想
+                keywords = historyBean.getRecommend().get(position);
+                getPhysical_Search(keywords, time, is_buy, area);
+                break;
+            case R.id.mygrid_search_null://相关搜索
+                keywords = bean.getCombine().get(position);
                 getPhysical_Search(keywords, time, is_buy, area);
                 break;
             case R.id.search_listview_result:
@@ -245,14 +251,13 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             Gson gson = new Gson();
             boolean err = new JSONObject(object.toString()).getString("err").equals("0");
             if (type == 1 && err) {
-                Log.e("----->11", object.toString());
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 adapter_grid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
                 gridview_history.setAdapter(adapter_grid);
-                gridview_subcribe.setAdapter(adapter_grid);
+                SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
+                gridview_subcribe.setAdapter(adapter_grid1);
             }
             if (type == 2) {
-                Log.e("----->22", object.toString());
                 search_default_linear.setVisibility(View.GONE);
                 search_result_linear.setVisibility(View.VISIBLE);
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -269,13 +274,12 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     frameLayout.setVisibility(View.GONE);
                     search_result_linear_no.setVisibility(View.VISIBLE);
                     textView_no.setText("抱歉，未能找到相关搜索！");
-                    SearchNoResultBean bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
+                    bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
                     adapter_grid = new SupDem_Search_Grid_Adapter(this, bean.getCombine());
                     gridview_subcribe_no.setAdapter(adapter_grid);
                 }
             }
             if (type == 3 && err) {
-                Log.e("----->33", object.toString());
                 TabCofigBean bean = gson.fromJson(object.toString(), TabCofigBean.class);
                 list_area = bean.getData().getArea().getData();
                 list_time = bean.getData().getTime().getData();
@@ -296,7 +300,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 }
             }
             if (type == 4 && err) {
-                Log.e("----->44", object.toString());
                 TextUtils.Toast(this, "删除成功！");
                 adapter_grid = new SupDem_Search_Grid_Adapter(this, null);
                 gridview_history.setAdapter(adapter_grid);

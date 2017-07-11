@@ -214,19 +214,10 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
             Gson gson = new Gson();
             boolean err = new JSONObject(object.toString()).getString("err").equals("0");
             if (type == 1 && err) {
-                Log.e("------>", object.toString());
                 SearchResultDetailBean bean = gson.fromJson(object.toString(), SearchResultDetailBean.class);
                 detailBean = bean.getData();
                 showInfo(detailBean);
             }
-            if (type == 2 && new JSONObject(object.toString()).getString("err").equals("0")) {
-
-            }
-            //出价消息的结果
-            if (type == 3 && new JSONObject(object.toString()).getString("err").equals("0")) {
-
-            }
-
         } catch (Exception e) {
         }
     }

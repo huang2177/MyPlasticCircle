@@ -28,8 +28,7 @@
             android:maxLines="2"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:singleLine="true"
-            android:textSize="15.0sp" />
+            android:textSize="14.0sp" />
 
         <TextView
             android:id="@+id/fx_tt_title_author"

@@ -66,10 +66,14 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
             viewHolder = (viewHolder) convertView.getTag();
         }
         viewHolder.textView_title.setText(list.get(position).getCompany());
+        String forward = (list.get(position).getType().equals("9")) ?
+                (list.get(position).getISForward()) :
+                ((list.get(position).getISForward().equals("1")) ? ("现货") : ("期货"));
         viewHolder.textView_content.setText("货物位置:"+list.get(position).getGoodssPosition()+
                 "  牌号:"+list.get(position).getPlsticNumber()+
                 "  产地:"+list.get(position).getProduction()+
-                "  "+list.get(position).getISForward());
+                "  价格:" + list.get(position).getPrice() +
+                "  " + forward);
         viewHolder.textView_time.setText((list.get(position).getType().equals("9"))?
                 ("来自QQ群  "+list.get(position).getUpdateTime()):
                 ("来自供求  "+list.get(position).getUpdateTime()));

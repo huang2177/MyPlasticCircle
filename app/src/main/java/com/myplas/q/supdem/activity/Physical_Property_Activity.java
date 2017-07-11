@@ -60,7 +60,6 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("------->", object.toString());
             if (new JSONObject(object.toString()).getString("err").equals("0")) {
                 Gson gson = new Gson();
                 PhysicalBean bean = gson.fromJson(object.toString(), PhysicalBean.class);

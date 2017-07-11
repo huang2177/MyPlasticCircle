@@ -12,7 +12,7 @@ public class SearchResultDetailBean {
 
     /**
      * err : 0
-     * data : {"Company":"广州金信塑业有限公司","Production":"P-泰国PTT","ISForward":"现货","Price":"9700","PlsticNumber":"7000F","QQName":"广州金信塑业-陈荣基","QQNumber":"1789051421","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1789051421&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","Isbuy":"0","GoodssPosition":"广州","ShowInformation":[{"id":"29795","title":"齐鲁石化HDPE装置停车","cate_name":"装置动态"},{"id":"29821","title":"上游早报：原油及PVC单体5月2日收盘价格","cate_name":"上游动态"},{"id":"29820","title":"早盘预测：国际油价下跌  塑料市场如何应对？","cate_name":"早提示"}],"FriendSearch":[{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"IphoneList":[{"Iphone":"13502966902","UserName":"黄恒达"},{"Iphone":"13570048089","UserName":"陈R"},{"Iphone":"13660045662","UserName":"刘莉"},{"Iphone":"13825035682","UserName":"陈荣基"},{"Iphone":"13826196041","UserName":"许梓龙"}],"PlasticPhysicalTable":""}
+     * data : {"Company":"广东金柏能新材料有限公司","Production":"P-伊朗石化(火炬)","ISForward":"现货","Price":"0","PlsticNumber":"7000F","QQName":"金柏能 林晓君","QQNumber":"852049434","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=852049434&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","Isbuy":"0","GoodssPosition":"上海","ShowInformation":[{"id":"29795","title":"齐鲁石化HDPE装置停车","cate_name":"装置动态"},{"id":"29821","title":"上游早报：原油及PVC单体5月2日收盘价格","cate_name":"上游动态"},false],"FriendSearch":[{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"IphoneList":[{"Iphone":"13502944480","UserName":"刘旭春"},{"Iphone":"13502977802","UserName":"佘松鑫"},{"Iphone":"13592821215","UserName":"许华泳"},{"Iphone":"13592862198","UserName":"林晓君"}],"PlasticPhysicalTable":""}
      */
 
     private int err;
@@ -36,19 +36,19 @@ public class SearchResultDetailBean {
 
     public static class DataBean {
         /**
-         * Company : 广州金信塑业有限公司
-         * Production : P-泰国PTT
+         * Company : 广东金柏能新材料有限公司
+         * Production : P-伊朗石化(火炬)
          * ISForward : 现货
-         * Price : 9700
+         * Price : 0
          * PlsticNumber : 7000F
-         * QQName : 广州金信塑业-陈荣基
-         * QQNumber : 1789051421
-         * QQImage : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1789051421&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
+         * QQName : 金柏能 林晓君
+         * QQNumber : 852049434
+         * QQImage : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=852049434&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
          * Isbuy : 0
-         * GoodssPosition : 广州
-         * ShowInformation : [{"id":"29795","title":"齐鲁石化HDPE装置停车","cate_name":"装置动态"},{"id":"29821","title":"上游早报：原油及PVC单体5月2日收盘价格","cate_name":"上游动态"},{"id":"29820","title":"早盘预测：国际油价下跌  塑料市场如何应对？","cate_name":"早提示"}]
+         * GoodssPosition : 上海
+         * ShowInformation : [{"id":"29795","title":"齐鲁石化HDPE装置停车","cate_name":"装置动态"},{"id":"29821","title":"上游早报：原油及PVC单体5月2日收盘价格","cate_name":"上游动态"},false]
          * FriendSearch : [{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}]
-         * IphoneList : [{"Iphone":"13502966902","UserName":"黄恒达"},{"Iphone":"13570048089","UserName":"陈R"},{"Iphone":"13660045662","UserName":"刘莉"},{"Iphone":"13825035682","UserName":"陈荣基"},{"Iphone":"13826196041","UserName":"许梓龙"}]
+         * IphoneList : [{"Iphone":"13502944480","UserName":"刘旭春"},{"Iphone":"13502977802","UserName":"佘松鑫"},{"Iphone":"13592821215","UserName":"许华泳"},{"Iphone":"13592862198","UserName":"林晓君"}]
          * PlasticPhysicalTable :
          */
 
@@ -263,8 +263,8 @@ public class SearchResultDetailBean {
 
         public static class IphoneListBean {
             /**
-             * Iphone : 13502966902
-             * UserName : 黄恒达
+             * Iphone : 13502944480
+             * UserName : 刘旭春
              */
 
             private String Iphone;

@@ -18,7 +18,7 @@ public class HistoryBean {
 
     private int err;
     private List<String> history;
-    private List<?> recommend;
+    private List<String> recommend;
 
     public int getErr() {
         return err;
@@ -36,11 +36,11 @@ public class HistoryBean {
         this.history = history;
     }
 
-    public List<?> getRecommend() {
+    public List<String> getRecommend() {
         return recommend;
     }
 
-    public void setRecommend(List<?> recommend) {
+    public void setRecommend(List<String> recommend) {
         this.recommend = recommend;
     }
 }

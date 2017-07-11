@@ -89,6 +89,7 @@
                         android:layout_gravity="center_vertical"
                         android:singleLine="true"
                         android:ellipsize="end"
+                        android:maxLength="13"
                         android:textColor="@color/color_blue"
                         android:textSize="15.0sp" />
 

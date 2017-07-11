@@ -103,7 +103,6 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("------->", object.toString());
             if (new JSONObject(object.toString()).getString("err").equals("0")) {
                 Gson gson = new Gson();
                 PhysicalDetailBean bean = gson.fromJson(object.toString(), PhysicalDetailBean.class);
@@ -132,7 +131,7 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
                 "</style>\n" +
                 "<div id=\"wxbTable\">" + bean.getParams() + "</div>";
         webView.loadData(html, "text/html;charset=UTF-8", null);
-//        webView.loadDataWithBaseURL(null, html, "textselecthandle/html", "UTF-8", null);
+//      webView.loadDataWithBaseURL(null, html, "textselecthandle/html", "UTF-8", null);
     }
 
     @Override
