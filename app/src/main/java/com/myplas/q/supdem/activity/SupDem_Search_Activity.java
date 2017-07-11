@@ -73,7 +73,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private LinearLayout search_default_linear, search_result_linear, search_result_linear_no;
 
     private Handler handler;
-    private String level[];
+    private String level[],level1[];
     private boolean isRefresh;
     private HistoryBean historyBean;
     private SearchNoResultBean bean;
@@ -83,7 +83,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> list_area;
     private List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> list_time;
 
-    private String keywords = "7000f", is_buy = "2", area, time;
+    private String keywords = "7000f", is_buy = "1", area, time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +129,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item);
-        level = new String[]{"全部", "供给", "求购"};//资源文件
+        level = new String[]{"供给", "求购"};//资源文件
+        level1 = new String[]{"1", "0"};//资源文件
         for (int i = 0; i < level.length; i++) {
             adapter.add(level[i]);
         }
@@ -139,14 +140,13 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                is_buy = level[position];
+                is_buy = level1[position];
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
-
     //获取历史搜索
     public void getSearch_Record() {
         Map map = new HashMap();

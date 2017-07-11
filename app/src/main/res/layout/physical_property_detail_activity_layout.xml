@@ -62,7 +62,7 @@
 
                 <TextView
                     android:id="@+id/physical_detail_variety"
-                    android:layout_width="70dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:padding="5dp"
@@ -78,7 +78,7 @@
 
                 <TextView
                     android:id="@+id/physical_detail_remark"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"

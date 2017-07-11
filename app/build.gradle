@@ -11,7 +11,7 @@ android {
         }
     }
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '25.0.3'
     defaultConfig {
         applicationId "com.myplas.q"
         minSdkVersion 15

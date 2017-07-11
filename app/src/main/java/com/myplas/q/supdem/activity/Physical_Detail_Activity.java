@@ -113,8 +113,8 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
     }
 
     private void showInfo(PhysicalDetailBean bean) {
-        physical_variety.setText(bean.getName());
-        physical_remark.setText(bean.getType());
+        physical_variety.setText(bean.getType());
+        physical_remark.setText(bean.getName());
         physical_maker.setText("  " + bean.getCompany());
         physical_content.setText("特性备注：" + bean.getRemark());
 
