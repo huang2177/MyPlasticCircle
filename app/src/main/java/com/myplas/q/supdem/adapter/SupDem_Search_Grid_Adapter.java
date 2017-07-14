@@ -36,7 +36,7 @@ public class SupDem_Search_Grid_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list.size() != 0)
+        if (list != null)
             return list.size();
         return 0;
     }

@@ -20,7 +20,9 @@ import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.RoundImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.Head_Lines_DetailActivity;
+import com.myplas.q.supdem.Beans.PhysicalBean;
 import com.myplas.q.supdem.Beans.SearchResultDetailBean;
+import com.myplas.q.supdem.adapter.Physical_Property_Adapter;
 import com.myplas.q.supdem.adapter.SupDem_Search_QQ_Detail_Adapter;
 import com.umeng.analytics.MobclickAgent;
 
@@ -50,6 +52,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     private boolean isClicked1, isClicked2, isClicked3;
     private SupDem_Search_QQ_Detail_Adapter adapter;
     private SearchResultDetailBean.DataBean detailBean;
+    private PhysicalBean bean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +61,11 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         goBack(findViewById(R.id.back));
         initView();
         getSearch_Detail();
-
+        getPhysical_Search();
     }
 
     public void initView() {
-        isClicked1 = false;
+        isClicked1 = true;
         isClicked2 = false;
         isClicked3 = false;
 
@@ -108,27 +111,28 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH_DETAIL, map, this, 1);
     }
 
+    //获取物性列表数据
+    public void getPhysical_Search() {
+        Map map = new HashMap();
+        map.put("keywords", getIntent().getStringExtra("plastic_number"));
+        postAsyn(this, API.BASEURL + API.PHYSICAL_SEARCH, map, this, 2);
+    }
     @Override
     public void onClick(View v) {
-        if (detailBean == null) {
-            TextUtils.Toast(this, "没有相关数据！");
-            return;
-        }
         try {
             switch (v.getId()) {
                 case R.id.supdem_qq_layout_zx:
+                    if (detailBean.getShowInformation().size() == 0) {
+                        return;
+                    }
                     if (!isClicked1) {
                         isClicked1 = true;
                         img_zx.setImageResource(R.drawable.icon_more_hl);
-                        if (detailBean.getShowInformation().size() != 0) {
-                            listView_zx.setVisibility(View.VISIBLE);
-                            layout_zx_more.setVisibility(View.VISIBLE);
-                            adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
-                            adapter.setList_showinfo(detailBean.getShowInformation());
-                            listView_zx.setAdapter(adapter);
-                        } else {
-                            TextUtils.Toast(this, "没有相关数据！");
-                        }
+                        listView_zx.setVisibility(View.VISIBLE);
+                        layout_zx_more.setVisibility(View.VISIBLE);
+                        adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
+                        adapter.setList_showinfo(detailBean.getShowInformation());
+                        listView_zx.setAdapter(adapter);
                     } else {
                         isClicked1 = false;
                         listView_zx.setVisibility(View.GONE);
@@ -137,17 +141,17 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     break;
                 case R.id.supdem_qq_layout_find:
+                    if (detailBean.getFriendSearch().size() == 0) {
+                        TextUtils.Toast(this, "没有相关数据！");
+                        return;
+                    }
                     if (!isClicked2) {
                         isClicked2 = true;
                         img_find.setImageResource(R.drawable.icon_more_hl);
-                        if (detailBean.getFriendSearch().size() != 0) {
-                            listView_find.setVisibility(View.VISIBLE);
-                            adapter = new SupDem_Search_QQ_Detail_Adapter(this, 2);
-                            adapter.setList_friend(detailBean.getFriendSearch());
-                            listView_find.setAdapter(adapter);
-                        } else {
-                            TextUtils.Toast(this, "没有相关数据！");
-                        }
+                        listView_find.setVisibility(View.VISIBLE);
+                        adapter = new SupDem_Search_QQ_Detail_Adapter(this, 2);
+                        adapter.setList_friend(detailBean.getFriendSearch());
+                        listView_find.setAdapter(adapter);
                     } else {
                         isClicked2 = false;
                         listView_find.setVisibility(View.GONE);
@@ -155,23 +159,31 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     break;
                 case R.id.supdem_qq_layout_wx:
-                    Intent intent = new Intent(this, Physical_Property_Activity.class);
-                    intent.putExtra("plastic_number", getIntent().getStringExtra("plastic_number"));
-                    startActivity(intent);
+                    if (bean != null && bean.getData().size() == 1) {
+                        Intent intent = new Intent(this, Physical_Detail_Activity.class);
+                        intent.putExtra("lid", bean.getData().get(0).getLid());
+                        startActivity(intent);
+                    }
+                    if (bean != null && bean.getData().size() > 1) {
+                        Intent intent = new Intent(this, Physical_Property_Activity.class);
+                        intent.putExtra("plastic_number", getIntent().getStringExtra("plastic_number"));
+                        intent.putExtra("PhysicalBean", bean);
+                        startActivity(intent);
+                    }
                     break;
                 case R.id.supdem_qq_layout_tell:
+                    if (detailBean.getIphoneList().size() == 0) {
+                        TextUtils.Toast(this, "没有相关数据！");
+                        return;
+                    }
                     if (!isClicked3) {
                         isClicked3 = true;
                         img_tell.setImageResource(R.drawable.icon_more_hl);
-                        if (detailBean.getIphoneList().size() != 0) {
-                            listview_tell.setVisibility(View.VISIBLE);
-                            listview_tell.setSelection(layout_tell.getChildCount());
-                            adapter = new SupDem_Search_QQ_Detail_Adapter(this, 3);
-                            adapter.setList_phone(detailBean.getIphoneList());
-                            listview_tell.setAdapter(adapter);
-                        } else {
-                            TextUtils.Toast(this, "没有相关数据！");
-                        }
+                        listview_tell.setVisibility(View.VISIBLE);
+                        listview_tell.setSelection(layout_tell.getChildCount());
+                        adapter = new SupDem_Search_QQ_Detail_Adapter(this, 3);
+                        adapter.setList_phone(detailBean.getIphoneList());
+                        listview_tell.setAdapter(adapter);
                     } else {
                         isClicked3 = false;
                         listview_tell.setVisibility(View.GONE);
@@ -180,6 +192,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     break;
                 case R.id.supdem_qq_layout_zx_more:
                     SharedUtils.getSharedUtils().setBooloean(this, "fromsearch", true);
+                    SharedUtils.getSharedUtils().setData(this, "refreshdata", getIntent().getStringExtra("plastic_number"));
                     finish();
                     break;
             }
@@ -198,7 +211,6 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     startActivity(intent);
                     break;
                 case R.id.supdem_qq_listview_find:
-
                     break;
                 case R.id.supdem_qq_listview_tell:
                     call(detailBean.getIphoneList().get(position).getIphone());
@@ -217,6 +229,13 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                 SearchResultDetailBean bean = gson.fromJson(object.toString(), SearchResultDetailBean.class);
                 detailBean = bean.getData();
                 showInfo(detailBean);
+
+                adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
+                adapter.setList_showinfo(detailBean.getShowInformation());
+                listView_zx.setAdapter(adapter);
+            }
+            if (type == 2 && err) {
+                bean = gson.fromJson(object.toString(), PhysicalBean.class);
             }
         } catch (Exception e) {
         }

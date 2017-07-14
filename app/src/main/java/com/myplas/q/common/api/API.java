@@ -170,7 +170,7 @@ public class API {
     //获取我的供给或求购
     public final static String GET_MY_MSG = "releaseMsg/getMyMsg";
     //搜索记录查询
-    public final static String SEARCH_RECORD = "releaseMsg/searchRecord";
+    public final static String SEARCH_RECORD = "releaseMsg/SearchLog";
     //物性表查询列表
     public final static String PHYSICAL_SEARCH = "releaseMsg/physicalSearch";
     //搜塑料app接口

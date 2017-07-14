@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -21,8 +24,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.addresslist.fragment.Fragment_AddressList;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
@@ -51,6 +56,7 @@ import java.util.Map;
 import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
 import static com.umeng.analytics.pro.x.k;
 import static com.umeng.analytics.pro.x.o;
+import static com.umeng.analytics.pro.x.p;
 
 
 /**
@@ -73,10 +79,11 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private LinearLayout search_default_linear, search_result_linear, search_result_linear_no;
 
     private Handler handler;
-    private String level[],level1[];
     private boolean isRefresh;
-    private HistoryBean historyBean;
     private SearchNoResultBean bean;
+    private HistoryBean historyBean;
+    private String level[], level1[];
+    private TabCofigBean tabCofigBean;
     private List<SearchResultBean.ListBean> list;
     private SupDem_Search_Grid_Adapter adapter_grid;
     private SupDem_Search_List_Adapter adapter_list;
@@ -84,6 +91,9 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> list_time;
 
     private String keywords = "7000f", is_buy = "1", area, time;
+    private int page = 1, visibleItemCount;
+    private boolean hasMoerData = true;
+    private boolean spinnerSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +104,9 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         getSearch_Record();
         getTab_Config();
     }
-
     public void initView() {
         isRefresh = true;
+        list = new ArrayList<>();
         handler = new Handler();
         spinner = F(R.id.spinner_content);
         textView_hint = F(R.id.text_result);
@@ -125,7 +135,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         gridview_history.setOnItemClickListener(this);
         gridview_subcribe.setOnItemClickListener(this);
         gridview_subcribe_no.setOnItemClickListener(this);
-        editText.setHintTextColor(getResources().getColor(R.color.color_litlegray));
+        editText.setHintTextColor(getResources().getColor(R.color.color_gray));
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item);
@@ -140,25 +150,74 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                is_buy = level1[position];
+                if (spinnerSelected) {
+                    isRefresh = true;
+                    hasMoerData = true;
+                    is_buy = level1[position];
+                    keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+                    getPhysical_Search(1, keywords, time, is_buy, area);
+                } else {
+                    spinnerSelected = true;
+                }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        //edittext的回车监听
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+                if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
+                    isRefresh = true;
+                    hasMoerData = true;
+                    keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+                    getPhysical_Search(1, keywords, time, is_buy, area);
+                    return true;
+                }
+                return false;
+            }
+        });
+        //加载更多
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() > visibleItemCount) {
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
+                        Log.e("----", page + "");
+                        page++;
+                        if (hasMoerData) {
+                            getPhysical_Search(page, keywords, time, is_buy, area);
+                        } else {
+                            TextUtils.Toast(SupDem_Search_Activity.this, "没有更多数据了！");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                SupDem_Search_Activity.this.visibleItemCount = visibleItemCount;
+            }
+        });
     }
+
     //获取历史搜索
     public void getSearch_Record() {
         Map map = new HashMap();
         map.put("keywords", "");
         postAsyn(this, API.BASEURL + API.SEARCH_RECORD, map, this, 1);
     }
+
     //查询
-    public void getPhysical_Search(String keyWords, String time, String is_buy, String area) {
+    public void getPhysical_Search(int page, String keyWords, String time, String is_buy, String area) {
         Map map = new HashMap();
         map.put("keywords", keyWords);
-        map.put("page", "1");
-        map.put("size", "30");
+        map.put("page", page + "");
+        map.put("size", "10");
         map.put("time", time);
         map.put("is_buy", is_buy);
         map.put("is_futures", "0");
@@ -183,9 +242,11 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.supplydemand_btn_search:
+                page = 1;
                 isRefresh = true;
-                keywords = editText.getText().toString();
-                getPhysical_Search(keywords, time, is_buy, area);
+                hasMoerData = true;
+                keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+                getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.img_search_delete:
                 delSearch_Record();
@@ -198,6 +259,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 break;
         }
     }
+
     public void showPopou(int type, int resId) {
         PopouShowUtils popouShowUtils1 = new PopouShowUtils(this, resId, type, list_area, list_time);
         popouShowUtils1.showAsDropDown(findViewById(R.id.divider_result));
@@ -208,16 +270,28 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.mygrid_search_history://历史搜索
+                isRefresh = true;
+                hasMoerData = true;
                 keywords = historyBean.getHistory().get(position);
-                getPhysical_Search(keywords, time, is_buy, area);
+                editText.setText(keywords);
+                editText.setSelection(keywords.length());
+                getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.mygrid_search_subcribe://猜你所想
+                isRefresh = true;
+                hasMoerData = true;
                 keywords = historyBean.getRecommend().get(position);
-                getPhysical_Search(keywords, time, is_buy, area);
+                editText.setText(keywords);
+                editText.setSelection(keywords.length());
+                getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.mygrid_search_null://相关搜索
+                isRefresh = true;
+                hasMoerData = true;
                 keywords = bean.getCombine().get(position);
-                getPhysical_Search(keywords, time, is_buy, area);
+                editText.setText(keywords);
+                editText.setSelection(keywords.length());
+                getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.search_listview_result:
                 if (list.get(position).getType().equals("9")) {//来自QQ群
@@ -250,6 +324,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         try {
             Gson gson = new Gson();
             boolean err = new JSONObject(object.toString()).getString("err").equals("0");
+            Log.e("---------" + type, object.toString());
             if (type == 1 && err) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 adapter_grid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
@@ -262,15 +337,24 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 search_result_linear.setVisibility(View.VISIBLE);
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                SearchResultBean resultBean = null;
                 if (err) {
-                    frameLayout.setVisibility(View.VISIBLE);
-                    search_result_linear_no.setVisibility(View.GONE);
-                    SearchResultBean bean = gson.fromJson(object.toString(), SearchResultBean.class);
-                    list = bean.getList();
-                    adapter_list = new SupDem_Search_List_Adapter(this, list);
-                    listView.setAdapter(adapter_list);
-                    showRefreshPopou("为你搜索" + list.size() + "条信息");
+                    resultBean = gson.fromJson(object.toString(), SearchResultBean.class);
+                    if (page == 1) {
+                        frameLayout.setVisibility(View.VISIBLE);
+                        search_result_linear_no.setVisibility(View.GONE);
+                        adapter_list = new SupDem_Search_List_Adapter(this, resultBean.getList());
+                        listView.setAdapter(adapter_list);
+                        showRefreshPopou("为你搜索" + resultBean.getList().size() + "条信息");
+                        list.clear();
+                        list.addAll(resultBean.getList());
+                    } else {
+                        list.addAll(resultBean.getList());
+                        adapter_list.setList(list);
+                        adapter_list.notifyDataSetChanged();
+                    }
                 } else {
+                    hasMoerData = false;
                     frameLayout.setVisibility(View.GONE);
                     search_result_linear_no.setVisibility(View.VISIBLE);
                     textView_no.setText("抱歉，未能找到相关搜索！");
@@ -280,24 +364,20 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 }
             }
             if (type == 3 && err) {
-                TabCofigBean bean = gson.fromJson(object.toString(), TabCofigBean.class);
-                list_area = bean.getData().getArea().getData();
-                list_time = bean.getData().getTime().getData();
-
+                tabCofigBean = gson.fromJson(object.toString(), TabCofigBean.class);
+                list_area = tabCofigBean.getData().getArea().getData();
+                list_time = tabCofigBean.getData().getTime().getData();
                 //设置默认的时间
-                time = bean.getData().getTime().getCurrentValue();
-                int currentitem_time = Integer.parseInt(bean.getData().getTime().getCurrentItem());
+                time = tabCofigBean.getData().getTime().getCurrentValue();
+                int currentitem_time = Integer.parseInt(tabCofigBean.getData().getTime().getCurrentItem());
                 SharedUtils.getSharedUtils().setData(this, "position", currentitem_time + "");
                 textView_time.setText(list_time.get(currentitem_time).getShow());
-
                 //设置默认的地区
-                area = bean.getData().getArea().getCurrentValue();
-                int currentitem_add = Integer.parseInt(bean.getData().getArea().getCurrentItem());
-                for (int i = 0; i < list_area.get(currentitem_add).getData().size(); i++) {
-                    if (list_area.get(currentitem_add).getData().get(i).getValue().equals(bean.getData().getArea().getCurrentValue())) {
-                        textView_add.setText(list_area.get(currentitem_add).getShow() + "-" + list_area.get(currentitem_add).getData().get(i).getShow());
-                    }
-                }
+                area = tabCofigBean.getData().getArea().getCurrentValue();
+                int currentItem = Integer.parseInt(tabCofigBean.getData().getArea().getCurrentItem());
+                textView_add.setText(tabCofigBean.getData().getArea().getData().get(currentItem).getShow());
+                SharedUtils.getSharedUtils().setData(this, "position_pro", currentItem + "");
+                SharedUtils.getSharedUtils().setData(this, "position_city", 0 + "");
             }
             if (type == 4 && err) {
                 TextUtils.Toast(this, "删除成功！");
@@ -306,7 +386,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             }
         } catch (Exception e) {
         }
-
     }
 
     //展示刷新后的popou
@@ -321,33 +400,37 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     public void run() {
                         textView_hint.setVisibility(View.GONE);
                     }
-                }, 2000);
+                }, 1500);
             } else {
                 TextUtils.Toast(this, "已是最新头条信息！");
             }
         }
     }
+
     @Override
     public void failCallBack(int type) {
-
     }
+
     //地区回调
     @Override
-    public void addCallBack(int po_pro,int position) {
+    public void addCallBack(int po_pro, int position) {
         isRefresh = true;
-        textView_add.setText(list_area.get(po_pro).getShow()+"-"+list_area.get(po_pro).getData().get(position).getShow());
+        hasMoerData = true;
+        textView_add.setText(list_area.get(po_pro).getData().get(position).getShow());
         textView_add.setTextColor(getResources().getColor(R.color.color_red));
         area = list_area.get(po_pro).getData().get(position).getValue();
-        getPhysical_Search(keywords, time, is_buy, area);
+        getPhysical_Search(1, keywords, time, is_buy, area);
     }
+
     //时间回调
     @Override
     public void timeCallBack(int po) {
         isRefresh = true;
+        hasMoerData = true;
         textView_time.setText(list_time.get(po).getShow());
         textView_time.setTextColor(getResources().getColor(R.color.color_red));
         time = list_time.get(po).getValue();
-        getPhysical_Search(keywords, time, is_buy, area);
+        getPhysical_Search(1, keywords, time, is_buy, area);
     }
 
     public void onResume() {
@@ -363,5 +446,12 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 }

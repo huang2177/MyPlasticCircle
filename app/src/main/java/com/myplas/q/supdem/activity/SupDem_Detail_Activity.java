@@ -116,17 +116,17 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
         //是否显示编辑框
         what = getIntent().getStringExtra("what");
-        switch (what) {
-            case "1":
-            case "2":
-            case "3":
-                linearLayout_edit.setVisibility(View.VISIBLE);
-                break;
-            case "4":
-            case "5":
-                linearLayout_edit.setVisibility(View.GONE);
-                break;
-        }
+//        switch (what) {
+//            case "1":
+//            case "2":
+//            case "3":
+//                linearLayout_edit.setVisibility(View.VISIBLE);
+//                break;
+//            case "4":
+//            case "5":
+//                linearLayout_edit.setVisibility(View.GONE);
+//                break;
+//        }
     }
     //获取首页数据
     public void getNetData() {

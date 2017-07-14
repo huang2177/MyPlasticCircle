@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.supdem.Beans.TabCofigBean;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 编写： 黄双
@@ -19,18 +21,23 @@ import java.util.List;
  * 时间：2017/3/20 22:33
  */
 public class AddressSelectAdapter extends BaseAdapter {
-    int type;
     Context context;
+    int type, proItem, cityItem;
+    Map<Integer, View> map_pro, map_city;
     List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> list_area_pro;
     List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX.DataBeanX> list_area_city;
 
-    public AddressSelectAdapter(Context context, int type,
+    public AddressSelectAdapter(Context context, int type, int po,
                                 List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> list_area,
                                 List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX.DataBeanX> list_area_city) {
+        this.proItem = po;
         this.type = type;
         this.context = context;
         this.list_area_pro = list_area;
         this.list_area_city = list_area_city;
+
+        map_pro = new HashMap<>();
+        map_city = new HashMap<>();
     }
 
     @Override
@@ -59,23 +66,41 @@ public class AddressSelectAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder = null;
-        if (convertView == null) {
-            viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.layout_addressselect_listview_item, null, false);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.address_textview);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (viewHolder) convertView.getTag();
-        }
-        if (type==0) {
-            viewHolder.name.setText(list_area_pro.get(position).getShow());
-        } else {
-            viewHolder.name.setText(list_area_city.get(position).getShow());
+        switch (type) {
+            case 0:
+                if (map_pro.get(position) == null) {
+                    viewHolder = new viewHolder();
+                    convertView = LayoutInflater.from(context).inflate(R.layout.layout_addressselect_listview_item, null, false);
+                    viewHolder.name = (TextView) convertView.findViewById(R.id.address_textview);
+                    convertView.setTag(viewHolder);
+                } else {
+                    convertView = map_pro.get(position);
+                    viewHolder = (viewHolder) convertView.getTag();
+                }
+                map_pro.put(position, convertView);
+                viewHolder.name.setText(list_area_pro.get(position).getShow());
+//                if (position == proItem) {
+//                    map_pro.get(proItem).setBackgroundColor(context.getResources().getColor(R.color.color_white));
+//                }
+                break;
+            case 1:
+                if (map_city.get(position) == null) {
+                    viewHolder = new viewHolder();
+                    convertView = LayoutInflater.from(context).inflate(R.layout.layout_addressselect_listview_item, null, false);
+                    viewHolder.name = (TextView) convertView.findViewById(R.id.address_textview);
+                    convertView.setTag(viewHolder);
+                } else {
+                    convertView = map_city.get(position);
+                    viewHolder = (viewHolder) convertView.getTag();
+                }
+                map_city.put(position, convertView);
+                viewHolder.name.setText(list_area_city.get(position).getShow());
+//                if (position == proItem) {
+//                    map_city.get(proItem).setBackgroundColor(context.getResources().getColor(R.color.color_lightgray));
+//                }
+                break;
         }
         return convertView;
-    }
-
-    public void setPosition(int po) {
     }
 
     class viewHolder {

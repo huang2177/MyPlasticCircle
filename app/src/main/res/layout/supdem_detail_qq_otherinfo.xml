@@ -13,9 +13,9 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/supdem_qq_layout_zx"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/supdem_qq_layout_zx">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -23,8 +23,8 @@
                 android:layout_margin="13dp"
                 android:layout_weight="1"
                 android:text="查看资讯"
-                android:textSize="16.0sp"
-                android:textColor="#171717" />
+                android:textColor="#171717"
+                android:textSize="16.0sp" />
 
             <ImageView
                 android:id="@+id/supdem_qq_img_zx"
@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="right|center_vertical"
                 android:layout_margin="13dp"
-                android:src="@drawable/icon_more"></ImageView>
+                android:src="@drawable/icon_more_hl"></ImageView>
         </LinearLayout>
 
         <View
@@ -44,13 +44,11 @@
             android:id="@+id/supdem_qq_listview_zx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f2f3f4"
-            android:visibility="gone"></com.myplas.q.common.view.MyListview>
+            android:background="#f2f3f4"></com.myplas.q.common.view.MyListview>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:background="#f2f3f4"
             android:orientation="vertical"
             android:id="@+id/supdem_qq_layout_zx_more">

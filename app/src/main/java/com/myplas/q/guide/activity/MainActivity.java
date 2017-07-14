@@ -272,7 +272,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public void exit() {
         if ((System.currentTimeMillis() - exitTime) > 2500) {
-            TextUtils.Toast(getApplicationContext(), "再按一次退出程序!");
+            TextUtils.Toast(getApplicationContext(), "再按一次塑料圈通讯录!");
             exitTime = System.currentTimeMillis();
         } else {
             //moveTaskToBack(false);

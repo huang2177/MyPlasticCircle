@@ -90,9 +90,11 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private GridView gridView;
     private EditText editText;
     private XListView myListview;
+    private LinearLayout layout_nodata;
     private CustomPopupWindow popupWindow;
-    private TextView search_src_text, textView_refresh;
+    private TextView search_src_text, textView_refresh, text_nodata;
     private ImageButton gd_imgbtn, imageButton, imageButton_backup;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +110,9 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         editText = F(R.id.find_edit);
         imageButton = F(R.id.img_reload);
         gd_imgbtn = F(R.id.fx_gd_imgbtn);
+        text_nodata = F(R.id.text_noresult);
         myListview = F(R.id.find_mylistview);
+        layout_nodata = F(R.id.layout_noresult);
         imageButton_backup = F(R.id.image_backup);
         search_src_text = F(R.id.search_src_text);
 
@@ -119,23 +123,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         search_src_text.setOnClickListener(this);
         imageButton_backup.setOnClickListener(this);
 
+        //初始化横向listview
         getData();
-
-        int length = 85;
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        float density = dm.density;
-        int gridviewWidth = (int) (list.size() * (length + 1) * density);
-        int itemWidth = (int) (length * density);
-        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
-        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
-        gridView.setColumnWidth(itemWidth); // 设置列表项宽
-        gridView.setHorizontalSpacing(4); // 设置列表项水平间距
-        gridView.setStretchMode(GridView.NO_STRETCH);
-        gridView.setNumColumns(list.size()); // 设置列数量=列表集合数
-
-        gridViewAdapter = new GridViewAdapter(getActivity(), list, this);
-        gridView.setAdapter(gridViewAdapter);
 
         //edittext 回车监听
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -175,6 +164,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && myListview.getCount() > visibleItemCount) {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
                         keywords = editText.getText().toString();
@@ -217,7 +208,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         return view;
     }
 
-
     //获取推荐
     public void get_Subscribe(String page, String keywords, String subscribe, boolean isShow) {
         Map<String, String> map = new HashMap<String, String>();
@@ -237,6 +227,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         map.put("cate_id", cate_id);
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_CATE_LIST, map, this, 5, isShow);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -276,12 +267,14 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
-            myListview.setVisibility(View.VISIBLE);
             imageButton.setVisibility(View.GONE);
+            myListview.setVisibility(View.VISIBLE);
+            imageButton_backup.setVisibility(View.GONE);
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 4) {//推荐
                 if (err.equals("0")) {
+                    layout_nodata.setVisibility(View.GONE);
                     SubcribleBean subcribleBean = gson.fromJson(object.toString(), SubcribleBean.class);
                     list_subcirble = subcribleBean.getData();
                     if (page == 1) {
@@ -291,7 +284,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                         list_subcirble_more.clear();
                         list_subcirble_more.addAll(list_subcirble);
                         showRefreshPopou(subcribleBean.getShow_msg());
-                        lastvisibleItemCount = list_catelist.size();
+                        lastvisibleItemCount = list_subcirble.size();
                     } else {
                         isRefresh = false;
                         if (list_subcirble != null && list_subcirble.size() != 0) {
@@ -304,17 +297,19 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 } else if (err.equals("1") || "998".equals(err)) {
                     isRefresh = false;
                     myListview.stopRefresh();
-//                    sharedUtils.setData(getActivity(), "token", "");
-//                    sharedUtils.setData(getActivity(), "userid", "");
-//                    sharedUtils.setBooloean(getActivity(), "logined", false);
+                    sharedUtils.setData(getActivity(), "token", "");
+                    sharedUtils.setData(getActivity(), "userid", "");
+                    sharedUtils.setBooloean(getActivity(), "logined", false);
 
                 } else {
                     isRefresh = false;
                     myListview.stopRefresh();
-                    TextUtils.Toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
+                    myListview.setVisibility(View.GONE);
+                    layout_nodata.setVisibility(View.VISIBLE);
+                    imageButton_backup.setVisibility(View.GONE);
+                    text_nodata.setText(new JSONObject(object.toString()).getString("msg"));
                 }
             }
-
             if (type == 5) {//其他
                 if (new JSONObject(object.toString()).getString("err").equals("0")) {
                     CateListBean cateListBean = gson.fromJson(object.toString(), CateListBean.class);
@@ -357,6 +352,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void failCallBack(int type) {
         if (list_subcirble_more.size() == 0) {
             myListview.setVisibility(View.GONE);
+            layout_nodata.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);
         }
     }
@@ -378,7 +374,23 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             }
             list.add(itemBean);
         }
+        int length = 85;
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+        int gridviewWidth = (int) (list.size() * (length + 1) * density);
+        int itemWidth = (int) (length * density);
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        gridView.setColumnWidth(itemWidth); // 设置列表项宽
+        gridView.setHorizontalSpacing(4); // 设置列表项水平间距
+        gridView.setStretchMode(GridView.NO_STRETCH);
+        gridView.setNumColumns(list.size()); // 设置列数量=列表集合数
+
+        gridViewAdapter = new GridViewAdapter(getActivity(), list, this);
+        gridView.setAdapter(gridViewAdapter);
     }
+
     //展示刷新后的popou
     public void showRefreshPopou(String text) {
         if (isRefresh) {
@@ -412,6 +424,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             popupWindow.showAsDropDown(editText);
         }
     }
+
     //刷新
     @Override
     public void onRefresh() {
@@ -445,12 +458,22 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
     public void onResume() {
         super.onResume();
-        page=1;
+        page = 1;
         imageButton_backup.setVisibility(View.GONE);
-        boolean isLogined=sharedUtils.getBoolean(getActivity(),"isLogined_headlines");
-        if (isLogined){
+        boolean isLogined = sharedUtils.getBoolean(getActivity(), "isLogined_headlines");
+        String data = sharedUtils.getData(getActivity(), "refreshdata");
+
+        if (isLogined) {
             get_Subscribe("1", "", "2", true);
             sharedUtils.setBooloean(getActivity(), "isLogined_headlines", false);
+        }
+        if (!"".equals(data)) {//从供求-qq页面跳转
+            page = 1;
+            searchData(data);
+            editText.setText(data);
+            gridViewAdapter.chageBackgroudColor(0);
+            imageButton_backup.setVisibility(View.GONE);
+            sharedUtils.setData(getActivity(), "refreshdata", "");
         }
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }

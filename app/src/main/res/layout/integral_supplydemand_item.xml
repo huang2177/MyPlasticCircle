@@ -31,6 +31,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
+                    android:gravity="right"
+                    android:textColor="@color/color_litlegray"
                     android:buttonTintMode="multiply"
                     android:id="@+id/radio_1" />
             </LinearLayout>

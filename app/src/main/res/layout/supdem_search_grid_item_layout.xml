@@ -12,6 +12,7 @@
             android:textSize="14.0sp"
             android:gravity="center"
             android:padding="5dp"
+            android:singleLine="true"
             android:id="@+id/item_search_text"
             android:background="@drawable/corner_titlebar"/>
     </LinearLayout>

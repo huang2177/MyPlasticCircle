@@ -83,13 +83,16 @@ public class PopouShowUtils implements View.OnClickListener, AdapterView.OnItemC
             lp.height=(int) (screenH*3.35)/5;
             layout.setLayoutParams(lp);
 
-            adapter_add_province = new AddressSelectAdapter(context,0, list_area,null);
-            adapter_add_city=new AddressSelectAdapter(context,1,null,list_area.get(0).getData());
+            int pro = Integer.parseInt(sharedUtils.getData(context, "position_pro"));
+            int city = Integer.parseInt(sharedUtils.getData(context, "position_city"));
+            adapter_add_province = new AddressSelectAdapter(context, 0, pro, list_area, null);
+            adapter_add_city = new AddressSelectAdapter(context, 1, city, null, list_area.get(pro).getData());
             mListView_city = (ListView) view2.findViewById(R.id.mlistview_city);
             mListView_province = (ListView) view2.findViewById(R.id.mlistview_pro);
             mListView_province.setAdapter(adapter_add_province);
             mListView_city.setAdapter(adapter_add_city);
-
+//            mListView_province.setSelection(pro);
+//            mListView_city.setSelection(city);
             mListView_city.setOnItemClickListener(this);
             mListView_province.setOnItemClickListener(this);
         }
@@ -121,12 +124,13 @@ public class PopouShowUtils implements View.OnClickListener, AdapterView.OnItemC
                 break;
             case R.id.mlistview_pro:
                 this.po_pro=position;
-                adapter_add_province.setPosition(position);
-                adapter_add_city=new AddressSelectAdapter(context,1,null,list_area.get(position).getData());
+                SharedUtils.getSharedUtils().setData(context, "position_pro", position + "");
+                int city = Integer.parseInt(sharedUtils.getData(context, "position_city"));
+                adapter_add_city = new AddressSelectAdapter(context, 1, city, null, list_area.get(position).getData());
                 mListView_city.setAdapter(adapter_add_city);
                 break;
             case R.id.mlistview_city:
-                adapter_add_city.setPosition(position);
+                SharedUtils.getSharedUtils().setData(context, "position_city", position + "");
                 backInterface.addCallBack(po_pro,position);
                 mPopupWindow2.dismiss();
                 break;

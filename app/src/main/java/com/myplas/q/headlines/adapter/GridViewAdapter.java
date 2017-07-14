@@ -24,6 +24,9 @@ public class GridViewAdapter extends BaseAdapter {
     Myinterface myinterface;
     Map<Integer, TextView> map_text;
     Map<Integer, TextView> map_text_bg;
+
+    viewHolder viewHolder = null;
+
     public GridViewAdapter(Context context, List<ItemBean> list,Myinterface myinterface) {
         this.context = context;
         this.list = list;
@@ -31,6 +34,10 @@ public class GridViewAdapter extends BaseAdapter {
         map_text = new HashMap<>();
         map_text_bg=new HashMap<>();
         this.myinterface=myinterface;
+    }
+
+    public void setList(List<ItemBean> list) {
+        this.list = list;
     }
 
     @Override
@@ -55,6 +62,7 @@ public class GridViewAdapter extends BaseAdapter {
         viewHolder viewHolder = null;
         if (map.get(position) == null) {
             viewHolder = new viewHolder();
+            this.viewHolder = viewHolder;
             convertView = LayoutInflater.from(context).inflate(R.layout.layout_find_recycleview_item, parent, false);
             map.put(position, convertView);
             viewHolder.title = (TextView) convertView.findViewById(R.id.fx_titlebar_show);
@@ -65,6 +73,7 @@ public class GridViewAdapter extends BaseAdapter {
         } else {
             convertView = map.get(position);
             viewHolder = (viewHolder) convertView.getTag();
+            this.viewHolder = viewHolder;
         }
         viewHolder.title.setText(list.get(position).getString());
         viewHolder.title.setTextColor(list.get(position).getColor());
@@ -86,9 +95,18 @@ public class GridViewAdapter extends BaseAdapter {
                 myinterface.getdata(position);
             }
         });
-
-
         return convertView;
+    }
+
+    public void chageBackgroudColor(int po) {
+        for (int i = 0; i < map_text.size(); i++) {
+            list.get(i).setColor(context.getResources().getColor(R.color.color_balank));
+            map_text.get(i).setTextColor(context.getResources().getColor(R.color.color_balank));
+            map_text_bg.get(i).setBackgroundColor(context.getResources().getColor(R.color.color_balank));
+        }
+        list.get(po).setColor(context.getResources().getColor(R.color.color_red));
+        viewHolder.title.setTextColor(context.getResources().getColor(R.color.color_red));
+        viewHolder.text_bg.setBackgroundColor(context.getResources().getColor(R.color.color_red));
     }
 
     class viewHolder {

@@ -1,5 +1,6 @@
 package com.myplas.q.supdem.Beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * 时间： 2017/6/291724.
  */
 
-public class PhysicalBean {
+public class PhysicalBean implements Serializable {
 
     /**
      * err : 0
@@ -34,7 +35,7 @@ public class PhysicalBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * lid : 638
          * type : HDPE

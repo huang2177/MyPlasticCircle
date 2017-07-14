@@ -327,12 +327,14 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         jia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (SharedUtils.getSharedUtils().getBoolean(getActivity(), "logined")) {
-                    TextUtils.Toast(getActivity(), "您已登录塑料圈通讯录！");
-                } else {
-                    Intent in = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(in);
-                }
+//                if (SharedUtils.getSharedUtils().getBoolean(getActivity(), "logined")) {
+//                    TextUtils.Toast(getActivity(), "您已登录塑料圈通讯录！");
+//                } else {
+//                    Intent in = new Intent(getActivity(), LoginActivity.class);
+//                    startActivity(in);
+//                }
+                Intent in = new Intent(getActivity(), LoginActivity.class);
+                startActivity(in);
             }
         });
         return view;

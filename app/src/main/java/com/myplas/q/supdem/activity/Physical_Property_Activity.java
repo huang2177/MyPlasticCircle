@@ -47,7 +47,14 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
                 startActivity(intent);
             }
         });
-        getPhysical_Search();
+        PhysicalBean bean = (PhysicalBean) getIntent().getSerializableExtra("PhysicalBean");
+        if (bean == null) {
+            getPhysical_Search();
+        } else {
+            list = bean.getData();
+            adapter = new Physical_Property_Adapter(this, list);
+            listView.setAdapter(adapter);
+        }
     }
 
     //获取数据

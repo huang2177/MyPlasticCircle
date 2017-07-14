@@ -1,6 +1,9 @@
 package com.myplas.q.headlines.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +53,8 @@ public class CateListAdapter extends BaseAdapter {
             convertView= LayoutInflater.from(context).inflate(R.layout.layout_find_topline_listview_item,parent,false);
             viewHolder.time= (TextView) convertView.findViewById(R.id.fx_tt_title_shj);
             viewHolder.num= (TextView) convertView.findViewById(R.id.fx_tt_title_num);
-            viewHolder.title= (TextView) convertView.findViewById(R.id.fx_tt_title_text);
+            viewHolder.title1 = (TextView) convertView.findViewById(R.id.fx_tt_title_text1);
+            viewHolder.title2 = (TextView) convertView.findViewById(R.id.fx_tt_title_text2);
             viewHolder.content= (TextView) convertView.findViewById(R.id.fx_tt_title_content);
             viewHolder.author= (TextView) convertView.findViewById(R.id.fx_tt_title_author);
             convertView.setTag(viewHolder);
@@ -59,7 +63,8 @@ public class CateListAdapter extends BaseAdapter {
         }
         viewHolder.content.setText(list.get(position).getDescription());
         viewHolder.num.setText("  " +list.get(position).getPv());
-        viewHolder.title.setText("["+list.get(position).getType()+"]"+list.get(position).getTitle());
+        viewHolder.title1.setText("[" + replace(list.get(position).getType()) + "]");
+        viewHolder.title2.setText(replace(list.get(position).getTitle()));
         viewHolder.time.setText("  " + list.get(position).getInput_time());
         viewHolder.author.setText(list.get(position).getAuthor());
         return convertView;
@@ -70,6 +75,13 @@ public class CateListAdapter extends BaseAdapter {
     }
 
     class viewHolder{
-        TextView title,content,time,num,author;
+        TextView title1, title2, content, time, num, author;
+    }
+
+    public Spanned replace(String s) {
+        s = s.replace("<strong style='color: #ff5000;'>", "<font color='#ff5000'><b>");
+        s = s.replace("</strong>", "</b></font>");
+        Spanned s1 = Html.fromHtml(s);
+        return s1;
     }
 }
