@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:drawableLeft="@drawable/icon_offerprice"
-            android:text="看出价(0)"
+            android:text="出价(0)"
             android:textSize="@dimen/x66" />
 
         <TextView
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:drawableLeft="@drawable/icon_reply"
-            android:text="看回复(0)"
+            android:text="回复(0)"
             android:textSize="@dimen/x66" />
 
         <TextView

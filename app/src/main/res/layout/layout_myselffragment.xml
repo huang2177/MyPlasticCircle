@@ -325,6 +325,31 @@
                         android:text="  我的关注" />
 
                     <TextView
+                        android:id="@+id/wd_text_look"
+                        style="@style/wd_text2_style"
+                        android:layout_weight="0"
+                        android:drawableRight="@drawable/icon_more"
+                        android:text="  " />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/color_gray"></View>
+
+                <LinearLayout
+                    android:id="@+id/wd_linear_look"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <TextView
+                        style="@style/wd_text2_style"
+                        android:drawableLeft="@drawable/icon_who_see_me"
+                        android:gravity="center_vertical"
+                        android:text="  谁看过我" />
+
+                    <TextView
                         android:id="@+id/wd_text_gz"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"

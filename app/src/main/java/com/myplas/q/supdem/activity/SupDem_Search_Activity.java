@@ -151,6 +151,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (spinnerSelected) {
+                    page = 1;
                     isRefresh = true;
                     hasMoerData = true;
                     is_buy = level1[position];
@@ -170,6 +171,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             @Override
             public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
                 if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
+                    page = 1;
                     isRefresh = true;
                     hasMoerData = true;
                     keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
@@ -270,6 +272,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.mygrid_search_history://历史搜索
+                page = 1;
                 isRefresh = true;
                 hasMoerData = true;
                 keywords = historyBean.getHistory().get(position);
@@ -278,6 +281,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.mygrid_search_subcribe://猜你所想
+                page = 1;
                 isRefresh = true;
                 hasMoerData = true;
                 keywords = historyBean.getRecommend().get(position);
@@ -286,6 +290,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.mygrid_search_null://相关搜索
+                page = 1;
                 isRefresh = true;
                 hasMoerData = true;
                 keywords = bean.getCombine().get(position);
@@ -414,6 +419,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     //地区回调
     @Override
     public void addCallBack(int po_pro, int position) {
+        page = 1;
         isRefresh = true;
         hasMoerData = true;
         textView_add.setText(list_area.get(po_pro).getData().get(position).getShow());
@@ -425,6 +431,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     //时间回调
     @Override
     public void timeCallBack(int po) {
+        page = 1;
         isRefresh = true;
         hasMoerData = true;
         textView_time.setText(list_time.get(po).getShow());

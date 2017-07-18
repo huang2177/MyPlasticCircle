@@ -18,6 +18,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -188,7 +189,9 @@
         <activity
             android:name="com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity"
             android:screenOrientation="portrait"></activity>
-
+        <activity
+            android:name="com.myplas.q.myinfo.activity.LookMeActivity"
+            android:screenOrientation="portrait"></activity>
         <!--适配6.0以上的系统安装apk-->
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -207,6 +210,5 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="wandoujia" />
-
     </application>
 </manifest>

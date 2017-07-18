@@ -7,12 +7,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/supply_demand_prompt">
+
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/icon_intelligent_recommendation2"/>
+            android:layout_marginTop="0dp"
+            android:src="@drawable/icon_intelligent_recommendation2" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,6 +28,7 @@
             android:text="系统暂未为您匹配到相应的牌号，暂无推荐！"
             android:textSize="16.0sp"/>
         <ImageView
+            android:id="@+id/supply_demand_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

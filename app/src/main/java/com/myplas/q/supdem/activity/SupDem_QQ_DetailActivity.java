@@ -242,6 +242,9 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     }
 
     public void showInfo(SearchResultDetailBean.DataBean detailBean) {
+//        String forward = (detailBean..getType().equals("9")) ?
+//                (list.get(position).getISForward()) :
+//                ((list.get(position).getISForward().equals("1")) ? ("现货") : ("期货"));
         title_rs.setText(detailBean.getCompany());
         text_gs.setText(detailBean.getCompany());
         text_qq_num.setText(detailBean.getQQNumber());

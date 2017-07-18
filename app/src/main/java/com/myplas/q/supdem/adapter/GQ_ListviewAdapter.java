@@ -113,8 +113,9 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
             viewHolder.gs.setText((s1.length() > 15) ? (s1.subSequence(0, 15) + "...") : (s1));
             viewHolder.name.setText("  " + list.get(position).getName());
             viewHolder.time.setText(list.get(position).getInput_time());
-            viewHolder.isbuyed.setText("看出价(" + list.get(position).getDeliverPriceCount() + ")");
-            viewHolder.repeat.setText("看回复(" + list.get(position).getSaysCount() + ")");
+            String s = ("4".equals(type)) ? ("看") : ("");
+            viewHolder.isbuyed.setText(s + "出价(" + list.get(position).getDeliverPriceCount() + ")");
+            viewHolder.repeat.setText(s + "回复(" + list.get(position).getSaysCount() + ")");
             if (list.get(position).getIs_pass().equals("0")) {
                 viewHolder.rz.setImageResource(R.drawable.icon_identity);
             } else if (list.get(position).getIs_pass().equals("1")) {

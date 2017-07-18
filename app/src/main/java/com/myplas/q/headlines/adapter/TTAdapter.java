@@ -60,11 +60,10 @@ public class TTAdapter extends BaseAdapter {
         }else {
             viewHolder=(viewHolder)convertView.getTag();
         }
-        viewHolder.content.setText(list.get(position).getDescription());
+        viewHolder.content.setText(replaceContent(list.get(position).getDescription()));
         viewHolder.num.setText("  " +list.get(position).getPv());
-        viewHolder.title1.setText("[" + replace(list.get(position).getType()) + "]");
-        Log.e("------", list.get(position).getTitle());
-        viewHolder.title2.setText(replace(list.get(position).getTitle()));
+        viewHolder.title1.setText(replaceContent(list.get(position).getType()));
+        viewHolder.title2.setText(replaceContent(list.get(position).getTitle()));
         viewHolder.time.setText("  " + list.get(position).getInput_time());
         viewHolder.author.setText(list.get(position).getAuthor());
         return convertView;
@@ -79,8 +78,15 @@ public class TTAdapter extends BaseAdapter {
     }
 
     public Spanned replace(String s) {
-        s = s.replace("<strong style='color: #ff5000;'>", "<font color='#ff5000'><b>");
-        s = s.replace("</strong>", "</b></font>");
+        s = s.replace("<span style='color: #ff5000;'>", "<font color='#ff5000'><b>");
+        s = s.replace("</span>", "</b></font>");
+        Spanned s1 = Html.fromHtml(s);
+        return s1;
+    }
+
+    public Spanned replaceContent(String s) {
+        s = s.replace("<span style='color: #FF0000;'>", "<font color='#FF0000'><b>");
+        s = s.replace("</span>", "</b></font>");
         Spanned s1 = Html.fromHtml(s);
         return s1;
     }

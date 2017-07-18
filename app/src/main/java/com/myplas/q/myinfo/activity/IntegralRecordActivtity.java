@@ -2,8 +2,11 @@ package com.myplas.q.myinfo.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
@@ -30,12 +33,16 @@ import java.util.Map;
  * 时间：2017/3/29 09:57
  */
 public class IntegralRecordActivtity extends BaseActivity implements ResultCallBack {
-    private SharedUtils sharedUtils;
+    boolean hasMoerData = true;
     private ListView listView;
-    private Integral_Record_Adapter record_adapter;
+    private SharedUtils sharedUtils;
     private int page=1, visibleItemCount;
-    boolean hasMoerData=true;
     private List<RecordBean.DataBean>list;
+    private Integral_Record_Adapter record_adapter;
+
+    private TextView textView;
+    private LinearLayout layout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,9 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
 
         list=new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
-        listView = (ListView) findViewById(R.id.integral_record_listview);
+        textView = F(R.id.integral_text);
+        layout = F(R.id.integral_prompt);
+        listView = F(R.id.integral_record_listview);
 
         //加载更多
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -69,9 +78,7 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
             }
         });
         getBuyRecord("1");
-
     }
-
     public void getBuyRecord(String page) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", sharedUtils.getData(this, "token"));
@@ -86,6 +93,8 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
             RecordBean recordBean=null;
             if (new JSONObject(object.toString()).getString("err").equals("0")) {
                 Gson gson = new Gson();
+                layout.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
                 recordBean = gson.fromJson(object.toString(), RecordBean.class);
                 if (page==1) {
                     record_adapter = new Integral_Record_Adapter(this, recordBean.getData());
@@ -98,7 +107,9 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
                 }
             }else {
                 hasMoerData=false;
-                TextUtils.Toast(this,new JSONObject(object.toString()).getString("msg"));
+                listView.setVisibility(View.GONE);
+                layout.setVisibility(View.VISIBLE);
+                textView.setText(new JSONObject(object.toString()).getString("msg"));
             }
         } catch (Exception e) {
         }

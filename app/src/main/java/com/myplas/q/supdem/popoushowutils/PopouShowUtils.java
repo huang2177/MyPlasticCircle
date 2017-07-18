@@ -37,7 +37,7 @@ import static com.umeng.analytics.pro.x.b;
 
 public class PopouShowUtils implements View.OnClickListener, AdapterView.OnItemClickListener {
     private Activity context;
-    private int resId,po_pro;
+    private int pro;
     private View imageView_sd;
     private LinearLayout layout;
     private CustomPopupWindow mPopupWindow2;
@@ -55,7 +55,6 @@ public class PopouShowUtils implements View.OnClickListener, AdapterView.OnItemC
                           int type,
                           List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> list_area,
                           List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> list_time) {
-        this.resId = resId;
         this.context = context;
         this.list_area=list_area;
         sharedUtils = SharedUtils.getSharedUtils();
@@ -83,16 +82,19 @@ public class PopouShowUtils implements View.OnClickListener, AdapterView.OnItemC
             lp.height=(int) (screenH*3.35)/5;
             layout.setLayoutParams(lp);
 
-            int pro = Integer.parseInt(sharedUtils.getData(context, "position_pro"));
+            pro = Integer.parseInt(sharedUtils.getData(context, "position_pro"));
             int city = Integer.parseInt(sharedUtils.getData(context, "position_city"));
             adapter_add_province = new AddressSelectAdapter(context, 0, pro, list_area, null);
             adapter_add_city = new AddressSelectAdapter(context, 1, city, null, list_area.get(pro).getData());
             mListView_city = (ListView) view2.findViewById(R.id.mlistview_city);
             mListView_province = (ListView) view2.findViewById(R.id.mlistview_pro);
+
+            adapter_add_province.setSelectedItem(true);
             mListView_province.setAdapter(adapter_add_province);
             mListView_city.setAdapter(adapter_add_city);
-//            mListView_province.setSelection(pro);
-//            mListView_city.setSelection(city);
+
+            mListView_province.setSelection(pro);
+
             mListView_city.setOnItemClickListener(this);
             mListView_province.setOnItemClickListener(this);
         }
@@ -123,7 +125,8 @@ public class PopouShowUtils implements View.OnClickListener, AdapterView.OnItemC
                 mPopupWindow2.dismiss();
                 break;
             case R.id.mlistview_pro:
-                this.po_pro=position;
+                adapter_add_province.setSelectedItem(false);
+                adapter_add_province.notifyDataSetChanged();
                 SharedUtils.getSharedUtils().setData(context, "position_pro", position + "");
                 int city = Integer.parseInt(sharedUtils.getData(context, "position_city"));
                 adapter_add_city = new AddressSelectAdapter(context, 1, city, null, list_area.get(position).getData());
@@ -131,7 +134,8 @@ public class PopouShowUtils implements View.OnClickListener, AdapterView.OnItemC
                 break;
             case R.id.mlistview_city:
                 SharedUtils.getSharedUtils().setData(context, "position_city", position + "");
-                backInterface.addCallBack(po_pro,position);
+                int pro = Integer.parseInt(sharedUtils.getData(context, "position_pro"));
+                backInterface.addCallBack(pro, position);
                 mPopupWindow2.dismiss();
                 break;
         }

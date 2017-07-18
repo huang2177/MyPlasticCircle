@@ -330,10 +330,34 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                     textView_product.setText(mySelfInfo.getData().getMain_product());
                     textView_num.setText("  " + mySelfInfo.getData().getMonth_consum());
                     break;
-                default:
+                case "2":
+                    textView_company.setText("原料供应商");
+                    linearLayout.setVisibility(View.GONE);
+                    break;
+                case "4":
                     my_main_prod.setText("我的主营：");
                     linearLayout.setVisibility(View.GONE);
-                    textView_company.setText("物流服务商");
+                    textView_company.setText("物流商");
+                    break;
+                case "5":
+                    textView_company.setText("金融公司");
+                    linearLayout.setVisibility(View.GONE);
+                    break;
+                case "6":
+                    textView_company.setText("塑化电商");
+                    linearLayout.setVisibility(View.GONE);
+                    break;
+                case "7":
+                    textView_company.setText("回料(含新材料)");
+                    linearLayout.setVisibility(View.GONE);
+                    break;
+                case "8":
+                    textView_company.setText("期货");
+                    linearLayout.setVisibility(View.GONE);
+                    break;
+                case "9":
+                    textView_company.setText("塑机");
+                    linearLayout.setVisibility(View.GONE);
                     break;
             }
             //设置“关注的牌号”是否显示

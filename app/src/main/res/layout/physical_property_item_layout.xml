@@ -18,7 +18,6 @@
                 android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="7000F"
                 android:paddingLeft="5dp"
                 android:textSize="16.0sp" />
 
@@ -35,7 +34,6 @@
                 android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="HD7000F"
                 android:textColor="@color/color_red"
                 android:textSize="16.0sp" />
 
@@ -51,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="   泰国PTT"
                 android:padding="5dp"
                 android:textSize="16.0sp" />
         </LinearLayout>

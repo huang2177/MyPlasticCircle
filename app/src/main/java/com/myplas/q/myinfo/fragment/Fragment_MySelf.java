@@ -23,6 +23,7 @@ import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.R;
+import com.myplas.q.myinfo.activity.LookMeActivity;
 import com.myplas.q.myinfo.activity.MyFansFollowActivity;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -67,7 +68,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
     private TextView text_gj, text_qg, text_yj, text_fs, text_gz, text_ly, text_xx, text_gx, text_gs, text_name_tel;
     private TextView text_title_gj, text_title_qg, text_title_ly, text_title_yj, text_title_fs, text_title_gz, text_title_jf;
-    private LinearLayout linear_changepass, linear_title, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_ly, linear_xx, linear_jf, linear_bz, linear_gx, linear_edu, linear_pz, linear_share;
+    private LinearLayout linear_changepass, linear_title, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_look, linear_ly, linear_xx, linear_jf, linear_bz, linear_gx, linear_edu, linear_pz, linear_share;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_yj = f(R.id.wd_linear_yj);
         linear_fs = f(R.id.wd_linear_fs);
         linear_gz = f(R.id.wd_linear_gz);
+        linear_look = f(R.id.wd_linear_look);
         linear_ly = f(R.id.wd_linear_ly);
         linear_jf = f(R.id.wd_linear_jf);
         linear_bz = f(R.id.wd_linear_bz);
@@ -122,6 +124,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_yj.setOnClickListener(this);
         linear_fs.setOnClickListener(this);
         linear_gz.setOnClickListener(this);
+        linear_look.setOnClickListener(this);
         linear_ly.setOnClickListener(this);
         linear_xx.setOnClickListener(this);
         linear_jf.setOnClickListener(this);
@@ -190,6 +193,10 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                     intent4.putExtra("type", "2");
                     startActivity(intent4);
                     break;
+                case R.id.wd_linear_look:
+                    Intent intent0 = new Intent(getActivity(), LookMeActivity.class);
+                    startActivity(intent0);
+                    break;
                 case R.id.wd_linear_ly:
                     Intent intent5 = new Intent(getActivity(), MyCommentActivity.class);
                     startActivity(intent5);
@@ -228,7 +235,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void resquestNetData(String method, Map map, int type, boolean isShow) {
         try {
             String url = API.BASEURL + method;
-            new BaseActivity().postAsyn1(getActivity(), url, map, this, type, isShow);
+            BaseActivity.postAsyn1(getActivity(), url, map, this, type, isShow);
         } catch (Exception e) {
         }
     }

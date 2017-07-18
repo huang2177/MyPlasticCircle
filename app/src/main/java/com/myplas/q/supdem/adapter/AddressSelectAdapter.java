@@ -1,6 +1,7 @@
 package com.myplas.q.supdem.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,8 @@ import java.util.Map;
  */
 public class AddressSelectAdapter extends BaseAdapter {
     Context context;
-    int type, proItem, cityItem;
+    boolean isMarked;
+    int type, selectedItem;
     Map<Integer, View> map_pro, map_city;
     List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> list_area_pro;
     List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX.DataBeanX> list_area_city;
@@ -30,8 +32,8 @@ public class AddressSelectAdapter extends BaseAdapter {
     public AddressSelectAdapter(Context context, int type, int po,
                                 List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> list_area,
                                 List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX.DataBeanX> list_area_city) {
-        this.proItem = po;
         this.type = type;
+        this.selectedItem = po;
         this.context = context;
         this.list_area_pro = list_area;
         this.list_area_city = list_area_city;
@@ -39,6 +41,7 @@ public class AddressSelectAdapter extends BaseAdapter {
         map_pro = new HashMap<>();
         map_city = new HashMap<>();
     }
+
 
     @Override
     public int getCount() {
@@ -79,9 +82,11 @@ public class AddressSelectAdapter extends BaseAdapter {
                 }
                 map_pro.put(position, convertView);
                 viewHolder.name.setText(list_area_pro.get(position).getShow());
-//                if (position == proItem) {
-//                    map_pro.get(proItem).setBackgroundColor(context.getResources().getColor(R.color.color_white));
-//                }
+                if (position == selectedItem) {
+                    map_pro.get(selectedItem).setBackgroundColor((isMarked) ?
+                            (context.getResources().getColor(R.color.color_white)) :
+                            (context.getResources().getColor(R.color.color_gray1)));
+                }
                 break;
             case 1:
                 if (map_city.get(position) == null) {
@@ -95,15 +100,15 @@ public class AddressSelectAdapter extends BaseAdapter {
                 }
                 map_city.put(position, convertView);
                 viewHolder.name.setText(list_area_city.get(position).getShow());
-//                if (position == proItem) {
-//                    map_city.get(proItem).setBackgroundColor(context.getResources().getColor(R.color.color_lightgray));
-//                }
                 break;
         }
         return convertView;
     }
-
     class viewHolder {
         TextView name;
+    }
+
+    public void setSelectedItem(boolean isMarked) {
+        this.isMarked = isMarked;
     }
 }

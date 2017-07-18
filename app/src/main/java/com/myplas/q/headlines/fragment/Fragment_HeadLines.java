@@ -131,11 +131,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
             @Override
             public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-                if (arg1 == EditorInfo.IME_ACTION_UNSPECIFIED && arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN) {
-                    keywords = (editText.getText().toString().equals("")) ? ("") : (editText.getText().toString());
-                    get_Subscribe("1", keywords, "1", true);
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
+                    searchData(editText.getText().toString());
                     return true;
                 }
                 return false;
@@ -361,7 +358,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void getData() {
         list = new ArrayList();
         list1 = Arrays.asList("推荐", "塑料上游", "早盘预报", "企业动态", "中晨塑说", "美金市场", "期货资讯", "装置动态", "期刊报告", "独家解读");
-        list2 = Arrays.asList("", "2", "1", "9", "4", "5", "21", "11", "13", "22");
+        list2 = Arrays.asList("", "2", "1", "9", "76", "5", "21", "11", "13", "22");
         for (int i = 0; i < list1.size(); i++) {
             ItemBean itemBean = new ItemBean();
             itemBean.setString(list1.get(i).toString());
@@ -444,9 +441,10 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void getdata(int position) {
         page = 1;
         po = position;
+        editText.setText("");
         imageButton_backup.setVisibility(View.GONE);
         if (position == 0) {
-            get_Subscribe("1", editText.getText().toString(), "2", true);
+            get_Subscribe("1", "", "2", true);
         } else {
             get_CateList("1", list2.get(position).toString(), true);
         }
