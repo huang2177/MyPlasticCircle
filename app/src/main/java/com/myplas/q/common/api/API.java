@@ -17,7 +17,6 @@ public class API {
     //正式_快速登陆
     public final static String BASEURL_API= "https://api.myplas.com/";
 
-
     /*common*/
     //检查UA
     public final static String CHECK_UA = "common/checkUA";
@@ -115,7 +114,8 @@ public class API {
     public final static String GET_MY_FUNS = "myInfo/getMyFuns";
     //获取系统消息
     public final static String GET_ROBOT_MSG = "myInfo/getRobotMsg";
-
+    //获取谁看过我详情数据
+    public final static String GET_VIEW_HISTORY_DETAILS = "myInfo/getViewHistoryDetails";
 
     /*product*/
     //塑料圈app之兑换置顶信息

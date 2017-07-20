@@ -3,42 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
     <LinearLayout
-        android:id="@+id/lookme_time_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_gray"></View>
-
-        <TextView
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/color_gray0"
-            android:id="@+id/lookme_time" />
+            android:layout_marginLeft="2dp"
+            android:layout_marginBottom="1dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_gray"></View>
-    </LinearLayout>
+            <com.myplas.q.common.view.MyImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="8dp"
+                android:id="@+id/xq_tx"
+                android:background="@drawable/corner_gz"
+                android:src="@drawable/contact_image_defaul_male"
+                android:scaleType="centerCrop" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp">
-
-        <include layout="@layout/layout_tx"></include>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/xq_rz"
+                android:src="@drawable/icon_identity"
+                android:layout_gravity="bottom|right" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -47,12 +43,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_balank"
+                android:singleLine="true"
                 android:textSize="16.0sp" />
 
             <TextView
                 android:id="@+id/lookme_listview_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:textSize="14.0sp" />
         </LinearLayout>
     </LinearLayout>

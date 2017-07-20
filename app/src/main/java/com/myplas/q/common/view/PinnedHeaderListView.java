@@ -256,8 +256,10 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         mEnablePullRefresh = enable;
         if (!mEnablePullRefresh) { // disable, hide the content
             mHeaderViewContent.setVisibility(View.GONE);
+            findViewById(R.id.header_view).setVisibility(GONE);
         } else {
             mHeaderViewContent.setVisibility(View.VISIBLE);
+            findViewById(R.id.header_view).setVisibility(VISIBLE);
         }
     }
     /**
