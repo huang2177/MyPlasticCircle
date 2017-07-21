@@ -301,13 +301,13 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             case R.id.search_listview_result:
                 if (list.get(position).getType().equals("9")) {//来自QQ群
                     Intent intent = new Intent(SupDem_Search_Activity.this, SupDem_QQ_DetailActivity.class);
-                    intent.putExtra("company", list.get(position).getCompany());
-                    intent.putExtra("plastic_number", list.get(position).getPlsticNumber());
+                    intent.putExtra("company", list.get(position).getC_name());
+                    intent.putExtra("plastic_number", list.get(position).getModel());
                     startActivity(intent);
                 } else {//来自供求
                     try {
                         Intent intent = new Intent(this, SupDem_Detail_Activity.class);
-                        String id_ = list.get(position).getId();
+                        String id_ = list.get(position).getNews_id();
                         String userid = list.get(position).getUser_id();
                         String user_id = SharedUtils.getSharedUtils().getData(this, "userid");
 
@@ -390,6 +390,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 gridview_history.setAdapter(adapter_grid);
             }
         } catch (Exception e) {
+            Log.e("++",e.toString());
         }
     }
 

@@ -13,10 +13,11 @@ import java.util.List;
  * 时间：2017/3/17 14:52
  */
 public class SupDem_ViewPager_Adapter extends FragmentPagerAdapter {
-    List<Fragment>list;
+    List<Fragment> list;
+
     public SupDem_ViewPager_Adapter(FragmentManager fm, List<Fragment> list) {
         super(fm);
-        this.list=list;
+        this.list = list;
     }
 
     @Override
@@ -26,7 +27,7 @@ public class SupDem_ViewPager_Adapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        if (list.size()!=0)
+        if (list.size() != 0)
             return list.size();
         return 0;
     }

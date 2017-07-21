@@ -9,17 +9,24 @@ import java.util.List;
  */
 
 public class SearchResultBean {
-    private String err;
+
+    /**
+     * err : 0
+     * list : [{"c_name":"上海田塑化工有限公司","produce_place":"伊朗石化","cargo_type":"现货","unit_price":"0","model":"7000F","thumbqq":["http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=4972776&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"],"qq_name":"遇见","qq":"4972776","update_time":"07-18 00:01","is_buy":"1","store_house":"宁波","news_id":43050,"mobile_list":[{"name":"李慧丹","mobile":"13355778767"}],"qq_name_qq":[{"qq_name":"遇见","qq":"4972776"}],"produce_place_one":"伊朗石化","type":9,"user_id":"53402"},{"c_name":"上海天业国际贸易有限公司","produce_place":"伊朗石化","cargo_type":"7月底","unit_price":"9600","model":"7000F","thumbqq":["http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1516657714&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"],"qq_name":"上海天业（中萱）巽通-孔","qq":"1516657714","update_time":"07-18 00:01","is_buy":"1","store_house":"宁波","news_id":43050,"mobile_list":{"3":{"name":"张永明","mobile":"15618650630"}},"qq_name_qq":{"1":{"qq_name":"上海天业（中萱）巽通-孔","qq":"1516657714"}},"produce_place_one":"伊朗石化","type":9,"user_id":"53402"},{"c_name":"明年我的时候","produce_place":"","cargo_type":"现货","unit_price":"0","model":"7000F","thumbqq":["http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=183097697&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"],"qq_name":"灿灿1943","qq":"183097697","update_time":"07-18 00:01","is_buy":"1","store_house":"上海","news_id":43050,"mobile_list":{"2":{"name":"刘招","mobile":"13806260431"}},"qq_name_qq":{"2":{"qq_name":"灿灿1943","qq":"183097697"}},"produce_place_one":"","type":9,"user_id":"53402"}]
+     * total : 3
+     * search : 7000F
+     */
+
+    private int err;
     private String total;
     private String search;
-    private String combine;
     private List<ListBean> list;
 
-    public String getErr() {
+    public int getErr() {
         return err;
     }
 
-    public void setErr(String err) {
+    public void setErr(int err) {
         this.err = err;
     }
 
@@ -39,14 +46,6 @@ public class SearchResultBean {
         this.search = search;
     }
 
-    public String getCombine() {
-        return combine;
-    }
-
-    public void setCombine(String combine) {
-        this.combine = combine;
-    }
-
     public List<ListBean> getList() {
         return list;
     }
@@ -56,127 +55,136 @@ public class SearchResultBean {
     }
 
     public static class ListBean {
-        private String Company;
-        private String Production;
-        private String ISForward;
-        private String Price;
-        private String PlsticNumber;
-        private String QQName;
-        private String QQNumber;
-        private String UpdateTime;
-        private String Isbuy;
-        private String GoodssPosition;
-        private String new_id;
-        private String Production_one;
+        /**
+         * c_name : 上海田塑化工有限公司
+         * produce_place : 伊朗石化
+         * cargo_type : 现货
+         * unit_price : 0
+         * model : 7000F
+         * thumbqq : ["http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=4972776&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"]
+         * qq_name : 遇见
+         * qq : 4972776
+         * update_time : 07-18 00:01
+         * is_buy : 1
+         * store_house : 宁波
+         * news_id : 43050
+         * mobile_list : [{"name":"李慧丹","mobile":"13355778767"}]
+         * qq_name_qq : [{"qq_name":"遇见","qq":"4972776"}]
+         * produce_place_one : 伊朗石化
+         * type : 9
+         * user_id : 53402
+         */
+
+        private String c_name;
+        private String produce_place;
+        private String cargo_type;
+        private String unit_price;
+        private String model;
+        private String qq_name;
+        private String qq;
+        private String update_time;
+        private String is_buy;
+        private String store_house;
+        private String news_id;
+        private String produce_place_one;
         private String type;
-        private String id;
-        private String p_id;
         private String user_id;
-        private String content;
-        private String name;
-        private String thumb;
-        private String thumbqq;
-        private String sex;
-        private String mobile_province;
-        private String is_pass;
-        private List<String> QQImage;
-        // private List<String> Iphone_list;
-        private List<String> QQName_Number;
+        private List<String> thumbqq;
 
-        public String getCompany() {
-            return Company;
+        public String getC_name() {
+            return c_name;
         }
 
-        public void setCompany(String Company) {
-            this.Company = Company;
+        public void setC_name(String c_name) {
+            this.c_name = c_name;
         }
 
-        public String getProduction() {
-            return Production;
+        public String getProduce_place() {
+            return produce_place;
         }
 
-        public void setProduction(String Production) {
-            this.Production = Production;
+        public void setProduce_place(String produce_place) {
+            this.produce_place = produce_place;
         }
 
-        public String getISForward() {
-            return ISForward;
+        public String getCargo_type() {
+            return cargo_type;
         }
 
-        public void setISForward(String ISForward) {
-            this.ISForward = ISForward;
+        public void setCargo_type(String cargo_type) {
+            this.cargo_type = cargo_type;
         }
 
-        public String getPrice() {
-            return Price;
+        public String getUnit_price() {
+            return unit_price;
         }
 
-        public void setPrice(String Price) {
-            this.Price = Price;
+        public void setUnit_price(String unit_price) {
+            this.unit_price = unit_price;
         }
 
-        public String getPlsticNumber() {
-            return PlsticNumber;
+        public String getModel() {
+            return model;
         }
 
-        public void setPlsticNumber(String PlsticNumber) {
-            this.PlsticNumber = PlsticNumber;
+        public void setModel(String model) {
+            this.model = model;
         }
 
-        public String getQQName() {
-            return QQName;
+        public String getQq_name() {
+            return qq_name;
         }
 
-        public void setQQName(String QQName) {
-            this.QQName = QQName;
+        public void setQq_name(String qq_name) {
+            this.qq_name = qq_name;
         }
 
-        public String getQQNumber() {
-            return QQNumber;
+        public String getQq() {
+            return qq;
         }
 
-        public void setQQNumber(String QQNumber) {
-            this.QQNumber = QQNumber;
+        public void setQq(String qq) {
+            this.qq = qq;
         }
 
-        public String getUpdateTime() {
-            return UpdateTime;
+        public String getUpdate_time() {
+            return update_time;
         }
 
-        public void setUpdateTime(String UpdateTime) {
-            this.UpdateTime = UpdateTime;
+        public void setUpdate_time(String update_time) {
+            this.update_time = update_time;
         }
 
-        public String getIsbuy() {
-            return Isbuy;
+        public String getIs_buy() {
+            return is_buy;
         }
 
-        public void setIsbuy(String Isbuy) {
-            this.Isbuy = Isbuy;
+        public void setIs_buy(String is_buy) {
+            this.is_buy = is_buy;
         }
 
-        public String getGoodssPosition() {
-            return GoodssPosition;
+        public String getStore_house() {
+            return store_house;
         }
 
-        public void setGoodssPosition(String GoodssPosition) {
-            this.GoodssPosition = GoodssPosition;
+        public void setStore_house(String store_house) {
+            this.store_house = store_house;
         }
 
-        public String getNew_id() {
-            return new_id;
+        public String getNews_id() {
+            return news_id;
         }
 
-        public void setNew_id(String new_id) {
-            this.new_id = new_id;
+        public void setNews_id(String news_id) {
+            this.news_id = news_id;
         }
 
-        public String getProduction_one() {
-            return Production_one;
+        public String getProduce_place_one() {
+            return produce_place_one;
         }
 
-        public void setProduction_one(String Production_one) {
-            this.Production_one = Production_one;
+        public void setProduce_place_one(String produce_place_one) {
+            this.produce_place_one = produce_place_one;
         }
 
         public String getType() {
@@ -187,22 +195,6 @@ public class SearchResultBean {
             this.type = type;
         }
 
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getP_id() {
-            return p_id;
-        }
-
-        public void setP_id(String p_id) {
-            this.p_id = p_id;
-        }
-
         public String getUser_id() {
             return user_id;
         }
@@ -211,84 +203,12 @@ public class SearchResultBean {
             this.user_id = user_id;
         }
 
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getThumb() {
-            return thumb;
-        }
-
-        public void setThumb(String thumb) {
-            this.thumb = thumb;
-        }
-
-        public String getThumbqq() {
+        public List<String> getThumbqq() {
             return thumbqq;
         }
 
-        public void setThumbqq(String thumbqq) {
+        public void setThumbqq(List<String> thumbqq) {
             this.thumbqq = thumbqq;
-        }
-
-        public String getSex() {
-            return sex;
-        }
-
-        public void setSex(String sex) {
-            this.sex = sex;
-        }
-
-        public String getMobile_province() {
-            return mobile_province;
-        }
-
-        public void setMobile_province(String mobile_province) {
-            this.mobile_province = mobile_province;
-        }
-
-        public String getIs_pass() {
-            return is_pass;
-        }
-
-        public void setIs_pass(String is_pass) {
-            this.is_pass = is_pass;
-        }
-
-        public List<String> getQQImage() {
-            return QQImage;
-        }
-
-        public void setQQImage(List<String> QQImage) {
-            this.QQImage = QQImage;
-        }
-
-//        public List<String> getIphone_list() {
-//            return Iphone_list;
-//        }
-//
-//        public void setIphone_list(List<String> Iphone_list) {
-//            this.Iphone_list = Iphone_list;
-//        }
-
-        public List<String> getQQName_Number() {
-            return QQName_Number;
-        }
-
-        public void setQQName_Number(List<String> QQName_Number) {
-            this.QQName_Number = QQName_Number;
         }
     }
 }

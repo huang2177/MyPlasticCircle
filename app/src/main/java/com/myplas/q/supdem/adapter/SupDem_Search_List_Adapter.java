@@ -65,18 +65,18 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
-        viewHolder.textView_title.setText(list.get(position).getCompany());
+        viewHolder.textView_title.setText(list.get(position).getC_name());
         String forward = (list.get(position).getType().equals("9")) ?
-                (list.get(position).getISForward()) :
-                ((list.get(position).getISForward().equals("1")) ? ("现货") : ("期货"));
-        viewHolder.textView_content.setText("货物位置:"+list.get(position).getGoodssPosition()+
-                "  牌号:"+list.get(position).getPlsticNumber()+
-                "  产地:"+list.get(position).getProduction()+
-                "  价格:" + list.get(position).getPrice() +
+                (list.get(position).getCargo_type()) :
+                ((list.get(position).getCargo_type().equals("1")) ? ("现货") : ("期货"));
+        viewHolder.textView_content.setText("货物位置:"+list.get(position).getStore_house()+
+                "  牌号:"+list.get(position).getModel()+
+                "  产地:"+list.get(position).getProduce_place_one()+
+                "  价格:" + list.get(position).getUnit_price() +
                 "  " + forward);
         viewHolder.textView_time.setText((list.get(position).getType().equals("9"))?
-                ("来自QQ群  "+list.get(position).getUpdateTime()):
-                ("来自供求  "+list.get(position).getUpdateTime()));
+                ("来自QQ群  "+list.get(position).getUpdate_time()):
+                ("来自供求  "+list.get(position).getUpdate_time()));
         return convertView;
     }
     class viewHolder {

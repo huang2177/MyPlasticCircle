@@ -24,13 +24,19 @@ import com.myplas.q.R;
 
 public class PinnedHeaderListView extends ListView implements OnScrollListener {
     private OnScrollListener mOnScrollListener;
+
     public static interface PinnedSectionedHeaderAdapter {
         public boolean isSectionHeader(int position);
+
         public int getSectionForPosition(int position);
+
         public View getSectionHeaderView(int section, View convertView, ViewGroup parent);
+
         public int getSectionHeaderViewType(int section);
+
         public int getCount();
     }
+
     private PinnedSectionedHeaderAdapter mAdapter;
     private View mCurrentHeader;
     private int mCurrentHeaderViewType = 0;
@@ -39,24 +45,29 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
     private int mCurrentSection = 0;
     private int mWidthMode;
     private int mHeightMode;
+
     public PinnedHeaderListView(Context context) {
         super(context);
         super.setOnScrollListener(this);
         initWithContext(context);
     }
+
     public PinnedHeaderListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOnScrollListener(this);
         initWithContext(context);
     }
+
     public PinnedHeaderListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         super.setOnScrollListener(this);
         initWithContext(context);
     }
+
     public void setPinHeaders(boolean shouldPin) {
         mShouldPin = shouldPin;
     }
+
     @Override
     public void setAdapter(ListAdapter adapter) {
         mCurrentHeader = null;
@@ -67,6 +78,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         }
         super.setAdapter(adapter);
     }
+
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         mTotalItemCount = totalItemCount;
@@ -106,6 +118,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         }
         invalidate();
     }
+
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -114,6 +127,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         }
 
     }
+
     private View getSectionHeaderView(int section, View oldView) {
         boolean shouldLayout = section != mCurrentSection || oldView == null;
         View view = mAdapter.getSectionHeaderView(section, oldView, this);
@@ -124,6 +138,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         }
         return view;
     }
+
     private void ensurePinnedHeaderLayout(View header) {
         if (header.isLayoutRequested()) {
             int widthSpec = MeasureSpec.makeMeasureSpec(getMeasuredWidth(), mWidthMode);
@@ -138,6 +153,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
             header.layout(0, 0, header.getMeasuredWidth(), header.getMeasuredHeight());
         }
     }
+
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
@@ -149,19 +165,23 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         mCurrentHeader.draw(canvas);
         canvas.restoreToCount(saveCount);
     }
+
     @Override
     public void setOnScrollListener(OnScrollListener l) {
         mOnScrollListener = l;
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         mWidthMode = MeasureSpec.getMode(widthMeasureSpec);
         mHeightMode = MeasureSpec.getMode(heightMeasureSpec);
     }
+
     public void setOnItemClickListener(PinnedHeaderListView.OnItemClickListener listener) {
         super.setOnItemClickListener(listener);
     }
+
     public static abstract class OnItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int rawPosition, long id) {
@@ -180,10 +200,11 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
                 onItemClick(adapterView, view, section, position, id);
             }
         }
+
         public abstract void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id);
+
         public abstract void onSectionClick(AdapterView<?> adapterView, View view, int section, long id);
     }
-
 
 
     private float mLastY = -1; // save event y
@@ -217,7 +238,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
     private final static int SCROLL_DURATION = 400; // scroll back duration
     private final static int PULL_LOAD_MORE_DELTA = 50; // when pull up >= 50px// at bottom, trigger// load more.
     private final static float OFFSET_RADIO = 1.8f; // support iOS like pull// feature.
-
 
 
     private void initWithContext(Context context) {
@@ -262,6 +282,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
             findViewById(R.id.header_view).setVisibility(VISIBLE);
         }
     }
+
     /**
      * enable or disable pull up load more feature.
      *
@@ -285,6 +306,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
             });
         }
     }
+
     /**
      * stop refresh, reset header view.
      */
@@ -294,6 +316,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
             resetHeaderHeight();
         }
     }
+
     /**
      * stop load more, reset footer view.
      */
@@ -303,6 +326,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
             mFooterView.setState(XListViewFooter.STATE_NORMAL);
         }
     }
+
     /**
      * set last refresh time
      *
@@ -318,6 +342,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
             l.onXScrolling(this);
         }
     }
+
     private void updateHeaderHeight(float delta) {
         mHeaderView.setVisiableHeight((int) delta
                 + mHeaderView.getVisiableHeight());
@@ -367,6 +392,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         mFooterView.setBottomMargin(height);
 //		setSelection(mTotalItemCount - date_selected); // scroll to bottom
     }
+
     private void resetFooterHeight() {
         int bottomMargin = mFooterView.getBottomMargin();
         if (bottomMargin > 0) {
@@ -376,6 +402,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
             invalidate();
         }
     }
+
     private void startLoadMore() {
         mPullLoading = true;
         mFooterView.setState(XListViewFooter.STATE_LOADING);
@@ -383,6 +410,7 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
             mListViewListener.onLoadMore();
         }
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (mLastY == -1) {
@@ -444,9 +472,11 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         }
         super.computeScroll();
     }
+
     public void setXListViewListener(IXListViewListener l) {
         mListViewListener = l;
     }
+
     /**
      * you can listen ListView.OnScrollListener or this one. it will invoke
      * onXScrolling when header/footer scroll back.
@@ -454,11 +484,13 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
     public interface OnXScrollListener extends OnScrollListener {
         public void onXScrolling(View view);
     }
+
     /**
      * implements this interface to get refresh/load more event.
      */
     public interface IXListViewListener {
         public void onRefresh();
+
         public void onLoadMore();
     }
 }

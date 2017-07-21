@@ -81,7 +81,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         }
     }
     public void initView() {
-
         img_tx = F(R.id.xq_tx);
         img_rz = F(R.id.xq_rz);
         btn_gz = F(R.id.xq_gz);

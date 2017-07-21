@@ -39,7 +39,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:33
  */
-public class LookMeAdapter extends SectionedBaseAdapter implements ResultCallBack, DialogShowUtils.DialogShowInterface {
+public class LookMeAdapter extends SectionedBaseAdapter  {
     String userid;
     Context context;
     List<String> time;
@@ -47,7 +47,6 @@ public class LookMeAdapter extends SectionedBaseAdapter implements ResultCallBac
     Map<Integer, LinearLayout> map1;
     List<LookMeBean.DataBean.HistoryBean> list;
     List<LookMeBean.DataBean.HistoryBean.PersonBean> listPerson;
-
     public LookMeAdapter(Context context, List<LookMeBean.DataBean.HistoryBean> list) {
         this.list = list;
         this.context = context;
@@ -72,7 +71,8 @@ public class LookMeAdapter extends SectionedBaseAdapter implements ResultCallBac
     @Override
     public int getSectionCount() {
         if (list != null)
-            return list.size();
+
+        return list.size();
         return 0;
     }
 
@@ -109,7 +109,7 @@ public class LookMeAdapter extends SectionedBaseAdapter implements ResultCallBac
             } else if (listPerson.get(position).getIsvip().equals("1")) {
                 viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
             }
-            convertView.setOnClickListener(new MyOnClickListener(position, listPerson));
+
         } catch (Exception e) {
         }
         return convertView;
@@ -130,88 +130,15 @@ public class LookMeAdapter extends SectionedBaseAdapter implements ResultCallBac
             convertView = map.get(section);
             viewHolder = (viewHearderHolder) convertView.getTag();
         }
-        viewHolder.time.setText(list.get(section).getTime());
+        try {
+            Log.e("==========",list.size()+"======");
+            viewHolder.time.setText(list.get(section).getTime());
+        } catch (Exception e) {
+
+        }
         return convertView;
     }
 
-    public class MyOnClickListener implements View.OnClickListener {
-        int position;
-        List<LookMeBean.DataBean.HistoryBean.PersonBean> listPerson;
-
-        public MyOnClickListener(int position, List<LookMeBean.DataBean.HistoryBean.PersonBean> listPerson) {
-            this.position = position;
-            this.listPerson = listPerson;
-        }
-
-        @Override
-        public void onClick(View v) {
-            userid = "53402";
-            //userid=listPerson.get(position).getDate();
-            getPersonInfoData(userid, "1", 5);
-        }
-    }
-
-    public void getPersonInfoData(String userid, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", SharedUtils.getSharedUtils().getData(context, "token"));
-        map.put("user_id", userid);
-        map.put("showType", showtype);
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn(context, url, map, this, type);
-    }
-
-    @Override
-    public void callBack(Object object, int type) {
-        try {
-            Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
-
-            //是否消耗积分
-            if (type == 5 && err.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(context, content, 1, this);
-            }
-            //已经消耗积分
-            if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(context, PersonInfoActivity.class);
-                intent.putExtra("userid", userid);
-                intent.putExtra("id", userid);
-                context.startActivity(intent);
-            }
-            //减积分成功
-            if (type == 2 && err.equals("0")) {
-                Intent intent = new Intent(context, PersonInfoActivity.class);
-                intent.putExtra("userid", userid);
-                intent.putExtra("id", userid);
-                context.startActivity(intent);
-            }
-            //积分不足
-            if (type == 2 && !err.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(context, content, (err.equals("100")) ? (2) : (3), this);
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void ok(int type) {
-        switch (type) {
-            case 1:
-                getPersonInfoData(userid, "5", 2);
-                break;
-            case 2:
-                context.startActivity(new Intent(context, IntegralPayActivtity.class));
-                break;
-        }
-    }
-
-    @Override
-    public void failCallBack(int type) {
-
-    }
     class viewHolder {
         ImageView tx, rz;
         LinearLayout layout;

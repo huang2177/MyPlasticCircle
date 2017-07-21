@@ -11,37 +11,40 @@ import java.util.List;
  */
 public class MyZone implements Serializable{
 
+
     /**
      * err : 0
-     * s_in_count : 12
-     * s_out_count : 23
-     * points : 1875
+     * s_in_count : 0
+     * s_out_count : 0
+     * points : 2455
      * leaveword : 0
+     * myviewhistory : 585
      * message : 0
      * introduction : 0
-     * myfans : 5
+     * myfans : 6
      * myconcerns : 4
-     * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/06/02/5930dda0bd3b9.jpg","thumbqq":"http://pic.myplas.com/upload/17/06/02/5930dda0bd3b9.jpg","thumbcard":"http://pic.myplas.com/upload/17/05/31/592e692398985.jpg","c_name":"上海中晨电子商务股份有限公司","credit_level":"AAAAA","credit_limit":"600.00","is_credit":"1","pre_credit_limit":"600.00","credit_time":"1488357059","sex":"0"}
+     * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg","thumbcard":"http://pic.myplas.com/upload/17/07/07/595f20fa7ab89.jpg","c_name":"上海中晨电子商务股份有限公司","credit_level":"AAAAA","credit_limit":"600.00","is_credit":"1","pre_credit_limit":"600.00","credit_time":"1488357059","sex":"0"}
      * help : ["http://statics.myplas.com/myapp/img/h1.jpg","http://statics.myplas.com/myapp/img/h2.jpg","http://statics.myplas.com/myapp/img/h3.jpg","http://statics.myplas.com/myapp/img/h4.jpg","http://statics.myplas.com/myapp/img/h5.jpg"]
      */
 
-    private int err;
+    private String err;
     private String s_in_count;
     private String s_out_count;
     private String points;
-    private int leaveword;
-    private int message;
-    private int introduction;
-    private int myfans;
-    private int myconcerns;
+    private String leaveword;
+    private String myviewhistory;
+    private String message;
+    private String introduction;
+    private String myfans;
+    private String myconcerns;
     private DataBean data;
     private List<String> help;
 
-    public int getErr() {
+    public String getErr() {
         return err;
     }
 
-    public void setErr(int err) {
+    public void setErr(String err) {
         this.err = err;
     }
 
@@ -69,43 +72,51 @@ public class MyZone implements Serializable{
         this.points = points;
     }
 
-    public int getLeaveword() {
+    public String getLeaveword() {
         return leaveword;
     }
 
-    public void setLeaveword(int leaveword) {
+    public void setLeaveword(String leaveword) {
         this.leaveword = leaveword;
     }
 
-    public int getMessage() {
+    public String getMyviewhistory() {
+        return myviewhistory;
+    }
+
+    public void setMyviewhistory(String myviewhistory) {
+        this.myviewhistory = myviewhistory;
+    }
+
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(int message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 
-    public int getIntroduction() {
+    public String getIntroduction() {
         return introduction;
     }
 
-    public void setIntroduction(int introduction) {
+    public void setIntroduction(String introduction) {
         this.introduction = introduction;
     }
 
-    public int getMyfans() {
+    public String getMyfans() {
         return myfans;
     }
 
-    public void setMyfans(int myfans) {
+    public void setMyfans(String myfans) {
         this.myfans = myfans;
     }
 
-    public int getMyconcerns() {
+    public String getMyconcerns() {
         return myconcerns;
     }
 
-    public void setMyconcerns(int myconcerns) {
+    public void setMyconcerns(String myconcerns) {
         this.myconcerns = myconcerns;
     }
 
@@ -132,9 +143,9 @@ public class MyZone implements Serializable{
          * c_id : 5041
          * mobile : 15378412400
          * is_pass : 0
-         * thumb : http://pic.myplas.com/upload/17/06/02/5930dda0bd3b9.jpg
-         * thumbqq : http://pic.myplas.com/upload/17/06/02/5930dda0bd3b9.jpg
-         * thumbcard : http://pic.myplas.com/upload/17/05/31/592e692398985.jpg
+         * thumb : http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg
+         * thumbqq : http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg
+         * thumbcard : http://pic.myplas.com/upload/17/07/07/595f20fa7ab89.jpg
          * c_name : 上海中晨电子商务股份有限公司
          * credit_level : AAAAA
          * credit_limit : 600.00

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private ImageButton imageButton;
     private ScrollView scrollingView;
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
-    private TextView text_gj, text_qg, text_yj, text_fs, text_gz, text_ly, text_xx, text_gx, text_gs, text_name_tel;
+    private TextView text_gj, text_qg, text_yj, text_fs, text_gz,text_look, text_ly, text_xx, text_gx, text_gs, text_name_tel;
     private TextView text_title_gj, text_title_qg, text_title_ly, text_title_yj, text_title_fs, text_title_gz, text_title_jf;
     private LinearLayout linear_changepass, linear_title, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_look, linear_ly, linear_xx, linear_jf, linear_bz, linear_gx, linear_edu, linear_pz, linear_share;
 
@@ -93,6 +94,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         text_yj = f(R.id.wd_text_yj);
         text_fs = f(R.id.wd_text_fs);
         text_gz = f(R.id.wd_text_gz);
+        text_look=f(R.id.wd_text_look);
         text_ly = f(R.id.wd_text_ly);
         text_xx = f(R.id.wd_text_xx);
         text_gx = f(R.id.wd_text_gx);
@@ -277,6 +279,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                 if ("0".equals(jsonObject.getString("err"))) {
                     myZone = gson.fromJson(object.toString(), MyZone.class);
                     showInfo(myZone);
+                    Log.e("------",object.toString());
                 } else if ("1".equals(jsonObject.getString("err")) || "998".equals(jsonObject.getString("err"))) {
                     sharedUtils.setData(getActivity(), "token", "");
                     sharedUtils.setData(getActivity(), "userid", "");
@@ -340,6 +343,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             text_yj.setText(myZone.getIntroduction() + "  ");
             text_fs.setText(myZone.getMyfans() + "  ");
             text_gz.setText(myZone.getMyconcerns() + "  ");
+            text_look.setText(myZone.getMyviewhistory()+"  ");
             text_ly.setText("未读留言" + myZone.getLeaveword() + "  ");
             text_xx.setText("未读消息" + myZone.getMessage() + "  ");
         } catch (Exception e) {

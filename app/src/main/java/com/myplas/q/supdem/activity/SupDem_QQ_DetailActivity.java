@@ -106,8 +106,8 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     //获取数据
     public void getSearch_Detail() {
         Map map = new HashMap();
-        map.put("company", getIntent().getStringExtra("company"));
-        map.put("plastic_number", getIntent().getStringExtra("plastic_number"));
+        map.put("c_name", getIntent().getStringExtra("company"));
+        map.put("model", getIntent().getStringExtra("plastic_number"));
         postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH_DETAIL, map, this, 1);
     }
 
@@ -122,7 +122,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         try {
             switch (v.getId()) {
                 case R.id.supdem_qq_layout_zx:
-                    if (detailBean.getShowInformation().size() == 0) {
+                    if (detailBean.getShow_information().size() == 0) {
                         return;
                     }
                     if (!isClicked1) {
@@ -131,7 +131,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                         listView_zx.setVisibility(View.VISIBLE);
                         layout_zx_more.setVisibility(View.VISIBLE);
                         adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
-                        adapter.setList_showinfo(detailBean.getShowInformation());
+                        adapter.setList_showinfo(detailBean.getShow_information());
                         listView_zx.setAdapter(adapter);
                     } else {
                         isClicked1 = false;
@@ -141,7 +141,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     break;
                 case R.id.supdem_qq_layout_find:
-                    if (detailBean.getFriendSearch().size() == 0) {
+                    if (detailBean.getFind_relevant().size() == 0) {
                         TextUtils.Toast(this, "没有相关数据！");
                         return;
                     }
@@ -150,7 +150,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                         img_find.setImageResource(R.drawable.icon_more_hl);
                         listView_find.setVisibility(View.VISIBLE);
                         adapter = new SupDem_Search_QQ_Detail_Adapter(this, 2);
-                        adapter.setList_friend(detailBean.getFriendSearch());
+                        adapter.setList_friend(detailBean.getFind_relevant());
                         listView_find.setAdapter(adapter);
                     } else {
                         isClicked2 = false;
@@ -172,7 +172,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     break;
                 case R.id.supdem_qq_layout_tell:
-                    if (detailBean.getIphoneList().size() == 0) {
+                    if (detailBean.getMobile_list().size() == 0) {
                         TextUtils.Toast(this, "没有相关数据！");
                         return;
                     }
@@ -182,7 +182,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                         listview_tell.setVisibility(View.VISIBLE);
                         listview_tell.setSelection(layout_tell.getChildCount());
                         adapter = new SupDem_Search_QQ_Detail_Adapter(this, 3);
-                        adapter.setList_phone(detailBean.getIphoneList());
+                        adapter.setList_phone(detailBean.getMobile_list());
                         listview_tell.setAdapter(adapter);
                     } else {
                         isClicked3 = false;
@@ -206,14 +206,14 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
             switch (parent.getId()) {
                 case R.id.supdem_qq_listview_zx:
                     Intent intent = new Intent(this, Head_Lines_DetailActivity.class);
-                    intent.putExtra("title", detailBean.getShowInformation().get(position).getCate_name());
-                    intent.putExtra("id", detailBean.getShowInformation().get(position).getId());
+                    intent.putExtra("title", detailBean.getShow_information().get(position).getCate_name());
+                    intent.putExtra("id", detailBean.getShow_information().get(position).getId());
                     startActivity(intent);
                     break;
                 case R.id.supdem_qq_listview_find:
                     break;
                 case R.id.supdem_qq_listview_tell:
-                    call(detailBean.getIphoneList().get(position).getIphone());
+                    call(detailBean.getMobile_list().get(position).getMobile());
                     break;
             }
         } catch (Exception e) {
@@ -224,6 +224,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
+            Log.e("---------" + type, object.toString());
             boolean err = new JSONObject(object.toString()).getString("err").equals("0");
             if (type == 1 && err) {
                 SearchResultDetailBean bean = gson.fromJson(object.toString(), SearchResultDetailBean.class);
@@ -231,7 +232,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                 showInfo(detailBean);
 
                 adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
-                adapter.setList_showinfo(detailBean.getShowInformation());
+                adapter.setList_showinfo(detailBean.getShow_information());
                 listView_zx.setAdapter(adapter);
             }
             if (type == 2 && err) {
@@ -242,19 +243,16 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     }
 
     public void showInfo(SearchResultDetailBean.DataBean detailBean) {
-//        String forward = (detailBean..getType().equals("9")) ?
-//                (list.get(position).getISForward()) :
-//                ((list.get(position).getISForward().equals("1")) ? ("现货") : ("期货"));
-        title_rs.setText(detailBean.getCompany());
-        text_gs.setText(detailBean.getCompany());
-        text_qq_num.setText(detailBean.getQQNumber());
-        text_hw.setText(detailBean.getGoodssPosition());
-        text_ph.setText(detailBean.getPlsticNumber());
-        text_chd.setText(detailBean.getProduction());
-        text_jg.setText(detailBean.getPrice());
-        text_xq.setText(detailBean.getISForward());
-        text_qq.setText(detailBean.getQQName());
-        Glide.with(this).load(detailBean.getQQImage()).placeholder(R.drawable.contact_image_defaul_male).into(roundImagView);
+        title_rs.setText(detailBean.getC_name());
+        text_gs.setText(detailBean.getC_name());
+        text_qq_num.setText(detailBean.getQq());
+        text_hw.setText(detailBean.getStore_house());
+        text_ph.setText(detailBean.getModel());
+        text_chd.setText(detailBean.getProduce_place());
+        text_jg.setText(detailBean.getUnit_price());
+        text_xq.setText(detailBean.getCargo_type());
+        text_qq.setText(detailBean.getQq_name());
+        Glide.with(this).load(detailBean.getThumbqq()).placeholder(R.drawable.contact_image_defaul_male).into(roundImagView);
     }
 
     public void onResume() {

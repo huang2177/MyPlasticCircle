@@ -51,13 +51,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_gravity="right">
-
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="0.8"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textSize="14.0sp" />
             <TextView
                 android:id="@+id/fx_tt_title_author"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:layout_weight="1"
+                android:layout_weight="0.2"
                 android:singleLine="true"
                 android:textSize="14.0sp" />
 
@@ -84,7 +91,7 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="4px"
+            android:layout_height="3px"
             android:layout_marginTop="2dp"
             android:background="@color/color_lightgray"></View>
     </LinearLayout>

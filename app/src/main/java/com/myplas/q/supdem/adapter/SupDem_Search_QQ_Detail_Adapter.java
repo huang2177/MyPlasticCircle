@@ -29,8 +29,8 @@ import static android.R.id.list;
 public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
     int type;
     Context context;
-    List<SearchResultDetailBean.DataBean.IphoneListBean> list_phone;
-    List<SearchResultDetailBean.DataBean.FriendSearchBean> list_friend;
+    List<SearchResultDetailBean.DataBean.MobileListBean> list_phone;
+    List<SearchResultDetailBean.DataBean.FindRelevantBean> list_friend;
     List<SearchResultDetailBean.DataBean.ShowInformationBean> list_showinfo;
 
     public SupDem_Search_QQ_Detail_Adapter(Context context, int type) {
@@ -38,11 +38,11 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
         this.type = type;
     }
 
-    public void setList_phone(List<SearchResultDetailBean.DataBean.IphoneListBean> list_phone) {
+    public void setList_phone(List<SearchResultDetailBean.DataBean.MobileListBean> list_phone) {
         this.list_phone = list_phone;
     }
 
-    public void setList_friend(List<SearchResultDetailBean.DataBean.FriendSearchBean> list_friend) {
+    public void setList_friend(List<SearchResultDetailBean.DataBean.FindRelevantBean> list_friend) {
         this.list_friend = list_friend;
     }
 
@@ -100,12 +100,12 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
             viewHolder.textView_zx_content.setText(list_showinfo.get(position).getTitle());
             viewHolder.textView_zx_title.setText(list_showinfo.get(position).getCate_name());
         } else if (type == 2) {
-            viewHolder.textView_find1.setText(list_friend.get(position).getCompany());
+            viewHolder.textView_find1.setText(list_friend.get(position).getC_name());
             viewHolder.textView_find2.setText(list_friend.get(position).getMobile());
-            viewHolder.textView_find3.setText(list_friend.get(position).getContent());
-            Glide.with(context).load(list_friend.get(position).getQQImage()).into(viewHolder.imageView);
+            viewHolder.textView_find3.setText(list_friend.get(position).getModel());
+            Glide.with(context).load(list_friend.get(position).getThumbqq()).into(viewHolder.imageView);
         } else {
-            viewHolder.textView_tell.setText(list_phone.get(position).getUserName() + "  " + list_phone.get(position).getIphone());
+            viewHolder.textView_tell.setText(list_phone.get(position).getName() + "  " + list_phone.get(position).getMobile());
         }
         return convertView;
     }

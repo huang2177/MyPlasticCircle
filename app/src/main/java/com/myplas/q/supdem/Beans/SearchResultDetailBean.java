@@ -12,7 +12,7 @@ public class SearchResultDetailBean {
 
     /**
      * err : 0
-     * data : {"Company":"广东金柏能新材料有限公司","Production":"P-伊朗石化(火炬)","ISForward":"现货","Price":"0","PlsticNumber":"7000F","QQName":"金柏能 林晓君","QQNumber":"852049434","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=852049434&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","Isbuy":"0","GoodssPosition":"上海","ShowInformation":[{"id":"29795","title":"齐鲁石化HDPE装置停车","cate_name":"装置动态"},{"id":"29821","title":"上游早报：原油及PVC单体5月2日收盘价格","cate_name":"上游动态"},false],"FriendSearch":[{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"IphoneList":[{"Iphone":"13502944480","UserName":"刘旭春"},{"Iphone":"13502977802","UserName":"佘松鑫"},{"Iphone":"13592821215","UserName":"许华泳"},{"Iphone":"13592862198","UserName":"林晓君"}],"PlasticPhysicalTable":""}
+     * data : {"c_name":"明年我的时候","produce_place":"","cargo_type":"现货","unit_price":"0","model":"7000F","qq_name":"灿灿1943","qq":"183097697","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=183097697&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","is_buy":"1","store_house":"上海","show_information":[{"id":"40426","title":"中沙天津石化HDPE装置开车动态","cate_name":"装置动态"},{"id":"43110","title":"上游早报：原油及PVC单体7月12日收盘价格","cate_name":"上游动态"},{"id":"43250","title":"新闻早提示","cate_name":"早提示"}],"find_relevant":[{"c_name":"上海天业国际贸易有限公司","mobile":"15618650630","model":"7000F","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1516657714&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"上海田塑化工有限公司","mobile":"13388572729","model":"7000F","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=4972776&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"mobile_list":[{"mobile":"13806260431","name":"刘招"}],"physical":""}
      */
 
     private int err;
@@ -36,153 +36,153 @@ public class SearchResultDetailBean {
 
     public static class DataBean {
         /**
-         * Company : 广东金柏能新材料有限公司
-         * Production : P-伊朗石化(火炬)
-         * ISForward : 现货
-         * Price : 0
-         * PlsticNumber : 7000F
-         * QQName : 金柏能 林晓君
-         * QQNumber : 852049434
-         * QQImage : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=852049434&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
-         * Isbuy : 0
-         * GoodssPosition : 上海
-         * ShowInformation : [{"id":"29795","title":"齐鲁石化HDPE装置停车","cate_name":"装置动态"},{"id":"29821","title":"上游早报：原油及PVC单体5月2日收盘价格","cate_name":"上游动态"},false]
-         * FriendSearch : [{"company":"山东日聚电子商务有限公司","mobile":"15666617220","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海中晨电子商务股份有限公司","mobile":"13816297484","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=137111752&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海华浩彤贸易有限公司","mobile":"15896851245","content":"7000f","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2694067915&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"上海塑米信息科技有限公司","mobile":"13658961254","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1172786508&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"company":"中化塑料有限公司","mobile":"15900859805","content":"7000F","QQImage":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2430778164&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}]
-         * IphoneList : [{"Iphone":"13502944480","UserName":"刘旭春"},{"Iphone":"13502977802","UserName":"佘松鑫"},{"Iphone":"13592821215","UserName":"许华泳"},{"Iphone":"13592862198","UserName":"林晓君"}]
-         * PlasticPhysicalTable :
+         * c_name : 明年我的时候
+         * produce_place :
+         * cargo_type : 现货
+         * unit_price : 0
+         * model : 7000F
+         * qq_name : 灿灿1943
+         * qq : 183097697
+         * thumbqq : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=183097697&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
+         * is_buy : 1
+         * store_house : 上海
+         * show_information : [{"id":"40426","title":"中沙天津石化HDPE装置开车动态","cate_name":"装置动态"},{"id":"43110","title":"上游早报：原油及PVC单体7月12日收盘价格","cate_name":"上游动态"},{"id":"43250","title":"新闻早提示","cate_name":"早提示"}]
+         * find_relevant : [{"c_name":"上海天业国际贸易有限公司","mobile":"15618650630","model":"7000F","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1516657714&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"上海田塑化工有限公司","mobile":"13388572729","model":"7000F","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=4972776&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}]
+         * mobile_list : [{"mobile":"13806260431","name":"刘招"}]
+         * physical :
          */
 
-        private String Company;
-        private String Production;
-        private String ISForward;
-        private String Price;
-        private String PlsticNumber;
-        private String QQName;
-        private String QQNumber;
-        private String QQImage;
-        private String Isbuy;
-        private String GoodssPosition;
-        private String PlasticPhysicalTable;
-        private List<ShowInformationBean> ShowInformation;
-        private List<FriendSearchBean> FriendSearch;
-        private List<IphoneListBean> IphoneList;
+        private String c_name;
+        private String produce_place;
+        private String cargo_type;
+        private String unit_price;
+        private String model;
+        private String qq_name;
+        private String qq;
+        private String thumbqq;
+        private String is_buy;
+        private String store_house;
+        private String physical;
+        private List<ShowInformationBean> show_information;
+        private List<FindRelevantBean> find_relevant;
+        private List<MobileListBean> mobile_list;
 
-        public String getCompany() {
-            return Company;
+        public String getC_name() {
+            return c_name;
         }
 
-        public void setCompany(String Company) {
-            this.Company = Company;
+        public void setC_name(String c_name) {
+            this.c_name = c_name;
         }
 
-        public String getProduction() {
-            return Production;
+        public String getProduce_place() {
+            return produce_place;
         }
 
-        public void setProduction(String Production) {
-            this.Production = Production;
+        public void setProduce_place(String produce_place) {
+            this.produce_place = produce_place;
         }
 
-        public String getISForward() {
-            return ISForward;
+        public String getCargo_type() {
+            return cargo_type;
         }
 
-        public void setISForward(String ISForward) {
-            this.ISForward = ISForward;
+        public void setCargo_type(String cargo_type) {
+            this.cargo_type = cargo_type;
         }
 
-        public String getPrice() {
-            return Price;
+        public String getUnit_price() {
+            return unit_price;
         }
 
-        public void setPrice(String Price) {
-            this.Price = Price;
+        public void setUnit_price(String unit_price) {
+            this.unit_price = unit_price;
         }
 
-        public String getPlsticNumber() {
-            return PlsticNumber;
+        public String getModel() {
+            return model;
         }
 
-        public void setPlsticNumber(String PlsticNumber) {
-            this.PlsticNumber = PlsticNumber;
+        public void setModel(String model) {
+            this.model = model;
         }
 
-        public String getQQName() {
-            return QQName;
+        public String getQq_name() {
+            return qq_name;
         }
 
-        public void setQQName(String QQName) {
-            this.QQName = QQName;
+        public void setQq_name(String qq_name) {
+            this.qq_name = qq_name;
         }
 
-        public String getQQNumber() {
-            return QQNumber;
+        public String getQq() {
+            return qq;
         }
 
-        public void setQQNumber(String QQNumber) {
-            this.QQNumber = QQNumber;
+        public void setQq(String qq) {
+            this.qq = qq;
         }
 
-        public String getQQImage() {
-            return QQImage;
+        public String getThumbqq() {
+            return thumbqq;
         }
 
-        public void setQQImage(String QQImage) {
-            this.QQImage = QQImage;
+        public void setThumbqq(String thumbqq) {
+            this.thumbqq = thumbqq;
         }
 
-        public String getIsbuy() {
-            return Isbuy;
+        public String getIs_buy() {
+            return is_buy;
         }
 
-        public void setIsbuy(String Isbuy) {
-            this.Isbuy = Isbuy;
+        public void setIs_buy(String is_buy) {
+            this.is_buy = is_buy;
         }
 
-        public String getGoodssPosition() {
-            return GoodssPosition;
+        public String getStore_house() {
+            return store_house;
         }
 
-        public void setGoodssPosition(String GoodssPosition) {
-            this.GoodssPosition = GoodssPosition;
+        public void setStore_house(String store_house) {
+            this.store_house = store_house;
         }
 
-        public String getPlasticPhysicalTable() {
-            return PlasticPhysicalTable;
+        public String getPhysical() {
+            return physical;
         }
 
-        public void setPlasticPhysicalTable(String PlasticPhysicalTable) {
-            this.PlasticPhysicalTable = PlasticPhysicalTable;
+        public void setPhysical(String physical) {
+            this.physical = physical;
         }
 
-        public List<ShowInformationBean> getShowInformation() {
-            return ShowInformation;
+        public List<ShowInformationBean> getShow_information() {
+            return show_information;
         }
 
-        public void setShowInformation(List<ShowInformationBean> ShowInformation) {
-            this.ShowInformation = ShowInformation;
+        public void setShow_information(List<ShowInformationBean> show_information) {
+            this.show_information = show_information;
         }
 
-        public List<FriendSearchBean> getFriendSearch() {
-            return FriendSearch;
+        public List<FindRelevantBean> getFind_relevant() {
+            return find_relevant;
         }
 
-        public void setFriendSearch(List<FriendSearchBean> FriendSearch) {
-            this.FriendSearch = FriendSearch;
+        public void setFind_relevant(List<FindRelevantBean> find_relevant) {
+            this.find_relevant = find_relevant;
         }
 
-        public List<IphoneListBean> getIphoneList() {
-            return IphoneList;
+        public List<MobileListBean> getMobile_list() {
+            return mobile_list;
         }
 
-        public void setIphoneList(List<IphoneListBean> IphoneList) {
-            this.IphoneList = IphoneList;
+        public void setMobile_list(List<MobileListBean> mobile_list) {
+            this.mobile_list = mobile_list;
         }
 
         public static class ShowInformationBean {
             /**
-             * id : 29795
-             * title : 齐鲁石化HDPE装置停车
+             * id : 40426
+             * title : 中沙天津石化HDPE装置开车动态
              * cate_name : 装置动态
              */
 
@@ -215,25 +215,25 @@ public class SearchResultDetailBean {
             }
         }
 
-        public static class FriendSearchBean {
+        public static class FindRelevantBean {
             /**
-             * company : 山东日聚电子商务有限公司
-             * mobile : 15666617220
-             * content : 7000F
-             * QQImage : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=282443191&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
+             * c_name : 上海天业国际贸易有限公司
+             * mobile : 15618650630
+             * model : 7000F
+             * thumbqq : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1516657714&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
              */
 
-            private String company;
+            private String c_name;
             private String mobile;
-            private String content;
-            private String QQImage;
+            private String model;
+            private String thumbqq;
 
-            public String getCompany() {
-                return company;
+            public String getC_name() {
+                return c_name;
             }
 
-            public void setCompany(String company) {
-                this.company = company;
+            public void setC_name(String c_name) {
+                this.c_name = c_name;
             }
 
             public String getMobile() {
@@ -244,46 +244,46 @@ public class SearchResultDetailBean {
                 this.mobile = mobile;
             }
 
-            public String getContent() {
-                return content;
+            public String getModel() {
+                return model;
             }
 
-            public void setContent(String content) {
-                this.content = content;
+            public void setModel(String model) {
+                this.model = model;
             }
 
-            public String getQQImage() {
-                return QQImage;
+            public String getThumbqq() {
+                return thumbqq;
             }
 
-            public void setQQImage(String QQImage) {
-                this.QQImage = QQImage;
+            public void setThumbqq(String thumbqq) {
+                this.thumbqq = thumbqq;
             }
         }
 
-        public static class IphoneListBean {
+        public static class MobileListBean {
             /**
-             * Iphone : 13502944480
-             * UserName : 刘旭春
+             * mobile : 13806260431
+             * name : 刘招
              */
 
-            private String Iphone;
-            private String UserName;
+            private String mobile;
+            private String name;
 
-            public String getIphone() {
-                return Iphone;
+            public String getMobile() {
+                return mobile;
             }
 
-            public void setIphone(String Iphone) {
-                this.Iphone = Iphone;
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
             }
 
-            public String getUserName() {
-                return UserName;
+            public String getName() {
+                return name;
             }
 
-            public void setUserName(String UserName) {
-                this.UserName = UserName;
+            public void setName(String name) {
+                this.name = name;
             }
         }
     }
