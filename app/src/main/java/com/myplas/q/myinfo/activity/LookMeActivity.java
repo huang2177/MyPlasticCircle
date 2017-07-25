@@ -42,7 +42,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:15
  */
-public class LookMeActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface {
+public class LookMeActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface, LookMeAdapter.OnItemClickListener {
     private String mode;
     private String userid;
     private boolean hasMoreData;
@@ -99,18 +99,6 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
         });
     }
     public void setListener(final int position){
-        mListViews.get(position).setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
-                Log.e("********", position + "");
-                userid = list.get(section).getPerson().get(position).getUserid();
-                getPersonInfoData(userid, "1", 5);
-            }
-
-            @Override
-            public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
-            }
-        });
         mListViews.get(position).setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -208,12 +196,18 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
         }
     }
 
+    //listview的item点击事件
+    @Override
+    public void onItemClick(int section, int position) {
+        userid = list.get(section).getPerson().get(position).getUserid();
+        getPersonInfoData(userid, "1", 5);
+    }
+
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            Log.e("----------",object.toString());
             if (type == 1) {
                 LookMeBean lookMeBean = null;
                 if (err.equals("0")) {
@@ -222,6 +216,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
                     if (page == 1) {
                         adapter = new LookMeAdapter(this, lookMeBean.getData().getHistory());
                         mListViews.get(position).setAdapter(adapter);
+                        adapter.setOnItemClickListener(this);
                         showInfo(lookMeBean.getData().getTotals(),lookMeBean.getData().getToday());
                         list.clear();
                         list.addAll(lookMeBean.getData().getHistory());

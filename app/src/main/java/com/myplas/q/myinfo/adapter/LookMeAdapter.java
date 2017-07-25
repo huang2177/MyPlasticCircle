@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:33
  */
-public class LookMeAdapter extends SectionedBaseAdapter  {
+public class LookMeAdapter extends SectionedBaseAdapter {
     String userid;
     Context context;
     List<String> time;
@@ -47,6 +48,8 @@ public class LookMeAdapter extends SectionedBaseAdapter  {
     Map<Integer, LinearLayout> map1;
     List<LookMeBean.DataBean.HistoryBean> list;
     List<LookMeBean.DataBean.HistoryBean.PersonBean> listPerson;
+    private OnItemClickListener listener;
+
     public LookMeAdapter(Context context, List<LookMeBean.DataBean.HistoryBean> list) {
         this.list = list;
         this.context = context;
@@ -68,10 +71,11 @@ public class LookMeAdapter extends SectionedBaseAdapter  {
     public long getItemId(int section, int position) {
         return 0;
     }
+
     @Override
     public int getSectionCount() {
         if (list != null)
-        return list.size();
+            return list.size();
         return 0;
     }
 
@@ -83,7 +87,7 @@ public class LookMeAdapter extends SectionedBaseAdapter  {
     }
 
     @Override
-    public View getItemView(int section, int position, View convertView, ViewGroup parent) {
+    public View getItemView(final int section, final int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new viewHolder();
@@ -108,7 +112,12 @@ public class LookMeAdapter extends SectionedBaseAdapter  {
             } else if (listPerson.get(position).getIsvip().equals("1")) {
                 viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
             }
-
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(section, position);
+                }
+            });
         } catch (Exception e) {
         }
         return convertView;
@@ -146,5 +155,13 @@ public class LookMeAdapter extends SectionedBaseAdapter  {
     class viewHearderHolder {
         TextView time;
         LinearLayout layout;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int section, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }
