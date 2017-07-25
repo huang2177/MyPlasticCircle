@@ -66,6 +66,8 @@ public class API {
     public final static String SIMPLE_LOGIN = "user/simpleLogin";
     //退出登录
     public final static String LOGOUT = "user/logout";
+    //检查登录状态
+    public final static String VALIDUSERTOKEN = "user/validUserToken";
 
 
     /*Api*/

@@ -1,12 +1,16 @@
 package com.myplas.q.myinfo.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -26,6 +30,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,21 +42,23 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:15
  */
-public class LookMeActivity extends BaseActivity implements ResultCallBack, View.OnClickListener, DialogShowUtils.DialogShowInterface {
+public class LookMeActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface {
     private String mode;
     private String userid;
-    private StringBuffer promit;
     private boolean hasMoreData;
-    private int page, visibleItemCount;
+    private StringBuffer promit1,promit2;
+    private int page, visibleItemCount,position;
 
     private ViewPager mViewPager;
+    private TabLayout mTabLayout;
     private LookMeAdapter adapter;
+    private PinnedHeaderListView listView;
     private Look_ViewPager_Adapter mAdapter;
-    private PinnedHeaderListView listView, mListView;
-    private NoResultLayout mNoResultLayout1, mNoResultLayout2;
-    private TextView textView_other, textView_me, textView_other_bg, textView_me_bg, textView_num;
+    private NoResultLayout mNoResultLayout1;
+    private TextView textView_num;
 
-    private List<View> mViewList;
+    private List<NoResultLayout> mView;
+    private List<PinnedHeaderListView> mListViews;
     private List<LookMeBean.DataBean.HistoryBean> list;
 
     @Override
@@ -64,118 +71,99 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, View
         mode = "0";
         hasMoreData = true;
         list = new ArrayList<>();
-        mViewList = new ArrayList<>();
-        promit = new StringBuffer("看过我的人的总数：");
+        mView = new ArrayList<>();
+        mListViews = new ArrayList<>();
+        promit2 = new StringBuffer("今日看我：");
+        promit1 = new StringBuffer("看过我的人的总数：");
 
         mViewPager = F(R.id.look_viewpager);
         textView_num = F(R.id.look_num_text);
-        textView_me = F(R.id.look_me_text);
-        textView_other = F(R.id.look_other_text);
-        textView_me_bg = F(R.id.look_me_text_bg);
-        textView_other_bg = F(R.id.look_other_text_bg);
+        mTabLayout = F(R.id.look_me_tablayout);
 
-        textView_me.setOnClickListener(this);
-        textView_other.setOnClickListener(this);
-
-        setView();
-
-        listView.setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
-                userid = list.get(section).getPerson().get(position - 1).getUserid();
-                getPersonInfoData(userid, "1", 5);
-            }
-
-            @Override
-            public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
-            }
-        });
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() > visibleItemCount) {
-                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        if (hasMoreData) {
-                            page++;
-                            getViewHistoryDetails(String.valueOf(page), 1);
-                        } else {
-                            TextUtils.Toast(LookMeActivity.this, "没有更多数据！");
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                LookMeActivity.this.visibleItemCount = visibleItemCount;
-            }
-        });
-        mListView.setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
-                userid = list.get(section).getPerson().get(position - 1).getUserid();
-                getPersonInfoData(userid, "1", 5);
-            }
-
-            @Override
-            public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
-            }
-        });
-        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() > visibleItemCount) {
-                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        if (hasMoreData) {
-                            page++;
-                            getViewHistoryDetails(String.valueOf(page), 1);
-                        } else {
-                            TextUtils.Toast(LookMeActivity.this, "没有更多数据！");
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                LookMeActivity.this.visibleItemCount = visibleItemCount;
-            }
-        });
+        initViewPager();
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
-
             @Override
             public void onPageSelected(int position) {
-                mode = (position == 0) ? ("0") : ("1");
-                int id = (position == 0) ? (R.id.look_me_text) : (R.id.look_other_text);
-                chageColor(id);
+                LookMeActivity.this.position=position;
+                chageColor(position);
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
 
             }
         });
     }
+    public void setListener(final int position){
+        mListViews.get(position).setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
+                userid = list.get(section).getPerson().get(position - 1).getUserid();
+                getPersonInfoData(userid, "1", 5);
+            }
 
-    public void setView() {
-        mNoResultLayout1 = new NoResultLayout(this);
-        listView = (PinnedHeaderListView) mNoResultLayout1.findViewById(R.id.look_listview);
-        mNoResultLayout2 = new NoResultLayout(this);
-        mListView = (PinnedHeaderListView) mNoResultLayout2.findViewById(R.id.look_listview);
-        listView.setPullRefreshEnable(false);
-        mListView.setPullRefreshEnable(false);
-        mViewList.add(mNoResultLayout1);
-        mViewList.add(mNoResultLayout2);
-        mAdapter = new Look_ViewPager_Adapter(mViewList);
+            @Override
+            public void onSectionClick(AdapterView<?> adapterView, View view, int section, long id) {
+            }
+        });
+        mListViews.get(position).setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE &&
+                        mListViews.get(position).getCount() > visibleItemCount) {
+                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
+                        if (hasMoreData) {
+                            page++;
+                            getViewHistoryDetails(String.valueOf(page), 1);
+                        } else {
+                            TextUtils.Toast(LookMeActivity.this, "没有更多数据！");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                LookMeActivity.this.visibleItemCount = visibleItemCount;
+            }
+        });
+    }
+
+    public void initViewPager() {
+        List<String> titles = new ArrayList<>();
+        titles.add("谁看过我");
+        titles.add("我看过谁");
+        for (int i = 0; i < titles.size(); i++) {
+            mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(i)));
+        }
+        for (int i = 0; i < 2; i++) {
+            mNoResultLayout1 = new NoResultLayout(this);
+            listView = (PinnedHeaderListView) mNoResultLayout1.findViewById(R.id.look_listview);
+            listView.setPullRefreshEnable(false);
+            mView.add(mNoResultLayout1);
+            mListViews.add(listView);
+            setListener(i);
+        }
+        mAdapter = new Look_ViewPager_Adapter(mView, titles);
         mViewPager.setAdapter(mAdapter);
 
         mViewPager.setCurrentItem(0);
         getViewHistoryDetails("1", 1);
+
+        //将选项卡和viewpager关连起来
+        mTabLayout.setupWithViewPager(mViewPager);
+        //给TabLayout设置适配器
+        mTabLayout.setTabsFromPagerAdapter(mAdapter);
+        mTabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                setIndicator(mTabLayout, 30, 30);
+            }
+        });
     }
 
     public void getViewHistoryDetails(String page, int type) {
@@ -195,38 +183,26 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, View
         BaseActivity.postAsyn(this, url, map, this, type);
     }
 
-    @Override
-    public void onClick(View v) {
-        chageColor(v.getId());
-    }
 
     public void chageColor(int id) {
         switch (id) {
-            case R.id.look_me_text:
+            case 0:
                 page = 1;
                 mode = "0";
                 hasMoreData = true;
                 getViewHistoryDetails("1", 1);
                 mViewPager.setCurrentItem(0);
-                promit = new StringBuffer("看过我的人的总数：");
-                textView_num.setText("看过我的人的总数： 0 今日：0");
-                textView_me_bg.setVisibility(View.VISIBLE);
-                textView_other_bg.setVisibility(View.INVISIBLE);
-                textView_me.setTextColor(getResources().getColor(R.color.color_balank));
-                textView_other.setTextColor(getResources().getColor(R.color.color_gray));
+                promit2=new StringBuffer("今日看我：");
+                promit1 = new StringBuffer("看过我的人的总数：");
                 break;
-            case R.id.look_other_text:
+            case 1:
                 page = 1;
                 mode = "1";
                 hasMoreData = true;
-                getViewHistoryDetails("1", 3);
+                getViewHistoryDetails("1", 1);
                 mViewPager.setCurrentItem(1);
-                textView_num.setText("我看过的人的总数： 0 今日：0");
-                promit = new StringBuffer("我看过的人的总数： ");
-                textView_me_bg.setVisibility(View.INVISIBLE);
-                textView_other_bg.setVisibility(View.VISIBLE);
-                textView_other.setTextColor(getResources().getColor(R.color.color_balank));
-                textView_me.setTextColor(getResources().getColor(R.color.color_gray));
+                promit2=new StringBuffer("今日查看：");
+                promit1 = new StringBuffer("我看过的人的总数：");
                 break;
         }
     }
@@ -234,18 +210,18 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, View
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("------", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
+            Log.e("----------",object.toString());
             if (type == 1) {
                 LookMeBean lookMeBean = null;
                 if (err.equals("0")) {
-                    mNoResultLayout1.setVisibility(false);
+                    mView.get(position).setVisibility(false);
                     lookMeBean = gson.fromJson(object.toString(), LookMeBean.class);
                     if (page == 1) {
                         adapter = new LookMeAdapter(this, lookMeBean.getData().getHistory());
-                        listView.setAdapter(adapter);
-                        showInfo(lookMeBean);
+                        mListViews.get(position).setAdapter(adapter);
+                        showInfo(lookMeBean.getData().getTotals(),lookMeBean.getData().getToday());
                         list.clear();
                         list.addAll(lookMeBean.getData().getHistory());
                     } else {
@@ -254,33 +230,12 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, View
                         adapter.notifyDataSetChanged();
                     }
                 } else if (err.equals("2")) {
+                    showInfo("0","0");
                     hasMoreData = false;
-                    adapter.setList(null);
-                    adapter.notifyDataSetChanged();
-                    mNoResultLayout1.setNoResultData(R.drawable.seenumempty, new JSONObject(object.toString()).getString("msg"), true);
-                }
-            }
-            if (type == 3) {
-                LookMeBean lookMeBean = null;
-                if (err.equals("0")) {
-                    mNoResultLayout2.setVisibility(false);
-                    lookMeBean = gson.fromJson(object.toString(), LookMeBean.class);
-                    if (page == 1) {
-                        adapter = new LookMeAdapter(this, lookMeBean.getData().getHistory());
-                        mListView.setAdapter(adapter);
-                        showInfo(lookMeBean);
-                        list.clear();
-                        list.addAll(lookMeBean.getData().getHistory());
-                    } else {
-                        list.addAll(lookMeBean.getData().getHistory());
-                        adapter.setList(list);
-                        adapter.notifyDataSetChanged();
-                    }
-                } else if (err.equals("2")) {
-                    hasMoreData = false;
-                    adapter.setList(null);
-                    adapter.notifyDataSetChanged();
-                    mNoResultLayout2.setNoResultData(R.drawable.seenumempty, new JSONObject(object.toString()).getString("msg"), true);
+                    adapter = new LookMeAdapter(this,null);
+                    mListViews.get(position).setAdapter(adapter);
+                    String msg= new JSONObject(object.toString()).getString("msg");
+                    mView.get(position).setNoResultData(R.drawable.icon_null,msg, true);
                 }
             }
             //是否消耗积分
@@ -313,10 +268,11 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, View
         }
     }
 
-    private void showInfo(LookMeBean lookMeBean) {
-        textView_num.setText(promit.toString() +
-                lookMeBean.getData().getTotals() + "  今日：" +
-                lookMeBean.getData().getToday());
+    private void showInfo(String num1,String num2) {
+        textView_num.setText(promit1.toString() +
+                num1 +"  "+
+                promit2.toString() +
+                num2);
     }
 
     @Override
@@ -333,6 +289,34 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, View
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));
                 break;
+        }
+    }
+
+    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
+        Class<?> tabLayout = tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tabLayout.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        tabStrip.setAccessible(true);
+        LinearLayout llTab = null;
+        try {
+            llTab = (LinearLayout) tabStrip.get(tabs);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
+        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
+        for (int i = 0; i < llTab.getChildCount(); i++) {
+            View child = llTab.getChildAt(i);
+            child.setPadding(0, 0, 0, 0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            params.leftMargin = left;
+            params.rightMargin = right;
+            child.setLayoutParams(params);
+            child.invalidate();
         }
     }
 

@@ -599,7 +599,7 @@ public class CalendarPickerView extends ListView {
             cells.add(weekCells);
             for (int c = 0; c < 7; c++) {
                 Date date = cal.getTime();
-                boolean isCurrentMonth = cal.get(MONTH) == month.getMonth();
+                boolean isCurrentMonth = (cal.get(MONTH) == month.getMonth());
                 boolean isSelected = isCurrentMonth && containsDate(selectedCals, cal);
 //                boolean isSelectable =
 //                        isCurrentMonth && betweenDates(cal, minCal, maxCal) && isDateSelectable(date);

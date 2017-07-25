@@ -1,14 +1,10 @@
 package com.myplas.q.myinfo.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.myplas.q.common.view.PinnedHeaderListView;
+import com.myplas.q.common.view.NoResultLayout;
 
 import java.util.List;
 
@@ -19,10 +15,12 @@ import java.util.List;
  * 时间：2017/3/17 14:52
  */
 public class Look_ViewPager_Adapter extends PagerAdapter {
-    List<View> viewLists;
+    List<String> mTitles;
+    List<NoResultLayout> viewLists;
 
-    public Look_ViewPager_Adapter(List<View> list) {
+    public Look_ViewPager_Adapter(List<NoResultLayout> list,List<String> titles) {
         this.viewLists = list;
+        this.mTitles=titles;
     }
 
     @Override
@@ -43,5 +41,9 @@ public class Look_ViewPager_Adapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         container.addView(viewLists.get(position));
         return viewLists.get(position);
+    }
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTitles.get(position);
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/search_result_linear"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/search_result_linear"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:drawableRight="@drawable/btn_xiala"
                 android:gravity="center"
                 android:textColor="@color/color_balank"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -43,7 +43,7 @@
                 android:drawableRight="@drawable/btn_xiala"
                 android:gravity="center"
                 android:textColor="@color/color_balank"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -54,15 +54,15 @@
         android:background="@color/color_lightgray"></View>
 
     <FrameLayout
+        android:id="@+id/search_result_framelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/search_result_framelayout">
+        android:layout_height="match_parent">
 
         <ListView
             android:id="@+id/search_listview_result"
             android:layout_width="match_parent"
-            android:divider="@null"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent"
+            android:divider="@null"></ListView>
 
         <TextView
             android:id="@+id/text_result"
@@ -74,32 +74,32 @@
             android:background="@drawable/coner_toast"
             android:gravity="center"
             android:padding="10dp"
-            android:textColor="@color/color_white" />
+            android:textColor="@color/color_white"/>
     </FrameLayout>
 
     <LinearLayout
         android:id="@+id/search_result_linear_null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/search_result_text_null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             android:textColor="@color/color_balank"
-            android:textSize="16.0sp" />
+            android:textSize="16.0sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:text="相关搜索:"
-            android:textSize="16.0sp" />
+            android:textSize="16.0sp"/>
 
         <com.myplas.q.common.view.MyGridview
             android:id="@+id/mygrid_search_null"
@@ -108,7 +108,6 @@
             android:layout_margin="20dp"
             android:layout_marginRight="20dp"
             android:horizontalSpacing="8dp"
-            android:listSelector="#123"
             android:numColumns="3"
             android:verticalSpacing="10dp"></com.myplas.q.common.view.MyGridview>
     </LinearLayout>

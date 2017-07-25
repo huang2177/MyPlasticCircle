@@ -85,11 +85,9 @@ public class SearchResultBean {
         private String update_time;
         private String is_buy;
         private String store_house;
-        private String news_id;
-        private String produce_place_one;
+        private String id;
         private String type;
         private String user_id;
-        private List<String> thumbqq;
 
         public String getC_name() {
             return c_name;
@@ -171,21 +169,14 @@ public class SearchResultBean {
             this.store_house = store_house;
         }
 
-        public String getNews_id() {
-            return news_id;
+        public String getId() {
+            return id;
         }
 
-        public void setNews_id(String news_id) {
-            this.news_id = news_id;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public String getProduce_place_one() {
-            return produce_place_one;
-        }
-
-        public void setProduce_place_one(String produce_place_one) {
-            this.produce_place_one = produce_place_one;
-        }
 
         public String getType() {
             return type;
@@ -203,12 +194,5 @@ public class SearchResultBean {
             this.user_id = user_id;
         }
 
-        public List<String> getThumbqq() {
-            return thumbqq;
-        }
-
-        public void setThumbqq(List<String> thumbqq) {
-            this.thumbqq = thumbqq;
-        }
     }
 }

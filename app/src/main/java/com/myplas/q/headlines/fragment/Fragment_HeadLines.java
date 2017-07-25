@@ -308,7 +308,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 }
             }
             if (type == 5) {//其他
-                if (new JSONObject(object.toString()).getString("err").equals("0")) {
+                if (err.equals("0")) {
+                    layout_nodata.setVisibility(View.GONE);
                     CateListBean cateListBean = gson.fromJson(object.toString(), CateListBean.class);
                     list_catelist = cateListBean.getInfo();
                     if (page == 1) {
@@ -338,7 +339,10 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 } else {
                     isRefresh = false;
                     myListview.stopRefresh();
-                    TextUtils.Toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
+                    myListview.setVisibility(View.GONE);
+                    layout_nodata.setVisibility(View.VISIBLE);
+                    imageButton_backup.setVisibility(View.GONE);
+                    text_nodata.setText(new JSONObject(object.toString()).getString("msg"));
                 }
             }
         } catch (Exception e) {

@@ -104,6 +104,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         getSearch_Record();
         getTab_Config();
     }
+
     public void initView() {
         isRefresh = true;
         list = new ArrayList<>();
@@ -189,7 +190,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        Log.e("----", page + "");
                         page++;
                         if (hasMoerData) {
                             getPhysical_Search(page, keywords, time, is_buy, area);
@@ -307,7 +307,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 } else {//来自供求
                     try {
                         Intent intent = new Intent(this, SupDem_Detail_Activity.class);
-                        String id_ = list.get(position).getNews_id();
+                        String id_ = list.get(position).getId();
                         String userid = list.get(position).getUser_id();
                         String user_id = SharedUtils.getSharedUtils().getData(this, "userid");
 
@@ -329,7 +329,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         try {
             Gson gson = new Gson();
             boolean err = new JSONObject(object.toString()).getString("err").equals("0");
-            Log.e("---------" + type, object.toString());
             if (type == 1 && err) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 adapter_grid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
@@ -350,7 +349,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                         search_result_linear_no.setVisibility(View.GONE);
                         adapter_list = new SupDem_Search_List_Adapter(this, resultBean.getList());
                         listView.setAdapter(adapter_list);
-                        showRefreshPopou("为你搜索" + resultBean.getList().size() + "条信息");
+                        showRefreshPopou("为你搜索" + resultBean.getTotal() + "条信息");
                         list.clear();
                         list.addAll(resultBean.getList());
                     } else {
@@ -390,7 +389,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 gridview_history.setAdapter(adapter_grid);
             }
         } catch (Exception e) {
-            Log.e("++",e.toString());
         }
     }
 

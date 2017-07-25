@@ -16,8 +16,8 @@ android {
         applicationId "com.myplas.q"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 90
-        versionName "3.6.0"
+        versionCode 91
+        versionName "3.6.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,7 +31,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+        preDexLibraries true
+        maxProcessCount 8
+        javaMaxHeapSize "2048m"
+    }
 }
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -53,4 +59,5 @@ dependencies {
     }
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.3.4'
     compile 'com.optimus:editTextField:0.2.0'
+    compile 'com.android.support:design:25.3.1'
 }

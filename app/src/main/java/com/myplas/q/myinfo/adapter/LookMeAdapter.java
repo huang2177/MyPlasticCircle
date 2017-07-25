@@ -71,7 +71,6 @@ public class LookMeAdapter extends SectionedBaseAdapter  {
     @Override
     public int getSectionCount() {
         if (list != null)
-
         return list.size();
         return 0;
     }
@@ -131,7 +130,6 @@ public class LookMeAdapter extends SectionedBaseAdapter  {
             viewHolder = (viewHearderHolder) convertView.getTag();
         }
         try {
-            Log.e("==========",list.size()+"======");
             viewHolder.time.setText(list.get(section).getTime());
         } catch (Exception e) {
 

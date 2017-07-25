@@ -55,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:singleLine="true"
                 android:textSize="14.0sp" />
@@ -64,18 +64,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.5"
                 android:singleLine="true"
                 android:textSize="14.0sp" />
 
             <TextView
                 android:id="@+id/fx_tt_title_shj"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:layout_weight="0.7"
                 android:drawableLeft="@drawable/icon_time1"
                 android:singleLine="true"
+                android:layout_marginRight="8dp"
                 android:textSize="14.0sp" />
 
             <TextView

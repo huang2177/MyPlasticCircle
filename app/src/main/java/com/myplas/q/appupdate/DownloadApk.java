@@ -20,6 +20,7 @@ import java.io.File;
  */
 public class DownloadApk {
     static InstallInterface installInterface;
+
     //private static MainActivity.MyReceiver apkInstallReceiver;
     public DownloadApk(InstallInterface installInterface) {
         this.installInterface = installInterface;
@@ -40,7 +41,7 @@ public class DownloadApk {
         Uri downloadFileUri = Uri.parse("file://" + path);
 
         //比较是否安装的版本是一样
-        if (fileIsExists(path)&&compare(getApkInfo(context, downloadFileUri.getPath()), context)) {
+        if (fileIsExists(path) && compare(getApkInfo(context, downloadFileUri.getPath()), context)) {
             installInterface.install();
         } else {
             //删除下载任务以及文件

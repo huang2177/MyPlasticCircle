@@ -71,7 +71,7 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
                 ((list.get(position).getCargo_type().equals("1")) ? ("现货") : ("期货"));
         viewHolder.textView_content.setText("货物位置:"+list.get(position).getStore_house()+
                 "  牌号:"+list.get(position).getModel()+
-                "  产地:"+list.get(position).getProduce_place_one()+
+                "  产地:"+list.get(position).getProduce_place()+
                 "  价格:" + list.get(position).getUnit_price() +
                 "  " + forward);
         viewHolder.textView_time.setText((list.get(position).getType().equals("9"))?

@@ -28,7 +28,6 @@ public class MyViewPager extends ViewPager {
     public boolean onInterceptTouchEvent(MotionEvent arg0) {
         if (noScroll)
             return false;
-        else
             return super.onInterceptTouchEvent(arg0);
     }
 }

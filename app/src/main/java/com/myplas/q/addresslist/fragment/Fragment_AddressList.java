@@ -512,7 +512,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 DialogShowUtils dialogShowUtils = new DialogShowUtils();
                 dialogShowUtils.showDialog(getActivity(), content, (err.equals("100")) ? (2) : (3), this);
             }
-            if (type == 10 && err.equals("1")) {
+            if (type == 10 &&! err.equals("0")) {
                 sharedUtils.setData(getActivity(), "token", "");
                 sharedUtils.setData(getActivity(), "userid", "");
                 sharedUtils.setBooloean(getActivity(), "logined", false);
@@ -667,14 +667,13 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             popupWindow.showAsDropDown(editText);
         }
     }
-
+    @Override
     public void onResume() {
         super.onResume();
         //统计页面，"MainScreen"为页面名称，可自定义
         MobclickAgent.onPageStart("MainScreen");
-        if (list_more.size() != 0) {
-            getPersonInfoData(list_more.get(0).getUser_id(), "1", 10);
-        }
+        //检查登录状态
+        BaseActivity.postAsyn(getActivity(),API.BASEURL+API.VALIDUSERTOKEN,null,this,10);
     }
 
     public void onPause() {
