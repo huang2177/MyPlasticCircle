@@ -102,7 +102,8 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
         mListViews.get(position).setOnItemClickListener(new PinnedHeaderListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
-                userid = list.get(section).getPerson().get(position - 1).getUserid();
+                Log.e("********", position + "");
+                userid = list.get(section).getPerson().get(position).getUserid();
                 getPersonInfoData(userid, "1", 5);
             }
 
