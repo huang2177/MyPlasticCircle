@@ -699,6 +699,4 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         }
         return false;
     }
-
-    //3333333333
 }
