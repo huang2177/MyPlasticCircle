@@ -58,7 +58,6 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-//3333333
 public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, DialogShowUtils.DialogShowInterface, DownloadApk.InstallInterface {
     private View view;
     private MyZone myZone;
