@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:gravity="center"
             android:text="我的塑料圈"
             android:textColor="@color/color_white"
-            android:textSize="@dimen/x84" />
+            android:textSize="@dimen/x84"/>
 
         <LinearLayout
             android:id="@+id/wd_linear_share"
@@ -27,15 +27,16 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center"
-                android:src="@drawable/btn_share1" />
+                android:src="@drawable/btn_share1"/>
         </LinearLayout>
     </FrameLayout>
+
     <ScrollView
+        android:id="@+id/scrollView_myself"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_lightgray"
-        android:scrollbars="none"
-        android:id="@+id/scrollView_myself">
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,8 +54,9 @@
                     android:id="@+id/wd_linear_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="10dp">
+
                     <com.myplas.q.common.view.XCRoundRectRelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"></com.myplas.q.common.view.XCRoundRectRelativeLayout>
@@ -62,46 +64,49 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/wd_title_gs"
-                            android:textSize="@dimen/x70"
-                            android:text="* * * * * *"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="* * * * * *"
                             android:textColor="#19191a"
-                            android:maxLines="1" />
+                            android:textSize="@dimen/x70"/>
 
                         <TextView
                             android:id="@+id/wd_title_name"
-                            android:textSize="@dimen/x70"
-                            android:text="* * * * * * * * *"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#19191a" />
+                            android:text="* * * * * * * * *"
+                            android:textColor="#19191a"
+                            android:textSize="@dimen/x70"/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
                             <TextView
                                 android:id="@+id/wd_title_gg"
-                                android:textSize="@dimen/x70"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableRight="@drawable/icon_change"
                                 android:text="更改用户信息 "
-                                android:textColor="#19191a" />
+                                android:textColor="#19191a"
+                                android:textSize="@dimen/x70"/>
+
                             <TextView
                                 android:id="@+id/wd_title_shc"
-                                android:textSize="@dimen/x70"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:singleLine="true"
                                 android:text="上传名片加V认证 >>"
-                                android:textColor="#19191a" />
+                                android:textColor="#19191a"
+                                android:textSize="@dimen/x70"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -119,7 +124,7 @@
                         <TextView
                             android:id="@+id/wd_title_gj"
                             style="@style/wd_text_style"
-                            android:text="\n供给" />
+                            android:text="\n供给"/>
 
                         <View
                             android:layout_width="3px"
@@ -132,7 +137,7 @@
                         <TextView
                             android:id="@+id/wd_title_qg"
                             style="@style/wd_text_style"
-                            android:text="\n求购" />
+                            android:text="\n求购"/>
 
                         <View
                             android:layout_width="3px"
@@ -145,7 +150,7 @@
                         <TextView
                             android:id="@+id/wd_title_ly"
                             style="@style/wd_text_style"
-                            android:text="\n留言" />
+                            android:text="\n留言"/>
 
                         <View
                             android:layout_width="3px"
@@ -158,7 +163,7 @@
                         <TextView
                             android:id="@+id/wd_title_yj"
                             style="@style/wd_text_style"
-                            android:text="\n引荐" />
+                            android:text="\n引荐"/>
 
                         <View
                             android:layout_width="3px"
@@ -171,7 +176,7 @@
                         <TextView
                             android:id="@+id/wd_title_fs"
                             style="@style/wd_text_style"
-                            android:text="\n粉丝" />
+                            android:text="\n粉丝"/>
 
                         <View
                             android:layout_width="3px"
@@ -184,7 +189,7 @@
                         <TextView
                             android:id="@+id/wd_title_gz"
                             style="@style/wd_text_style"
-                            android:text="\n关注" />
+                            android:text="\n关注"/>
 
                         <View
                             android:layout_width="3px"
@@ -198,7 +203,7 @@
                             android:id="@+id/wd_title_jf"
                             style="@style/wd_text_style"
                             android:maxLines="2"
-                            android:text="\n积分" />
+                            android:text="\n积分"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -206,6 +211,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/wd_linear_dd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <TextView
+                        style="@style/wd_text2_style"
+                        android:drawableLeft="@drawable/icon_order"
+                        android:gravity="center_vertical"
+                        android:text="  交易订单"/>
+
+                    <TextView
+                        android:id="@+id/wd_text_dd"
+                        style="@style/wd_text2_style"
+                        android:layout_weight="0"
+                        android:drawableRight="@drawable/icon_more"
+                        android:text="  "/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@color/color_white"
                 android:orientation="vertical">
 
@@ -219,14 +253,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_my_supply"
                         android:gravity="center_vertical"
-                        android:text="  我的供给" />
+                        android:text="  我的供给"/>
 
                     <TextView
                         android:id="@+id/wd_text_gj"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
 
                 <View
@@ -244,14 +278,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_my_purchase"
                         android:gravity="center_vertical"
-                        android:text="  我的求购" />
+                        android:text="  我的求购"/>
 
                     <TextView
                         android:id="@+id/wd_text_qg"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -272,14 +306,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_my_recommend"
                         android:gravity="center_vertical"
-                        android:text="  我的引荐" />
+                        android:text="  我的引荐"/>
 
                     <TextView
                         android:id="@+id/wd_text_yj"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
 
                 <View
@@ -297,14 +331,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_my_fans"
                         android:gravity="center_vertical"
-                        android:text="  我的粉丝" />
+                        android:text="  我的粉丝"/>
 
                     <TextView
                         android:id="@+id/wd_text_fs"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
 
                 <View
@@ -322,14 +356,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_my_follow"
                         android:gravity="center_vertical"
-                        android:text="  我的关注" />
+                        android:text="  我的关注"/>
 
                     <TextView
                         android:id="@+id/wd_text_gz"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
 
                 <View
@@ -347,14 +381,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_who_see_me"
                         android:gravity="center_vertical"
-                        android:text="  谁看过我" />
+                        android:text="  谁看过我"/>
 
                     <TextView
                         android:id="@+id/wd_text_look"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -375,14 +409,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_my_message"
                         android:gravity="center_vertical"
-                        android:text="  我的留言" />
+                        android:text="  我的留言"/>
 
                     <TextView
                         android:id="@+id/wd_text_ly"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="未读留言  " />
+                        android:text="未读留言  "/>
                 </LinearLayout>
 
                 <View
@@ -401,14 +435,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_my_news"
                         android:gravity="center_vertical"
-                        android:text="  我的消息" />
+                        android:text="  我的消息"/>
 
                     <TextView
                         android:id="@+id/wd_text_xx"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="未读消息  " />
+                        android:text="未读消息  "/>
                 </LinearLayout>
 
                 <View
@@ -423,28 +457,29 @@
                     android:layout_margin="8dp">
 
                     <TextView
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/icon_my_points"
                         android:gravity="center_vertical"
-                        android:textSize="@dimen/x66"
-                        android:text="  我的塑豆" />
+                        android:text="  我的塑豆"
+                        android:textSize="@dimen/x66"/>
+
                     <TextView
-                        android:layout_height="match_parent"
                         android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="top"
-                        android:textStyle="italic"
+                        android:text=" hot!"
                         android:textColor="#f4410a"
                         android:textSize="16.0sp"
-                        android:text=" hot!" />
+                        android:textStyle="italic"/>
 
                     <TextView
                         android:id="@+id/wd_text_jf"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="可兑换礼品  " />
+                        android:text="可兑换礼品  "/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -455,6 +490,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/color_white"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/wd_linear_edu"
                     android:layout_width="match_parent"
@@ -465,14 +501,15 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_credi"
                         android:gravity="center_vertical"
-                        android:text="  企业信用额度" />
+                        android:text="  企业信用额度"/>
 
                     <TextView
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
@@ -488,15 +525,16 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_assets"
                         android:gravity="center_vertical"
-                        android:text="  塑料配资" />
+                        android:text="  塑料配资"/>
 
                     <TextView
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -514,14 +552,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_modify_password"
                         android:gravity="center_vertical"
-                        android:text="  修改密码" />
+                        android:text="  修改密码"/>
 
                     <TextView
                         android:id="@+id/wd_text_changepass"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="  " />
+                        android:text="  "/>
                 </LinearLayout>
 
                 <View
@@ -539,14 +577,14 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_check_update"
                         android:gravity="center_vertical"
-                        android:text="  检查更新" />
+                        android:text="  检查更新"/>
 
                     <TextView
                         android:id="@+id/wd_text_gx"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="当前版本2.0  " />
+                        android:text="当前版本2.0  "/>
                 </LinearLayout>
 
                 <View
@@ -564,17 +602,18 @@
                         style="@style/wd_text2_style"
                         android:drawableLeft="@drawable/icon_my_help"
                         android:gravity="center_vertical"
-                        android:text="  帮助" />
+                        android:text="  帮助"/>
 
                     <TextView
                         android:id="@+id/wd_text_bz"
                         style="@style/wd_text2_style"
                         android:layout_weight="0"
                         android:drawableRight="@drawable/icon_more"
-                        android:text="联系客服  " />
+                        android:text="联系客服  "/>
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -591,15 +630,16 @@
                     android:text="退出登录"
                     android:textColor="@color/color_red"
                     android:textSize="18.0sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
     <ImageButton
         android:id="@+id/img_reload"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@null"
-        android:src="@drawable/img_reload" />
+        android:src="@drawable/img_reload"/>
 </LinearLayout>

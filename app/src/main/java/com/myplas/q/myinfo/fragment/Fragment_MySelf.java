@@ -43,6 +43,7 @@ import com.myplas.q.myinfo.activity.MyDataActivity;
 import com.myplas.q.myinfo.activity.FindPSWActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myinfo.activity.PlasticMoneyActivity;
+import com.myplas.q.myinfo.activity.TradeOrderActivity;
 import com.myplas.q.myinfo.beans.MyZone;
 import com.myplas.q.guide.activity.MainActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -67,9 +68,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private ImageButton imageButton;
     private ScrollView scrollingView;
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
-    private TextView text_gj, text_qg, text_yj, text_fs, text_gz,text_look, text_ly, text_xx, text_gx, text_gs, text_name_tel;
+    private TextView text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_ly, text_xx, text_gx, text_gs, text_name_tel;
     private TextView text_title_gj, text_title_qg, text_title_ly, text_title_yj, text_title_fs, text_title_gz, text_title_jf;
-    private LinearLayout linear_changepass, linear_title, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_look, linear_ly, linear_xx, linear_jf, linear_bz, linear_gx, linear_edu, linear_pz, linear_share;
+    private LinearLayout linear_changepass, linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_look, linear_ly, linear_xx, linear_jf, linear_bz, linear_gx, linear_edu, linear_pz, linear_share;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,16 +90,18 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         text_title_gz = f(R.id.wd_title_gz);
         text_title_jf = f(R.id.wd_title_jf);
 
+        text_dd = f(R.id.wd_text_dd);
         text_gj = f(R.id.wd_text_gj);
         text_qg = f(R.id.wd_text_qg);
         text_yj = f(R.id.wd_text_yj);
         text_fs = f(R.id.wd_text_fs);
         text_gz = f(R.id.wd_text_gz);
-        text_look=f(R.id.wd_text_look);
+        text_look = f(R.id.wd_text_look);
         text_ly = f(R.id.wd_text_ly);
         text_xx = f(R.id.wd_text_xx);
         text_gx = f(R.id.wd_text_gx);
 
+        linear_dd = f(R.id.wd_linear_dd);
         linear_gj = f(R.id.wd_linear_gj);
         linear_qg = f(R.id.wd_linear_qg);
         linear_yj = f(R.id.wd_linear_yj);
@@ -121,6 +124,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_changepass.setOnClickListener(this);
         linear_share.setOnClickListener(this);
         linear_title.setOnClickListener(this);
+        linear_dd.setOnClickListener(this);
         linear_gj.setOnClickListener(this);
         linear_qg.setOnClickListener(this);
         linear_yj.setOnClickListener(this);
@@ -140,6 +144,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         //getLoginInfo(false);
         text_gx.setText("当前版本 " + VersionUtils.getVersionName(getActivity()) + "  ");
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -154,6 +159,10 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void onClick(View v) {
         if (NetUtils.isNetworkStateed(getActivity())) {
             switch (v.getId()) {
+                case R.id.wd_linear_dd:
+                    Intent i0 = new Intent(getActivity(), TradeOrderActivity.class);
+                    startActivity(i0);
+                    break;
                 case R.id.img_reload:
                     getLoginInfo(true);
                     break;
@@ -279,7 +288,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                 if ("0".equals(jsonObject.getString("err"))) {
                     myZone = gson.fromJson(object.toString(), MyZone.class);
                     showInfo(myZone);
-                    Log.e("------",object.toString());
+                    Log.e("------", object.toString());
                 } else if ("1".equals(jsonObject.getString("err")) || "998".equals(jsonObject.getString("err"))) {
                     sharedUtils.setData(getActivity(), "token", "");
                     sharedUtils.setData(getActivity(), "userid", "");
@@ -295,7 +304,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                     //比较版本号
                     if (version_now > version_last) {
                         //如果手机是否安装apk
-                        DownloadApk downloadApk=new DownloadApk(this);
+                        DownloadApk downloadApk = new DownloadApk(this);
                         downloadApk.downloadApk(getActivity(), url, "塑料圈通讯录更新...", "塑料圈通讯录");
                     }
                 }
@@ -306,18 +315,20 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         } catch (Exception e) {
         }
     }
+
     @Override
     public void ok(int type) {
         if (type == 4) {
             //退出登陆；
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("token", sharedUtils.getData(getActivity(), "token"));
-            resquestNetData(API.LOGOUT, map, 1,true);
+            resquestNetData(API.LOGOUT, map, 1, true);
         }
     }
+
     @Override
     public void failCallBack(int type) {
-        if (myZone==null) {
+        if (myZone == null) {
             scrollingView.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);
         }
@@ -343,7 +354,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             text_yj.setText(myZone.getIntroduction() + "  ");
             text_fs.setText(myZone.getMyfans() + "  ");
             text_gz.setText(myZone.getMyconcerns() + "  ");
-            text_look.setText(myZone.getMyviewhistory()+"  ");
+            text_look.setText(myZone.getMyviewhistory() + "  ");
             text_ly.setText("未读留言" + myZone.getLeaveword() + "  ");
             text_xx.setText("未读消息" + myZone.getMessage() + "  ");
         } catch (Exception e) {
@@ -360,6 +371,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
     }
+
     @Override
     public void install() {
         DownLoadUtils.getInstance(getActivity()).installApk(getActivity());
