@@ -32,10 +32,10 @@ public class InvoicesDetailActivity extends BaseActivity implements OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_tradeorder);
+        setContentView(R.layout.activity_layout_invoices);
         goBack(findViewById(R.id.img_back));
 
-        initView();
+        // initView();
     }
 
     public void initView() {
