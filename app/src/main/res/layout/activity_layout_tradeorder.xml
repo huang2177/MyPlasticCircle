@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
               android:orientation="vertical">
 
     <FrameLayout
@@ -47,37 +49,64 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#dedada">
+                android:background="@color/color_gray_bg">
 
-                <EditText
-                    android:id="@+id/trade_order_edittext"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/shape_txl_edit"
-                    android:drawableLeft="@drawable/icon_search"
-                    android:hint="按订单时间和订单号搜索"
-                    android:imeOptions="actionSearch"
-                    android:padding="8dp"
-                    android:singleLine="true"
-                    android:textCursorDrawable="@drawable/text_cursor_shape"
-                    android:textSelectHandle="@drawable/textselecthandle"
-                    android:textSelectHandleLeft="@drawable/textselecthandle"
-                    android:textSelectHandleRight="@drawable/textselecthandle"
-                    android:textSize="@dimen/x65"/>
-            </LinearLayout>
+                    android:background="@drawable/shape_txl_edit">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/trade_order_img_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_toLeftOf="@+id/trade_order_edittext"
+                            android:src="@drawable/icon_search"/>
+
+                        <EditText
+                            android:id="@+id/trade_order_edittext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="按订单时间和订单号搜索"
+                            android:imeOptions="actionSearch"
+                            android:singleLine="true"
+                            android:textCursorDrawable="@drawable/text_cursor_shape"
+                            android:textSelectHandle="@drawable/textselecthandle"
+                            android:textSelectHandleLeft="@drawable/textselecthandle"
+                            android:textSelectHandleRight="@drawable/textselecthandle"
+                            android:textSize="@dimen/x65"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </RelativeLayout>
 
             <com.myplas.q.common.view.MyListview
                 android:id="@+id/trade_order_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="#dedada"
-                android:dividerHeight="6dp">
+                android:divider="@color/color_gray_bg"
+                android:dividerHeight="20px">
             </com.myplas.q.common.view.MyListview>
+
+            <com.myplas.q.common.view.NoResultLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:visibility="gone"
+                android:id="@+id/trade_order_noresultlayout">
+            </com.myplas.q.common.view.NoResultLayout>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

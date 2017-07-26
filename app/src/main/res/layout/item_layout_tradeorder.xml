@@ -4,6 +4,10 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
     <TextView
         android:id="@+id/tradeorder_item_title"
         android:layout_width="match_parent"
@@ -13,10 +17,15 @@
         android:text="订单号：00000000000"
         android:textColor="@color/color_balank"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_in"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_lightgray"
+        android:background="@color/color_gray2"
         android:orientation="horizontal">
 
         <TextView
@@ -57,9 +66,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -100,16 +107,16 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="3px"
-        android:background="@color/color_gray1"></View>
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_in"></View>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -125,4 +132,9 @@
             android:layout_height="wrap_content"
             android:src="@drawable/btn_apply"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
 </LinearLayout>
