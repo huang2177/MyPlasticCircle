@@ -5,6 +5,8 @@
         android:bottomLeftRadius="3dp"
         android:topLeftRadius="3dp"
         android:topRightRadius="3dp"/><!--设置圆角-->
-    <stroke android:width="0px" android:color="#c1c3c1"/>
-    <solid  android:color="#737272"></solid>
+    <stroke
+        android:width="0px"
+        android:color="#c1c3c1"/>
+    <solid android:color="#181818"></solid>
 </shape>

@@ -1,6 +1,7 @@
 package com.myplas.q.myinfo.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,14 +27,18 @@ public class TradeOrder_Listview_Adapter extends BaseAdapter {
     private Context context;
     private List<EDuBean.DataBean> list;
 
+    private Handler mHandler;
     private MyOnClickListener mListener;
 
-    private Map<Integer, TextView> mMapViews;
+    private Map<Integer, View> mMapViews;
+    private Map<Integer, TextView> mMapTextViews;
 
     public TradeOrder_Listview_Adapter(Context context, List<EDuBean.DataBean> list) {
         this.list = list;
+        mHandler = new Handler();
         this.context = context;
         mMapViews = new HashMap<>();
+        mMapTextViews = new HashMap<>();
     }
 
     @Override
@@ -56,9 +61,10 @@ public class TradeOrder_Listview_Adapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder;
-        if (convertView == null) {
+        if (mMapViews.get(position) == null) {
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_tradeorder, parent, false);
+            viewHolder.textView_signed = (TextView) convertView.findViewById(R.id.popou_layout_signed_text);
             viewHolder.textView_title = (TextView) convertView.findViewById(R.id.tradeorder_item_title);
             viewHolder.textView_content = (TextView) convertView.findViewById(R.id.tradeorder_item_content);
             viewHolder.textView_uprice = (TextView) convertView.findViewById(R.id.tradeorder_item_uprice);
@@ -69,8 +75,10 @@ public class TradeOrder_Listview_Adapter extends BaseAdapter {
             viewHolder.mImageView1 = (ImageView) convertView.findViewById(R.id.tradeorder_item_img1);
             viewHolder.mImageView2 = (ImageView) convertView.findViewById(R.id.tradeorder_item_img2);
             convertView.setTag(viewHolder);
-            mMapViews.put(position, viewHolder.textView_title);
+            mMapViews.put(position, convertView);
+            mMapTextViews.put(position, viewHolder.textView_signed);
         } else {
+            convertView = mMapViews.get(position);
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
@@ -79,8 +87,14 @@ public class TradeOrder_Listview_Adapter extends BaseAdapter {
             viewHolder.mImageView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("------", position + "");
-                    mListener.onClickSigned(mMapViews.get(position));
+                    mMapTextViews.get(position).setVisibility(View.VISIBLE);
+                    mMapTextViews.get(position).setText("签收时间：2017-07-07 13:30");
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mMapTextViews.get(position).setVisibility(View.GONE);
+                        }
+                    }, 2000);
                 }
             });
             viewHolder.mImageView2.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +109,7 @@ public class TradeOrder_Listview_Adapter extends BaseAdapter {
     }
 
     class viewHolder {
+        TextView textView_signed;
         ImageView mImageView1, mImageView2;
         TextView textView_title, textView_content, textView_uprice, textView_tprice, textView_feight, textView_num1, textView_num2;
     }

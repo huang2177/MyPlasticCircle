@@ -1,17 +1,12 @@
 package com.myplas.q.myinfo.activity;
 
-import android.app.ActionBar;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -26,10 +21,7 @@ import com.umeng.analytics.MobclickAgent;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 10:25
  */
-public class TradeOrderActivity extends BaseActivity implements OnClickListener, TradeOrder_Listview_Adapter.MyOnClickListener {
-    private Information information;
-    private String appkey = "c1ff771c06254db796cd7ce1433d2004";
-
+public class InvoicesDetailActivity extends BaseActivity implements OnClickListener, TradeOrder_Listview_Adapter.MyOnClickListener {
     private EditText mEditText;
     private MyListview mListView;
     private ImageView mImageView;
@@ -62,9 +54,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_contact:
-                information = new Information();
-                information.setAppkey(appkey);
-                SobotApi.startSobotChat(TradeOrderActivity.this, information);
+
                 break;
 
         }
@@ -78,7 +68,6 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     public void onClick2(int position) {
 
     }
-
 
 
     public void onResume() {
