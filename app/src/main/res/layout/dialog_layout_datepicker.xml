@@ -5,7 +5,7 @@
     android:background="#9da2a7"
     android:orientation="vertical">
 
-    <include layout="@layout/date_picker_selected_date" />
+    <include layout="@layout/dialog_datepicker_selected_date"/>
 
     <com.myplas.q.myinfo.mydatepicker.CalendarPickerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/calendar_view"

@@ -50,7 +50,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +88,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setStatusBar();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_layout_main);
         initView();
         firstInto();
         getVersion();

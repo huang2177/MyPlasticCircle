@@ -9,8 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_red"
-        android:visibility="gone">
+        android:background="@color/color_red">
 
         <LinearLayout
             android:id="@+id/img_back"
@@ -29,33 +28,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="我的订单"
+            android:text="发票详情"
             android:textColor="@color/color_white"
             android:textSize="18.0sp"/>
-
-        <ImageView
-            android:id="@+id/img_contact"
-            android:layout_width="55dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:src="@drawable/btn_customer_service_help"/>
     </FrameLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/dl_tel_wrap"
+    <ListView
+        android:id="@+id/invoices_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:hint="请填写手机号码">
+        android:layout_height="match_parent"
+        android:divider="@color/color_gray_bg"
+        android:dividerHeight="20px"></ListView>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/dl_tel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="11"
-            android:paddingLeft="3dp"
-            android:paddingRight="5dp"
-            android:textSize="14.0sp"/>
-    </android.support.design.widget.TextInputLayout>
+    <com.myplas.q.common.view.NoResultLayout
+        android:id="@+id/invoices_noresultlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </com.myplas.q.common.view.NoResultLayout>
 </LinearLayout>

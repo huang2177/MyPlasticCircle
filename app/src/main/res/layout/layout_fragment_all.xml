@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/gq_listview_item"></include>
+            <include layout="@layout/item_listview_supdem"></include>
 
             <ListView
                 android:id="@+id/gq_listview"

@@ -12,7 +12,7 @@ import com.myplas.q.R;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.BigImageViewActivity;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.myinfo.adapter.LookPerson_SupplyDemandAdapter;
+import com.myplas.q.myinfo.adapter.LookPersonSupDemAdapter;
 import com.myplas.q.myinfo.beans.PersonSupplyDemadBean;
 import com.umeng.analytics.MobclickAgent;
 
@@ -32,7 +32,7 @@ public class LookPersonInfoActivity extends BaseActivity implements View.OnClick
     private List<PersonSupplyDemadBean.DataBean> list;
     private ListView myListview_supply;
     private PersonSupplyDemadBean personinfo;
-    private LookPerson_SupplyDemandAdapter p_adapter;
+    private LookPersonSupDemAdapter p_adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +82,7 @@ public class LookPersonInfoActivity extends BaseActivity implements View.OnClick
             text_dh.setText("电话： " + getIntent().getStringExtra("tel"));
             list=new ArrayList<>();
             list.addAll(personinfo.getData());
-            p_adapter=new LookPerson_SupplyDemandAdapter(this,list,getIntent().getStringExtra("type"));
+            p_adapter = new LookPersonSupDemAdapter(this, list, getIntent().getStringExtra("type"));
             myListview_supply.setAdapter(p_adapter);
         } catch (Exception e) {
         }

@@ -80,7 +80,7 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
         viewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.gq_listview_firstitem, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_supdem_firstitem, parent, false);
             viewHolder.tx = (ImageView) convertView.findViewById(R.id.xq_tx);
             viewHolder.rz = (ImageView) convertView.findViewById(R.id.xq_rz);
             viewHolder.img = (ImageView) convertView.findViewById(R.id.supply_demand_img);

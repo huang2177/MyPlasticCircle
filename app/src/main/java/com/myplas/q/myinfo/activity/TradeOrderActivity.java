@@ -1,22 +1,17 @@
 package com.myplas.q.myinfo.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.myinfo.adapter.TradeOrder_Listview_Adapter;
+import com.myplas.q.myinfo.adapter.TradeOrderListviewAdapter;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.umeng.analytics.MobclickAgent;
@@ -27,7 +22,7 @@ import com.umeng.analytics.MobclickAgent;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 10:25
  */
-public class TradeOrderActivity extends BaseActivity implements OnClickListener, TradeOrder_Listview_Adapter.MyOnClickListener {
+public class TradeOrderActivity extends BaseActivity implements OnClickListener, TradeOrderListviewAdapter.MyOnClickListener {
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
@@ -36,7 +31,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     private ImageView mImageView;
     private NoResultLayout mNoResultLayout;
 
-    private TradeOrder_Listview_Adapter mAdapter;
+    private TradeOrderListviewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +49,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         mNoResultLayout = F(R.id.trade_order_noresultlayout);
 
         mImageView.setOnClickListener(this);
-        mAdapter = new TradeOrder_Listview_Adapter(this, null);
+        mAdapter = new TradeOrderListviewAdapter(this, null);
         mAdapter.setMyOnClickListener(this);
         mListView.setAdapter(mAdapter);
     }

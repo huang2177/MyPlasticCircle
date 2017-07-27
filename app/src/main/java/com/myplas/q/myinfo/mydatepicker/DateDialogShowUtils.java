@@ -18,7 +18,6 @@ import com.myplas.q.R;
 import com.myplas.q.myinfo.adapter.Date_Grid_Adapter;
 import com.myplas.q.myinfo.adapter.IntegralAdapter;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
 
     public void showDialog(Context context, List<String> list_unclickable, Date date_start, Date date_end) {
         try {
-            View view1 = LayoutInflater.from(context).inflate(R.layout.date_picker_dialog, null, false);
+            View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_layout_datepicker, null, false);
             dialogView = (CalendarPickerView) view1.findViewById(R.id.calendar_view);
             imageView = (ImageView) view1.findViewById(R.id.popupwindow_calendar_bt_enter);
             linearLayout = (LinearLayout) view1.findViewById(R.id.date_linear);

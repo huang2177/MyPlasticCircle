@@ -5,11 +5,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,7 +22,7 @@ import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.common.view.PinnedHeaderListView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.adapter.LookMeAdapter;
-import com.myplas.q.myinfo.adapter.Look_ViewPager_Adapter;
+import com.myplas.q.myinfo.adapter.LookViewPagerAdapter;
 import com.myplas.q.myinfo.beans.LookMeBean;
 import com.umeng.analytics.MobclickAgent;
 
@@ -53,7 +51,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
     private TabLayout mTabLayout;
     private LookMeAdapter adapter;
     private PinnedHeaderListView listView;
-    private Look_ViewPager_Adapter mAdapter;
+    private LookViewPagerAdapter mAdapter;
     private NoResultLayout mNoResultLayout1;
     private TextView textView_num;
 
@@ -64,7 +62,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wholookme_layout);
+        setContentView(R.layout.activity_lookme_layout);
         goBack(findViewById(R.id.img_back));
 
         page = 1;
@@ -137,7 +135,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
             mListViews.add(listView);
             setListener(i);
         }
-        mAdapter = new Look_ViewPager_Adapter(mView, titles);
+        mAdapter = new LookViewPagerAdapter(mView, titles);
         mViewPager.setAdapter(mAdapter);
 
         mViewPager.setCurrentItem(0);

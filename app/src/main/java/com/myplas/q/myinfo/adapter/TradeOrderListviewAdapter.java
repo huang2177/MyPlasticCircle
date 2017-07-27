@@ -23,7 +23,7 @@ import java.util.Map;
  * 时间： 2017/6/121519.
  */
 
-public class TradeOrder_Listview_Adapter extends BaseAdapter {
+public class TradeOrderListviewAdapter extends BaseAdapter {
     private Context context;
     private List<EDuBean.DataBean> list;
 
@@ -33,7 +33,7 @@ public class TradeOrder_Listview_Adapter extends BaseAdapter {
     private Map<Integer, View> mMapViews;
     private Map<Integer, TextView> mMapTextViews;
 
-    public TradeOrder_Listview_Adapter(Context context, List<EDuBean.DataBean> list) {
+    public TradeOrderListviewAdapter(Context context, List<EDuBean.DataBean> list) {
         this.list = list;
         mHandler = new Handler();
         this.context = context;

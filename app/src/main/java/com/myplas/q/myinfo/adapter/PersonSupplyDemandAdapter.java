@@ -20,54 +20,55 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/29 10:57
  */
-public class LookPerson_SupplyDemandAdapter extends BaseAdapter {
+public class PersonSupplyDemandAdapter extends BaseAdapter {
     Context context;
     List<PersonSupplyDemadBean.DataBean> list;
-    String type;
-    public LookPerson_SupplyDemandAdapter(Context context, List<PersonSupplyDemadBean.DataBean> list,String type) {
+
+    public PersonSupplyDemandAdapter(Context context, List<PersonSupplyDemadBean.DataBean> list) {
         this.context = context;
         this.list = list;
-        this.type=type;
     }
     @Override
     public int getCount() {
-        if (list!= null)
-            return list.size();
+        if (list.size() != 0)
+        return (list.size()>=5)?(5):(list.size());
         return 0;
     }
+
     @Override
     public Object getItem(int position) {
         return null;
     }
+
     @Override
     public long getItemId(int position) {
         return 0;
     }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.lookperson_supplydemand_listview_item, parent, false);
-            viewHolder.time = (TextView) convertView.findViewById(R.id.lookperson_inputtime);
-            viewHolder.content = (TextView) convertView.findViewById(R.id.lookperson_content);
+            convertView = LayoutInflater.from(context).inflate(R.layout.person_supplydemand_listview_item, parent, false);
+            viewHolder.time = (TextView) convertView.findViewById(R.id.person_supplydemand_listview_text_time);
+            viewHolder.show= (TextView) convertView.findViewById(R.id.person_supplydemand_title);
+            viewHolder.content = (TextView) convertView.findViewById(R.id.person_supplydemand_listview_text_content);
+            viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.linear_layout);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
         viewHolder.time.setText(list.get(position).getInput_time());
-        String html=null;
-        if (type.equals("查看Ta的供给信息")) {
-            html="<font color='#9AC0CD'>"+"供给:"+"</font>"+list.get(position).getContents();
-            viewHolder.content.setText(Html.fromHtml(html));
-        } else {
-            html="<font color='#EEAD0E'>"+"求购:"+"</font>"+list.get(position).getContents();
-            viewHolder.content.setText(Html.fromHtml(html));
-        }
+        viewHolder.content.setText(list.get(position).getContents());
+        String type=list.get(position).getType();
+        String demand="<font color='#EEAD0E'>"+"求购:"+"</font>";
+        String supply="<font color='#9AC0CD'>"+"供给:"+"</font>";
+        viewHolder.show.setText((type.equals("1"))?(Html.fromHtml(demand)):(Html.fromHtml(supply)));
         return convertView;
     }
     class viewHolder {
-        TextView content, time;
+        TextView content, time,show;
         LinearLayout linearLayout;
     }
 }

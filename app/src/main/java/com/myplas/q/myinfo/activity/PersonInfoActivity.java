@@ -3,9 +3,7 @@ package com.myplas.q.myinfo.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +17,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
-import com.myplas.q.myinfo.adapter.Person_SupplyDemandAdapter;
+import com.myplas.q.myinfo.adapter.PersonSupplyDemandAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myinfo.beans.PersonInfoBean;
 import com.myplas.q.myinfo.beans.PersonSupplyDemadBean;
@@ -48,7 +46,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     private MyListview myListview_supply, myListview_demand;
     private PersonInfoBean personinfo;
     private PersonSupplyDemadBean p1, p2;
-    private Person_SupplyDemandAdapter p_adapter;
+    private PersonSupplyDemandAdapter p_adapter;
     private LinearLayout linearLayout;
 
     @Override
@@ -213,7 +211,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 if (new JSONObject(object.toString()).getString("err").equals("0")) {
                     p1 = gson.fromJson(object.toString(), PersonSupplyDemadBean.class);
                     list = p1.getData();
-                    p_adapter = new Person_SupplyDemandAdapter(this, list);
+                    p_adapter = new PersonSupplyDemandAdapter(this, list);
                     myListview_supply.setAdapter(p_adapter);
                     textView_supply.setClickable(true);
                 } else {
@@ -226,7 +224,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 if (new JSONObject(object.toString()).getString("err").equals("0")) {
                     p2 = gson.fromJson(object.toString(), PersonSupplyDemadBean.class);
                     list = p2.getData();
-                    p_adapter = new Person_SupplyDemandAdapter(this, list);
+                    p_adapter = new PersonSupplyDemandAdapter(this, list);
                     myListview_demand.setAdapter(p_adapter);
                     textView_demand.setClickable(true);
                 } else {

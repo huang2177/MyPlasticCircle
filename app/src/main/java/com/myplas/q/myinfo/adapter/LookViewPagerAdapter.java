@@ -14,11 +14,11 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:52
  */
-public class Look_ViewPager_Adapter extends PagerAdapter {
+public class LookViewPagerAdapter extends PagerAdapter {
     List<String> mTitles;
     List<NoResultLayout> viewLists;
 
-    public Look_ViewPager_Adapter(List<NoResultLayout> list,List<String> titles) {
+    public LookViewPagerAdapter(List<NoResultLayout> list, List<String> titles) {
         this.viewLists = list;
         this.mTitles=titles;
     }

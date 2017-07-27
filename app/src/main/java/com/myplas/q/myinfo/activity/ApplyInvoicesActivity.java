@@ -17,7 +17,7 @@ import com.umeng.analytics.MobclickAgent;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 10:25
  */
-public class InvoicesDetailActivity extends BaseActivity {
+public class ApplyInvoicesActivity extends BaseActivity {
     private EditText mEditText;
     private ListView mListView;
     private ImageView mImageView;
