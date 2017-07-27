@@ -1,6 +1,7 @@
 package com.myplas.q.myinfo.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class InvoicesDetailActivity extends BaseActivity implements OnClickListe
     private NoResultLayout mNoResultLayout;
 
     private TradeOrder_Listview_Adapter mAdapter;
+    TextInputLayout mTextInputLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +37,21 @@ public class InvoicesDetailActivity extends BaseActivity implements OnClickListe
         setContentView(R.layout.activity_layout_invoices);
         goBack(findViewById(R.id.img_back));
 
-        // initView();
+        //initView();
     }
 
     public void initView() {
-        mImageView = F(R.id.img_contact);
-        mListView = F(R.id.trade_order_listview);
-        mEditText = F(R.id.trade_order_edittext);
-        mNoResultLayout = F(R.id.trade_order_noresultlayout);
-
-        mImageView.setOnClickListener(this);
-        mAdapter = new TradeOrder_Listview_Adapter(this, null);
-        mAdapter.setMyOnClickListener(this);
-        mListView.setAdapter(mAdapter);
+        mTextInputLayout = (TextInputLayout) findViewById(R.id.dl_tel_wrap);
+        mTextInputLayout.setHint("请填写手机号码");
+//        mImageView = F(R.id.img_contact);
+//        mListView = F(R.id.trade_order_listview);
+//        mEditText = F(R.id.trade_order_edittext);
+//        mNoResultLayout = F(R.id.trade_order_noresultlayout);
+//
+//        mImageView.setOnClickListener(this);
+//        mAdapter = new TradeOrder_Listview_Adapter(this, null);
+//        mAdapter.setMyOnClickListener(this);
+//        mListView.setAdapter(mAdapter);
     }
 
     @Override
