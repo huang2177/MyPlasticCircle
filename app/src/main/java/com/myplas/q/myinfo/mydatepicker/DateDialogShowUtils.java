@@ -1,5 +1,6 @@
 package com.myplas.q.myinfo.mydatepicker;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.myplas.q.R;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.myinfo.adapter.Date_Grid_Adapter;
 import com.myplas.q.myinfo.adapter.IntegralAdapter;
 
@@ -42,10 +44,12 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
     public DateDialogShowUtils(List<Date> list, IntegralAdapter integralAdapter) {
         this.list = list;
         this.integralAdapter = integralAdapter;
+
     }
 
-    public void showDialog(Context context, List<String> list_unclickable, Date date_start, Date date_end) {
+    public void showDialog(Activity context, List<String> list_unclickable, Date date_start, Date date_end) {
         try {
+
             View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_layout_datepicker, null, false);
             dialogView = (CalendarPickerView) view1.findViewById(R.id.calendar_view);
             imageView = (ImageView) view1.findViewById(R.id.popupwindow_calendar_bt_enter);

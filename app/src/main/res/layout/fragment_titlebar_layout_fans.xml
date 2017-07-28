@@ -12,8 +12,8 @@
         android:layout_weight="1"
         android:background="@color/color_white"
         android:orientation="vertical"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp">
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp">
 
         <TextView
             android:id="@+id/wd_text_fans"
@@ -45,8 +45,8 @@
         android:layout_weight="1"
         android:background="@color/color_white"
         android:orientation="vertical"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp">
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp">
 
 
         <TextView
@@ -80,8 +80,8 @@
         android:layout_weight="1"
         android:background="@color/color_white"
         android:orientation="vertical"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp">
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp">
 
         <TextView
             android:id="@+id/wd_text_introdus"

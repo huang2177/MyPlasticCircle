@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:clipChildren="false"
               android:orientation="vertical">
 
     <ScrollView
@@ -14,9 +15,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="false"
             android:orientation="vertical">
 
-            <include layout="@layout/fragment_titlebar_layout_logined"></include>
+            <include
+                layout="@layout/fragment_titlebar_layout_logined"
+                android:clipChildren="false"></include>
 
             <include layout="@layout/fragment_titlebar_layout_fans"></include>
 
@@ -31,5 +35,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@null"
-        android:src="@drawable/img_reload"/>
+        android:src="@drawable/img_reload"
+        android:visibility="gone"/>
 </LinearLayout>

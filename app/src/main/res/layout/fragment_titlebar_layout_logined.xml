@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:clipChildren="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_11"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clipChildren="false">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:clipChildren="false">
 
             <ImageView
+                android:id="@+id/wd_logined_news_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/btn_news"/>
 
-            <TextView
+            <com.myplas.q.common.view.DragView
+                android:id="@+id/wd_logined_news_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
 
-                android:layout_alignParentRight="true"
-                android:textColor="#ea6010"
-                android:text="199"
-                android:padding="1dp"
-                android:gravity="center"
-                android:textSize="10.0sp"/>
+            </com.myplas.q.common.view.DragView>
         </RelativeLayout>
 
         <LinearLayout

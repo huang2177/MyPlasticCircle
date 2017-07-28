@@ -37,6 +37,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.common.view.MyViewPager;
@@ -86,9 +87,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StatusUtils.getStatusBarHeight(this);
         super.onCreate(savedInstanceState);
-        //setStatusBar();
         setContentView(R.layout.activity_layout_main);
+        StatusUtils.setStatusBar(this, false, false);
         initView();
         firstInto();
         getVersion();
@@ -442,15 +444,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             switch (position) {
                 case 0:
                     //fragment_fx.get_Subscribe("1", "", "2",true);
+                    StatusUtils.setStatusTextColor(false, this);
                     break;
                 case 1:
                     // fragment_txl.getNetData("1", "", "0", "0", true);
+                    StatusUtils.setStatusTextColor(false, this);
                     break;
                 case 2:
                     //fragment_gq.initData();
+                    StatusUtils.setStatusTextColor(false, this);
                     break;
                 case 3:
                     //fragment_wd.getLoginInfo();
+                    StatusUtils.setStatusTextColor(true, this);
                     break;
             }
         } catch (Exception e) {

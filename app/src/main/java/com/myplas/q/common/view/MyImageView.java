@@ -82,6 +82,10 @@ public class MyImageView extends ImageView {
         //setDrawingCacheEnabled(true);
         setWillNotDraw(false);
     }
+
+    public void setBorderColor(Context context, int color) {
+        this.borderColor = context.getResources().getColor(color);
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         if (shapeType == 0) {

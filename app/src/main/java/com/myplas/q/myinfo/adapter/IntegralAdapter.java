@@ -50,8 +50,7 @@ import java.util.Map;
  */
 public class IntegralAdapter extends BaseAdapter implements ResultCallBack, Integral_SupDem_Adapter.MyInterface
         , DialogShowUtils.DialogShowInterface {
-    private Context context;
-    private Activity activity;
+    private Activity context;
     private viewHolder viewHolder;
     private Map<Integer, View> map;
     private TookDateBean tookDateBean;
@@ -74,8 +73,7 @@ public class IntegralAdapter extends BaseAdapter implements ResultCallBack, Inte
 
     public IntegralAdapter(Context context, Activity activity, List<IntegralBean.InfoBean> list, callBackiterface callBackiterface) {
         this.list = list;
-        this.context = context;
-        this.activity = activity;
+        this.context = activity;
 
         map = new HashMap<>();
         map_grid = new HashMap<>();
@@ -374,7 +372,7 @@ public class IntegralAdapter extends BaseAdapter implements ResultCallBack, Inte
     public void setGridViewParams(GridView gridView, List<Date> list) {
         int length = 75;
         DisplayMetrics dm = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
         float density = dm.density;
         int gridviewWidth = (int) (list.size() * (length + 1) * density);
         int itemWidth = (int) (length * density);

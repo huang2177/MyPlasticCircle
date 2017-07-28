@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="23dp"-->
-    <!--android:background="@color/color_red"></View>-->
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/color_red"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -35,7 +37,7 @@
             android:textSelectHandle="@drawable/textselecthandle"
             android:textSelectHandleLeft="@drawable/textselecthandle"
             android:textSelectHandleRight="@drawable/textselecthandle"
-            android:textSize="14.0sp" />
+            android:textSize="14.0sp"/>
 
         <TextView
             android:id="@+id/search_src_text"
@@ -45,11 +47,13 @@
             android:background="@drawable/toplines_shape_text"
             android:gravity="center"
             android:text="搜索"
-            android:textColor="@color/color_white" />
+            android:textColor="@color/color_white"/>
     </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -87,56 +91,58 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@color/color_white"
-                    android:src="@drawable/btn_recommend" />
+                    android:src="@drawable/btn_recommend"/>
             </LinearLayout>
 
             <com.myplas.q.common.view.XListView
                 android:id="@+id/find_mylistview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:divider="@null">
+                android:divider="@null"
+                android:visibility="gone">
             </com.myplas.q.common.view.XListView>
+
             <ImageButton
                 android:id="@+id/img_reload"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@null"
-                android:visibility="gone"
-                android:src="@drawable/img_reload" />
+                android:src="@drawable/img_reload"
+                android:visibility="gone"/>
         </LinearLayout>
+
         <ImageButton
             android:id="@+id/image_backup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_backup"
-            android:background="@null"
+            android:layout_gravity="bottom|right"
             android:layout_margin="15dp"
-            android:visibility="gone"
-            android:layout_gravity="bottom|right"/>
+            android:background="@null"
+            android:src="@drawable/btn_backup"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/layout_noresult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
-            android:visibility="visible"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="25dp"
-                android:src="@drawable/zxtb" />
+                android:src="@drawable/zxtb"/>
 
             <TextView
+                android:id="@+id/text_noresult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/text_noresult"
                 android:layout_gravity="center"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"/>
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>
