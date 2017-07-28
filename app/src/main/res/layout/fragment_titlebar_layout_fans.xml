@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/wd_linear_fans"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@color/color_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/wd_text_fans"
+            style="@style/wd_text2_style"
+            android:layout_weight="0"
+            android:textSize="20.0sp"
+            android:textColor="@color/color_red"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="粉丝数"
+            android:layout_gravity="center"
+            android:textSize="16.0sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/wd_linear_follow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@color/color_white"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/wd_text_follow"
+            style="@style/wd_text2_style"
+            android:textSize="20.0sp"
+            android:textColor="@color/calendar_selected_range_bg"
+            android:layout_gravity="center"
+            android:layout_weight="0"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="关注数"
+            android:layout_gravity="center"
+            android:textSize="16.0sp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/wd_linear_introdus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@color/color_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/wd_text_introdus"
+            style="@style/wd_text2_style"
+            android:textSize="20.0sp"
+            android:textColor="@color/calendar_highlighted_day_bg"
+            android:layout_gravity="center"
+            android:layout_weight="0"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="引荐数"
+            android:layout_gravity="center"
+            android:textSize="16.0sp"/>
+    </LinearLayout>
+</LinearLayout>

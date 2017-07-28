@@ -68,9 +68,8 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private ImageButton imageButton;
     private ScrollView scrollingView;
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
-    private TextView text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_ly, text_xx, text_gx, text_gs, text_name_tel;
-    private TextView text_title_gj, text_title_qg, text_title_ly, text_title_yj, text_title_fs, text_title_gz, text_title_jf;
-    private LinearLayout linear_changepass, linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_look, linear_ly, linear_xx, linear_jf, linear_bz, linear_gx, linear_edu, linear_pz, linear_share;
+    private TextView text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_gs;
+    private LinearLayout linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_look, linear_edu, linear_pz;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,15 +79,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         image_tx = f(R.id.xq_tx);
         image_rz = f(R.id.xq_rz);
         text_gs = f(R.id.wd_title_gs);
-        linear_share = f(R.id.wd_linear_share);
-        text_name_tel = f(R.id.wd_title_name);
-        text_title_gj = f(R.id.wd_title_gj);
-        text_title_qg = f(R.id.wd_title_qg);
-        text_title_ly = f(R.id.wd_title_ly);
-        text_title_yj = f(R.id.wd_title_yj);
-        text_title_fs = f(R.id.wd_title_fs);
-        text_title_gz = f(R.id.wd_title_gz);
-        text_title_jf = f(R.id.wd_title_jf);
 
         text_dd = f(R.id.wd_text_dd);
         text_gj = f(R.id.wd_text_gj);
@@ -97,9 +87,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         text_fs = f(R.id.wd_text_fs);
         text_gz = f(R.id.wd_text_gz);
         text_look = f(R.id.wd_text_look);
-        text_ly = f(R.id.wd_text_ly);
-        text_xx = f(R.id.wd_text_xx);
-        text_gx = f(R.id.wd_text_gx);
 
         linear_dd = f(R.id.wd_linear_dd);
         linear_gj = f(R.id.wd_linear_gj);
@@ -108,22 +95,12 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_fs = f(R.id.wd_linear_fs);
         linear_gz = f(R.id.wd_linear_gz);
         linear_look = f(R.id.wd_linear_look);
-        linear_ly = f(R.id.wd_linear_ly);
-        linear_jf = f(R.id.wd_linear_jf);
-        linear_bz = f(R.id.wd_linear_bz);
-        linear_gx = f(R.id.wd_linear_gx);
-        linear_xx = f(R.id.wd_linear_xx);
         linear_tc = f(R.id.wd_linear_tc);
-        linear_pz = f(R.id.wd_linear_pz);
         linear_edu = f(R.id.wd_linear_edu);
-        linear_title = f(R.id.wd_linear_title);
+        linear_edu = f(R.id.wd_linear_pz);
         imageButton = f(R.id.img_reload);
         scrollingView = f(R.id.scrollView_myself);
-        linear_changepass = f(R.id.wd_linear_changepass);
 
-        linear_changepass.setOnClickListener(this);
-        linear_share.setOnClickListener(this);
-        linear_title.setOnClickListener(this);
         linear_dd.setOnClickListener(this);
         linear_gj.setOnClickListener(this);
         linear_qg.setOnClickListener(this);
@@ -131,18 +108,12 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_fs.setOnClickListener(this);
         linear_gz.setOnClickListener(this);
         linear_look.setOnClickListener(this);
-        linear_ly.setOnClickListener(this);
-        linear_xx.setOnClickListener(this);
-        linear_jf.setOnClickListener(this);
-        linear_bz.setOnClickListener(this);
-        linear_gx.setOnClickListener(this);
         linear_tc.setOnClickListener(this);
         linear_pz.setOnClickListener(this);
         linear_edu.setOnClickListener(this);
         imageButton.setOnClickListener(this);
         //请求数据
         //getLoginInfo(false);
-        text_gx.setText("当前版本 " + VersionUtils.getVersionName(getActivity()) + "  ");
     }
 
     @Nullable
@@ -170,12 +141,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                     Intent in = new Intent(getActivity(), ShareActivity.class);
                     in.putExtra("type", "5");
                     startActivity(in);
-                    break;
-                case R.id.wd_linear_changepass:
-                    Intent i = new Intent(getActivity(), FindPSWActivity.class);
-                    i.putExtra("title", "修改密码");
-                    startActivity(i);
-                    break;
+                    break
                 case R.id.wd_linear_gj:
                     Intent intent = new Intent(getActivity(), MySupplyDemandActivity.class);
                     intent.putExtra("title", "我的供给");
@@ -207,28 +173,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                 case R.id.wd_linear_look:
                     Intent intent0 = new Intent(getActivity(), LookMeActivity.class);
                     startActivity(intent0);
-                    break;
-                case R.id.wd_linear_ly:
-                    Intent intent5 = new Intent(getActivity(), MyCommentActivity.class);
-                    startActivity(intent5);
-                    break;
-                case R.id.wd_linear_xx:
-                    startActivity(new Intent(getActivity(), MyMessageActivity.class));
-                    break;
-                case R.id.wd_linear_jf:
-                    startActivity(new Intent(getActivity(), IntegralActivity.class));
-                    break;
-                case R.id.wd_linear_bz:
-                    startActivity(new Intent(getActivity(), HelpActivity.class));
-                    break;
-                case R.id.wd_linear_edu:
-                    startActivity(new Intent(getActivity(), LineOfCreditActivity.class));
-                    break;
-                case R.id.wd_linear_pz:
-                    startActivity(new Intent(getActivity(), PlasticMoneyActivity.class));
-                    break;
-                case R.id.wd_linear_gx:
-                    getVersion();
                     break;
                 case R.id.wd_linear_tc:
                     String content = "确定退出？";
@@ -340,14 +284,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             Glide.with(getActivity()).load(myZone.getData().getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(image_tx);
             image_rz.setImageResource((ispass.equals("0")) ? (R.drawable.icon_identity) : (R.drawable.icon_identity_hl));
             text_gs.setText(myZone.getData().getC_name());
-            text_name_tel.setText(myZone.getData().getName() + "  " + myZone.getData().getMobile());
-            text_title_gj.setText(myZone.getS_out_count() + "\n供给");
-            text_title_qg.setText(myZone.getS_in_count() + "\n求购");
-            text_title_ly.setText(myZone.getLeaveword() + "\n留言");
-            text_title_yj.setText(myZone.getIntroduction() + "\n引荐");
-            text_title_fs.setText(myZone.getMyfans() + "\n粉丝");
-            text_title_gz.setText(myZone.getMyconcerns() + "\n关注");
-            text_title_jf.setText(myZone.getPoints() + "\n塑豆");
 
             text_gj.setText(myZone.getS_out_count() + "  ");
             text_qg.setText(myZone.getS_in_count() + "  ");
@@ -355,8 +291,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             text_fs.setText(myZone.getMyfans() + "  ");
             text_gz.setText(myZone.getMyconcerns() + "  ");
             text_look.setText(myZone.getMyviewhistory() + "  ");
-            text_ly.setText("未读留言" + myZone.getLeaveword() + "  ");
-            text_xx.setText("未读消息" + myZone.getMessage() + "  ");
         } catch (Exception e) {
         }
     }
