@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.common.view.MyListview;
 import com.myplas.q.myinfo.beans.EDuBean;
 
 import java.util.HashMap;
@@ -66,14 +67,12 @@ public class TradeOrderListviewAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_tradeorder, parent, false);
             viewHolder.textView_signed = (TextView) convertView.findViewById(R.id.popou_layout_signed_text);
             viewHolder.textView_title = (TextView) convertView.findViewById(R.id.tradeorder_item_title);
-            viewHolder.textView_content = (TextView) convertView.findViewById(R.id.tradeorder_item_content);
-            viewHolder.textView_uprice = (TextView) convertView.findViewById(R.id.tradeorder_item_uprice);
             viewHolder.textView_tprice = (TextView) convertView.findViewById(R.id.tradeorder_item_tprice);
             viewHolder.textView_feight = (TextView) convertView.findViewById(R.id.tradeorder_item_feight);
-            viewHolder.textView_num1 = (TextView) convertView.findViewById(R.id.tradeorder_item_num);
             viewHolder.textView_num2 = (TextView) convertView.findViewById(R.id.tradeorder_item_num2);
             viewHolder.mImageView1 = (ImageView) convertView.findViewById(R.id.tradeorder_item_img1);
             viewHolder.mImageView2 = (ImageView) convertView.findViewById(R.id.tradeorder_item_img2);
+            viewHolder.mMyListview = (MyListview) convertView.findViewById(R.id.tradeorder_item_listview);
             convertView.setTag(viewHolder);
             mMapViews.put(position, convertView);
             mMapTextViews.put(position, viewHolder.textView_signed);
@@ -84,6 +83,9 @@ public class TradeOrderListviewAdapter extends BaseAdapter {
         try {
 //            viewHolder.textView_content.setText(Html.fromHtml(list.get(position).getA()));
 //            viewHolder.textView_title.setText("Q:" + Html.fromHtml(list.get(position).getQ()));
+            TradeOrderLV_ItemAdapter itemAdapter = new TradeOrderLV_ItemAdapter(context, null);
+            viewHolder.mMyListview.setAdapter(itemAdapter);
+
             viewHolder.mImageView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,9 +111,9 @@ public class TradeOrderListviewAdapter extends BaseAdapter {
     }
 
     class viewHolder {
-        TextView textView_signed;
+        MyListview mMyListview;
         ImageView mImageView1, mImageView2;
-        TextView textView_title, textView_content, textView_uprice, textView_tprice, textView_feight, textView_num1, textView_num2;
+        TextView textView_title, textView_tprice, textView_feight, textView_num2, textView_signed;
     }
 
     public interface MyOnClickListener {

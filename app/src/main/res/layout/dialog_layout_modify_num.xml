@@ -8,8 +8,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/corner_invoice_dialog_up">
+        android:background="@drawable/corner_invoice_dialog_up"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="match_parent"
@@ -28,14 +28,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:paddingRight="10dp"
-            android:src="@drawable/btn_apply"/>
+            android:src="@drawable/btn_delete1"/>
     </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="20dp">
 
         <LinearLayout
@@ -59,6 +60,8 @@
                 android:background="@drawable/corner_titlebar"
                 android:inputType="number"
                 android:padding="5dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"

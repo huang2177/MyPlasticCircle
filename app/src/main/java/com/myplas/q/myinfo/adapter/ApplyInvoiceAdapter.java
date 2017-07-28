@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -109,9 +110,10 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
         normalDialog = new Dialog(context, R.style.dialog);
         normalDialog.setContentView(view);
         normalDialog.setCancelable(true);
-        normalDialog.setCanceledOnTouchOutside(false);
+        normalDialog.setCanceledOnTouchOutside(true);
         setDialogWindowAttr(context);
         normalDialog.show();
+
 
         mImageView = (ImageView) view.findViewById(R.id.dialog_layout_modify_img);
         mEditText = (EditText) view.findViewById(R.id.dialog_layout_modify_editText);
@@ -128,6 +130,13 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
                 }
             }
         });
+//        mEditText.requestFocus();
+//
+//        mEditText.setFocusable(true);
+//
+//        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//
+//        imm.showSoftInputFromInputMethod(mEditText.getWindowToken(),0);
 
     }
 

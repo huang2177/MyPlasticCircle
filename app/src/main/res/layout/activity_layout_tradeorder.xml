@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="@color/color_gray_bg"
-                android:dividerHeight="20px">
+                android:dividerHeight="25px">
             </com.myplas.q.common.view.MyListview>
 
             <com.myplas.q.common.view.NoResultLayout
