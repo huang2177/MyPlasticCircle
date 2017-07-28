@@ -74,7 +74,19 @@
                 android:layout_weight="1"
                 android:background="@color/color_white"
                 android:divider="@null"
+                android:listSelector="@android:color/transparent"
                 android:scrollbars="none"></com.myplas.q.common.view.MyListview>
+
+            <TextView
+                android:id="@+id/item_lv_invoice_allprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@color/color_white"
+                android:gravity="right"
+                android:padding="10dp"
+                android:text="申请开票合计金额：222222222"
+                android:textColor="@color/color_red"/>
 
             <View
                 android:layout_width="match_parent"

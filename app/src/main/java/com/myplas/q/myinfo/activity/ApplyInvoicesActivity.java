@@ -24,7 +24,7 @@ import com.umeng.analytics.MobclickAgent;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 10:25
  */
-public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickListener {
+public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickListener, ApplyInvoiceAdapter.MyOnClickListener {
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
@@ -32,7 +32,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     private EditText mEditText;
     private MyListview mListView;
     private ImageView mImageView;
-    private TextView mTextView_cm, mTextView_tprice, mTextView_notapplied, mTextView_apply;
+    private TextView mTextView_cm, mTextView_tprice, mTextView_notapplied, mTextView_apply, textView_allprice;
 
     private ApplyInvoiceAdapter mAdapter;
 
@@ -53,6 +53,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         mTextView_cm = F(R.id.applyinvoices_company);
         mTextView_apply = F(R.id.applyinvoices_apply);
         mTextView_tprice = F(R.id.applyinvoices_tprice);
+        textView_allprice = F(R.id.item_lv_invoice_allprice);
         mTextView_notapplied = F(R.id.applyinvoices_notapplied);
 
         mImageView.setOnClickListener(this);
@@ -72,6 +73,13 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
         }
     }
+
+    //适配器的回调
+    @Override
+    public void onClick(int position) {
+
+    }
+
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);

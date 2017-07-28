@@ -38,16 +38,19 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     private String num;
     private Map<Integer, View> mViewMap;
     private Map<Integer, TextView> mTextViewMap;
+    private Map<Integer, ImageView> mImageViewMap;
 
     private EditText mEditText;
     private ImageView mImageView;
     private Dialog normalDialog;
+    private MyOnClickListener mListener;
 
     public ApplyInvoiceAdapter(Context context, List<EDuBean.DataBean> list) {
         this.list = list;
         this.context = context;
         mViewMap = new HashMap<>();
         mTextViewMap = new HashMap<>();
+        mImageViewMap = new HashMap<>();
     }
 
     @Override
@@ -70,7 +73,8 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final viewHolder viewHolder;
-        if (mViewMap.get(position) == null) {
+        if (convertView == null) {
+
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_applyinvoices, null);
             viewHolder.textView_mode = (TextView) convertView.findViewById(R.id.item_lv_applyinvoice_mode);
@@ -78,37 +82,28 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
             viewHolder.textView_applied = (TextView) convertView.findViewById(R.id.item_lv_invoice_applied);
             viewHolder.textView_applyable = (TextView) convertView.findViewById(R.id.item_lv_invoice_applyable);
             viewHolder.textView_apply = (TextView) convertView.findViewById(R.id.item_lv_invoice_apply);
-            viewHolder.textView_allprice = (TextView) convertView.findViewById(R.id.item_lv_invoice_allprice);
             viewHolder.mImageView_modify = (ImageView) convertView.findViewById(R.id.item_lv_invoice_img);
 
             convertView.setTag(viewHolder);
-            mViewMap.put(position, convertView);
-            mTextViewMap.put(position, viewHolder.textView_allprice);
         } else {
-            convertView = mViewMap.get(position);
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-            if (position == 2) {
-                mTextViewMap.get(position).setVisibility(View.VISIBLE);
-            }
-//            viewHolder.textView_content.setText(Html.fromHtml(list.get(position).getA()));
-//            viewHolder.textView_title.setText("Q:" + Html.fromHtml(list.get(position).getQ()));
-
             viewHolder.mImageView_modify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    viewHolder.textView_apply.setText("333");
                     showDialog(viewHolder);
                 }
             });
         } catch (Exception e) {
         }
+
         return convertView;
     }
 
 
     public void showDialog(final viewHolder viewHolder) {
-        Log.e("-----", viewHolder.toString());
         View view = View.inflate(context, R.layout.dialog_layout_modify_num, null);
 
         normalDialog = new Dialog(context, R.style.dialog);
@@ -127,6 +122,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
                 if (num != null && !"".equals(num)) {
                     normalDialog.dismiss();
                     viewHolder.textView_apply.setText(num);
+                    //mListener.onClick(num);
                 } else {
                     TextUtils.Toast(context, "你还没有输入开票数量！");
                 }
@@ -151,9 +147,17 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
         normalDialog.getWindow().setAttributes(lp);
     }
 
+    public interface MyOnClickListener {
+        void onClick(int position);
+    }
+
+    public void setMyOnClickListener(MyOnClickListener myOnClickListener) {
+        this.mListener = myOnClickListener;
+    }
+
     class viewHolder {
         ImageView mImageView_modify;
-        TextView textView_mode, textView_num, textView_applied, textView_applyable, textView_apply, textView_allprice;
+        TextView textView_mode, textView_num, textView_applied, textView_applyable, textView_apply;
     }
 
 }
