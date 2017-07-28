@@ -2,89 +2,102 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="horizontal">
+              android:orientation="horizontal"
+              android:background="@color/colorAccent">
 
     <LinearLayout
         android:id="@+id/wd_linear_fans"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
         android:background="@color/color_white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
 
         <TextView
             android:id="@+id/wd_text_fans"
             style="@style/wd_text2_style"
+            android:layout_gravity="center"
             android:layout_weight="0"
-            android:textSize="20.0sp"
+            android:gravity="center"
             android:textColor="@color/color_red"
-            android:layout_gravity="center"/>
+            android:textSize="20.0sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center_vertical"
             android:text="粉丝数"
-            android:layout_gravity="center"
             android:textSize="16.0sp"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="@color/color_gray_divider_in"></View>
 
     <LinearLayout
         android:id="@+id/wd_linear_follow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
         android:background="@color/color_white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
 
 
         <TextView
             android:id="@+id/wd_text_follow"
             style="@style/wd_text2_style"
-            android:textSize="20.0sp"
-            android:textColor="@color/calendar_selected_range_bg"
             android:layout_gravity="center"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            android:gravity="center"
+            android:textColor="@color/calendar_selected_range_bg"
+            android:textSize="20.0sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center_vertical"
             android:text="关注数"
-            android:layout_gravity="center"
             android:textSize="16.0sp"/>
 
     </LinearLayout>
 
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="@color/color_gray_divider_in"></View>
 
     <LinearLayout
         android:id="@+id/wd_linear_introdus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
         android:background="@color/color_white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
 
         <TextView
             android:id="@+id/wd_text_introdus"
             style="@style/wd_text2_style"
-            android:textSize="20.0sp"
-            android:textColor="@color/calendar_highlighted_day_bg"
             android:layout_gravity="center"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            android:gravity="center"
+            android:textColor="@color/calendar_highlighted_day_bg"
+            android:textSize="20.0sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center_vertical"
             android:text="引荐数"
-            android:layout_gravity="center"
             android:textSize="16.0sp"/>
     </LinearLayout>
 </LinearLayout>

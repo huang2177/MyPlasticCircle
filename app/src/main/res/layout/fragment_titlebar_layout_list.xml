@@ -4,22 +4,66 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out"></View>
+
+    <LinearLayout
+        android:id="@+id/wd_linear_dd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/wd_text2_style"
+            android:drawableLeft="@drawable/icon_trade"
+            android:gravity="center_vertical"
+            android:text="  交易订单"
+            android:textColor="@color/color_balank"/>
+
+        <TextView
+            android:id="@+id/wd_text_dd"
+            style="@style/wd_text2_style"
+            android:layout_weight="0"
+            android:drawableRight="@drawable/icon_more"
+            android:text="  "/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/color_white"
+        android:background="@color/colorAccent"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/wd_linear_gj"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="10dp">
 
             <TextView
                 style="@style/wd_text2_style"
-                android:drawableLeft="@drawable/icon_my_supply"
+                android:drawableLeft="@drawable/icon_my_purchase"
                 android:gravity="center_vertical"
                 android:text="  我的供给"
                 android:textColor="@color/color_balank"/>
@@ -34,18 +78,18 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/color_gray"></View>
+            android:layout_height="1px"
+            android:background="@color/color_gray_divider_in"></View>
 
         <LinearLayout
             android:id="@+id/wd_linear_qg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="10dp">
 
             <TextView
                 style="@style/wd_text2_style"
-                android:drawableLeft="@drawable/icon_my_purchase"
+                android:drawableLeft="@drawable/icon_my_supply"
                 android:gravity="center_vertical"
                 android:text="  我的求购"
                 android:textColor="@color/color_balank"/>
@@ -59,95 +103,117 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out"></View>
+
+
     <LinearLayout
+        android:id="@+id/wd_linear_jf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/color_white"
-        android:orientation="vertical">
+        android:background="@color/colorAccent"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:id="@+id/wd_linear_jf"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:drawableLeft="@drawable/icon_integral"
+            android:gravity="center_vertical"
+            android:text="  我的塑豆"
+            android:textColor="@color/color_balank"
+            android:textSize="@dimen/x66"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_my_points"
-                android:gravity="center_vertical"
-                android:text="  我的塑豆"
-                android:textColor="@color/color_balank"
-                android:textSize="@dimen/x66"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:text=" hot!"
+            android:textColor="#f4410a"
+            android:textSize="16.0sp"
+            android:textStyle="italic"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="top"
-                android:text=" hot!"
-                android:textColor="#f4410a"
-                android:textSize="16.0sp"
-                android:textStyle="italic"/>
 
-            <TextView
-                android:id="@+id/wd_text_jf"
-                style="@style/wd_text2_style"
-                android:layout_weight="0"
-                android:drawableRight="@drawable/icon_more"
-                android:text="  "/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/wd_text_jf"
+            style="@style/wd_text2_style"
+            android:layout_weight="0"
+            android:drawableRight="@drawable/icon_more"
+            android:text="  "/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out"></View>
+
+
     <LinearLayout
+        android:id="@+id/wd_linear_look"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/color_white"
-        android:orientation="vertical">
+        android:background="@color/colorAccent"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:id="@+id/wd_linear_look"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icon_who_see_me"
+            android:gravity="center_vertical"
+            android:text="  谁看过我"
+            android:textColor="@color/color_balank"
+            android:textSize="@dimen/x66"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/icon_my_points"
-                android:gravity="center_vertical"
-                android:text="  谁看过我"
-                android:textColor="@color/color_balank"
-                android:textSize="@dimen/x66"/>
-
-            <TextView
-                android:id="@+id/wd_text_look"
-                style="@style/wd_text2_style"
-                android:layout_weight="0"
-                android:drawableRight="@drawable/icon_more"
-                android:text="  "/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/wd_text_look"
+            style="@style/wd_text2_style"
+            android:layout_weight="0"
+            android:drawableRight="@drawable/icon_more"
+            android:text="  "/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/color_white"
+        android:background="@color/colorAccent"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/wd_linear_edu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="10dp">
 
             <TextView
                 style="@style/wd_text2_style"
-                android:drawableLeft="@drawable/icon_credi"
+                android:drawableLeft="@drawable/icon_card"
                 android:gravity="center_vertical"
                 android:text="  企业信用额度"
                 android:textColor="@color/color_balank"/>
@@ -161,18 +227,18 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/color_gray"></View>
+            android:layout_height="1px"
+            android:background="@color/color_gray_divider_in"></View>
 
         <LinearLayout
             android:id="@+id/wd_linear_pz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="10dp">
 
             <TextView
                 style="@style/wd_text2_style"
-                android:drawableLeft="@drawable/icon_assets"
+                android:drawableLeft="@drawable/icon_with_capital"
                 android:gravity="center_vertical"
                 android:text="  塑料配资"
                 android:textColor="@color/color_balank"/>
@@ -185,44 +251,58 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out"></View>
+
     <LinearLayout
+        android:id="@+id/wd_linear_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/color_white"
-        android:orientation="vertical">
+        android:background="@color/colorAccent"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:id="@+id/wd_linear_set"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icon_setup"
+            android:gravity="center_vertical"
+            android:text="  设置"
+            android:textColor="@color/color_balank"
+            android:textSize="@dimen/x66"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/icon_my_points"
-                android:gravity="center_vertical"
-                android:text="  设置"
-                android:textColor="@color/color_balank"
-                android:textSize="@dimen/x66"/>
-
-            <TextView
-                android:id="@+id/wd_text_set"
-                style="@style/wd_text2_style"
-                android:layout_weight="0"
-                android:drawableRight="@drawable/icon_more"
-                android:text="  "/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/wd_text_set"
+            style="@style/wd_text2_style"
+            android:layout_weight="0"
+            android:drawableRight="@drawable/icon_more"
+            android:text="  "/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/color_white">
+        android:background="@color/colorAccent">
 
         <Button
             android:id="@+id/wd_linear_tc"
@@ -236,4 +316,9 @@
             android:textStyle="bold"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_gray_divider_out"></View>
 </LinearLayout>

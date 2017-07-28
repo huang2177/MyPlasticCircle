@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#FF5000</color>
     <color name="colorPrimaryDark">#FF5000</color>
-    <color name="colorAccent">#fcfbfc</color>
+    <color name="colorAccent">#ffffff</color>
     <color name="color_white">#fbf9f8</color>
     <color name="color_red">#FF5000</color>
     <color name="color_blue">#6485a3</color>
@@ -31,8 +31,8 @@
     <color name="calendar_divider">#ffbababa</color>
     <color name="calendar_inactive_month_bg">#fff5f7f9</color>
     <color name="calendar_selected_day_bg">#fa5013</color>
-    <color name="calendar_highlighted_day_bg">#ccffcc</color>
-    <color name="calendar_selected_range_bg">#ff96caff</color>
+    <color name="calendar_highlighted_day_bg">#91f591</color>
+    <color name="calendar_selected_range_bg">#91c3f5</color>
     <color name="calendar_text_inactive">#fff5f7f9</color>
     <color name="calendar_text_active">#ff778088</color>
     <color name="calendar_text_selected">#ffffffff</color>

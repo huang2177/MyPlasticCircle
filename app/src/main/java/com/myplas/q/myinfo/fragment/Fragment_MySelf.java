@@ -68,7 +68,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private ImageButton imageButton;
     private ScrollView scrollingView;
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
-    private TextView text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_gs;
+    private TextView text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
     private LinearLayout linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_look, linear_edu, linear_pz;
 
     @Override
@@ -80,25 +80,27 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         image_rz = f(R.id.xq_rz);
         text_gs = f(R.id.wd_title_gs);
 
+        text_pm = f(R.id.wd_title_pm);
         text_dd = f(R.id.wd_text_dd);
         text_gj = f(R.id.wd_text_gj);
         text_qg = f(R.id.wd_text_qg);
-        text_yj = f(R.id.wd_text_yj);
-        text_fs = f(R.id.wd_text_fs);
-        text_gz = f(R.id.wd_text_gz);
+        text_fs = f(R.id.wd_text_fans);
+        text_name = f(R.id.wd_title_name);
+        text_gz = f(R.id.wd_text_follow);
         text_look = f(R.id.wd_text_look);
+        text_yj = f(R.id.wd_text_introdus);
 
         linear_dd = f(R.id.wd_linear_dd);
         linear_gj = f(R.id.wd_linear_gj);
         linear_qg = f(R.id.wd_linear_qg);
-        linear_yj = f(R.id.wd_linear_yj);
-        linear_fs = f(R.id.wd_linear_fs);
-        linear_gz = f(R.id.wd_linear_gz);
-        linear_look = f(R.id.wd_linear_look);
         linear_tc = f(R.id.wd_linear_tc);
-        linear_edu = f(R.id.wd_linear_edu);
-        linear_edu = f(R.id.wd_linear_pz);
+        linear_pz = f(R.id.wd_linear_pz);
         imageButton = f(R.id.img_reload);
+        linear_fs = f(R.id.wd_linear_fans);
+        linear_edu = f(R.id.wd_linear_edu);
+        linear_gz = f(R.id.wd_linear_follow);
+        linear_look = f(R.id.wd_linear_look);
+        linear_yj = f(R.id.wd_linear_introdus);
         scrollingView = f(R.id.scrollView_myself);
 
         linear_dd.setOnClickListener(this);
@@ -141,7 +143,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                     Intent in = new Intent(getActivity(), ShareActivity.class);
                     in.putExtra("type", "5");
                     startActivity(in);
-                    break
+                    break;
                 case R.id.wd_linear_gj:
                     Intent intent = new Intent(getActivity(), MySupplyDemandActivity.class);
                     intent.putExtra("title", "我的供给");
@@ -154,17 +156,17 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                     intent1.putExtra("type", "1");
                     startActivity(intent1);
                     break;
-                case R.id.wd_linear_yj:
+                case R.id.wd_linear_introdus:
                     Intent intent2 = new Intent(getActivity(), MyIntroductionActivity.class);
                     startActivity(intent2);
                     break;
-                case R.id.wd_linear_fs:
+                case R.id.wd_linear_fans:
                     Intent intent3 = new Intent(getActivity(), MyFansFollowActivity.class);
                     intent3.putExtra("titlename", "我的粉丝");
                     intent3.putExtra("type", "1");
                     startActivity(intent3);
                     break;
-                case R.id.wd_linear_gz:
+                case R.id.wd_linear_follow:
                     Intent intent4 = new Intent(getActivity(), MyFansFollowActivity.class);
                     intent4.putExtra("titlename", "我的关注");
                     intent4.putExtra("type", "2");
@@ -283,13 +285,17 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             String ispass = myZone.getData().getIs_pass();
             Glide.with(getActivity()).load(myZone.getData().getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(image_tx);
             image_rz.setImageResource((ispass.equals("0")) ? (R.drawable.icon_identity) : (R.drawable.icon_identity_hl));
+            text_name.setText(myZone.getData().getName() + " " +
+                    myZone.getData().getMobile() + " " +
+                    ((!myZone.getData().getSex().equals("0")) ? ("女") : ("男")));
             text_gs.setText(myZone.getData().getC_name());
+
+            text_yj.setText(myZone.getIntroduction());
+            text_fs.setText(myZone.getMyfans());
+            text_gz.setText(myZone.getMyconcerns());
 
             text_gj.setText(myZone.getS_out_count() + "  ");
             text_qg.setText(myZone.getS_in_count() + "  ");
-            text_yj.setText(myZone.getIntroduction() + "  ");
-            text_fs.setText(myZone.getMyfans() + "  ");
-            text_gz.setText(myZone.getMyconcerns() + "  ");
             text_look.setText(myZone.getMyviewhistory() + "  ");
         } catch (Exception e) {
         }
