@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/color_gray_bg"
               android:focusable="true"
               android:focusableInTouchMode="true"
               android:orientation="vertical">
@@ -28,22 +29,211 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="发票详情"
+            android:text="申请开票"
             android:textColor="@color/color_white"
             android:textSize="18.0sp"/>
+
+        <ImageView
+            android:id="@+id/img_contact"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:src="@drawable/btn_customer_service_help"/>
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/invoices_listview"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/color_gray_bg"
-        android:dividerHeight="20px"></ListView>
+        android:layout_weight="1">
 
-    <com.myplas.q.common.view.NoResultLayout
-        android:id="@+id/invoices_noresultlayout"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:padding="10dp"
+                android:text="商品详情"
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_gray_divider_out"></View>
+
+            <com.myplas.q.common.view.MyListview
+                android:id="@+id/applyinvoices_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:layout_weight="1"
+                android:background="@color/color_white"
+                android:divider="@null"
+                android:scrollbars="none"></com.myplas.q.common.view.MyListview>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_gray_divider_out"></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="20px"
+                android:background="@color/color_gray_divider_out"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="开票基本信息"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="开票单位"/>
+
+                    <TextView
+                        android:id="@+id/applyinvoices_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="昆山德顺塑胶有限公司"
+                        android:textColor="@color/color_balank"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="合同金额"/>
+
+                    <TextView
+                        android:id="@+id/applyinvoices_tprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="99999999.00"
+                        android:textColor="@color/color_balank"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="未开票金额"/>
+
+                    <TextView
+                        android:id="@+id/applyinvoices_notapplied"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="110000.00"
+                        android:textColor="@color/color_balank"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="申请开票金额"/>
+
+                    <TextView
+                        android:id="@+id/applyinvoices_apply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="110000.00"
+                        android:textColor="@color/color_balank"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="备注"/>
+
+                    <EditText
+                        android:id="@+id/applyinvoices_remark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="2.5"
+                        android:background="@drawable/corner_titlebar"
+                        android:padding="5dp"
+                        android:textColor="@color/color_balank"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_gray_divider_out"></View>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:background="@color/color_gray_bg"></View>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/applyinvoices_confirm"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-    </com.myplas.q.common.view.NoResultLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/color_red"
+        android:padding="10dp"
+        android:text="确认提交"
+        android:textColor="@color/color_white"
+        android:textSize="18.0sp"/>
+
 </LinearLayout>

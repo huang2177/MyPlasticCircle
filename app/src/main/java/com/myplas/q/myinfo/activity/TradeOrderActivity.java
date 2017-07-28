@@ -72,7 +72,8 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void onClick2(int position) {
-        startActivity(new Intent(this, InvoicesDetailActivity.class));
+        //startActivity(new Intent(this, InvoicesDetailActivity.class));
+        startActivity(new Intent(this, ApplyInvoicesActivity.class));
     }
 
 

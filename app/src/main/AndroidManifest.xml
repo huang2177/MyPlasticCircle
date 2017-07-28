@@ -198,6 +198,10 @@
         <activity
             android:name="com.myplas.q.myinfo.activity.InvoicesDetailActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.myplas.q.myinfo.activity.ApplyInvoicesActivity"
+            android:screenOrientation="portrait"></activity>
+
         <!--适配6.0以上的系统安装apk-->
         <provider
             android:name="android.support.v4.content.FileProvider"
