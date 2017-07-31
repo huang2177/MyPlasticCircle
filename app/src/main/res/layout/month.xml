@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.myplas.q.myinfo.mydatepicker.MonthView
+<com.myplas.q.myinfo.integral.mydatepicker.MonthView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -22,12 +22,14 @@
       android:layout_width="match_parent"
       android:layout_height="1.0dip"
       android:background="#b4b5b6" />
-  <com.myplas.q.myinfo.mydatepicker.CalendarGridView
+
+  <com.myplas.q.myinfo.integral.mydatepicker.CalendarGridView
       android:id="@+id/calendar_grid"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       >
-    <com.myplas.q.myinfo.mydatepicker.CalendarRowView
+
+    <com.myplas.q.myinfo.integral.mydatepicker.CalendarRowView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="4dp"
@@ -67,12 +69,12 @@
           android:layout_height="wrap_content"
           style="@style/CalendarCell.DayHeader"
           />
-    </com.myplas.q.myinfo.mydatepicker.CalendarRowView>
+    </com.myplas.q.myinfo.integral.mydatepicker.CalendarRowView>
     <include layout="@layout/week"/>
     <include layout="@layout/week"/>
     <include layout="@layout/week"/>
     <include layout="@layout/week"/>
     <include layout="@layout/week"/>
     <include layout="@layout/week"/>
-  </com.myplas.q.myinfo.mydatepicker.CalendarGridView>
-</com.myplas.q.myinfo.mydatepicker.MonthView>
+  </com.myplas.q.myinfo.integral.mydatepicker.CalendarGridView>
+</com.myplas.q.myinfo.integral.mydatepicker.MonthView>

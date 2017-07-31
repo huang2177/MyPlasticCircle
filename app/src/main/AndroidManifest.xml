@@ -54,7 +54,7 @@
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".myinfo.activity.MyFansFollowActivity"
+            android:name=".myinfo.fansfollows.MyFansFollowActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
@@ -74,63 +74,63 @@
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.MyDataActivity"
+            android:name="com.myplas.q.myinfo.activity.setting.MyDataActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.MySupplyDemandActivity"
+            android:name="com.myplas.q.myinfo.activity.supdem.MySupplyDemandActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.MyIntroductionActivity"
+            android:name="com.myplas.q.myinfo.fansfollows.MyIntroductionActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.LoginActivity"
+            android:name="com.myplas.q.myinfo.login.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.RegesterActivity"
+            android:name="com.myplas.q.myinfo.login.RegesterActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.FindPSWActivity"
+            android:name="com.myplas.q.myinfo.activity.setting.FindPSWActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.HelpActivity"
+            android:name="com.myplas.q.myinfo.activity.setting.HelpActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.IntegralActivity"
+            android:name="com.myplas.q.myinfo.integral.IntegralActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.IntegralPayActivtity"
+            android:name="com.myplas.q.myinfo.integral.IntegralPayActivtity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.IntegralDetialActivtity"
+            android:name="com.myplas.q.myinfo.integral.IntegralDetialActivtity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.IntegralRuleActivtity"
+            android:name="com.myplas.q.myinfo.integral.IntegralRuleActivtity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.IntegralRecordActivtity"
+            android:name="com.myplas.q.myinfo.integral.IntegralRecordActivtity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.MyMessageActivity"
+            android:name="com.myplas.q.myinfo.message.MyMessageActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.MyCommentActivity"
+            android:name="com.myplas.q.myinfo.message.MyCommentActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.PersonInfoActivity"
+            android:name="com.myplas.q.myinfo.fansfollows.PersonInfoActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
@@ -139,15 +139,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppBlankTheme"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.LookPersonInfoActivity"
+            android:name="com.myplas.q.myinfo.fansfollows.LookPersonInfoActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.LineOfCreditActivity"
+            android:name="com.myplas.q.myinfo.activity.credit.LineOfCreditActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.PlasticMoneyActivity"
+            android:name="com.myplas.q.myinfo.activity.credit.PlasticMoneyActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
@@ -164,7 +164,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/my_theme_animation"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.Ed_Call_Dialog_Activity"
+            android:name="com.myplas.q.myinfo.activity.credit.Ed_Call_Dialog_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/my_theme_animation"></activity>
         <activity
@@ -175,7 +175,7 @@
             android:name="com.myplas.q.addresslist.activity.Cover_WebActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.RegesterXYActivity"
+            android:name="com.myplas.q.myinfo.login.RegesterXYActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.myplas.q.supdem.activity.SupDem_Search_Activity"
@@ -190,17 +190,21 @@
             android:name="com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.LookMeActivity"
+            android:name="com.myplas.q.myinfo.fansfollows.LookMeActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.TradeOrderActivity"
+            android:name="com.myplas.q.myinfo.invoices.TradeOrderActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.InvoicesDetailActivity"
+            android:name="com.myplas.q.myinfo.invoices.InvoicesDetailActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.myplas.q.myinfo.activity.ApplyInvoicesActivity"
+            android:name="com.myplas.q.myinfo.invoices.ApplyInvoicesActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.myplas.q.myinfo.activity.setting.SetActivity"
+            android:screenOrientation="portrait"></activity>
+
 
         <!--适配6.0以上的系统安装apk-->
         <provider

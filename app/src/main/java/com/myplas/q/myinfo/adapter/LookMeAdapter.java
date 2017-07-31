@@ -1,33 +1,17 @@
 package com.myplas.q.myinfo.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
-import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.SectionedBaseAdapter;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.myinfo.activity.IntegralPayActivtity;
-import com.myplas.q.myinfo.activity.PersonInfoActivity;
 import com.myplas.q.myinfo.beans.LookMeBean;
-import com.myplas.q.myinfo.beans.MyIntroductionBean;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

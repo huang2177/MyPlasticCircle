@@ -23,13 +23,12 @@ import com.myplas.q.R;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.api.API;
-import com.myplas.q.myinfo.activity.IntegralPayActivtity;
-import com.myplas.q.myinfo.mydatepicker.DateDialogShowUtils;
-import com.myplas.q.myinfo.mydatepicker.SupDemDialogShowUtils;
+import com.myplas.q.myinfo.integral.IntegralPayActivtity;
+import com.myplas.q.myinfo.integral.mydatepicker.DateDialogShowUtils;
+import com.myplas.q.myinfo.integral.mydatepicker.SupDemDialogShowUtils;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.myinfo.activity.IntegralRuleActivtity;
 import com.myplas.q.myinfo.beans.IntegralBean;
 import com.myplas.q.myinfo.beans.TookDateBean;
 

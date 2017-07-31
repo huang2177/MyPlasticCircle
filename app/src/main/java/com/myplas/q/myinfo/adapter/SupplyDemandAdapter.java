@@ -1,18 +1,12 @@
 package com.myplas.q.myinfo.adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +17,6 @@ import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.api.API;
-import com.myplas.q.myinfo.activity.IntegralRuleActivtity;
 import com.myplas.q.myinfo.beans.MyCommentBean;
 
 import org.json.JSONObject;

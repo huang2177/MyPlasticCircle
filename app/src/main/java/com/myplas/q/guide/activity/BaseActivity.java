@@ -12,6 +12,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.common.netresquset.NetRequest;
@@ -28,12 +31,34 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 11:46
  */
-public class BaseActivity extends Activity{
+public class BaseActivity extends Activity {
+    private View mView;
+    private TextView mTextView;
+    private LinearLayout mLayout_back;
+    private ImageView mImageView_conact;
+
+
+    public void initTileBar() {
+        mTextView = F(R.id.titlebar_text_title);
+        mLayout_back = F(R.id.titlebar_img_back);
+        mImageView_conact = F(R.id.titlebar_img_conact);
+        goBack(mLayout_back);
+    }
+
+    public void setTitle(String title) {
+        mTextView.setText(title);
+    }
+
+    public void setRightBTVisibility(int isShow) {
+        mImageView_conact.setVisibility(isShow);
+    }
+
+
     public <T extends View> T F(int id) {
         return (T) findViewById(id);
     }
 
-    public void goBack(View view){
+    public void goBack(View view) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,40 +66,44 @@ public class BaseActivity extends Activity{
             }
         });
     }
+
     //get请求
-    public synchronized void getAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type,String jison){
+    public synchronized void getAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, String jison) {
         if (NetUtils.isNetworkStateed(context)) {
-            NetRequest netRequest=new NetRequest(context,url,map,resultCallBack,type);
+            NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
             netRequest.getAsyn();
         }
     }
+
     //post请求
-    public static synchronized void postAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type){
+    public static synchronized void postAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type) {
         if (NetUtils.isNetworkStateed(context)) {
             LoadingDialog.getInstance(context).show();
-            NetRequest netRequest=new NetRequest(context,url,map,resultCallBack,type);
+            NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
             netRequest.postAsyn();
-        }else{
+        } else {
             resultCallBack.failCallBack(type);
         }
     }
+
     //post请求
-    public static synchronized void postAsyn1(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type,boolean isSHowDialog){
+    public static synchronized void postAsyn1(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, boolean isSHowDialog) {
         if (NetUtils.isNetworkStateed(context)) {
             if (isSHowDialog) {
                 LoadingDialog.getInstance(context).show();
             }
-            NetRequest netRequest=new NetRequest(context,url,map,resultCallBack,type);
+            NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
             netRequest.postAsyn();
-        }else{
+        } else {
             resultCallBack.failCallBack(type);
         }
     }
+
     //post之上传图片
-    public synchronized void postUpLoadIMG(Context context, String url,String imgpath ,String token,ResultCallBack resultCallBack,int type){
+    public synchronized void postUpLoadIMG(Context context, String url, String imgpath, String token, ResultCallBack resultCallBack, int type) {
         if (NetUtils.isNetworkStateed(context)) {
-            NetRequest netRequest=new NetRequest(context,url,null,resultCallBack,type);
-            netRequest.post_UpLoadIMG(imgpath,token);
+            NetRequest netRequest = new NetRequest(context, url, null, resultCallBack, type);
+            netRequest.post_UpLoadIMG(imgpath, token);
         }
     }
 

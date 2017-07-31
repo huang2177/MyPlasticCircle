@@ -2,7 +2,6 @@ package com.myplas.q.headlines.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,7 +13,6 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
-import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -22,14 +20,11 @@ import com.myplas.q.headlines.adapter.HeadLine_Column_Adapetr;
 import com.myplas.q.headlines.adapter.HeadLine_Product_Adapetr;
 import com.myplas.q.headlines.bean.CateListSelectBean;
 import com.myplas.q.headlines.bean.MyCateBean;
-import com.myplas.q.myinfo.activity.IntegralPayActivtity;
 
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

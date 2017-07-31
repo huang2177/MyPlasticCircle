@@ -14,22 +14,22 @@ public class MyZone implements Serializable{
 
     /**
      * err : 0
-     * s_in_count : 0
+     * s_in_count : 1
      * s_out_count : 0
-     * points : 2455
+     * points : 2725
      * leaveword : 0
-     * myviewhistory : 585
+     * myviewhistory : 600
      * message : 0
      * introduction : 0
      * myfans : 6
      * myconcerns : 4
-     * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg","thumbcard":"http://pic.myplas.com/upload/17/07/07/595f20fa7ab89.jpg","c_name":"上海中晨电子商务股份有限公司","credit_level":"AAAAA","credit_limit":"600.00","is_credit":"1","pre_credit_limit":"600.00","credit_time":"1488357059","sex":"0"}
+     * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg","thumbcard":"http://pic.myplas.com/upload/17/07/07/595f20fa7ab89.jpg","c_name":"上海中晨电子商务股份有限公司","credit_level":"AAAAA","credit_limit":"600.00","is_credit":"1","pre_credit_limit":"600.00","credit_time":"1488357059","sex":"0","rank":"22","memberlevel":"列兵"}
      * help : ["http://statics.myplas.com/myapp/img/h1.jpg","http://statics.myplas.com/myapp/img/h2.jpg","http://statics.myplas.com/myapp/img/h3.jpg","http://statics.myplas.com/myapp/img/h4.jpg","http://statics.myplas.com/myapp/img/h5.jpg"]
      */
 
-    private String err;
+    private int err;
     private String s_in_count;
-    private String s_out_count;
+    private int s_out_count;
     private String points;
     private String leaveword;
     private String myviewhistory;
@@ -40,11 +40,11 @@ public class MyZone implements Serializable{
     private DataBean data;
     private List<String> help;
 
-    public String getErr() {
+    public int getErr() {
         return err;
     }
 
-    public void setErr(String err) {
+    public void setErr(int err) {
         this.err = err;
     }
 
@@ -56,11 +56,11 @@ public class MyZone implements Serializable{
         this.s_in_count = s_in_count;
     }
 
-    public String getS_out_count() {
+    public int getS_out_count() {
         return s_out_count;
     }
 
-    public void setS_out_count(String s_out_count) {
+    public void setS_out_count(int s_out_count) {
         this.s_out_count = s_out_count;
     }
 
@@ -153,6 +153,8 @@ public class MyZone implements Serializable{
          * pre_credit_limit : 600.00
          * credit_time : 1488357059
          * sex : 0
+         * rank : 22
+         * memberlevel : 列兵
          */
 
         private String user_id;
@@ -170,6 +172,8 @@ public class MyZone implements Serializable{
         private String pre_credit_limit;
         private String credit_time;
         private String sex;
+        private String rank;
+        private String memberlevel;
 
         public String getUser_id() {
             return user_id;
@@ -289,6 +293,22 @@ public class MyZone implements Serializable{
 
         public void setSex(String sex) {
             this.sex = sex;
+        }
+
+        public String getRank() {
+            return rank;
+        }
+
+        public void setRank(String rank) {
+            this.rank = rank;
+        }
+
+        public String getMemberlevel() {
+            return memberlevel;
+        }
+
+        public void setMemberlevel(String memberlevel) {
+            this.memberlevel = memberlevel;
         }
     }
 }

@@ -7,16 +7,16 @@
 
     <include layout="@layout/dialog_datepicker_selected_date"/>
 
-    <com.myplas.q.myinfo.mydatepicker.CalendarPickerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/calendar_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="none" />
+    <com.myplas.q.myinfo.integral.mydatepicker.CalendarPickerView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                                  android:id="@+id/calendar_view"
+                                                                  android:layout_width="match_parent"
+                                                                  android:layout_height="0dp"
+                                                                  android:layout_weight="1"
+                                                                  android:background="#FFFFFF"
+                                                                  android:clipToPadding="false"
+                                                                  android:overScrollMode="never"
+                                                                  android:scrollbarStyle="outsideOverlay"
+                                                                  android:scrollbars="none"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1.0dip"

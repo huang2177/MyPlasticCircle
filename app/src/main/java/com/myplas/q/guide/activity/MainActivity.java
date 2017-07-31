@@ -43,7 +43,7 @@ import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.fragment.Fragment_HeadLines;
-import com.myplas.q.myinfo.activity.LoginActivity;
+import com.myplas.q.myinfo.login.LoginActivity;
 import com.myplas.q.myinfo.fragment.Fragment_MySelf;
 import com.myplas.q.release.activity.ReleaseActivity;
 import com.myplas.q.supdem.fragment.Fragment_SupplyDemand;
