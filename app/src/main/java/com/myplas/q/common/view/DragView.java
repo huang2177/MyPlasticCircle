@@ -121,6 +121,7 @@ public class DragView extends View {
         super(context, attrs, defStyleAttr);
         this.attrs = attrs;
         this.defStyleAttr = defStyleAttr;
+        init(context);
 
     }
 

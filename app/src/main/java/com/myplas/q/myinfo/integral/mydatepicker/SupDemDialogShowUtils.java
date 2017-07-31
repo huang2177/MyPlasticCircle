@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.myinfo.adapter.Integral_SupDem_Adapter;
+import com.myplas.q.myinfo.integral.adapter.Integral_SupDem_Adapter;
 import com.myplas.q.myinfo.beans.IntegralBean;
 
 import java.util.List;

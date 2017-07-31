@@ -23,7 +23,8 @@ import com.myplas.q.common.utils.SystemUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.myinfo.activity.setting.FindPSWActivity;
+
+import com.myplas.q.myinfo.setting.activity.FindPSWActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;

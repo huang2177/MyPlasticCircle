@@ -40,11 +40,11 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.PinnedHeaderListView;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.myinfo.integral.IntegralActivity;
-import com.myplas.q.myinfo.integral.IntegralPayActivtity;
+import com.myplas.q.myinfo.integral.activity.IntegralActivity;
+import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myinfo.login.LoginActivity;
-import com.myplas.q.myinfo.fansfollows.MyFansFollowActivity;
-import com.myplas.q.myinfo.fansfollows.PersonInfoActivity;
+import com.myplas.q.myinfo.fans.activity.MyFansFollowActivity;
+import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;

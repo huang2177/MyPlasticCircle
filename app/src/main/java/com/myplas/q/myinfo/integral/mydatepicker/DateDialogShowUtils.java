@@ -16,9 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.myplas.q.R;
-import com.myplas.q.common.utils.StatusUtils;
-import com.myplas.q.myinfo.adapter.Date_Grid_Adapter;
-import com.myplas.q.myinfo.adapter.IntegralAdapter;
+import com.myplas.q.myinfo.integral.adapter.Date_Grid_Adapter;
+import com.myplas.q.myinfo.integral.adapter.IntegralAdapter;
 
 import java.util.Date;
 import java.util.List;

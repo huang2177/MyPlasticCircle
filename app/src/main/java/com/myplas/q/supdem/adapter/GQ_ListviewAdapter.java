@@ -20,8 +20,8 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.myinfo.integral.IntegralPayActivtity;
-import com.myplas.q.myinfo.fansfollows.PersonInfoActivity;
+import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
+import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
 
 import com.myplas.q.release.activity.Release_SupplyDemandActivity;
 import com.myplas.q.supdem.Beans.Supply_DemandBean;
