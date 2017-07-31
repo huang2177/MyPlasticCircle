@@ -1,7 +1,6 @@
 package com.myplas.q.myinfo.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,34 +21,29 @@ import com.myplas.q.appupdate.DownLoadUtils;
 import com.myplas.q.appupdate.DownloadApk;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.NetUtils;
-import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.R;
-import com.myplas.q.myinfo.activity.LookMeActivity;
-import com.myplas.q.myinfo.activity.MyFansFollowActivity;
+import com.myplas.q.myinfo.fansfollows.LookMeActivity;
+import com.myplas.q.myinfo.fansfollows.MyFansFollowActivity;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.common.view.MyImageView;
-import com.myplas.q.myinfo.activity.HelpActivity;
-import com.myplas.q.myinfo.activity.IntegralActivity;
-import com.myplas.q.myinfo.activity.LineOfCreditActivity;
-import com.myplas.q.myinfo.activity.MyCommentActivity;
-import com.myplas.q.myinfo.activity.MyMessageActivity;
-import com.myplas.q.myinfo.activity.MySupplyDemandActivity;
-import com.myplas.q.myinfo.activity.MyIntroductionActivity;
-import com.myplas.q.myinfo.activity.MyDataActivity;
-import com.myplas.q.myinfo.activity.FindPSWActivity;
+import com.myplas.q.myinfo.integral.IntegralActivity;
+import com.myplas.q.myinfo.activity.credit.LineOfCreditActivity;
+import com.myplas.q.myinfo.activity.supdem.MySupplyDemandActivity;
+import com.myplas.q.myinfo.fansfollows.MyIntroductionActivity;
+import com.myplas.q.myinfo.activity.setting.MyDataActivity;
 import com.myplas.q.common.api.API;
-import com.myplas.q.myinfo.activity.PlasticMoneyActivity;
-import com.myplas.q.myinfo.activity.TradeOrderActivity;
+import com.myplas.q.myinfo.activity.credit.PlasticMoneyActivity;
+import com.myplas.q.myinfo.activity.setting.SetActivity;
+import com.myplas.q.myinfo.invoices.TradeOrderActivity;
 import com.myplas.q.myinfo.beans.MyZone;
 import com.myplas.q.guide.activity.MainActivity;
-import com.sobot.chat.utils.CommonUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -76,7 +70,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private ImageView mImageView_news;
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
     private TextView text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
-    private LinearLayout linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_jf, linear_look, linear_edu, linear_pz;
+    private LinearLayout linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_jf, linear_look, linear_edu, linear_pz, linear_set;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,9 +99,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_pz = f(R.id.wd_linear_pz);
         imageButton = f(R.id.img_reload);
         linear_fs = f(R.id.wd_linear_fans);
+        linear_set = f(R.id.wd_linear_set);
         linear_edu = f(R.id.wd_linear_edu);
         linear_gz = f(R.id.wd_linear_follow);
         linear_look = f(R.id.wd_linear_look);
+        linear_title = f(R.id.wd_linear_title);
         linear_yj = f(R.id.wd_linear_introdus);
         mDragView = f(R.id.wd_logined_news_text);
         scrollingView = f(R.id.scrollView_myself);
@@ -119,16 +115,16 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_yj.setOnClickListener(this);
         linear_fs.setOnClickListener(this);
         linear_gz.setOnClickListener(this);
-        linear_look.setOnClickListener(this);
         linear_tc.setOnClickListener(this);
         linear_jf.setOnClickListener(this);
         linear_pz.setOnClickListener(this);
+        linear_set.setOnClickListener(this);
         linear_edu.setOnClickListener(this);
+        linear_look.setOnClickListener(this);
         imageButton.setOnClickListener(this);
+        linear_title.setOnClickListener(this);
+        mImageView_news.setOnClickListener(this);
 
-        mDragView.setTextColor(Color.GREEN);
-        mDragView.setText("99+");
-        mDragView.init(getActivity());
         image_tx.setBorderColor(getActivity(), R.color.color_white);
     }
 
@@ -146,9 +142,13 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void onClick(View v) {
         if (NetUtils.isNetworkStateed(getActivity())) {
             switch (v.getId()) {
+                case R.id.wd_logined_news_img:
+//                    Intent i0 = new Intent(getActivity(), TradeOrderActivity.class);
+//                    startActivity(i0);
+                    break;
                 case R.id.wd_linear_dd:
-                    Intent i0 = new Intent(getActivity(), TradeOrderActivity.class);
-                    startActivity(i0);
+                    Intent i1 = new Intent(getActivity(), TradeOrderActivity.class);
+                    startActivity(i1);
                     break;
                 case R.id.img_reload:
                     getLoginInfo(true);
@@ -207,6 +207,10 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                 case R.id.wd_linear_title:
                     Intent intent6 = new Intent(getActivity(), MyDataActivity.class);
                     startActivity(intent6);
+                    break;
+                case R.id.wd_linear_set:
+                    Intent intent7 = new Intent(getActivity(), SetActivity.class);
+                    startActivity(intent7);
                     break;
             }
         }
@@ -305,13 +309,16 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
 
     public void showInfo(MyZone myZone) {
         try {
+            mDragView.setText(myZone.getMessage());
+
             String ispass = myZone.getData().getIs_pass();
             Glide.with(getActivity()).load(myZone.getData().getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(image_tx);
             image_rz.setImageResource((ispass.equals("0")) ? (R.drawable.icon_identity) : (R.drawable.icon_identity_hl));
-            text_name.setText(myZone.getData().getName() + " " +
-                    myZone.getData().getMobile() + " " +
+            text_name.setText(myZone.getData().getName() + "  " +
+                    myZone.getData().getMobile() + "  " +
                     ((!myZone.getData().getSex().equals("0")) ? ("女") : ("男")));
             text_gs.setText(myZone.getData().getC_name());
+            text_pm.setText("等级：" + myZone.getData().getMemberlevel() + "  排名：" + myZone.getData().getRank() + "位");
 
             text_yj.setText(myZone.getIntroduction());
             text_fs.setText(myZone.getMyfans());
