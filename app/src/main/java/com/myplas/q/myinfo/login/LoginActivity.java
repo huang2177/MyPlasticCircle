@@ -136,6 +136,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.dl_wjmm:
                 Intent intent1 = new Intent(this, FindPSWActivity.class);
+                intent1.putExtra("title", "找回密码");
                 startActivityForResult(intent1, 0);
                 break;
             //登陆；
@@ -269,7 +270,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 String msg = new JSONObject(object.toString()).getString("msg");
                 TextUtils.Toast(this, msg);
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
         }
     }
 

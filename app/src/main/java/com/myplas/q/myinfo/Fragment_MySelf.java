@@ -60,11 +60,11 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, DialogShowUtils.DialogShowInterface, DownloadApk.InstallInterface {
+public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, DownloadApk.InstallInterface {
 
     private View view;
     private MyZone myZone;
-    private Button linear_tc;
+
     private ImageView image_rz;
     private DragView mDragView;
     private MyImageView image_tx;
@@ -98,7 +98,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_dd = f(R.id.wd_linear_dd);
         linear_gj = f(R.id.wd_linear_gj);
         linear_qg = f(R.id.wd_linear_qg);
-        linear_tc = f(R.id.wd_linear_tc);
         linear_pz = f(R.id.wd_linear_pz);
         imageButton = f(R.id.img_reload);
         linear_fs = f(R.id.wd_linear_fans);
@@ -118,7 +117,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_yj.setOnClickListener(this);
         linear_fs.setOnClickListener(this);
         linear_gz.setOnClickListener(this);
-        linear_tc.setOnClickListener(this);
         linear_jf.setOnClickListener(this);
         linear_pz.setOnClickListener(this);
         linear_set.setOnClickListener(this);
@@ -202,11 +200,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                 case R.id.wd_linear_pz:
                     startActivity(new Intent(getActivity(), PlasticMoneyActivity.class));
                     break;
-                case R.id.wd_linear_tc:
-                    String content = "确定退出？";
-                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.showDialog(getActivity(), content, 4, this);
-                    break;
                 case R.id.wd_linear_title:
                     Intent intent6 = new Intent(getActivity(), MyDataActivity.class);
                     startActivity(intent6);
@@ -251,20 +244,10 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             imageButton.setVisibility(View.GONE);
             JSONObject jsonObject = new JSONObject(object.toString());
             Gson gson = new Gson();
-            if (type == 1) {
-                String s = jsonObject.getString("err");
-                if (("0").equals(s) || "1".equals(s) || "998".equals(s)) {
-                    sharedUtils.setBooloean(getActivity(), "logined", false);
-                    sharedUtils.setData(getActivity(), "token", "");
-                    sharedUtils.setData(getActivity(), "userid", "");
-                    MainActivity.firstInto();
-                }
-            }
             if (type == 2) {
                 if ("0".equals(jsonObject.getString("err"))) {
                     myZone = gson.fromJson(object.toString(), MyZone.class);
                     showInfo(myZone);
-                    Log.e("------", object.toString());
                 } else if ("1".equals(jsonObject.getString("err")) || "998".equals(jsonObject.getString("err"))) {
                     sharedUtils.setData(getActivity(), "token", "");
                     sharedUtils.setData(getActivity(), "userid", "");
@@ -289,16 +272,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                 }
             }
         } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void ok(int type) {
-        if (type == 4) {
-            //退出登陆；
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("token", sharedUtils.getData(getActivity(), "token"));
-            resquestNetData(API.LOGOUT, map, 1, true);
         }
     }
 

@@ -6,17 +6,39 @@
 
     <include layout="@layout/titlebar_lauout"></include>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        <ListView
-            android:id="@+id/setting_listview"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/color_gray_divider_in"
-            android:dividerHeight="1px">
-        </ListView>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.myplas.q.common.view.MyListview
+                android:id="@+id/setting_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:divider="@null">
+            </com.myplas.q.common.view.MyListview>
+
+
+            <Button
+                android:id="@+id/wd_linear_tc"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_xq_chujian"
+                android:gravity="center"
+                android:text="退出登录"
+                android:textColor="@color/color_white"
+                android:textSize="18.0sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

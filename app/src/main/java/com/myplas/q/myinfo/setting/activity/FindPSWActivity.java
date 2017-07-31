@@ -7,6 +7,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myplas.q.R;
@@ -19,6 +20,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,10 +32,12 @@ import java.util.Map;
  * 时间：2017/3/24 11:41
  */
 public class FindPSWActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
-    private EditText editText_tel, editText_pass, editText_yzm;
-    private Button button_next, button_yzm;
     private int count = 60;
     private Handler mHandler;
+
+    private TextView mTextView;
+    private Button button_next, button_yzm;
+    private EditText editText_tel, editText_pass, editText_yzm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +48,13 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void initView() {
-        editText_tel = (EditText) findViewById(R.id.zhh_tel);
-        editText_pass = (EditText) findViewById(R.id.zhh_pass);
-        editText_yzm = (EditText) findViewById(R.id.zhh_yzm);
-        button_next = (Button) findViewById(R.id.zhh_next);
-        button_yzm = (Button) findViewById(R.id.zhh_hq_yzm);
+        mTextView = F(R.id.title_rs);
+        editText_tel = F(R.id.zhh_tel);
+        editText_yzm = F(R.id.zhh_yzm);
+        button_next = F(R.id.zhh_next);
+        button_yzm = F(R.id.zhh_hq_yzm);
+        editText_pass = F(R.id.zhh_pass);
+
         button_yzm.setClickable(false);
         button_yzm.setOnClickListener(this);
         button_next.setOnClickListener(this);
@@ -68,6 +74,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         };
+        mTextView.setText(getIntent().getStringExtra("title"));
     }
 
     @Override
