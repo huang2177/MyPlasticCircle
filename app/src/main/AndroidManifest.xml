@@ -32,14 +32,7 @@
             </intent-filter>
         </activity>
 
-        <!--微信回调-->
-        <activity
-            android:name="com.myplas.q.wxapi.WXEntryActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name="com.myplas.q.wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop"/>
+
 
         <!--activity注册-->
         <activity
@@ -211,7 +204,26 @@
         <activity
             android:name="com.myplas.q.myinfo.setting.activity.AboutPlasticActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.myplas.q.myinfo.setting.activity.TakePhotoDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/my_theme_animation"></activity>
 
+        <!--微信回调-->
+        <activity
+            android:name="com.myplas.q.wxapi.WXEntryActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name="com.myplas.q.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
+
+        <!--album-->
+        <activity
+            android:name="com.yanzhenjie.album.AlbumActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden"/>
 
         <!--适配6.0以上的系统安装apk-->
         <provider

@@ -10,9 +10,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_white"
+            android:background="@color/colorAccent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -25,22 +27,23 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="头像："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <com.myplas.q.common.view.MyImageView
                     android:id="@+id/wd_zl_text_headimg"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/contact_image_defaul_male"
-                    android:layout_marginRight="5dp"></com.myplas.q.common.view.MyImageView>
+                    android:src="@drawable/contact_image_defaul_male"></com.myplas.q.common.view.MyImageView>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_more"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/personal_information_btn_more"/>
             </LinearLayout>
 
             <View
@@ -51,22 +54,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="公司名称："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_gs"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/icon_more"></TextView>
+                    android:layout_width="match_parent"
+                    android:drawableRight="@drawable/btn_more_big1"
+                    android:gravity="right"
+                    android:singleLine="true"></TextView>
             </LinearLayout>
 
             <View
@@ -77,22 +82,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="联系方式："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_tel"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/icon_more"></TextView>
+                    android:drawableRight="@drawable/btn_more_big1"></TextView>
             </LinearLayout>
 
             <View
@@ -103,22 +108,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="地址："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_text_dzh"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/icon_more"></TextView>
+                    android:drawableRight="@drawable/personal_information_btn_more"></TextView>
             </LinearLayout>
 
             <View
@@ -128,22 +133,23 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="性别："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_text_xb"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/icon_more"></TextView>
+                    android:drawableRight="@drawable/personal_information_btn_more"></TextView>
             </LinearLayout>
 
             <View
@@ -153,22 +159,23 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="所属地区："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_text_address"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/icon_more"></TextView>
+                    android:drawableRight="@drawable/personal_information_btn_more"></TextView>
             </LinearLayout>
 
             <View
@@ -178,21 +185,23 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="企业类型："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_text_company"
-                    style="@style/wd_zl_text_style"></TextView>
+                    style="@style/wd_zl_text_style"
+                    android:drawableRight="@drawable/btn_more_big1"></TextView>
             </LinearLayout>
 
             <View
@@ -205,27 +214,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                >
-
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableRight="@drawable/icon_more"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
                         android:text="生产产品："
-                        android:textSize="16.0sp"
-                        android:textColor="#171717"/>
+                        android:textColor="#171717"
+                        android:textSize="16.0sp"/>
 
                     <TextView
                         android:id="@+id/wd_zl_text_products"
-                        style="@style/wd_zl_text_style"></TextView>
+                        style="@style/wd_zl_text_style"
+                        android:drawableRight="@drawable/personal_information_btn_more"></TextView>
                 </LinearLayout>
 
                 <View
@@ -235,22 +244,23 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
                         android:text="月用量："
-                        android:textSize="16.0sp"
-                        android:textColor="#171717"/>
+                        android:textColor="#171717"
+                        android:textSize="16.0sp"/>
 
                     <TextView
                         android:id="@+id/wd_zl_text_num"
                         style="@style/wd_zl_text_style"
-                        android:drawableRight="@drawable/icon_more"></TextView>
+                        android:drawableRight="@drawable/personal_information_btn_more"></TextView>
                 </LinearLayout>
 
                 <View
@@ -261,23 +271,26 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textView8"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableRight="@drawable/icon_more"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="我的主营："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_text_zhy"
                     style="@style/wd_zl_text_style"
-                    android:maxLines="2"></TextView>
+                    android:layout_width="match_parent"
+                    android:drawableRight="@drawable/personal_information_btn_more"
+                    android:gravity="right"
+                    android:singleLine="true"></TextView>
             </LinearLayout>
 
 
@@ -289,23 +302,25 @@
             <LinearLayout
                 android:id="@+id/wd_zl_linear_ph"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="关注的牌号："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_text_ph"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/icon_more"
-                    android:maxLines="2"></TextView>
+                    android:layout_width="match_parent"
+                    android:drawableRight="@drawable/personal_information_btn_more"
+                    android:gravity="right"
+                    android:singleLine="true"></TextView>
             </LinearLayout>
 
             <View
@@ -324,22 +339,29 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="我的名片："
-                    android:textSize="16.0sp"
-                    android:textColor="#171717"/>
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
 
                 <ImageView
                     android:id="@+id/wd_zl_text_upload"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/card"
-                    android:layout_margin="5dp"></ImageView>
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/card"></ImageView>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_more"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/personal_information_btn_more"/>
             </LinearLayout>
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="2px"-->
+            <!--android:background="@color/color_gray_divider_in"></View>-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -2,16 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:gravity="bottom"
              android:orientation="vertical">
 
     <View
-        android:id="@+id/share_view"
+        android:id="@+id/takephoto_close"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:alpha="0.7"
-        android:background="#111212"></View>
+        android:alpha="0.6"
+        android:background="#000000"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,37 +18,44 @@
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/ed_call1"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/corner_titlebar"
-            android:gravity="center"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:text="400-6129-965"
-            android:textColor="#0672df"
-            android:textSize="16.0sp"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/takephoto_take"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="拍 照"
+                android:textColor="@color/color_red"
+                android:textSize="16.0sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_gray_divider_in"></View>
+
+            <TextView
+                android:id="@+id/takephoto_pick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="从相册选取"
+                android:textColor="#0672df"
+                android:textSize="16.0sp"/>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/ed_call2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/corner_titlebar"
-            android:gravity="center"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:text="021-61070985"
-            android:textColor="#0672df"
-            android:textSize="16.0sp"/>
-
-        <TextView
-            android:id="@+id/ed_cancle"
+            android:id="@+id/takephoto_cancle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"

@@ -7,5 +7,5 @@
 
     <include layout="@layout/titlebar_lauout"></include>
 
-    <include layout="@layout/wd_zl_layout_edit"></include>
+    <include layout="@layout/activity_layout_setting_data_lists"></include>
 </LinearLayout>
