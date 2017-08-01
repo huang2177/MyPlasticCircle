@@ -67,7 +67,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     private MySelfInfo mySelfInfo;
     private View view_save, view_edit;
-    private Switch switch_gz, switch_hf, switch_phone;
     private LinearLayout linearLayout, linearLayout_save_edit, linearLayout_ph, linearLayout_ph_save;
     private RadioGroup radioGroup_sex, radioGroup_address;
 
@@ -106,23 +105,9 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         image_show.setOnClickListener(this);
 
         textView_save = f(R.id.wd_zl_bc);
-        switch_hf = f(R.id.wd_zl_switch_hf);
-        switch_gz = f(R.id.wd_zl_switch_gz);
-        switch_phone = f(R.id.wd_zl_switch_phone_public);
-
         textView_save.setOnClickListener(this);
-        switch_hf.setOnCheckedChangeListener(this);
-        switch_gz.setOnCheckedChangeListener(this);
-        switch_phone.setOnCheckedChangeListener(this);
 
-        if (Build.VERSION.SDK_INT >= 19) {
-            switch_gz.setThumbResource(R.drawable.switch_thumb);
-            switch_gz.setTrackResource(R.drawable.switch_track);
-            switch_hf.setThumbResource(R.drawable.switch_thumb);
-            switch_hf.setTrackResource(R.drawable.switch_track);
-            switch_phone.setThumbResource(R.drawable.switch_thumb);
-            switch_phone.setTrackResource(R.drawable.switch_track);
-        }
+
     }
 
     public <T extends View> T f(int id) {
@@ -316,9 +301,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             Glide.with(this).load(mySelfInfo.getData().getThumbcard()).into(image_show);
             MySelfInfo.DataBean.AllowSendBean ab = mySelfInfo.getData().getAllow_send();
 
-            switch_gz.setChecked((ab.getFocus() == 1) ? (false) : (true));
-            switch_hf.setChecked(ab.getRepeat() == 1 ? false : true);
-            switch_phone.setChecked(ab.getShow() == 1 ? false : true);
 
             text_px.setText("通讯录排序：您目前排在通讯录的第" + mySelfInfo.getData().getRank() + "位，共" + mySelfInfo.getData().getTotal() + "人，按照粉丝数量、发布供给数量进行排序");
             switch (mySelfInfo.getData().getType()) {

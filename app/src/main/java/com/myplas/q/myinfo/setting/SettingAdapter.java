@@ -1,4 +1,4 @@
-package com.myplas.q.myinfo.setting.adapter;
+package com.myplas.q.myinfo.setting;
 
 import android.content.Context;
 import android.os.Build;

@@ -53,17 +53,10 @@
         <item name="android:layout_weight">1</item>
     </style>
     <style name="wd_zl_text_style">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:background">@null</item>
-        <item name="android:textColor">@color/color_balank</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:textSize">14.0sp</item>
-        <item name="android:textSelectHandle">@drawable/textselecthandle</item>
-        <item name="android:textSelectHandleLeft">@drawable/textselecthandle</item>
-        <item name="android:textSelectHandleRight">@drawable/textselecthandle</item>
-        <item name="android:textCursorDrawable">@drawable/text_cursor_shape</item>
+
     </style>
     <style name="wd_zhc_edit_style">
         <item name="android:layout_width">match_parent</item>

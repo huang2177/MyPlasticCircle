@@ -1,12 +1,14 @@
 package com.myplas.q.myinfo.beans;
 
+import java.io.Serializable;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
  * 邮箱：15378412400@163.com
  * 时间：2017/3/27 19:16
  */
-public class MySelfInfo {
+public class MySelfInfo implements Serializable {
 
 
     /**
@@ -33,7 +35,7 @@ public class MySelfInfo {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * user_id : 41497
          * name : 黄双
@@ -268,7 +270,7 @@ public class MySelfInfo {
             this.concern_model = concern_model;
         }
 
-        public static class AllowSendBean {
+        public static class AllowSendBean implements Serializable {
             /**
              * focus : 0
              * repeat : 0

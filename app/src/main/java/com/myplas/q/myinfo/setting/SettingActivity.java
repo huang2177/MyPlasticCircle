@@ -1,36 +1,34 @@
-package com.myplas.q.myinfo.setting.activity;
+package com.myplas.q.myinfo.setting;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.BitmapUtils;
 import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.utils.FileUtils;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.LoadingDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.beans.MySelfInfo;
-import com.myplas.q.myinfo.beans.MyZone;
-import com.myplas.q.myinfo.setting.adapter.SettingAdapter;
+import com.myplas.q.myinfo.setting.activity.AboutPlasticActivity;
+import com.myplas.q.myinfo.setting.activity.FindPSWActivity;
+import com.myplas.q.myinfo.setting.activity.HelpActivity;
+import com.myplas.q.myinfo.setting.activity.MessageActivity;
+import com.myplas.q.myinfo.setting.activity.MyDataActivity;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
+import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -53,6 +51,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
     private List<String> mStringList;
     private List<Integer> mIntegerList;
 
+    private MySelfInfo mySelfInfo;
     private SharedUtils sharedUtils;
 
     @Override
@@ -63,7 +62,6 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
         setTitle("设置");
         init();
         initSetting();
-        requestNetData();
     }
 
     public void init() {
@@ -89,6 +87,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
                         break;
                     case 2:
                         Intent intent2 = new Intent(SettingActivity.this, MessageActivity.class);
+                        intent2.putExtra("Allow_send", mySelfInfo.getData().getAllow_send());
                         startActivity(intent2);
                         break;
                     case 3:
@@ -106,10 +105,15 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
                         SobotApi.startSobotChat(SettingActivity.this, information);
                         break;
                     case 6:
+                        String content = "确定清除？";
+                        DialogShowUtils dialogShowUtils = new DialogShowUtils();
+                        dialogShowUtils.showDialog(SettingActivity.this, content, 10, SettingActivity.this);
                         break;
                     case 7:
                         break;
                     case 8:
+                        Intent intent8 = new Intent(SettingActivity.this, AboutPlasticActivity.class);
+                        startActivity(intent8);
                         break;
                 }
             }
@@ -179,7 +183,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
             }
             if (type == 3) {
                 if (err.equals("0")) {
-                    MySelfInfo mySelfInfo = gson.fromJson(object.toString(), MySelfInfo.class);
+                    mySelfInfo = gson.fromJson(object.toString(), MySelfInfo.class);
                     MySelfInfo.DataBean.AllowSendBean ab = mySelfInfo.getData().getAllow_send();
                     mAdapter.setSwitchChecked(ab.getShow() == 1 ? false : true);
                 }
@@ -206,12 +210,26 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
 
     @Override
     public void ok(int type) {
-        if (type == 4) {
-            //退出登陆；
+        if (type == 4) {//退出登陆；
             Map<String, String> map = new HashMap<String, String>();
             map.put("token", sharedUtils.getData(this, "token"));
             String url = API.BASEURL + API.MY_ZONE;
             BaseActivity.postAsyn1(this, url, map, this, 1, true);
         }
+        if (type == 10) {//清除缓存；
+            FileUtils.clearAllCache(this);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        requestNetData();
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

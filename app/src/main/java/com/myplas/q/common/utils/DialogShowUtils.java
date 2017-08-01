@@ -34,6 +34,8 @@ public class DialogShowUtils {
         View view = View.inflate(context, R.layout.layout_dialog, null);
         if (normalDialog == null) {
             normalDialog = new Dialog(context, R.style.dialog);
+            normalDialog.setCancelable(true);
+            normalDialog.setCanceledOnTouchOutside(true);
             normalDialog.setContentView(view);
             setDialogWindowAttr(context);
         }
@@ -92,8 +94,8 @@ public class DialogShowUtils {
         Window window = normalDialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.CENTER;
-        lp.width = (int) ((width * 2) / 3.1);//宽高可设置具体大小
-        lp.height = (int) (height / 4.4);
+        lp.width = (int) ((width * 2) / 3);//宽高可设置具体大小
+        lp.height = (int) (height / 4.6);
         normalDialog.getWindow().setAttributes(lp);
     }
 
