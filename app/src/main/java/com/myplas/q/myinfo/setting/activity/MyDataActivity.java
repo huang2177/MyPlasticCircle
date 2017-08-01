@@ -51,8 +51,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 13:39
  */
-public class MyDataActivity extends BaseActivity implements View.OnClickListener,
-        ResultCallBack, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
+public class MyDataActivity extends BaseActivity implements View.OnClickListener, ResultCallBack, RadioGroup.OnCheckedChangeListener {
 
     private String imgurl, string;
     private SharedUtils sharedUtils;
@@ -62,7 +61,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private TextView text_name, text_dj, text_gs, text_dh, text_gj, text_px, textView_save;
     private TextView text_xb, textView_dzh, textView_zhy, textView_ph, textView_num, textView_product, textView_address, textView_company, my_main_prod, my_main_prod_save;
     private EditText textView_dzh_save, textView_zhy_save, textView_ph_save, textView_num_save, textView_product_save;
-    private String allow_sendmsg_gz = "1", allow_sendmsg_hf = "1", allow_sendmsg_gk = "1";
     private Map<String, String> map = new HashMap<String, String>();
 
     private MySelfInfo mySelfInfo;
@@ -89,23 +87,18 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         linearLayout_save_edit.addView(view_edit);
 
         image_tx = f(R.id.xq_tx);
-        text_px = f(R.id.wd_zl_px);
-        text_dj = f(R.id.wd_zl_dj);
         text_gs = f(R.id.wd_zl_gs);
         text_dh = f(R.id.wd_zl_tel);
         text_gj = f(R.id.wd_zl_gjqg);
         text_name = f(R.id.wd_zl_name);
         image_show = f(R.id.wd_zl_show);
-        image_shch = f(R.id.wd_zl_shch);
         my_main_prod = f(R.id.my_main_prod);
+        image_shch = f(R.id.wd_zl_text_upload);
         my_main_prod_save = f(R.id.my_main_prod_save);
 
         image_tx.setOnClickListener(this);
         image_shch.setOnClickListener(this);
         image_show.setOnClickListener(this);
-
-        textView_save = f(R.id.wd_zl_bc);
-        textView_save.setOnClickListener(this);
 
 
     }
@@ -179,15 +172,15 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 head_card = 1;
                 checkPic();
                 break;
-            case R.id.wd_zl_shch:
-                head_card = 2;
-                checkPic();
-                break;
+//            case R.id.wd_zl_shch:
+//                head_card = 2;
+//                checkPic();
+//                break;
             case R.id.wd_zl_text_dzh:
                 break;
-            case R.id.wd_zl_bc:
-                saveData();
-                break;
+//            case R.id.wd_zl_bc:
+//                saveData();
+//                break;
             case R.id.wd_zl_show:
                 Intent intent_im = new Intent(this, BigImageViewActivity.class);
                 intent_im.putExtra("imgurl", imgurl);
@@ -237,33 +230,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             if (cilick_num == 2) {
                 saveSelfInfo(API.SAVE_SELFINFO, map, 3);
             }
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()) {
-            case R.id.wd_zl_switch_gz:
-                allow_sendmsg_gz = (isChecked) ? "0" : "1";
-                map.put("type", "0");
-                map.put("token", sharedUtils.getData(this, "token"));
-                map.put("is_allow", allow_sendmsg_gz);
-                saveSelfInfo(API.FAVORATE_SET, map, 5);
-                break;
-            case R.id.wd_zl_switch_hf:
-                allow_sendmsg_hf = (isChecked) ? "0" : "1";
-                map.put("type", "1");
-                map.put("is_allow", allow_sendmsg_hf);
-                map.put("token", sharedUtils.getData(this, "token"));
-                saveSelfInfo(API.FAVORATE_SET, map, 4);
-                break;
-            case R.id.wd_zl_switch_phone_public:
-                allow_sendmsg_gk = (isChecked) ? "0" : "1";
-                map.put("type", "2");
-                map.put("is_allow", allow_sendmsg_gk);
-                map.put("token", sharedUtils.getData(this, "token"));
-                saveSelfInfo(API.FAVORATE_SET, map, 6);
-                break;
         }
     }
 

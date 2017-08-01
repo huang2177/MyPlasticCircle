@@ -30,8 +30,10 @@
 
                 <com.myplas.q.common.view.MyImageView
                     android:id="@+id/wd_zl_text_headimg"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/contact_image_defaul_male"
                     android:layout_marginRight="5dp"></com.myplas.q.common.view.MyImageView>
 
                 <ImageView
@@ -62,7 +64,7 @@
                     android:textColor="#171717"/>
 
                 <TextView
-                    android:id="@+id/wd_zl_text_cname"
+                    android:id="@+id/wd_zl_gs"
                     style="@style/wd_zl_text_style"
                     android:drawableRight="@drawable/icon_more"></TextView>
             </LinearLayout>
@@ -88,7 +90,7 @@
                     android:textColor="#171717"/>
 
                 <TextView
-                    android:id="@+id/wd_zl_text_tel"
+                    android:id="@+id/wd_zl_tel"
                     style="@style/wd_zl_text_style"
                     android:drawableRight="@drawable/icon_more"></TextView>
             </LinearLayout>
@@ -325,12 +327,12 @@
                     android:textSize="16.0sp"
                     android:textColor="#171717"/>
 
-                <com.myplas.q.common.view.MyImageView
+                <ImageView
                     android:id="@+id/wd_zl_text_upload"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src=""
-                    android:layout_margin="5dp"></com.myplas.q.common.view.MyImageView>
+                    android:src="@drawable/card"
+                    android:layout_margin="5dp"></ImageView>
 
                 <ImageView
                     android:layout_width="wrap_content"
