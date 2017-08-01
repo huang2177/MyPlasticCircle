@@ -205,6 +205,9 @@
         <activity
             android:name="com.myplas.q.myinfo.setting.activity.SettingActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.myplas.q.myinfo.setting.activity.MessageActivity"
+            android:screenOrientation="portrait"></activity>
 
 
         <!--适配6.0以上的系统安装apk-->

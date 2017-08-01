@@ -23,7 +23,7 @@ public class API {
     //APP更新
     public final static String CHECK_VERSION = "common/checkVersion";
     //微信分享缩略图
-    public final static String LOG_IMG_URL = "http://statics.myplas.com/myapp/img/sharelogo.png";
+    public final static String LOG_IMG_URL = "http://statics.myplas.com/myapp/img/shareLogo.png";
     //测试——微信appid
 //     public final static String WXAPI="wxf17d8dabcebe5b1b";
     // 正式——微信appid

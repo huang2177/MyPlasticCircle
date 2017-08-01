@@ -3,7 +3,6 @@ package com.myplas.q.myinfo.setting.activity;
 import android.os.Bundle;
 import android.view.View;
 
-
 import com.myplas.q.R;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.sobot.chat.SobotApi;
@@ -16,26 +15,16 @@ import com.umeng.analytics.MobclickAgent;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 10:25
  */
-public class HelpActivity extends BaseActivity {
+public class MessageActivity extends BaseActivity {
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_setting_help);
-        goBack(findViewById(R.id.img_back));
-        findViewById(R.id.img_contact).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "4006129965"));
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-                information = new Information();
-                information.setAppkey(appkey);
-                SobotApi.startSobotChat(HelpActivity.this, information);
-            }
-        });
+        setContentView(R.layout.activity_layout_setting_message);
+        initTileBar();
+        setTitle("短信设置");
     }
 
     public void onResume() {

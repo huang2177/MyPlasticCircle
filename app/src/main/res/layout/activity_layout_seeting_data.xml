@@ -161,6 +161,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical"
+                android:visibility="gone"
                 android:background="@drawable/corner_titlebar">
                 <TextView
                     android:layout_width="match_parent"

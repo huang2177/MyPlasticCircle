@@ -8,11 +8,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.myplas.q.R;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.api.API;
+import com.myplas.q.myinfo.setting.activity.SettingActivity;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -98,11 +102,12 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
             WXMediaMessage msg = new WXMediaMessage(webpage);
             msg.description = "我的塑料网-塑料圈通讯录";
             msg.title = title;
-            Bitmap bp = BitmapFactory.decodeResource(getResources(), R.drawable.sharelogo);
-            Bitmap thumbBmp = Bitmap.createScaledBitmap(bp, 150, 150, true);
-            msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
-            thumbBmp.recycle();
-            bp.recycle();
+            getBitMap(msg);
+//            Bitmap bp = BitmapFactory.decodeResource(getResources(), R.drawable.sharelogo);
+//            Bitmap thumbBmp = Bitmap.createScaledBitmap(bp, 150, 150, true);
+//
+//            thumbBmp.recycle();
+//            bp.recycle();
             SendMessageToWX.Req req = new SendMessageToWX.Req();
             req.transaction = String.valueOf(System.currentTimeMillis());//transaction字段用于唯一标识一个请求，这个必须有，否则会出错
             req.message = msg;
@@ -113,6 +118,19 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
             TextUtils.Toast(this, "你的手机没有安装微信！");
             return false;
         }
+    }
+
+    public void getBitMap(final WXMediaMessage msg) {
+        Glide.with(ShareActivity.this)
+                .load(API.LOG_IMG_URL)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        msg.thumbData = Util.bmpToByteArray(resource, true);
+                        resource.recycle();
+                    }
+                });
     }
 
     public void shareLog(String type, String id) {
@@ -141,6 +159,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
             return false;
         }
     }
+
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);

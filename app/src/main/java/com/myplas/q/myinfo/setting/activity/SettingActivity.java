@@ -1,6 +1,7 @@
 package com.myplas.q.myinfo.setting.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -9,10 +10,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.BitmapUtils;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -82,9 +87,9 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
                         Intent intent0 = new Intent(SettingActivity.this, MyDataActivity.class);
                         startActivity(intent0);
                         break;
-                    case 1:
-                        break;
                     case 2:
+                        Intent intent2 = new Intent(SettingActivity.this, MessageActivity.class);
+                        startActivity(intent2);
                         break;
                     case 3:
                         Intent intent3 = new Intent(SettingActivity.this, FindPSWActivity.class);
