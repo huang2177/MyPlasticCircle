@@ -10,6 +10,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.myinfo.setting.adapter.SettingSex_RegionAdapter;
 import com.optimus.edittextfield.EditTextField;
 import com.umeng.analytics.MobclickAgent;
 
@@ -22,26 +23,34 @@ import rx.Subscriber;
  * 时间：2017/3/28 10:25
  */
 public class DataCommonInputActivity extends BaseActivity {
-    private EditTextField mTextField;
 
+    private String type;
     private Subscriber mSubscriber;
+    private SettingSex_RegionAdapter mAdapter;
+
+    private EditTextField mTextField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_datacommon_input);
-        initTileBar();
-        setLeftTVVisibility(View.VISIBLE);
-        setRightTVVisibility(View.VISIBLE);
-        setTitle(getIntent().getStringExtra("title"));
         init();
-
     }
 
     private void init() {
-        mTextField = F(R.id.datacommon_input_edit);
-        mTextField.setHint(getIntent().getStringExtra("hint"));
+        type = getIntent().getStringExtra("type");
 
+        initTileBar();
+        setTitle(getIntent().getStringExtra("title"));
+        if (type.equals("2")) {
+            setLeftTVVisibility(View.VISIBLE);
+            setRightTVVisibility(View.VISIBLE);
+        } else {
+
+        }
+        mTextField = F(R.id.datacommon_input_edit);
+        mTextField.setText(getIntent().getStringExtra("hint"));
+        mTextField.setSelection(getIntent().getStringExtra("hint").length() - 1);
         mSubscriber = new Subscriber() {
             @Override
             public void onCompleted() {
@@ -61,8 +70,6 @@ public class DataCommonInputActivity extends BaseActivity {
                     intent.putExtra("updateData", text);
                     setResult(1, intent);
                     DataCommonInputActivity.this.finish();
-                } else {
-                    TextUtils.Toast(DataCommonInputActivity.this, "你还没输入内容！");
                 }
             }
         };

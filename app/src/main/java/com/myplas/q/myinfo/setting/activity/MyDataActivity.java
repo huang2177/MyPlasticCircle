@@ -55,7 +55,8 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private MySelfInfo mySelfInfo;
     private SharedUtils sharedUtils;
     private Map<String, String> map;
-    private String address, sex, region, product, monthUse, mainPro, model;
+    private String sexInPut, regionInPut;
+    private String type, address, sex, region, product, monthUse, mainPro, model;
 
     private ImageView image_shch;
     private MyImageView image_tx;
@@ -176,28 +177,44 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 startActivityForResult(intent2, 200);
                 break;
             case R.id.setting_data_sex:
-
+                Intent intent3 = new Intent(this, DataCommonInputActivity.class);
+                intent3.putExtra("type", "1");
+                intent3.putExtra("title", "性别");
+                intent3.putExtra("hint", sex);
+                startActivityForResult(intent3, 3);
                 break;
             case R.id.setting_data_region:
+                Intent intent4 = new Intent(this, DataCommonInputActivity.class);
+                intent4.putExtra("type", "1");
+                intent4.putExtra("title", "所属地区");
+                intent4.putExtra("hint", region);
+                startActivityForResult(intent4, 4);
                 break;
 
             case R.id.setting_data_address:
-
+                Intent intent5 = new Intent(this, DataCommonInputActivity.class);
+                intent5.putExtra("type", "2");
+                intent5.putExtra("title", "地址");
+                intent5.putExtra("hint", address);
+                startActivityForResult(intent5, 5);
                 break;
             case R.id.setting_data_product:
                 Intent intent6 = new Intent(this, DataCommonInputActivity.class);
+                intent6.putExtra("type", "2");
                 intent6.putExtra("title", "生产产品");
                 intent6.putExtra("hint", product);
                 startActivityForResult(intent6, 6);
                 break;
             case R.id.setting_data_monthlyuse:
                 Intent intent7 = new Intent(this, DataCommonInputActivity.class);
+                intent7.putExtra("type", "2");
                 intent7.putExtra("title", "月用量");
                 intent7.putExtra("hint", monthUse);
                 startActivityForResult(intent7, 7);
                 break;
             case R.id.setting_data_mainsell:
                 Intent intent8 = new Intent(this, DataCommonInputActivity.class);
+                intent8.putExtra("type", "2");
                 intent8.putExtra("title", "我的主营");
                 intent8.putExtra("hint", mainPro);
                 startActivityForResult(intent8, 8);
@@ -208,25 +225,21 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     //保存资料。。。
     public void saveData() {
         Map map = new HashMap();
-        if (mySelfInfo.getData().getType().equals("1")) {
-            map.put("month_consum", monthUse);
-            map.put("main_product", product);
-        }
-        String s[] = model.split(" ");
+        String s2 = "";
         String str[] = mainPro.split(" ");
-        String s1 = "", s2 = "";
-        for (int i = 0; i < s.length; i++) {
-            s1 += s[i] + ",";
-        }
         for (int i = 0; i < str.length; i++) {
             s2 += str[i] + ",";
         }
-        map.put("sex", sex);
-        map.put("dist", address);
-        map.put("address", region);
-        map.put("type", mySelfInfo.getData().getType());
+        if (type.equals("1")) {
+            map.put("month_consum", monthUse);
+            map.put("main_product", product);
+        }
+        map.put("type", type);
+        map.put("sex", sexInPut);
+        map.put("concern", model);
+        map.put("address", address);
+        map.put("dist", regionInPut);
         map.put("major", s2.substring(0, s2.length() - 1));
-        map.put("concern", s1.substring(0, s1.length() - 1));
         map.put("token", sharedUtils.getData(this, "token"));
         saveSelfInfo(API.SAVE_SELFINFO, map, 3);
     }
@@ -310,7 +323,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                     showInfo(mySelfInfo);
                 }
             }
-            Log.e("---******---", object.toString());
             if (type == 3 && err.equals("0")) {
                 requestNetData();
             }
@@ -325,6 +337,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     public void showInfo(MySelfInfo mySelfInfo) {
         try {
             sex = mySelfInfo.getData().getSex();
+            type = mySelfInfo.getData().getType();
             address = mySelfInfo.getData().getAddress();
             region = mySelfInfo.getData().getAdistinct();
             model = mySelfInfo.getData().getConcern_model();
@@ -332,6 +345,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             mainPro = mySelfInfo.getData().getNeed_product();
             monthUse = mySelfInfo.getData().getMonth_consum();
 
+            sexInPut = (sex.equals("男")) ? ("0") : ("1");
 
             text_xb.setText(sex + "  ");
             textView_ph.setText(model + "  ");
@@ -343,7 +357,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             Glide.with(this).load(mySelfInfo.getData().getThumbcard()).placeholder(R.drawable.card).into(image_shch);
             Glide.with(this).load(mySelfInfo.getData().getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(image_tx);
 
-            String type = mySelfInfo.getData().getType();
             switch (type) {
                 case "1":
                     ll_mode.setVisibility(View.VISIBLE);       //"‘关注的牌号’是否显示"
@@ -390,6 +403,21 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                     ll_pro_month.setVisibility(View.GONE);
                     break;
             }
+            //设置地区
+            switch (region) {
+                case "华东":
+                    regionInPut = "EC";
+                    break;
+                case "华北":
+                    regionInPut = "NC";
+                    break;
+                case "华南":
+                    regionInPut = "SC";
+                    break;
+                case "其他":
+                    regionInPut = "OT";
+                    break;
+            }
         } catch (Exception e) {
         }
     }
@@ -398,6 +426,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == 100 && resultCode == 1) {
             String imagePath = data.getStringExtra("img_url");
             Glide.with(this).load(imagePath).into(image_tx);
@@ -408,13 +437,43 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             Glide.with(this).load(imagePath).into(image_shch);
             upLoadImg(API.SAVE_CARD_IMG, imagePath, 6);
         }
+        if (requestCode == 3 && data != null) {
+            if (!sexInPut.equals(data.getStringExtra("updateData"))) {
+                sexInPut = data.getStringExtra("updateData");
+                saveData();
+            }
+        }
+        if (requestCode == 4 && data != null) {
+            if (!regionInPut.equals(data.getStringExtra("updateData"))) {
+                regionInPut = data.getStringExtra("updateData");
+                saveData();
+            }
+        }
+        if (requestCode == 5 && data != null) {
+            if (!address.equals(data.getStringExtra("updateData"))) {
+                address = data.getStringExtra("updateData");
+                saveData();
+            }
+        }
         if (requestCode == 6 && data != null) {
             if (!product.equals(data.getStringExtra("updateData"))) {
-                Log.e("====", product);
                 product = data.getStringExtra("updateData");
                 saveData();
             }
         }
+        if (requestCode == 7 && data != null) {
+            if (!monthUse.equals(data.getStringExtra("updateData"))) {
+                monthUse = data.getStringExtra("updateData");
+                saveData();
+            }
+        }
+        if (requestCode == 8 && data != null) {
+            if (!mainPro.equals(data.getStringExtra("updateData"))) {
+                mainPro = data.getStringExtra("updateData");
+                saveData();
+            }
+        }
+
     }
 
 

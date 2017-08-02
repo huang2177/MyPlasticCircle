@@ -58,7 +58,7 @@ public class Integral_SupDem_Adapter extends BaseAdapter {
         viewHolder viewHolder = null;
         if (map_view.get(position) == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.integral_supplydemand_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_integral_supdem, parent, false);
             map_view.put(position,convertView);
             viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.linearlayout1_);
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.img_check);
