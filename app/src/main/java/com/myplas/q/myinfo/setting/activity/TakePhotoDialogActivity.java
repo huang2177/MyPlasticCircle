@@ -1,7 +1,9 @@
 package com.myplas.q.myinfo.setting.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,6 +13,8 @@ import com.myplas.q.R;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.umeng.analytics.MobclickAgent;
 import com.yanzhenjie.album.Album;
+import com.yanzhenjie.durban.Controller;
+import com.yanzhenjie.durban.Durban;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,7 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
 
     private int color;
     private String type;
+    private ArrayList<String> pathList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +65,12 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
                         .start(100); // 100是请求码，返回时onActivityResult()的第一个参数。
                 break;
             case R.id.takephoto_pick:
-                Album.album(this)
+                String s = (type.equals("1")) ? ("选择头像") : ("选择名片");
+                Album.albumRadio(this)
                         .toolBarColor(color) // Toolbar 颜色，默认蓝色。
                         .statusBarColor(color) // StatusBar 颜色，默认蓝色。
-                        .title("选择头像") // 配置title。
+                        .title(s) // 配置title。
+
                         .columnCount(2) // 相册展示列数，默认是2列。
                         .camera(false) // 是否有拍照功能。
                         .start(200); // 200是请求码，返回时onActivityResult()的第一个参数。
@@ -79,21 +86,71 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            //相机
+
             if (requestCode == 100) {
-                if (resultCode == RESULT_OK) { // Successfully.
-                    List<String> pathList = Album.parseResult(data); // Parse path.
+                if (resultCode == RESULT_OK) {  //相机
+                    List<String> pathList = Album.parseResult(data);
+                    int backcode = Integer.parseInt(type);
+                    Intent intent = new Intent();
+                    intent.putExtra("img_url", pathList.get(0));
+                    setResult(backcode, intent);
+                    finish();
                 }
             }
-            //相册
+
             if (requestCode == 200) {
-                if (resultCode == RESULT_OK) { // Successfully.
-                    ArrayList<String> pathList = Album.parseResult(data);
+                if (resultCode == RESULT_OK) {  //相册
+                    pathList = Album.parseResult(data);
+                    cutPhoto(pathList);
+                }
+            }
+            if (requestCode == 300) {  // 解析剪切结果：
+                if (resultCode == RESULT_OK) {
+                    int backcode = Integer.parseInt(type);
+                    ArrayList<String> mImageList = Durban.parseResult(data);
+                    String pick_url = (mImageList.size() == 0) ? (pathList.get(0)) : (mImageList.get(0));
+                    Intent intent = new Intent();
+                    intent.putExtra("img_url", pick_url);
+                    setResult(backcode, intent);
+                    finish();
+
                 }
             }
         } catch (Exception e) {
         }
     }
+
+    private void cutPhoto(ArrayList<String> pathList) {
+        Durban.with(this)
+                // 裁剪界面的标题。
+                .title("裁剪")
+                .statusBarColor(color)
+                .toolBarColor(color)
+                // 图片路径list或者数组。
+                .inputImagePaths(pathList)
+                // 图片输出文件夹路径。
+                // 裁剪图片输出的最大宽高。
+                .maxWidthHeight(100, 100)
+                // 裁剪时的宽高比。
+                .aspectRatio(1, 1)
+                // 图片压缩格式：JPEG、PNG。
+                .compressFormat(Durban.COMPRESS_PNG)
+                // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)
+                .compressQuality(90)
+                // 裁剪时的手势支持：ROTATE, SCALE, ALL, NONE.
+                .gesture(Durban.GESTURE_SCALE)
+                .controller(
+                        Controller.newBuilder()
+                                .enable(true) // 是否开启控制面板。
+                                .rotation(true) // 是否有旋转按钮。
+                                .rotationTitle(true) // 旋转控制按钮上面的标题。
+                                .scale(true) // 是否有缩放按钮。
+                                .scaleTitle(true) // 缩放控制按钮上面的标题。
+                                .build()) // 创建控制面板配置。
+                .requestCode(300)
+                .start();
+    }
+
 
     public void onResume() {
         super.onResume();

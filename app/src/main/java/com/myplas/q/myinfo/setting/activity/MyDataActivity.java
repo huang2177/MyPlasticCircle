@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,16 +52,14 @@ import java.util.Map;
  */
 public class MyDataActivity extends BaseActivity implements View.OnClickListener, ResultCallBack, RadioGroup.OnCheckedChangeListener {
 
-    private String imgurl, string;
-    private SharedUtils sharedUtils;
-    private int head_card, cilick_num;
-    private String address = "EC", sex = "0";
-    private Map<String, String> map = new HashMap<String, String>();
+    private int head_card;
     private MySelfInfo mySelfInfo;
+    private SharedUtils sharedUtils;
+    private Map<String, String> map;
+    private String address = "EC", sex = "0";
 
     private ImageView image_shch;
     private MyImageView image_tx;
-    private View view_save, view_edit;
     private RadioGroup radioGroup_sex, radioGroup_address;
     private LinearLayout linearLayout, linearLayout_ph, linearLayout_ph_save;
     private TextView text_xb, textView_dzh, text_gs, text_dh, textView_zhy, textView_ph, textView_num, textView_product, textView_address, textView_company, my_main_prod, my_main_prod_save;
@@ -76,6 +75,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     }
 
     public void initView() {
+        map = new HashMap<String, String>();
         sharedUtils = SharedUtils.getSharedUtils();
 
         text_gs = F(R.id.wd_zl_gs);
@@ -151,18 +151,14 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.wd_zl_text_headimg:
-//                head_card = 1;
-//                checkPic();
                 Intent intent1 = new Intent(this, TakePhotoDialogActivity.class);
                 intent1.putExtra("type", "1");
-                startActivity(intent1);
+                startActivityForResult(intent1, 100);
                 break;
             case R.id.wd_zl_text_upload:
-//                head_card = 2;
-//                checkPic();
                 Intent intent2 = new Intent(this, TakePhotoDialogActivity.class);
                 intent2.putExtra("type", "2");
-                startActivity(intent2);
+                startActivityForResult(intent2, 200);
                 break;
             case R.id.wd_zl_text_dzh:
                 break;
@@ -179,11 +175,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     //保存资料。。。
     public void saveData() {
-        if (mySelfInfo != null) {
-            if (cilick_num == 0) {
-                saveInfo(mySelfInfo);
-            }
-            cilick_num++;
+
 //            String address_ = textView_dzh_save.getText().toString();
 //            String major = textView_zhy_save.getText().toString();
 //            String concern = textView_ph_save.getText().toString();
@@ -214,7 +206,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 //            if (cilick_num == 2) {
 //                saveSelfInfo(API.SAVE_SELFINFO, map, 3);
 //            }
-        }
+
     }
 
     public void requestNetData() {
@@ -343,26 +335,20 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
+            String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
-                if (new JSONObject(object.toString()).getString("err").equals("0")) {
+                if (err.equals("0")) {
                     Gson gson = new Gson();
                     mySelfInfo = gson.fromJson(object.toString(), MySelfInfo.class);
-                    imgurl = mySelfInfo.getData().getThumbcard();
                     showInfo(mySelfInfo);
                 } else {
                     mySelfInfo = null;
                 }
-            } else if (type == 3) {
-                cilick_num = 0;
-                string = new JSONObject(object.toString()).getString("msg");
-                TextUtils.Toast(this, string);
-                if (new JSONObject(object.toString()).getString("err").equals("0")) {
-
-                    requestNetData();
-                }
+            } else if (type == 3 && err.equals("0")) {
+                requestNetData();
             }
-            if (type == 6 && new JSONObject(object.toString()).getString("err").equals("0")) {
-                imgurl = new JSONObject(object.toString()).getString("url");
+            if (type == 6) {
+                Log.e("--------", object.toString());
             }
         } catch (JSONException e) {
         }
@@ -370,76 +356,24 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void failCallBack(int type) {
-
     }
 
     //选择照片返回结果
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumns = {MediaStore.Images.Media.DATA};
-            Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
-            c.moveToFirst();
-            int columnIndex = c.getColumnIndex(filePathColumns[0]);
-            String imagePath = c.getString(columnIndex);
-            if (requestCode == 100) {
-                showImage(imagePath, image_tx, 5);
-            } else {
-                showImage(imagePath, image_shch, 6);
-            }
-            c.close();
+        if (requestCode == 100 && resultCode == 1) {
+            String imagePath = data.getStringExtra("img_url");
+            Glide.with(this).load(imagePath).into(image_tx);
+            upLoadImg(API.SAVE_PIC_TO_SERVER, imagePath, 5);
+        }
+        if (requestCode == 200 && resultCode == 2) {
+            String imagePath = data.getStringExtra("img_url");
+            Glide.with(this).load(imagePath).into(image_shch);
+            upLoadImg(API.SAVE_CARD_IMG, imagePath, 6);
         }
     }
 
-    private void showImage(String imaePath, ImageView imageView, int type) {
-        Bitmap bitmap = BitmapFactory.decodeFile(imaePath);
-        Bitmap bp = BitmapUtils.ratio(imaePath, 70, 400);
-        //imageView.setImageBitmap(bitmap);
-        Glide.with(this).load(imaePath).into(imageView);
-        upLoadImg((head_card == 1) ? (API.SAVE_PIC_TO_SERVER) : (API.SAVE_CARD_IMG), imaePath, type);
-    }
-
-    public void checkPic() {
-        int api = SystemUtils.getSystemInfo();
-        if (api >= 23) {
-            checkPremission();
-        } else {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, (head_card == 1) ? (100) : (200));
-        }
-    }
-
-    //动态申请权限
-    private void checkPremission() {
-        final String permission1 = Manifest.permission.READ_EXTERNAL_STORAGE; //写入数据权限
-        if (ContextCompat.checkSelfPermission(this, permission1) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this, permission1) != PackageManager.PERMISSION_GRANTED) {  //先判断是否被赋予权限，没有则申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, 300);
-        } else {
-            //赋予过权限，则直接调用相册
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, (head_card == 1) ? (100) : (200));
-        }
-    }
-
-    //权限申请返回结果
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {  //申请权限的返回值
-            case 300:
-                int length = grantResults.length;
-                final boolean isGranted = length >= 1 && PackageManager.PERMISSION_GRANTED == grantResults[length - 1];
-                if (isGranted) {//如果用户赋予权限，则调用相册
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, (head_card == 1) ? (100) : (200));
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
 
     public void onResume() {
         super.onResume();
