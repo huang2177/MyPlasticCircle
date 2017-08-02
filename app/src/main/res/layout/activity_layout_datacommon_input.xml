@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_gray_bg"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+    <include layout="@layout/titlebar_lauout"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp">
+
+        <com.optimus.edittextfield.EditTextField
+            android:id="@+id/datacommon_input_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/corner_titlebar"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textColor="@color/color_balank"
+            android:textColorHint="@color/color_gray3"
+            android:textCursorDrawable="@drawable/text_cursor_shape"
+            android:textSelectHandle="@drawable/textselecthandle"
+            android:textSelectHandleLeft="@drawable/textselecthandle"
+            android:textSelectHandleRight="@drawable/textselecthandle"
+            android:textSize="@dimen/x66"
+            app:clearButtonMode="whileEditing"/>
+    </LinearLayout>
+</LinearLayout>

@@ -25,6 +25,10 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.Map;
 
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
@@ -33,15 +37,19 @@ import java.util.Map;
  */
 public class BaseActivity extends Activity {
     private View mView;
-    private TextView mTextView;
     private LinearLayout mLayout_back;
     private ImageView mImageView_conact;
+    public TextView mTextView, mTextView_left, mTextView_right;
 
+    private String type;
+    private Observer observer;
 
     public void initTileBar() {
         mTextView = F(R.id.titlebar_text_title);
         mLayout_back = F(R.id.titlebar_img_back);
-        mImageView_conact = F(R.id.titlebar_img_conact);
+        mTextView_left = F(R.id.titlebar_text_left);
+        mTextView_right = F(R.id.titlebar_text_right);
+        mImageView_conact = F(R.id.titlebar_img_right);
         goBack(mLayout_back);
     }
 
@@ -49,10 +57,45 @@ public class BaseActivity extends Activity {
         mTextView.setText(title);
     }
 
-    public void setRightBTVisibility(int isShow) {
+    public void setRightIVVisibility(int isShow) {
         mImageView_conact.setVisibility(isShow);
     }
 
+    //右边确定按钮
+    public void setRightTVVisibility(int isShow) {
+        mTextView_right.setVisibility(isShow);
+    }
+
+    //左边取消按钮
+    public void setLeftTVVisibility(int isShow) {
+        mTextView_left.setVisibility(isShow);
+        findViewById(R.id.titlebar_img_left).setVisibility(View.GONE);
+        mTextView_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    //绑定订阅者
+    public void setObserver(Observer observer, String type) {
+        this.type = type;
+        this.observer = observer;
+        mTextView_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Observable observable = Observable.create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        subscriber.onNext(BaseActivity.this.type);
+                        subscriber.onCompleted();
+                    }
+                });
+                observable.subscribe(BaseActivity.this.observer);
+            }
+        });
+    }
 
     public <T extends View> T F(int id) {
         return (T) findViewById(id);

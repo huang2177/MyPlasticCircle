@@ -106,6 +106,7 @@
                 android:background="@color/color_gray_divider_in"></View>
 
             <LinearLayout
+                android:id="@+id/setting_data_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -132,6 +133,7 @@
                 android:background="@color/color_gray_divider_in"></View>
 
             <LinearLayout
+                android:id="@+id/setting_data_sex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -158,6 +160,7 @@
                 android:background="@color/color_gray_divider_in"></View>
 
             <LinearLayout
+                android:id="@+id/setting_data_region"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -217,6 +220,7 @@
                 android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/setting_data_product"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -243,6 +247,7 @@
                     android:background="@color/color_gray_divider_in"></View>
 
                 <LinearLayout
+                    android:id="@+id/setting_data_monthlyuse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -270,6 +275,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/setting_data_mainsell"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -305,7 +311,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="12dp"
-                android:paddingTop="12dp">
+                android:paddingTop="12dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="110dp"
@@ -318,7 +325,7 @@
                     android:id="@+id/wd_zl_text_ph"
                     style="@style/wd_zl_text_style"
                     android:layout_width="match_parent"
-                    android:drawableRight="@drawable/personal_information_btn_more"
+                    android:drawableRight="@drawable/btn_more_big1"
                     android:gravity="right"
                     android:singleLine="true"></TextView>
             </LinearLayout>

@@ -208,6 +208,9 @@
             android:name="com.myplas.q.myinfo.setting.activity.TakePhotoDialogActivity"
             android:screenOrientation="portrait"
             android:theme="@style/my_theme_animation"></activity>
+        <activity
+            android:name="com.myplas.q.myinfo.setting.activity.DataCommonInputActivity"
+            android:screenOrientation="portrait"></activity>
 
         <!--微信回调-->
         <activity
