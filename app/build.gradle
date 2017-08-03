@@ -16,8 +16,8 @@ android {
         applicationId "com.myplas.q"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 91
-        versionName "3.6.1"
+        versionCode 93
+        versionName "3.6.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
