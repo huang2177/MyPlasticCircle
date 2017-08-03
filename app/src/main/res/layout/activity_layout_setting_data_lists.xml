@@ -325,7 +325,7 @@
                     android:id="@+id/wd_zl_text_ph"
                     style="@style/wd_zl_text_style"
                     android:layout_width="match_parent"
-                    android:drawableRight="@drawable/btn_more_big1"
+                    android:drawableRight="@drawable/personal_information_btn_more"
                     android:gravity="right"
                     android:singleLine="true"></TextView>
             </LinearLayout>

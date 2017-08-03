@@ -1,47 +1,43 @@
 package com.myplas.q.myinfo.setting.activity;
 
-import android.Manifest;
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.appupdate.DownLoadUtils;
 import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.BigImageViewActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.BitmapUtils;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.SystemUtils;
-import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.api.API;
+import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.beans.MySelfInfo;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
+
+import rx.Subscriber;
 
 
 /**
@@ -52,6 +48,9 @@ import java.util.Map;
  */
 public class MyDataActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
 
+    private MyReceiver myReceiver;
+
+    private int regionPosition;
     private MySelfInfo mySelfInfo;
     private SharedUtils sharedUtils;
     private Map<String, String> map;
@@ -76,6 +75,11 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     }
 
     public void initView() {
+        //注册广播；
+        myReceiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter("com.broadcast.databack");
+        registerReceiver(myReceiver, filter);
+
         map = new HashMap<String, String>();
         sharedUtils = SharedUtils.getSharedUtils();
 
@@ -105,7 +109,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
         image_tx.setOnClickListener(this);
         image_shch.setOnClickListener(this);
-
+        ll_mode.setOnClickListener(this);
         ll_sex.setOnClickListener(this);
         ll_pro.setOnClickListener(this);
         ll_add.setOnClickListener(this);
@@ -116,52 +120,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-
-//    public void initView_save() {
-//        radioGroup_sex = f(R.id.radio_sex);
-//        textView_ph_save = f(R.id.wd_zl_text_ph);
-//        textView_dzh_save = f(R.id.wd_zl_text_dzh);
-//        textView_zhy_save = f(R.id.wd_zl_text_zhy);
-//        textView_num_save = f(R.id.wd_zl_text_num);
-//        radioGroup_address = f(R.id.radio_address);
-//        textView_product_save = f(R.id.wd_zl_text_products);
-//        linearLayout = (LinearLayout) view_save.findViewById(R.id.linear_show_close);
-//        linearLayout_ph = (LinearLayout) view_save.findViewById(R.id.wd_zl_linear_ph);
-//
-//        radioGroup_sex.setOnCheckedChangeListener(this);
-//        radioGroup_address.setOnCheckedChangeListener(this);
-//
-//        //设置塑料制品厂所需栏目显示与否
-//        String type = mySelfInfo.getData().getType();
-//        linearLayout.setVisibility((type.equals("1")) ? (View.VISIBLE) : (View.GONE));
-//        linearLayout_ph.setVisibility((type.equals("1") || (type.equals("2")) ? (View.VISIBLE) : (View.GONE)));
-//    }
-
-
-//    @Override
-//    public void onCheckedChanged(RadioGroup group, int checkedId) {
-//        switch (group.getId()) {
-//            case R.id.radio_sex:
-//                sex = (checkedId == R.id.radio_sex_man) ? ("0") : ("1");
-//                break;
-//            case R.id.radio_address:
-//                switch (checkedId) {
-//                    case R.id.radio_address_se:
-//                        address = "EC";
-//                        break;
-//                    case R.id.radio_address_sn:
-//                        address = "NC";
-//                        break;
-//                    case R.id.radio_address_ss:
-//                        address = "SC";
-//                        break;
-//                    case R.id.radio_address_qt:
-//                        address = "OT";
-//                        break;
-//                }
-//                break;
-//        }
-//    }
 
     @Override
     public void onClick(View v) {
@@ -177,47 +135,54 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 startActivityForResult(intent2, 200);
                 break;
             case R.id.setting_data_sex:
-                Intent intent3 = new Intent(this, DataCommonInputActivity.class);
-                intent3.putExtra("type", "1");
+                Intent intent3 = new Intent(this, DataCommonActivity.class);
+                intent3.putExtra("type", "0");
                 intent3.putExtra("title", "性别");
-                intent3.putExtra("hint", sex);
-                startActivityForResult(intent3, 3);
+                intent3.putExtra("hint", sexInPut);
+                startActivity(intent3);
                 break;
             case R.id.setting_data_region:
-                Intent intent4 = new Intent(this, DataCommonInputActivity.class);
+                Intent intent4 = new Intent(this, DataCommonActivity.class);
                 intent4.putExtra("type", "1");
                 intent4.putExtra("title", "所属地区");
-                intent4.putExtra("hint", region);
-                startActivityForResult(intent4, 4);
+                intent4.putExtra("hint", regionPosition + "");
+                startActivity(intent4);
                 break;
 
             case R.id.setting_data_address:
-                Intent intent5 = new Intent(this, DataCommonInputActivity.class);
+                Intent intent5 = new Intent(this, DataCommonActivity.class);
                 intent5.putExtra("type", "2");
                 intent5.putExtra("title", "地址");
                 intent5.putExtra("hint", address);
                 startActivityForResult(intent5, 5);
                 break;
             case R.id.setting_data_product:
-                Intent intent6 = new Intent(this, DataCommonInputActivity.class);
+                Intent intent6 = new Intent(this, DataCommonActivity.class);
                 intent6.putExtra("type", "2");
                 intent6.putExtra("title", "生产产品");
                 intent6.putExtra("hint", product);
                 startActivityForResult(intent6, 6);
                 break;
             case R.id.setting_data_monthlyuse:
-                Intent intent7 = new Intent(this, DataCommonInputActivity.class);
+                Intent intent7 = new Intent(this, DataCommonActivity.class);
                 intent7.putExtra("type", "2");
                 intent7.putExtra("title", "月用量");
                 intent7.putExtra("hint", monthUse);
                 startActivityForResult(intent7, 7);
                 break;
             case R.id.setting_data_mainsell:
-                Intent intent8 = new Intent(this, DataCommonInputActivity.class);
+                Intent intent8 = new Intent(this, DataCommonActivity.class);
                 intent8.putExtra("type", "2");
                 intent8.putExtra("title", "我的主营");
                 intent8.putExtra("hint", mainPro);
                 startActivityForResult(intent8, 8);
+                break;
+            case R.id.wd_zl_linear_ph:
+                Intent intent9 = new Intent(this, DataCommonActivity.class);
+                intent9.putExtra("type", "2");
+                intent9.putExtra("title", "关注的牌号");
+                intent9.putExtra("hint", model);
+                startActivityForResult(intent9, 9);
                 break;
         }
     }
@@ -225,21 +190,35 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     //保存资料。。。
     public void saveData() {
         Map map = new HashMap();
-        String s2 = "";
-        String str[] = mainPro.split(" ");
-        for (int i = 0; i < str.length; i++) {
-            s2 += str[i] + ",";
-        }
+        String sMainPro = mainPro
+                .replace("  ", ",")
+                .replace(" ", ",")
+                .replace("，", ",")
+                .replace("|", ",")
+                .replace("、", ",")
+                .replace("/", ",")
+                .replace("。", ",")
+                .replace(".", ",");
+        String sModel = model
+                .replace("  ", ",")
+                .replace(" ", ",")
+                .replace("，", ",")
+                .replace("|", ",")
+                .replace("、", ",")
+                .replace("/", ",")
+                .replace("。", ",")
+                .replace(".", ",");
+
         if (type.equals("1")) {
             map.put("month_consum", monthUse);
             map.put("main_product", product);
         }
         map.put("type", type);
         map.put("sex", sexInPut);
-        map.put("concern", model);
+        map.put("concern", sModel);
+        map.put("major", sMainPro);
         map.put("address", address);
         map.put("dist", regionInPut);
-        map.put("major", s2.substring(0, s2.length() - 1));
         map.put("token", sharedUtils.getData(this, "token"));
         saveSelfInfo(API.SAVE_SELFINFO, map, 3);
     }
@@ -262,54 +241,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         postUpLoadIMG(this, API.BASEURL + method, imgpath, token, this, type);
     }
 
-
-//    //编辑时数据的填充
-//    public void saveInfo(MySelfInfo mySelfInfo) {
-//        try {
-////            textView_dzh_save.setText(mySelfInfo.getData().getAddress());
-////            textView_zhy_save.setText(mySelfInfo.getData().getNeed_product());
-////            textView_ph_save.setText(mySelfInfo.getData().getConcern_model());
-////            textView_num_save.setText(mySelfInfo.getData().getMonth_consum());
-////            textView_product_save.setText(mySelfInfo.getData().getMain_product());
-//            //性别
-//            RadioButton rB = (RadioButton) radioGroup_sex.findViewById((mySelfInfo.getData().getSex().equals("男")) ? (R.id.radio_sex_man) : (R.id.radio_sex_woman));
-//            rB.setChecked(true);
-//
-//            //设置地区
-//            switch (mySelfInfo.getData().getAdistinct()) {
-//                case "华东":
-//                    RadioButton radioButton = (RadioButton) radioGroup_address.findViewById(R.id.radio_address_se);
-//                    radioButton.setChecked(true);
-//                    break;
-//                case "华北":
-//                    RadioButton radioButton1 = (RadioButton) radioGroup_address.findViewById(R.id.radio_address_sn);
-//                    radioButton1.setChecked(true);
-//                    break;
-//                case "华南":
-//                    RadioButton radioButton2 = (RadioButton) radioGroup_address.findViewById(R.id.radio_address_ss);
-//                    radioButton2.setChecked(true);
-//                    break;
-//                case "其他":
-//                    RadioButton radioButton3 = (RadioButton) radioGroup_address.findViewById(R.id.radio_address_qt);
-//                    radioButton3.setChecked(true);
-//                    break;
-//            }
-//            //设置企业类型
-//            switch (mySelfInfo.getData().getType()) {
-//                case "1":
-//                    ll_pro_month.setVisibility(View.VISIBLE);
-//                    my_main_prod_save.setText("我的需求：");
-////                    textView_product_save.setText(mySelfInfo.getData().getMain_product());
-////                    textView_num_save.setText(mySelfInfo.getData().getMonth_consum());
-//                    break;
-//                default:
-//                    my_main_prod_save.setText("我的主营：");
-//                    ll_pro_month.setVisibility(View.GONE);
-//                    break;
-//            }
-//        } catch (Exception e) {
-//        }
-//    }
 
     @Override
     public void callBack(Object object, int type) {
@@ -406,15 +337,19 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             //设置地区
             switch (region) {
                 case "华东":
+                    regionPosition = 0;
                     regionInPut = "EC";
                     break;
-                case "华北":
-                    regionInPut = "NC";
-                    break;
                 case "华南":
+                    regionPosition = 1;
                     regionInPut = "SC";
                     break;
+                case "华北":
+                    regionPosition = 2;
+                    regionInPut = "NC";
+                    break;
                 case "其他":
+                    regionPosition = 3;
                     regionInPut = "OT";
                     break;
             }
@@ -436,18 +371,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             String imagePath = data.getStringExtra("img_url");
             Glide.with(this).load(imagePath).into(image_shch);
             upLoadImg(API.SAVE_CARD_IMG, imagePath, 6);
-        }
-        if (requestCode == 3 && data != null) {
-            if (!sexInPut.equals(data.getStringExtra("updateData"))) {
-                sexInPut = data.getStringExtra("updateData");
-                saveData();
-            }
-        }
-        if (requestCode == 4 && data != null) {
-            if (!regionInPut.equals(data.getStringExtra("updateData"))) {
-                regionInPut = data.getStringExtra("updateData");
-                saveData();
-            }
         }
         if (requestCode == 5 && data != null) {
             if (!address.equals(data.getStringExtra("updateData"))) {
@@ -473,9 +396,34 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 saveData();
             }
         }
-
+        if (requestCode == 9 && data != null) {
+            if (!model.equals(data.getStringExtra("updateData"))) {
+                model = data.getStringExtra("updateData");
+                saveData();
+            }
+        }
     }
 
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("com.broadcast.databack")) {
+                String type = intent.getStringExtra("type");
+                String data = intent.getStringExtra("updateData");
+                if (type.equals("0")) {
+                    if (!sexInPut.equals(data)) {
+                        sexInPut = data;
+                        saveData();
+                    }
+                } else {
+                    if (!regionInPut.equals(data)) {
+                        regionInPut = data;
+                        saveData();
+                    }
+                }
+            }
+        }
+    }
 
     public void onResume() {
         super.onResume();
@@ -485,5 +433,11 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(myReceiver);
     }
 }

@@ -25,15 +25,18 @@ import java.util.Map;
  */
 public class SettingSex_RegionAdapter extends BaseAdapter {
     Context context;
-    List<String> list;
     Map<Integer, ImageView> map;
     Map<Integer, View> map_view;
-    MyInterface myinterface;
 
-    public SettingSex_RegionAdapter(Context context, List<String> list, MyInterface myinterface) {
-        this.context = context;
+    int position;
+    List<String> list;
+
+
+    public SettingSex_RegionAdapter(Context context, List<String> list, int position) {
         this.list = list;
-        this.myinterface = myinterface;
+        this.context = context;
+        this.position = position;
+
         map = new HashMap<>();
         map_view = new HashMap<>();
     }
@@ -56,7 +59,7 @@ public class SettingSex_RegionAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder = null;
         if (map_view.get(position) == null) {
             viewHolder = new viewHolder();
@@ -71,6 +74,9 @@ public class SettingSex_RegionAdapter extends BaseAdapter {
             convertView = map_view.get(position);
             viewHolder = (viewHolder) convertView.getTag();
         }
+        map.get(position).setImageResource((this.position == position) ?
+                (R.drawable.btn_radio_checked) :
+                (R.drawable.btn_radio));
         viewHolder.content.setText(list.get(position));
         return convertView;
     }
