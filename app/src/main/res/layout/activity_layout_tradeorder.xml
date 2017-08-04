@@ -103,7 +103,7 @@
             <com.myplas.q.common.view.NoResultLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:visibility="gone"
                 android:id="@+id/trade_order_noresultlayout">
             </com.myplas.q.common.view.NoResultLayout>

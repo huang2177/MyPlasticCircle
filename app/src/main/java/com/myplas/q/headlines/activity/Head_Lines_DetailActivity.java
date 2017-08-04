@@ -156,7 +156,10 @@ public class Head_Lines_DetailActivity extends BaseActivity implements ResultCal
                     + "    发布时间：" + sucribleDetailBean.getInfo().getInput_time()));
 
             String html = sucribleDetailBean.getInfo().getContent();
-            webView.loadData(html, "text/html;charset=UTF-8", null);
+
+            String s = "<style>img{ width:100%}</style>" + html;
+
+            webView.loadData(s, "text/html;charset=UTF-8", null);
             //webView.loadDataWithBaseURL(null, html, "textselecthandle/html", "UTF-8", null);
 
             List<SucribleDetailBean.InfoBean.SubscribeBean> l = sucribleDetailBean.getInfo().getSubscribe();

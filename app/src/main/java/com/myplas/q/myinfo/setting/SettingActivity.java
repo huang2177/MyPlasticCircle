@@ -1,6 +1,7 @@
 package com.myplas.q.myinfo.setting;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -110,6 +111,10 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
                         dialogShowUtils.showDialog(SettingActivity.this, content, 10, SettingActivity.this);
                         break;
                     case 7:
+                        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                         break;
                     case 8:
                         Intent intent8 = new Intent(SettingActivity.this, AboutPlasticActivity.class);

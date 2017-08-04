@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.myinfo.beans.ApplyInvoiceBean;
 import com.myplas.q.myinfo.beans.EDuBean;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ import java.util.Map;
 
 public class ApplyInvoiceAdapter extends BaseAdapter {
     private Context context;
-    private List<EDuBean.DataBean> list;
+    private List<ApplyInvoiceBean.DataBean.ListBean> list;
 
     private String num;
     private Map<Integer, View> mViewMap;
@@ -46,7 +47,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     private Dialog normalDialog;
     private MyOnClickListener mListener;
 
-    public ApplyInvoiceAdapter(Context context, List<EDuBean.DataBean> list) {
+    public ApplyInvoiceAdapter(Context context, List<ApplyInvoiceBean.DataBean.ListBean> list) {
         this.list = list;
         this.context = context;
         mViewMap = new HashMap<>();
@@ -56,9 +57,9 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-//        if (list != null)
-//            return list.size();
-        return 3;
+        if (list != null)
+            return list.size();
+        return 0;
     }
 
     @Override
@@ -75,7 +76,6 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final viewHolder viewHolder;
         if (convertView == null) {
-
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_applyinvoices, null);
             viewHolder.textView_mode = (TextView) convertView.findViewById(R.id.item_lv_applyinvoice_mode);
@@ -90,11 +90,20 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
+            viewHolder.textView_mode.setText(list.get(position).getModel());
+            viewHolder.textView_num.setText(list.get(position).getUnit_price() + " x " +
+                    list.get(position).getNumber() + " = " +
+                    list.get(position).getPrice());
+            double numAll = Double.parseDouble(list.get(position).getNumber());
+            double notApplyNum = Double.parseDouble(list.get(position).getB_number());
+            viewHolder.textView_applied.setText(((int) numAll - notApplyNum) + "");
+            viewHolder.textView_applyable.setText(list.get(position).getB_number());
+            viewHolder.textView_apply.setText(list.get(position).getB_number());
+
             viewHolder.mImageView_modify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    viewHolder.textView_apply.setText("333");
-                    showDialog(viewHolder);
+                    showDialog(viewHolder, list.get(position).getB_number());
                 }
             });
         } catch (Exception e) {
@@ -104,7 +113,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     }
 
 
-    public void showDialog(final viewHolder viewHolder) {
+    public void showDialog(final viewHolder viewHolder, String num) {
         View view = View.inflate(context, R.layout.dialog_layout_modify_num, null);
 
         normalDialog = new Dialog(context, R.style.dialog);
@@ -117,6 +126,8 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
 
         mImageView = (ImageView) view.findViewById(R.id.dialog_layout_modify_img);
         mEditText = (EditText) view.findViewById(R.id.dialog_layout_modify_editText);
+        mEditText.setText(num);
+        mEditText.setSelection(num.length());
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
