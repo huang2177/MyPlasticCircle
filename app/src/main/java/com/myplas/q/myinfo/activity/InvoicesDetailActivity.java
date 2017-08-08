@@ -14,10 +14,9 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.myinfo.adapter.InvoiceListviewAdapter;
 import com.myplas.q.myinfo.beans.ApplyInvoiceBean;
 import com.myplas.q.myinfo.beans.InvoiceDetailBean;
-import com.myplas.q.myinfo.invoices.adapter.ApplyInvoiceAdapter;
-import com.myplas.q.myinfo.invoices.adapter.InvoiceListviewAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
