@@ -2,6 +2,7 @@ package com.myplas.q.myinfo.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.InputFilter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,11 +21,15 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.InputFilterMinMax;
+import com.myplas.q.myinfo.beans.ApplyInvoiceBean;
 import com.myplas.q.myinfo.beans.EDuBean;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 编写：黄双
@@ -34,7 +39,7 @@ import java.util.Map;
 
 public class ApplyInvoiceAdapter extends BaseAdapter {
     private Context context;
-    private List<EDuBean.DataBean> list;
+    private List<ApplyInvoiceBean.DataBean.ListBean> list;
 
     private String num;
     private Map<Integer, View> mViewMap;
@@ -46,7 +51,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     private Dialog normalDialog;
     private MyOnClickListener mListener;
 
-    public ApplyInvoiceAdapter(Context context, List<EDuBean.DataBean> list) {
+    public ApplyInvoiceAdapter(Context context, List<ApplyInvoiceBean.DataBean.ListBean> list) {
         this.list = list;
         this.context = context;
         mViewMap = new HashMap<>();
@@ -56,9 +61,9 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-//        if (list != null)
-//            return list.size();
-        return 3;
+        if (list != null)
+            return list.size();
+        return 0;
     }
 
     @Override
@@ -75,7 +80,6 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final viewHolder viewHolder;
         if (convertView == null) {
-
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_applyinvoices, null);
             viewHolder.textView_mode = (TextView) convertView.findViewById(R.id.item_lv_applyinvoice_mode);
@@ -90,11 +94,21 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
+            int total_num = list.get(position).getTotal_num();
+            int b_number = list.get(position).getB_number();
+            int unit_price = (int) Double.parseDouble(list.get(position).getUnit_price());
+            int number = list.get(position).getNumber();
+
+            viewHolder.textView_mode.setText(list.get(position).getF_name() + " " + list.get(position).getModel());
+            viewHolder.textView_num.setText(unit_price + " x " + number + " = " + number * unit_price);
+            viewHolder.textView_applied.setText((total_num - b_number) + "");
+            viewHolder.textView_applyable.setText(b_number + "");
+            viewHolder.textView_apply.setText(b_number + "");
+
             viewHolder.mImageView_modify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    viewHolder.textView_apply.setText("333");
-                    showDialog(viewHolder);
+                    showDialog(viewHolder, list.get(position).getB_number() + "", Double.parseDouble(list.get(position).getUnit_price()));
                 }
             });
         } catch (Exception e) {
@@ -104,40 +118,60 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     }
 
 
-    public void showDialog(final viewHolder viewHolder) {
+    public void showDialog(final viewHolder viewHolder, String num, final double unit_price) {
         View view = View.inflate(context, R.layout.dialog_layout_modify_num, null);
 
         normalDialog = new Dialog(context, R.style.dialog);
         normalDialog.setContentView(view);
         normalDialog.setCancelable(true);
         normalDialog.setCanceledOnTouchOutside(true);
+
         setDialogWindowAttr(context);
         normalDialog.show();
 
-
         mImageView = (ImageView) view.findViewById(R.id.dialog_layout_modify_img);
         mEditText = (EditText) view.findViewById(R.id.dialog_layout_modify_editText);
+        mEditText.setText(num);
+        mEditText.setSelection(num.length());
+        mEditText.setFilters(new InputFilter[]{new InputFilterMinMax("1", "12")});
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String num = mEditText.getText().toString();
-                if (num != null && !"".equals(num)) {
+                if (TextUtils.isNullOrEmpty(num)) {
+                    int numed = Integer.parseInt(num);
+                    hideInPutKeyboord();
                     normalDialog.dismiss();
                     viewHolder.textView_apply.setText(num);
-                    //mListener.onClick(num);
+                    viewHolder.textView_num.setText(unit_price + " x " + num + " = " + numed * unit_price);
+                    mListener.onClick(numed);
                 } else {
                     TextUtils.Toast(context, "你还没有输入开票数量！");
                 }
             }
         });
-//        mEditText.requestFocus();
-//
-//        mEditText.setFocusable(true);
-//
-//        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-//
-//        imm.showSoftInputFromInputMethod(mEditText.getWindowToken(),0);
+        showInPutKeybord();
+    }
 
+    public void hideInPutKeyboord() {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+    }
+
+    private void showInPutKeybord() {
+        mEditText.setFocusable(true);
+        mEditText.setFocusableInTouchMode(true);
+        mEditText.requestFocus();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            }
+
+        }, 200);
     }
 
     //设置dialog属性

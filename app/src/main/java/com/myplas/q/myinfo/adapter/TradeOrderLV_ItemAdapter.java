@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.myinfo.beans.EDuBean;
+import com.myplas.q.myinfo.beans.OrderListsBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,18 +25,18 @@ import java.util.Map;
 
 public class TradeOrderLV_ItemAdapter extends BaseAdapter {
     private Context context;
-    private List<EDuBean.DataBean> list;
+    private List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct;
 
-    public TradeOrderLV_ItemAdapter(Context context, List<EDuBean.DataBean> list) {
-        this.list = list;
+    public TradeOrderLV_ItemAdapter(Context context, List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct) {
         this.context = context;
+        this.listProduct = listProduct;
     }
 
     @Override
     public int getCount() {
-//        if (list != null)
-//            return list.size();
-        return 2;
+        if (listProduct != null)
+            return listProduct.size();
+        return 0;
     }
 
     @Override
@@ -62,8 +63,10 @@ public class TradeOrderLV_ItemAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-//            viewHolder.textView_content.setText(Html.fromHtml(list.get(position).getA()));
-//            viewHolder.textView_title.setText("Q:" + Html.fromHtml(list.get(position).getQ()));
+            viewHolder.textView_content.setText(listProduct.get(position).getF_name() + " " +
+                    listProduct.get(position).getModel());
+            viewHolder.textView_uprice.setText(listProduct.get(position).getUnit_price());
+            viewHolder.textView_num1.setText("x" + listProduct.get(position).getInit());
         } catch (Exception e) {
         }
         return convertView;

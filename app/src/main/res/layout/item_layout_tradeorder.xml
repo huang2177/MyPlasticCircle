@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:orientation="vertical">
@@ -9,19 +10,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_gray_divider_out"></View>
-
-        <TextView
-            android:id="@+id/tradeorder_item_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_white"
-            android:padding="10dp"
-            android:text="订单号：00000000000"
-            android:textColor="@color/color_balank"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tradeorder_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/color_white"
+                android:padding="10dp"
+                android:textColor="@color/color_balank"/>
+
+            <TextView
+                android:id="@+id/tradeorder_item_zht"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:padding="10dp"
+                android:textColor="@color/color_red"/>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -29,11 +39,17 @@
             android:background="@color/color_gray_divider_in"></View>
 
         <com.myplas.q.common.view.MyListview
+            android:id="@+id/tradeorder_item_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tradeorder_item_listview">
+            android:divider="@color/color_gray_divider_in"
+            android:dividerHeight="1px">
         </com.myplas.q.common.view.MyListview>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_divider_in"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,11 +64,9 @@
 
             <TextView
                 android:id="@+id/tradeorder_item_num2"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#a1b2c2"
-                android:gravity="right"
+                android:gravity="center"
                 android:text="共10吨"
                 android:textColor="@color/color_gray"/>
 
@@ -60,20 +74,16 @@
                 android:id="@+id/tradeorder_item_tprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#b5c2a1"
                 android:gravity="right"
                 android:text="合计100000.05"
                 android:textColor="@color/color_gray"/>
 
             <TextView
                 android:id="@+id/tradeorder_item_feight"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:background="#c2a1be"
-                android:gravity="right"
-                android:singleLine="true"
-                android:text="(含运费100000000.00)"
+                android:gravity="center"
+                android:text="(含运费100.00)"
                 android:textColor="@color/color_gray"/>
         </LinearLayout>
 
@@ -87,41 +97,50 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30px"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/tradeorder_item_img1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/btn_submit"/>
+                android:layout_height="match_parent"
+                />
 
             <ImageView
                 android:id="@+id/tradeorder_item_img2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/btn_apply"/>
+                android:layout_height="match_parent"/>
+
+            <ImageView
+                android:id="@+id/tradeorder_item_img3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/color_gray_divider_out"></View>
+
+        <View
+            android:id="@+id/tradeorder_item_divider"
+            android:layout_width="match_parent"
+            android:layout_height="28px"
+            android:background="@color/color_gray_bg"></View>
     </LinearLayout>
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/popou_layout_signed_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:alpha="0.8"
         android:background="@drawable/coner_signed"
         android:gravity="center"
         android:padding="15dp"
-        android:alpha="0.8"
-        android:layout_gravity="center"
         android:textColor="#ffffff"
-        android:textSize="16.0sp"/>
+        android:textSize="16.0sp"
+        android:visibility="gone"/>
 
 </FrameLayout>
