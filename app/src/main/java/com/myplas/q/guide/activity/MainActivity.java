@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,6 +29,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fm.openinstall.OpenInstall;
+import com.fm.openinstall.listener.AppWakeUpListener;
+import com.fm.openinstall.model.AppData;
+import com.fm.openinstall.model.Error;
 import com.myplas.q.R;
 import com.myplas.q.addresslist.fragment.Fragment_AddressList;
 import com.myplas.q.appupdate.DownLoadUtils;
@@ -474,5 +479,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             sharedUtils.setBooloean(this, "isrequest", true);
         }
     }
+
 }
 

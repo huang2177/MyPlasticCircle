@@ -2,7 +2,12 @@ package com.myplas.q.guide.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.fm.openinstall.OpenInstall;
+import com.fm.openinstall.listener.AppWakeUpListener;
+import com.fm.openinstall.model.AppData;
+import com.fm.openinstall.model.Error;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
@@ -16,15 +21,18 @@ import com.umeng.analytics.MobclickAgent;
  * 时间：2017/3/17 11:52
  */
 public class SplashActivity extends BaseActivity {
-    boolean isGuided=false;
+    boolean isGuided = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_splash_activity);
-        isGuided= SharedUtils.getSharedUtils().getBoolean(this,"isGuided");
+        isGuided = SharedUtils.getSharedUtils().getBoolean(this, "isGuided");
         new MyThread().start();
     }
-    class MyThread extends Thread{
+
+    class MyThread extends Thread {
+
         @Override
         public void run() {
             super.run();
@@ -36,18 +44,21 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    public void goMainOrGuide(){
-        if(!isGuided){
+    public void goMainOrGuide() {
+        if (!isGuided) {
             startActivity(new Intent(SplashActivity.this, GuideActivity.class));
-        }else {
+        } else {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
         }
         finish();
     }
+
+
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

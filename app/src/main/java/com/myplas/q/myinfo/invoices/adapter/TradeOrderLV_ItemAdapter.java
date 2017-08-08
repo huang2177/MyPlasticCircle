@@ -63,8 +63,9 @@ public class TradeOrderLV_ItemAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-            viewHolder.textView_content.setText(listProduct.get(position).getModel());
-            viewHolder.textView_uprice.setText(listProduct.get(position).getF_name());
+            viewHolder.textView_content.setText(listProduct.get(position).getF_name() + " " +
+                    listProduct.get(position).getModel());
+            viewHolder.textView_uprice.setText(listProduct.get(position).getUnit_price());
             viewHolder.textView_num1.setText("x" + listProduct.get(position).getInit());
         } catch (Exception e) {
         }

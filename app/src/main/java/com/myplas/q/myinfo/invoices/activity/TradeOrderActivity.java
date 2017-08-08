@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -44,8 +45,9 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
+    private View mViewHeader;
     private EditText mEditText;
-    private MyListview mListView;
+    private ListView mListView;
     private ImageView mImageView;
     private NoResultLayout mNoResultLayout;
 
@@ -64,10 +66,13 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
     public void initView() {
         mImageView = F(R.id.img_contact);
-        mListView = F(R.id.trade_order_listview);
-        mEditText = F(R.id.trade_order_edittext);
-        mNoResultLayout = F(R.id.trade_order_noresultlayout);
 
+        mListView = F(R.id.trade_order_listview);
+        mNoResultLayout = F(R.id.trade_order_noresultlayout);
+        mViewHeader = View.inflate(this, R.layout.header_layout_tradeorder, null);
+        mEditText = (EditText) mViewHeader.findViewById(R.id.trade_order_edittext);
+
+        mListView.addHeaderView(mViewHeader);
         mImageView.setOnClickListener(this);
         //edittext 回车监听
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -116,15 +121,16 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     }
 
     @Override
-    public void onClick2(int position) {
+    public void onClick2(int p) {
         //startActivity(new Intent(this, InvoicesDetailActivity.class));
 
     }
 
     @Override
-    public void onClick3(int position) {
-        //startActivity(new Intent(this, InvoicesDetailActivity.class));
-        startActivity(new Intent(this, ApplyInvoicesActivity.class));
+    public void onClick3(String order_sn) {
+        Intent intent = new Intent(this, InvoicesDetailActivity.class);
+        intent.putExtra("order_sn", order_sn);
+        startActivity(intent);
     }
 
 
@@ -145,8 +151,8 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                     mListView.setAdapter(mAdapter);
                 } else {
                     mListView.setVisibility(View.GONE);
-                    //String msg= new JSONObject(object.toString()).getString("msg");
-                    mNoResultLayout.setNoResultData(R.drawable.zxtb, "gsughduycdghuydcguwd", true);
+                    String msg = new JSONObject(object.toString()).getString("msg");
+                    mNoResultLayout.setNoResultData(R.drawable.icon_invoices_null, "", true);
                 }
             }
         } catch (Exception e) {

@@ -31,7 +31,7 @@ public class DialogShowUtils {
     public void showDialog(Context context, String content, int type, DialogShowInterface dialogShowInterface) {
         this.type=type;
         this.dialogShowInterface=dialogShowInterface;
-        View view = View.inflate(context, R.layout.layout_dialog, null);
+        View view = View.inflate(context, R.layout.dialog_layout_common, null);
         if (normalDialog == null) {
             normalDialog = new Dialog(context, R.style.dialog);
             normalDialog.setCancelable(true);

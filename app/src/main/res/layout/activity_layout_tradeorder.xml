@@ -40,73 +40,29 @@
             android:src="@drawable/btn_customer_service_help"/>
     </FrameLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_gray_bg">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/shape_txl_edit">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:padding="8dp">
-
-                        <ImageView
-                            android:id="@+id/trade_order_img_search"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_toLeftOf="@+id/trade_order_edittext"
-                            android:src="@drawable/icon_search"/>
-
-                        <EditText
-                            android:id="@+id/trade_order_edittext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:hint="按订单时间和订单号搜索"
-                            android:imeOptions="actionSearch"
-                            android:singleLine="true"
-                            android:textCursorDrawable="@drawable/text_cursor_shape"
-                            android:textSelectHandle="@drawable/textselecthandle"
-                            android:textSelectHandleLeft="@drawable/textselecthandle"
-                            android:textSelectHandleRight="@drawable/textselecthandle"
-                            android:textSize="@dimen/x65"/>
-                    </LinearLayout>
-
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <com.myplas.q.common.view.MyListview
+            <ListView
                 android:id="@+id/trade_order_listview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:divider="@color/color_gray_bg"
-                android:dividerHeight="25px">
-            </com.myplas.q.common.view.MyListview>
+                android:dividerHeight="0px">
+            </ListView>
 
             <com.myplas.q.common.view.NoResultLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:visibility="gone"
                 android:id="@+id/trade_order_noresultlayout">
             </com.myplas.q.common.view.NoResultLayout>
         </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 </LinearLayout>

@@ -33,12 +33,18 @@
             android:textSize="18.0sp"/>
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/invoices_listview"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@color/color_gray_bg"
-        android:dividerHeight="20px"></ListView>
+        android:layout_height="match_parent">
+
+        <com.myplas.q.common.view.MyListview
+            android:id="@+id/invoices_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/color_gray_bg"
+            android:dividerHeight="20px"></com.myplas.q.common.view.MyListview>
+    </ScrollView>
+
 
     <com.myplas.q.common.view.NoResultLayout
         android:id="@+id/invoices_noresultlayout"

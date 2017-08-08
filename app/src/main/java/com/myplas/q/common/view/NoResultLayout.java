@@ -38,6 +38,7 @@ public class NoResultLayout extends LinearLayout {
         mTextView= (TextView) mView.findViewById(R.id.noresult_text);
         mImageView= (ImageView) mView.findViewById(R.id.noresult_image);
         mLinearLayout= (LinearLayout) mView.findViewById(R.id.layout_noresult);
+        mLinearLayout.setVisibility(GONE);
     }
     public void setNoResultData(int resId,String text,boolean visibility){
         mLinearLayout.setVisibility((visibility)?(VISIBLE):(GONE));

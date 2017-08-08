@@ -1,12 +1,21 @@
 package com.myplas.q.myinfo;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,15 +74,29 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private DragView mDragView;
     private MyImageView image_tx;
     private ImageButton imageButton;
-    private ScrollView scrollingView;
-    private ImageView mImageView_news;
+    private NestedScrollView scrollingView;
+    private ImageView mImageView_news, imageViewBg;
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
-    private TextView text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
+    private TextView text_title, text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
     private LinearLayout linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_jf, linear_look, linear_edu, linear_pz, linear_set;
+
+    private int height;
+    private Toolbar mToolbar;
+    private boolean hasMeasured;
+    private AppBarLayout mBarLayout;
+    private LinearLayout headLayout;
+    private CollapsingToolbarLayoutState state;
+    private CoordinatorLayout mCoordinatorLayout;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initView();
+        //setAppBarListener();
+    }
+
+    public void initView() {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_myselffragment, null, false);
         //获取登陆后相关数据
         image_tx = f(R.id.xq_tx);
@@ -89,7 +112,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         text_gz = f(R.id.wd_text_follow);
         text_look = f(R.id.wd_text_look);
         text_yj = f(R.id.wd_text_introdus);
+        text_title = f(R.id.toolbar_title);
 
+        imageViewBg = f(R.id.backdrop);
         linear_jf = f(R.id.wd_linear_jf);
         linear_dd = f(R.id.wd_linear_dd);
         linear_gj = f(R.id.wd_linear_gj);
@@ -107,6 +132,12 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         scrollingView = f(R.id.scrollView_myself);
         mImageView_news = f(R.id.wd_logined_news_img);
 
+        mToolbar = f(R.id.toolbar);
+        mBarLayout = f(R.id.app_bar_layout);
+        mCoordinatorLayout = f(R.id.coordinatorlayout);
+        headLayout = f(R.id.fragment_titlebar_ll_logined);
+        mCollapsingToolbarLayout = f(R.id.collapsing_toolbar);
+
         linear_dd.setOnClickListener(this);
         linear_gj.setOnClickListener(this);
         linear_qg.setOnClickListener(this);
@@ -122,6 +153,8 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_title.setOnClickListener(this);
         mImageView_news.setOnClickListener(this);
 
+        hasMeasured = false;
+        height = imageViewBg.getHeight();
         image_tx.setBorderColor(getActivity(), R.color.color_white);
     }
 
@@ -130,6 +163,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return view;
     }
+
 
     public <T extends View> T f(int id) {
         return (T) view.findViewById(id);
@@ -317,5 +351,72 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     @Override
     public void install() {
         DownLoadUtils.getInstance(getActivity()).installApk(getActivity());
+    }
+
+    private void setAppBarListener() {
+        measureHeight();
+        mBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset == 0) {
+                    if (state != CollapsingToolbarLayoutState.EXPANDED) {
+                        text_title.setText("");
+                        state = CollapsingToolbarLayoutState.EXPANDED;//修改为展开状态
+                        mToolbar.setBackgroundColor(Color.TRANSPARENT);
+//                        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+//                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
+                    }
+                } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                    text_title.setText("我的塑料圈");
+                    state = CollapsingToolbarLayoutState.COLLAPSED;//修改为折叠状态
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//                    }
+                } else {
+                    if (Math.abs(verticalOffset) > height) {
+                        float scale = (float) Math.abs(verticalOffset) / appBarLayout.getTotalScrollRange();
+                        if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
+//                            if (state == CollapsingToolbarLayoutState.COLLAPSED && scale < 0.55) {//由折叠变为展开
+//                                getActivity().getWindow().getDecorView().setSystemUiVisibility(
+//                                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
+//                            } else {
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                                    getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//                                }
+//                            }
+                            state = CollapsingToolbarLayoutState.INTERNEDIATE;
+                        }
+                        int alpha = (int) (255 * scale);
+                        Log.e("-------", scale + "");
+                        Log.e("=======", alpha + "");
+                        text_title.setTextColor(Color.argb(alpha, 255, 255, 255));
+//                        mToolbar.setBackgroundColor(Color.argb(alpha, 255, 80, 0));
+                    } else {
+                        text_title.setText("");
+                    }
+                }
+            }
+        });
+    }
+
+
+    private void measureHeight() {
+        ViewTreeObserver vto = mCoordinatorLayout.getViewTreeObserver();
+
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                if (hasMeasured == false) {
+                    height = mToolbar.getMeasuredHeight();
+                    hasMeasured = true;
+                }
+                return true;
+            }
+        });
+    }
+
+    private enum CollapsingToolbarLayoutState {
+        EXPANDED,
+        COLLAPSED,
+        INTERNEDIATE
     }
 }

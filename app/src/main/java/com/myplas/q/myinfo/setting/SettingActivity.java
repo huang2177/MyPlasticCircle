@@ -1,14 +1,22 @@
 package com.myplas.q.myinfo.setting;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
@@ -16,7 +24,6 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.FileUtils;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.view.LoadingDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
@@ -46,6 +53,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
     private Button logout;
+    private Dialog normalDialog;
     private MyListview mListView;
     private SettingAdapter mAdapter;
 
@@ -222,9 +230,41 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
             BaseActivity.postAsyn1(this, url, map, this, 1, true);
         }
         if (type == 10) {//清除缓存；
+            showDialog();
             FileUtils.clearAllCache(this);
+            normalDialog.dismiss();
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void showDialog() {
+        View view = View.inflate(this, R.layout.dialog_layout_clearcache, null);
+        if (normalDialog == null) {
+            normalDialog = new Dialog(this, R.style.dialog);
+            normalDialog.setCancelable(true);
+            normalDialog.setCanceledOnTouchOutside(true);
+            normalDialog.setContentView(view);
+            setDialogWindowAttr();
+            ImageView imageView = (ImageView) view.findViewById(R.id.dialog_img_clearcache);
+            Glide.with(this).load(R.drawable.clearcache).into(imageView);
+        }
+        normalDialog.show();
+    }
+
+    //设置dialog属性
+    public void setDialogWindowAttr() {
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        int width = outMetrics.widthPixels;
+        int height = outMetrics.heightPixels;
+
+        Window window = normalDialog.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.gravity = Gravity.CENTER;
+        lp.width = (int) ((width * 2) / 3.5);//宽高可设置具体大小
+        lp.height = (int) (height / 5);
+        normalDialog.getWindow().setAttributes(lp);
     }
 
     public void onResume() {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.myinfo.beans.EDuBean;
+import com.myplas.q.myinfo.beans.InvoiceDetailBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,19 +25,19 @@ import java.util.Map;
 
 public class InvoiceListviewAdapter extends BaseAdapter {
     private Context context;
-    private List<EDuBean.DataBean> list;
+    private List<InvoiceDetailBean.DataBean> list;
 
 
-    public InvoiceListviewAdapter(Context context, List<EDuBean.DataBean> list) {
+    public InvoiceListviewAdapter(Context context, List<InvoiceDetailBean.DataBean> list) {
         this.list = list;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-//        if (list != null)
-//            return list.size();
-        return 7;
+        if (list != null)
+            return list.size();
+        return 0;
     }
 
     @Override
@@ -63,8 +64,10 @@ public class InvoiceListviewAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-//            viewHolder.textView_content.setText(Html.fromHtml(list.get(position).getA()));
-//            viewHolder.textView_title.setText("Q:" + Html.fromHtml(list.get(position).getQ()));
+
+            viewHolder.textView_num.setText(list.get(position).getOrder_sn());
+            viewHolder.textView_time.setText(list.get(position).getInput_time());
+            viewHolder.textView_tprice.setText(list.get(position).getTotal_price());
 
         } catch (Exception e) {
         }

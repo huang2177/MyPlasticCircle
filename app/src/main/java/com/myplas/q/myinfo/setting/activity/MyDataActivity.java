@@ -174,7 +174,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 Intent intent8 = new Intent(this, DataCommonActivity.class);
                 intent8.putExtra("type", "2");
                 intent8.putExtra("title", "我的主营");
-                intent8.putExtra("hint", mainPro);
+                intent8.putExtra("hint", (type.equals("4")) ? ("logistics") : (mainPro));
                 startActivityForResult(intent8, 8);
                 break;
             case R.id.wd_zl_linear_ph:

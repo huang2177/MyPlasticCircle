@@ -13,7 +13,7 @@ public class ApplyInvoiceBean {
 
     /**
      * err : 0
-     * data : {"detail":{"total_price":"89000.00","rise":"上海诚信木业有限公司","order_sn":"SO2017080215583908","unbilling_price":"89000.0000","billing_price":"89000.0000"},"list":[{"id":"79","f_name":"伊朗","model":"2119","number":"10.0000","unit_price":"8900.00","price":"89000.0000","total_num":"10.0000","b_number":"10.0000"}],"page":""}
+     * data : {"detail":{"total_price":"86.00","rise":"WE战队有限公司","order_sn":"SO2017080715275918","unbilling_price":"86.0000","billing_price":"86.0000"},"list":[{"id":"131","f_name":"沈阳石化","model":"7042","number":2,"unit_price":"22.00","price":44,"total_num":4,"b_number":1},{"id":"132","f_name":"沈阳石化","model":"7042","number":2,"unit_price":"21.00","price":42,"total_num":4,"b_number":1}],"page":""}
      */
 
     private int err;
@@ -37,8 +37,8 @@ public class ApplyInvoiceBean {
 
     public static class DataBean {
         /**
-         * detail : {"total_price":"89000.00","rise":"上海诚信木业有限公司","order_sn":"SO2017080215583908","unbilling_price":"89000.0000","billing_price":"89000.0000"}
-         * list : [{"id":"79","f_name":"伊朗","model":"2119","number":"10.0000","unit_price":"8900.00","price":"89000.0000","total_num":"10.0000","b_number":"10.0000"}]
+         * detail : {"total_price":"86.00","rise":"WE战队有限公司","order_sn":"SO2017080715275918","unbilling_price":"86.0000","billing_price":"86.0000"}
+         * list : [{"id":"131","f_name":"沈阳石化","model":"7042","number":2,"unit_price":"22.00","price":44,"total_num":4,"b_number":1},{"id":"132","f_name":"沈阳石化","model":"7042","number":2,"unit_price":"21.00","price":42,"total_num":4,"b_number":1}]
          * page :
          */
 
@@ -72,11 +72,11 @@ public class ApplyInvoiceBean {
 
         public static class DetailBean {
             /**
-             * total_price : 89000.00
-             * rise : 上海诚信木业有限公司
-             * order_sn : SO2017080215583908
-             * unbilling_price : 89000.0000
-             * billing_price : 89000.0000
+             * total_price : 86.00
+             * rise : WE战队有限公司
+             * order_sn : SO2017080715275918
+             * unbilling_price : 86.0000
+             * billing_price : 86.0000
              */
 
             private String total_price;
@@ -128,24 +128,24 @@ public class ApplyInvoiceBean {
 
         public static class ListBean {
             /**
-             * id : 79
-             * f_name : 伊朗
-             * model : 2119
-             * number : 10.0000
-             * unit_price : 8900.00
-             * price : 89000.0000
-             * total_num : 10.0000
-             * b_number : 10.0000
+             * id : 131
+             * f_name : 沈阳石化
+             * model : 7042
+             * number : 2
+             * unit_price : 22.00
+             * price : 44
+             * total_num : 4
+             * b_number : 1
              */
 
             private String id;
             private String f_name;
             private String model;
-            private String number;
+            private int number;
             private String unit_price;
             private String price;
-            private String total_num;
-            private String b_number;
+            private int total_num;
+            private int b_number;
 
             public String getId() {
                 return id;
@@ -171,11 +171,11 @@ public class ApplyInvoiceBean {
                 this.model = model;
             }
 
-            public String getNumber() {
+            public int getNumber() {
                 return number;
             }
 
-            public void setNumber(String number) {
+            public void setNumber(int number) {
                 this.number = number;
             }
 
@@ -195,19 +195,19 @@ public class ApplyInvoiceBean {
                 this.price = price;
             }
 
-            public String getTotal_num() {
+            public int getTotal_num() {
                 return total_num;
             }
 
-            public void setTotal_num(String total_num) {
+            public void setTotal_num(int total_num) {
                 this.total_num = total_num;
             }
 
-            public String getB_number() {
+            public int getB_number() {
                 return b_number;
             }
 
-            public void setB_number(String b_number) {
+            public void setB_number(int b_number) {
                 this.b_number = b_number;
             }
         }

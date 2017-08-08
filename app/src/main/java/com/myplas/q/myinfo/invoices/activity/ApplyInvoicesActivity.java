@@ -78,6 +78,23 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         postAsyn(this, API.BASEURL + API.INVOICE, map, this, 1);
     }
 
+    public void applyInvioce(String keywords) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("order_sn", keywords);
+        map.put("rise", "20");
+        map.put("remark", "1");
+        map.put("totals", keywords);
+        map.put("order_total_price", keywords);
+        map.put("billing_price", keywords);
+        map.put("unbilling_price", keywords);
+        map.put("ids", keywords);
+        map.put("number", keywords);
+        map.put("no_number", keywords);
+        map.put("total_price", keywords);
+        map.put("p_number", keywords);
+
+        postAsyn(this, API.BASEURL + API.INVOICEDETAILADD, map, this, 1);
+    }
 
     @Override
     public void onClick(View v) {
@@ -125,8 +142,8 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
     //适配器的回调
     @Override
-    public void onClick(int position) {
-
+    public void onClick(int num) {
+        //mTextView_apply.set
     }
 
     public void onResume() {

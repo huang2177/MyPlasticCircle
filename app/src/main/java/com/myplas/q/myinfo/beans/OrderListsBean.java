@@ -8,9 +8,10 @@ import java.util.List;
 
 public class OrderListsBean {
 
+
     /**
      * err : 0
-     * data : {"list":[{"o_id":"83","order_sn":"SO2017080215492688","input_time":"2017-08-02 15:51:53","join_id":"0","invoice_status":"1","order_status":"2","c_name":"上海诚信木业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"64","total_num":"10.0000","count":2,"product":[{"price":"9000.00","model":"DF640","init":10,"f_name":"三井化学"},{"price":"9000.00","model":"DF640","init":10,"f_name":"三井化学"}],"sign":0,"billing_status":"","billing_list_status":0,"last_invoice_status":0,"transport":0,"total_price":0},{"o_id":"84","order_sn":"SO2017080215583908","input_time":"2017-08-02 16:00:51","join_id":"85","invoice_status":"1","order_status":"2","c_name":"上海诚信木业有限公司","collection_status":"1","transport_status":"2","out_storage_status":"1","store_o_id":"0","total_num":"10.0000","count":1,"product":[{"price":"8900.00","model":"2119","init":10,"f_name":"伊朗"}],"sign":0,"billing_status":"","billing_list_status":0,"last_invoice_status":0,"transport":0,"total_price":0}],"page":""}
+     * data : {"list":[{"o_id":"148","order_sn":"SO2017080715157605","input_time":"2017-08-07 15:16:15","invoice_status":"1","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"0","total_num":"23.0000","total_price":204424,"product":[{"unit_price":"8888.00","model":"T30S","init":23,"f_name":"兰化"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_info":"采购单未完全开票，暂无法开票","apply_billing_char":"申请开票","apply_billing":2,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":0,"transport":0},{"o_id":"139","order_sn":"SO2017080709002168","input_time":"2017-08-07 09:01:13","invoice_status":"1","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"136","total_num":"2.0000","total_price":40,"product":[{"unit_price":"20.00","model":"7042","init":2,"f_name":"沈阳石化"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"135","order_sn":"SO2017080416150369","input_time":"2017-08-04 16:16:16","invoice_status":"2","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"64","total_num":"2.0000","total_price":200,"product":[{"unit_price":"100.00","model":"DF640","init":2,"f_name":"三井化学"}],"part_billing_price":100,"confirm_receipt_char":"已签收","confirm_receipt":1,"billing_detail_list_char":"发票详情","billing_detail_list":1,"apply_billing_char":"","apply_billing":3,"last_invoice_status":1,"transport":0},{"o_id":"131","order_sn":"SO2017080416011987","input_time":"2017-08-04 16:02:33","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"15","total_num":"2.0000","total_price":20,"product":[{"unit_price":"10.00","model":"4725P","init":2,"f_name":"陶氏"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"129","order_sn":"SO2017080415283814","input_time":"2017-08-04 15:28:58","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"87","total_num":"2.0000","total_price":40,"product":[{"unit_price":"20.00","model":"118L150","init":2,"f_name":"镇江奇美"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"128","order_sn":"SO2017080415063601","input_time":"2017-08-04 15:07:45","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"64","total_num":"2.0000","total_price":20,"product":[{"unit_price":"10.00","model":"DF640","init":2,"f_name":"三井化学"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"127","order_sn":"SO2017080414536536","input_time":"2017-08-04 14:54:38","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"87","total_num":"1.0000","total_price":9999,"product":[{"unit_price":"9999.00","model":"118L150","init":1,"f_name":"镇江奇美"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"123","order_sn":"SO2017080414090912","input_time":"2017-08-04 14:10:36","invoice_status":"2","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"0","total_num":"4.0000","total_price":8,"product":[{"unit_price":"2.00","model":"4725P","init":2,"f_name":"陶氏"},{"unit_price":"2.00","model":"J2210","init":2,"f_name":"乌兹别克"}],"part_billing_price":4,"confirm_receipt_char":"已签收","confirm_receipt":1,"billing_detail_list_char":"发票详情","billing_detail_list":1,"apply_billing_char":"","apply_billing":3,"last_invoice_status":0,"transport":0},{"o_id":"118","order_sn":"SO2017080410426827","input_time":"2017-08-04 10:43:34","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"15","total_num":"2.0000","total_price":20,"product":[{"unit_price":"10.00","model":"4725P","init":2,"f_name":"陶氏"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"115","order_sn":"SO2017080410202551","input_time":"2017-08-04 10:22:26","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"0","total_num":"43.0000","total_price":53019,"product":[{"unit_price":"1233.00","model":"J2210","init":11,"f_name":"乌兹别克"},{"unit_price":"1233.00","model":"FB3003","init":32,"f_name":"伊朗"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":0,"transport":0},{"o_id":"112","order_sn":"SO2017080409269613","input_time":"2017-08-04 09:28:25","invoice_status":"1","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"64","total_num":"1.0000","total_price":8999,"product":[{"unit_price":"8999.00","model":"DF640","init":1,"f_name":"三井化学"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"86","order_sn":"SO2017080216069793","input_time":"2017-08-02 16:06:55","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"3","total_num":"8.0000","total_price":71104,"product":[{"unit_price":"8888.00","model":"4725P","init":8,"f_name":"陶氏"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"1","order_sn":"SO2017073114370912","input_time":"2017-07-31 14:39:07","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"0","total_num":"51.0000","total_price":110000,"product":[{"unit_price":"11000.00","model":"4725P","init":10,"f_name":"陶氏"}],"confirm_receipt_char":"订单未全部发货，暂无法签收","confirm_receipt":2,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":0,"transport":0}],"page":""}
      */
 
     private int err;
@@ -34,7 +35,7 @@ public class OrderListsBean {
 
     public static class DataBean {
         /**
-         * list : [{"o_id":"83","order_sn":"SO2017080215492688","input_time":"2017-08-02 15:51:53","join_id":"0","invoice_status":"1","order_status":"2","c_name":"上海诚信木业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"64","total_num":"10.0000","count":2,"product":[{"price":"9000.00","model":"DF640","init":10,"f_name":"三井化学"},{"price":"9000.00","model":"DF640","init":10,"f_name":"三井化学"}],"sign":0,"billing_status":"","billing_list_status":0,"last_invoice_status":0,"transport":0,"total_price":0},{"o_id":"84","order_sn":"SO2017080215583908","input_time":"2017-08-02 16:00:51","join_id":"85","invoice_status":"1","order_status":"2","c_name":"上海诚信木业有限公司","collection_status":"1","transport_status":"2","out_storage_status":"1","store_o_id":"0","total_num":"10.0000","count":1,"product":[{"price":"8900.00","model":"2119","init":10,"f_name":"伊朗"}],"sign":0,"billing_status":"","billing_list_status":0,"last_invoice_status":0,"transport":0,"total_price":0}]
+         * list : [{"o_id":"148","order_sn":"SO2017080715157605","input_time":"2017-08-07 15:16:15","invoice_status":"1","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"0","total_num":"23.0000","total_price":204424,"product":[{"unit_price":"8888.00","model":"T30S","init":23,"f_name":"兰化"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_info":"采购单未完全开票，暂无法开票","apply_billing_char":"申请开票","apply_billing":2,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":0,"transport":0},{"o_id":"139","order_sn":"SO2017080709002168","input_time":"2017-08-07 09:01:13","invoice_status":"1","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"136","total_num":"2.0000","total_price":40,"product":[{"unit_price":"20.00","model":"7042","init":2,"f_name":"沈阳石化"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"135","order_sn":"SO2017080416150369","input_time":"2017-08-04 16:16:16","invoice_status":"2","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"64","total_num":"2.0000","total_price":200,"product":[{"unit_price":"100.00","model":"DF640","init":2,"f_name":"三井化学"}],"part_billing_price":100,"confirm_receipt_char":"已签收","confirm_receipt":1,"billing_detail_list_char":"发票详情","billing_detail_list":1,"apply_billing_char":"","apply_billing":3,"last_invoice_status":1,"transport":0},{"o_id":"131","order_sn":"SO2017080416011987","input_time":"2017-08-04 16:02:33","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"15","total_num":"2.0000","total_price":20,"product":[{"unit_price":"10.00","model":"4725P","init":2,"f_name":"陶氏"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"129","order_sn":"SO2017080415283814","input_time":"2017-08-04 15:28:58","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"87","total_num":"2.0000","total_price":40,"product":[{"unit_price":"20.00","model":"118L150","init":2,"f_name":"镇江奇美"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"128","order_sn":"SO2017080415063601","input_time":"2017-08-04 15:07:45","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"64","total_num":"2.0000","total_price":20,"product":[{"unit_price":"10.00","model":"DF640","init":2,"f_name":"三井化学"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"127","order_sn":"SO2017080414536536","input_time":"2017-08-04 14:54:38","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"87","total_num":"1.0000","total_price":9999,"product":[{"unit_price":"9999.00","model":"118L150","init":1,"f_name":"镇江奇美"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"123","order_sn":"SO2017080414090912","input_time":"2017-08-04 14:10:36","invoice_status":"2","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"0","total_num":"4.0000","total_price":8,"product":[{"unit_price":"2.00","model":"4725P","init":2,"f_name":"陶氏"},{"unit_price":"2.00","model":"J2210","init":2,"f_name":"乌兹别克"}],"part_billing_price":4,"confirm_receipt_char":"已签收","confirm_receipt":1,"billing_detail_list_char":"发票详情","billing_detail_list":1,"apply_billing_char":"","apply_billing":3,"last_invoice_status":0,"transport":0},{"o_id":"118","order_sn":"SO2017080410426827","input_time":"2017-08-04 10:43:34","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"15","total_num":"2.0000","total_price":20,"product":[{"unit_price":"10.00","model":"4725P","init":2,"f_name":"陶氏"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"115","order_sn":"SO2017080410202551","input_time":"2017-08-04 10:22:26","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"0","total_num":"43.0000","total_price":53019,"product":[{"unit_price":"1233.00","model":"J2210","init":11,"f_name":"乌兹别克"},{"unit_price":"1233.00","model":"FB3003","init":32,"f_name":"伊朗"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":0,"transport":0},{"o_id":"112","order_sn":"SO2017080409269613","input_time":"2017-08-04 09:28:25","invoice_status":"1","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"64","total_num":"1.0000","total_price":8999,"product":[{"unit_price":"8999.00","model":"DF640","init":1,"f_name":"三井化学"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"86","order_sn":"SO2017080216069793","input_time":"2017-08-02 16:06:55","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"3","total_num":"8.0000","total_price":71104,"product":[{"unit_price":"8888.00","model":"4725P","init":8,"f_name":"陶氏"}],"confirm_receipt_char":"已签收","confirm_receipt":1,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":1,"transport":0},{"o_id":"1","order_sn":"SO2017073114370912","input_time":"2017-07-31 14:39:07","invoice_status":"3","order_status":"2","c_name":"上海梓辰实业有限公司","collection_status":"3","transport_status":"2","out_storage_status":"3","store_o_id":"0","total_num":"51.0000","total_price":110000,"product":[{"unit_price":"11000.00","model":"4725P","init":10,"f_name":"陶氏"}],"confirm_receipt_char":"订单未全部发货，暂无法签收","confirm_receipt":2,"apply_billing_char":"申请中","apply_billing":1,"billing_detail_list_char":"","billing_detail_list":0,"last_invoice_status":0,"transport":0}]
          * page :
          */
 
@@ -59,32 +60,34 @@ public class OrderListsBean {
 
         public static class ListBean {
             /**
-             * o_id : 83
-             * order_sn : SO2017080215492688
-             * input_time : 2017-08-02 15:51:53
-             * join_id : 0
+             * o_id : 148
+             * order_sn : SO2017080715157605
+             * input_time : 2017-08-07 15:16:15
              * invoice_status : 1
              * order_status : 2
-             * c_name : 上海诚信木业有限公司
+             * c_name : 上海梓辰实业有限公司
              * collection_status : 3
              * transport_status : 2
              * out_storage_status : 3
-             * store_o_id : 64
-             * total_num : 10.0000
-             * count : 2
-             * product : [{"price":"9000.00","model":"DF640","init":10,"f_name":"三井化学"},{"price":"9000.00","model":"DF640","init":10,"f_name":"三井化学"}]
-             * sign : 0
-             * billing_status :
-             * billing_list_status : 0
+             * store_o_id : 0
+             * total_num : 23.0000
+             * total_price : 204424
+             * product : [{"unit_price":"8888.00","model":"T30S","init":23,"f_name":"兰化"}]
+             * confirm_receipt_char : 已签收
+             * confirm_receipt : 1
+             * apply_billing_info : 采购单未完全开票，暂无法开票
+             * apply_billing_char : 申请开票
+             * apply_billing : 2
+             * billing_detail_list_char :
+             * billing_detail_list : 0
              * last_invoice_status : 0
              * transport : 0
-             * total_price : 0
+             * part_billing_price : 100
              */
 
             private String o_id;
             private String order_sn;
             private String input_time;
-            private String join_id;
             private String invoice_status;
             private String order_status;
             private String c_name;
@@ -93,13 +96,17 @@ public class OrderListsBean {
             private String out_storage_status;
             private String store_o_id;
             private String total_num;
-            private String count;
-            private String sign;
-            private String billing_status;
-            private String billing_list_status;
+            private String total_price;
+            private String confirm_receipt_char;
+            private String confirm_receipt;
+            private String apply_billing_info;
+            private String apply_billing_char;
+            private String apply_billing;
+            private String billing_detail_list_char;
+            private String billing_detail_list;
             private String last_invoice_status;
             private String transport;
-            private String total_price;
+            private String part_billing_price;
             private List<ProductBean> product;
 
             public String getO_id() {
@@ -124,14 +131,6 @@ public class OrderListsBean {
 
             public void setInput_time(String input_time) {
                 this.input_time = input_time;
-            }
-
-            public String getJoin_id() {
-                return join_id;
-            }
-
-            public void setJoin_id(String join_id) {
-                this.join_id = join_id;
             }
 
             public String getInvoice_status() {
@@ -198,36 +197,68 @@ public class OrderListsBean {
                 this.total_num = total_num;
             }
 
-            public String getCount() {
-                return count;
+            public String getTotal_price() {
+                return total_price;
             }
 
-            public void setCount(String count) {
-                this.count = count;
+            public void setTotal_price(String total_price) {
+                this.total_price = total_price;
             }
 
-            public String getSign() {
-                return sign;
+            public String getConfirm_receipt_char() {
+                return confirm_receipt_char;
             }
 
-            public void setSign(String sign) {
-                this.sign = sign;
+            public void setConfirm_receipt_char(String confirm_receipt_char) {
+                this.confirm_receipt_char = confirm_receipt_char;
             }
 
-            public String getBilling_status() {
-                return billing_status;
+            public String getConfirm_receipt() {
+                return confirm_receipt;
             }
 
-            public void setBilling_status(String billing_status) {
-                this.billing_status = billing_status;
+            public void setConfirm_receipt(String confirm_receipt) {
+                this.confirm_receipt = confirm_receipt;
             }
 
-            public String getBilling_list_status() {
-                return billing_list_status;
+            public String getApply_billing_info() {
+                return apply_billing_info;
             }
 
-            public void setBilling_list_status(String billing_list_status) {
-                this.billing_list_status = billing_list_status;
+            public void setApply_billing_info(String apply_billing_info) {
+                this.apply_billing_info = apply_billing_info;
+            }
+
+            public String getApply_billing_char() {
+                return apply_billing_char;
+            }
+
+            public void setApply_billing_char(String apply_billing_char) {
+                this.apply_billing_char = apply_billing_char;
+            }
+
+            public String getApply_billing() {
+                return apply_billing;
+            }
+
+            public void setApply_billing(String apply_billing) {
+                this.apply_billing = apply_billing;
+            }
+
+            public String getBilling_detail_list_char() {
+                return billing_detail_list_char;
+            }
+
+            public void setBilling_detail_list_char(String billing_detail_list_char) {
+                this.billing_detail_list_char = billing_detail_list_char;
+            }
+
+            public String getBilling_detail_list() {
+                return billing_detail_list;
+            }
+
+            public void setBilling_detail_list(String billing_detail_list) {
+                this.billing_detail_list = billing_detail_list;
             }
 
             public String getLast_invoice_status() {
@@ -246,12 +277,12 @@ public class OrderListsBean {
                 this.transport = transport;
             }
 
-            public String getTotal_price() {
-                return total_price;
+            public String getPart_billing_price() {
+                return part_billing_price;
             }
 
-            public void setTotal_price(String total_price) {
-                this.total_price = total_price;
+            public void setPart_billing_price(String part_billing_price) {
+                this.part_billing_price = part_billing_price;
             }
 
             public List<ProductBean> getProduct() {
@@ -264,23 +295,23 @@ public class OrderListsBean {
 
             public static class ProductBean {
                 /**
-                 * price : 9000.00
-                 * model : DF640
-                 * init : 10
-                 * f_name : 三井化学
+                 * unit_price : 8888.00
+                 * model : T30S
+                 * init : 23
+                 * f_name : 兰化
                  */
 
-                private String price;
+                private String unit_price;
                 private String model;
                 private String init;
                 private String f_name;
 
-                public String getPrice() {
-                    return price;
+                public String getUnit_price() {
+                    return unit_price;
                 }
 
-                public void setPrice(String price) {
-                    this.price = price;
+                public void setUnit_price(String unit_price) {
+                    this.unit_price = unit_price;
                 }
 
                 public String getModel() {
