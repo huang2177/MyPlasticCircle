@@ -268,7 +268,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 String msg = new JSONObject(object.toString()).getString("msg");
                 TextUtils.Toast(this, msg);
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
         }
     }
 
@@ -316,6 +316,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.clear(imageView_verification);
     }
 
     public void setData(JSONObject jsonObject) {

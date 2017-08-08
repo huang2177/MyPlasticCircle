@@ -25,6 +25,10 @@ import com.myplas.q.common.view.InputFilterMinMax;
 import com.myplas.q.myinfo.beans.ApplyInvoiceBean;
 import com.myplas.q.myinfo.beans.EDuBean;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +46,8 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     private List<ApplyInvoiceBean.DataBean.ListBean> list;
 
     private String num;
-    private Map<Integer, View> mViewMap;
-    private Map<Integer, TextView> mTextViewMap;
-    private Map<Integer, ImageView> mImageViewMap;
+    private Map<Integer, Double> mDoubleMap;
+    private Map<Integer, String> mStringMap;
 
     private EditText mEditText;
     private ImageView mImageView;
@@ -54,9 +57,8 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     public ApplyInvoiceAdapter(Context context, List<ApplyInvoiceBean.DataBean.ListBean> list) {
         this.list = list;
         this.context = context;
-        mViewMap = new HashMap<>();
-        mTextViewMap = new HashMap<>();
-        mImageViewMap = new HashMap<>();
+        mDoubleMap = new HashMap<>();
+        mStringMap = new HashMap<>();
     }
 
     @Override
@@ -88,37 +90,42 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
             viewHolder.textView_applyable = (TextView) convertView.findViewById(R.id.item_lv_invoice_applyable);
             viewHolder.textView_apply = (TextView) convertView.findViewById(R.id.item_lv_invoice_apply);
             viewHolder.mImageView_modify = (ImageView) convertView.findViewById(R.id.item_lv_invoice_img);
-
             convertView.setTag(viewHolder);
+
+            try {
+                double total_num = list.get(position).getTotal_num();
+                double b_number = list.get(position).getB_number();
+                double unit_price = getDecimalFormatData(list.get(position).getUnit_price());
+                double number = list.get(position).getNumber();
+
+                viewHolder.textView_mode.setText(list.get(position).getF_name() + " " + list.get(position).getModel());
+                viewHolder.textView_num.setText(unit_price + " x " + number + " = "
+                        + getDecimalFormatData((number * unit_price) + ""));
+                viewHolder.textView_applied.setText((total_num - b_number) + "");
+                viewHolder.textView_applyable.setText(b_number + "");
+                viewHolder.textView_apply.setText(b_number + "");
+                mDoubleMap.put(position, getDecimalFormatData((number * unit_price) + ""));
+                mStringMap.put(position, list.get(position).getB_number() + "");
+
+                viewHolder.mImageView_modify.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialog(viewHolder
+                                , mStringMap.get(position) + ""
+                                , Double.parseDouble(list.get(position).getUnit_price())
+                                , position);
+                    }
+                });
+            } catch (Exception e) {
+            }
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
-        try {
-            int total_num = list.get(position).getTotal_num();
-            int b_number = list.get(position).getB_number();
-            int unit_price = (int) Double.parseDouble(list.get(position).getUnit_price());
-            int number = list.get(position).getNumber();
-
-            viewHolder.textView_mode.setText(list.get(position).getF_name() + " " + list.get(position).getModel());
-            viewHolder.textView_num.setText(unit_price + " x " + number + " = " + number * unit_price);
-            viewHolder.textView_applied.setText((total_num - b_number) + "");
-            viewHolder.textView_applyable.setText(b_number + "");
-            viewHolder.textView_apply.setText(b_number + "");
-
-            viewHolder.mImageView_modify.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showDialog(viewHolder, list.get(position).getB_number() + "", Double.parseDouble(list.get(position).getUnit_price()));
-                }
-            });
-        } catch (Exception e) {
-        }
-
         return convertView;
     }
 
 
-    public void showDialog(final viewHolder viewHolder, String num, final double unit_price) {
+    public void showDialog(final viewHolder viewHolder, String num, final double unit_price, final int pos) {
         View view = View.inflate(context, R.layout.dialog_layout_modify_num, null);
 
         normalDialog = new Dialog(context, R.style.dialog);
@@ -133,18 +140,22 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
         mEditText = (EditText) view.findViewById(R.id.dialog_layout_modify_editText);
         mEditText.setText(num);
         mEditText.setSelection(num.length());
-        mEditText.setFilters(new InputFilter[]{new InputFilterMinMax("1", "12")});
+        mEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0.1", num)});
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String num = mEditText.getText().toString();
                 if (TextUtils.isNullOrEmpty(num)) {
-                    int numed = Integer.parseInt(num);
+                    double numed = Double.parseDouble(num);
                     hideInPutKeyboord();
                     normalDialog.dismiss();
-                    viewHolder.textView_apply.setText(num);
-                    viewHolder.textView_num.setText(unit_price + " x " + num + " = " + numed * unit_price);
-                    mListener.onClick(numed);
+
+                    mStringMap.put(pos, getDecimalFormatData(num) + "");
+                    mDoubleMap.put(pos, getDecimalFormatData((numed * unit_price) + ""));
+                    viewHolder.textView_apply.setText(getDecimalFormatData(num) + "");
+                    viewHolder.textView_num.setText(unit_price + " x " + num + " = " + getDecimalFormatData((numed * unit_price) + ""));
+
+                    mListener.onClick(mDoubleMap);
                 } else {
                     TextUtils.Toast(context, "你还没有输入开票数量！");
                 }
@@ -191,7 +202,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     }
 
     public interface MyOnClickListener {
-        void onClick(int position);
+        void onClick(Map<Integer, Double> map);
     }
 
     public void setMyOnClickListener(MyOnClickListener myOnClickListener) {
@@ -203,4 +214,8 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
         TextView textView_mode, textView_num, textView_applied, textView_applyable, textView_apply;
     }
 
+    public double getDecimalFormatData(String data) {
+        DecimalFormat format = new DecimalFormat("#.0000");
+        return Double.parseDouble(format.format(Double.parseDouble(data)));
+    }
 }

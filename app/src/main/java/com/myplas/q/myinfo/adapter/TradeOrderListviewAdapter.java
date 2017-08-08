@@ -119,7 +119,7 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
                         setStatus(position);
                         if (sign_status.equals("0")) {
                             TradeOrderListviewAdapter.this.position = position;
-                            confirmSign(mList.get(position).getOrder_sn());
+                            confirmSign(mList.get(position).getO_id());
                         } else if (sign_status.equals("2")) {
                             TextUtils.Toast(context, "订单未全部发货，暂无法签收!");
                         }
@@ -130,11 +130,11 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
                     @Override
                     public void onClick(View v) {
                         setStatus(position);
-//                        if (billing_status.equals("0")) {
+                        if (billing_status.equals("0")) {
                         mListener.onClick1(mList.get(position).getOrder_sn());
-//                        } else if (billing_status.equals("2")) {
-//                            TextUtils.Toast(context, "订单未签收或未付款，暂无法开票!");
-//                        }
+                        } else if (billing_status.equals("2")) {
+                            TextUtils.Toast(context, "订单未签收或未付款，暂无法开票!");
+                        }
                     }
                 });
                 //发票详情
@@ -206,7 +206,7 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
 
     public void confirmSign(String orderNum) {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("order_sn", orderNum);
+        map.put("o_id", orderNum);
         BaseActivity.postAsyn(context, API.BASEURL + API.ORDERSIGN, map, this, 1);
     }
 
@@ -216,10 +216,10 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
             Log.e("11111111", object.toString());
             String err = new JSONObject(object.toString()).getString("err");
             if (err.equals("0")) {
-                //notifyDataSetChanged();
-                //TextUtils.Toast(context,"签收时间：" + mList.get(position).getInput_time());
+
+                String time = new JSONObject(object.toString()).getString("time");
                 mMapTextViews.get(position).setVisibility(View.VISIBLE);
-                mMapTextViews.get(position).setText("签收时间：" + mList.get(position).getInput_time());
+                mMapTextViews.get(position).setText("签收时间：" + time);
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -250,7 +250,7 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
     public interface MyOnClickListener {
         void onClick1(String order_sn);
 
-        void onClick2(int position);
+        void onClick2();
 
         void onClick3(String order_sn);
     }

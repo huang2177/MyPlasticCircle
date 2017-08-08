@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/corner_titlebar"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="5dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"

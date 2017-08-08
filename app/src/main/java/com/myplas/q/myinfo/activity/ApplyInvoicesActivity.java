@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -21,9 +22,15 @@ import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.umeng.analytics.MobclickAgent;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -44,6 +51,8 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
     private ApplyInvoiceBean bean;
     private ApplyInvoiceAdapter mAdapter;
+
+    private String keywords, totals, ids, order_total_price, number, p_number, no_number, total_pirce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +75,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         textView_allprice = F(R.id.item_lv_invoice_allprice);
         mTextView_notapplied = F(R.id.applyinvoices_notapplied);
 
+        mButton.setOnClickListener(this);
         mImageView.setOnClickListener(this);
     }
 
@@ -77,22 +87,22 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         postAsyn(this, API.BASEURL + API.INVOICE, map, this, 1);
     }
 
-    public void applyInvioce(String keywords) {
+    public void applyInvioce() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("order_sn", keywords);
-        map.put("rise", "20");
-        map.put("remark", "1");
-        map.put("totals", keywords);
-        map.put("order_total_price", keywords);
-        map.put("billing_price", keywords);
-        map.put("unbilling_price", keywords);
-        map.put("ids", keywords);
-        map.put("number", keywords);
-        map.put("no_number", keywords);
-        map.put("total_price", keywords);
-        map.put("p_number", keywords);
+        map.put("order_sn", getIntent().getStringExtra("order_sn"));
+        map.put("rise", bean.getData().getDetail().getRise());
+        map.put("remark", keywords);
+        map.put("totals", totals);
+        map.put("order_total_price", order_total_price);
+        map.put("billing_price", bean.getData().getDetail().getBilling_price());
+        map.put("unbilling_price", bean.getData().getDetail().getUnbilling_price());
+        map.put("ids", ids);
+        map.put("number", number);
+        map.put("no_number", no_number);
+        map.put("total_price", total_pirce);
+        map.put("p_number", p_number);
 
-        postAsyn(this, API.BASEURL + API.INVOICEDETAILADD, map, this, 1);
+        postAsyn(this, API.BASEURL + API.INVOICEDETAILADD, map, this, 2);
     }
 
     @Override
@@ -102,6 +112,10 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                 information = new Information();
                 information.setAppkey(appkey);
                 SobotApi.startSobotChat(this, information);
+                break;
+            case R.id.applyinvoices_confirm:
+                keywords = mEditText.getText().toString();
+                applyInvioce();
                 break;
 
         }
@@ -120,18 +134,27 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                     mAdapter = new ApplyInvoiceAdapter(this, bean.getData().getList());
                     mAdapter.setMyOnClickListener(this);
                     mListView.setAdapter(mAdapter);
+                    showInfo();
+                    getArray();
                 }
+            }
+            if (type == 2) {
+
             }
         } catch (Exception e) {
         }
     }
 
     public void showInfo() {
+        totals = bean.getData().getDetail().getBilling_price();
+        order_total_price = bean.getData().getDetail().getTotal_price();
+
         mTextView_cm.setText(bean.getData().getDetail().getRise());
-        mTextView_tprice.setText(bean.getData().getDetail().getTotal_price());
-        mTextView_notapplied.setText(bean.getData().getDetail().getUnbilling_price());
-        textView_allprice.setText(bean.getData().getDetail().getBilling_price());
-        mTextView_apply.setText(bean.getData().getDetail().getBilling_price());
+        mTextView_tprice.setText(getDecimalFormatData(bean.getData().getDetail().getTotal_price()) + "");
+        mTextView_notapplied.setText(getDecimalFormatData(bean.getData().getDetail().getUnbilling_price()) + "");
+        textView_allprice.setText("申请开票金额合计：" + getDecimalFormatData(bean.getData().getDetail().getBilling_price()) + "");
+        mTextView_apply.setText(getDecimalFormatData(bean.getData().getDetail().getBilling_price()) + "");
+
     }
 
     @Override
@@ -141,8 +164,48 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
     //适配器的回调
     @Override
-    public void onClick(int num) {
-        //mTextView_apply.set
+    public void onClick(Map<Integer, Double> map) {
+        double d = 0;
+        if (map != null) {
+            Iterator<Map.Entry<Integer, Double>> entries = map.entrySet().iterator();
+            while (entries.hasNext()) {
+                Map.Entry<Integer, Double> entry = entries.next();
+                d += entry.getValue();
+            }
+            totals = d + "";
+            mTextView_apply.setText(d + "");
+            textView_allprice.setText("申请开票金额合计：" + d + "");
+        }
+    }
+
+    public String getDecimalFormatData(String data) {
+        DecimalFormat format = new DecimalFormat("#.0000");
+//        return Double.parseDouble(format.format(Double.parseDouble(data)));
+        return data;
+    }
+
+    public void getArray() {
+        JSONArray ids = new JSONArray();
+        JSONArray total_pirce = new JSONArray();
+        JSONArray number = new JSONArray();
+        JSONArray no_number = new JSONArray();
+        JSONArray p_number = new JSONArray();
+
+        for (int i = 0; i < bean.getData().getList().size(); i++) {
+            try {
+                ids.put(i, bean.getData().getList().get(i).getId());
+                total_pirce.put(i, bean.getData().getList().get(i).getPrice());
+                number.put(i, bean.getData().getList().get(i).getNumber());
+                no_number.put(i, bean.getData().getList().get(i).getNumber());
+                p_number.put(i, bean.getData().getList().get(i).getNumber());
+            } catch (Exception e) {
+            }
+        }
+        this.ids = ids.toString();
+        this.total_pirce = total_pirce.toString();
+        this.number = number.toString();
+        this.no_number = no_number.toString();
+        this.p_number = p_number.toString();
     }
 
     public void onResume() {
