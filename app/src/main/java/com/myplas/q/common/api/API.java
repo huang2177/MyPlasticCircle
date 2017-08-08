@@ -10,12 +10,12 @@ public class API {
     /*base url*/
     //测试
     public final static String BASEURL = "https://ssl.myplas.com/qapi_3/";
-//    正式
+    //    正式
 //    public final static String BASEURL= "https://api.myplas.com/qapi_3/";
     //测试_快速登陆
 //    public final static String BASEURL_API = "https://ssl.myplas.com/";
     //正式_快速登陆
-    public final static String BASEURL_API= "https://api.myplas.com/";
+    public final static String BASEURL_API = "https://api.myplas.com/";
 
     /*common*/
     //检查UA
@@ -77,7 +77,6 @@ public class API {
     public final static String VCODE = "api/vcode/app";
     //验证码
     public final static String CHK_VCODE = "api/vcode/chkVcode";
-
 
 
     /*friend*/
@@ -186,6 +185,18 @@ public class API {
     //物性表查询详情
     public final static String PHYSICAL_DETAIL = "releaseMsg/physicalDetail";
 
+    /*billingInfo*/
+
+    //我的发票列表
+    public final static String BILLINGLIST = "billingInfo/billingList";
+    //开票基本信息以及开票明细
+    public final static String INVOICE = "billingInfo/invoice";
+    //申请开票
+    public final static String INVOICEDETAILADD = "billingInfo/invoiceDetailAdd";
+    //确认签收
+    public final static String ORDERSIGN = "billingInfo/orderSign";
+    //发票详情列表
+    public final static String BILLINGDETAILLIST = "billingInfo/billingDetailList";
 
     /*toutiao*/
     //塑料头条
