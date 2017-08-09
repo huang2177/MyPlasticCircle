@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -55,9 +56,9 @@ public class NetRequest implements Callback {
 
         message = new Message();
         client = new OkHttpClient.Builder()
-                .readTimeout(8000,TimeUnit.SECONDS)
-                .connectTimeout(8000,TimeUnit.SECONDS)
-               .build();
+                .readTimeout(8000, TimeUnit.SECONDS)
+                .connectTimeout(8000, TimeUnit.SECONDS)
+                .build();
         builder = new Request.Builder();
         myHandler = new MyHandler(context);
         requestBody = new FormBody.Builder();
@@ -65,12 +66,12 @@ public class NetRequest implements Callback {
         token = SharedUtils.getSharedUtils().getData(context, "token");
         userid = SharedUtils.getSharedUtils().getData(context, "userid");
         uuid = SharedUtils.getSharedUtils().getData(context, "uuid");
-        packgename = VersionUtils.getVersionCode(context)+"";
-        inch = SystemUtils.getInch(context)+"";
+        packgename = VersionUtils.getVersionCode(context) + "";
+        inch = SystemUtils.getInch(context) + "";
         comtroname = SystemUtils.getSystem3() + "";
         controversion = SystemUtils.getSystem2();
         kernelVersion = SystemUtils.getKernelVersion() + "";
-        makename =  SystemUtils.getSystem1() + "";
+        makename = SystemUtils.getSystem1() + "";
         phonename = SystemUtils.getSystem() + "";
         chrome = "";
         chromeversion = "";
@@ -101,7 +102,7 @@ public class NetRequest implements Callback {
                 request = builder.build();
             } else {
                 for (Map.Entry<String, String> ele : map.entrySet()) {
-                    requestBody.add(ele.getKey(), ele.getValue().toString());
+                    requestBody.add(ele.getKey(), ele.getValue());
                 }
                 request = builder.post(requestBody.build()).build();
             }
@@ -130,14 +131,6 @@ public class NetRequest implements Callback {
         client.newCall(request).enqueue(this);
     }
 
-    public synchronized void postAsyn_Array(Map<String, Object> map) {
-        for (Map.Entry<String, Object> ele : map.entrySet()) {
-            requestBody.add(ele.getKey(), ele.getValue().toString());
-        }
-        Request request = new Request.Builder().url(url).post(requestBody.build()).build();
-        //3，创建call对象并将请求对象添加到调度中
-        client.newCall(request).enqueue(this);
-    }
 
     private String initParams(Map<String, String> map) {
         StringBuffer params = new StringBuffer();
@@ -164,7 +157,7 @@ public class NetRequest implements Callback {
     public void onResponse(Call call, Response response) throws IOException {
         try {
             String result = UnicodeUtils.decode(response.body().string());
-            if (response.isSuccessful()&&result != null && !result.equals("")) {
+            if (response.isSuccessful() && result != null && !result.equals("")) {
                 message.what = 1;
                 message.obj = resultCallBack;
                 message.arg1 = type;

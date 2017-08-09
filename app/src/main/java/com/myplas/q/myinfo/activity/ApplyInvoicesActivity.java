@@ -52,7 +52,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     private ApplyInvoiceBean bean;
     private ApplyInvoiceAdapter mAdapter;
 
-    private String keywords, totals, ids, order_total_price, number, p_number, no_number, total_pirce;
+    private String keywords, ids, p_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,18 +90,10 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     public void applyInvioce() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("order_sn", getIntent().getStringExtra("order_sn"));
-        map.put("rise", bean.getData().getDetail().getRise());
         map.put("remark", keywords);
-        map.put("totals", totals);
-        map.put("order_total_price", order_total_price);
-        map.put("billing_price", bean.getData().getDetail().getBilling_price());
-        map.put("unbilling_price", bean.getData().getDetail().getUnbilling_price());
-        map.put("ids", ids);
-        map.put("number", number);
-        map.put("no_number", no_number);
-        map.put("total_price", total_pirce);
-        map.put("p_number", p_number);
-
+        map.put("billing_price", bean.getData().getDetail().getUnbilling_price());
+        map.put("id", ids);
+        map.put("b_number", p_number);
         postAsyn(this, API.BASEURL + API.INVOICEDETAILADD, map, this, 2);
     }
 
@@ -146,8 +138,8 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     }
 
     public void showInfo() {
-        totals = bean.getData().getDetail().getBilling_price();
-        order_total_price = bean.getData().getDetail().getTotal_price();
+//        totals = bean.getData().getDetail().getBilling_price();
+//        order_total_price = bean.getData().getDetail().getTotal_price();
 
         mTextView_cm.setText(bean.getData().getDetail().getRise());
         mTextView_tprice.setText(getDecimalFormatData(bean.getData().getDetail().getTotal_price()) + "");
@@ -172,7 +164,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                 Map.Entry<Integer, Double> entry = entries.next();
                 d += entry.getValue();
             }
-            totals = d + "";
+//            totals = d + "";
             mTextView_apply.setText(d + "");
             textView_allprice.setText("申请开票金额合计：" + d + "");
         }
@@ -187,25 +179,16 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     public void getArray() {
         JSONArray ids = new JSONArray();
         JSONArray total_pirce = new JSONArray();
-        JSONArray number = new JSONArray();
-        JSONArray no_number = new JSONArray();
-        JSONArray p_number = new JSONArray();
 
         for (int i = 0; i < bean.getData().getList().size(); i++) {
             try {
-                ids.put(i, bean.getData().getList().get(i).getId());
-                total_pirce.put(i, bean.getData().getList().get(i).getPrice());
-                number.put(i, bean.getData().getList().get(i).getNumber());
-                no_number.put(i, bean.getData().getList().get(i).getNumber());
-                p_number.put(i, bean.getData().getList().get(i).getNumber());
+                ids.put(i, Double.parseDouble(bean.getData().getList().get(i).getId()));
+                total_pirce.put(i, Double.parseDouble(bean.getData().getList().get(i).getPrice()));
             } catch (Exception e) {
             }
         }
-        this.ids = ids.toString();
-        this.total_pirce = total_pirce.toString();
-        this.number = number.toString();
-        this.no_number = no_number.toString();
-        this.p_number = p_number.toString();
+//        this.ids = ids;
+//        this.p_number = total_pirce;
     }
 
     public void onResume() {
