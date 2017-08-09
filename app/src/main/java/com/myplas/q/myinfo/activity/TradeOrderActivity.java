@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -54,6 +55,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     private RecyclerView mListView;
     private NoResultLayout mNoResultLayout;
 
+    private Toolbar mToolbar;
     private TradeOrderListviewAdapter mAdapter;
     private List<OrderListsBean.DataBean.ListBean> mList;
 
@@ -68,6 +70,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     }
 
     public void initView() {
+        mToolbar = F(R.id.toolbar);
         mImageView = F(R.id.img_contact);
 
         mListView = F(R.id.trade_order_listview);
@@ -77,7 +80,8 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);//设置为一个1列的纵向网格布局
         mListView.setLayoutManager(mLayoutManager);
-        //mListView.addView(mViewHeader,0);
+
+        mToolbar.setNavigationIcon(null);
         mImageView.setOnClickListener(this);
         //edittext 回车监听
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
