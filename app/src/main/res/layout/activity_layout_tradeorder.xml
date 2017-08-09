@@ -67,8 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <include layout="@layout/header_layout_tradeorder"
-                        ></include>
+                    <include layout="@layout/header_layout_tradeorder"></include>
 
                 </android.support.v7.widget.ButtonBarLayout>
             </android.support.v7.widget.Toolbar>
