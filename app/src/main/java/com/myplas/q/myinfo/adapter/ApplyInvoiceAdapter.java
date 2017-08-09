@@ -99,7 +99,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
                 double number = list.get(position).getNumber();
 
                 viewHolder.textView_mode.setText(list.get(position).getF_name() + " " + list.get(position).getModel());
-                viewHolder.textView_num.setText(unit_price + " x " + number + " = "
+                viewHolder.textView_num.setText(unit_price + " x " + b_number + " = "
                         + getDecimalFormatData((number * unit_price) + ""));
                 viewHolder.textView_applied.setText((total_num - b_number) + "");
                 viewHolder.textView_applyable.setText(b_number + "");
@@ -140,7 +140,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
         mEditText = (EditText) view.findViewById(R.id.dialog_layout_modify_editText);
         mEditText.setText(num);
         mEditText.setSelection(num.length());
-        mEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0.1", num)});
+        mEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", num)});
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,9 +153,9 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
                     mStringMap.put(pos, getDecimalFormatData(num) + "");
                     mDoubleMap.put(pos, getDecimalFormatData((numed * unit_price) + ""));
                     viewHolder.textView_apply.setText(getDecimalFormatData(num) + "");
-                    viewHolder.textView_num.setText(unit_price + " x " + num + " = " + getDecimalFormatData((numed * unit_price) + ""));
+                    viewHolder.textView_num.setText(unit_price + " x " + getDecimalFormatData(num) + " = " + getDecimalFormatData((numed * unit_price) + ""));
 
-                    mListener.onClick(mDoubleMap);
+                    mListener.onClick(mDoubleMap, mStringMap);
                 } else {
                     TextUtils.Toast(context, "你还没有输入开票数量！");
                 }
@@ -202,7 +202,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     }
 
     public interface MyOnClickListener {
-        void onClick(Map<Integer, Double> map);
+        void onClick(Map<Integer, Double> map1, Map<Integer, String> map2);
     }
 
     public void setMyOnClickListener(MyOnClickListener myOnClickListener) {

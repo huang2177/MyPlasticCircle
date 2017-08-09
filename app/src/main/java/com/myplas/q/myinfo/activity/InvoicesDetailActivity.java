@@ -64,6 +64,7 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("=======", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
             if (err.equals("0")) {

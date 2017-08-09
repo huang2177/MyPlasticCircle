@@ -73,7 +73,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/item_lv_invoice_tprice"
             android:gravity="center_vertical"
-            android:text="5000.00"
             android:textColor="@color/color_balank"
             android:padding="10dp"/>
     </LinearLayout>

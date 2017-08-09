@@ -141,11 +141,11 @@ public class ApplyInvoiceBean {
             private String id;
             private String f_name;
             private String model;
-            private int number;
+            private double number;
             private String unit_price;
             private String price;
-            private int total_num;
-            private int b_number;
+            private double total_num;
+            private double b_number;
 
             public String getId() {
                 return id;
@@ -171,7 +171,7 @@ public class ApplyInvoiceBean {
                 this.model = model;
             }
 
-            public int getNumber() {
+            public double getNumber() {
                 return number;
             }
 
@@ -195,7 +195,7 @@ public class ApplyInvoiceBean {
                 this.price = price;
             }
 
-            public int getTotal_num() {
+            public double getTotal_num() {
                 return total_num;
             }
 
@@ -203,7 +203,7 @@ public class ApplyInvoiceBean {
                 this.total_num = total_num;
             }
 
-            public int getB_number() {
+            public double getB_number() {
                 return b_number;
             }
 

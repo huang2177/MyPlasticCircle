@@ -13,6 +13,7 @@ import com.google.gson.JsonArray;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.adapter.ApplyInvoiceAdapter;
@@ -52,7 +53,8 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     private ApplyInvoiceBean bean;
     private ApplyInvoiceAdapter mAdapter;
 
-    private String keywords, ids, p_number;
+    private StringBuffer ids, b_number;
+    private String keywords, billing_price, rise, unbilling_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     }
 
     public void initView() {
+        ids = new StringBuffer();
+        b_number = new StringBuffer();
+
         mImageView = F(R.id.img_contact);
         mButton = F(R.id.applyinvoices_confirm);
         mEditText = F(R.id.applyinvoices_remark);
@@ -89,11 +94,16 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
     public void applyInvioce() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("order_sn", getIntent().getStringExtra("order_sn"));
+        map.put("rise", rise);
         map.put("remark", keywords);
-        map.put("billing_price", bean.getData().getDetail().getUnbilling_price());
-        map.put("id", ids);
-        map.put("b_number", p_number);
+        map.put("id", ids.toString());
+        map.put("billing_price", billing_price);
+        map.put("b_number", b_number.toString());
+        map.put("unbilling_price", unbilling_price);
+        map.put("order_sn", getIntent().getStringExtra("order_sn"));
+        Log.e("------b_number", b_number.toString());
+        Log.e("------ids", ids.toString());
+        Log.e("------billing_price", billing_price);
         postAsyn(this, API.BASEURL + API.INVOICEDETAILADD, map, this, 2);
     }
 
@@ -130,16 +140,17 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                     getArray();
                 }
             }
-            if (type == 2) {
-
+            if (type == 2 && err.equals("0")) {
+                TextUtils.Toast(this, "提交成功！");
             }
         } catch (Exception e) {
         }
     }
 
     public void showInfo() {
-//        totals = bean.getData().getDetail().getBilling_price();
-//        order_total_price = bean.getData().getDetail().getTotal_price();
+        rise = bean.getData().getDetail().getRise();
+        billing_price = bean.getData().getDetail().getBilling_price();
+        unbilling_price = bean.getData().getDetail().getUnbilling_price();
 
         mTextView_cm.setText(bean.getData().getDetail().getRise());
         mTextView_tprice.setText(getDecimalFormatData(bean.getData().getDetail().getTotal_price()) + "");
@@ -149,6 +160,17 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    public void getArray() {
+        for (int i = 0; i < bean.getData().getList().size(); i++) {
+            ids = ids.append(bean.getData().getList().get(i).getId());
+            b_number = b_number.append(bean.getData().getList().get(i).getB_number());
+            if (i != bean.getData().getList().size() - 1) {
+                ids = ids.append(",");
+                b_number = b_number.append(",");
+            }
+        }
+    }
+
     @Override
     public void failCallBack(int type) {
 
@@ -156,17 +178,27 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
     //适配器的回调
     @Override
-    public void onClick(Map<Integer, Double> map) {
+    public void onClick(Map<Integer, Double> map, Map<Integer, String> map2) {
         double d = 0;
-        if (map != null) {
+        b_number = new StringBuffer();
+        try {
             Iterator<Map.Entry<Integer, Double>> entries = map.entrySet().iterator();
             while (entries.hasNext()) {
                 Map.Entry<Integer, Double> entry = entries.next();
                 d += entry.getValue();
             }
-//            totals = d + "";
+            billing_price = d + "";
             mTextView_apply.setText(d + "");
             textView_allprice.setText("申请开票金额合计：" + d + "");
+
+            Iterator<Map.Entry<Integer, String>> entries2 = map2.entrySet().iterator();
+            while (entries2.hasNext()) {
+                Map.Entry<Integer, String> entry = entries2.next();
+                b_number = b_number.append(entry.getValue()).append(",");
+            }
+            b_number = new StringBuffer(b_number.subSequence(0, b_number.lastIndexOf(",")));
+            billing_price = d + "";
+        } catch (Exception e) {
         }
     }
 
@@ -174,21 +206,6 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         DecimalFormat format = new DecimalFormat("#.0000");
 //        return Double.parseDouble(format.format(Double.parseDouble(data)));
         return data;
-    }
-
-    public void getArray() {
-        JSONArray ids = new JSONArray();
-        JSONArray total_pirce = new JSONArray();
-
-        for (int i = 0; i < bean.getData().getList().size(); i++) {
-            try {
-                ids.put(i, Double.parseDouble(bean.getData().getList().get(i).getId()));
-                total_pirce.put(i, Double.parseDouble(bean.getData().getList().get(i).getPrice()));
-            } catch (Exception e) {
-            }
-        }
-//        this.ids = ids;
-//        this.p_number = total_pirce;
     }
 
     public void onResume() {

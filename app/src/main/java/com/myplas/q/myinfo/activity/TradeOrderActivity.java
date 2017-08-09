@@ -2,6 +2,9 @@ package com.myplas.q.myinfo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,10 +48,10 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
-    private View mViewHeader;
+    //private View mViewHeader;
     private EditText mEditText;
-    private ListView mListView;
     private ImageView mImageView;
+    private RecyclerView mListView;
     private NoResultLayout mNoResultLayout;
 
     private TradeOrderListviewAdapter mAdapter;
@@ -60,7 +64,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         goBack(findViewById(R.id.img_back));
 
         initView();
-        getorderLists("");
+        getorderLists("", 1);
     }
 
     public void initView() {
@@ -68,10 +72,12 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
         mListView = F(R.id.trade_order_listview);
         mNoResultLayout = F(R.id.trade_order_noresultlayout);
-        mViewHeader = View.inflate(this, R.layout.header_layout_tradeorder, null);
-        mEditText = (EditText) mViewHeader.findViewById(R.id.trade_order_edittext);
+        //mViewHeader = View.inflate(this, R.layout.header_layout_tradeorder, null);
+        mEditText = F(R.id.trade_order_edittext);
 
-        mListView.addHeaderView(mViewHeader);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);//设置为一个1列的纵向网格布局
+        mListView.setLayoutManager(mLayoutManager);
+        //mListView.addView(mViewHeader,0);
         mImageView.setOnClickListener(this);
         //edittext 回车监听
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -81,7 +87,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                 if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
                     String keywords = mEditText.getText().toString();
                     if (TextUtils.isNullOrEmpty(keywords)) {
-                        getorderLists(keywords);
+                        getorderLists(keywords, 1);
                     } else {
                         TextUtils.Toast(TradeOrderActivity.this, "你还没有输入搜索内容！");
                     }
@@ -92,12 +98,12 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         });
     }
 
-    public void getorderLists(String keywords) {
+    public void getorderLists(String keywords, int type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
         map.put("size", "20");
         map.put("order_sn", keywords);
-        postAsyn(this, API.BASEURL + API.BILLINGLIST, map, this, 1);
+        postAsyn(this, API.BASEURL + API.BILLINGLIST, map, this, type);
     }
 
     @Override
@@ -154,6 +160,14 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                     mNoResultLayout.setNoResultData(R.drawable.icon_invoices_null, "", true);
                 }
             }
+            if (type == 2) {
+                if (err.equals("0")) {
+                    OrderListsBean bean = gson.fromJson(object.toString(), OrderListsBean.class);
+                    mList = bean.getData().getList();
+                    mAdapter.setList(mList);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
         } catch (Exception e) {
         }
     }
@@ -166,6 +180,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        getorderLists("", 2);
     }
 
     public void onPause() {
