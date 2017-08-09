@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,8 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     private String num;
     private Map<Integer, Double> mDoubleMap;
     private Map<Integer, String> mStringMap;
+    private List<Double> mDoubleList;
+    private List<String> mStringList;
 
     private EditText mEditText;
     private ImageView mImageView;
@@ -59,6 +62,8 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
         this.context = context;
         mDoubleMap = new HashMap<>();
         mStringMap = new HashMap<>();
+        mStringList = new ArrayList<>();
+        mDoubleList = new ArrayList<>();
     }
 
     @Override
@@ -95,16 +100,16 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
             try {
                 double total_num = list.get(position).getTotal_num();
                 double b_number = list.get(position).getB_number();
-                double unit_price = getDecimalFormatData(list.get(position).getUnit_price());
+                double unit_price = getDecimalFormatData(list.get(position).getUnit_price() + "");
                 double number = list.get(position).getNumber();
 
                 viewHolder.textView_mode.setText(list.get(position).getF_name() + " " + list.get(position).getModel());
                 viewHolder.textView_num.setText(unit_price + " x " + b_number + " = "
-                        + getDecimalFormatData((number * unit_price) + ""));
-                viewHolder.textView_applied.setText((total_num - b_number) + "");
+                        + getDecimalFormatData((b_number * unit_price) + ""));
+                viewHolder.textView_applied.setText(getDecimalFormatData(list.get(position).getLast_num() + "") + "");
                 viewHolder.textView_applyable.setText(b_number + "");
                 viewHolder.textView_apply.setText(b_number + "");
-                mDoubleMap.put(position, getDecimalFormatData((number * unit_price) + ""));
+                mDoubleMap.put(position, getDecimalFormatData((b_number * unit_price) + ""));
                 mStringMap.put(position, list.get(position).getB_number() + "");
 
                 viewHolder.mImageView_modify.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +117,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
                     public void onClick(View v) {
                         showDialog(viewHolder
                                 , mStringMap.get(position) + ""
-                                , Double.parseDouble(list.get(position).getUnit_price())
+                                , Double.parseDouble(list.get(position).getUnit_price() + "")
                                 , position);
                     }
                 });
@@ -140,7 +145,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
         mEditText = (EditText) view.findViewById(R.id.dialog_layout_modify_editText);
         mEditText.setText(num);
         mEditText.setSelection(num.length());
-        mEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", num)});
+        mEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", list.get(pos).getB_number() + "")});
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,9 +157,9 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
 
                     mStringMap.put(pos, getDecimalFormatData(num) + "");
                     mDoubleMap.put(pos, getDecimalFormatData((numed * unit_price) + ""));
+
                     viewHolder.textView_apply.setText(getDecimalFormatData(num) + "");
                     viewHolder.textView_num.setText(unit_price + " x " + getDecimalFormatData(num) + " = " + getDecimalFormatData((numed * unit_price) + ""));
-
                     mListener.onClick(mDoubleMap, mStringMap);
                 } else {
                     TextUtils.Toast(context, "你还没有输入开票数量！");

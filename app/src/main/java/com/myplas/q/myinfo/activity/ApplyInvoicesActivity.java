@@ -28,10 +28,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -140,8 +142,14 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                     getArray();
                 }
             }
-            if (type == 2 && err.equals("0")) {
-                TextUtils.Toast(this, "提交成功！");
+            if (type == 2) {
+                if (err.equals("0")) {
+                    TextUtils.Toast(this, "提交成功！");
+                    finish();
+                } else {
+                    String msg = new JSONObject(object.toString()).getString("msg");
+                    TextUtils.Toast(this, msg);
+                }
             }
         } catch (Exception e) {
         }
@@ -181,23 +189,22 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     public void onClick(Map<Integer, Double> map, Map<Integer, String> map2) {
         double d = 0;
         b_number = new StringBuffer();
+        List<Integer> list = new ArrayList<>();
+        List<Integer> list1 = new ArrayList<>();
         try {
-            Iterator<Map.Entry<Integer, Double>> entries = map.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry<Integer, Double> entry = entries.next();
-                d += entry.getValue();
+            for (int key : map2.keySet()) {
+                list.add(key);
             }
-            billing_price = d + "";
-            mTextView_apply.setText(d + "");
-            textView_allprice.setText("申请开票金额合计：" + d + "");
+            Collections.sort(list);
 
-            Iterator<Map.Entry<Integer, String>> entries2 = map2.entrySet().iterator();
-            while (entries2.hasNext()) {
-                Map.Entry<Integer, String> entry = entries2.next();
-                b_number = b_number.append(entry.getValue()).append(",");
+            for (int i = 0; i < list.size(); i++) {
+                b_number = b_number.append(map2.get(i)).append(",");
+                d += map.get(i);
             }
             b_number = new StringBuffer(b_number.subSequence(0, b_number.lastIndexOf(",")));
             billing_price = d + "";
+            mTextView_apply.setText(d + "");
+            textView_allprice.setText("申请开票金额合计：" + d + "");
         } catch (Exception e) {
         }
     }

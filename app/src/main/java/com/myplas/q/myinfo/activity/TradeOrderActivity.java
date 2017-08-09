@@ -55,7 +55,6 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     private RecyclerView mListView;
     private NoResultLayout mNoResultLayout;
 
-    private Toolbar mToolbar;
     private TradeOrderListviewAdapter mAdapter;
     private List<OrderListsBean.DataBean.ListBean> mList;
 
@@ -70,7 +69,6 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     }
 
     public void initView() {
-        mToolbar = F(R.id.toolbar);
         mImageView = F(R.id.img_contact);
 
         mListView = F(R.id.trade_order_listview);
@@ -81,7 +79,6 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);//设置为一个1列的纵向网格布局
         mListView.setLayoutManager(mLayoutManager);
 
-        mToolbar.setNavigationIcon(null);
         mImageView.setOnClickListener(this);
         //edittext 回车监听
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -121,7 +118,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         }
     }
 
-    //que
+    //申请开票
     @Override
     public void onClick1(String order_sn) {
         Intent intent = new Intent(this, ApplyInvoicesActivity.class);
@@ -129,12 +126,13 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         startActivity(intent);
     }
 
+    //确认签收后的刷新
     @Override
     public void onClick2() {
-        //startActivity(new Intent(this, InvoicesDetailActivity.class));
-
+        getorderLists("", 2);
     }
 
+    //发票详情
     @Override
     public void onClick3(String order_sn) {
         Intent intent = new Intent(this, InvoicesDetailActivity.class);

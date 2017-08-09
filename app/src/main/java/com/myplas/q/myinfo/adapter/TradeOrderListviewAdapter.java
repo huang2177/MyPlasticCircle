@@ -213,7 +213,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
         try {
             String err = new JSONObject(object.toString()).getString("err");
             if (err.equals("0")) {
-                mImageViewMap1.get(position).setImageResource(R.drawable.btn_signed);
+                mListener.onClick2();
                 String time = new JSONObject(object.toString()).getString("time");
                 mMapTextViews.get(position).setVisibility(View.VISIBLE);
                 mMapTextViews.get(position).setText("签收时间：" + time);
