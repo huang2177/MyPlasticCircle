@@ -2,7 +2,9 @@ package com.myplas.q.myinfo.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,6 +24,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.InputFilterMinMax;
+import com.myplas.q.myinfo.activity.IntegralPayActivtity;
 import com.myplas.q.myinfo.beans.ApplyInvoiceBean;
 import com.myplas.q.myinfo.beans.EDuBean;
 
@@ -46,7 +49,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     private Context context;
     private List<ApplyInvoiceBean.DataBean.ListBean> list;
 
-    private String num;
+    private String num, maxString;
     private Map<Integer, Double> mDoubleMap;
     private Map<Integer, String> mStringMap;
     private List<Double> mDoubleList;
@@ -149,24 +152,61 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideInPutKeyboord();
+                normalDialog.dismiss();
                 String num = mEditText.getText().toString();
+
                 if (TextUtils.isNullOrEmpty(num)) {
                     double numed = Double.parseDouble(num);
-                    hideInPutKeyboord();
-                    normalDialog.dismiss();
-
                     mStringMap.put(pos, getDecimalFormatData(num) + "");
                     mDoubleMap.put(pos, getDecimalFormatData((numed * unit_price) + ""));
 
                     viewHolder.textView_apply.setText(getDecimalFormatData(num) + "");
                     viewHolder.textView_num.setText(unit_price + " x " + getDecimalFormatData(num) + " = " + getDecimalFormatData((numed * unit_price) + ""));
                     mListener.onClick(mDoubleMap, mStringMap);
-                } else {
-                    TextUtils.Toast(context, "你还没有输入开票数量！");
                 }
             }
         });
         showInPutKeybord();
+
+        mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    if (s.toString().contains(".")) {
+                        if (isFourFloat(s.toString()) == 2) {
+                            maxString = s.toString();
+                            mEditText.removeTextChangedListener(this);
+                            mEditText.setText(maxString);
+                            mEditText.setSelection(s.length());
+                            mEditText.addTextChangedListener(this);
+                        } else if (isFourFloat(s.toString()) == 3) {
+                            mEditText.setText(maxString);
+                            TextUtils.Toast(context, "最多可以输入四位小数！");
+                        }
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+    public int isFourFloat(String s) {
+        if (s.substring(s.indexOf(".") + 1).length() < 4) {
+            return 1;
+        } else if (s.substring(s.indexOf(".") + 1).length() == 4) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 
     public void hideInPutKeyboord() {

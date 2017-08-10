@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
@@ -27,10 +28,12 @@ public class InvoiceListviewAdapter extends BaseAdapter {
     private Context context;
     private List<InvoiceDetailBean.DataBean> list;
 
+    private Map<Integer, View> mMap;
 
     public InvoiceListviewAdapter(Context context, List<InvoiceDetailBean.DataBean> list) {
         this.list = list;
         this.context = context;
+        mMap = new HashMap<>();
     }
 
     @Override
@@ -53,27 +56,33 @@ public class InvoiceListviewAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder;
-        if (convertView == null) {
+        if (mMap.get(position) == null) {
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_invoices, parent, false);
             viewHolder.textView_num = (TextView) convertView.findViewById(R.id.item_lv_invoice_num);
             viewHolder.textView_time = (TextView) convertView.findViewById(R.id.item_lv_invoice_time);
             viewHolder.textView_tprice = (TextView) convertView.findViewById(R.id.item_lv_invoice_tprice);
+            viewHolder.mLayout = (LinearLayout) convertView.findViewById(R.id.item_lv_invioces_ll_hch);
             convertView.setTag(viewHolder);
+            mMap.put(position, convertView);
         } else {
+            convertView = mMap.get(position);
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
             viewHolder.textView_num.setText(list.get(position).getOrder_sn());
             viewHolder.textView_time.setText(list.get(position).getInput_time());
             viewHolder.textView_tprice.setText(list.get(position).getBilling_price());
-
+            if (list.get(position).getInvoice_status().equals("3")) {
+                viewHolder.mLayout.setVisibility(View.VISIBLE);
+            }
         } catch (Exception e) {
         }
         return convertView;
     }
 
     class viewHolder {
+        LinearLayout mLayout;
         TextView textView_num, textView_time, textView_tprice;
     }
 

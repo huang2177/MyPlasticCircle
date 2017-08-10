@@ -103,9 +103,6 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         map.put("b_number", b_number.toString());
         map.put("unbilling_price", unbilling_price);
         map.put("order_sn", getIntent().getStringExtra("order_sn"));
-        Log.e("------b_number", b_number.toString());
-        Log.e("------ids", ids.toString());
-        Log.e("------billing_price", billing_price);
         postAsyn(this, API.BASEURL + API.INVOICEDETAILADD, map, this, 2);
     }
 
