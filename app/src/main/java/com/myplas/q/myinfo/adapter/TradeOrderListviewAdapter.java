@@ -105,12 +105,12 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
                 @Override
                 public void onClick(View v) {
                     setStatus(position);
-                    //                if (sign_status.equals("0")) {
-                    TradeOrderListviewAdapter.this.position = position;
-                    confirmSign(mList.get(position).getO_id());
-                    //                } else if (sign_status.equals("2")) {
-                    //                    TextUtils.Toast(context, "订单未全部发货，暂无法签收!");
-                    //                }
+                    if (sign_status.equals("0")) {
+                        TradeOrderListviewAdapter.this.position = position;
+                        confirmSign(mList.get(position).getO_id());
+                    } else if (sign_status.equals("2")) {
+                        TextUtils.Toast(context, "订单未全部发货，暂无法签收!");
+                    }
                 }
             });
             //申请---
