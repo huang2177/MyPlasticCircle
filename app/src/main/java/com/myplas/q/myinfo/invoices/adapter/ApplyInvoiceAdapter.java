@@ -24,7 +24,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.InputFilterMinMax;
-import com.myplas.q.myinfo.activity.IntegralPayActivtity;
+import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myinfo.beans.ApplyInvoiceBean;
 import com.myplas.q.myinfo.beans.EDuBean;
 

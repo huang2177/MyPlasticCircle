@@ -29,10 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fm.openinstall.OpenInstall;
-import com.fm.openinstall.listener.AppWakeUpListener;
-import com.fm.openinstall.model.AppData;
-import com.fm.openinstall.model.Error;
+
 import com.myplas.q.R;
 import com.myplas.q.addresslist.fragment.Fragment_AddressList;
 import com.myplas.q.appupdate.DownLoadUtils;

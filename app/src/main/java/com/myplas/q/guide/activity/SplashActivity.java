@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.fm.openinstall.OpenInstall;
-import com.fm.openinstall.listener.AppWakeUpListener;
-import com.fm.openinstall.model.AppData;
-import com.fm.openinstall.model.Error;
+
 import com.myplas.q.R;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
