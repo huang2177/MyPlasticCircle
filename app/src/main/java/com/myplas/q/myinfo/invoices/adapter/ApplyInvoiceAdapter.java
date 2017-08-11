@@ -1,4 +1,4 @@
-package com.myplas.q.myinfo.adapter;
+package com.myplas.q.myinfo.invoices.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
