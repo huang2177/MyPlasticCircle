@@ -150,6 +150,7 @@ public class BaseActivity extends Activity {
         }
     }
 
+
     public void call(String tel) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -320,6 +320,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         MobclickAgent.onPause(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.clear(imageView_verification);
+    }
+
     public void setData(JSONObject jsonObject) {
         try {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

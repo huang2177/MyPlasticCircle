@@ -13,7 +13,7 @@ public class ApplyInvoiceBean {
 
     /**
      * err : 0
-     * data : {"detail":{"total_price":"86.00","rise":"WE战队有限公司","order_sn":"SO2017080715275918","unbilling_price":"86.0000","billing_price":"86.0000"},"list":[{"id":"131","f_name":"沈阳石化","model":"7042","number":2,"unit_price":"22.00","price":44,"total_num":4,"b_number":1},{"id":"132","f_name":"沈阳石化","model":"7042","number":2,"unit_price":"21.00","price":42,"total_num":4,"b_number":1}],"page":""}
+     * data : {"detail":{"total_price":"6.00","rise":"上海梓辰实业有限公司","order_sn":"SO2017080913461634","unbilling_price":"0.9980","billing_price":"0.9980"},"list":[{"id":"236","f_name":"泰国","model":"7420D","number":"2.0000","unit_price":"2.00","price":"0.9980","total_num":"3.0000","b_number":"0.4990","last_num":1.501}],"page":""}
      */
 
     private int err;
@@ -37,8 +37,8 @@ public class ApplyInvoiceBean {
 
     public static class DataBean {
         /**
-         * detail : {"total_price":"86.00","rise":"WE战队有限公司","order_sn":"SO2017080715275918","unbilling_price":"86.0000","billing_price":"86.0000"}
-         * list : [{"id":"131","f_name":"沈阳石化","model":"7042","number":2,"unit_price":"22.00","price":44,"total_num":4,"b_number":1},{"id":"132","f_name":"沈阳石化","model":"7042","number":2,"unit_price":"21.00","price":42,"total_num":4,"b_number":1}]
+         * detail : {"total_price":"6.00","rise":"上海梓辰实业有限公司","order_sn":"SO2017080913461634","unbilling_price":"0.9980","billing_price":"0.9980"}
+         * list : [{"id":"236","f_name":"泰国","model":"7420D","number":"2.0000","unit_price":"2.00","price":"0.9980","total_num":"3.0000","b_number":"0.4990","last_num":1.501}]
          * page :
          */
 
@@ -72,11 +72,11 @@ public class ApplyInvoiceBean {
 
         public static class DetailBean {
             /**
-             * total_price : 86.00
-             * rise : WE战队有限公司
-             * order_sn : SO2017080715275918
-             * unbilling_price : 86.0000
-             * billing_price : 86.0000
+             * total_price : 6.00
+             * rise : 上海梓辰实业有限公司
+             * order_sn : SO2017080913461634
+             * unbilling_price : 0.9980
+             * billing_price : 0.9980
              */
 
             private String total_price;
@@ -128,24 +128,26 @@ public class ApplyInvoiceBean {
 
         public static class ListBean {
             /**
-             * id : 131
-             * f_name : 沈阳石化
-             * model : 7042
-             * number : 2
-             * unit_price : 22.00
-             * price : 44
-             * total_num : 4
-             * b_number : 1
+             * id : 236
+             * f_name : 泰国
+             * model : 7420D
+             * number : 2.0000
+             * unit_price : 2.00
+             * price : 0.9980
+             * total_num : 3.0000
+             * b_number : 0.4990
+             * last_num : 1.501
              */
 
             private String id;
             private String f_name;
             private String model;
-            private int number;
-            private String unit_price;
-            private String price;
-            private int total_num;
-            private int b_number;
+            private double number;
+            private double unit_price;
+            private double price;
+            private double total_num;
+            private double b_number;
+            private double last_num;
 
             public String getId() {
                 return id;
@@ -171,44 +173,52 @@ public class ApplyInvoiceBean {
                 this.model = model;
             }
 
-            public int getNumber() {
+            public double getNumber() {
                 return number;
             }
 
-            public void setNumber(int number) {
+            public void setNumber(double number) {
                 this.number = number;
             }
 
-            public String getUnit_price() {
+            public double getUnit_price() {
                 return unit_price;
             }
 
-            public void setUnit_price(String unit_price) {
+            public void setUnit_price(double unit_price) {
                 this.unit_price = unit_price;
             }
 
-            public String getPrice() {
+            public double getPrice() {
                 return price;
             }
 
-            public void setPrice(String price) {
+            public void setPrice(double price) {
                 this.price = price;
             }
 
-            public int getTotal_num() {
+            public double getTotal_num() {
                 return total_num;
             }
 
-            public void setTotal_num(int total_num) {
+            public void setTotal_num(double total_num) {
                 this.total_num = total_num;
             }
 
-            public int getB_number() {
+            public double getB_number() {
                 return b_number;
             }
 
-            public void setB_number(int b_number) {
+            public void setB_number(double b_number) {
                 this.b_number = b_number;
+            }
+
+            public double getLast_num() {
+                return last_num;
+            }
+
+            public void setLast_num(double last_num) {
+                this.last_num = last_num;
             }
         }
     }

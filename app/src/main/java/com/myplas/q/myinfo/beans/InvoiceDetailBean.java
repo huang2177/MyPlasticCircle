@@ -13,7 +13,7 @@ public class InvoiceDetailBean {
 
     /**
      * err : 0
-     * data : [{"invoice_sn":"567956790","order_sn":"SO2017080415282419","total_price":"150.00","input_time":"2017-08-04","payment_time":"1501832670","billing_price":"50.00","unbilling_price":"100.00"},{"invoice_sn":"90876887654","order_sn":"SO2017080415282419","total_price":"150.00","input_time":"2017-08-04","payment_time":"1501833535","billing_price":"50.00","unbilling_price":"50.00"},{"invoice_sn":"9875432145","order_sn":"SO2017080415282419","total_price":"150.00","input_time":"2017-08-04","payment_time":"1501833731","billing_price":"50.00","unbilling_price":"0.00"}]
+     * data : [{"invoice_sn":"33333333","input_time":"2017-08-09","billing_price":"240.00","invoice_status":"2","order_sn":"SO2017080911188350"},{"invoice_sn":"eeeeeeeeeee","input_time":"2017-08-09","billing_price":"20.00","invoice_status":"2","order_sn":"SO2017080911188350"},{"invoice_sn":"p987765","input_time":"2017-08-09","billing_price":"10.00","invoice_status":"2","order_sn":"SO2017080911188350"}]
      */
 
     private int err;
@@ -37,22 +37,18 @@ public class InvoiceDetailBean {
 
     public static class DataBean {
         /**
-         * invoice_sn : 567956790
-         * order_sn : SO2017080415282419
-         * total_price : 150.00
-         * input_time : 2017-08-04
-         * payment_time : 1501832670
-         * billing_price : 50.00
-         * unbilling_price : 100.00
+         * invoice_sn : 33333333
+         * input_time : 2017-08-09
+         * billing_price : 240.00
+         * invoice_status : 2
+         * order_sn : SO2017080911188350
          */
 
         private String invoice_sn;
-        private String order_sn;
-        private String total_price;
         private String input_time;
-        private String payment_time;
         private String billing_price;
-        private String unbilling_price;
+        private String invoice_status;
+        private String order_sn;
 
         public String getInvoice_sn() {
             return invoice_sn;
@@ -60,22 +56,6 @@ public class InvoiceDetailBean {
 
         public void setInvoice_sn(String invoice_sn) {
             this.invoice_sn = invoice_sn;
-        }
-
-        public String getOrder_sn() {
-            return order_sn;
-        }
-
-        public void setOrder_sn(String order_sn) {
-            this.order_sn = order_sn;
-        }
-
-        public String getTotal_price() {
-            return total_price;
-        }
-
-        public void setTotal_price(String total_price) {
-            this.total_price = total_price;
         }
 
         public String getInput_time() {
@@ -86,14 +66,6 @@ public class InvoiceDetailBean {
             this.input_time = input_time;
         }
 
-        public String getPayment_time() {
-            return payment_time;
-        }
-
-        public void setPayment_time(String payment_time) {
-            this.payment_time = payment_time;
-        }
-
         public String getBilling_price() {
             return billing_price;
         }
@@ -102,12 +74,20 @@ public class InvoiceDetailBean {
             this.billing_price = billing_price;
         }
 
-        public String getUnbilling_price() {
-            return unbilling_price;
+        public String getInvoice_status() {
+            return invoice_status;
         }
 
-        public void setUnbilling_price(String unbilling_price) {
-            this.unbilling_price = unbilling_price;
+        public void setInvoice_status(String invoice_status) {
+            this.invoice_status = invoice_status;
+        }
+
+        public String getOrder_sn() {
+            return order_sn;
+        }
+
+        public void setOrder_sn(String order_sn) {
+            this.order_sn = order_sn;
         }
     }
 }
