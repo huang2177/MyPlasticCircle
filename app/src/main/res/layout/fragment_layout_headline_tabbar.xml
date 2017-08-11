@@ -30,9 +30,9 @@
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@color/color_red"
                     app:tabMode="scrollable"
-                    app:tabSelectedTextColor="@color/color_balank"
+                    app:tabSelectedTextColor="@color/color_red"
                     app:tabTextAppearance="@style/TabLayoutTextStyle"
-                    app:tabTextColor="@color/color_gray">
+                    app:tabTextColor="@color/color_balank1">
                 </android.support.design.widget.TabLayout>
 
                 <ImageButton
@@ -42,6 +42,11 @@
                     android:background="@color/color_white"
                     android:src="@drawable/btn_recommend"/>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_gray"></View>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/headline_viewpager"

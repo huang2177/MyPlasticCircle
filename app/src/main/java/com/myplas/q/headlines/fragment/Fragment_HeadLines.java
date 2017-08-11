@@ -67,12 +67,12 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private List<String> list1, list2;
     private int currentItem, position;
 
-    private HeadLineViewPagerAdapter mViewPagerAdapter;
     private View view;
     private GridView gridView;
     private EditText editText;
     private CustomPopupWindow popupWindow;
     private TextView search_src_text, textView_refresh;
+    private HeadLineViewPagerAdapter mViewPagerAdapter;
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -127,7 +127,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 if (position == 0) {
                     mFragments.get(0).get_Subscribe(1, "", "2", true);
                 } else {
-                    mFragments.get(position).get_CateList(1, list2.get(position), true);
+                    mFragments.get(position).get_CateList(1, list2.get(position), false);
                 }
             }
 

@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
@@ -47,7 +48,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     private View view;
     private TTAdapter ttAdapter;
     private XListView mXListView;
-    private NoResultLayout mNoResultLayout;
+    private LinearLayout mLayoutNoData;
     private CateListAdapter cateListAdapter;
     private ImageButton imageButton, imageButton_backup;
 
@@ -68,13 +69,15 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         sharedUtils = SharedUtils.getSharedUtils();
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_headline_list_fm, null, false);
-        mXListView = (XListView) view.findViewById(R.id.fragment_headline_list_lv);
         imageButton = (ImageButton) view.findViewById(R.id.img_reload);
+        mLayoutNoData = (LinearLayout) view.findViewById(R.id.layout_noresult);
         imageButton_backup = (ImageButton) view.findViewById(R.id.image_backup);
+        mXListView = (XListView) view.findViewById(R.id.fragment_headline_list_lv);
 
         mXListView.setPullRefreshEnable(true);
         mXListView.setXListViewListener(this);
         imageButton.setOnClickListener(this);
+        mXListView.setDividerViewVisibility(false);
         imageButton_backup.setOnClickListener(this);
 
         //item的监听
@@ -215,6 +218,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                     CateListBean cateListBean = gson.fromJson(object.toString(), CateListBean.class);
                     list_catelist = cateListBean.getInfo();
                     if (page == 1) {
+                        mXListView.setVisibility(View.VISIBLE);
+                        mLayoutNoData.setVisibility(View.GONE);
+                        imageButton_backup.setVisibility(View.GONE);
                         cateListAdapter = new CateListAdapter(getActivity(), list_catelist);
                         mXListView.setAdapter(cateListAdapter);
                         mXListView.stopRefresh();
@@ -247,10 +253,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                 } else {
                     isRefresh = false;
                     mXListView.stopRefresh();
-//                    myListview.setVisibility(View.GONE);
-//                    layout_nodata.setVisibility(View.VISIBLE);
-//                    imageButton_backup.setVisibility(View.GONE);
-//                    text_nodata.setText(new JSONObject(object.toString()).getString("msg"));
+                    mXListView.setVisibility(View.GONE);
+                    mLayoutNoData.setVisibility(View.VISIBLE);
+                    imageButton_backup.setVisibility(View.GONE);
                 }
             }
         } catch (Exception e) {
@@ -261,7 +266,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     public void failCallBack(int type) {
         if (list_subcirble_more.size() == 0) {
             mXListView.setVisibility(View.GONE);
-            layout_nodata.setVisibility(View.GONE);
+            mLayoutNoData.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);
         }
     }

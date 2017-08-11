@@ -42,6 +42,7 @@ public class XListView extends ListView implements OnScrollListener {
 	private int mHeaderViewHeight; // header view's height
 	private boolean mEnablePullRefresh = true;
 	private boolean mPullRefreshing = false; // is refreashing.
+	private View mViewDivider;
 
 	// -- footer view
 	//private XListViewFooter mFooterView;
@@ -80,6 +81,7 @@ public class XListView extends ListView implements OnScrollListener {
 		mHeaderView = new XListViewHeader(context);
 		mHeaderViewContent = (RelativeLayout) mHeaderView.findViewById(R.id.xlistview_header_content);
 		mHeaderTimeView = (TextView) mHeaderView.findViewById(R.id.xlistview_header_time);
+		mViewDivider = mHeaderView.findViewById(R.id.header_view);
 		addHeaderView(mHeaderView);
 		mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
@@ -132,6 +134,10 @@ public class XListView extends ListView implements OnScrollListener {
 			mPullRefreshing = false;
 			resetHeaderHeight();
 		}
+	}
+
+	public void setDividerViewVisibility(boolean visibility) {
+		mViewDivider.setVisibility((visibility) ? (VISIBLE) : (GONE));
 	}
 	/**
 	 * stop load more, reset footer view.
