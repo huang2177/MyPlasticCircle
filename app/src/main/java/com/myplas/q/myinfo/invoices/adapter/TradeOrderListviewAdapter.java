@@ -2,6 +2,7 @@ package com.myplas.q.myinfo.invoices.adapter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
 
 /**
  * 编写：黄双
@@ -38,7 +36,7 @@ import rx.Subscriber;
  * 时间： 2017/6/121519.
  */
 
-public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCallBack {
+public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ResultCallBack {
     private Context context;
     private List<OrderListsBean.DataBean.ListBean> mList;
 
@@ -46,8 +44,9 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
     private Handler mHandler;
     private MyOnClickListener mListener;
 
-    private Map<Integer, View> mMapViews;
+    private Map<Integer, viewHolder> mMapViews;
     private Map<Integer, TextView> mMapTextViews;
+    private Map<Integer, ImageView> mImageViewMap1;
 
     private String invoice_status, sign_status, billing_status, isHaveInvoicesDetail;
 
@@ -57,18 +56,85 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
         this.context = context;
         mMapViews = new HashMap<>();
         mMapTextViews = new HashMap<>();
+        mImageViewMap1 = new HashMap<>();
+    }
+
+
+    public void setList(List<OrderListsBean.DataBean.ListBean> list) {
+        mList = list;
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
-    public int getCount() {
-        if (mList != null)
-            return mList.size();
-        return 0;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_layout_tradeorder, parent, false);//这个布局就是一个imageview用来显示图片
+        viewHolder holder = new viewHolder(view, viewType);
+        mMapViews.put(viewType, holder);
+        return holder;
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        viewHolder viewHolder = mMapViews.get(position);
+        try {
+            if (position == mList.size() - 1) {
+                viewHolder.mView.setVisibility(View.GONE);
+            }
+            viewHolder.textView_title.setText("订单号：" + mList.get(position).getOrder_sn());
+            viewHolder.textView_num2.setText("共 " + mList.get(position).getTotal_num() + "吨");
+            viewHolder.textView_tprice.setText("   合计 " + mList.get(position).getTotal_price());
+            viewHolder.textView_feight.setText("   (含运费 " + mList.get(position).getTransport() + ")");
+
+
+            List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct = mList.get(position).getProduct();
+            TradeOrderLV_ItemAdapter itemAdapter = new TradeOrderLV_ItemAdapter(context, listProduct);
+            viewHolder.mMyListview.setAdapter(itemAdapter);
+
+            setStatus(position);
+
+            //设置按钮的状态
+            showStatusInfo(viewHolder, position);
+
+            //签收类
+            viewHolder.mImageView1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setStatus(position);
+                    //                if (sign_status.equals("0")) {
+                    TradeOrderListviewAdapter.this.position = position;
+                    confirmSign(mList.get(position).getO_id());
+                    //                } else if (sign_status.equals("2")) {
+                    //                    TextUtils.Toast(context, "订单未全部发货，暂无法签收!");
+                    //                }
+                }
+            });
+            //申请---
+            viewHolder.mImageView2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setStatus(position);
+                    if (billing_status.equals("0")) {
+                        mListener.onClick1(mList.get(position).getOrder_sn());
+                    } else if (billing_status.equals("2")) {
+                        TextUtils.Toast(context, "订单未签收或未付款，暂无法开票!");
+                    }
+                }
+            });
+            //发票详情
+            viewHolder.mImageView3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setStatus(position);
+                    mListener.onClick3(mList.get(position).getOrder_sn());
+                }
+            });
+        } catch (Exception e) {
+        }
     }
 
     @Override
@@ -77,83 +143,12 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        final viewHolder viewHolder;
-        if (mMapViews.get(position) == null) {
-            viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_tradeorder, null, false);
-            viewHolder.textView_signed = (TextView) convertView.findViewById(R.id.popou_layout_signed_text);
-            viewHolder.textView_title = (TextView) convertView.findViewById(R.id.tradeorder_item_title);
-            viewHolder.textView_tprice = (TextView) convertView.findViewById(R.id.tradeorder_item_tprice);
-            viewHolder.textView_feight = (TextView) convertView.findViewById(R.id.tradeorder_item_feight);
-            viewHolder.textView_num2 = (TextView) convertView.findViewById(R.id.tradeorder_item_num2);
-            viewHolder.mImageView1 = (ImageView) convertView.findViewById(R.id.tradeorder_item_img1);
-            viewHolder.mImageView2 = (ImageView) convertView.findViewById(R.id.tradeorder_item_img2);
-            viewHolder.mImageView3 = (ImageView) convertView.findViewById(R.id.tradeorder_item_img3);
-            viewHolder.textView_status = (TextView) convertView.findViewById(R.id.tradeorder_item_zht);
-            viewHolder.mMyListview = (MyListview) convertView.findViewById(R.id.tradeorder_item_listview);
-            viewHolder.mView = convertView.findViewById(R.id.tradeorder_item_divider);
-            mMapViews.put(position, convertView);
-            mMapTextViews.put(position, viewHolder.textView_signed);
-            convertView.setTag(viewHolder);
-            try {
-                if (position == mList.size() - 1) {
-                    viewHolder.mView.setVisibility(View.GONE);
-                }
-                viewHolder.textView_title.setText("订单号：" + mList.get(position).getOrder_sn());
-                viewHolder.textView_num2.setText("共 " + mList.get(position).getTotal_num() + "吨");
-                viewHolder.textView_tprice.setText("   合计 " + mList.get(position).getTotal_price());
-                viewHolder.textView_feight.setText("   (含运费 " + mList.get(position).getTransport() + ")");
-
-
-                List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct = mList.get(position).getProduct();
-                TradeOrderLV_ItemAdapter itemAdapter = new TradeOrderLV_ItemAdapter(context, listProduct);
-                viewHolder.mMyListview.setAdapter(itemAdapter);
-
-                setStatus(position);
-
-                //设置按钮的状态
-                showStatusInfo(viewHolder);
-
-                //签收类
-                viewHolder.mImageView1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setStatus(position);
-                        if (sign_status.equals("0")) {
-                            TradeOrderListviewAdapter.this.position = position;
-                            confirmSign(mList.get(position).getOrder_sn());
-                        } else if (sign_status.equals("2")) {
-                            TextUtils.Toast(context, "订单未全部发货，暂无法签收!");
-                        }
-                    }
-                });
-                //申请---
-                viewHolder.mImageView2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setStatus(position);
-//                        if (billing_status.equals("0")) {
-                            mListener.onClick1(mList.get(position).getOrder_sn());
-//                        } else if (billing_status.equals("2")) {
-//                            TextUtils.Toast(context, "订单未签收或未付款，暂无法开票!");
-//                        }
-                    }
-                });
-                //发票详情
-                viewHolder.mImageView3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setStatus(position);
-                        mListener.onClick3(mList.get(position).getOrder_sn());
-                    }
-                });
-            } catch (Exception e) {
-            }
-
-        }
-        return mMapViews.get(position);
+    public int getItemCount() {
+        if (mList != null)
+            return mList.size();
+        return 0;
     }
+
 
     private void setStatus(int position) {
         sign_status = mList.get(position).getConfirm_receipt();
@@ -162,7 +157,7 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
         isHaveInvoicesDetail = mList.get(position).getBilling_detail_list();
     }
 
-    private void showStatusInfo(viewHolder viewHolder) {
+    private void showStatusInfo(viewHolder viewHolder, int position) {
         if (invoice_status.equals("1")) {
             viewHolder.textView_status.setText("未开票");
         } else if (invoice_status.equals("2")) {
@@ -209,26 +204,26 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
 
     public void confirmSign(String orderNum) {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("order_sn", orderNum);
+        map.put("o_id", orderNum);
         BaseActivity.postAsyn(context, API.BASEURL + API.ORDERSIGN, map, this, 1);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("11111111", object.toString());
             String err = new JSONObject(object.toString()).getString("err");
             if (err.equals("0")) {
-                //notifyDataSetChanged();
-                //TextUtils.Toast(context,"签收时间：" + mList.get(position).getInput_time());
+                mListener.onClick2();
+                String time = new JSONObject(object.toString()).getString("time");
                 mMapTextViews.get(position).setVisibility(View.VISIBLE);
-                mMapTextViews.get(position).setText("签收时间：" + mList.get(position).getInput_time());
+                mMapTextViews.get(position).setText("签收时间：" + time);
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mMapTextViews.get(position).setVisibility(View.GONE);
                     }
                 }, 1500);
+
             } else {
                 String msg = new JSONObject(object.toString()).getString("msg");
                 TextUtils.Toast(context, msg);
@@ -242,18 +237,35 @@ public class TradeOrderListviewAdapter extends BaseAdapter implements ResultCall
 
     }
 
-
-    class viewHolder {
+    class viewHolder extends RecyclerView.ViewHolder {
         View mView;
         MyListview mMyListview;
         ImageView mImageView1, mImageView2, mImageView3;
         TextView textView_title, textView_tprice, textView_feight, textView_num2, textView_signed, textView_status;
+
+        public viewHolder(View itemView, int position) {
+            super(itemView);
+            textView_signed = (TextView) itemView.findViewById(R.id.popou_layout_signed_text);
+            textView_title = (TextView) itemView.findViewById(R.id.tradeorder_item_title);
+            textView_tprice = (TextView) itemView.findViewById(R.id.tradeorder_item_tprice);
+            textView_feight = (TextView) itemView.findViewById(R.id.tradeorder_item_feight);
+            textView_num2 = (TextView) itemView.findViewById(R.id.tradeorder_item_num2);
+            mImageView1 = (ImageView) itemView.findViewById(R.id.tradeorder_item_img1);
+            mImageView2 = (ImageView) itemView.findViewById(R.id.tradeorder_item_img2);
+            mImageView3 = (ImageView) itemView.findViewById(R.id.tradeorder_item_img3);
+            textView_status = (TextView) itemView.findViewById(R.id.tradeorder_item_zht);
+            mMyListview = (MyListview) itemView.findViewById(R.id.tradeorder_item_listview);
+            mView = itemView.findViewById(R.id.tradeorder_item_divider);
+
+            mImageViewMap1.put(position, mImageView1);
+            mMapTextViews.put(position, textView_signed);
+        }
     }
 
     public interface MyOnClickListener {
         void onClick1(String order_sn);
 
-        void onClick2(int position);
+        void onClick2();
 
         void onClick3(String order_sn);
     }
