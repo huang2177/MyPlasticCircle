@@ -65,4 +65,5 @@ dependencies {
     compile 'com.yanzhenjie:durban:1.0.1'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.android.support:recyclerview-v7:25.3.1+'
 }
