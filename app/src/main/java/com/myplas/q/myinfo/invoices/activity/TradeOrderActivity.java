@@ -146,7 +146,6 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            Log.e("------", object.toString());
             if (type == 1) {
                 if (err.equals("0")) {
                     mNoResultLayout.setVisibility(false);

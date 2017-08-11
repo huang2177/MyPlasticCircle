@@ -34,4 +34,10 @@
         android:id="@+id/wd_gj_listview"
         android:scrollbars="none">
     </com.myplas.q.common.view.XListView>
+
+    <com.myplas.q.common.view.NoResultLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:id="@+id/mysupdem_noresultlayout"></com.myplas.q.common.view.NoResultLayout>
 </LinearLayout>

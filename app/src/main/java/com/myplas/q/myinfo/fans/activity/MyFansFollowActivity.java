@@ -13,6 +13,7 @@ import com.myplas.q.R;
 import com.myplas.q.addresslist.Beans.MyFansBean;
 import com.myplas.q.addresslist.adapter.MyFansFollowAdapter;
 import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -51,14 +52,18 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
     private Dialog normalDialog = null;
     private String type = "1", user_id, id_;
     private int page = 1, visibleItemCount;
+    private NoResultLayout mNoResultLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.txl_wdgz_activity);
         goBack(findViewById(R.id.back));
+
         sharedUtils = SharedUtils.getSharedUtils();
-        listView = (XListView) findViewById(R.id.wdgz_listview);
+        listView = F(R.id.wdgz_listview);
+        mNoResultLayout = F(R.id.my_foolow_noresultlayout);
+
         listView.setPullLoadEnable(true);
         listView.setPullRefreshEnable(false);
         listView.setXListViewListener(this);
@@ -142,6 +147,9 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                     wdgzBean = gson.fromJson(object.toString(), MyFansBean.class);
                     list = wdgzBean.getData();
                     if (page == 1) {
+                        mNoResultLayout.setVisibility(false);
+                        listView.setVisibility(View.VISIBLE);
+
                         wdgz_adapter = new MyFansFollowAdapter(this, list);
                         listView.setAdapter(wdgz_adapter);
                         listView.stopRefresh();
@@ -156,7 +164,9 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                         }
                     }
                 } else {
-                    TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                    listView.setVisibility(View.GONE);
+                    String msg = new JSONObject(object.toString()).getString("msg");
+                    mNoResultLayout.setNoResultData(R.drawable.icon_null, msg, true);
                 }
             } else if (type == 2) {
                 MyFollowBean wdgzBean = null;
@@ -164,6 +174,8 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                     wdgzBean = gson.fromJson(object.toString(), MyFollowBean.class);
                     list1 = wdgzBean.getData();
                     if (page == 1) {
+                        mNoResultLayout.setVisibility(false);
+                        listView.setVisibility(View.VISIBLE);
                         myFollowAdapter = new MyFollowAdapter(this, list1);
                         listView.setAdapter(myFollowAdapter);
                         listView.stopRefresh();
@@ -178,7 +190,9 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                         }
                     }
                 } else {
-                    TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                    listView.setVisibility(View.GONE);
+                    String msg = new JSONObject(object.toString()).getString("msg");
+                    mNoResultLayout.setNoResultData(R.drawable.icon_null, msg, true);
                 }
             }
             //是否消耗积分//

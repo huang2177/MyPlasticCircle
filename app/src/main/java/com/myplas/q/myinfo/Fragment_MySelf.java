@@ -2,7 +2,6 @@ package com.myplas.q.myinfo;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -19,7 +18,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -51,7 +49,7 @@ import com.myplas.q.myinfo.invoices.activity.TradeOrderActivity;
 import com.myplas.q.myinfo.beans.MyZone;
 import com.myplas.q.myinfo.setting.activity.MyDataActivity;
 import com.myplas.q.myinfo.setting.SettingActivity;
-import com.myplas.q.myinfo.supdem.activity.MySupplyDemandActivity;
+import com.myplas.q.myinfo.supdem.activity.MySupDemActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -190,13 +188,13 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                     startActivity(in);
                     break;
                 case R.id.wd_linear_gj:
-                    Intent intent = new Intent(getActivity(), MySupplyDemandActivity.class);
+                    Intent intent = new Intent(getActivity(), MySupDemActivity.class);
                     intent.putExtra("title", "我的供给");
                     intent.putExtra("type", "2");
                     startActivity(intent);
                     break;
                 case R.id.wd_linear_qg:
-                    Intent intent1 = new Intent(getActivity(), MySupplyDemandActivity.class);
+                    Intent intent1 = new Intent(getActivity(), MySupDemActivity.class);
                     intent1.putExtra("title", "我的求购");
                     intent1.putExtra("type", "1");
                     startActivity(intent1);

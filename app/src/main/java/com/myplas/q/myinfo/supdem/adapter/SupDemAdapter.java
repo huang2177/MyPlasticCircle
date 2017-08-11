@@ -31,7 +31,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 16:29
  */
-public class SupplyDemandAdapter extends BaseAdapter implements ResultCallBack ,DialogShowUtils.DialogShowInterface{
+public class SupDemAdapter extends BaseAdapter implements ResultCallBack, DialogShowUtils.DialogShowInterface {
     String type;
     Context context;
     MyInterface myInterface;
@@ -49,7 +49,7 @@ public class SupplyDemandAdapter extends BaseAdapter implements ResultCallBack ,
         this.list = list;
     }
 
-    public SupplyDemandAdapter(Context context, List<MyCommentBean.DataBean> list, String type, MyInterface myInterface) {
+    public SupDemAdapter(Context context, List<MyCommentBean.DataBean> list, String type, MyInterface myInterface) {
         this.context = context;
         this.list = list;
         this.type = type;
@@ -135,9 +135,9 @@ public class SupplyDemandAdapter extends BaseAdapter implements ResultCallBack ,
         viewHolder.shc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SupplyDemandAdapter.this.position=position;
+                SupDemAdapter.this.position = position;
                 DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(context, "确定删除?", 1, SupplyDemandAdapter.this);
+                dialogShowUtils.showDialog(context, "确定删除?", 1, SupDemAdapter.this);
             }
         });
         //分享
@@ -183,7 +183,7 @@ public class SupplyDemandAdapter extends BaseAdapter implements ResultCallBack ,
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("token", sharedUtils.getData(context, "token"));
                 map.put("id", list.get(position).getId());
-                BaseActivity.postAsyn(context, API.BASEURL + API.DELETE_MY_MSG, map, SupplyDemandAdapter.this, 1);
+                BaseActivity.postAsyn(context, API.BASEURL + API.DELETE_MY_MSG, map, SupDemAdapter.this, 1);
                 break;
         }
     }

@@ -163,7 +163,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
         } else if (invoice_status.equals("2")) {
             viewHolder.textView_status.setText("部分开票");
         } else if (invoice_status.equals("3")) {
-            viewHolder.mImageView2.setVisibility(View.GONE); //如果全部开票
+            //viewHolder.mImageView2.setVisibility(View.GONE); //如果全部开票
             viewHolder.textView_status.setText("全部开票");
         }
 

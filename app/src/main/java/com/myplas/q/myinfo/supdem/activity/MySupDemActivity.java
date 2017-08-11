@@ -1,19 +1,21 @@
 package com.myplas.q.myinfo.supdem.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.XListView;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myinfo.beans.MyCommentBean;
-import com.myplas.q.myinfo.supdem.adapter.SupplyDemandAdapter;
+import com.myplas.q.myinfo.supdem.adapter.SupDemAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -29,24 +31,28 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 16:22
  */
-public class MySupplyDemandActivity extends BaseActivity implements ResultCallBack, SupplyDemandAdapter.MyInterface
+public class MySupDemActivity extends BaseActivity implements ResultCallBack, SupDemAdapter.MyInterface
         , XListView.IXListViewListener {
+    private String type;
+    private TextView textView;
     private XListView listView;
     private List<MyCommentBean.DataBean> list;
     private List<MyCommentBean.DataBean> list_more;
-    private SupplyDemandAdapter supplyDemandAdapter;
-    private TextView textView;
+    private SupDemAdapter supplyDemandAdapter;
     private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
-    private String type;
+    private NoResultLayout mNoResultLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wd_gj_activity_layout);
         goBack(findViewById(R.id.back));
-        listView = (XListView) findViewById(R.id.wd_gj_listview);
+
+        mNoResultLayout = F(R.id.mysupdem_noresultlayout);
         textView = (TextView) findViewById(R.id.title_rs);
+        listView = (XListView) findViewById(R.id.wd_gj_listview);
+
         textView.setText(getIntent().getStringExtra("title"));
         list_more = new ArrayList<>();
         listView.setPullLoadEnable(true);
@@ -68,7 +74,7 @@ public class MySupplyDemandActivity extends BaseActivity implements ResultCallBa
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                MySupplyDemandActivity.this.visibleItemCount = visibleItemCount;
+                MySupDemActivity.this.visibleItemCount = visibleItemCount;
             }
         });
     }
@@ -91,7 +97,10 @@ public class MySupplyDemandActivity extends BaseActivity implements ResultCallBa
                     MyCommentBean supplyDemandBean = gson.fromJson(object.toString(), MyCommentBean.class);
                     list = supplyDemandBean.getData();
                     if (page == 1) {
-                        supplyDemandAdapter = new SupplyDemandAdapter(this, list, getIntent().getStringExtra("type"), this);
+                        mNoResultLayout.setVisibility(false);
+                        listView.setVisibility(View.VISIBLE);
+
+                        supplyDemandAdapter = new SupDemAdapter(this, list, getIntent().getStringExtra("type"), this);
                         listView.setAdapter(supplyDemandAdapter);
                         listView.stopRefresh();
                         list_more.clear();
@@ -106,7 +115,9 @@ public class MySupplyDemandActivity extends BaseActivity implements ResultCallBa
                     }
                 } else {
                     list = null;
-                    TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                    listView.setVisibility(View.GONE);
+                    String msg = new JSONObject(object.toString()).getString("msg");
+                    mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2, msg, true);
                 }
             }
         } catch (Exception e) {

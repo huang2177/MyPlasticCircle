@@ -42,7 +42,6 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
     private TextView textView;
     private LinearLayout layout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
