@@ -115,6 +115,8 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                 SobotApi.startSobotChat(this, information);
                 break;
             case R.id.applyinvoices_confirm:
+                mButton.setClickable(false);
+                mButton.setBackgroundColor(getResources().getColor(R.color.color_litlegray));
                 keywords = mEditText.getText().toString();
                 applyInvioce();
                 break;
@@ -125,7 +127,6 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("=======", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
@@ -144,6 +145,8 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                     TextUtils.Toast(this, "提交成功！");
                     finish();
                 } else {
+                    mButton.setClickable(true);
+                    mButton.setBackgroundColor(getResources().getColor(R.color.color_red));
                     String msg = new JSONObject(object.toString()).getString("msg");
                     TextUtils.Toast(this, msg);
                 }
@@ -162,7 +165,6 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         mTextView_notapplied.setText(getDecimalFormatData(bean.getData().getDetail().getUnbilling_price()) + "");
         textView_allprice.setText("申请开票金额合计：" + getDecimalFormatData(bean.getData().getDetail().getBilling_price()) + "");
         mTextView_apply.setText(getDecimalFormatData(bean.getData().getDetail().getBilling_price()) + "");
-
     }
 
     public void getArray() {
@@ -178,7 +180,10 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void failCallBack(int type) {
-
+        if (type == 2) {
+            mButton.setClickable(true);
+            mButton.setBackgroundColor(getResources().getColor(R.color.color_red));
+        }
     }
 
     //适配器的回调

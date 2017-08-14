@@ -70,7 +70,7 @@ public class InvoiceListviewAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-            viewHolder.textView_num.setText(list.get(position).getOrder_sn());
+            viewHolder.textView_num.setText(list.get(position).getInvoice_sn());
             viewHolder.textView_time.setText(list.get(position).getInput_time());
             viewHolder.textView_tprice.setText(list.get(position).getBilling_price());
             if (list.get(position).getInvoice_status().equals("3")) {

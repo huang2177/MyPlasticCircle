@@ -3,6 +3,7 @@ package com.myplas.q.myinfo.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -107,8 +108,10 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
                 double number = list.get(position).getNumber();
 
                 viewHolder.textView_mode.setText(list.get(position).getF_name() + " " + list.get(position).getModel());
-                viewHolder.textView_num.setText(unit_price + " x " + b_number + " = "
-                        + getDecimalFormatData((b_number * unit_price) + ""));
+
+                String html = "<font color='#ff5550'>" + unit_price + "</font>" + " x " + b_number + " = "
+                        + getDecimalFormatData((b_number * unit_price) + "");
+                viewHolder.textView_num.setText(Html.fromHtml(html));
                 viewHolder.textView_applied.setText(getDecimalFormatData(list.get(position).getLast_num() + "") + "");
                 viewHolder.textView_applyable.setText(b_number + "");
                 viewHolder.textView_apply.setText(b_number + "");
