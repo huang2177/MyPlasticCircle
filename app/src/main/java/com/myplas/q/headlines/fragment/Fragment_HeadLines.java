@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -63,9 +64,9 @@ import java.util.Map;
 public class Fragment_HeadLines extends Fragment implements View.OnClickListener, HeadLineListFragment.Myinterface {
     private Handler handler;
     private String keywords;
+    private int currentItem;
     private SharedUtils sharedUtils;
     private List<String> list1, list2;
-    private int currentItem, position;
 
     private View view;
     private GridView gridView;
@@ -119,13 +120,13 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
             @Override
             public void onPageSelected(int position) {
+                Log.e("---------", position + "");
                 currentItem = position;
-                Fragment_HeadLines.this.position = 0;
                 mViewPager.setCurrentItem(position);
                 mFragments.get(position).po = position;
                 mFragments.get(position).title = list1.get(position);
                 if (position == 0) {
-                    mFragments.get(0).get_Subscribe(1, "", "2", true);
+                    mFragments.get(0).get_Subscribe(1, "", "2", false);
                 } else {
                     mFragments.get(position).get_CateList(1, list2.get(position), false);
                 }
@@ -145,6 +146,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             mTabLayout.addTab(mTabLayout.newTab().setText(list1.get(i).toString()));
             HeadLineListFragment fragment = new HeadLineListFragment();
             fragment.setMyinterface(this);
+            fragment.po = i;
             mFragments.add(fragment);
         }
         mViewPagerAdapter = new HeadLineViewPagerAdapter(getChildFragmentManager(), mFragments, list1);
@@ -180,8 +182,11 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
     public void searchData(String keywords) {
         if (TextUtils.isNullOrEmpty(keywords)) {
-            mFragments.get(position).po = -1;
-            mFragments.get(position).get_Subscribe(1, keywords, "1", true);
+            mViewPager.setCurrentItem(0);
+            mTabLayout.getTabAt(0).select();
+            mFragments.get(currentItem).po = -1;
+            mFragments.get(currentItem).keywords1 = keywords;
+            mFragments.get(currentItem).get_Subscribe(1, keywords, "1", true);
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         } else {
@@ -206,21 +211,28 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
     //展示刷新后的popou
     @Override
-    public void callBack(String s) {
-        if (TextUtils.isNullOrEmpty(s)) {
-            View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
-            textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
-            popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-            popupWindow.setFocusable(true);
-            popupWindow.setOutsideTouchable(true);
-            textView_refresh.setText(s);
-            showPopou(popupWindow);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    popupWindow.dismiss();
+    public void callBack(String s, boolean b) {
+        if (b) {
+            mFragments.get(currentItem).isRefresh = false;
+            if (TextUtils.isNullOrEmpty(s)) {
+                View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
+                textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
+                if (popupWindow == null) {
+                    popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
                 }
-            }, 1500);
+                popupWindow.setFocusable(true);
+                popupWindow.setOutsideTouchable(true);
+                textView_refresh.setText(s);
+                showPopou(popupWindow);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow.dismiss();
+                    }
+                }, 1500);
+            } else {
+                TextUtils.Toast(getActivity(), "已是最新头条信息！");
+            }
         }
     }
 

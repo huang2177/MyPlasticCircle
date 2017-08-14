@@ -115,7 +115,7 @@ public class Head_Lines_DetailActivity extends BaseActivity implements ResultCal
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();
         if (width > 650) {
-            webView.setInitialScale(250);
+            webView.setInitialScale(220);
         } else if (width > 520) {
             webView.setInitialScale(200);
         } else if (width > 450) {
