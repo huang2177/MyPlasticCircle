@@ -72,7 +72,7 @@ public class Integral_SupDem_Adapter extends BaseAdapter {
         }
         String html=null;
         viewHolder.time.setText(list.get(position).getInput_time());
-        if ("date_selected".equals(list.get(position).getType())) {
+        if ("1".equals(list.get(position).getType())) {
             html="<font color='#EEAD0E'>"+"求购:"+"</font>"+list.get(position).getContents();
             viewHolder.textView.setText(Html.fromHtml(html));
         } else {

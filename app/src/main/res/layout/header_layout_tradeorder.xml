@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="按订单时间和订单号搜索"
+                    android:hint="按订单号搜索"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:textCursorDrawable="@drawable/text_cursor_shape"

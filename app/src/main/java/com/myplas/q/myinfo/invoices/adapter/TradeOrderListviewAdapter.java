@@ -3,6 +3,7 @@ package com.myplas.q.myinfo.invoices.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,10 +86,12 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
             if (position == mList.size() - 1) {
                 viewHolder.mView.setVisibility(View.GONE);
             }
+            String html1 = "   合计 " + "<font color='#ff5550'>¥" + mList.get(position).getTotal_price() + "</font>";
+            String html2 = "   (含运费 " + "<font color='#ff5550'>¥" + mList.get(position).getTransport() + "</font>" + ")";
             viewHolder.textView_title.setText("订单号：" + mList.get(position).getOrder_sn());
             viewHolder.textView_num2.setText("共 " + mList.get(position).getTotal_num() + "吨");
-            viewHolder.textView_tprice.setText("   合计 " + mList.get(position).getTotal_price());
-            viewHolder.textView_feight.setText("   (含运费 " + mList.get(position).getTransport() + ")");
+            viewHolder.textView_tprice.setText(Html.fromHtml(html1));
+            viewHolder.textView_feight.setText(Html.fromHtml(html2));
 
 
             List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct = mList.get(position).getProduct();
@@ -214,15 +217,15 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
             String err = new JSONObject(object.toString()).getString("err");
             if (err.equals("0")) {
                 mListener.onClick2();
-                String time = new JSONObject(object.toString()).getString("time");
-                mMapTextViews.get(position).setVisibility(View.VISIBLE);
-                mMapTextViews.get(position).setText("签收时间：" + time);
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mMapTextViews.get(position).setVisibility(View.GONE);
-                    }
-                }, 1500);
+//                String time = new JSONObject(object.toString()).getString("time");
+//                mMapTextViews.get(position).setVisibility(View.VISIBLE);
+//                mMapTextViews.get(position).setText("签收时间：" + time);
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mMapTextViews.get(position).setVisibility(View.GONE);
+//                    }
+//                }, 1500);
 
             } else {
                 String msg = new JSONObject(object.toString()).getString("msg");

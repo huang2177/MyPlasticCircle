@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 android:padding="10dp"
-                android:text="商品详情"
+                android:text="商品信息"
                 android:textColor="@color/color_balank"
                 android:textSize="16.0sp"/>
 
@@ -75,6 +75,7 @@
                 android:background="@color/color_white"
                 android:divider="@null"
                 android:listSelector="@android:color/transparent"
+                android:overScrollMode="never"
                 android:scrollbars="none"></com.myplas.q.common.view.MyListview>
 
             <TextView
