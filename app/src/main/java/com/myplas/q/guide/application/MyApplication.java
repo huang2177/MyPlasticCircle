@@ -29,7 +29,7 @@ public class MyApplication extends Application {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mNSQHelper.startConnection();
+
             }
         }).start();
     }
