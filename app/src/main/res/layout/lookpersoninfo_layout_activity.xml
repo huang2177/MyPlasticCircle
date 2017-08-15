@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="查看Ta的供求信息"
             android:textColor="@color/color_white"
             android:textSize="18.0sp" />
 

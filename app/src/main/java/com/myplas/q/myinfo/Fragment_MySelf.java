@@ -239,7 +239,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             }
         }
     }
-
     public void resquestNetData(String method, Map map, int type, boolean isShow) {
         try {
             String url = API.BASEURL + method;
