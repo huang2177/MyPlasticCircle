@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:singleLine="true"
-                android:text="已开票数量: "/>
+                android:text="已开票吨数: "/>
 
             <TextView
                 android:id="@+id/item_lv_invoice_applied"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:singleLine="true"
-                android:text="可开票数量: "/>
+                android:text="可开票吨数: "/>
 
             <TextView
                 android:id="@+id/item_lv_invoice_applyable"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:singleLine="true"
-                android:text="本次开票数量: "/>
+                android:text="本次开票吨数: "/>
 
             <TextView
                 android:id="@+id/item_lv_invoice_apply"

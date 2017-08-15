@@ -91,7 +91,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
             viewHolder.textView_title.setText("订单号：" + mList.get(position).getOrder_sn());
             viewHolder.textView_num2.setText("共 " + mList.get(position).getTotal_num() + "吨");
             viewHolder.textView_tprice.setText(Html.fromHtml(html1));
-            viewHolder.textView_feight.setText(Html.fromHtml(html2));
+            //viewHolder.textView_feight.setText(Html.fromHtml(html2));
 
 
             List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct = mList.get(position).getProduct();
