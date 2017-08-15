@@ -91,7 +91,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-        //setAppBarListener();
+        setAppBarListener();
     }
 
     public void initView() {

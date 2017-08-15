@@ -476,6 +476,5 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             sharedUtils.setBooloean(this, "isrequest", true);
         }
     }
-
 }
 

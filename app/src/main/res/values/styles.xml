@@ -15,8 +15,9 @@
         <item name="android:windowBackground">@drawable/float_box</item>
     </style>
     <style name="AppBlankTheme">
+        <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/default_splash</item>
+        <item name="android:windowBackground">@drawable/launch_image</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
