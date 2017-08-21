@@ -93,6 +93,7 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
                     int backcode = Integer.parseInt(type);
                     Intent intent = new Intent();
                     intent.putExtra("img_url", pathList.get(0));
+                    Log.e("*********", pathList.get(0));
                     setResult(backcode, intent);
                     finish();
                 }

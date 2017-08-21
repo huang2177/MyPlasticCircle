@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.release.activity.Release_SupplyDemandActivity;
+import com.myplas.q.release.activity.ReleaseSupDemActivity;
 import com.myplas.q.supdem.Beans.Supply_DemandBean;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class Release_Demand_ListviewAdapter extends BaseAdapter {
         viewHolder.chf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1=new Intent(context,Release_SupplyDemandActivity.class);
+                Intent intent1 = new Intent(context, ReleaseSupDemActivity.class);
                 intent1.putExtra("id",list.get(position).getP_id());
                 context.startActivity(intent1);
             }

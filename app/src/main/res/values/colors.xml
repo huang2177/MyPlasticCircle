@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#FF5000</color>
     <color name="colorAccent">#ffffff</color>
     <color name="color_white">#fbf9f8</color>
-    <color name="color_red">#FF5000</color>
+    <color name="color_red">#ff5000</color>
     <color name="color_blue">#6485a3</color>
     <color name="color_balank">#3b3a3a</color>
     <color name="color_balank1">#000000</color>
@@ -26,6 +26,7 @@
     <color name="color_gray_divider_out">#d6d7dc</color>
     <color name="color_gray_divider_in">#d9d9d9</color>
 
+    <color name="color_dl_integral_confirm">#08c7ae</color>
 
     <color name="calendar_active_month_bg">#fff5f7f9</color>
     <color name="calendar_bg">#ffffffff</color>

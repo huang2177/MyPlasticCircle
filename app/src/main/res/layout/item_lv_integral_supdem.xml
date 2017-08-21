@@ -17,7 +17,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
@@ -25,15 +24,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:buttonTintMode="multiply"
                     android:id="@+id/radio_" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:gravity="right"
-                    android:textColor="@color/color_litlegray"
-                    android:buttonTintMode="multiply"
+                    android:textSize="14.0sp"
                     android:id="@+id/radio_1" />
             </LinearLayout>
             <ImageView
@@ -46,8 +43,7 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layerType="software"
-            android:background="@drawable/shape_dashedline"></View>
+            android:layout_height="1px"
+            android:background="@color/color_gray_divider_in"></View>
     </LinearLayout>
 </LinearLayout>

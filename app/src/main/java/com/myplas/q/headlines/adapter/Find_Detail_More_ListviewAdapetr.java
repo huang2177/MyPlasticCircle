@@ -47,19 +47,24 @@ public class Find_Detail_More_ListviewAdapetr extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.layout_find_more_listview_item, parent, false);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.title_find_listview);
-            viewHolder.time = (TextView) convertView.findViewById(R.id.time_find_listview);
+            convertView = LayoutInflater.from(context).inflate(R.layout.layout_find_topline_listview_item, parent, false);
+            viewHolder.time = (TextView) convertView.findViewById(R.id.fx_tt_title_shj);
+            viewHolder.num = (TextView) convertView.findViewById(R.id.fx_tt_title_num);
+            viewHolder.title2 = (TextView) convertView.findViewById(R.id.fx_tt_title_text2);
+            viewHolder.content = (TextView) convertView.findViewById(R.id.fx_tt_title_content);
+            viewHolder.author = (TextView) convertView.findViewById(R.id.fx_tt_title_author);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
-        viewHolder.name.setText("["+l.get(position).getTitle()+"]");
-        viewHolder.time.setText(l.get(position).getInput_time());
+        viewHolder.title2.setText(l.get(position).getTitle());
+        viewHolder.time.setText(" " + l.get(position).getInput_time());
+        viewHolder.author.setText(l.get(position).getType());
+        //viewHolder.num.setText(l.get(position).getType());
         return convertView;
     }
     class viewHolder {
-        TextView name,time;
+        TextView title2, content, time, num, author;
     }
 
 }

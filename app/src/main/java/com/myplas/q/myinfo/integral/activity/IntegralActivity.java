@@ -1,22 +1,24 @@
 package com.myplas.q.myinfo.integral.activity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.myinfo.integral.adapter.IntegralAdapter;
-import com.myplas.q.common.api.API;
-import com.myplas.q.myinfo.beans.IntegralBean;
+import com.myplas.q.common.view.FullyLinearLayoutManager;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.myinfo.beans.IntegralBean;
+import com.myplas.q.myinfo.integral.adapter.IntegralAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -31,9 +33,9 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 14:10
  */
-public class IntegralActivity extends BaseActivity implements ResultCallBack, View.OnClickListener, IntegralAdapter.callBackiterface {
-    private ListView mGridview;
+public class IntegralActivity extends BaseActivity implements ResultCallBack, View.OnClickListener {
     private SharedUtils sharedUtils;
+    private RecyclerView mRecyclerView;
     private IntegralAdapter integralAdapter;
     private List<IntegralBean.InfoBean> list;
     private TextView integral_all, integral_all_, intergral_chz, intergral_record, intergral_rule;
@@ -41,19 +43,21 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.jf_activity_layout);
+        setContentView(R.layout.activity_layout_integral);
         goBack(findViewById(R.id.back));
 
         sharedUtils = SharedUtils.getSharedUtils();
-        mGridview = (ListView) findViewById(R.id.jf_gridview);
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_integral_listview_head, null);
+        intergral_chz = F(R.id.jf_chz);
+        intergral_rule = F(R.id.jf_rule);
+        integral_all = F(R.id.integral_all);
+        mRecyclerView = F(R.id.jf_gridview);
+        intergral_record = F(R.id.jf_record);
+        integral_all_ = F(R.id.integral_all_);
 
-        intergral_rule = (TextView) findViewById(R.id.jf_rule);
-        intergral_chz = (TextView) view.findViewById(R.id.jf_chz);
-        intergral_record = (TextView) view.findViewById(R.id.jf_record);
-        integral_all = (TextView) view.findViewById(R.id.integral_all);
-        integral_all_ = (TextView) view.findViewById(R.id.integral_all_);
-        mGridview.addHeaderView(view);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setNestedScrollingEnabled(false);
+
 
         intergral_rule.setOnClickListener(this);
         intergral_chz.setOnClickListener(this);
@@ -82,8 +86,8 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
                 list = integralBean.getInfo();
                 integral_all.setText(" " + integralBean.getPointsAll().toString());
-                integralAdapter = new IntegralAdapter(this, this, list, this);
-                mGridview.setAdapter(integralAdapter);
+                integralAdapter = new IntegralAdapter(this, this, list);
+                mRecyclerView.setAdapter(integralAdapter);
             } else if (type == 1) {
                 TextUtils.Toast(this, "没有相关数据！");
             }
@@ -117,14 +121,6 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 startActivity(new Intent(this, IntegralRuleActivtity.class));
                 break;
         }
-    }
-
-    //跳转到供求
-    @Override
-    public void finishActivity() {
-        this.finish();
-        MainActivity.clearColor();
-        MainActivity.goToSupDem();
     }
 
     public void onResume() {

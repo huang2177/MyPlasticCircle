@@ -1,9 +1,13 @@
 package com.myplas.q.myinfo;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -15,15 +19,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.myplas.q.appupdate.DownLoadUtils;
 import com.myplas.q.appupdate.DownloadApk;
+import com.myplas.q.common.utils.ImgUtils;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.guide.activity.ShareActivity;
@@ -47,9 +57,13 @@ import com.myplas.q.common.api.API;
 
 import com.myplas.q.myinfo.invoices.activity.TradeOrderActivity;
 import com.myplas.q.myinfo.beans.MyZone;
+import com.myplas.q.myinfo.message.activity.MessageListsActivity;
 import com.myplas.q.myinfo.setting.activity.MyDataActivity;
 import com.myplas.q.myinfo.setting.SettingActivity;
 import com.myplas.q.myinfo.supdem.activity.MySupDemActivity;
+import com.myplas.q.myinfo.websockethelper.WebSocketCallBack;
+import com.myplas.q.myinfo.websockethelper.WebSocketHelper;
+import com.tencent.mm.sdk.platformtools.Util;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -57,13 +71,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import rx.Observer;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, DownloadApk.InstallInterface {
+public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, WebSocketCallBack {
 
     private View view;
     private MyZone myZone;
@@ -73,25 +89,32 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private MyImageView image_tx;
     private ImageButton imageButton;
     private NestedScrollView scrollingView;
-    private ImageView mImageView_news, imageViewBg;
+    private ImageView mImageView_news, mImage_more;
     private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
     private TextView text_title, text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
     private LinearLayout linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_jf, linear_look, linear_edu, linear_pz, linear_set;
 
-    private int height;
     private Toolbar mToolbar;
-    private boolean hasMeasured;
     private AppBarLayout mBarLayout;
-    private LinearLayout headLayout;
+    private FrameLayout mFrameLayout;
     private CollapsingToolbarLayoutState state;
     private CoordinatorLayout mCoordinatorLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
+    private WebSocketHelper mSocketHelper;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initWebSocket();
         initView();
         setAppBarListener();
+    }
+
+    private void initWebSocket() {
+        mSocketHelper = new WebSocketHelper(this);
+        mSocketHelper.startConnect(getActivity());
     }
 
     public void initView() {
@@ -112,7 +135,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         text_yj = f(R.id.wd_text_introdus);
         text_title = f(R.id.toolbar_title);
 
-        imageViewBg = f(R.id.backdrop);
         linear_jf = f(R.id.wd_linear_jf);
         linear_dd = f(R.id.wd_linear_dd);
         linear_gj = f(R.id.wd_linear_gj);
@@ -122,18 +144,19 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_fs = f(R.id.wd_linear_fans);
         linear_set = f(R.id.wd_linear_set);
         linear_edu = f(R.id.wd_linear_edu);
+        mImage_more = f(R.id.wd_title_more);
         linear_gz = f(R.id.wd_linear_follow);
         linear_look = f(R.id.wd_linear_look);
         linear_title = f(R.id.wd_linear_title);
         linear_yj = f(R.id.wd_linear_introdus);
         mDragView = f(R.id.wd_logined_news_text);
+        mFrameLayout = f(R.id.wd_logined_news_fl);
         scrollingView = f(R.id.scrollView_myself);
         mImageView_news = f(R.id.wd_logined_news_img);
 
         mToolbar = f(R.id.toolbar);
         mBarLayout = f(R.id.app_bar_layout);
         mCoordinatorLayout = f(R.id.coordinatorlayout);
-        headLayout = f(R.id.fragment_titlebar_ll_logined);
         mCollapsingToolbarLayout = f(R.id.collapsing_toolbar);
 
         linear_dd.setOnClickListener(this);
@@ -144,15 +167,14 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_gz.setOnClickListener(this);
         linear_jf.setOnClickListener(this);
         linear_pz.setOnClickListener(this);
+        mDragView.setOnClickListener(this);
         linear_set.setOnClickListener(this);
         linear_edu.setOnClickListener(this);
         linear_look.setOnClickListener(this);
         imageButton.setOnClickListener(this);
         linear_title.setOnClickListener(this);
-        mImageView_news.setOnClickListener(this);
+        mFrameLayout.setOnClickListener(this);
 
-        hasMeasured = false;
-        height = imageViewBg.getHeight();
         image_tx.setBorderColor(getActivity(), R.color.color_white);
     }
 
@@ -162,7 +184,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         return view;
     }
 
-
     public <T extends View> T f(int id) {
         return (T) view.findViewById(id);
     }
@@ -171,9 +192,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void onClick(View v) {
         if (NetUtils.isNetworkStateed(getActivity())) {
             switch (v.getId()) {
-                case R.id.wd_logined_news_img:
-//                    Intent i0 = new Intent(getActivity(), TradeOrderActivity.class);
-//                    startActivity(i0);
+                case R.id.wd_logined_news_fl:
+                    Intent i0 = new Intent(getActivity(), MessageListsActivity.class);
+                    startActivity(i0);
                     break;
                 case R.id.wd_linear_dd:
                     Intent i1 = new Intent(getActivity(), TradeOrderActivity.class);
@@ -239,29 +260,12 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             }
         }
     }
-    public void resquestNetData(String method, Map map, int type, boolean isShow) {
-        try {
-            String url = API.BASEURL + method;
-            BaseActivity.postAsyn1(getActivity(), url, map, this, type, isShow);
-        } catch (Exception e) {
-        }
-    }
+
 
     public void getLoginInfo(boolean isShow) {
-        try {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("token", sharedUtils.getData(getActivity(), "token"));
-            resquestNetData(API.MY_ZONE, map, 2, isShow);
-        } catch (Exception e) {
-        }
-    }
-
-    public void getVersion() {
         Map<String, String> map = new HashMap<String, String>();
-        String version_local = VersionUtils.getVersionName(getActivity());
-        map.put("version", version_local);
-        map.put("platform", "android");
-        new BaseActivity().postAsyn(getActivity(), API.BASEURL + API.CHECK_VERSION, map, this, 3);
+        map.put("token", sharedUtils.getData(getActivity(), "token"));
+        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.MY_ZONE, map, this, 2, isShow);
     }
 
     @Override
@@ -281,23 +285,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
                     sharedUtils.setBooloean(getActivity(), "logined", false);
                 }
             }
-            if (type == 3) {
-                String s = jsonObject.getString("err");
-                if (s.equals("1")) {
-                    int version_last = GetNumUtil.getNum(VersionUtils.getVersionName(getActivity()));
-                    int version_now = GetNumUtil.getNum(new JSONObject(object.toString()).getString("new_version"));
-                    String url = new JSONObject(object.toString()).getString("url");
-                    //比较版本号
-                    if (version_now > version_last) {
-                        //如果手机是否安装apk
-                        DownloadApk downloadApk = new DownloadApk(this);
-                        downloadApk.downloadApk(getActivity(), url, "塑料圈通讯录更新...", "塑料圈通讯录");
-                    }
-                }
-                if (s.equals("0")) {
-                    TextUtils.Toast(getActivity(), "当前版本已是最新版本！");
-                }
-            }
         } catch (Exception e) {
         }
     }
@@ -312,8 +299,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
 
     public void showInfo(MyZone myZone) {
         try {
-            mDragView.setText(myZone.getMessage());
-
             String ispass = myZone.getData().getIs_pass();
             Glide.with(getActivity()).load(myZone.getData().getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(image_tx);
             image_rz.setImageResource((ispass.equals("0")) ? (R.drawable.icon_identity) : (R.drawable.icon_identity_hl));
@@ -330,6 +315,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             text_gj.setText(myZone.getS_out_count() + "  ");
             text_qg.setText(myZone.getS_in_count() + "  ");
             text_look.setText(myZone.getMyviewhistory() + "  ");
+
         } catch (Exception e) {
         }
     }
@@ -345,75 +331,63 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         MobclickAgent.onPageEnd("MainScreen");
     }
 
-    @Override
-    public void install() {
-        DownLoadUtils.getInstance(getActivity()).installApk(getActivity());
-    }
-
     private void setAppBarListener() {
-        measureHeight();
-        mBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (verticalOffset == 0) {
-                    if (state != CollapsingToolbarLayoutState.EXPANDED) {
-                        text_title.setText("");
-                        state = CollapsingToolbarLayoutState.EXPANDED;//修改为展开状态
-                        mToolbar.setBackgroundColor(Color.TRANSPARENT);
-//                        getActivity().getWindow().getDecorView().setSystemUiVisibility(
-//                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
-                    }
-                } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-                    text_title.setText("我的塑料圈");
-                    state = CollapsingToolbarLayoutState.COLLAPSED;//修改为折叠状态
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//                    }
-                } else {
-                    if (Math.abs(verticalOffset) > height) {
-                        float scale = (float) Math.abs(verticalOffset) / appBarLayout.getTotalScrollRange();
-                        if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
-//                            if (state == CollapsingToolbarLayoutState.COLLAPSED && scale < 0.55) {//由折叠变为展开
-//                                getActivity().getWindow().getDecorView().setSystemUiVisibility(
-//                                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
-//                            } else {
-//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                                    getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//                                }
-//                            }
-                            state = CollapsingToolbarLayoutState.INTERNEDIATE;
+        mBarLayout.addOnOffsetChangedListener(
+                new AppBarLayout.OnOffsetChangedListener() {
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (verticalOffset == 0) {//张开
+                            setToolbar1Alpha(255);
+                        } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {//收缩
+                            setToolbar2Alpha(255);
+                        } else {
+                            int alpha = 255 - Math.abs(verticalOffset) - 150;
+                            if (alpha <= 0) {//收缩
+                                setToolbar2Alpha(Math.abs(verticalOffset));
+                            } else {//张开
+                                setToolbar1Alpha(alpha);
+                            }
                         }
-                        int alpha = (int) (255 * scale);
-                        Log.e("-------", scale + "");
-                        Log.e("=======", alpha + "");
-                        text_title.setTextColor(Color.argb(alpha, 255, 255, 255));
-//                        mToolbar.setBackgroundColor(Color.argb(alpha, 255, 80, 0));
-                    } else {
-                        text_title.setText("");
                     }
-                }
-            }
-        });
+                });
     }
 
+    //设置展开时各控件的透明度
+    public void setToolbar1Alpha(int alpha) {
+        text_title.setTextColor(Color.TRANSPARENT);
 
-    private void measureHeight() {
-        ViewTreeObserver vto = mCoordinatorLayout.getViewTreeObserver();
+        image_rz.getDrawable().setAlpha(alpha);
+        mImage_more.getDrawable().setAlpha(alpha);
+        mImageView_news.getDrawable().setAlpha(alpha);
+        image_tx.getDrawable().mutate().setAlpha(alpha);
+        text_pm.setTextColor(Color.argb(alpha, 255, 255, 255));
+        text_gs.setTextColor(Color.argb(alpha, 255, 255, 255));
+        mDragView.setTextColor(Color.argb(alpha, 255, 255, 255));
+        text_name.setTextColor(Color.argb(alpha, 255, 255, 255));
+        image_tx.setBorderColor(Color.argb(alpha, 255, 255, 255));
+    }
 
-        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            public boolean onPreDraw() {
-                if (hasMeasured == false) {
-                    height = mToolbar.getMeasuredHeight();
-                    hasMeasured = true;
-                }
-                return true;
-            }
-        });
+    //设置闭合时各控件的透明度
+    public void setToolbar2Alpha(int alpha) {
+        text_title.setTextColor(Color.argb(alpha, 255, 255, 255));
+        mCollapsingToolbarLayout.setContentScrimColor(Color.argb(alpha, 255, 80, 0));
+    }
+
+    //websocket回调
+    @Override
+    public void callback(String msg) {
+        //mDragView.setText(msg);
     }
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
         COLLAPSED,
         INTERNEDIATE
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSocketHelper.stopConnect();
     }
 }

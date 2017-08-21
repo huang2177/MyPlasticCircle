@@ -47,6 +47,7 @@ import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.fragment.Fragment_HeadLines;
 import com.myplas.q.myinfo.login.LoginActivity;
 import com.myplas.q.myinfo.Fragment_MySelf;
+import com.myplas.q.myinfo.websockethelper.WebSocketHelper;
 import com.myplas.q.release.activity.ReleaseActivity;
 import com.myplas.q.supdem.fragment.Fragment_SupplyDemand;
 import com.umeng.analytics.MobclickAgent;
@@ -101,7 +102,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
-
     //设置透明状态栏以及文字颜色
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#eceded"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#eceded"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="详情"
             android:textColor="@color/color_white"
-            android:textSize="18.0sp" />
+            android:textSize="18.0sp"/>
 
         <LinearLayout
             android:id="@+id/back_img"
@@ -30,7 +30,7 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
+                android:src="@drawable/btn_back"/>
         </LinearLayout>
     </FrameLayout>
     <!--<ScrollView-->
@@ -52,19 +52,20 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <com.myplas.q.common.view.MyImageView
                 android:id="@+id/xq_tx"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_margin="6dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"/>
 
             <ImageView
                 android:id="@+id/xq_rz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:src="@drawable/icon_identity" />
+                android:src="@drawable/icon_identity"/>
         </FrameLayout>
 
         <LinearLayout
@@ -78,28 +79,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/xq_gs"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:singleLine="true"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLength="13"
+                        android:singleLine="true"
                         android:textColor="@color/color_blue"
-                        android:textSize="15.0sp" />
+                        android:textSize="15.0sp"/>
 
                     <TextView
                         android:id="@+id/xq_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/color_blue"
                         android:singleLine="true"
-                        android:textSize="15.0sp" />
+                        android:textColor="@color/color_blue"
+                        android:textSize="15.0sp"/>
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -110,7 +113,7 @@
                 android:layout_gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="@color/color_blue"
-                android:textSize="15.0sp" />
+                android:textSize="15.0sp"/>
         </LinearLayout>
 
         <Button
@@ -120,7 +123,7 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/corner_gz"
             android:text="关 注"
-            android:textColor="@color/color_yellow" />
+            android:textColor="@color/color_yellow"/>
     </LinearLayout>
 
     <LinearLayout
@@ -133,7 +136,7 @@
             android:id="@+id/img_gong_qiu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="2dp"/>
 
         <TextView
             android:id="@+id/xq_content"
@@ -142,7 +145,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:textColor="@color/color_balank"
-            android:textSize="@dimen/x66" />
+            android:textSize="@dimen/x66"/>
     </LinearLayout>
 
     <LinearLayout
@@ -157,7 +160,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_weight="2" />
+            android:layout_weight="2"/>
 
         <TextView
             android:id="@+id/gq_chujian"
@@ -166,7 +169,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/icon_offerprice"
             android:ellipsize="end"
-            android:lines="1" />
+            android:lines="1"/>
 
         <TextView
             android:id="@+id/gq_huifu"
@@ -175,7 +178,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/icon_reply"
             android:ellipsize="end"
-            android:lines="1" />
+            android:lines="1"/>
 
         <TextView
             android:id="@+id/gq_chongfa"
@@ -185,7 +188,7 @@
             android:drawableLeft="@drawable/icon_redistribute"
             android:ellipsize="end"
             android:lines="1"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </LinearLayout>
 
     <View
@@ -205,7 +208,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/btn_switch_bid_message" />
+            android:src="@drawable/btn_switch_bid_message"/>
 
         <Button
             android:id="@+id/xq_chjxx"
@@ -216,7 +219,7 @@
             android:alpha="0"
             android:background="#123"
             android:textColor="@color/color_white"
-            android:textSize="13.0sp" />
+            android:textSize="13.0sp"/>
 
         <Button
             android:id="@+id/xq_hfxx"
@@ -227,7 +230,7 @@
             android:alpha="0"
             android:background="#2485e6"
             android:textColor="@color/color_balank"
-            android:textSize="13.0sp" />
+            android:textSize="13.0sp"/>
     </FrameLayout>
 
     <LinearLayout
@@ -243,21 +246,21 @@
             android:layout_height="35dp"
             android:layout_weight="4"
             android:background="@drawable/corner_text_left"
-            android:text="出价人" />
+            android:text="出价人"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_weight="2"
             android:background="@drawable/corner_text_null"
-            android:text="出价" />
+            android:text="出价"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_weight="2"
             android:background="@drawable/corner_text_right"
-            android:text="操作" />
+            android:text="操作"/>
     </LinearLayout>
 
     <ListView
@@ -295,7 +298,7 @@
             android:textCursorDrawable="@drawable/text_cursor_shape"
             android:textSelectHandle="@drawable/textselecthandle"
             android:textSelectHandleLeft="@drawable/textselecthandle"
-            android:textSelectHandleRight="@drawable/textselecthandle" />
+            android:textSelectHandleRight="@drawable/textselecthandle"/>
 
         <Button
             android:id="@+id/btn_chj_hf"
@@ -304,7 +307,7 @@
             android:layout_marginRight="15dp"
             android:background="@drawable/btn_xq_chujian"
             android:text="出价"
-            android:textColor="@color/color_white" />
+            android:textColor="@color/color_white"/>
     </LinearLayout>
     <!--</LinearLayout>-->
     <!--</ScrollView>-->

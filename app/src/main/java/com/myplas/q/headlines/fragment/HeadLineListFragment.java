@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +22,13 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.common.view.XListView;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.headlines.activity.Head_Lines_DetailActivity;
+import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.headlines.adapter.CateListAdapter;
 import com.myplas.q.headlines.adapter.TTAdapter;
 import com.myplas.q.headlines.bean.CateListBean;
 import com.myplas.q.headlines.bean.SubcribleBean;
-import com.myplas.q.myinfo.setting.activity.MyDataActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -103,7 +99,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
             list1.add("测试1");
             list1.add("测试2");
-            list1.add("测试3");
+            list1.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=521537717,807622349&fm=26&gp=0.jpg");
             initBanner(list, list1);
             mBanner.setOnBannerListener(new OnBannerListener() {
                 @Override
@@ -118,10 +114,10 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetUtils.isNetworkStateed(getActivity())) {
-                    Intent intent = new Intent(getActivity(), Head_Lines_DetailActivity.class);
+                    Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
                     if (po == 0 || po == -1) {
                         intent.putExtra("title", "推荐");
-                        intent.putExtra("id", list_subcirble_more.get(position - 1).getId());
+                        intent.putExtra("id", list_subcirble_more.get(position - 2).getId());
                         startActivity(intent);
                     } else {
                         intent.putExtra("title", title);

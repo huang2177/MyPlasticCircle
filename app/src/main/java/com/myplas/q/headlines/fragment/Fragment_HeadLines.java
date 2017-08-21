@@ -3,6 +3,7 @@ package com.myplas.q.headlines.fragment;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -17,42 +19,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
-import com.myplas.q.common.view.XListView;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.Cate_Dialog_Activtiy;
-import com.myplas.q.headlines.activity.Head_Lines_DetailActivity;
-import com.myplas.q.headlines.adapter.CateListAdapter;
 import com.myplas.q.headlines.adapter.HeadLineViewPagerAdapter;
-import com.myplas.q.headlines.adapter.TTAdapter;
-import com.myplas.q.headlines.bean.CateListBean;
-import com.myplas.q.headlines.bean.ItemBean;
-import com.myplas.q.headlines.bean.SubcribleBean;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONObject;
-
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -115,12 +99,10 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.e("---------", position + "");
                 currentItem = position;
                 mViewPager.setCurrentItem(position);
                 mFragments.get(position).po = position;
@@ -134,7 +116,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
@@ -158,6 +139,13 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         mTabLayout.setupWithViewPager(mViewPager);
         //给TabLayout设置适配器
         mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
+        //mTabLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                setIndicator(mTabLayout,10,10);
+//            }
+//        });
+
     }
 
     @Nullable
@@ -233,6 +221,34 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             } else {
                 TextUtils.Toast(getActivity(), "已是最新头条信息！");
             }
+        }
+    }
+
+    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
+        Class<?> tabLayout = tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tabLayout.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        tabStrip.setAccessible(true);
+        LinearLayout llTab = null;
+        try {
+            llTab = (LinearLayout) tabStrip.get(tabs);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
+        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
+        for (int i = 0; i < llTab.getChildCount(); i++) {
+            View child = llTab.getChildAt(i);
+            child.setPadding(0, 0, 0, 0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            params.leftMargin = left;
+            params.rightMargin = right;
+            child.setLayoutParams(params);
+            child.invalidate();
         }
     }
 

@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -46,15 +45,14 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wd_gj_activity_layout);
-        goBack(findViewById(R.id.back));
+        setContentView(R.layout.activity_layout_myself_msg);
+        initTileBar();
+        setTitle(getIntent().getStringExtra("title"));
 
+        list_more = new ArrayList<>();
         mNoResultLayout = F(R.id.mysupdem_noresultlayout);
-        textView = (TextView) findViewById(R.id.title_rs);
         listView = (XListView) findViewById(R.id.wd_gj_listview);
 
-        textView.setText(getIntent().getStringExtra("title"));
-        list_more = new ArrayList<>();
         listView.setPullLoadEnable(true);
         listView.setPullRefreshEnable(false);
         listView.setXListViewListener(this);

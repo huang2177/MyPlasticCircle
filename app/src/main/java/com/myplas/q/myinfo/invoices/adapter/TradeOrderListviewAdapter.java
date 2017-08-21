@@ -73,7 +73,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_layout_tradeorder, parent, false);//这个布局就是一个imageview用来显示图片
+        View view = LayoutInflater.from(context).inflate(R.layout.item_layout_tradeorder, parent, false);
         viewHolder holder = new viewHolder(view, viewType);
         mMapViews.put(viewType, holder);
         return holder;

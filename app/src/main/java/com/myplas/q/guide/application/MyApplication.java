@@ -3,7 +3,7 @@ package com.myplas.q.guide.application;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
-import com.myplas.q.myinfo.nsqhelper.NSQHelper;
+import com.myplas.q.myinfo.websockethelper.WebSocketHelper;
 
 /**
  * 作者：  黄双
@@ -12,8 +12,6 @@ import com.myplas.q.myinfo.nsqhelper.NSQHelper;
  */
 
 public class MyApplication extends Application {
-    private NSQHelper mNSQHelper;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,12 +23,5 @@ public class MyApplication extends Application {
                                 Stetho.defaultInspectorModulesProvider(this))
                         .build());
 
-        mNSQHelper = new NSQHelper();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }).start();
     }
 }

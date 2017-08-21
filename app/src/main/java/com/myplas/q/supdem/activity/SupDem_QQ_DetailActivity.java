@@ -19,10 +19,9 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.RoundImageView;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.headlines.activity.Head_Lines_DetailActivity;
+import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.supdem.Beans.PhysicalBean;
 import com.myplas.q.supdem.Beans.SearchResultDetailBean;
-import com.myplas.q.supdem.adapter.Physical_Property_Adapter;
 import com.myplas.q.supdem.adapter.SupDem_Search_QQ_Detail_Adapter;
 import com.umeng.analytics.MobclickAgent;
 
@@ -31,9 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.R.id.list;
 import static com.myplas.q.R.id.supdem_qq_listview_find;
-import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
 
 /**
  * 编写： 黄双
@@ -209,7 +206,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         try {
             switch (parent.getId()) {
                 case R.id.supdem_qq_listview_zx:
-                    Intent intent = new Intent(this, Head_Lines_DetailActivity.class);
+                    Intent intent = new Intent(this, HeadLinesDetailActivity.class);
                     intent.putExtra("title", detailBean.getShow_information().get(position).getCate_name());
                     intent.putExtra("id", detailBean.getShow_information().get(position).getId());
                     startActivity(intent);

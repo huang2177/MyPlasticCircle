@@ -23,6 +23,7 @@ import com.myplas.q.R;
  * 邮箱：15378412400@163.com
  * 时间：2017/5/8 09:32
  */
+
 /**
  * Created by lzan13 on 2015/4/30.
  * 自定义 ImageView 控件，实现了圆角和边框，以及按下变色
@@ -42,6 +43,7 @@ public class MyImageView extends ImageView {
     private int borderColor;
     // 边框宽度
     private int borderWidth;
+    private int pressAlpha;
 
 
     // 圆角半径
@@ -86,6 +88,7 @@ public class MyImageView extends ImageView {
     public void setBorderColor(Context context, int color) {
         this.borderColor = context.getResources().getColor(color);
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
         if (shapeType == 0) {
@@ -252,6 +255,7 @@ public class MyImageView extends ImageView {
             return null;
         }
     }
+
     /**
      * 设置边框颜色
      *
@@ -261,6 +265,7 @@ public class MyImageView extends ImageView {
         this.borderColor = borderColor;
         invalidate();
     }
+
     /**
      * 设置边框宽度
      *
@@ -269,14 +274,17 @@ public class MyImageView extends ImageView {
     public void setBorderWidth(int borderWidth) {
         this.borderWidth = borderWidth;
     }
+
     /**
      * 设置图片按下颜色透明度
      *
      * @param pressAlpha
      */
-    //public void setPressAlpha(int pressAlpha) {
-        //this.pressAlpha = pressAlpha;
-  //  }
+    public void setPressAlpha(int pressAlpha) {
+        this.pressAlpha = pressAlpha;
+        pressPaint.setAlpha(pressAlpha);
+        invalidate();
+    }
 
     /**
      * 设置图片按下的颜色

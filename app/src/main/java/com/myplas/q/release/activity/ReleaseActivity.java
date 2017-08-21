@@ -19,7 +19,6 @@ import com.myplas.q.supdem.Beans.Supply_DemandBean;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,13 +70,13 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fb_qg_img:
-                Intent intent = new Intent(this, Release_SupplyDemandActivity.class);
+                Intent intent = new Intent(this, ReleaseSupDemActivity.class);
                 intent.putExtra("qg_gj", "发布求购");
                 intent.putExtra("type", "1");
                 startActivity(intent);
                 break;
             case R.id.fb_gj_img:
-                Intent intent1 = new Intent(this, Release_SupplyDemandActivity.class);
+                Intent intent1 = new Intent(this, ReleaseSupDemActivity.class);
                 intent1.putExtra("qg_gj", "发布供给");
                 intent1.putExtra("type", "2");
                 startActivity(intent1);

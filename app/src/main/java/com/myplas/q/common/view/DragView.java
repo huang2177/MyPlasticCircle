@@ -17,6 +17,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -108,6 +109,7 @@ public class DragView extends View {
     private int mPosition;
     private AttributeSet attrs;
     private int defStyleAttr;
+    private int mStatus;
 
     public DragView(Context context) {
         this(context, null);
@@ -127,12 +129,13 @@ public class DragView extends View {
 
     public void init(Context context) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DragBubbleView, defStyleAttr, 0);
-        mBubbleRadius = ta.getDimension(R.styleable.DragBubbleView_bubbleRadius, AndroidUtil.dp2px(context, 10));
+        mBubbleRadius = ta.getDimension(R.styleable.DragBubbleView_bubbleRadius, AndroidUtil.dp2px(context, 8));
         mBubbleColor = ta.getColor(R.styleable.DragBubbleView_bubbleColor, Color.WHITE);
         mText = ta.getString(R.styleable.DragBubbleView_text);
         mTextSize = ta.getDimension(R.styleable.DragBubbleView_textSize, AndroidUtil.dp2px(context, 10));
         mTextColor = ta.getColor(R.styleable.DragBubbleView_textColor, Color.RED);
         mState = STATE_DEFAULT;
+        mStatus = 0;
         mCircleRadius = mBubbleRadius;
         maxD = 8 * mBubbleRadius;
         ta.recycle();
@@ -251,7 +254,7 @@ public class DragView extends View {
                 if (mState != STATE_DISMISS) {
                     getParent().requestDisallowInterceptTouchEvent(true);
                     d = (float) Math.hypot(event.getX() - mBubbleCenterX, event.getY() - mBubbleCenterY);
-                    if (d < mBubbleRadius + maxD / 4) {
+                    if (d > mBubbleRadius && d < mBubbleRadius + maxD / 4) {
                         //当指尖坐标在圆内的时候，才认为是可拖拽的
                         //一般气泡比较小，增加(maxD/4)像素是为了更轻松的拖拽
                         mState = STATE_DRAG;
@@ -299,7 +302,7 @@ public class DragView extends View {
                 }
                 break;
         }
-        return true;
+        return false;
     }
 
     /**

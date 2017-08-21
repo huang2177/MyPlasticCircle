@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorAccent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_red">
+        android:layout_marginTop="25dp"
+        android:background="@color/colorAccent">
+
         <LinearLayout
             android:id="@+id/img_back"
             android:layout_width="40dp"
@@ -18,7 +22,7 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
+                android:src="@drawable/btn_back_white"/>
         </LinearLayout>
 
         <TextView
@@ -27,8 +31,9 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="塑料发现"
-            android:textColor="@color/color_white"
-            android:textSize="18.0sp" />
+            android:textColor="@color/color_balank"
+            android:textSize="18.0sp"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:id="@+id/wd_linear_share"
@@ -40,14 +45,18 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center"
-                android:src="@drawable/btn_share1" />
+                android:src="@drawable/btn_share_white"/>
         </LinearLayout>
     </FrameLayout>
+
     <ScrollView
+        android:id="@+id/headline_sceollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:overScrollMode="never"
         android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -63,81 +72,82 @@
                     android:id="@+id/fx_tt_title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:maxLines="2"
                     android:paddingLeft="10dp"
-                    android:textColor="#060606"
-                    android:textSize="16.0sp"
-                    android:textStyle="bold" />
+                    android:paddingRight="10dp"
+                    android:textColor="@color/color_balank"
+                    android:textSize="20.0sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/fx_tt_title_shj"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:textSize="15.0sp"
+                    android:gravity="center"
                     android:lines="1"
-                    android:ellipsize="end"/>
+                    android:textSize="15.0sp"/>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3px"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#9d9e9f"></View>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#ffffff"
-                android:layout_margin="10dp">
+                android:background="@color/colorAccent"
+                android:orientation="vertical">
 
                 <WebView
                     android:id="@+id/find_detail_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:background="@null"
-                    android:scrollbars="none" />
+                    android:scrollbars="none"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/btn_last"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/btn_last" />
+                        android:text="上一条"/>
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/btn_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/btn_next" />
+                        android:text="下一条"/>
                 </RelativeLayout>
 
                 <TextView
                     android:id="@+id/hot_search"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:text="热门追踪"
-                    android:textSize="16.0sp" />
+                    android:layout_margin="10dp"
+                    android:drawableLeft="@drawable/icon_hot_pursuit"
+                    android:text=" 热门追踪"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"
+                    android:textStyle="bold"/>
 
                 <com.myplas.q.common.view.MyListview
                     android:id="@+id/find_detail_mliatview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:dividerHeight="0px">
                 </com.myplas.q.common.view.MyListview>
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
     <include layout="@layout/layout_buttom"></include>
 </LinearLayout>

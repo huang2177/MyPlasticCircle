@@ -53,7 +53,6 @@ public class CateListAdapter extends BaseAdapter {
             convertView= LayoutInflater.from(context).inflate(R.layout.layout_find_topline_listview_item,parent,false);
             viewHolder.time= (TextView) convertView.findViewById(R.id.fx_tt_title_shj);
             viewHolder.num= (TextView) convertView.findViewById(R.id.fx_tt_title_num);
-            viewHolder.title1 = (TextView) convertView.findViewById(R.id.fx_tt_title_text1);
             viewHolder.title2 = (TextView) convertView.findViewById(R.id.fx_tt_title_text2);
             viewHolder.content= (TextView) convertView.findViewById(R.id.fx_tt_title_content);
             viewHolder.author= (TextView) convertView.findViewById(R.id.fx_tt_title_author);
@@ -63,7 +62,6 @@ public class CateListAdapter extends BaseAdapter {
         }
         viewHolder.content.setText(list.get(position).getDescription());
         viewHolder.num.setText(" " +list.get(position).getPv());
-        //viewHolder.title1.setText(replace(list.get(position).getType()));
         viewHolder.title2.setText(replace(list.get(position).getTitle()));
         viewHolder.time.setText(" " + list.get(position).getInput_time());
         viewHolder.author.setText(list.get(position).getType());
@@ -75,7 +73,7 @@ public class CateListAdapter extends BaseAdapter {
     }
 
     class viewHolder{
-        TextView title1, title2, content, time, num, author;
+        TextView title2, content, time, num, author;
     }
 
     public Spanned replace(String s) {

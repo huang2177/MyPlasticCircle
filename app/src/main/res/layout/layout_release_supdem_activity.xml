@@ -1,181 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/color_red">
+
         <TextView
+            android:id="@+id/fb_titlebar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="18.0sp"
-            android:id="@+id/fb_titlebar"
+            android:text="发布求购"
             android:textColor="@color/color_white"
-            android:text="发布求购"/>
+            android:textSize="18.0sp"/>
+
         <LinearLayout
-        android:id="@+id/back_img"
-        android:layout_width="40dp"
-        android:layout_height="match_parent">
-        <ImageView
+            android:id="@+id/back_img"
             android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/btn_back" />
-    </LinearLayout>
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/btn_back"/>
+        </LinearLayout>
     </FrameLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp">
+
         <ImageView
             android:id="@+id/image_k_j"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:src="@drawable/btn_switch_quick_release"/>
+
         <Button
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
             android:id="@+id/fb_ks"
-            android:alpha="0"
-            android:layout_marginRight="50dp"/>
-        <Button
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="50dp"
+            android:alpha="0"/>
+
+        <Button
             android:id="@+id/fb_jz"
-            android:alpha="0"
-            android:layout_marginLeft="50dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:alpha="0"/>
     </FrameLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="13dp"
         android:text="快速发布：简单粘贴或复制供求，快速录入；\n\n精准发布：填写准确供求，参与系统比价；"/>
+
     <EditText
+        android:id="@+id/fb_edit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="13dp"
         android:layout_weight="1"
-        android:hint="在次文本框中，可快速复制粘贴供求信息，限制100字内！"
-        android:padding="4dp"
-        android:textSize="15.0sp"
+        android:background="@drawable/shape_txl_edit"
         android:gravity="start"
+        android:hint="在次文本框中，可快速复制粘贴供求信息，限制100字内！"
         android:maxLength="100"
+        android:padding="4dp"
+        android:textCursorDrawable="@drawable/text_cursor_shape"
         android:textSelectHandle="@drawable/textselecthandle"
         android:textSelectHandleLeft="@drawable/textselecthandle"
         android:textSelectHandleRight="@drawable/textselecthandle"
-        android:textCursorDrawable="@drawable/text_cursor_shape"
-        android:id="@+id/fb_edit"
-        android:background="@drawable/shape_txl_edit"/>
+        android:textSize="15.0sp"/>
+
     <LinearLayout
+        android:id="@+id/jzfb_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="13dp"
-        android:id="@+id/jzfb_linear"
         android:orientation="vertical"
         android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
+            android:gravity="center_horizontal">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_balank"
-                android:textSize="16.0sp"
-                android:text="牌号"/>
-            <EditText
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="牌号"
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp"/>
+
+            <EditText
+                android:id="@+id/jzfb_edit_ph"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:paddingLeft="2dp"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/release_edit_shape"
+                android:paddingLeft="2dp"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:background="@drawable/release_edit_shape"
-                android:id="@+id/jzfb_edit_ph"/>
+                android:textSelectHandleRight="@drawable/textselecthandle"/>
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="16.0sp"
-                android:textColor="@color/color_balank"
                 android:layout_marginLeft="10dp"
-                android:text="厂    家"/>
-            <EditText
-                android:layout_width="0dp"
                 android:layout_weight="1"
+                android:text="厂家"
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp"/>
+
+            <EditText
+                android:id="@+id/jzfb_edit_cj"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/release_edit_shape"
                 android:paddingLeft="2dp"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/release_edit_shape"
-                android:id="@+id/jzfb_edit_cj"/>
+                android:textSelectHandleRight="@drawable/textselecthandle"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="5dp">
+            android:gravity="center_horizontal">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16.0sp"
-                android:textColor="@color/color_balank"
-                android:text="价格"/>
-            <EditText
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="价格"
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp"/>
+
+            <EditText
+                android:id="@+id/jzfb_edit_jg"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:paddingLeft="2dp"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/release_edit_shape"
+                android:paddingLeft="2dp"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:background="@drawable/release_edit_shape"
-                android:id="@+id/jzfb_edit_jg"/>
+                android:textSelectHandleRight="@drawable/textselecthandle"/>
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="16.0sp"
-                android:textColor="@color/color_balank"
                 android:layout_marginLeft="10dp"
-                android:text="交货地"/>
-            <EditText
-                android:layout_width="0dp"
                 android:layout_weight="1"
+                android:text="交货地"
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp"/>
+
+            <EditText
+                android:id="@+id/jzfb_edit_jhd"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/release_edit_shape"
                 android:paddingLeft="2dp"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/release_edit_shape"
-                android:id="@+id/jzfb_edit_jhd"/>
+                android:textSelectHandleRight="@drawable/textselecthandle"/>
         </LinearLayout>
     </LinearLayout>
+
     <Button
+        android:id="@+id/fb_ok"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_margin="13dp"
         android:background="@drawable/shape_btn_red"
         android:text="发布"
         android:textColor="@color/color_white"
-        android:textSize="18.0sp"
-        android:id="@+id/fb_ok"/>
+        android:textSize="18.0sp"/>
 </LinearLayout>

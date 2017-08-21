@@ -3,6 +3,9 @@ package com.myplas.q.common.utils;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 
 /**
  * 编写： 黄双
@@ -12,12 +15,11 @@ import android.graphics.BitmapFactory;
  */
 public class ImgUtils {
     /**
-     * @description 计算图片的压缩比率
-     *
-     * @param options 参数
-     * @param reqWidth 目标的宽度
+     * @param options   参数
+     * @param reqWidth  目标的宽度
      * @param reqHeight 目标的高度
      * @return
+     * @description 计算图片的压缩比率
      */
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // 源图片的高度和宽度
@@ -37,12 +39,11 @@ public class ImgUtils {
     }
 
     /**
-     * @description 通过传入的bitmap，进行压缩，得到符合标准的bitmap
-     *
      * @param src
      * @param dstWidth
      * @param dstHeight
      * @return
+     * @description 通过传入的bitmap，进行压缩，得到符合标准的bitmap
      */
     public static Bitmap createScaleBitmap(Bitmap src, int dstWidth, int dstHeight, int inSampleSize) {
         // 如果是放大图片，filter决定是否平滑，如果是缩小图片，filter无影响，我们这里是缩小图片，所以直接设置为false
@@ -52,14 +53,14 @@ public class ImgUtils {
         }
         return dst;
     }
+
     /**
-     * @description 从Resources中加载图片
-     *
      * @param res
      * @param resId
      * @param reqWidth
      * @param reqHeight
      * @return
+     * @description 从Resources中加载图片
      */
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -73,12 +74,11 @@ public class ImgUtils {
     }
 
     /**
-     * @description 从SD卡上加载图片
-     *
      * @param pathName
      * @param reqWidth
      * @param reqHeight
      * @return
+     * @description 从SD卡上加载图片
      */
     public static Bitmap decodeSampledBitmapFromFile(String pathName, int reqWidth, int reqHeight) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -88,5 +88,29 @@ public class ImgUtils {
         options.inJustDecodeBounds = false;
         Bitmap src = BitmapFactory.decodeFile(pathName, options);
         return createScaleBitmap(src, reqWidth, reqHeight, options.inSampleSize);
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+
+        Bitmap bitmap = Bitmap.createBitmap(
+
+                drawable.getIntrinsicWidth(),
+
+                drawable.getIntrinsicHeight(),
+
+                drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+
+                        : Bitmap.Config.RGB_565);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        //canvas.setBitmap(bitmap);
+
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+        drawable.draw(canvas);
+
+        return bitmap;
+
     }
 }

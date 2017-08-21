@@ -23,7 +23,7 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
 
-import com.myplas.q.release.activity.Release_SupplyDemandActivity;
+import com.myplas.q.release.activity.ReleaseSupDemActivity;
 import com.myplas.q.supdem.Beans.Supply_DemandBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
@@ -167,7 +167,7 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
         viewHolder.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Release_SupplyDemandActivity.class);
+                Intent intent = new Intent(context, ReleaseSupDemActivity.class);
                 intent.putExtra("id", (list.get(position).getId()));
                 context.startActivity(intent);
             }

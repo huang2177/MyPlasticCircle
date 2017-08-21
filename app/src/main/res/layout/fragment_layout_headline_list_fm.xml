@@ -13,6 +13,7 @@
             android:id="@+id/fragment_headline_list_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:divider="@null"
             android:dividerHeight="0px">
         </com.myplas.q.common.view.XListView>
 

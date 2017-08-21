@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              android:background="@color/color_gray_bg"
+              android:orientation="vertical">
+
+    <include layout="@layout/dialog_datepicker_selected_date"/>
+
+    <com.myplas.q.myinfo.integral.datehelper.CalendarPickerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="none"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out"/>
+
+    <LinearLayout
+        android:id="@+id/date_linear"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingTop="3dp"
+            android:text="已选择："
+            android:textSize="14.0sp"/>
+
+        <GridView
+            android:id="@+id/mygridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:numColumns="4"></GridView>
+    </LinearLayout>
+
+
+</LinearLayout>
