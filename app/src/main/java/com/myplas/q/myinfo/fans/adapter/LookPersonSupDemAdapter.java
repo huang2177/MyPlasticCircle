@@ -58,7 +58,7 @@ public class LookPersonSupDemAdapter extends BaseAdapter {
         }
         viewHolder.time.setText(list.get(position).getInput_time());
         String html=null;
-        if (type.equals("查看Ta的供给信息")) {
+        if (type.equals("供给信息")) {
             html="<font color='#9AC0CD'>"+"供给:"+"</font>"+list.get(position).getContents();
             viewHolder.content.setText(Html.fromHtml(html));
         } else {

@@ -105,6 +105,10 @@
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name="com.myplas.q.myinfo.setting.activity.AddressSelectedActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.myplas.q.myinfo.integral.activity.IntegralActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
@@ -151,6 +155,10 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.myplas.q.headlines.activity.CreditActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.myplas.q.headlines.activity.HeadLineSearchActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity

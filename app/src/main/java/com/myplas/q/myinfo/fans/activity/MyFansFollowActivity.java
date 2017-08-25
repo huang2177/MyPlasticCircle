@@ -6,23 +6,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.addresslist.Beans.MyFansBean;
 import com.myplas.q.addresslist.adapter.MyFansFollowAdapter;
-import com.myplas.q.common.utils.DialogShowUtils;
-import com.myplas.q.common.view.NoResultLayout;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.XListView;
-import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
-import com.myplas.q.myinfo.fans.adapter.MyFollowAdapter;
-import com.myplas.q.common.api.API;
+import com.myplas.q.common.view.NoResultLayout;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.MyFollowBean;
+import com.myplas.q.myinfo.fans.adapter.MyFollowAdapter;
+import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -38,44 +38,39 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:15
  */
-public class MyFansFollowActivity extends BaseActivity implements ResultCallBack,
-        XListView.IXListViewListener, DialogShowUtils.DialogShowInterface {
+public class MyFansFollowActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface {
+
+    private ListView listView;
+    private Dialog normalDialog;
+    private TextView textView_title;
+    private NoResultLayout mNoResultLayout;
+    private MyFollowAdapter myFollowAdapter;
+    private MyFansFollowAdapter wdgz_adapter;
+    private SharedUtils sharedUtils;
+
+    private int page = 1, visibleItemCount;
+    private String type = "1", user_id, id_;
+
     private List<MyFansBean.DataBean> list;
     private List<MyFollowBean.DataBean> list1;
     private List<MyFansBean.DataBean> list_more;
     private List<MyFollowBean.DataBean> list1_more;
-    private XListView listView;
-    private MyFansFollowAdapter wdgz_adapter;
-    private MyFollowAdapter myFollowAdapter;
-    private SharedUtils sharedUtils;
-    private TextView textView_title;
-    private Dialog normalDialog = null;
-    private String type = "1", user_id, id_;
-    private int page = 1, visibleItemCount;
-    private NoResultLayout mNoResultLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.txl_wdgz_activity);
-        goBack(findViewById(R.id.back));
+        setContentView(R.layout.activity_layout_myself_fansfollow);
+        initTileBar();
+        setTitle(getIntent().getStringExtra("titlename"));
 
+        type = getIntent().getStringExtra("type");
         sharedUtils = SharedUtils.getSharedUtils();
         listView = F(R.id.wdgz_listview);
         mNoResultLayout = F(R.id.my_foolow_noresultlayout);
 
-        listView.setPullLoadEnable(true);
-        listView.setPullRefreshEnable(false);
-        listView.setXListViewListener(this);
         list1_more = new ArrayList<>();
         list_more = new ArrayList<>();
-        textView_title = (TextView) findViewById(R.id.title_name);
-        textView_title.setText(getIntent().getStringExtra("titlename"));
-        type = getIntent().getStringExtra("type");
-        //关注、粉丝
-        if (TextUtils.isNullOrEmpty(type)) {
-            getMyFans("1");
-        }
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -113,6 +108,11 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                 MyFansFollowActivity.this.visibleItemCount = visibleItemCount;
             }
         });
+
+        //关注、粉丝
+        if (TextUtils.isNullOrEmpty(type)) {
+            getMyFans("1");
+        }
     }
 
     public void getMyFans(String page) {
@@ -152,12 +152,10 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
 
                         wdgz_adapter = new MyFansFollowAdapter(this, list);
                         listView.setAdapter(wdgz_adapter);
-                        listView.stopRefresh();
                         list_more.clear();
                         list_more.addAll(list);
                     } else {
                         if (list != null && list.size() != 0) {
-                            listView.stopLoadMore();
                             list_more.addAll(list);
                             wdgz_adapter.setList(list_more);
                             wdgz_adapter.notifyDataSetChanged();
@@ -178,12 +176,10 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                         listView.setVisibility(View.VISIBLE);
                         myFollowAdapter = new MyFollowAdapter(this, list1);
                         listView.setAdapter(myFollowAdapter);
-                        listView.stopRefresh();
                         list1_more.clear();
                         list1_more.addAll(list1);
                     } else {
                         if (list1 != null && list1.size() != 0) {
-                            listView.stopLoadMore();
                             list1_more.addAll(list1);
                             myFollowAdapter.setList(list1_more);
                             myFollowAdapter.notifyDataSetChanged();
@@ -240,19 +236,6 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                 startActivity(new Intent(this, IntegralPayActivtity.class));
                 break;
         }
-    }
-
-    //刷新
-    @Override
-    public void onRefresh() {
-        page = 1;
-        getMyFans(String.valueOf(page));
-    }
-
-    //加载
-    @Override
-    public void onLoadMore() {
-
     }
 
     public void onResume() {

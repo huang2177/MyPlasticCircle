@@ -116,7 +116,7 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
     @Override
     public void onClick(View v) {
         theDialog.dismiss();
-        integralAdapter.showGrid_isSelected();
+        integralAdapter.dateSelected();
     }
 
     public Date getDate(Date date) {
@@ -131,7 +131,7 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
     @Override
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            integralAdapter.showGrid_isSelected();
+            integralAdapter.dateSelected();
         }
         return false;
     }

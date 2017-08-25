@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_gray_bg"
+              android:orientation="vertical">
+
+    <include layout="@layout/titlebar_lauout"></include>
+
+    <LinearLayout
+        android:id="@+id/datacommon_ll_logistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/addselected_ll"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="18dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="选择地区"
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp"/>
+
+            <com.optimus.edittextfield.EditTextField
+                android:id="@+id/address_edit_starting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:focusable="false"
+                android:hint="地区信息"
+                android:imeOptions="actionDone"
+                android:paddingLeft="5dp"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:textColor="@color/color_balank"
+                android:textColorHint="@color/color_gray3"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
+                android:textSelectHandle="@drawable/textselecthandle"
+                android:textSelectHandleLeft="@drawable/textselecthandle"
+                android:textSelectHandleRight="@drawable/textselecthandle"
+                android:textSize="@dimen/x66"
+                app:clearButtonMode="whileEditing"/>
+
+            <ImageView
+                android:id="@+id/address_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/btn_location"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_divider_in"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="详细地址"
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp"/>
+
+            <com.optimus.edittextfield.EditTextField
+                android:id="@+id/address_edit_ending"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:hint="详细地址"
+                android:imeOptions="actionDone"
+                android:paddingLeft="5dp"
+                android:singleLine="true"
+                android:textColor="@color/color_balank"
+                android:textColorHint="@color/color_gray3"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
+                android:textSelectHandle="@drawable/textselecthandle"
+                android:textSelectHandleLeft="@drawable/textselecthandle"
+                android:textSelectHandleRight="@drawable/textselecthandle"
+                android:textSize="@dimen/x66"
+                app:clearButtonMode="whileEditing"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_divider_out"></View>
+
+    </LinearLayout>
+</LinearLayout>

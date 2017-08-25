@@ -26,9 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:background="@drawable/toplines_shape_edit"
+            android:background="@drawable/corner_titlebar"
             android:drawableLeft="@drawable/icon_search"
+            android:focusable="false"
             android:hint="搜你想搜的"
             android:imeOptions="actionSearch"
             android:paddingLeft="5dp"
@@ -48,7 +50,8 @@
             android:background="@drawable/toplines_shape_text"
             android:gravity="center"
             android:text="搜索"
-            android:textColor="@color/color_white"/>
+            android:textColor="@color/color_white"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <include layout="@layout/fragment_layout_headline_tabbar"></include>

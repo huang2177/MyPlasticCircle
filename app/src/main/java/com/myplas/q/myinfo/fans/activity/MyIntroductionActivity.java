@@ -33,8 +33,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 17:46
  */
-public class MyIntroductionActivity extends BaseActivity implements ResultCallBack
-        , XListView.IXListViewListener, DialogShowUtils.DialogShowInterface {
+public class MyIntroductionActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface {
     private XListView listView;
     private List<MyIntroductionBean.DataBean> list;
     private List<MyIntroductionBean.DataBean> list_more;
@@ -46,13 +45,14 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wd_yj_activity_layout);
-        goBack(findViewById(R.id.back));
+        setContentView(R.layout.activity_layout_myself_introdution);
+        initTileBar();
+        setTitle("我的引荐");
+
         listView = (XListView) findViewById(R.id.wd_yj_listview);
         list_more = new ArrayList<>();
         listView.setPullLoadEnable(true);
         listView.setPullRefreshEnable(false);
-        //listView.setXListViewListener(this);
         sharedUtils = SharedUtils.getSharedUtils();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -171,18 +171,6 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
                 startActivity(new Intent(this, IntegralPayActivtity.class));
                 break;
         }
-    }
-
-    @Override
-    public void onRefresh() {
-        page = 1;
-        getMyFans(String.valueOf(page));
-    }
-
-    @Override
-    public void onLoadMore() {
-//        page++;
-//        getMyFans(String.valueOf(page));
     }
 
     public void onResume() {

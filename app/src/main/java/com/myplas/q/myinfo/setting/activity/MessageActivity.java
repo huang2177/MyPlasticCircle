@@ -14,6 +14,7 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.MySelfInfo;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
+import com.suke.widget.SwitchButton;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -25,16 +26,17 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 10:25
  */
-public class MessageActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, ResultCallBack {
+public class MessageActivity extends BaseActivity implements SwitchButton.OnCheckedChangeListener, ResultCallBack {
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
-    private Switch switch_gz, switch_hf;
+    private SwitchButton switch_gz, switch_hf;
 
     private Map<String, String> map;
     private MySelfInfo.DataBean.AllowSendBean mBean;
     private SharedUtils sharedUtils;
     private String allow_sendmsg_gz, allow_sendmsg_hf;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,22 +56,16 @@ public class MessageActivity extends BaseActivity implements CompoundButton.OnCh
         switch_hf.setOnCheckedChangeListener(this);
         switch_gz.setOnCheckedChangeListener(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            switch_gz.setThumbResource(R.drawable.switch_thumb);
-            switch_gz.setTrackResource(R.drawable.switch_track);
-            switch_hf.setThumbResource(R.drawable.switch_thumb);
-            switch_hf.setTrackResource(R.drawable.switch_track);
-        }
 
         mBean = (MySelfInfo.DataBean.AllowSendBean) getIntent().getSerializableExtra("Allow_send");
         if (mBean != null) {
-            switch_gz.setChecked((mBean.getFocus() == 1) ? (false) : (true));
-            switch_hf.setChecked(mBean.getRepeat() == 1 ? false : true);
+            switch_gz.setChecked((mBean.getFocus().equals("1")) ? (false) : (true));
+            switch_hf.setChecked(mBean.getRepeat().equals("1") ? false : true);
         }
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public void onCheckedChanged(SwitchButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
             case R.id.message_switch_gz:
                 allow_sendmsg_gz = (isChecked) ? "0" : "1";
@@ -92,6 +88,7 @@ public class MessageActivity extends BaseActivity implements CompoundButton.OnCh
         String url = API.BASEURL + method;
         postAsyn(this, url, map, this, type);
     }
+
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);

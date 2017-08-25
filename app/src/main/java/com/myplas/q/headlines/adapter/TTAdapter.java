@@ -59,7 +59,6 @@ public class TTAdapter extends BaseAdapter {
         }else {
             viewHolder=(viewHolder)convertView.getTag();
         }
-        viewHolder.content.setText(replaceContent(list.get(position).getDescription()));
         viewHolder.num.setText(" " +list.get(position).getPv());
         viewHolder.title2.setText(replaceContent(list.get(position).getTitle()));
         viewHolder.time.setText(" " + list.get(position).getInput_time());

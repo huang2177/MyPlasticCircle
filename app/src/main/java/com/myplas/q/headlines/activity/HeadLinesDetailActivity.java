@@ -20,9 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.myplas.q.R;
-import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
@@ -31,7 +29,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
-import com.myplas.q.headlines.adapter.Find_Detail_More_ListviewAdapetr;
+import com.myplas.q.headlines.adapter.HeadLinesDetail_More_LVAdapetr;
 import com.myplas.q.common.api.API;
 import com.myplas.q.headlines.bean.SucribleDetailBean;
 import com.myplas.q.release.activity.ReleaseActivity;
@@ -43,8 +41,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.R.attr.width;
-
 /**
  * 编写： 黄双
  * 电话：15378412400
@@ -53,12 +49,12 @@ import static android.R.attr.width;
  */
 public class HeadLinesDetailActivity extends BaseActivity implements ResultCallBack, View.OnClickListener {
     private WebView webView;
-    private MyListview listview;
     private Resources resources;
     private WebSettings webSettings;
     private SharedUtils sharedUtils;
     private LinearLayout linearLayout_share;
     private SucribleDetailBean sucribleDetailBean;
+    private MyListview mListviewHot, mListviewAbout;
     private TextView textView_tt_title, textView_shj;
     private TextView textView_title, textView_content;
     private TextView imageView_btn_next, imageView_btn_last;
@@ -87,10 +83,11 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         imageView_btn_next = F(R.id.btn_next);
         textView_title = F(R.id.fx_ttxq_title);
         textView_shj = F(R.id.fx_tt_title_shj);
-        listview = F(R.id.find_detail_mliatview);
         mScrollView = F(R.id.headline_sceollview);
+        mListviewHot = F(R.id.find_detail_mliatview);
         textView_tt_title = F(R.id.fx_tt_title_text);
         linearLayout_share = F(R.id.wd_linear_share);
+        mListviewAbout = F(R.id.find_detail_about_mlv);
 
         layout_gq = F(R.id.buttom_linear_gq);
         layout_txl = F(R.id.buttom_linear_txl);
@@ -140,7 +137,13 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
 //        }
         webView.setWebViewClient(new WebViewClient());
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListviewHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getNetData(sucribleDetailBean.getInfo().getSubscribe().get(position).getId());
+            }
+        });
+        mListviewAbout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getNetData(sucribleDetailBean.getInfo().getSubscribe().get(position).getId());
@@ -193,10 +196,14 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         webView.loadData(s, "text/html;charset=UTF-8", null);
         //webView.loadDataWithBaseURL(null, html, "textselecthandle/html", "UTF-8", null);
 
-        List<SucribleDetailBean.InfoBean.SubscribeBean> l = sucribleDetailBean.getInfo().getSubscribe();
-        textView_content.setVisibility((l == null) ? (View.GONE) : (View.VISIBLE));
-        Find_Detail_More_ListviewAdapetr f = new Find_Detail_More_ListviewAdapetr(this, l);
-        listview.setAdapter(f);
+        List<SucribleDetailBean.InfoBean.SubscribeBean> subscribeBeanList = sucribleDetailBean.getInfo().getSubscribe();
+        List<SucribleDetailBean.InfoBean.HotBean> hotBeanList = sucribleDetailBean.getInfo().getHot();
+        textView_content.setVisibility((subscribeBeanList == null) ? (View.GONE) : (View.VISIBLE));
+        HeadLinesDetail_More_LVAdapetr adapetrHot = new HeadLinesDetail_More_LVAdapetr(this, null, subscribeBeanList);
+        mListviewAbout.setAdapter(adapetrHot);
+
+        HeadLinesDetail_More_LVAdapetr adapetrAbout = new HeadLinesDetail_More_LVAdapetr(this, hotBeanList, null);
+        mListviewHot.setAdapter(adapetrAbout);
     }
 
     @Override

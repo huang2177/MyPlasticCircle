@@ -50,8 +50,8 @@
     <View
         android:id="@+id/divider_result"
         android:layout_width="match_parent"
-        android:layout_height="5px"
-        android:background="@color/color_lightgray"></View>
+        android:layout_height="3px"
+        android:background="@color/color_gray_divider_out"></View>
 
     <FrameLayout
         android:id="@+id/search_result_framelayout"

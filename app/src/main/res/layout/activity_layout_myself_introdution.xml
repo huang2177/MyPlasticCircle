@@ -8,10 +8,14 @@
     <include layout="@layout/titlebar_lauout"></include>
 
     <com.myplas.q.common.view.XListView
-        android:id="@+id/mymessage_listview"
+        android:id="@+id/wd_yj_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:background="@color/color_white"
-        android:scrollbars="none"></com.myplas.q.common.view.XListView>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:divider="@color/color_lightgray"
+        android:dividerHeight="1.2px"
+        android:scrollbars="none">
+    </com.myplas.q.common.view.XListView>
 </LinearLayout>

@@ -13,7 +13,7 @@ public class MySelfInfo implements Serializable {
 
     /**
      * err : 0
-     * data : {"user_id":"41497","name":"黄双","c_id":"37963","mobile":"15378412400","adistinct":"华东","sex":"男","member_level":"列兵","thumb":"http://statics.myplas.com/myapp/img/male.jpg","thumbqq":"","thumbcard":"","allow_send":{"focus":0,"repeat":0,"show":date_selected},"c_name":"上海中晨电子商务有限公司","need_product":"","address":"","type":"date_selected","month_consum":"0.00","main_product":"","buy":"7","sale":"6","total":15650,"rank":"13139","fans":"0","concern_model":"HF5110"}
+     * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","adistinct":"华北","sex":"男","member_level":"列兵","thumb":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbcard":"http://pic.myplas.com/upload/17/08/14/599116f59415e.jpg","allow_send":{"focus":1,"repeat":0,"show":0},"c_name":"上海中晨电子商务股份有限公司","need_product":"5000F|2179","address":"北京北京东城区|上海","type":"1","month_consum":"100","main_product":"5000","origin":"|","buy":"1","sale":0,"total":3349,"rank":"22","fans":"7","concern_model":"500"}
      */
 
     private int err;
@@ -35,31 +35,32 @@ public class MySelfInfo implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean {
         /**
-         * user_id : 41497
-         * name : 黄双
-         * c_id : 37963
+         * user_id : 53402
+         * name : hh
+         * c_id : 5041
          * mobile : 15378412400
-         * adistinct : 华东
+         * adistinct : 华北
          * sex : 男
          * member_level : 列兵
-         * thumb : http://statics.myplas.com/myapp/img/male.jpg
-         * thumbqq :
-         * thumbcard :
-         * allow_send : {"focus":0,"repeat":0,"show":date_selected}
-         * c_name : 上海中晨电子商务有限公司
-         * need_product :
-         * address :
-         * type : date_selected
-         * month_consum : 0.00
-         * main_product :
-         * buy : 7
-         * sale : 6
-         * total : 15650
-         * rank : 13139
-         * fans : 0
-         * concern_model : HF5110
+         * thumb : http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG
+         * thumbqq : http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG
+         * thumbcard : http://pic.myplas.com/upload/17/08/14/599116f59415e.jpg
+         * allow_send : {"focus":1,"repeat":0,"show":0}
+         * c_name : 上海中晨电子商务股份有限公司
+         * need_product : 5000F|2179
+         * address : 北京北京东城区|上海
+         * type : 1
+         * month_consum : 100
+         * main_product : 5000
+         * origin : |
+         * buy : 1
+         * sale : 0
+         * total : 3349
+         * rank : 22
+         * fans : 7
+         * concern_model : 500
          */
 
         private String user_id;
@@ -79,9 +80,10 @@ public class MySelfInfo implements Serializable {
         private String type;
         private String month_consum;
         private String main_product;
+        private String origin;
         private String buy;
         private String sale;
-        private int total;
+        private String total;
         private String rank;
         private String fans;
         private String concern_model;
@@ -222,6 +224,14 @@ public class MySelfInfo implements Serializable {
             this.main_product = main_product;
         }
 
+        public String getOrigin() {
+            return origin;
+        }
+
+        public void setOrigin(String origin) {
+            this.origin = origin;
+        }
+
         public String getBuy() {
             return buy;
         }
@@ -238,11 +248,11 @@ public class MySelfInfo implements Serializable {
             this.sale = sale;
         }
 
-        public int getTotal() {
+        public String getTotal() {
             return total;
         }
 
-        public void setTotal(int total) {
+        public void setTotal(String total) {
             this.total = total;
         }
 
@@ -272,36 +282,36 @@ public class MySelfInfo implements Serializable {
 
         public static class AllowSendBean implements Serializable {
             /**
-             * focus : 0
+             * focus : 1
              * repeat : 0
-             * show : date_selected
+             * show : 0
              */
 
-            private int focus;
-            private int repeat;
-            private int show;
+            private String focus;
+            private String repeat;
+            private String show;
 
-            public int getFocus() {
+            public String getFocus() {
                 return focus;
             }
 
-            public void setFocus(int focus) {
+            public void setFocus(String focus) {
                 this.focus = focus;
             }
 
-            public int getRepeat() {
+            public String getRepeat() {
                 return repeat;
             }
 
-            public void setRepeat(int repeat) {
+            public void setRepeat(String repeat) {
                 this.repeat = repeat;
             }
 
-            public int getShow() {
+            public String getShow() {
                 return show;
             }
 
-            public void setShow(int show) {
+            public void setShow(String show) {
                 this.show = show;
             }
         }

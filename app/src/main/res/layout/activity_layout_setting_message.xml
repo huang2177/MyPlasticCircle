@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/color_gray_bg"
@@ -11,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_white"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="10dp">
 
         <ImageView
@@ -23,17 +24,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:text="关注我提醒"
-            android:layout_marginLeft="5dp"
             android:textColor="@color/color_balank"
             android:textSize="16.0sp"/>
 
-        <Switch
+        <com.suke.widget.SwitchButton
             android:id="@+id/message_switch_gz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            app:sb_checkline_color="#05d61a"
+            app:sb_checkline_width="0dp"
+            app:sb_uncheckcircle_color="@color/color_white"
+            app:sb_uncheckcircle_width="0dp"/>
     </LinearLayout>
 
     <View
@@ -45,9 +50,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_white"
-        android:padding="10dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="80px"
@@ -58,18 +63,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="恢复供求提醒"
             android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
+            android:text="恢复供求提醒"
             android:textColor="@color/color_balank"
             android:textSize="16.0sp"/>
 
-        <Switch
+        <com.suke.widget.SwitchButton
             android:id="@+id/message_switch_hf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            app:sb_checkline_color="#05d61a"
+            app:sb_checkline_width="0dp"
+            app:sb_uncheckcircle_color="@color/color_white"
+            app:sb_uncheckcircle_width="0dp"/>
     </LinearLayout>
 
 

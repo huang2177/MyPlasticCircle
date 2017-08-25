@@ -81,7 +81,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
     private ImageView imageView_intergral, jia;
     private RadioGroup radioGroup_address, radioGroup_time;
     private RadioButton radioButton_address, radioButton_time;
-    private View view, viewheader, imageView_tm, imageView_adress, view_header_line;
+    private View view, viewheader, imageView_tm, imageView_adress;
     public CustomPopupWindow mPopupWindow1, mPopupWindow2, mPopupWindow3;
     private TextView rs, zh_zj, wgz, gzw, textView_address, search_text, textView_refresh;
 
@@ -105,7 +105,6 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         rs = (TextView) view.findViewById(R.id.title_rs);
         jia = (ImageView) view.findViewById(R.id.title_jia);
         editText = (EditText) view.findViewById(R.id.txl_edit);
-        view_header_line = view.findViewById(R.id.header_view);
         imageButton = (ImageButton) view.findViewById(R.id.img_reload);
         textView_address = (TextView) view.findViewById(R.id.address);
         search_text = (TextView) view.findViewById(R.id.search_src_text);
@@ -340,7 +339,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         return view;
     }
 
-    public void setPoPouProperty(CustomPopupWindow popupWindow,boolean b) {
+    public void setPoPouProperty(CustomPopupWindow popupWindow, boolean b) {
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);//设置弹出窗体需要软键盘，
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);  //再设置模式，和Activity的一样，覆盖。
     }
@@ -511,7 +510,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 DialogShowUtils dialogShowUtils = new DialogShowUtils();
                 dialogShowUtils.showDialog(getActivity(), content, (err.equals("100")) ? (2) : (3), this);
             }
-            if (type == 10 &&! err.equals("0")) {
+            if (type == 10 && !err.equals("0")) {
                 sharedUtils.setData(getActivity(), "token", "");
                 sharedUtils.setData(getActivity(), "userid", "");
                 sharedUtils.setBooloean(getActivity(), "logined", false);
@@ -544,14 +543,12 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                     jumpToWhere = txlBean.getIs_banner_jump_native() + "";
                     jumpTitle = txlBean.getBanner_jump_url_title();
 
-                    view_header_line.setVisibility(View.VISIBLE);
                     viewheader.findViewById(R.id.linearlayout_care_fans).setVisibility(View.GONE);
                     viewheader.findViewById(R.id.contact_img).setVisibility(View.VISIBLE);
                     imageView_intergral = (ImageView) viewheader.findViewById(R.id.contact_img);
                     Glide.with(getContext()).load(img_url).into(imageView_intergral);
                     imageView_intergral.setOnClickListener(this);
                 } else {
-                    view_header_line.setVisibility(View.GONE);
                     viewheader.findViewById(R.id.linearlayout_care_fans).setVisibility(View.VISIBLE);
                     viewheader.findViewById(R.id.contact_img).setVisibility(View.GONE);
                     wgz = (TextView) viewheader.findViewById(R.id.text_wgz);
@@ -666,13 +663,14 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             popupWindow.showAsDropDown(editText);
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
         //统计页面，"MainScreen"为页面名称，可自定义
         MobclickAgent.onPageStart("MainScreen");
         //检查登录状态
-        BaseActivity.postAsyn(getActivity(),API.BASEURL+API.VALIDUSERTOKEN,null,this,10);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10);
     }
 
     public void onPause() {

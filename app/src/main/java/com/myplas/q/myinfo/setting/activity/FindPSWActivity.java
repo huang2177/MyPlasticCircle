@@ -155,7 +155,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                     finish();
                 }
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
         }
     }
 

@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,7 +56,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private SharedUtils sharedUtils;
     private Map<String, String> map;
     private String sexInPut, regionInPut;
-    private String type, address, sex, region, product, monthUse, mainPro, model;
+    private String type, address, addressId, sex, region, product, monthUse, mainPro, model;
 
     private ImageView image_shch;
     private MyImageView image_tx;
@@ -150,11 +151,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 break;
 
             case R.id.setting_data_address:
-                Intent intent5 = new Intent(this, DataCommonActivity.class);
-                intent5.putExtra("type", "2");
+                Intent intent5 = new Intent(this, AddressSelectedActivity.class);
+                intent5.putExtra("type", "3");
                 intent5.putExtra("title", "地址");
-                intent5.putExtra("hint", address);
-                startActivityForResult(intent5, 5);
+                intent5.putExtra("address", address);
+                intent5.putExtra("addressId", addressId);
+                startActivity(intent5);
                 break;
             case R.id.setting_data_product:
                 Intent intent6 = new Intent(this, DataCommonActivity.class);
@@ -218,6 +220,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         map.put("concern", sModel);
         map.put("major", sMainPro);
         map.put("address", address);
+        map.put("address_id", addressId);
         map.put("dist", regionInPut);
         map.put("token", sharedUtils.getData(this, "token"));
         saveSelfInfo(API.SAVE_SELFINFO, map, 3);
@@ -245,6 +248,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("-=-=-=-=-=", object.toString());
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 mySelfInfo = null;
@@ -257,7 +261,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             if (type == 3 && err.equals("0")) {
                 requestNetData();
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
         }
     }
 
@@ -270,6 +274,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             sex = mySelfInfo.getData().getSex();
             type = mySelfInfo.getData().getType();
             address = mySelfInfo.getData().getAddress();
+            addressId = mySelfInfo.getData().getOrigin();
             region = mySelfInfo.getData().getAdistinct();
             model = mySelfInfo.getData().getConcern_model();
             product = mySelfInfo.getData().getMain_product();
@@ -372,12 +377,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             Glide.with(this).load(imagePath).into(image_shch);
             upLoadImg(API.SAVE_CARD_IMG, imagePath, 6);
         }
-        if (requestCode == 5 && data != null) {
-            if (!address.equals(data.getStringExtra("updateData"))) {
-                address = data.getStringExtra("updateData");
-                saveData();
-            }
-        }
         if (requestCode == 6 && data != null) {
             if (!product.equals(data.getStringExtra("updateData"))) {
                 product = data.getStringExtra("updateData");
@@ -415,11 +414,16 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                         sexInPut = data;
                         saveData();
                     }
-                } else {
+                } else if (type.equals("1")) {
                     if (!regionInPut.equals(data)) {
                         regionInPut = data;
                         saveData();
                     }
+                } else {
+                    address = data;
+                    addressId = intent.getStringExtra("addressId");
+                    Log.e("******", addressId + "----");
+                    saveData();
                 }
             }
         }

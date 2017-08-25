@@ -1,119 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/linear_txl_item">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1.5px"
-        android:background="@color/color_lightgray"></View>
+              android:id="@+id/linear_txl_item"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0.5px"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:background="@color/color_gray3"></View>-->
 
     <LinearLayout
+        android:id="@+id/txl_listview_gd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/txl_listview_gd"
         android:background="#ffffff"
         android:orientation="horizontal">
+
         <include layout="@layout/layout_tx"></include>
+
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
-            android:layout_height="match_parent">
+            android:layout_weight="1">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/x66"
-                        android:singleLine="true"
                         android:id="@+id/txl_listview_gs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
                         android:drawableLeft="@drawable/icon_company"
-                        android:textColor="@color/color_balank"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:textSize="@dimen/x66"
-                        android:layout_weight="2.1"
+                        android:drawablePadding="3dp"
                         android:singleLine="true"
+                        android:textColor="@color/color_balank"
+                        android:textSize="@dimen/x66"/>
+
+                    <TextView
+                        android:id="@+id/txl_listview_mz"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="2.3"
                         android:drawableLeft="@drawable/icon_name"
+                        android:drawablePadding="3dp"
+                        android:maxLines="1"
                         android:textColor="@color/color_balank"
-                        android:id="@+id/txl_listview_mz"/>
+                        android:textSize="@dimen/x66"/>
+
                     <TextView
+                        android:id="@+id/txl_listview_sex"
                         android:layout_width="0dp"
-                        android:layout_weight="2.9"
-                        android:textSize="@dimen/x66"
-                        android:singleLine="true"
                         android:layout_height="wrap_content"
+                        android:layout_weight="2.9"
+                        android:singleLine="true"
                         android:textColor="@color/color_balank"
-                        android:id="@+id/txl_listview_sex"/>
+                        android:textSize="@dimen/x66"/>
                 </LinearLayout>
+
                 <TextView
+                    android:id="@+id/txl_listview_zg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:textSize="@dimen/x66"
                     android:textColor="@color/color_blue"
-                    android:id="@+id/txl_listview_zg"/>
+                    android:textSize="@dimen/x66"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
+                        android:id="@+id/txl_listview_gj"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txl_listview_gj"
+                        android:singleLine="true"
                         android:textColor="@color/color_balank"
-                        android:textSize="@dimen/x66"
-                        android:singleLine="true"/>
+                        android:textSize="@dimen/x66"/>
                     <!--<LinearLayout-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_weight="7"-->
-                        <!--android:layout_height="wrap_content">-->
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:id="@+id/need_text" />-->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/x66"
-                            android:id="@+id/txl_listview_zhy"
-                            android:textColor="@color/color_balank"
-                            android:singleLine="true"/>
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_weight="7"-->
+                    <!--android:layout_height="wrap_content">-->
+                    <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/need_text" />-->
+                    <TextView
+                        android:id="@+id/txl_listview_zhy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textColor="@color/color_balank"
+                        android:textSize="@dimen/x66"/>
                     <!--</LinearLayout>-->
                 </LinearLayout>
             </LinearLayout>
+
             <ImageView
+                android:id="@+id/top_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
-                android:paddingBottom="8dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/top_img"
-                android:visibility="gone"
-                android:src="@drawable/icon_contact_up"/>
+                android:paddingBottom="8dp"
+                android:src="@drawable/icon_contact_up"
+                android:visibility="gone"/>
         </FrameLayout>
+
         <LinearLayout
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:gravity="center">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_more"/>
         </LinearLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5px"
-        android:background="@color/color_lightgray"></View>
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/color_gray3"></View>
 </LinearLayout>

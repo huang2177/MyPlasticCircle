@@ -177,7 +177,6 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-------", object.toString());
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("err");
             Gson gson = new Gson();
@@ -198,7 +197,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
                 if (err.equals("0")) {
                     mySelfInfo = gson.fromJson(object.toString(), MySelfInfo.class);
                     MySelfInfo.DataBean.AllowSendBean ab = mySelfInfo.getData().getAllow_send();
-                    mAdapter.setSwitchChecked(ab.getShow() == 1 ? false : true);
+                    mAdapter.setSwitchChecked(ab.getShow().equals("1") ? false : true);
                 }
             }
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 14:10
  */
-public class IntegralActivity extends BaseActivity implements ResultCallBack, View.OnClickListener {
+public class IntegralActivity extends BaseActivity implements ResultCallBack, View.OnClickListener, IntegralAdapter.MyInterface {
     private SharedUtils sharedUtils;
     private RecyclerView mRecyclerView;
     private IntegralAdapter integralAdapter;
@@ -72,7 +73,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
             Map<String, String> map = new HashMap<String, String>();
             map.put("token", sharedUtils.getData(this, "token"));
             map.put("page", "1");
-            map.put("size", "10");
+            map.put("size", "20");
             postAsyn(this, API.BASEURL + API.GET_PRODUCT_LIST, map, this, type);
         } catch (Exception e) {
         }
@@ -86,7 +87,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
                 list = integralBean.getInfo();
                 integral_all.setText(" " + integralBean.getPointsAll().toString());
-                integralAdapter = new IntegralAdapter(this, this, list);
+                integralAdapter = new IntegralAdapter(this, this, list, this);
                 mRecyclerView.setAdapter(integralAdapter);
             } else if (type == 1) {
                 TextUtils.Toast(this, "没有相关数据！");
@@ -96,12 +97,18 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 integral_all.setText(" " + integralBean.getPointsAll().toString());
             }
         } catch (Exception e) {
+            TextUtils.Toast(this, "数据解析错啦！");
         }
     }
 
     @Override
     public void failCallBack(int type) {
 
+    }
+
+    @Override
+    public void refresgData() {
+        getProducts(2);
     }
 
     @Override
@@ -125,7 +132,6 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
 
     public void onResume() {
         super.onResume();
-        getProducts(2);
         MobclickAgent.onResume(this);
     }
 

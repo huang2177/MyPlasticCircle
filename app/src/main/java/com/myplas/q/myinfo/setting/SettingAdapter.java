@@ -11,11 +11,9 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
 import com.myplas.q.common.utils.FileUtils;
-import com.myplas.q.myinfo.beans.MyMessageBean;
+import com.suke.widget.SwitchButton;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +32,7 @@ public class SettingAdapter extends BaseAdapter {
     mySwitchCheckedListenler mListenler;
 
     Map<Integer, View> mViewMap;
-    Map<Integer, Switch> mSwitchMap;
+    Map<Integer, SwitchButton> mSwitchMap;
 
     public SettingAdapter(Context context, List<String> list, List<Integer> list1) {
         this.context = context;
@@ -67,10 +65,10 @@ public class SettingAdapter extends BaseAdapter {
         if (mViewMap.get(position) == null) {
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_setting, parent, false);
-            viewHolder.mSwitch = (Switch) convertView.findViewById(R.id.item_lv_setting_switch);
             viewHolder.mTextView = (TextView) convertView.findViewById(R.id.item_lv_setting_text);
-            viewHolder.mTextView1 = (TextView) convertView.findViewById(R.id.item_lv_setting_text1);
             viewHolder.mImageView = (ImageView) convertView.findViewById(R.id.item_lv_setting_img);
+            viewHolder.mTextView1 = (TextView) convertView.findViewById(R.id.item_lv_setting_text1);
+            viewHolder.mSwitch = (SwitchButton) convertView.findViewById(R.id.item_lv_setting_switch);
             convertView.setTag(viewHolder);
             mViewMap.put(position, convertView);
         } else {
@@ -82,10 +80,6 @@ public class SettingAdapter extends BaseAdapter {
             viewHolder.mTextView1.setVisibility(View.GONE);
             viewHolder.mSwitch.setVisibility(View.VISIBLE);
             viewHolder.mSwitch.setOnCheckedChangeListener(new myOnCheckedChangeListener());
-            if (Build.VERSION.SDK_INT >= 19) {
-                viewHolder.mSwitch.setThumbResource(R.drawable.switch_thumb);
-                viewHolder.mSwitch.setTrackResource(R.drawable.switch_track);
-            }
         }
         if (position == 6) {
             String cacheSize = FileUtils.getTotalCacheSize(context);
@@ -97,7 +91,7 @@ public class SettingAdapter extends BaseAdapter {
     }
 
     class viewHolder {
-        Switch mSwitch;
+        SwitchButton mSwitch;
         ImageView mImageView;
         TextView mTextView, mTextView1;
     }
@@ -106,15 +100,12 @@ public class SettingAdapter extends BaseAdapter {
         mSwitchMap.get(1).setChecked(checked);
     }
 
-    public class myOnCheckedChangeListener implements CompoundButton.OnCheckedChangeListener {
+    public class myOnCheckedChangeListener implements SwitchButton.OnCheckedChangeListener {
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            switch (buttonView.getId()) {
-                case R.id.item_lv_setting_switch:
-                    String allow_sendmsg_gk = (isChecked) ? "0" : "1";
-                    mListenler.onChecked(allow_sendmsg_gk);
-                    break;
-            }
+        public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+            String allow_sendmsg_gk = (isChecked) ? "0" : "1";
+            mListenler.onChecked(allow_sendmsg_gk);
+
         }
     }
 

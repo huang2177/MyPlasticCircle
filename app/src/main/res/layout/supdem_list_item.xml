@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/fx_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/fx_tt_title_text"
             android:layout_width="match_parent"
@@ -18,7 +20,7 @@
             android:singleLine="true"
             android:textColor="@color/color_balank"
             android:textSize="16.0sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/fx_tt_title_content"
@@ -28,22 +30,24 @@
             android:maxLines="2"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textSize="14.0sp" />
+            android:textSize="14.0sp"/>
 
         <TextView
             android:id="@+id/fx_tt_title_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
             android:gravity="right"
             android:singleLine="true"
-            android:textSize="14.0sp" />
+            android:textSize="14.0sp"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="3px"
-        android:background="@color/color_lightgray"></View>
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/color_gray3"></View>
 </LinearLayout>

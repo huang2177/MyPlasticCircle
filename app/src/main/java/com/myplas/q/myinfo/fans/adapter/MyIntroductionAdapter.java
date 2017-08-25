@@ -55,7 +55,7 @@ public class MyIntroductionAdapter extends BaseAdapter {
         viewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.txl_wdgz_listview_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_lv_myself_fansfollow, parent, false);
             viewHolder.tx= (ImageView) convertView.findViewById(R.id.xq_tx);
             viewHolder.rz= (ImageView) convertView.findViewById(R.id.xq_rz);
             viewHolder.gs= (TextView) convertView.findViewById(R.id.txl_listview_gs);

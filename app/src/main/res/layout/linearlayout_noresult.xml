@@ -4,10 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <com.myplas.q.common.view.PinnedHeaderListView
+        android:id="@+id/look_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/look_listview">
+        android:divider="@color/color_gray_divider_in"
+        android:dividerHeight="1px">
     </com.myplas.q.common.view.PinnedHeaderListView>
 
     <LinearLayout
@@ -15,21 +18,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:visibility="visible"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
+
         <ImageView
             android:id="@+id/noresult_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"/>
 
         <TextView
+            android:id="@+id/noresult_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/noresult_text"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:textSize="16.0sp" />
+            android:textSize="16.0sp"/>
     </LinearLayout>
 </LinearLayout>

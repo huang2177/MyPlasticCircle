@@ -1,6 +1,7 @@
 package com.myplas.q.myinfo.integral.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
@@ -89,6 +90,7 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("-----", object.toString());
             RecordBean recordBean = null;
             if (new JSONObject(object.toString()).getString("err").equals("0")) {
                 Gson gson = new Gson();

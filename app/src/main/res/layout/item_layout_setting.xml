@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="70px"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/item_lv_setting_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center"/>
         </LinearLayout>
 
 
@@ -29,6 +29,7 @@
             android:id="@+id/item_lv_setting_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="80px"
             android:layout_weight="1"
             android:textColor="@color/color_balank"
@@ -38,15 +39,19 @@
             android:id="@+id/item_lv_setting_text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="right|center_vertical"
             android:drawableRight="@drawable/icon_more"/>
 
-        <Switch
+        <com.suke.widget.SwitchButton
             android:id="@+id/item_lv_setting_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:visibility="gone"/>
+            android:layout_gravity="right|center_vertical"
+            android:visibility="gone"
+            app:sb_checkline_color="#05d61a"
+            app:sb_checkline_width="0dp"
+            app:sb_uncheckcircle_color="@color/color_white"
+            app:sb_uncheckcircle_width="0dp"/>
     </FrameLayout>
 
     <View

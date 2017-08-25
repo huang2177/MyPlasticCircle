@@ -10,12 +10,12 @@ public class API {
     /*base url*/
     //测试
     public final static String BASEURL = "https://ssl.myplas.com/qapi_3/";
-//    正式
+    //    正式
 //    public final static String BASEURL = "https://api.myplas.com/qapi_3/";
     //测试_快速登陆
 //    public final static String BASEURL_API = "https://ssl.myplas.com/";
     //正式_快速登陆
-    public final static String BASEURL_API= "https://api.myplas.com/";
+    public final static String BASEURL_API = "https://api.myplas.com/";
 
     /*common*/
     //检查UA
@@ -79,7 +79,6 @@ public class API {
     public final static String CHK_VCODE = "api/vcode/chkVcode";
 
 
-
     /*friend*/
     //取消或关注
     public final static String FOCUS_OR_CANCEL = "friend/focusOrCancel";
@@ -118,6 +117,8 @@ public class API {
     public final static String GET_ROBOT_MSG = "myInfo/getRobotMsg";
     //获取谁看过我详情数据
     public final static String GET_VIEW_HISTORY_DETAILS = "myInfo/getViewHistoryDetails";
+    //获取格式化中国的地区
+    public final static String GET_ALL_REGIONS = "myInfo/getAllRegions";
 
     /*product*/
     //塑料圈app之兑换置顶信息
@@ -128,6 +129,8 @@ public class API {
     public final static String GET_VALID_DATE = "product/getValidDate";
     //塑料圈app之购买记录
     public final static String GET_PURCHASE_RECORD = "product/getPurchaseRecord";
+    //塑料圈app之购买头条
+    public final static String NEW_EXCHANGE_TOUTIAO = "product/newExchangeToutiao";
 
 
     /*pay*/
@@ -143,7 +146,7 @@ public class API {
 
     /*score*/
     //塑料圈app之积分记录
-    public final static String SCORE_RECORD = "score/scoreRecord";
+    public final static String SCORE_RECORD = "score/getScoreRecords";
 
 
     /*releaseMsg*/
@@ -212,4 +215,11 @@ public class API {
     public final static String GET_SELECT_CATE = "toutiao/getSelectCate";
     //塑料头条-详情列表
     public final static String GET_DETAIL_INFO = "toutiao/getDetailInfo";
+    //头条搜索记录及相关推荐
+    public final static String TOUTIAO_SEARCH_LOG = "toutiao/ToutiaoSearchLog";
+    //清空头条搜索记录
+    public final static String DEL_TOUTIAO_SEARCH_LOG = "toutiao/delToutiaoSearchLog";
+    //塑料头条-详情列表
+    //public final static String GET_DETAIL_INFO = "toutiao/getDetailInfo";
+
 }

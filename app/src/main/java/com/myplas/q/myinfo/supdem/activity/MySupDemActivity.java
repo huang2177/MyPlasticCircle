@@ -32,33 +32,35 @@ import java.util.Map;
  */
 public class MySupDemActivity extends BaseActivity implements ResultCallBack, SupDemAdapter.MyInterface
         , XListView.IXListViewListener {
+
     private String type;
-    private TextView textView;
-    private XListView listView;
-    private List<MyCommentBean.DataBean> list;
-    private List<MyCommentBean.DataBean> list_more;
-    private SupDemAdapter supplyDemandAdapter;
     private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
+
+    private TextView textView;
+    private XListView listView;
     private NoResultLayout mNoResultLayout;
+    private List<MyCommentBean.DataBean> list;
+    private List<MyCommentBean.DataBean> list_more;
+
+    private SupDemAdapter supplyDemandAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_myself_msg);
+        setContentView(R.layout.activity_layout_myself_supdem);
         initTileBar();
         setTitle(getIntent().getStringExtra("title"));
 
         list_more = new ArrayList<>();
+        sharedUtils = SharedUtils.getSharedUtils();
         mNoResultLayout = F(R.id.mysupdem_noresultlayout);
         listView = (XListView) findViewById(R.id.wd_gj_listview);
 
         listView.setPullLoadEnable(true);
         listView.setPullRefreshEnable(false);
         listView.setXListViewListener(this);
-        sharedUtils = SharedUtils.getSharedUtils();
         type = getIntent().getStringExtra("type");
-        getSupplyDemandList("1");
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -75,6 +77,8 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
                 MySupDemActivity.this.visibleItemCount = visibleItemCount;
             }
         });
+
+        getSupplyDemandList("1");
     }
 
     public void getSupplyDemandList(String page) {

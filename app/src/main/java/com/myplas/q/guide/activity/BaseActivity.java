@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -111,7 +112,13 @@ public class BaseActivity extends Activity {
     }
 
     //get请求
-    public synchronized void getAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, String jison) {
+    public synchronized void getAsyn(Context context
+            , String url
+            , Map<String
+            , String> map
+            , ResultCallBack resultCallBack
+            , int type
+            , String jison) {
         if (NetUtils.isNetworkStateed(context)) {
             NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
             netRequest.getAsyn();
@@ -119,7 +126,12 @@ public class BaseActivity extends Activity {
     }
 
     //post请求
-    public static synchronized void postAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type) {
+    public static synchronized void postAsyn(Context context
+            , String url
+            , Map<String
+            , String> map
+            , ResultCallBack resultCallBack
+            , int type) {
         if (NetUtils.isNetworkStateed(context)) {
             LoadingDialog.getInstance(context).show();
             NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
@@ -130,9 +142,15 @@ public class BaseActivity extends Activity {
     }
 
     //post请求
-    public static synchronized void postAsyn1(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, boolean isSHowDialog) {
+    public static synchronized void postAsyn1(Context context
+            , String url
+            , Map<String
+            , String> map
+            , ResultCallBack resultCallBack
+            , int type
+            , boolean isShowDialog) {
         if (NetUtils.isNetworkStateed(context)) {
-            if (isSHowDialog) {
+            if (isShowDialog) {
                 LoadingDialog.getInstance(context).show();
             }
             NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
@@ -143,7 +161,12 @@ public class BaseActivity extends Activity {
     }
 
     //post之上传图片
-    public synchronized void postUpLoadIMG(Context context, String url, String imgpath, String token, ResultCallBack resultCallBack, int type) {
+    public synchronized void postUpLoadIMG(Context context
+            , String url
+            , String imgpath
+            , String token
+            , ResultCallBack resultCallBack
+            , int type) {
         if (NetUtils.isNetworkStateed(context)) {
             NetRequest netRequest = new NetRequest(context, url, null, resultCallBack, type);
             netRequest.post_UpLoadIMG(imgpath, token);

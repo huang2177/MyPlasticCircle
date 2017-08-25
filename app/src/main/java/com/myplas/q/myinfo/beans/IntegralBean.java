@@ -13,8 +13,8 @@ public class IntegralBean {
 
     /**
      * err : 0
-     * info : [{"id":"12","cate_id":"9","thumb":"http://pic.myplas.com/upload/17/04/07/58e759146ce08.gif","name":"单条供求信息一天置顶卡","points":"100","myMsg":[{"id":"50254","p_id":"5084","user_id":"3858","model":"7000F","unit_price":"9000.00","store_house":"上海","f_name":"上海","input_time":"04-08 11:07","type":"2","content":"ddddd","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"价格9000.00元左右/7000F/上海/上海/ddddd","saysCount":0,"deliverPriceCount":"0"},{"id":"50246","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"04-07 21:15","type":"date_selected","content":"111111","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"111111","saysCount":0,"deliverPriceCount":"0"},{"id":"50243","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"04-07 19:16","type":"2","content":"ddfffff","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"ddfffff","saysCount":0,"deliverPriceCount":"0"},{"id":"50242","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"04-07 19:15","type":"date_selected","content":"11111155555","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"11111155555","saysCount":0,"deliverPriceCount":"0"},{"id":"50241","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"04-07 19:06","type":"2","content":"ddddd","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"ddddd","saysCount":0,"deliverPriceCount":"0"}]}]
-     * pointsAll : 1589
+     * info : [{"id":"22","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"独家解读包月卡","points":"340","type":"3","extra_config":[{"cate_id":"22","cate_name":"独家解读","children":[{"cate_id":"23","cate_name":"下游"},{"cate_id":"24","cate_name":"库存"},{"cate_id":"25","cate_name":"产量"},{"cate_id":"26","cate_name":"装置检修"},{"cate_id":"27","cate_name":"排产"},{"cate_id":"28","cate_name":"进出口"},{"cate_id":"32","cate_name":"网拍"},{"cate_id":"29","cate_name":"进口"},{"cate_id":"30","cate_name":"出口"}]}]},{"id":"21","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"期刊报告包月卡","points":"340","type":"3","extra_config":[{"cate_id":"21","cate_name":"期货资讯"}]},{"id":"20","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"装置动态包月卡","points":"340","type":"3","extra_config":[{"cate_id":"20","cate_name":"美金市场"}]},{"id":"19","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"期货资讯包月卡","points":"340","type":"3","extra_config":[{"cate_id":"19","cate_name":"行业要闻"}]},{"id":"18","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"美金市场包月卡","points":"340","type":"3","extra_config":null},{"id":"17","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"中晨塑说包月卡","points":"340","type":"3","extra_config":[{"cate_id":"62","cate_name":"中晨塑说"}]},{"id":"16","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"企业动态包月卡","points":"340","type":"3","extra_config":[{"cate_id":"9","cate_name":"企业动态"}]},{"id":"15","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"早盘预报包月卡","points":"340","type":"3","extra_config":[{"cate_id":"7","cate_name":"今日焦点"}]},{"id":"14","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"塑料上游包月卡","points":"340","type":"3","extra_config":[{"cate_id":"2","cate_name":"上游动态"}]},{"id":"13","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"通讯录一天置顶卡","points":"100","type":"2","extra_config":""},{"id":"12","cate_id":"9","thumb":"http://pic.myplas.com/myapp/img/img_supply@2x.png","image":"http://pic.myplas.com/myapp/img/img_supply@2x.png","name":"供求信息一天置顶卡","points":"100","type":"1","extra_config":"","myMsg":[{"id":"110848","p_id":"0","user_id":"53402","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"08-18 15:28","type":"1","content":"pp","c_name":"上海中晨电子商务股份有限公司","name":"hh","thumb":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","sex":"0","mobile_province":"四川","is_pass":"0","contents":"pp","saysCount":1,"deliverPriceCount":0}]}]
+     * pointsAll : 1975
      */
 
     private int err;
@@ -47,29 +47,26 @@ public class IntegralBean {
 
     public static class InfoBean {
         /**
-         * id : 12
+         * id : 22
          * cate_id : 9
-         * thumb : http://pic.myplas.com/upload/17/04/07/58e759146ce08.gif
-         * name : 单条供求信息一天置顶卡
-         * points : 100
-         * myMsg : [{"id":"50254","p_id":"5084","user_id":"3858","model":"7000F","unit_price":"9000.00","store_house":"上海","f_name":"上海","input_time":"04-08 11:07","type":"2","content":"ddddd","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"价格9000.00元左右/7000F/上海/上海/ddddd","saysCount":0,"deliverPriceCount":"0"},{"id":"50246","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"04-07 21:15","type":"date_selected","content":"111111","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"111111","saysCount":0,"deliverPriceCount":"0"},{"id":"50243","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"04-07 19:16","type":"2","content":"ddfffff","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"ddfffff","saysCount":0,"deliverPriceCount":"0"},{"id":"50242","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"04-07 19:15","type":"date_selected","content":"11111155555","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"11111155555","saysCount":0,"deliverPriceCount":"0"},{"id":"50241","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"04-07 19:06","type":"2","content":"ddddd","name":"李一帆","c_name":"上海中晨电子商务","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg","contents":"ddddd","saysCount":0,"deliverPriceCount":"0"}]
+         * thumb : http://pic.myplas.com/myapp/img/img_mail_list@2x.png
+         * image : http://pic.myplas.com/myapp/img/img_mail_list@2x.png
+         * name : 独家解读包月卡
+         * points : 340
+         * type : 3
+         * extra_config : [{"cate_id":"22","cate_name":"独家解读","children":[{"cate_id":"23","cate_name":"下游"},{"cate_id":"24","cate_name":"库存"},{"cate_id":"25","cate_name":"产量"},{"cate_id":"26","cate_name":"装置检修"},{"cate_id":"27","cate_name":"排产"},{"cate_id":"28","cate_name":"进出口"},{"cate_id":"32","cate_name":"网拍"},{"cate_id":"29","cate_name":"进口"},{"cate_id":"30","cate_name":"出口"}]}]
+         * myMsg : [{"id":"110848","p_id":"0","user_id":"53402","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"08-18 15:28","type":"1","content":"pp","c_name":"上海中晨电子商务股份有限公司","name":"hh","thumb":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","sex":"0","mobile_province":"四川","is_pass":"0","contents":"pp","saysCount":1,"deliverPriceCount":0}]
          */
 
         private String id;
         private String cate_id;
         private String thumb;
+        private String image;
         private String name;
-        private String type;
         private String points;
+        private String type;
+        private List<ExtraConfigBean> extra_config;
         private List<MyMsgBean> myMsg;
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
 
         public String getId() {
             return id;
@@ -95,6 +92,14 @@ public class IntegralBean {
             this.thumb = thumb;
         }
 
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
         public String getName() {
             return name;
         }
@@ -111,6 +116,22 @@ public class IntegralBean {
             this.points = points;
         }
 
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public List<ExtraConfigBean> getExtra_config() {
+            return extra_config;
+        }
+
+        public void setExtra_config(List<ExtraConfigBean> extra_config) {
+            this.extra_config = extra_config;
+        }
+
         public List<MyMsgBean> getMyMsg() {
             return myMsg;
         }
@@ -119,24 +140,89 @@ public class IntegralBean {
             this.myMsg = myMsg;
         }
 
+        public static class ExtraConfigBean {
+            /**
+             * cate_id : 22
+             * cate_name : 独家解读
+             * children : [{"cate_id":"23","cate_name":"下游"},{"cate_id":"24","cate_name":"库存"},{"cate_id":"25","cate_name":"产量"},{"cate_id":"26","cate_name":"装置检修"},{"cate_id":"27","cate_name":"排产"},{"cate_id":"28","cate_name":"进出口"},{"cate_id":"32","cate_name":"网拍"},{"cate_id":"29","cate_name":"进口"},{"cate_id":"30","cate_name":"出口"}]
+             */
+
+            private String cate_id;
+            private String cate_name;
+            private List<ChildrenBean> children;
+
+            public String getCate_id() {
+                return cate_id;
+            }
+
+            public void setCate_id(String cate_id) {
+                this.cate_id = cate_id;
+            }
+
+            public String getCate_name() {
+                return cate_name;
+            }
+
+            public void setCate_name(String cate_name) {
+                this.cate_name = cate_name;
+            }
+
+            public List<ChildrenBean> getChildren() {
+                return children;
+            }
+
+            public void setChildren(List<ChildrenBean> children) {
+                this.children = children;
+            }
+
+            public static class ChildrenBean {
+                /**
+                 * cate_id : 23
+                 * cate_name : 下游
+                 */
+
+                private String cate_id;
+                private String cate_name;
+
+                public String getCate_id() {
+                    return cate_id;
+                }
+
+                public void setCate_id(String cate_id) {
+                    this.cate_id = cate_id;
+                }
+
+                public String getCate_name() {
+                    return cate_name;
+                }
+
+                public void setCate_name(String cate_name) {
+                    this.cate_name = cate_name;
+                }
+            }
+        }
+
         public static class MyMsgBean {
             /**
-             * id : 50254
-             * p_id : 5084
-             * user_id : 3858
-             * model : 7000F
-             * unit_price : 9000.00
-             * store_house : 上海
-             * f_name : 上海
-             * input_time : 04-08 11:07
-             * type :
-             * content : ddddd 2
-             * name : 李一帆
-             * c_name : 上海中晨电子商务
+             * id : 110848
+             * p_id : 0
+             * user_id : 53402
+             * model : null
+             * unit_price : 0.00
+             * store_house :
+             * f_name : null
+             * input_time : 08-18 15:28
+             * type : 1
+             * content : pp
+             * c_name : 上海中晨电子商务股份有限公司
+             * name : hh
+             * thumb : http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG
+             * thumbqq : http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG
+             * sex : 0
+             * mobile_province : 四川
              * is_pass : 0
-             * thumb : http://pic.myplas.com/upload/17/03/29/58db68941ae4e.jpg
-             * contents : 价格9000.00元左右/7000F/上海/上海/ddddd
-             * saysCount : 0
+             * contents : pp
+             * saysCount : 1
              * deliverPriceCount : 0
              */
 
@@ -150,13 +236,16 @@ public class IntegralBean {
             private String input_time;
             private String type;
             private String content;
-            private String name;
             private String c_name;
-            private String is_pass;
+            private String name;
             private String thumb;
+            private String thumbqq;
+            private String sex;
+            private String mobile_province;
+            private String is_pass;
             private String contents;
             private int saysCount;
-            private String deliverPriceCount;
+            private int deliverPriceCount;
 
             public String getId() {
                 return id;
@@ -182,7 +271,7 @@ public class IntegralBean {
                 this.user_id = user_id;
             }
 
-            public String getModel() {
+            public Object getModel() {
                 return model;
             }
 
@@ -206,7 +295,7 @@ public class IntegralBean {
                 this.store_house = store_house;
             }
 
-            public String getF_name() {
+            public Object getF_name() {
                 return f_name;
             }
 
@@ -238,14 +327,6 @@ public class IntegralBean {
                 this.content = content;
             }
 
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
             public String getC_name() {
                 return c_name;
             }
@@ -254,12 +335,12 @@ public class IntegralBean {
                 this.c_name = c_name;
             }
 
-            public String getIs_pass() {
-                return is_pass;
+            public String getName() {
+                return name;
             }
 
-            public void setIs_pass(String is_pass) {
-                this.is_pass = is_pass;
+            public void setName(String name) {
+                this.name = name;
             }
 
             public String getThumb() {
@@ -268,6 +349,38 @@ public class IntegralBean {
 
             public void setThumb(String thumb) {
                 this.thumb = thumb;
+            }
+
+            public String getThumbqq() {
+                return thumbqq;
+            }
+
+            public void setThumbqq(String thumbqq) {
+                this.thumbqq = thumbqq;
+            }
+
+            public String getSex() {
+                return sex;
+            }
+
+            public void setSex(String sex) {
+                this.sex = sex;
+            }
+
+            public String getMobile_province() {
+                return mobile_province;
+            }
+
+            public void setMobile_province(String mobile_province) {
+                this.mobile_province = mobile_province;
+            }
+
+            public String getIs_pass() {
+                return is_pass;
+            }
+
+            public void setIs_pass(String is_pass) {
+                this.is_pass = is_pass;
             }
 
             public String getContents() {
@@ -286,11 +399,11 @@ public class IntegralBean {
                 this.saysCount = saysCount;
             }
 
-            public String getDeliverPriceCount() {
+            public int getDeliverPriceCount() {
                 return deliverPriceCount;
             }
 
-            public void setDeliverPriceCount(String deliverPriceCount) {
+            public void setDeliverPriceCount(int deliverPriceCount) {
                 this.deliverPriceCount = deliverPriceCount;
             }
         }

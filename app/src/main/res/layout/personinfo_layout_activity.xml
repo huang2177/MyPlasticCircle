@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_lightgray"
-    android:orientation="vertical"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_lightgray"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,17 +19,18 @@
             android:gravity="center"
             android:text="查看个人信息"
             android:textColor="@color/color_white"
-            android:textSize="18.0sp" />
+            android:textSize="18.0sp"/>
 
         <LinearLayout
             android:id="@+id/back"
             android:layout_width="40dp"
             android:layout_height="match_parent">
+
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
+                android:src="@drawable/btn_back"/>
         </LinearLayout>
     </FrameLayout>
 
@@ -37,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,50 +49,56 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
+
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp">
+
                     <com.myplas.q.common.view.MyImageView
                         android:id="@+id/xq_tx"
                         android:layout_width="72dp"
                         android:layout_height="72dp"
                         android:layout_margin="8dp"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"/>
+
                     <ImageView
+                        android:id="@+id/xq_rz"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/xq_rz"
-                        android:src="@drawable/icon_identity"
-                        android:layout_gravity="bottom|right" />
+                        android:layout_gravity="bottom|right"
+                        android:src="@drawable/icon_identity"/>
                 </FrameLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="30dp">
+
                         <TextView
                             android:id="@+id/wd_zl_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#171717"
                             android:textSize="16.0sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/personinfo_care_btn"
                             android:layout_width="75dp"
                             android:layout_height="25dp"
                             android:layout_marginLeft="10dp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
                             android:background="@drawable/corner_gz"
                             android:gravity="center"
-                            android:textColor="@color/color_yellow" />
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:textColor="@color/color_yellow"/>
                     </LinearLayout>
 
                     <TextView
@@ -107,25 +115,28 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/corner_titlebar"
                 android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/personinfo_company_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:text="公司："
-                    android:id="@+id/personinfo_company_text"
-                    android:textColor="#171717" />
+                    android:textColor="#171717"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
                     android:background="@color/color_lightgray"></View>
 
                 <TextView
+                    android:id="@+id/personinfo_address_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="地址："
-                    android:id="@+id/personinfo_address_text"
-                    android:textColor="#171717" />
+                    android:textColor="#171717"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
@@ -142,7 +153,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:text="联系电话："
-                        android:textColor="#171717" />
+                        android:textColor="#171717"/>
 
                     <ImageView
                         android:id="@+id/personinfo_call_img"
@@ -159,56 +170,70 @@
 
 
                 <TextView
+                    android:id="@+id/personinfo_mysale_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:lines="1"
                     android:ellipsize="end"
+                    android:lines="1"
                     android:text="我的主营："
-                    android:id="@+id/personinfo_mysale_text"
-                    android:textColor="#171717" />
+                    android:textColor="#171717"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
                     android:background="@color/color_lightgray"></View>
+
                 <LinearLayout
+                    android:id="@+id/linear_show_close"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/linear_show_close"
                     android:orientation="vertical"
                     android:visibility="gone">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:textColor="#171717"
-                            android:text="生产产品："/>
+                            android:layout_margin="10dp"
+                            android:text="生产产品："
+                            android:textColor="#171717"/>
+
                         <TextView
+                            android:id="@+id/wd_zl_text_products"
                             style="@style/wd_zl_text_style"
-                            android:id="@+id/wd_zl_text_products"></TextView>
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:textColor="#171717"></TextView>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2px"
                         android:background="@color/color_lightgray"></View>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:textColor="#171717"
-                            android:text="月用量："/>
+                            android:layout_margin="10dp"
+                            android:text="月用量："
+                            android:textColor="#171717"/>
+
                         <TextView
+                            android:id="@+id/wd_zl_text_num"
                             style="@style/wd_zl_text_style"
-                            android:id="@+id/wd_zl_text_num"></TextView>
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:textColor="#171717"></TextView>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2px"
@@ -220,10 +245,11 @@
                     android:id="@+id/wd_zl_show"
                     android:layout_width="100dp"
                     android:layout_height="60dp"
-                    android:layout_margin="10dp"
                     android:layout_gravity="center_horizontal"
-                    android:scaleType="fitXY" />
+                    android:layout_margin="10dp"
+                    android:scaleType="fitXY"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -232,37 +258,42 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/buttomnull_red_shape"
                 android:orientation="horizontal">
+
                 <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:text="最近求购信息"
-                android:textColor="@color/color_balank" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="最近求购信息"
+                    android:textColor="@color/color_balank"/>
+
                 <TextView
+                    android:id="@+id/more_supply"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="查看更多>>"
-                    android:id="@+id/more_supply"
-                    android:textColor="@color/color_red" />
+                    android:textColor="@color/color_red"/>
             </LinearLayout>
+
             <com.myplas.q.common.view.MyListview
+                android:id="@+id/personinfo_more_supply_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10.5dip"
                 android:layout_marginRight="10.5dip"
-                android:background="@drawable/listview_buttomtop_shape"
-                android:id="@+id/personinfo_more_supply_listview">
+                android:background="@drawable/listview_buttomtop_shape">
             </com.myplas.q.common.view.MyListview>
+
             <TextView
+                android:id="@+id/person_supplydemand_listview_text_show1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_gravity="center_vertical"
-                android:textSize="14.0sp"
-                android:id="@+id/person_supplydemand_listview_text_show1"/>
+                android:textSize="14.0sp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -271,38 +302,42 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/butoomnull_blue_shape"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_margin="10dp"
+                    android:layout_weight="1"
                     android:text="最近供给信息"
-                    android:textColor="@color/color_balank" />
+                    android:textColor="@color/color_balank"/>
+
                 <TextView
+                    android:id="@+id/more_demand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="查看更多>>"
-                    android:id="@+id/more_demand"
-                    android:textColor="#0467cb" />
+                    android:textColor="#0467cb"/>
             </LinearLayout>
+
             <com.myplas.q.common.view.MyListview
+                android:id="@+id/personinfo_more_demand_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="11dp"
-                android:background="@drawable/listview_buttomtop_shape"
-                android:id="@+id/personinfo_more_demand_listview">
+                android:background="@drawable/listview_buttomtop_shape">
             </com.myplas.q.common.view.MyListview>
+
             <TextView
+                android:id="@+id/person_supplydemand_listview_text_show2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center_vertical"
-                android:textSize="14.0sp"
-                android:id="@+id/person_supplydemand_listview_text_show2"/>
+                android:textSize="14.0sp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

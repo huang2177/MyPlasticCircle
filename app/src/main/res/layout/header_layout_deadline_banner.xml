@@ -8,6 +8,7 @@
         android:id="@+id/headline_banner"
         android:layout_width="match_parent"
         android:layout_height="375px"
-        ></com.youth.banner.Banner>
+        app:indicator_drawable_selected="@drawable/headline_banner_selected"
+        app:indicator_drawable_unselected="@drawable/headline_banner_unselected"></com.youth.banner.Banner>
 
 </LinearLayout>

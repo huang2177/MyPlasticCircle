@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
+import static com.umeng.analytics.pro.x.V;
 import static com.umeng.analytics.pro.x.k;
 import static com.umeng.analytics.pro.x.o;
 import static com.umeng.analytics.pro.x.p;
@@ -147,6 +148,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         }
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(adapter);
+        spinner.setVisibility(View.VISIBLE);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

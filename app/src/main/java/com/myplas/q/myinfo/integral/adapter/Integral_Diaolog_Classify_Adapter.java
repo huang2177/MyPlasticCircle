@@ -27,24 +27,39 @@ import java.util.Map;
  */
 public class Integral_Diaolog_Classify_Adapter extends BaseAdapter {
     Context context;
+    int defPosition;
     MyInterface myinterface;
     Map<Integer, View> mViewMap;
     Map<Integer, TextView> mTextViewMap;
-    List<IntegralBean.InfoBean.MyMsgBean> list;
+    List<IntegralBean.InfoBean.ExtraConfigBean> mExtraConfigList;
+    List<IntegralBean.InfoBean.ExtraConfigBean.ChildrenBean> mChildrenList;
 
-    public Integral_Diaolog_Classify_Adapter(Context context, List<IntegralBean.InfoBean.MyMsgBean> list, MyInterface myinterface) {
-        this.list = list;
+
+    public Integral_Diaolog_Classify_Adapter(Context context
+            , List<IntegralBean.InfoBean.ExtraConfigBean> mExtraConfigList
+            , List<IntegralBean.InfoBean.ExtraConfigBean.ChildrenBean> mChildrenList
+            , int position) {
+
         this.context = context;
         mViewMap = new HashMap<>();
+        this.defPosition = position;
         mTextViewMap = new HashMap<>();
         this.myinterface = myinterface;
+        this.mChildrenList = mChildrenList;
+        this.mExtraConfigList = mExtraConfigList;
     }
 
     @Override
     public int getCount() {
-        if (list != null)
-            return list.size();
-        return 5;
+        if (mExtraConfigList == null) {
+            if (mChildrenList != null)
+                return mChildrenList.size();
+            return 0;
+        } else {
+            if (mExtraConfigList != null)
+                return mExtraConfigList.size();
+            return 0;
+        }
     }
 
     @Override
@@ -71,18 +86,15 @@ public class Integral_Diaolog_Classify_Adapter extends BaseAdapter {
             convertView = mViewMap.get(position);
             viewHolder = (viewHolder) convertView.getTag();
         }
-        if (position == 0) {
+        if (position == defPosition) {
             viewHolder.mTextView.setBackgroundResource(R.drawable.corners_integral_classify);
             viewHolder.mTextView.setTextColor(context.getResources().getColor(R.color.colorAccent));
         }
-        String html = null;
-//        if ("1".equals(list.get(position).getType())) {
-//            html = "<font color='#EEAD0E'>" + "求购:" + "</font>" + list.get(position).getContents();
-//            viewHolder.textView.setText(Html.fromHtml(html));
-//        } else {
-//            html = "<font color='#9AC0CD'>" + "供给:" + "</font>" + list.get(position).getContents();
-//            viewHolder.textView.setText(Html.fromHtml(html));
-//        }
+        if (mExtraConfigList == null) {
+            viewHolder.mTextView.setText(mChildrenList.get(position).getCate_name());
+        } else {
+            viewHolder.mTextView.setText(mExtraConfigList.get(position).getCate_name());
+        }
         return convertView;
     }
 

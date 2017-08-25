@@ -48,9 +48,9 @@ public class IntegralDialogActivity extends BaseActivity implements View.OnClick
 
         //mImageClose.setOnClickListener(this);
 
-        mAdapter = new Integral_Diaolog_Classify_Adapter(this, null, null);
+        mAdapter = new Integral_Diaolog_Classify_Adapter(this, null, null, 0);
         mGridView1.setAdapter(mAdapter);
-        final Integral_Diaolog_Classify_Adapter mAdapter1 = new Integral_Diaolog_Classify_Adapter(this, null, null);
+        final Integral_Diaolog_Classify_Adapter mAdapter1 = new Integral_Diaolog_Classify_Adapter(this, null, null, 0);
         mGridView2.setAdapter(mAdapter1);
 
         mGridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {

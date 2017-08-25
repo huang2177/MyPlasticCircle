@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +108,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
                 }
             });
+            get_Subscribe(1, "", "2", true);
+        } else {
+            get_CateList(1, cate_id, false);
         }
 
         //item的监听
@@ -165,7 +169,6 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
             }
         });
-        get_Subscribe(1, "", "2", true);
     }
 
     @Override
@@ -197,9 +200,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     public void get_Subscribe(int page, String keywords, String subscribe, boolean isShow) {
         this.page = page;
         this.keywords = keywords;
-
         Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(getActivity(), "token"));
         map.put("page", page + "");
         map.put("keywords", keywords);
         map.put("subscribe", subscribe);
@@ -210,9 +211,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     public void get_CateList(int page, String cate_id, boolean isShow) {
         this.page = page;
         this.cate_id = cate_id;
-
         Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(getActivity(), "token"));
         map.put("page", page + "");
         map.put("size", "10");
         map.put("cate_id", cate_id);
@@ -311,7 +310,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
     @Override
     public void failCallBack(int type) {
-        if (list_subcirble_more.size() == 0) {
+        if (list_subcirble_more != null && list_subcirble_more.size() == 0) {
             mXListView.setVisibility(View.GONE);
             mLayoutNoData.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);

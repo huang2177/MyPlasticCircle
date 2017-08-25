@@ -27,6 +27,7 @@
     <color name="color_gray_divider_in">#d9d9d9</color>
 
     <color name="color_dl_integral_confirm">#08c7ae</color>
+    <color name="color_regions_dialog">#0893b9</color>
 
     <color name="calendar_active_month_bg">#fff5f7f9</color>
     <color name="calendar_bg">#ffffffff</color>

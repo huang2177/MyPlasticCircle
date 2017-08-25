@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/supply_demand_linear"
@@ -19,14 +19,14 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_margin="6dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"/>
 
             <ImageView
                 android:id="@+id/xq_rz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:src="@drawable/icon_identity" />
+                android:src="@drawable/icon_identity"/>
         </FrameLayout>
 
         <LinearLayout
@@ -40,7 +40,7 @@
                 android:layout_marginTop="15dp"
                 android:singleLine="true"
                 android:textColor="@color/color_blue"
-                android:textSize="@dimen/x66" />
+                android:textSize="@dimen/x66"/>
 
             <TextView
                 android:id="@+id/gq_listview_name"
@@ -49,15 +49,15 @@
                 android:layout_marginTop="15dp"
                 android:singleLine="true"
                 android:textColor="@color/color_blue"
-                android:textSize="@dimen/x66" />
+                android:textSize="@dimen/x66"/>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="15dp">
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="2dp">
 
         <ImageView
             android:id="@+id/supply_demand_img"
@@ -71,25 +71,25 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:maxLines="2"
             android:textColor="@color/color_balank"
-            android:textSize="@dimen/x66" />
+            android:textSize="@dimen/x66"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="2dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="5dp">
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="2dp">
 
         <TextView
             android:id="@+id/supply_demand_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/supply_demand_isbuyed"
@@ -98,7 +98,7 @@
             android:layout_marginRight="5dp"
             android:drawableLeft="@drawable/icon_offerprice"
             android:text="出价(0)"
-            android:textSize="@dimen/x66" />
+            android:textSize="@dimen/x66"/>
 
         <TextView
             android:id="@+id/supply_demand_repeat"
@@ -107,7 +107,7 @@
             android:layout_marginRight="5dp"
             android:drawableLeft="@drawable/icon_reply"
             android:text="回复(0)"
-            android:textSize="@dimen/x66" />
+            android:textSize="@dimen/x66"/>
 
         <TextView
             android:id="@+id/supply_demand_send"
@@ -117,7 +117,7 @@
             android:drawableLeft="@drawable/icon_redistribute"
             android:text="重发"
             android:textSize="@dimen/x66"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/supply_demand_share"
@@ -127,11 +127,13 @@
             android:drawableLeft="@drawable/icon_redistribute"
             android:text="分享"
             android:textSize="@dimen/x66"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="3px"
-        android:background="@color/color_lightgray"></View>
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/color_gray3"></View>
 </LinearLayout>

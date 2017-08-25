@@ -18,19 +18,31 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/21 19:27
  */
-public class Find_Detail_More_ListviewAdapetr extends BaseAdapter{
+public class HeadLinesDetail_More_LVAdapetr extends BaseAdapter {
     Context context;
-    List<SucribleDetailBean.InfoBean.SubscribeBean> l;
+    List<SucribleDetailBean.InfoBean.HotBean> mHotBeanList;
+    List<SucribleDetailBean.InfoBean.SubscribeBean> mSubscribeBeanList;
     viewHolder viewHolder = null;
-    public Find_Detail_More_ListviewAdapetr(Context context, List<SucribleDetailBean.InfoBean.SubscribeBean> l) {
+
+    public HeadLinesDetail_More_LVAdapetr(Context context
+            , List<SucribleDetailBean.InfoBean.HotBean> mHotBeanList
+            , List<SucribleDetailBean.InfoBean.SubscribeBean> mSubscribeBeanList) {
         this.context = context;
-        this.l=l;
+        this.mHotBeanList = mHotBeanList;
+        this.mSubscribeBeanList = mSubscribeBeanList;
     }
+
     @Override
     public int getCount() {
-        if (l!=null)
-            return l.size();
-        return 0;
+        if (mHotBeanList == null) {
+            if (mSubscribeBeanList != null)
+                return mSubscribeBeanList.size();
+            return 0;
+        } else {
+            if (mHotBeanList != null)
+                return mHotBeanList.size();
+            return 0;
+        }
     }
 
     @Override
@@ -57,12 +69,20 @@ public class Find_Detail_More_ListviewAdapetr extends BaseAdapter{
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
-        viewHolder.title2.setText(l.get(position).getTitle());
-        viewHolder.time.setText(" " + l.get(position).getInput_time());
-        viewHolder.author.setText(l.get(position).getType());
-        //viewHolder.num.setText(l.get(position).getType());
+        if (mHotBeanList == null) {
+            viewHolder.title2.setText(mSubscribeBeanList.get(position).getTitle());
+            viewHolder.time.setText(" " + mSubscribeBeanList.get(position).getInput_time());
+            viewHolder.author.setText(mSubscribeBeanList.get(position).getPhysical_label());
+            viewHolder.num.setText(mSubscribeBeanList.get(position).getPv());
+        } else {
+            viewHolder.title2.setText(mHotBeanList.get(position).getTitle());
+            viewHolder.time.setText(" " + mHotBeanList.get(position).getTime());
+            viewHolder.author.setText(mHotBeanList.get(position).getPhysical_label());
+            viewHolder.num.setText(mHotBeanList.get(position).getPv());
+        }
         return convertView;
     }
+
     class viewHolder {
         TextView title2, content, time, num, author;
     }

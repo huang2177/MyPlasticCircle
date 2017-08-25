@@ -64,7 +64,8 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lookme_layout);
-        goBack(findViewById(R.id.img_back));
+        initTileBar();
+        setTitle("谁看过我");
 
         page = 1;
         mode = "0";

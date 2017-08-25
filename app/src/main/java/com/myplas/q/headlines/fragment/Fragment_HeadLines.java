@@ -10,14 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -30,6 +27,7 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.headlines.activity.Cate_Dialog_Activtiy;
+import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.adapter.HeadLineViewPagerAdapter;
 import com.umeng.analytics.MobclickAgent;
 
@@ -79,23 +77,12 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         mTabLayout = F(R.id.headline_tablayout);
         search_src_text = F(R.id.search_src_text);
 
+        editText.setOnClickListener(this);
         gd_imgbtn.setOnClickListener(this);
         search_src_text.setOnClickListener(this);
 
         initViewPager();
 
-        //edittext 回车监听
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-                if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
-                    searchData(editText.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -107,11 +94,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 mViewPager.setCurrentItem(position);
                 mFragments.get(position).po = position;
                 mFragments.get(position).title = list1.get(position);
-                if (position == 0) {
-                    mFragments.get(0).get_Subscribe(1, "", "2", false);
-                } else {
-                    mFragments.get(position).get_CateList(1, list2.get(position), false);
-                }
             }
 
             @Override
@@ -128,6 +110,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             HeadLineListFragment fragment = new HeadLineListFragment();
             fragment.setMyinterface(this);
             fragment.po = i;
+            fragment.cate_id = list2.get(i);
             mFragments.add(fragment);
         }
         mViewPagerAdapter = new HeadLineViewPagerAdapter(getChildFragmentManager(), mFragments, list1);
@@ -145,7 +128,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 //                setIndicator(mTabLayout,10,10);
 //            }
 //        });
-
     }
 
     @Nullable
@@ -153,7 +135,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return view;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -164,6 +145,10 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             case R.id.fx_gd_imgbtn:
                 Intent intent = new Intent(getActivity(), Cate_Dialog_Activtiy.class);
                 startActivity(intent);
+                break;
+            case R.id.find_edit:
+                Intent in = new Intent(getActivity(), HeadLineSearchActivity.class);
+                startActivity(in);
                 break;
         }
     }
