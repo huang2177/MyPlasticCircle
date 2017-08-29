@@ -195,7 +195,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.dl_classify_ok) {
             num = -1;
-            myInterface.classifySelected(-1, fName, fId, childName, childId, mAddSubUtils.getNumber());
+            myInterface.classifySelected(-1, fName, childName, fId, childId, mAddSubUtils.getNumber());
         } else {
             theDialog.dismiss();
         }
@@ -218,7 +218,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
 
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.width = lp.MATCH_PARENT;
-        lp.height = (int) (height / 1.9);
+        lp.height = (int) (height / 1.8);
         dlg.getWindow().setAttributes(lp);
 
         dlg.setOnDismissListener(new DialogInterface.OnDismissListener() {

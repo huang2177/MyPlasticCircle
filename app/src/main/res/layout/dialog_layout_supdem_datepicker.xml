@@ -14,9 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#FFFFFF"
-        android:clipToPadding="false"
         android:overScrollMode="never"
-        android:scrollbarStyle="outsideOverlay"
         android:scrollbars="none"/>
 
     <View

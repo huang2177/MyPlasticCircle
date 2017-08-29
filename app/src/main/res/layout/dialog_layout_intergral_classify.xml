@@ -191,6 +191,11 @@
                         jmf:contentWidth="38dp">
                     </com.jmf.addsubutils.AddSubUtils>
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_gray_divider_in"/>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

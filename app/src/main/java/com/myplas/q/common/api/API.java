@@ -9,9 +9,9 @@ package com.myplas.q.common.api;
 public class API {
     /*base url*/
     //测试
-    public final static String BASEURL = "https://ssl.myplas.com/qapi_3/";
+//    public final static String BASEURL = "https://ssl.myplas.com/qapi_3/";
     //    正式
-//    public final static String BASEURL = "https://api.myplas.com/qapi_3/";
+    public final static String BASEURL = "https://api.myplas.com/qapi_3/";
     //测试_快速登陆
 //    public final static String BASEURL_API = "https://ssl.myplas.com/";
     //正式_快速登陆
@@ -219,7 +219,7 @@ public class API {
     public final static String TOUTIAO_SEARCH_LOG = "toutiao/ToutiaoSearchLog";
     //清空头条搜索记录
     public final static String DEL_TOUTIAO_SEARCH_LOG = "toutiao/delToutiaoSearchLog";
-    //塑料头条-详情列表
-    //public final static String GET_DETAIL_INFO = "toutiao/getDetailInfo";
+    //塑料头条-检查是否有文章阅读权限
+    public final static String IS_PAID_SUBSCRIPTION = "toutiao/isPaidSubscription";
 
 }

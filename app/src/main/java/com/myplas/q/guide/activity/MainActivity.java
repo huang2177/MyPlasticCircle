@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private long exitTime = 0;
     private SharedUtils sharedUtils;
     private static Resources resources;
-    private int version_now, version_locate;
+    private int versionService, versionLocate;
 
 
     private Button button_ok;
@@ -102,6 +102,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
+
     //设置透明状态栏以及文字颜色
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上
@@ -265,10 +266,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if (!fragment_txl.onKeyDown()) {
                 exit();
                 return true;
-            }else {
+            } else {
                 return fragment_txl.onKeyDown();
             }
-        }else {
+        } else {
             return super.onKeyDown(keyCode, event);
         }
     }
@@ -291,8 +292,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
-
-
     public void getVersion() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("version", VersionUtils.getVersionName(this));
@@ -304,13 +303,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void callBack(Object object, int type) {
         try {
             String err = new JSONObject(object.toString()).getString("err");
+            Log.e("**********", object.toString() + "");
             if (type == 3 && err.equals("1")) {
                 url = new JSONObject(object.toString()).getString("url");
                 promit = new JSONObject(object.toString()).getString("msg");
-                version_locate = GetNumUtil.getNum(VersionUtils.getVersionName(this));
-                version_now = GetNumUtil.getNum(new JSONObject(object.toString()).getString("new_version"));
+                versionLocate = GetNumUtil.getNum(VersionUtils.getVersionName(this));
+                versionService = GetNumUtil.getNum(new JSONObject(object.toString()).getString("new_version"));
                 //比较版本号
-                if (version_now > version_locate) {
+                Log.e("------", versionLocate + "");
+                Log.e("======", versionService + "");
+                if (versionService > versionLocate) {
                     showDialog(promit);
                 }
             }

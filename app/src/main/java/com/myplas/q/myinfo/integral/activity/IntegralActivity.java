@@ -35,10 +35,13 @@ import java.util.Map;
  * 时间：2017/3/28 14:10
  */
 public class IntegralActivity extends BaseActivity implements ResultCallBack, View.OnClickListener, IntegralAdapter.MyInterface {
+    private String type1;
+    private boolean move;
     private SharedUtils sharedUtils;
     private RecyclerView mRecyclerView;
     private IntegralAdapter integralAdapter;
     private List<IntegralBean.InfoBean> list;
+    private LinearLayoutManager manager;
     private TextView integral_all, integral_all_, intergral_chz, intergral_record, intergral_rule;
 
     @Override
@@ -55,7 +58,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         intergral_record = F(R.id.jf_record);
         integral_all_ = F(R.id.integral_all_);
 
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
+        manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setNestedScrollingEnabled(false);
 
@@ -65,6 +68,8 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         intergral_record.setOnClickListener(this);
         integral_all.setOnClickListener(this);
         integral_all_.setOnClickListener(this);
+        type1 = getIntent().getStringExtra("type");
+        //getProducts((type1 == null || "".equals(type1)) ? (3) : (3));
         getProducts(1);
     }
 
@@ -83,22 +88,62 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            if (type == 1 && new JSONObject(object.toString()).getString("err").equals("0")) {
+            String err = new JSONObject(object.toString()).getString("err");
+            if (type == 1 && err.equals("0")) {
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
                 list = integralBean.getInfo();
                 integral_all.setText(" " + integralBean.getPointsAll().toString());
                 integralAdapter = new IntegralAdapter(this, this, list, this);
                 mRecyclerView.setAdapter(integralAdapter);
-            } else if (type == 1) {
-                TextUtils.Toast(this, "没有相关数据！");
             }
-            if (type == 2 && new JSONObject(object.toString()).getString("err").equals("0")) {
+            if (type == 2 && err.equals("0")) {
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
                 integral_all.setText(" " + integralBean.getPointsAll().toString());
             }
+//            if (type == 3 && err.equals("0")) {
+//                Log.e("------------", type + "");
+//                IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
+//                list = integralBean.getInfo();
+//                integral_all.setText(" " + integralBean.getPointsAll().toString());
+//                integralAdapter = new IntegralAdapter(this, this, list, this);
+//                mRecyclerView.setAdapter(integralAdapter);
+//                MoveToPosition(manager, mRecyclerView, 5);
+//                for (int i = 0; i < list.size(); i++) {
+//
+//                }
+//
+//            }
         } catch (Exception e) {
             TextUtils.Toast(this, "数据解析错啦！");
         }
+    }
+
+    public void MoveToPosition(final LinearLayoutManager manager, RecyclerView recyclerView, final int p) {
+        int fir = manager.findFirstVisibleItemPosition();
+        int end = manager.findLastVisibleItemPosition();
+        if (p <= fir) {
+            recyclerView.scrollToPosition(p);
+        } else if (p <= end) {
+            int top = recyclerView.getChildAt(p - fir).getTop();
+            recyclerView.scrollBy(0, top);
+        } else {
+            recyclerView.scrollToPosition(p);    //先让当前view滚动到列表内
+            move = true;
+        }
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (move) {
+                    move = false;
+                    int n = p - manager.findFirstVisibleItemPosition();
+                    if (n >= 0 && n < recyclerView.getChildCount()) {
+                        recyclerView.scrollBy(0, recyclerView.getChildAt(n).getTop()); //滚动到顶部
+                    }
+                }
+            }
+        });
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,31 +38,31 @@ public class CalendarGridView extends ViewGroup {
         super.addView(child, index, params);
     }
 
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
-        final ViewGroup row = (ViewGroup) getChildAt(1);
-        int top = row.getTop();
-        int bottom = getBottom();
-        // Left side border.
-        final int left = row.getChildAt(0).getLeft() + getLeft();
-        //canvas.drawLine(left, top, left, bottom, dividerPaint);
+//    @Override
+//    protected void dispatchDraw(Canvas canvas) {
+//        super.dispatchDraw(canvas);
+//        final ViewGroup row = (ViewGroup) getChildAt(1);
+//        int top = row.getTop();
+//        int bottom = getBottom();
+//        // Left side border.
+//        final int left = row.getChildAt(0).getLeft() + getLeft();
+//        //canvas.drawLine(left, top, left, bottom, dividerPaint);
+//
+//        // Each cell's right-side border.
+//        for (int c = 0; c < 7; c++) {
+//            int x = left + row.getChildAt(c).getRight() - 1;
+//            //canvas.drawLine(x, top, x, bottom, dividerPaint);
+//        }
+//    }
 
-        // Each cell's right-side border.
-        for (int c = 0; c < 7; c++) {
-            int x = left + row.getChildAt(c).getRight() - 1;
-            //canvas.drawLine(x, top, x, bottom, dividerPaint);
-        }
-    }
-
-    @Override
-    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        final boolean retVal = super.drawChild(canvas, child, drawingTime);
-        // Draw a bottom border.
-        final int bottom = child.getBottom() - 1;
-        //canvas.drawLine(child.getLeft(), bottom, child.getRight(), bottom, dividerPaint);
-        return retVal;
-    }
+//    @Override
+//    protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+//        final boolean retVal = super.drawChild(canvas, child, drawingTime);
+//        // Draw a bottom border.
+//        final int bottom = child.getBottom() - 1;
+//        //canvas.drawLine(child.getLeft(), bottom, child.getRight(), bottom, dividerPaint);
+//        return retVal;
+//    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -77,7 +78,7 @@ public class CalendarGridView extends ViewGroup {
         widthMeasureSize = cellSize * 7;
         int totalHeight = 0;
         final int rowWidthSpec = makeMeasureSpec(widthMeasureSize, EXACTLY);
-        final int rowHeightSpec = makeMeasureSpec(cellSize, EXACTLY);
+        final int rowHeightSpec = makeMeasureSpec(heightMeasureSpec, EXACTLY);
         for (int c = 0, numChildren = getChildCount(); c < numChildren; c++) {
             final View child = getChildAt(c);
             if (child.getVisibility() == View.VISIBLE) {
@@ -85,6 +86,7 @@ public class CalendarGridView extends ViewGroup {
                     measureChild(child, rowWidthSpec, makeMeasureSpec(cellSize, AT_MOST));
                 } else {
                     measureChild(child, rowWidthSpec, rowHeightSpec);
+                    Log.e("------", "-------");
                 }
                 totalHeight += child.getMeasuredHeight();
             }

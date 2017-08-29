@@ -49,7 +49,6 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
 
     public void showDialog(Activity context, List<String> list_unclickable, Date date_start, Date date_end) {
         try {
-
             View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_layout_supdem_datepicker, null, false);
             dialogView = (CalendarPickerView) view1.findViewById(R.id.calendar_view);
             imageView = (ImageView) view1.findViewById(R.id.popupwindow_calendar_bt_enter);
@@ -60,15 +59,18 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
             myGridview.setAdapter(dateGridAdapter);
             // linearLayout.setVisibility((list.size() != 0) ? (View.VISIBLE) : (View.GONE));
             imageView.setOnClickListener(this);
+
             dialogView.init(date_start, getDate(date_end), list_unclickable)//
                     .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
                     .withSelectedDates(list);
             theDialog = new Dialog(context, R.style.FullHeightDialog);
+
             theDialog.setContentView(view1);
             //theDialog.setCancelable(true);
-            theDialog.setCanceledOnTouchOutside(false);
+            theDialog.setCanceledOnTouchOutside(true);
             setDialogWindowAttr(theDialog, context);
             dialogView.setOnDateSelectedListener(this);
+
             theDialog.setOnKeyListener(this);
             theDialog.show();
         } catch (Exception e) {
@@ -85,11 +87,12 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
 
         Window window = dlg.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
-        lp.gravity = Gravity.CENTER;
+        window.setGravity(Gravity.BOTTOM);
+        window.setWindowAnimations(R.style.my_anim_out_in); // 添加动画
 //        lp.width = (int) ((width *3) / 3.8);//宽高可设置具体大小
 //        lp.height = (int) ((height*6) / 7);
         lp.width = lp.MATCH_PARENT;
-        lp.height = lp.MATCH_PARENT;
+        lp.height = (int) (height / 1.9);
         dlg.getWindow().setAttributes(lp);
     }
 

@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.AndroidUtil;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
@@ -20,6 +21,7 @@ import com.myplas.q.headlines.adapter.HeadLine_Column_Adapetr;
 import com.myplas.q.headlines.adapter.HeadLine_Product_Adapetr;
 import com.myplas.q.headlines.bean.CateListSelectBean;
 import com.myplas.q.headlines.bean.MyCateBean;
+
 
 import org.json.JSONObject;
 

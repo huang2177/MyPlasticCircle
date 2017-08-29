@@ -10,6 +10,7 @@ package com.myplas.q.common.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;

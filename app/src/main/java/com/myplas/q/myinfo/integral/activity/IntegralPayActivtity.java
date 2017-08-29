@@ -47,6 +47,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     private int plasticBean;
     private String order_id;
     private EditText editText;
+    private TextView mTextView;
     private MyGridview myGridview;
     private boolean isCalledWeChat;
     private TextView textView_show1;
@@ -66,6 +67,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         getSelectableMoney();
 
         button = (Button) findViewById(R.id.chz_zhf);
+        mTextView = (TextView) findViewById(R.id.chz_rules);
         editText = (EditText) findViewById(R.id.chz_edittext);
 //        imageView_zfb = (ImageView) findViewById(R.id.img_zhfb);
         imageView_wx = (ImageView) findViewById(R.id.img_weixin);
@@ -73,6 +75,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         textView_show1 = (TextView) findViewById(R.id.chz_text_show1);
 
         button.setOnClickListener(this);
+        mTextView.setOnClickListener(this);
 //        imageView_wx.setOnClickListener(this);
 //        imageView_zfb.setOnClickListener(this);
 
@@ -166,6 +169,9 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
             case R.id.img_weixin:
                 imageView_zfb.setImageResource(R.drawable.btn_radio);
                 imageView_wx.setImageResource(R.drawable.btn_radiohl);
+                break;
+            case R.id.chz_rules:
+                startActivity(new Intent(this, IntegralRuleActivtity.class));
                 break;
         }
     }

@@ -13,13 +13,15 @@ public class SubcribleBean {
 
     /**
      * err : 0
-     * data : [{"id":"448","title":"9月独山子石化PE排产计划","description":"9月独山子石化PE装置排产计划如下：老低压装置计划1-17日产4801,18-30日产5420。老全...","cate_id":"27","author":"我的塑料网","input_time":"2016-09-23","type":"PE","pv":"580","cate_name":"独家解读"},{"id":"13956","title":"2016年11月PVC进口数据统计","description":"抓取聚氯乙烯原料的进口、出口等数据。...","cate_id":"29","author":"","input_time":"2016-12-27","type":"PVC","pv":"383","cate_name":"独家解读"},{"id":"375","title":"9月扬子石化PP排产计划","description":"【排产计划】9月份扬子石化PP排产计划...","cate_id":"27","author":"","input_time":"2016-09-23","type":"PP","pv":"583","cate_name":"独家解读"},{"id":"4935","title":"2016年9月PVC进口数据统计","description":"2016年9月PVC进口数据统计...","cate_id":"29","author":"","input_time":"2016-10-26","type":"PVC","pv":"612","cate_name":"独家解读"},{"id":"319","title":"2016年7月PVC进口数据统计","description":"2016年7月PVC进口数据统计...","cate_id":"29","author":"","input_time":"2016-09-23","type":"PVC","pv":"694","cate_name":"独家解读"},{"id":"381","title":"9月抚顺石化PP排产计划","description":"【排产计划】9月份抚顺石化PP排产计划...","cate_id":"27","author":"","input_time":"2016-09-23","type":"PP","pv":"567","cate_name":"独家解读"}]
-     * show_msg : 更新了6条数据
+     * data : []
+     * show_msg :
+     * banner : [{"id":"44829","title":"安徽华塑PVC最新报价","img":"http://pic.myplas.com/upload/17/08/25/599fe56f97e3c.jpg"},{"id":"44828","title":"7月25聚烯烃石化库存","img":"http://pic.myplas.com/upload/17/08/25/599fe56f97e3c.jpg"},{"id":"44827","title":"中煤蒙大PE装置动态","img":"http://pic.myplas.com/upload/17/08/25/599fe56f97e3c.jpg"}]
      */
 
     private int err;
     private String show_msg;
     private List<DataBean> data;
+    private List<BannerBean> banner;
 
     public int getErr() {
         return err;
@@ -45,17 +47,60 @@ public class SubcribleBean {
         this.data = data;
     }
 
+    public List<BannerBean> getBanner() {
+        return banner;
+    }
+
+    public void setBanner(List<BannerBean> banner) {
+        this.banner = banner;
+    }
+
+    public static class BannerBean {
+        /**
+         * id : 44829
+         * title : 安徽华塑PVC最新报价
+         * img : http://pic.myplas.com/upload/17/08/25/599fe56f97e3c.jpg
+         */
+
+        private String id;
+        private String title;
+        private String img;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+    }
     public static class DataBean {
         /**
-         * id : 448
-         * title : 9月独山子石化PE排产计划
-         * description : 9月独山子石化PE装置排产计划如下：老低压装置计划1-17日产4801,18-30日产5420。老全...
-         * cate_id : 27
-         * author : 我的塑料网
-         * input_time : 2016-09-23
+         * id : 29334
+         * title : 上游早报：原油及PE单体4月27日收盘价格
+         * description : 上游早报：原油及PE单体4月19日收盘价格...
+         * cate_id : 2
+         * author :
+         * input_time : 2017-04-28
          * type : PE
-         * pv : 580
-         * cate_name : 独家解读
+         * pv : 753
+         * cate_name : 塑料上游
          */
 
         private String id;

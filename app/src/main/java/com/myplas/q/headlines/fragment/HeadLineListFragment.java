@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.XListView;
@@ -30,6 +31,8 @@ import com.myplas.q.headlines.adapter.CateListAdapter;
 import com.myplas.q.headlines.adapter.TTAdapter;
 import com.myplas.q.headlines.bean.CateListBean;
 import com.myplas.q.headlines.bean.SubcribleBean;
+import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
+import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -43,13 +46,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HeadLineListFragment extends Fragment implements ResultCallBack, XListView.IXListViewListener, View.OnClickListener {
+public class HeadLineListFragment extends Fragment implements ResultCallBack, XListView.IXListViewListener, View.OnClickListener, DialogShowUtils.DialogShowInterface {
     public String keywords1;
     public boolean isRefresh;
     private SharedUtils sharedUtils;
-    private int lastvisibleItemCount;
-    public String cate_id, keywords, title;
-    public int page, po, visibleItemCount;
+    public String cate_id, keywords, title, clickId, clickTitle;
+    public int page, po, visibleItemCount, lastvisibleItemCount;
 
     private Banner mBanner;
     private View view, mHeadView;
@@ -64,13 +66,19 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     private List<CateListBean.InfoBean> list_catelist_more;
     private List<SubcribleBean.DataBean> list_subcirble_more;
 
+    private List<String> mListId;
+    private List<String> mListImg;
     public Myinterface mMyinterface;
+    private List<String> mListTitle;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         page = 1;
         isRefresh = false;
+        mListId = new ArrayList<>();
+        mListImg = new ArrayList<>();
+        mListTitle = new ArrayList<>();
         list_catelist_more = new ArrayList<>();
         list_subcirble_more = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
@@ -92,20 +100,14 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             mBanner = (Banner) mHeadView.findViewById(R.id.headline_banner);
             mXListView.addHeaderView(mHeadView);
 
-            List<String> list = new ArrayList();
-            List<String> list1 = new ArrayList();
-            list.add("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=917422979,1607254342&fm=26&gp=0.jpg");
-            list.add("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=72317916,3102515157&fm=26&gp=0.jpg");
-            list.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=521537717,807622349&fm=26&gp=0.jpg");
-
-            list1.add("测试1");
-            list1.add("测试2");
-            list1.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=521537717,807622349&fm=26&gp=0.jpg");
-            initBanner(list, list1);
             mBanner.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
-
+                    if (NetUtils.isNetworkStateed(getActivity())) {
+                        clickId = mListId.get(position);
+                        clickTitle = mListTitle.get(position);
+                        isPaidSubscription(clickId);
+                    }
                 }
             });
             get_Subscribe(1, "", "2", true);
@@ -118,16 +120,14 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetUtils.isNetworkStateed(getActivity())) {
-                    Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
-                    if (po == 0 || po == -1) {
-                        intent.putExtra("title", "推荐");
-                        intent.putExtra("id", list_subcirble_more.get(position - 2).getId());
-                        startActivity(intent);
-                    } else {
-                        intent.putExtra("title", title);
-                        intent.putExtra("id", list_catelist_more.get(position - 1).getId());
-                        startActivity(intent);
-                    }
+                    clickId = (po == 0 || po == -1)
+                            ? (list_subcirble_more.get(position - 2).getId())
+                            : (list_catelist_more.get(position - 1).getId());
+
+                    clickTitle = (po == 0 || po == -1)
+                            ? ("推荐")
+                            : (title);
+                    isPaidSubscription(clickId);
                 }
             }
         });
@@ -176,16 +176,21 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         return view;
     }
 
-    public void initBanner(List<String> images, List<String> titles) {
+    public void initBanner(List<SubcribleBean.BannerBean> list) {
+        for (int i = 0; i < list.size(); i++) {
+            mListId.add(list.get(i).getId());
+            mListImg.add(list.get(i).getImg());
+            mListTitle.add(list.get(i).getTitle());
+        }
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         //设置图片加载器
         mBanner.setImageLoader(new GlideImageLoader());
         //设置图片集合
-        mBanner.setImages(images);
+        mBanner.setImages(mListImg);
         //设置banner动画效果
         mBanner.setBannerAnimation(Transformer.Accordion);
         //设置标题集合（当banner样式有显示title时）
-        mBanner.setBannerTitles(titles);
+        mBanner.setBannerTitles(mListTitle);
         //设置自动轮播，默认为true
         mBanner.isAutoPlay(true);
         //设置轮播时间
@@ -218,6 +223,13 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_CATE_LIST, map, this, 5, isShow);
     }
 
+    //获取其他
+    public void isPaidSubscription(String cate_id) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", cate_id);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 6);
+    }
+
     @Override
     public void callBack(Object object, int type) {
         try {
@@ -225,6 +237,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             String err = new JSONObject(object.toString()).getString("err");
 
             if (type == 4) {//推荐
+                Log.e("----------", object.toString());
                 if (err.equals("0")) {
                     SubcribleBean subcribleBean = gson.fromJson(object.toString(), SubcribleBean.class);
                     list_subcirble = subcribleBean.getData();
@@ -232,6 +245,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                         mXListView.setVisibility(View.VISIBLE);
                         mLayoutNoData.setVisibility(View.GONE);
                         imageButton_backup.setVisibility(View.GONE);
+
+                        //显示banner
+                        initBanner(subcribleBean.getBanner());
 
                         ttAdapter = new TTAdapter(getActivity(), list_subcirble);
                         mXListView.setAdapter(ttAdapter);
@@ -304,8 +320,28 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                     imageButton_backup.setVisibility(View.GONE);
                 }
             }
+
+            if (type == 6) {
+                if (err.equals("0")) {
+                    Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
+                    intent.putExtra("title", clickTitle);
+                    intent.putExtra("id", clickId);
+                    startActivity(intent);
+                } else {
+                    String content = new JSONObject(object.toString()).getString("msg");
+                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.showDialog(getActivity(), content, 1, this);
+                }
+            }
         } catch (Exception e) {
         }
+    }
+
+    @Override
+    public void ok(int type) {
+        Intent intent = new Intent(getActivity(), IntegralActivity.class);
+        intent.putExtra("type", po + "");
+        startActivity(intent);
     }
 
     @Override
