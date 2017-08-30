@@ -2,10 +2,8 @@ package com.myplas.q.guide.activity;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
@@ -17,12 +15,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,8 +26,7 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.addresslist.fragment.Fragment_AddressList;
-import com.myplas.q.appupdate.DownLoadUtils;
-import com.myplas.q.appupdate.DownloadApk;
+import com.myplas.q.appupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
@@ -47,7 +40,6 @@ import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.fragment.Fragment_HeadLines;
 import com.myplas.q.myinfo.login.LoginActivity;
 import com.myplas.q.myinfo.Fragment_MySelf;
-import com.myplas.q.myinfo.websockethelper.WebSocketHelper;
 import com.myplas.q.release.activity.ReleaseActivity;
 import com.myplas.q.supdem.fragment.Fragment_SupplyDemand;
 import com.umeng.analytics.MobclickAgent;
@@ -59,8 +51,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener,
-        ResultCallBack, DownloadApk.InstallInterface, ViewPager.OnPageChangeListener, DialogShowUtils.DialogShowInterface {
+public class MainActivity extends FragmentActivity implements View.OnClickListener, VersionUpdateDialogUtils.VersionUpdateInterface,
+        ResultCallBack, ViewPager.OnPageChangeListener, DialogShowUtils.DialogShowInterface {
 
     private boolean logined;
     private String promit, url;
@@ -72,11 +64,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private Button button_ok;
     private Dialog normalDialog;
-    private Fragment_HeadLines fragment_fx;
     public static MyViewPager viewPager;
     private List<Fragment> fragmentlist;
     private Fragment_MySelf fragment_wd;
-    private MyReceiver_DownLoad myReceiver;
+    private Fragment_HeadLines fragment_fx;
+
     private Fragment_SupplyDemand fragment_gq;
     private Fragment_AddressList fragment_txl;
     private MyReciver_AcitivityFinish myReciver;
@@ -85,8 +77,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static ImageView imageView_gq, imageView_wd, imageView_fx, imageView_txl;
     private LinearLayout layout_gq, layout_txl, layout_jia, layout_fx, layout_wd;
 
-    protected boolean useThemestatusBarColor = false;//是否使用特殊的标题栏背景颜色，android5.0以上可以设置状态栏背景色，如果不使用则使用透明色值
     protected boolean useStatusBarColor = false;//是否使用状态栏文字和图标为暗色，如果状态栏采用了白色系，则需要使状态栏和图标为暗色，android6.0以上可以设置
+    protected boolean useThemestatusBarColor = false;//是否使用特殊的标题栏背景颜色，android5.0以上可以设置状态栏背景色，如果不使用则使用透明色值
+
+    private VersionUpdateDialogUtils mUpdateDialogUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,9 +131,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         myReciver = new MyReciver_AcitivityFinish();
         IntentFilter filter = new IntentFilter("com.broadcast.test");
         registerReceiver(myReciver, filter);
-        //注册app更新广播；
-        myReceiver = new MyReceiver_DownLoad();
-        registerReceiver(myReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
         //保存首页是否显示图层的标签
         sharedUtils = SharedUtils.getSharedUtils();
         viewPager = F(R.id.viewpager_main);
@@ -292,6 +284,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+
     public void getVersion() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("version", VersionUtils.getVersionName(this));
@@ -303,17 +296,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void callBack(Object object, int type) {
         try {
             String err = new JSONObject(object.toString()).getString("err");
-            Log.e("**********", object.toString() + "");
             if (type == 3 && err.equals("1")) {
                 url = new JSONObject(object.toString()).getString("url");
                 promit = new JSONObject(object.toString()).getString("msg");
                 versionLocate = GetNumUtil.getNum(VersionUtils.getVersionName(this));
                 versionService = GetNumUtil.getNum(new JSONObject(object.toString()).getString("new_version"));
                 //比较版本号
-                Log.e("------", versionLocate + "");
-                Log.e("======", versionService + "");
                 if (versionService > versionLocate) {
-                    showDialog(promit);
+                    mUpdateDialogUtils = new VersionUpdateDialogUtils(this, promit, url);
+                    mUpdateDialogUtils.setVersionUpdateInterface(this);
+                    mUpdateDialogUtils.showDialog();
                 }
             }
         } catch (Exception e) {
@@ -325,20 +317,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    //设置dialog属性
-    public void setDialogWindowAttr(Dialog dlg, Context ctx) {
-        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        int width = outMetrics.widthPixels;
-        int height = outMetrics.heightPixels;
-
-        Window window = dlg.getWindow();
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.gravity = Gravity.CENTER;
-        lp.width = (width * 3) / 5;//宽高可设置具体大小
-        lp.height = (int) (height / 2);
-        dlg.getWindow().setAttributes(lp);
+    //更新dialog的返回监听 回调
+    @Override
+    public void exitCallBack() {
+        exit();
     }
 
     //其他页面返回来的跳转
@@ -368,64 +350,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    //下载完成后点安装
-    public class MyReceiver_DownLoad extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
-                if (button_ok != null) {
-                    button_ok.setClickable(true);
-                }
-                DownLoadUtils.getInstance(MainActivity.this).installApk(MainActivity.this);
-            }
-        }
-    }
 
-    //如果存在安装包就直接安装
-    @Override
-    public void install() {
-        if (button_ok != null) {
-            button_ok.setClickable(true);
-        }
-        DownLoadUtils.getInstance(MainActivity.this).installApk(MainActivity.this);
-    }
-
-    //弹出dialog 点击安装
-    public void showDialog(String s) {
-        View view = View.inflate(MainActivity.this, R.layout.layout_appupdate, null);
-        normalDialog = new Dialog(MainActivity.this, R.style.dialog);
-        normalDialog.setCanceledOnTouchOutside(false);
-        normalDialog.setContentView(view);
-        normalDialog.show();
-        setDialogWindowAttr(normalDialog, MainActivity.this);
-        button_ok = (Button) view.findViewById(R.id.btn_ok);
-        TextView textView_content = (TextView) view.findViewById(R.id.dialog_message);
-        textView_content.setText(s);
-        button_ok.setClickable(true);
-        button_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                button_ok.setClickable(false);
-                DownloadApk downloadApk = new DownloadApk(MainActivity.this);
-                downloadApk.downloadApk(MainActivity.this, url, "塑料圈通讯录更新", "塑料圈通讯录");
-            }
-        });
-        normalDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    exit();
-                }
-                return true;
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(myReciver);
-        unregisterReceiver(myReceiver);
+        if (mUpdateDialogUtils != null) {
+            mUpdateDialogUtils.unregisterReceiver();
+        }
     }
 
     public void onResume() {
