@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -331,12 +332,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(button.getWindowToken(), 0);
 
-            sharedUtils.setData(this, "token", jsonObject.getString("dataToken"));
-            sharedUtils.setData(this, "userid", jsonObject.getString("user_id"));
-            sharedUtils.setBooloean(this, "logined", true);
-            sharedUtils.setBooloean(this, "isLogined_supdem", true);
-            sharedUtils.setBooloean(this, "isLogined_headlines", true);
-            sharedUtils.setData(this, "uuid", SystemUtils.getMyUUID(this));
+            sharedUtils.setData(this, Constant.TOKEN, jsonObject.getString("dataToken"));
+            sharedUtils.setData(this, Constant.USERID, jsonObject.getString("user_id"));
+            sharedUtils.setBooloean(this, Constant.LOGINED, true);
+            sharedUtils.setBooloean(this, Constant.IS_LOGINED_H, true);
+            sharedUtils.setBooloean(this, Constant.IS_LOGINED_SD, true);
+            sharedUtils.setData(this, Constant.UUID, SystemUtils.getMyUUID(this));
         } catch (Exception e) {
         }
     }

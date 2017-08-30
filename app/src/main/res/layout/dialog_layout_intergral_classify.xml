@@ -186,7 +186,7 @@
                     <com.jmf.addsubutils.AddSubUtils
                         android:id="@+id/dl_classify_addsubutils"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="28dp"
                         jmf:ImageWidth="28dp"
                         jmf:contentWidth="38dp">
                     </com.jmf.addsubutils.AddSubUtils>

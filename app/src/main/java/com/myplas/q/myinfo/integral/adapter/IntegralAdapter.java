@@ -356,6 +356,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 }
             }
             if (type == 3) {//分类
+                Log.e("----------", object.toString());
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     myInterface.refresgData();

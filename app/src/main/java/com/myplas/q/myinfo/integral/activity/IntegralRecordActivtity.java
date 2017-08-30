@@ -90,7 +90,6 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-----", object.toString());
             RecordBean recordBean = null;
             if (new JSONObject(object.toString()).getString("err").equals("0")) {
                 Gson gson = new Gson();

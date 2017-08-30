@@ -8,43 +8,38 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="1">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_version_update"/>
+        android:background="@drawable/dialog_versionupdate"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/dialog_message"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_alignBottom="@+id/imageView2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColor="#121212"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="90dp"
+            android:maxLines="8"
+            android:textColor="@color/color_balank"
             android:textSize="16.0sp"/>
 
         <Button
             android:id="@+id/btn_ok"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView2"
-            android:layout_marginBottom="10dp"
-            android:alpha="0"/>
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/btn_refresh"/>
 
         <ProgressBar
             android:id="@+id/versionupdate_numberbar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_alignBottom="@+id/imageView2"
-            android:layout_marginBottom="5dp"
+            android:layout_height="7dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:max="100"

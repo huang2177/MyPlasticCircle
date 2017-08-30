@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
@@ -47,6 +48,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private Handler handler;
     private String keywords;
     private int currentItem;
+    private boolean logined;
     private SharedUtils sharedUtils;
     private List<String> list1, list2;
 
@@ -68,8 +70,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_find_fragment, null, false);
 
         handler = new Handler();
-        mFragments = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
+        logined = sharedUtils.getBoolean(getActivity(), Constant.LOGINED);
 
         editText = F(R.id.find_edit);
         gd_imgbtn = F(R.id.fx_gd_imgbtn);
@@ -81,7 +83,9 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         gd_imgbtn.setOnClickListener(this);
         search_src_text.setOnClickListener(this);
 
-        initViewPager();
+        if (logined) {
+            initViewPager();
+        }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -103,6 +107,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     }
 
     public void initViewPager() {
+        mFragments = new ArrayList<>();
         list1 = Arrays.asList("推荐", "塑料上游", "早盘预报", "企业动态", "中晨塑说", "美金市场", "期货资讯", "装置动态", "期刊报告", "独家解读");
         list2 = Arrays.asList("", "2", "1", "9", "76", "5", "21", "11", "13", "22");
         for (int i = 0; i < list1.size(); i++) {
@@ -117,7 +122,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         mViewPager.setAdapter(mViewPagerAdapter);
 
         mViewPager.setCurrentItem(0);
-        //mFragments.get(0).get_Subscribe(1, "", "2", true);
         //将选项卡和viewpager关连起来
         mTabLayout.setupWithViewPager(mViewPager);
         //给TabLayout设置适配器
@@ -239,14 +243,16 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
     public void onResume() {
         super.onResume();
-        boolean isLogined = sharedUtils.getBoolean(getActivity(), "isLogined_headlines");
         String data = sharedUtils.getData(getActivity(), "refreshdata");
+        boolean isLogined = sharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_H);
 
+        //防止第一次登陆以后没有数据
         if (isLogined) {
-            mFragments.get(0).get_Subscribe(1, "", "2", true);
-            sharedUtils.setBooloean(getActivity(), "isLogined_headlines", false);
+            initViewPager();
+            sharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_H, false);
         }
-        if (!"".equals(data)) {//从供求-qq页面跳转
+        //从供求-qq页面跳转
+        if (!"".equals(data)) {
             searchData(data);
             editText.setText(data);
             sharedUtils.setData(getActivity(), "refreshdata", "");

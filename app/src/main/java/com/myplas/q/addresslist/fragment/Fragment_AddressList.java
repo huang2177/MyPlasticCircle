@@ -3,6 +3,7 @@ package com.myplas.q.addresslist.fragment;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -123,22 +124,22 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
 
         //排序
         View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.txl_dropdown_popouwindow, null, false);
-        mPopupWindow1 = new CustomPopupWindow(view1, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        setPoPouProperty(mPopupWindow1, true);
+        mPopupWindow1 = new CustomPopupWindow(view1, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        setPoPouProperty(mPopupWindow1);
         imageView_tm = (View) view1.findViewById(R.id.img_tm);
         radioGroup_time = (RadioGroup) view1.findViewById(R.id.radio_danxuan);
         imageView_tm.setOnClickListener(this);
         //地区
         View view2 = LayoutInflater.from(getActivity()).inflate(R.layout.txl_dropdown_popouwindow_address, null, false);
         mPopupWindow2 = new CustomPopupWindow(view2, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        setPoPouProperty(mPopupWindow2, true);
+        setPoPouProperty(mPopupWindow2);
         imageView_adress = (View) view2.findViewById(R.id.img_adress);
         imageView_adress.setOnClickListener(this);
         radioGroup_address = (RadioGroup) view2.findViewById(R.id.radio_danxuan);
         //search
         View view3 = LayoutInflater.from(getActivity()).inflate(R.layout.layout_address_search_popou, null, false);
         mPopupWindow3 = new CustomPopupWindow(view3, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        setPoPouProperty(mPopupWindow3, false);
+        setPoPouProperty(mPopupWindow3);
         view3.findViewById(R.id.view_search).setOnClickListener(this);
         radioGroup_time.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -339,7 +340,12 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         return view;
     }
 
-    public void setPoPouProperty(CustomPopupWindow popupWindow, boolean b) {
+    public void setPoPouProperty(CustomPopupWindow popupWindow) {
+        //popupWindow.setFocusable(true);
+        //popupWindow.setOutsideTouchable(true);
+        ColorDrawable dw = new ColorDrawable(0000000000);
+        popupWindow.setBackgroundDrawable(dw);
+        popupWindow.setAnimationStyle(R.style.my_anim_popou);
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);//设置弹出窗体需要软键盘，
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);  //再设置模式，和Activity的一样，覆盖。
     }
@@ -652,6 +658,12 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             }
         }
 
+    }
+
+    public void setBackgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getActivity().getWindow().setAttributes(lp);
     }
 
     public void showPopou(CustomPopupWindow popupWindow) {

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.api.API;
@@ -101,7 +102,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     if (NetUtils.isNetworkStateed(context)) {
-                        goToDetail("0",list_more.get(position).getId(),list_more.get(position).getUser_id());
+                        goToDetail("0", list_more.get(position).getId(), list_more.get(position).getUser_id());
                     }
                 } catch (Exception e) {
                 }
@@ -121,10 +122,11 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     }
                 }
                 View firstVisibleItem1 = gq_listview.getChildAt(0);
-                if (scrollState==0&&firstVisibleItem1 != null &&  firstVisibleItem1.getTop() != 0){
+                if (scrollState == 0 && firstVisibleItem1 != null && firstVisibleItem1.getTop() != 0) {
                     myLinearLayout.setEnnablerefresh(false);
                 }
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 Fragment_SupDem_All.this.visibleItemCount = visibleItemCount;
@@ -151,10 +153,10 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         itemBean.page = 1;
         itemBean.hasMoreData = true;
         myLinearLayout.setEnnablerefresh(false);
-        boolean isLogined=sharedUtils.getBoolean(getActivity(),"isLogined_supdem");
-        if (isLogined){
+        boolean isLogined = sharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_SD);
+        if (isLogined) {
             getNetData(getActivity(), "1", "", "ALL", "", itemBean.type, true);
-            sharedUtils.setBooloean(getActivity(), "isLogined_supdem", false);
+            sharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_SD, false);
         }
     }
 
@@ -175,7 +177,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     }
 
     //跳转至详情
-    public void goToDetail(String type,String id_,String userid){
+    public void goToDetail(String type, String id_, String userid) {
         Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
         String user_id = sharedUtils.getData(getActivity(), "userid");
 
@@ -186,6 +188,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
         startActivity(intent);
     }
+
     public <T extends View> T F(int id) {
         return (T) view.findViewById(id);
     }
@@ -197,13 +200,13 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                 getPersonInfoData(user_id, "1", 2);
                 break;
             case R.id.first_item:
-                goToDetail("0",topBean.getId(),topBean.getUser_id());
+                goToDetail("0", topBean.getId(), topBean.getUser_id());
                 break;
             case R.id.supply_demand_isbuyed:
-                goToDetail("1",topBean.getId(),topBean.getUser_id());
+                goToDetail("1", topBean.getId(), topBean.getUser_id());
                 break;
             case R.id.supply_demand_repeat:
-                goToDetail("2",topBean.getId(),topBean.getUser_id());
+                goToDetail("2", topBean.getId(), topBean.getUser_id());
                 break;
 
             case R.id.supply_demand_follow:
@@ -375,12 +378,12 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
     @Override
     public void failCallBack(int type) {
-        if (list_more.size()==0) {
+        if (list_more.size() == 0) {
             refreshableView.setVisibility(View.GONE);
             linearLayout_prompt.setVisibility(View.VISIBLE);
             linearLayout_prompt.removeAllViews();
 
-            ImageButton imageButton=new ImageButton(getActivity());
+            ImageButton imageButton = new ImageButton(getActivity());
             imageButton.setImageResource(R.drawable.img_reload);
             linearLayout_prompt.addView(imageButton);
             imageButton.setBackgroundColor(getResources().getColor(R.color.color_white));
@@ -449,20 +452,22 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         getNetData(getActivity(), itemBean.page + "", itemBean.keywords, itemBean.sortField1, itemBean.sortField2, itemBean.type, false);
     }
 
-    public void showRefreshPopou(String text){
+    public void showRefreshPopou(String text) {
         if (isRefresh) {
             isRefresh = false;
             if (TextUtils.isNullOrEmpty(text)) {
                 showRefreshPopouinterface.showRefreshPopou(text);
             } else {
-                TextUtils.Toast(getActivity(),"已是最新供求信息！");
+                TextUtils.Toast(getActivity(), "已是最新供求信息！");
             }
         }
     }
-    public void setShowRefreshPopouinterface(ShowRefreshPopouinterface showRefreshPopouinterface){
-        this.showRefreshPopouinterface=showRefreshPopouinterface;
+
+    public void setShowRefreshPopouinterface(ShowRefreshPopouinterface showRefreshPopouinterface) {
+        this.showRefreshPopouinterface = showRefreshPopouinterface;
     }
-    public interface ShowRefreshPopouinterface{
+
+    public interface ShowRefreshPopouinterface {
         void showRefreshPopou(String text);
     }
 }

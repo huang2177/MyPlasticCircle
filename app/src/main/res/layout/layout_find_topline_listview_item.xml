@@ -14,10 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingBottom="8dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:paddingTop="8dp">
 
             <TextView
                 android:id="@+id/fx_tt_title_text2"
@@ -43,10 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:paddingBottom="8dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:paddingTop="8dp">
 
             <TextView
                 android:id="@+id/fx_tt_title_author"
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:singleLine="true"
-                android:textSize="14.0sp"/>
+                android:textSize="13.0sp"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:singleLine="true"
-                android:textSize="14.0sp"/>
+                android:textSize="13.0sp"/>
 
             <TextView
                 android:id="@+id/fx_tt_title_shj"
@@ -70,8 +70,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:drawableLeft="@drawable/icon_time1"
+                android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textSize="14.0sp"/>
+                android:textSize="13.0sp"/>
 
             <TextView
                 android:id="@+id/fx_tt_title_num"
@@ -89,7 +90,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray3"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"></View>
+        android:layout_marginRight="10dp"
+        android:background="@color/color_gray3"></View>
 </LinearLayout>

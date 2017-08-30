@@ -19,7 +19,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
@@ -76,9 +78,14 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         button_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) button_ok.getLayoutParams();
+                lp.bottomMargin = 70;
+                button_ok.setLayoutParams(lp);
+
                 button_ok.setClickable(false);
                 mNumberProgressBar.setProgress(0);
                 mNumberProgressBar.setVisibility(View.VISIBLE);
+                button_ok.setBackgroundResource(R.drawable.btn_download);
 
                 downloadApk = new DownloadApk(VersionUpdateDialogUtils.this);
                 downloadId = downloadApk.downloadApk(mContext, url, "塑料圈通讯录更新", "塑料圈通讯录");
@@ -103,6 +110,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
     public void install() {
         if (button_ok != null) {
             button_ok.setClickable(true);
+            button_ok.setBackgroundResource(R.drawable.btn_refresh);
         }
         DownLoadUtils.getInstance(mContext).installApk(mContext);
     }
@@ -127,7 +135,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.CENTER;
         lp.width = (width * 3) / 5;//宽高可设置具体大小
-        lp.height = (int) (height / 1.9);
+        lp.height = (int) (height / 2.2);
         dlg.getWindow().setAttributes(lp);
     }
 
@@ -199,6 +207,13 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
             if (intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
                 if (button_ok != null) {
                     button_ok.setClickable(true);
+                    button_ok.setBackgroundResource(R.drawable.btn_refresh);
+
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) button_ok.getLayoutParams();
+                    lp.bottomMargin = 40;
+                    button_ok.setLayoutParams(lp);
+
+                    mNumberProgressBar.setVisibility(View.GONE);
                 }
                 DownLoadUtils.getInstance(mContext).installApk(mContext);
             }
