@@ -36,7 +36,7 @@ public class Integral_Record_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list!=null)
+        if (list != null)
             return list.size();
         return 0;
     }
@@ -62,25 +62,30 @@ public class Integral_Record_Adapter extends BaseAdapter {
             viewHolder.content = (TextView) convertView.findViewById(R.id.integral_record_content);
             viewHolder.buy_date = (TextView) convertView.findViewById(R.id.integral_record_buy_date);
             viewHolder.use_date = (TextView) convertView.findViewById(R.id.integral_record_use_date);
-            viewHolder.imageView= (ImageView) convertView.findViewById(R.id.integral_record_img);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.integral_record_img);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-            String type=list.get(position).getType()+"";
-            viewHolder.title.setText(list.get(position).getGoods_name()+"    "+list.get(position).getNum()+"张");
-            viewHolder.buy_date.setText("购买日期："+list.get(position).getCreate_time());
-            viewHolder.use_date.setText("使用日期："+list.get(position).getAddress());
-            viewHolder.content.setText((type.equals("1"))?("置顶供求信息："+list.get(position).getContents()):("置顶人："+list.get(position).getName()));
-            viewHolder.num.setText(list.get(position).getUsepoints()+"塑豆");
+            String type = list.get(position).getType() + "";
+            viewHolder.title.setText(list.get(position).getGoods_name() + "  " + list.get(position).getGoods_num() + "张");
+            viewHolder.buy_date.setText("购买日期：" + list.get(position).getPurchase_date());
+            viewHolder.use_date.setText("使用日期：" + list.get(position).getStart_time());
+            viewHolder.num.setText(list.get(position).getCost_points() + "塑豆");
             Glide.with(context).load(list.get(position).getImage()).placeholder(R.drawable.img_purchase_record1).into(viewHolder.imageView);
+            if (type.equals("1")) {
+                viewHolder.content.setText("置顶供求信息：" + list.get(position).getContents());
+            } else if (type.equals("2")) {
+                viewHolder.content.setText("置顶人：" + list.get(position).getUser_name());
+            }
         } catch (Exception e) {
         }
         return convertView;
     }
+
     class viewHolder {
-        TextView content, title,buy_date,use_date, num;
+        TextView content, title, buy_date, use_date, num;
         ImageView imageView;
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,26 +16,28 @@
             android:gravity="center"
             android:text="购买记录"
             android:textColor="@color/color_white"
-            android:textSize="18.0sp" />
+            android:textSize="18.0sp"/>
 
         <LinearLayout
             android:id="@+id/back"
             android:layout_width="40dp"
             android:layout_height="match_parent">
+
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
+                android:src="@drawable/btn_back"/>
         </LinearLayout>
     </FrameLayout>
+
     <ListView
+        android:id="@+id/integral_record_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/integral_record_listview"
-        android:scrollbars="none"
+        android:layout_margin="5dp"
         android:divider="@null"
-        android:layout_margin="5dp">
+        android:scrollbars="none">
     </ListView>
 
     <LinearLayout
@@ -43,7 +45,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imageView"
@@ -51,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:src="@drawable/icon_intelligent_recommendation2" />
+            android:src="@drawable/icon_intelligent_recommendation2"/>
 
         <TextView
             android:id="@+id/integral_text"
@@ -62,6 +65,6 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
             android:textColor="@color/color_gray"
-            android:textSize="16.0sp" />
+            android:textSize="16.0sp"/>
     </LinearLayout>
 </LinearLayout>

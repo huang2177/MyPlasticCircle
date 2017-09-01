@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:textColor="@color/color_balank1"
+                android:textColor="@color/color_title_main"
                 android:textSize="16.0sp"/>
         </LinearLayout>
 
@@ -36,7 +36,7 @@
             android:maxLines="2"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textSize="15.0sp"
+            android:textSize="14.0sp"
             android:visibility="gone"/>
 
         <LinearLayout
@@ -50,39 +50,36 @@
 
             <TextView
                 android:id="@+id/fx_tt_title_author"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:singleLine="true"
-                android:textSize="13.0sp"/>
-
-            <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:singleLine="true"
-                android:textSize="13.0sp"/>
+                android:textColor="@color/color_content"
+                android:textSize="12.0sp"/>
+
 
             <TextView
                 android:id="@+id/fx_tt_title_shj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:drawableLeft="@drawable/icon_time1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:drawableLeft="@drawable/icon_time"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textSize="13.0sp"/>
+                android:textColor="@color/color_content"
+                android:textSize="12.0sp"/>
 
             <TextView
                 android:id="@+id/fx_tt_title_num"
-                android:layout_width="0dp"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:drawableLeft="@drawable/icon_see1"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/icon_see"
+                android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="@color/color_red"
-                android:textSize="13.0sp"/>
+                android:textSize="12.0sp"/>
         </LinearLayout>
 
     </LinearLayout>

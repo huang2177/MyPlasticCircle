@@ -24,6 +24,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.XListView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
@@ -143,7 +144,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                         if (po == -1) {
                             get_Subscribe(page, keywords, "1", false);
                         } else if (po == 0) {
-                            get_Subscribe(page, "", "2", false);
+                            get_CateList(page, "999", false);
                         } else {
                             get_CateList(page, cate_id, false);
                         }
@@ -156,13 +157,17 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                 HeadLineListFragment.this.visibleItemCount = visibleItemCount;
                 switch (po) {
                     case -1:
-                        if (list_subcirble != null) {
-                            imageButton_backup.setVisibility((view.getLastVisiblePosition() > lastvisibleItemCount) ? (View.VISIBLE) : (View.GONE));
+                        if (list_subcirble != null && list_subcirble.size() != 0) {
+                            imageButton_backup.setVisibility((view.getLastVisiblePosition() > lastvisibleItemCount)
+                                    ? (View.VISIBLE)
+                                    : (View.GONE));
                         }
                         break;
                     default:
-                        if (list_catelist != null) {
-                            imageButton_backup.setVisibility((view.getLastVisiblePosition() > lastvisibleItemCount) ? (View.VISIBLE) : (View.GONE));
+                        if (list_catelist != null && list_catelist.size() != 0) {
+                            imageButton_backup.setVisibility((view.getLastVisiblePosition() > lastvisibleItemCount)
+                                    ? (View.VISIBLE)
+                                    : (View.GONE));
                         }
                         break;
                 }
@@ -177,6 +182,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     }
 
     public void initBanner(List<SubcribleBean.BannerBean> list) {
+        mListId.clear();
+        mListImg.clear();
+        mListTitle.clear();
         for (int i = 0; i < list.size(); i++) {
             mListId.add(list.get(i).getId());
             mListImg.add(list.get(i).getImg());
@@ -194,7 +202,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         //设置自动轮播，默认为true
         mBanner.isAutoPlay(true);
         //设置轮播时间
-        mBanner.setDelayTime(1500);
+        mBanner.setDelayTime(3000);
         //设置指示器位置（当banner模式中有指示器时）
         mBanner.setIndicatorGravity(BannerConfig.RIGHT);
         //banner设置方法全部调用完毕时最后调用
@@ -223,7 +231,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_CATE_LIST, map, this, 5, isShow);
     }
 
-    //获取其他
+    //检查权限
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", cate_id);
@@ -235,19 +243,18 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-
             if (type == 4) {//推荐
-                Log.e("----------", object.toString());
                 if (err.equals("0")) {
                     SubcribleBean subcribleBean = gson.fromJson(object.toString(), SubcribleBean.class);
                     list_subcirble = subcribleBean.getData();
                     if (page == 1) {
+                        //显示banner
+                        initBanner(subcribleBean.getBanner());
+
+                        imageButton.setVisibility(View.GONE);
                         mXListView.setVisibility(View.VISIBLE);
                         mLayoutNoData.setVisibility(View.GONE);
                         imageButton_backup.setVisibility(View.GONE);
-
-                        //显示banner
-                        initBanner(subcribleBean.getBanner());
 
                         ttAdapter = new TTAdapter(getActivity(), list_subcirble);
                         mXListView.setAdapter(ttAdapter);
@@ -259,11 +266,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                         mMyinterface.callBack(subcribleBean.getShow_msg(), isRefresh);//展示刷新后的popou
                     } else {
                         isRefresh = false;
-                        if (list_subcirble != null && list_subcirble.size() != 0) {
-                            list_subcirble_more.addAll(list_subcirble);
-                            ttAdapter.setList(list_subcirble_more);
-                            ttAdapter.notifyDataSetChanged();
-                        }
+                        list_subcirble_more.addAll(list_subcirble);
+                        ttAdapter.setList(list_subcirble_more);
+                        ttAdapter.notifyDataSetChanged();
                     }
                 } else if (err.equals("1") || "998".equals(err)) {
                     isRefresh = false;
@@ -274,10 +279,14 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
                 } else {
                     isRefresh = false;
-                    mXListView.stopRefresh();
-                    mXListView.setVisibility(View.GONE);
-                    mLayoutNoData.setVisibility(View.VISIBLE);
-                    imageButton_backup.setVisibility(View.GONE);
+                    if (page == 1) {
+                        mXListView.stopRefresh();
+                        mXListView.setVisibility(View.GONE);
+                        mLayoutNoData.setVisibility(View.VISIBLE);
+                        imageButton_backup.setVisibility(View.GONE);
+                    } else {
+                        TextUtils.Toast(getActivity(), "没有更多数据了！");
+                    }
                 }
             }
             if (type == 5) {//其他
@@ -285,6 +294,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                     CateListBean cateListBean = gson.fromJson(object.toString(), CateListBean.class);
                     list_catelist = cateListBean.getInfo();
                     if (page == 1) {
+                        imageButton.setVisibility(View.GONE);
                         mXListView.setVisibility(View.VISIBLE);
                         mLayoutNoData.setVisibility(View.GONE);
                         imageButton_backup.setVisibility(View.GONE);
@@ -314,23 +324,26 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                     sharedUtils.setData(getActivity(), "toast_msg", new JSONObject(object.toString()).getString("msg"));
                 } else {
                     isRefresh = false;
-                    mXListView.stopRefresh();
-                    mXListView.setVisibility(View.GONE);
-                    mLayoutNoData.setVisibility(View.VISIBLE);
-                    imageButton_backup.setVisibility(View.GONE);
+                    if (page == 1) {
+                        mXListView.stopRefresh();
+                        mXListView.setVisibility(View.GONE);
+                        mLayoutNoData.setVisibility(View.VISIBLE);
+                        imageButton_backup.setVisibility(View.GONE);
+                    } else {
+                        TextUtils.Toast(getActivity(), "没有更多数据了！");
+                    }
                 }
             }
 
             if (type == 6) {
                 if (err.equals("0")) {
                     Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
-                    intent.putExtra("title", clickTitle);
                     intent.putExtra("id", clickId);
                     startActivity(intent);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
                     DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.showDialog(getActivity(), content, 1, this);
+                    dialogShowUtils.showDialog(getActivity(), content, (err.equals("2")) ? (1) : (3), this);
                 }
             }
         } catch (Exception e) {
@@ -375,7 +388,12 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_reload:
-                get_Subscribe(1, "", "2", true);
+                page = 1;
+                if (po == 0) {
+                    get_Subscribe(1, "", "2", true);
+                } else {
+                    get_CateList(1, cate_id, true);
+                }
                 break;
             case R.id.image_backup:
                 mXListView.setSelection(0);
@@ -395,6 +413,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     public class GlideImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(context).load(path).into(imageView);
         }
 

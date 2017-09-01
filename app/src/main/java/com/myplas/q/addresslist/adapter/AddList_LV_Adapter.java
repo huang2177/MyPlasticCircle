@@ -23,7 +23,7 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 19:31
  */
-public class AddressList_Listview_Adapter extends SectionedBaseAdapter {
+public class AddList_LV_Adapter extends SectionedBaseAdapter {
     Context context;
 
     public void setList(List<TXL_Bean.PersonsBean> list) {
@@ -38,7 +38,7 @@ public class AddressList_Listview_Adapter extends SectionedBaseAdapter {
         this.topBean = topBean;
     }
 
-    public AddressList_Listview_Adapter(Context context, List<TXL_Bean.PersonsBean> list, TXL_Bean.TopBean topBean) {
+    public AddList_LV_Adapter(Context context, List<TXL_Bean.PersonsBean> list, TXL_Bean.TopBean topBean) {
         this.context = context;
         this.list = list;
         this.topBean = topBean;
@@ -53,16 +53,19 @@ public class AddressList_Listview_Adapter extends SectionedBaseAdapter {
     public long getItemId(int section, int position) {
         return 0;
     }
+
     @Override
     public int getSectionCount() {
         return 1;
     }
+
     @Override
     public int getCountForSection(int section) {
-        if (list!=null)
+        if (list != null)
             return list.size();
         return 0;
     }
+
     //listview item
     @Override
     public View getItemView(int section, int position, View convertView, ViewGroup parent) {
@@ -82,56 +85,58 @@ public class AddressList_Listview_Adapter extends SectionedBaseAdapter {
         View view;
         LinearLayout gd;
         ImageView tx, rz, top_img;
-        TextView gs, mz,sex, gj, zg,zhy,need_text;
+        TextView gs, mz, sex, gj, zg, zhy, need_text;
     }
+
     public void shouInfo(viewHolder viewHolder, int position) {
         try {
             Glide.with(context)
                     .load(list.get(position).getThumb())
-                    .placeholder((list.get(position).getSex().equals("男"))?(R.drawable.contact_image_defaul_male):(R.drawable.contact_image_defaul_female))
+                    .placeholder((list.get(position).getSex().equals("男")) ? (R.drawable.contact_image_defaul_male) : (R.drawable.contact_image_defaul_female))
                     .into(viewHolder.tx);
-            Spanned s1=replace(list.get(position).getC_name());
+            Spanned s1 = replace(list.get(position).getC_name());
             viewHolder.gs.setText(s1);
-//            viewHolder.gs.setText((s1.length()>11)?(s1.subSequence(0,10)+"..."):(s1));
             viewHolder.mz.setText(replace(list.get(position).getName()));
             viewHolder.sex.setText(replace(list.get(position).getSex()));
-            String type=list.get(position).getType();
-            CharSequence product=replace(list.get(position).getMain_product());
+            String type = list.get(position).getType();
+            CharSequence product = replace(list.get(position).getMain_product());
             if (type.equals("1")) {
                 viewHolder.zg.setVisibility(View.VISIBLE);
                 viewHolder.gj.setVisibility(View.VISIBLE);
-                //viewHolder.need_text.setVisibility(View.VISIBLE);
                 viewHolder.zhy.setText(replace(list.get(position).getNeed_product()));
-                viewHolder.zg.setText("产品："+product+"  月用量："+list.get(position).getMonth_consum());
-                viewHolder.gj.setText("供给:" + list.get(position).getSale_count() + " 求购:" + list.get(position).getBuy_count()+"  需求:");
-                //viewHolder.need_text.setText("需求：");
-            } else if(type.equals("2")){
+                viewHolder.zg.setText("产品：" + product
+                        + "  月用量：" + list.get(position).getMonth_consum());
+
+                viewHolder.gj.setText("供给:" + list.get(position).getSale_count()
+                        + " 求购:" + list.get(position).getBuy_count()
+                        + " 需求:");
+            } else if (type.equals("2")) {
                 viewHolder.zg.setVisibility(View.INVISIBLE);
                 viewHolder.gj.setVisibility(View.VISIBLE);
-                //viewHolder.need_text.setVisibility(View.VISIBLE);
                 viewHolder.zhy.setText(replace(list.get(position).getNeed_product()));
-                viewHolder.gj.setText("供给:" + list.get(position).getSale_count() + " 求购:" + list.get(position).getBuy_count()+"  主营:");
-                //viewHolder.need_text.setText("主营：");
-            }else {
+                viewHolder.gj.setText("供给:" + list.get(position).getSale_count()
+                        + " 求购:" + list.get(position).getBuy_count()
+                        + " 主营:");
+            } else {
                 viewHolder.zg.setVisibility(View.INVISIBLE);
                 viewHolder.gj.setVisibility(View.VISIBLE);
-                viewHolder.gj.setText("主营产品：");
+                viewHolder.gj.setText("主营产品：" + replace(list.get(position).getNeed_product()));
             }
-            if (list.get(position).getIs_pass().equals("0")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity);
-            } else if (list.get(position).getIs_pass().equals("1")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
-            }
+            viewHolder.rz.setImageResource(list.get(position).getIs_pass().equals("0")
+                    ? R.drawable.icon_identity
+                    : R.drawable.icon_identity_hl);
+
             viewHolder.top_img.setVisibility(View.GONE);
         } catch (Exception e) {
         }
     }
+
     //listview 头部信息
     @Override
     public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
         LinearLayout layout = null;
         if (convertView == null) {
-            viewHolder=new viewHolder();
+            viewHolder = new viewHolder();
             LayoutInflater inflator = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             layout = (LinearLayout) inflator.inflate(R.layout.txl_listview_item, null);
             initView(layout);
@@ -141,25 +146,32 @@ public class AddressList_Listview_Adapter extends SectionedBaseAdapter {
             viewHolder = (viewHolder) layout.getTag();
         }
         try {
-           // viewHolder.gd.setBackgroundColor(context.getResources().getColor(R.color.color_lightgray));
-            viewHolder.top_img.setVisibility((topBean==null)?(View.GONE):(View.VISIBLE));
+            // viewHolder.gd.setBackgroundColor(context.getResources().getColor(R.color.color_lightgray));
+            viewHolder.top_img.setVisibility((topBean == null) ? (View.GONE) : (View.VISIBLE));
             Glide.with(context).load(topBean.getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(viewHolder.tx);
-            String s1=topBean.getC_name();
-            viewHolder.gs.setText((s1.length()>10)?(s1.subSequence(0,8)+"..."):(s1));
+            String s1 = topBean.getC_name();
+            viewHolder.gs.setText((s1.length() > 10) ? (s1.subSequence(0, 8) + "...") : (s1));
             viewHolder.mz.setText(replace(topBean.getName()));
             viewHolder.sex.setText(topBean.getSex());
-            String type=topBean.getType();
-            CharSequence product=replace(topBean.getMain_product());
+            String type = topBean.getType();
+            CharSequence product = replace(topBean.getMain_product());
             if (type.equals("1")) {
                 viewHolder.zg.setVisibility(View.VISIBLE);
                 viewHolder.gj.setVisibility(View.VISIBLE);
-                viewHolder.gj.setText("供给:" + topBean.getSale_count() + " 求购:" + topBean.getBuy_count() + " 需求:" + replace(topBean.getNeed_product()));
-                viewHolder.zg.setText("产品："+product+"  月用量："+topBean.getMonth_consum());
-            } else if(type.equals("2")){
+                viewHolder.gj.setText("供给:"
+                        + topBean.getSale_count()
+                        + " 求购:" + topBean.getBuy_count()
+                        + " 需求:" + replace(topBean.getNeed_product()));
+                viewHolder.zg.setText("产品："
+                        + product
+                        + "  月用量：" + topBean.getMonth_consum());
+            } else if (type.equals("2")) {
                 viewHolder.zg.setVisibility(View.INVISIBLE);
                 viewHolder.gj.setVisibility(View.VISIBLE);
-                viewHolder.gj.setText("供给:" + topBean.getSale_count() + " 求购:" + topBean.getBuy_count() + " 主营:" + replace(topBean.getNeed_product()));
-            }else {
+                viewHolder.gj.setText("供给:" + topBean.getSale_count()
+                        + " 求购:" + topBean.getBuy_count()
+                        + " 主营:" + replace(topBean.getNeed_product()));
+            } else {
                 viewHolder.zg.setVisibility(View.INVISIBLE);
                 viewHolder.gj.setVisibility(View.VISIBLE);
                 viewHolder.gj.setText("主营产品：" + replace(topBean.getNeed_product()));
@@ -171,9 +183,10 @@ public class AddressList_Listview_Adapter extends SectionedBaseAdapter {
             }
         } catch (Exception e) {
         }
-        return (topBean==null)?new LinearLayout(context):layout;
+        return (topBean == null) ? new LinearLayout(context) : layout;
     }
-    public void initView(View layout){
+
+    public void initView(View layout) {
         viewHolder.tx = (ImageView) layout.findViewById(R.id.xq_tx);
         viewHolder.rz = (ImageView) layout.findViewById(R.id.xq_rz);
         viewHolder.top_img = (ImageView) layout.findViewById(R.id.top_img);
@@ -181,15 +194,16 @@ public class AddressList_Listview_Adapter extends SectionedBaseAdapter {
         viewHolder.gs = (TextView) layout.findViewById(R.id.txl_listview_gs);
         viewHolder.mz = (TextView) layout.findViewById(R.id.txl_listview_mz);
         viewHolder.gj = (TextView) layout.findViewById(R.id.txl_listview_gj);
-        viewHolder.zg = (TextView) layout.findViewById(R.id.txl_listview_zg);
-        viewHolder.zhy= (TextView) layout.findViewById(R.id.txl_listview_zhy);
-        viewHolder.sex= (TextView) layout.findViewById(R.id.txl_listview_sex);
-       // viewHolder.need_text= (TextView) layout.findViewById(R.id.need_text);
+        viewHolder.zg = (TextView) layout.findViewById(R.id.txl_listview_pro_month);
+        viewHolder.zhy = (TextView) layout.findViewById(R.id.txl_listview_zhy);
+        viewHolder.sex = (TextView) layout.findViewById(R.id.txl_listview_sex);
+        // viewHolder.need_text= (TextView) layout.findViewById(R.id.need_text);
     }
-    public Spanned replace(String s){
-        s=s.replace("<strong style='color: #ff5000;'>","<font color='#ff5000'><b>");
-        s=s.replace("</strong>","</b></font>");
-        Spanned s1=Html.fromHtml(s);
+
+    public Spanned replace(String s) {
+        s = s.replace("<strong style='color: #ff5000;'>", "<font color='#ff5000'><b>");
+        s = s.replace("</strong>", "</b></font>");
+        Spanned s1 = Html.fromHtml(s);
         return s1;
     }
 }

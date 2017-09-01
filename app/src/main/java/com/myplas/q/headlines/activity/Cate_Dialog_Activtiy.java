@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.AndroidUtil;
 import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -37,7 +39,7 @@ import java.util.Map;
  * 时间： 2017/6/81123.
  */
 
-public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack, View.OnClickListener ,DialogShowUtils.DialogShowInterface{
+public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack, View.OnClickListener, DialogShowUtils.DialogShowInterface {
     private MyCateBean myCateBean;
     private ImageView cate_img_back;
     private HeadLine_Column_Adapetr column_adapetr;
@@ -46,6 +48,8 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     private List<String> list_column_selected, list_product_selected;
     private List<CateListSelectBean> list_cateselect_Column, list_cateselect_Product;
     private List list_Product_Classify, list_Subscription_Column, list1, list2;
+
+    private boolean isFirstIoto;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,12 +65,13 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     public void initView() {
         list_column_selected = new ArrayList<>();
         list_product_selected = new ArrayList<>();
+        isFirstIoto = SharedUtils.getSharedUtils().getBoolean(this, Constant.ISFIRSTINTOHEADCATE);
+
         cate_img_back = (ImageView) findViewById(R.id.cate_img_back);
         gridView_column = (MyGridview) findViewById(R.id.fx_gd_wd_girdview);
         gridView_product = (MyGridview) findViewById(R.id.fx_gd_qb_girdview);
 
         cate_img_back.setOnClickListener(this);
-        //myCateBean= (MyCateBean) getIntent().getSerializableExtra("mycatebean");
 
         gridView_column.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -170,7 +175,7 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     public String getData(List list) {
         if (list.size() == 0) {
             return "";
-        }else {
+        } else {
             try {
                 String s = "";
                 for (int i = 0; i < list.size(); i++) {
@@ -185,13 +190,14 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
 
     @Override
     public void onClick(View v) {
-        if (list_column_selected.size()>=2&&list_product_selected.size()>=6) {
+        if (list_column_selected.size() >= 2 && list_product_selected.size() >= 6) {
             setSelectCate();
             finish();
         } else {
-            TextUtils.Toast(this,"订阅栏目与制品分类至少各选6个!");
+            TextUtils.Toast(this, "订阅栏目与制品分类至少各选6个!");
         }
     }
+
     @Override
     public void callBack(Object object, int type) {
         try {
@@ -200,22 +206,36 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
             if (type == 2 && err.equals("0")) {
                 myCateBean = gson.fromJson(object.toString(), MyCateBean.class);
                 for (int i = 0; i < list1.size(); i++) {
+//                    if (!isFirstIoto) {
+//                        list_column_selected.addAll(list1);
+//                        list_cateselect_Column.get(i).setIssaveed(true);
+//                        list_cateselect_Column.get(i).setSelected(true);
+//                    } else {
                     if (myCateBean.getData().getSubscribe().contains(list1.get(i))) {
                         //已经订阅的频道设置为已选择
                         list_cateselect_Column.get(i).setIssaveed(true);
                         list_cateselect_Column.get(i).setSelected(true);
                     }
+//                    }
                     //设置不可选
                     if (myCateBean.getData().getUnconcealed_subscribe().contains(list1.get(i))) {
                         list_cateselect_Column.get(i).setUnSelecteable(true);
                     }
                 }
+
                 for (int i = 0; i < list2.size(); i++) {
+//                    if (!isFirstIoto) {
+//                        list_product_selected.addAll(list2);
+//                        list_cateselect_Product.get(i).setIssaveed(true);
+//                        list_cateselect_Product.get(i).setSelected(true);
+//                    } else {
                     if (myCateBean.getData().getProperty().contains(list2.get(i))) {
-                        //已经订阅的频道设置为已选择
+                        //已经订阅的栏目设置为已选择
                         list_cateselect_Product.get(i).setIssaveed(true);
                         list_cateselect_Product.get(i).setSelected(true);
                     }
+//                    }
+
                 }
 
                 list_column_selected.clear();
@@ -227,14 +247,18 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
                 list_product_selected.addAll(myCateBean.getData().getProperty());
                 product_adapetr.setList(list_cateselect_Product);
                 product_adapetr.notifyDataSetChanged();
+
+                //SharedUtils.getSharedUtils().setBooloean(this, Constant.ISFIRSTINTOHEADCATE, true);
             }
         } catch (Exception e) {
         }
     }
+
     @Override
     public void failCallBack(int type) {
 
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

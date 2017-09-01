@@ -107,7 +107,8 @@
             android:layout_height="match_parent"
             android:background="@color/color_white"
             android:divider="@null"
-            android:dividerHeight="0px"></com.myplas.q.common.view.PinnedHeaderListView>
+            android:dividerHeight="0px"
+            android:overScrollMode="never"></com.myplas.q.common.view.PinnedHeaderListView>
 
         <ImageButton
             android:id="@+id/img_reload"

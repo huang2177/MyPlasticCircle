@@ -36,17 +36,20 @@ public class SucribleDetailBean {
 
     public static class InfoBean {
         /**
-         * id : 44724
-         * title : 上游早报：原油及PE单体7月24日收盘价格
-         * cate_id : 2
-         * input_time : 2017-07-25
+         * id : 44461
+         * title : 竞拍分析：本周神华PE竞拍详情分析
+         * cate_id : 76
+         * input_time : 2017-07-21
          * source_from : 本站原创
          * author : 中晨
-         * pv : 3
-         * true_pv : 3
+         * pv : 1699
+         * true_pv : 195
          * type : pe
-         * lastOne : 44723
-         * nextOne : 44848
+         * lastOne : 44455
+         * nextOne : 44917
+         * cate_name : 中晨塑说
+         * subscribe : [{"id":"44910","title":"噜啦啦","input_time":"09:56","pv":"544","physical_label":"低压拉丝"},{"id":"44896","title":"装置动态","input_time":"2017-08-31","pv":"563","physical_label":"茂金属"},{"id":"44885","title":"早盘预测：油价连续两日暴跌，塑料市场能否延续强势","input_time":"2017-08-30","pv":"528","physical":""},{"id":"8340","title":"PP进口市场膜料价格即时报盘（20161117）","input_time":"2016-11-17","pv":"6075","physical":""},{"id":"1733","title":"关于2016年国庆节放假期间调整各品种最低交易保证金标准和涨跌停板幅度及夜盘交易时间的通知","input_time":"2016-09-30","pv":"10744","physical":""}]
+         * hot : [{"id":"44918","title":"独家解读","pv":"505","physical_label":"高压吹膜","time":"11:28"},{"id":"44917","title":"中晨塑说","pv":"538","physical_label":"高压涂覆","time":"11:27"},{"id":"44916","title":"666","pv":"520","physical_label":"茂金属","time":"11:19"},{"id":"44914","title":"哈哈哈","pv":"566","physical_label":"高压涂覆","time":"11:15"},{"id":"44912","title":"企业动态","pv":"564","physical_label":"共聚注塑","time":"11:14"}]
          */
 
         private String id;
@@ -187,11 +190,11 @@ public class SucribleDetailBean {
 
         public static class SubscribeBean {
             /**
-             * id : 44864
-             * title : 测试999
-             * input_time : 2017-08-23
-             * pv : 590
-             * physical_label : 高压重包
+             * id : 44910
+             * title : 噜啦啦
+             * input_time : 09:56
+             * pv : 544
+             * physical_label : 低压拉丝
              * physical :
              */
 
@@ -253,11 +256,11 @@ public class SucribleDetailBean {
 
         public static class HotBean {
             /**
-             * id : 44875
-             * title : 大师傅士大夫但是
-             * pv : 533
-             * physical_label : 线型
-             * time : 2017-08-23
+             * id : 44918
+             * title : 独家解读
+             * pv : 505
+             * physical_label : 高压吹膜
+             * time : 11:28
              */
 
             private String id;

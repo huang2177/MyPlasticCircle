@@ -18,4 +18,6 @@ public class Constant {
     public static final String TOKEN = "token";
 
     public static final String UUID = "uuid";
+
+    public static final String ISFIRSTINTOHEADCATE = "isFirstIntoHeadCate";
 }

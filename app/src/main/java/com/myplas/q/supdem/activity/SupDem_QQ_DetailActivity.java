@@ -19,6 +19,7 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.RoundImageView;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.supdem.Beans.PhysicalBean;
 import com.myplas.q.supdem.Beans.SearchResultDetailBean;
@@ -114,6 +115,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         map.put("keywords", getIntent().getStringExtra("plastic_number"));
         postAsyn(this, API.BASEURL + API.PHYSICAL_SEARCH, map, this, 2);
     }
+
     @Override
     public void onClick(View v) {
         try {
@@ -192,9 +194,9 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     break;
                 case R.id.supdem_qq_layout_zx_more:
-                    SharedUtils.getSharedUtils().setBooloean(this, "fromsearch", true);
-                    SharedUtils.getSharedUtils().setData(this, "refreshdata", getIntent().getStringExtra("plastic_number"));
-                    finish();
+                    Intent i = new Intent(this, HeadLineSearchActivity.class);
+                    i.putExtra("data", getIntent().getStringExtra("plastic_number"));
+                    startActivity(i);
                     break;
             }
         } catch (Exception e) {
@@ -225,7 +227,6 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            Log.e("---------" + type, object.toString());
             boolean err = new JSONObject(object.toString()).getString("err").equals("0");
             if (type == 1 && err) {
                 SearchResultDetailBean bean = gson.fromJson(object.toString(), SearchResultDetailBean.class);

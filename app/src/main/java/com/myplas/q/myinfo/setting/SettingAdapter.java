@@ -2,6 +2,7 @@ package com.myplas.q.myinfo.setting;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,12 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/29 10:57
  */
-public class SettingAdapter extends BaseAdapter {
+public class SettingAdapter extends RecyclerView.Adapter {
     Context context;
     List<String> list;
     List<Integer> mList;
     mySwitchCheckedListenler mListenler;
+    OnItemClickListener mOnItemClickListener;
 
     Map<Integer, View> mViewMap;
     Map<Integer, SwitchButton> mSwitchMap;
@@ -43,38 +45,26 @@ public class SettingAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        if (list != null)
-            return list.size();
-        return 0;
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+        View convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_setting, parent, false);
+        viewHolder viewHolder = new viewHolder(convertView);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickListener.onItemClick(viewType);
+            }
+        });
+        return viewHolder;
     }
 
     @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        viewHolder viewHolder = null;
-        if (mViewMap.get(position) == null) {
-            viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_setting, parent, false);
-            viewHolder.mTextView = (TextView) convertView.findViewById(R.id.item_lv_setting_text);
-            viewHolder.mImageView = (ImageView) convertView.findViewById(R.id.item_lv_setting_img);
-            viewHolder.mTextView1 = (TextView) convertView.findViewById(R.id.item_lv_setting_text1);
-            viewHolder.mSwitch = (SwitchButton) convertView.findViewById(R.id.item_lv_setting_switch);
-            convertView.setTag(viewHolder);
-            mViewMap.put(position, convertView);
-        } else {
-            convertView = mViewMap.get(position);
-            viewHolder = (viewHolder) convertView.getTag();
-        }
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        viewHolder viewHolder = (viewHolder) holder;
         if (position == 1) {
             mSwitchMap.put(position, viewHolder.mSwitch);
             viewHolder.mTextView1.setVisibility(View.GONE);
@@ -87,13 +77,33 @@ public class SettingAdapter extends BaseAdapter {
         }
         viewHolder.mTextView.setText(list.get(position));
         viewHolder.mImageView.setImageResource(mList.get(position));
-        return convertView;
     }
 
-    class viewHolder {
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public int getItemCount() {
+        if (list != null)
+            return list.size();
+        return 0;
+    }
+
+
+    class viewHolder extends RecyclerView.ViewHolder {
         SwitchButton mSwitch;
         ImageView mImageView;
         TextView mTextView, mTextView1;
+
+        public viewHolder(View convertView) {
+            super(convertView);
+            mTextView = (TextView) convertView.findViewById(R.id.item_lv_setting_text);
+            mImageView = (ImageView) convertView.findViewById(R.id.item_lv_setting_img);
+            mTextView1 = (TextView) convertView.findViewById(R.id.item_lv_setting_text1);
+            mSwitch = (SwitchButton) convertView.findViewById(R.id.item_lv_setting_switch);
+        }
     }
 
     public void setSwitchChecked(boolean checked) {
@@ -105,7 +115,6 @@ public class SettingAdapter extends BaseAdapter {
         public void onCheckedChanged(SwitchButton view, boolean isChecked) {
             String allow_sendmsg_gk = (isChecked) ? "0" : "1";
             mListenler.onChecked(allow_sendmsg_gk);
-
         }
     }
 
@@ -113,7 +122,15 @@ public class SettingAdapter extends BaseAdapter {
         void onChecked(String s);
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public void setMySwitchCheckedListenler(mySwitchCheckedListenler mySwitchCheckedListenler) {
         this.mListenler = mySwitchCheckedListenler;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
     }
 }

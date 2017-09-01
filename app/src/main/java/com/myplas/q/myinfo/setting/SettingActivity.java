@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -54,8 +56,8 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
 
     private Button logout;
     private Dialog normalDialog;
-    private MyListview mListView;
     private SettingAdapter mAdapter;
+    private RecyclerView mRecyclerView;
 
     private List<String> mStringList;
     private List<Integer> mIntegerList;
@@ -77,7 +79,11 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
         sharedUtils = SharedUtils.getSharedUtils();
 
         logout = F(R.id.wd_linear_tc);
-        mListView = F(R.id.setting_listview);
+        mRecyclerView = F(R.id.setting_listview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setNestedScrollingEnabled(false);
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,9 +92,40 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
                 dialogShowUtils.showDialog(SettingActivity.this, content, 4, SettingActivity.this);
             }
         });
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+    }
+
+    public void initSetting() {
+        mStringList = new ArrayList<>();
+        mIntegerList = new ArrayList<>();
+
+        mStringList.add("个人资料");
+        mStringList.add("手机号码公开");
+        mStringList.add("短信设置");
+        mStringList.add("修改密码");
+        mStringList.add("帮助中心");
+        mStringList.add("在线客服");
+        mStringList.add("清空缓存");
+        mStringList.add("去打分");
+        mStringList.add("关于塑料圈");
+
+        mIntegerList.add(R.drawable.setup_icon_user);
+        mIntegerList.add(R.drawable.setup_icon_phone);
+        mIntegerList.add(R.drawable.setup_icon_message);
+        mIntegerList.add(R.drawable.setup_icon_password);
+        mIntegerList.add(R.drawable.setup_icon_help);
+        mIntegerList.add(R.drawable.setup_icon_customer_service);
+        mIntegerList.add(R.drawable.setup_icon_empty);
+        mIntegerList.add(R.drawable.setup_icon_mark);
+        mIntegerList.add(R.drawable.setup_icon_book);
+
+        mAdapter = new SettingAdapter(this, mStringList, mIntegerList);
+        mAdapter.setMySwitchCheckedListenler(this);
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new SettingAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(int position) {
                 switch (position) {
                     case 0:
                         Intent intent0 = new Intent(SettingActivity.this, MyDataActivity.class);
@@ -131,35 +168,6 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
                 }
             }
         });
-    }
-
-    public void initSetting() {
-        mStringList = new ArrayList<>();
-        mIntegerList = new ArrayList<>();
-
-        mStringList.add("个人资料");
-        mStringList.add("手机号码公开");
-        mStringList.add("短信设置");
-        mStringList.add("修改密码");
-        mStringList.add("帮助中心");
-        mStringList.add("在线客服");
-        mStringList.add("清空缓存");
-        mStringList.add("去打分");
-        mStringList.add("关于塑料圈");
-
-        mIntegerList.add(R.drawable.setup_icon_user);
-        mIntegerList.add(R.drawable.setup_icon_phone);
-        mIntegerList.add(R.drawable.setup_icon_message);
-        mIntegerList.add(R.drawable.setup_icon_password);
-        mIntegerList.add(R.drawable.setup_icon_help);
-        mIntegerList.add(R.drawable.setup_icon_customer_service);
-        mIntegerList.add(R.drawable.setup_icon_empty);
-        mIntegerList.add(R.drawable.setup_icon_mark);
-        mIntegerList.add(R.drawable.setup_icon_book);
-
-        mAdapter = new SettingAdapter(this, mStringList, mIntegerList);
-        mAdapter.setMySwitchCheckedListenler(this);
-        mListView.setAdapter(mAdapter);
     }
 
     public void requestNetData() {

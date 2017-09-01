@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
@@ -32,6 +33,7 @@ import com.myplas.q.common.view.MyListview;
 import com.myplas.q.headlines.adapter.HeadLinesDetail_More_LVAdapetr;
 import com.myplas.q.common.api.API;
 import com.myplas.q.headlines.bean.SucribleDetailBean;
+import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.myplas.q.release.activity.ReleaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
@@ -47,7 +49,8 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/21 16:18
  */
-public class HeadLinesDetailActivity extends BaseActivity implements ResultCallBack, View.OnClickListener {
+public class HeadLinesDetailActivity extends BaseActivity implements ResultCallBack
+        , View.OnClickListener, DialogShowUtils.DialogShowInterface {
     private WebView webView;
     private Resources resources;
     private WebSettings webSettings;
@@ -64,6 +67,8 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
 
     private Handler mHandler;
     private ScrollView mScrollView;
+
+    private String clickId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +119,6 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         imageView_btn_next.setOnClickListener(this);
         linearLayout_share.setOnClickListener(this);
 
-        textView_title.setText(getIntent().getStringExtra("title"));
-
         webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDefaultTextEncodingName("UTF-8");
@@ -140,13 +143,15 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         mListviewHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getNetData(sucribleDetailBean.getInfo().getSubscribe().get(position).getId());
+                clickId = sucribleDetailBean.getInfo().getHot().get(position).getId();
+                isPaidSubscription(clickId);
             }
         });
         mListviewAbout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getNetData(sucribleDetailBean.getInfo().getSubscribe().get(position).getId());
+                clickId = sucribleDetailBean.getInfo().getSubscribe().get(position).getId();
+                isPaidSubscription(clickId);
             }
         });
 
@@ -161,13 +166,19 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         BaseActivity.postAsyn(this, API.BASEURL + API.GET_DETAIL_INFO, map, this, 1);
     }
 
+    //检查权限
+    public void isPaidSubscription(String cate_id) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", cate_id);
+        BaseActivity.postAsyn(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 6);
+    }
+
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("------", object.toString());
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("err");
-            if (err.equals("0")) {
+            if (type == 1 && err.equals("0")) {
                 Gson gson = new Gson();
                 sucribleDetailBean = gson.fromJson(object.toString(), SucribleDetailBean.class);
                 showInfo(sucribleDetailBean);
@@ -180,11 +191,21 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                     }
                 });
             }
+            if (type == 6) {
+                if (err.equals("0")) {
+                    getNetData(clickId);
+                } else {
+                    String content = new JSONObject(object.toString()).getString("msg");
+                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
+                }
+            }
         } catch (Exception e) {
         }
     }
 
     public void showInfo(SucribleDetailBean sucribleDetailBean) {
+        textView_title.setText(sucribleDetailBean.getInfo().getCate_name());
         textView_tt_title.setText("[" + sucribleDetailBean.getInfo().getType() + "]"
                 + sucribleDetailBean.getInfo().getTitle());
         textView_shj.setText(Html.fromHtml(sucribleDetailBean.getInfo().getAuthor()
@@ -209,6 +230,13 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     @Override
     public void failCallBack(int type) {
 
+    }
+
+    @Override
+    public void ok(int type) {
+        Intent intent = new Intent(this, IntegralActivity.class);
+        intent.putExtra("type", "1");
+        startActivity(intent);
     }
 
     @Override

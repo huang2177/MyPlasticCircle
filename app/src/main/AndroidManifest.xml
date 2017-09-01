@@ -110,6 +110,10 @@
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name="com.myplas.q.myinfo.setting.activity.MyMainPro_LogisticsActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.myplas.q.myinfo.setting.activity.AddressSelectedActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>

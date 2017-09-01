@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ import com.myplas.q.R;
 import com.myplas.q.addresslist.Beans.TXL_Bean;
 import com.myplas.q.addresslist.activity.AD_DialogActivtiy;
 import com.myplas.q.addresslist.activity.Cover_WebActivity;
-import com.myplas.q.addresslist.adapter.AddressList_Listview_Adapter;
+import com.myplas.q.addresslist.adapter.AddList_LV_Adapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
@@ -71,7 +72,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
 
     private TXL_Bean.TopBean topBean;
     private List<TXL_Bean.PersonsBean> list, list_more;
-    private AddressList_Listview_Adapter txl_listview_adapter;
+    private AddList_LV_Adapter txl_listview_adapter;
 
     private Handler handler;
     private TXL_Bean txlBean;
@@ -535,7 +536,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             if (page == 1) {
                 rs.setText("塑料圈通讯录(" + new JSONObject(json).getString("member") + "人)");
                 //显示数据
-                txl_listview_adapter = new AddressList_Listview_Adapter(getActivity(), list, topBean);
+                txl_listview_adapter = new AddList_LV_Adapter(getActivity(), list, topBean);
                 listView.setAdapter(txl_listview_adapter);
                 listView.stopRefresh();
                 list_more.clear();
@@ -639,6 +640,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
     public void showRefreshPopou(String text) {
         if (list.size() != 0 && isRefresh) {
             isRefresh = false;
+//            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(text)) ? (text) : ("已是最新通信录信息！"));
             if (TextUtils.isNullOrEmpty(text)) {
                 View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
                 textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);

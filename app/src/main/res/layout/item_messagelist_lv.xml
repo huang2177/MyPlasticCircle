@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <FrameLayout
@@ -23,19 +23,13 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/icon_supply_and_demand_news"/>
 
-            <TextView
+            <com.myplas.q.common.view.DragView2
                 android:id="@+id/msglist_text_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:background="@drawable/bg_news_number_9below"
-                android:padding="2dp"
-                android:text="99"
-                android:textColor="@color/colorAccent"
-                android:textSize="11.0sp"/>
+                android:padding="1dp"/>
         </FrameLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

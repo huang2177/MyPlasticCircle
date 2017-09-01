@@ -38,7 +38,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textColor="@color/color_red"/>
+                    android:textColor="@color/color_red"
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/integral_all_"
@@ -46,7 +47,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="塑豆"
-                    android:textColor="@color/color_balank"/>
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
             </LinearLayout>
 
             <View
@@ -75,7 +77,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text=" 购买记录"
-                    android:textColor="@color/color_balank"/>
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
             </LinearLayout>
 
             <View
@@ -104,7 +107,8 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:text=" 充值塑豆"
-                    android:textColor="@color/color_red"/>
+                    android:textColor="@color/color_red"
+                    android:textSize="16.0sp"/>
             </LinearLayout>
         </LinearLayout>
 

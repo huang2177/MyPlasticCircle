@@ -110,6 +110,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         initWebSocket();
         initView();
         setAppBarListener();
+        getLoginInfo(false);
     }
 
     private void initWebSocket() {
@@ -271,15 +272,17 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     @Override
     public void callBack(Object object, int type) {
         try {
-            scrollingView.setVisibility(View.VISIBLE);
+            mBarLayout.setExpanded(true, true);
             imageButton.setVisibility(View.GONE);
+            scrollingView.setVisibility(View.VISIBLE);
             JSONObject jsonObject = new JSONObject(object.toString());
             Gson gson = new Gson();
             if (type == 2) {
                 if ("0".equals(jsonObject.getString("err"))) {
                     myZone = gson.fromJson(object.toString(), MyZone.class);
                     showInfo(myZone);
-                } else if ("1".equals(jsonObject.getString("err")) || "998".equals(jsonObject.getString("err"))) {
+                } else if ("1".equals(jsonObject.getString("err"))
+                        || "998".equals(jsonObject.getString("err"))) {
                     sharedUtils.setData(getActivity(), "token", "");
                     sharedUtils.setData(getActivity(), "userid", "");
                     sharedUtils.setBooloean(getActivity(), "logined", false);
@@ -292,6 +295,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     @Override
     public void failCallBack(int type) {
         if (myZone == null) {
+            mBarLayout.setExpanded(false);
             scrollingView.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);
         }
@@ -300,13 +304,21 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void showInfo(MyZone myZone) {
         try {
             String ispass = myZone.getData().getIs_pass();
-            Glide.with(getActivity()).load(myZone.getData().getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(image_tx);
-            image_rz.setImageResource((ispass.equals("0")) ? (R.drawable.icon_identity) : (R.drawable.icon_identity_hl));
-            text_name.setText(myZone.getData().getName() + "  " +
-                    myZone.getData().getMobile() + "  " +
-                    ((!myZone.getData().getSex().equals("0")) ? ("女") : ("男")));
+            Glide.with(getActivity())
+                    .load(myZone.getData().getThumb())
+                    .placeholder(R.drawable.contact_image_defaul_male)
+                    .into(image_tx);
+            image_rz.setImageResource((ispass.equals("0"))
+                    ? (R.drawable.icon_identity)
+                    : (R.drawable.icon_identity_hl));
+            text_name.setText(myZone.getData().getName() + "  "
+                    + myZone.getData().getMobile() + "  " +
+                    (!myZone.getData().getSex().equals("0")
+                            ? ("女")
+                            : ("男")));
             text_gs.setText(myZone.getData().getC_name());
-            text_pm.setText("等级：" + myZone.getData().getMemberlevel() + "  排名：" + myZone.getData().getRank() + "位");
+            text_pm.setText("等级：" + myZone.getData().getMemberlevel()
+                    + "  排名：" + myZone.getData().getRank() + "位");
 
             text_yj.setText(myZone.getIntroduction());
             text_fs.setText(myZone.getMyfans());
@@ -316,19 +328,12 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             text_qg.setText(myZone.getS_in_count() + "  ");
             text_look.setText(myZone.getMyviewhistory() + "  ");
 
+            mDragView.setText(myZone.getMessage() + "  ");
+            mDragView.setVisibility(myZone.getMessage().equals("0")
+                    ? View.GONE
+                    : View.VISIBLE);
         } catch (Exception e) {
         }
-    }
-
-    public void onResume() {
-        super.onResume();
-        getLoginInfo(false);
-        MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("MainScreen");
     }
 
     private void setAppBarListener() {
@@ -379,10 +384,22 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         //mDragView.setText(msg);
     }
 
+
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
         COLLAPSED,
-        INTERNEDIATE
+        INTERNEDIATE;
+    }
+
+    public void onResume() {
+        super.onResume();
+        getLoginInfo(false);
+        MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainScreen");
     }
 
     @Override

@@ -16,51 +16,27 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/addselected_ll"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="18dp"
+            android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="选择地区"
+                android:text="全国线路"
                 android:textColor="@color/color_balank"
                 android:textSize="16.0sp"/>
 
-            <com.optimus.edittextfield.EditTextField
-                android:id="@+id/address_edit_starting"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:clickable="true"
-                android:focusable="false"
-                android:hint="地区信息"
-                android:imeOptions="actionDone"
-                android:paddingLeft="5dp"
-                android:selectAllOnFocus="true"
-                android:singleLine="true"
-                android:textColor="@color/color_balank"
-                android:textColorHint="@color/color_gray3"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:textSelectHandle="@drawable/textselecthandle"
-                android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textSize="@dimen/x66"
-                app:clearButtonMode="whileEditing"/>
-
             <ImageView
-                android:id="@+id/address_img"
+                android:id="@+id/datacommon_img_logistics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_location"
-                android:visibility="gone"/>
+                android:src="@drawable/btn_radio"/>
         </LinearLayout>
 
         <View
@@ -79,19 +55,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="详细地址"
+                android:text="出发地"
                 android:textColor="@color/color_balank"
                 android:textSize="16.0sp"/>
 
             <com.optimus.edittextfield.EditTextField
-                android:id="@+id/address_edit_ending"
+                android:id="@+id/datacommon_edit_starting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:background="@null"
-                android:hint="详细地址"
+                android:hint="上海市"
                 android:imeOptions="actionDone"
                 android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:textColor="@color/color_balank"
                 android:textColorHint="@color/color_gray3"
@@ -106,7 +84,48 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_out"></View>
+            android:background="@color/color_gray_divider_in"></View>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="目的地"
+                android:textColor="@color/color_balank"
+                android:textSize="16.0sp"/>
+
+            <com.optimus.edittextfield.EditTextField
+                android:id="@+id/datacommon_edit_ending"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:hint="北京市"
+                android:imeOptions="actionDone"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:textColor="@color/color_balank"
+                android:textColorHint="@color/color_gray3"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
+                android:textSelectHandle="@drawable/textselecthandle"
+                android:textSelectHandleLeft="@drawable/textselecthandle"
+                android:textSelectHandleRight="@drawable/textselecthandle"
+                android:textSize="@dimen/x66"
+                app:clearButtonMode="whileEditing"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_gray_divider_in"></View>
     </LinearLayout>
 </LinearLayout>
+

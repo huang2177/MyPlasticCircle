@@ -21,19 +21,23 @@
                 android:layout_height="45dp"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TabLayout
+                <com.androidkun.xtablayout.XTabLayout
                     android:id="@+id/headline_tablayout"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="@color/color_red"
-                    app:tabMode="scrollable"
-                    app:tabSelectedTextColor="@color/color_red"
-                    app:tabTextAppearance="@style/TabLayoutTextStyle"
-                    app:tabTextColor="@color/color_balank1">
-                </android.support.design.widget.TabLayout>
+                    app:xTabIndicatorColor="@color/color_red"
+                    app:xTabIndicatorHeight="3dp"
+                    app:xTabIndicatorWidth="25dp"
+                    app:xTabMode="scrollable"
+                    app:xTabSelectedTextColor="@color/color_red"
+                    app:xTabSelectedTextSize="48px"
+                    app:xTabTextColor="@color/color_title_main"
+                    app:xTabTextSelectedBold="true"
+                    app:xTabTextSize="46px">
+                </com.androidkun.xtablayout.XTabLayout>
 
                 <ImageButton
                     android:id="@+id/fx_gd_imgbtn"
@@ -44,9 +48,11 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/headline_divider"
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray"></View>
+                android:background="@color/color_gray"
+                android:visibility="gone"></View>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/headline_viewpager"

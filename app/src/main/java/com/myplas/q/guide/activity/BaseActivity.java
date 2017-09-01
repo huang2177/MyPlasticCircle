@@ -112,7 +112,7 @@ public class BaseActivity extends Activity {
     }
 
     //get请求
-    public synchronized void getAsyn(Context context
+    public synchronized void getAsyn(Activity context
             , String url
             , Map<String
             , String> map

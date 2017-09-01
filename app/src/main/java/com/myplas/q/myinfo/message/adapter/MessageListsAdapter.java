@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.common.view.DragView2;
 import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.myinfo.beans.MyMessageBean;
 
@@ -23,6 +24,8 @@ import java.util.Map;
  * 时间：2017/3/29 10:57
  */
 public class MessageListsAdapter extends BaseAdapter {
+    int imgRes;
+    String title;
     Context context;
     Map<Integer, View> mViewMap;
     List<MyMessageBean.DataBean> list;
@@ -37,7 +40,7 @@ public class MessageListsAdapter extends BaseAdapter {
     public int getCount() {
         if (list != null)
             return list.size();
-        return 3;
+        return 0;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class MessageListsAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_messagelist_lv, parent, false);
             viewHolder.mView = convertView.findViewById(R.id.msglist_view_divider);
             viewHolder.dis = (TextView) convertView.findViewById(R.id.msglist_text_dis);
-            viewHolder.num = (TextView) convertView.findViewById(R.id.msglist_text_num);
+            viewHolder.mDragView2 = (DragView2) convertView.findViewById(R.id.msglist_text_num);
             viewHolder.type = (TextView) convertView.findViewById(R.id.msglist_text_type);
             viewHolder.time = (TextView) convertView.findViewById(R.id.msglist_text_time);
             viewHolder.mImageView = (MyImageView) convertView.findViewById(R.id.msglist_img);
@@ -69,12 +72,29 @@ public class MessageListsAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         viewHolder.mImageView.setBorderColor(Color.WHITE);
-        if (position == 2) {
+        if (position == list.size() - 1) {
             viewHolder.mView.setVisibility(View.GONE);
         }
-//        viewHolder.type.setText(list.get(position).getContent());
-//        viewHolder.time.setText(list.get(position).getInput_time());
-//        viewHolder.dis.setText(list.get(position).getInput_time());
+        if (list.get(position).getType().equals("1")) {
+            title = "供求消息";
+            viewHolder.mDragView2.setVisibility(list.get(position).getCount().equals("0")
+                    ? View.GONE
+                    : View.VISIBLE);
+            imgRes = R.drawable.icon_supply_and_demand_news;
+        } else if (list.get(position).getType().equals("2")) {
+            title = "出价消息";
+            viewHolder.mDragView2.setVisibility(View.GONE);
+            imgRes = R.drawable.icon_bid_message;
+        } else {
+            title = "回复消息";
+            imgRes = R.drawable.icon_reply_message;
+            viewHolder.mDragView2.setVisibility(View.GONE);
+        }
+        viewHolder.type.setText(title);
+        viewHolder.mImageView.setImageResource(imgRes);
+        viewHolder.dis.setText(list.get(position).getMsg());
+        viewHolder.mDragView2.setText(list.get(position).getCount());
+        viewHolder.time.setText(list.get(position).getInput_time());
         return convertView;
     }
 
@@ -84,7 +104,8 @@ public class MessageListsAdapter extends BaseAdapter {
 
     class viewHolder {
         View mView;
+        DragView2 mDragView2;
         MyImageView mImageView;
-        TextView type, time, dis, num;
+        TextView type, time, dis;
     }
 }

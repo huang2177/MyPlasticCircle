@@ -173,20 +173,30 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         try {
             Glide.with(this)
                     .load(mySelfInfo.getData().getThumb())
-                    .placeholder((mySelfInfo.getData().getSex().equals("男")) ? (R.drawable.contact_image_defaul_male) : (R.drawable.contact_image_defaul_female))
+                    .placeholder((mySelfInfo.getData().getSex().equals("男"))
+                            ? (R.drawable.contact_image_defaul_male)
+                            : (R.drawable.contact_image_defaul_female))
                     .into(image_tx);
-            image_rz.setImageResource((mySelfInfo.getData().getIs_pass().equals("0")) ? (R.drawable.icon_identity) : (R.drawable.icon_identity_hl));
+            image_rz.setImageResource((mySelfInfo.getData().getIs_pass().equals("0"))
+                    ? (R.drawable.icon_identity)
+                    : (R.drawable.icon_identity_hl));
             btn_care.setText(mySelfInfo.getData().getStatus());
-            text_name.setText(mySelfInfo.getData().getName() + "  " + mySelfInfo.getData().getSex());
+            text_name.setText(mySelfInfo.getData().getName()
+                    + "  " + mySelfInfo.getData().getSex());
             text_gs.setText("公司：" + mySelfInfo.getData().getC_name());
             text_dh.setText("联系电话： " + mySelfInfo.getData().getMobile());
-            text_gj.setText("发布供给：" + mySelfInfo.getData().getSale() + "条" + "  发布求购：" + mySelfInfo.getData().getBuy() + "条");
+            text_gj.setText("发布供给：" + mySelfInfo.getData().getSale() + "条"
+                    + "  发布求购：" + mySelfInfo.getData().getBuy() + "条");
             textView_dzh.setText("地址：" + mySelfInfo.getData().getAddress());
             image_call.setImageResource(mySelfInfo.getData().getMobile().contains("*") ? (0) : (R.drawable.btn_dial));
+
             String zhy = mySelfInfo.getData().getNeed_product();
             String type = mySelfInfo.getData().getType();
-            textView_zhy.setText(type.equals("1") ? ("我的需求：" + zhy) : ("我的主营：" + zhy));
+            textView_zhy.setText(type.equals("1")
+                    ? ("我的需求：" + zhy)
+                    : ("我的主营：" + zhy));
             Glide.with(this).load(mySelfInfo.getData().getThumbcard()).placeholder(R.drawable.card).into(image_show);
+
             if (mySelfInfo.getData().getType().equals("1")) {
                 linearLayout.setVisibility(View.VISIBLE);
                 textView_num.setText(mySelfInfo.getData().getMonth_consum());

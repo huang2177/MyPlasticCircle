@@ -319,31 +319,37 @@
                 android:id="@+id/wd_zl_linear_ph"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp"
+                android:orientation="vertical"
                 android:visibility="gone">
 
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:text="关注的牌号："
-                    android:textColor="#171717"
-                    android:textSize="16.0sp"/>
-
-                <TextView
-                    android:id="@+id/wd_zl_text_ph"
-                    style="@style/wd_zl_text_style"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:drawableRight="@drawable/personal_information_btn_more"
-                    android:gravity="right"
-                    android:singleLine="true"></TextView>
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"></View>
+                    <TextView
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="关注的牌号："
+                        android:textColor="#171717"
+                        android:textSize="16.0sp"/>
+
+                    <TextView
+                        android:id="@+id/wd_zl_text_ph"
+                        style="@style/wd_zl_text_style"
+                        android:layout_width="match_parent"
+                        android:drawableRight="@drawable/personal_information_btn_more"
+                        android:gravity="right"
+                        android:singleLine="true"></TextView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/color_gray_divider_in"></View>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

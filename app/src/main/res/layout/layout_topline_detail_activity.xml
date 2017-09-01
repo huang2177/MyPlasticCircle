@@ -30,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="塑料发现"
             android:textColor="@color/color_balank"
             android:textSize="18.0sp"
             android:textStyle="bold"/>

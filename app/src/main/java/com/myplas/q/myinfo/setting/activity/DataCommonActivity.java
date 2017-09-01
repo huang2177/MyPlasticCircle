@@ -40,16 +40,14 @@ public class DataCommonActivity extends BaseActivity {
 
     private int position;
     private List<String> mList;
-    private boolean isLogistics, isClicked;
+    private Subscriber mSubscriber;
+    private String type, hint, dataBack;
     private SettingSex_RegionAdapter mAdapter;
-    private Subscriber mSubscriber, subscriber_back;
-    private String type, hint, dataBack, logisticsStartData, logisticsEndData;
 
     private ListView mListView;
     private ImageView mImageView;
-    private EditTextField mTextField_other, mTextField_start, mTextField_end;
+    private EditTextField mTextField_other;
 
-    private LinearLayout mLayout_logistics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,33 +62,19 @@ public class DataCommonActivity extends BaseActivity {
 
         type = getIntent().getStringExtra("type");
         hint = getIntent().getStringExtra("hint");
-        subscriber_back = (Subscriber) getIntent().getSerializableExtra("Subscriber");
 
         mListView = F(R.id.datacommon_input_lv);
         mImageView = F(R.id.datacommon_img_logistics);
-        mTextField_end = F(R.id.datacommon_edit_ending);
         mTextField_other = F(R.id.datacommon_input_edit);
-        mTextField_start = F(R.id.datacommon_edit_starting);
-        mLayout_logistics = F(R.id.datacommon_ll_logistics);
-
 
         if (type.equals("2")) {
             showInPutKeybord();
             setLeftTVVisibility(View.VISIBLE);
             setRightTVVisibility(View.VISIBLE);
-            if (hint.equals("logistics")) {  //如果是物流服务商
-                isLogistics = true;
-                mListView.setVisibility(View.GONE);
-                mTextField_other.setVisibility(View.GONE);
-                mLayout_logistics.setVisibility(View.VISIBLE);
-            } else {
-                isLogistics = false;            //其他企业类型
-                mListView.setVisibility(View.GONE);
-                mTextField_other.setVisibility(View.VISIBLE);
-                mLayout_logistics.setVisibility(View.GONE);
-                mTextField_other.setText(hint);
-                mTextField_other.setSelection(hint.length());
-            }
+            mListView.setVisibility(View.GONE);
+            mTextField_other.setVisibility(View.VISIBLE);
+            mTextField_other.setText(hint);
+            mTextField_other.setSelection(hint.length());
         } else {
             if (type.equals("0")) {           //性别
                 mList = Arrays.asList("男", "女");
@@ -99,7 +83,6 @@ public class DataCommonActivity extends BaseActivity {
             }
             mTextField_other.setVisibility(View.GONE);
             mListView.setVisibility(View.VISIBLE);
-            mLayout_logistics.setVisibility(View.GONE);
             position = Integer.parseInt(hint);
             mAdapter = new SettingSex_RegionAdapter(this, mList, position);
             mListView.setAdapter(mAdapter);
@@ -117,26 +100,16 @@ public class DataCommonActivity extends BaseActivity {
 
             @Override
             public void onNext(Object o) {
-                if (!hint.equals("logistics")) {
-                    String text1 = mTextField_other.getText().toString();
-                    if (TextUtils.isNullOrEmpty(text1)) {
-                        Intent intent = new Intent();
-                        intent.putExtra("updateData", text1);
-                        setResult(1, intent);
-                        DataCommonActivity.this.finish();
-                    }
-                } else {
-                    if (TextUtils.isNullOrEmpty(dataBack)) {
-                        Intent intent = new Intent();
-                        intent.putExtra("updateData", dataBack);
-                        setResult(1, intent);
-                        DataCommonActivity.this.finish();
-                    }
+                dataBack = mTextField_other.getText().toString();
+                if (TextUtils.isNullOrEmpty(dataBack)) {
+                    Intent intent = new Intent();
+                    intent.putExtra("updateData", dataBack);
+                    setResult(1, intent);
+                    DataCommonActivity.this.finish();
                 }
             }
         };
         setObserver(mSubscriber, "");
-
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -176,76 +149,13 @@ public class DataCommonActivity extends BaseActivity {
                 sendBroadcast(intent);
             }
         });
-        mLayout_logistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isClicked) {
-                    isClicked = false;
-                    dataBack = "";
-                    mImageView.setImageResource(R.drawable.btn_radio);
-                } else {
-                    isClicked = true;
-                    dataBack = "全国路线";
-                    logisticsEndData = "";
-                    logisticsStartData = "";
-                    mTextField_end.setText("");
-                    mTextField_start.setText("");
-                    mImageView.setImageResource(R.drawable.btn_radio_checked);
-                }
-            }
-        });
-        mTextField_start.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count == 0) {
-                    logisticsStartData = "";
-                } else {
-                    isClicked = false;
-                    logisticsStartData = s.toString();
-                    mImageView.setImageResource(R.drawable.btn_radio);
-                    dataBack = logisticsStartData + "-" + logisticsEndData;
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        mTextField_end.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count == 0) {
-                    logisticsEndData = "";
-                } else {
-                    isClicked = false;
-                    logisticsEndData = s.toString();
-                    mImageView.setImageResource(R.drawable.btn_radio);
-                    dataBack = logisticsStartData + "-" + logisticsEndData;
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 
     private void showInPutKeybord() {
-        mTextField_start.setFocusable(true);
-        mTextField_start.setFocusableInTouchMode(true);
-        mTextField_start.requestFocus();
+        mTextField_other.setFocusable(true);
+        mTextField_other.setFocusableInTouchMode(true);
+        mTextField_other.requestFocus();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
 

@@ -92,7 +92,7 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
 //        lp.width = (int) ((width *3) / 3.8);//宽高可设置具体大小
 //        lp.height = (int) ((height*6) / 7);
         lp.width = lp.MATCH_PARENT;
-        lp.height = (int) (height / 1.9);
+        lp.height = lp.MATCH_PARENT;
         dlg.getWindow().setAttributes(lp);
     }
 

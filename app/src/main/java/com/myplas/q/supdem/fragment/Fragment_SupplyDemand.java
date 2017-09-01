@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.supdem.Beans.ItemBean;
@@ -159,7 +160,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         itemBean.page = 1;
         itemBean.type = "0";
         itemBean.what = "1";
-        itemBean.keywords="";
+        itemBean.keywords = "";
         itemBean.sortField2 = "";
         itemBean.sortField1 = "ALL";
         itemBean.hasMoreData = true;
@@ -240,6 +241,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 //                break;
         }
     }
+
     //点击搜索
     public void searchData() {
         itemBean.page = 1;
@@ -317,6 +319,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                 popupWindow.dismiss();
             }
         }, 1500);
+//        TextUtils.topTSnackbar(editText, text);
     }
 
     public void onResume() {

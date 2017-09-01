@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.lib.WheelView;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.RegionsBean;
 import com.optimus.edittextfield.EditTextField;
@@ -27,6 +29,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import rx.Subscriber;
 
 /**
  * 编写： 黄双
@@ -35,11 +41,13 @@ import java.util.List;
  * 时间：2017/3/28 10:25
  */
 public class AddressSelectedActivity extends BaseActivity implements ResultCallBack, View.OnClickListener {
+    private TextView mTextViewOK;
     private ImageView mImageView;
     private EditTextField mTextField1, mTextField2;
     private String address, addressId, dataBack, logisticsStartData, logisticsEndData;
 
     private RegionsBean mBean;
+    private Subscriber mSubscriber;
     private List<RegionsBean.DataBean> mPList;
     private List<List<RegionsBean.DataBean.ChildrenBeanX>> mCList;
     private List<List<List<RegionsBean.DataBean.ChildrenBeanX.ChildrenBean>>> mDList;
@@ -47,7 +55,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
     private boolean isFormatAdd;
     private LinearLayout mLayout;
     private int options1, options2, options3;
-    private String tx, inPut, optionsId1, optionsId2, optionsId3;
+    private String tx, inPut, optionsId1, optionsId2, optionsId3, StringData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
 
     private void init() {
         initTileBar();
+        setRightTVVisibility(View.VISIBLE);
         setTitle(getIntent().getStringExtra("title"));
         address = getIntent().getStringExtra("address");
         addressId = getIntent().getStringExtra("addressId");
@@ -69,37 +78,18 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
         mDList = new ArrayList<>();
         mImageView = F(R.id.address_img);
         mLayout = F(R.id.addselected_ll);
-        mTextField1 = F(R.id.address_edit_starting);
+        mTextViewOK = F(R.id.titlebar_text_right);
         mTextField2 = F(R.id.address_edit_ending);
+        mTextField1 = F(R.id.address_edit_starting);
 
         mLayout.setOnClickListener(this);
-        mTextField2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!"".equals(mTextField2.getText().toString())) {
-                    if (!mTextField2.getText().toString().equals(s)) {
-                        Intent intent = new Intent("com.broadcast.databack");
-                        intent.putExtra("type", "2");
-                        intent.putExtra("updateData", tx + "|" + getFomatData(s.toString()));
-                        intent.putExtra("addressId", addressId);
-                        sendBroadcast(intent);
-                    }
-                }
-            }
-        });
+        mTextViewOK.setOnClickListener(this);
+        mTextField1.setOnClickListener(this);
     }
 
+
     private void showInfo() {
+        showInPutKeybord();
         isFormatAdd = addressId.equals("|");
         if (address.contains("|") && !isFormatAdd) {
             tx = address.substring(0, address.indexOf("|"));
@@ -128,14 +118,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
                 addressId = mPList.get(options1).getValue() + "|"
                         + mCList.get(options1).get(option2).getValue() + "|"
                         + mDList.get(options1).get(option2).get(options3).getValue();
-                inPut = mTextField2.getText().toString();
                 mTextField1.setText(tx);
-
-                Intent intent = new Intent("com.broadcast.databack");
-                intent.putExtra("type", "2");
-                intent.putExtra("updateData", tx + "|" + getFomatData(inPut));
-                intent.putExtra("addressId", addressId);
-                sendBroadcast(intent);
             }
         })
                 .setSubmitText("确定")//确定按钮文字
@@ -168,13 +151,32 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
 
     @Override
     public void onClick(View v) {
-        if (mBean != null) {
-            selectAddress();
+        if (v.getId() == R.id.addselected_ll
+                || v.getId() == R.id.address_edit_starting) {
+            if (mBean != null) {
+                selectAddress();
+            } else {
+                getCityNetData(2);
+            }
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mTextField1.getWindowToken(), 0);
         } else {
-            getCityNetData(2);
+            setDataBack();
         }
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mTextField1.getWindowToken(), 0);
+    }
+
+    private void setDataBack() {
+        inPut = mTextField2.getText().toString();
+        if (TextUtils.isNullOrEmpty(inPut)) {
+            Intent intent = new Intent("com.broadcast.databack");
+            intent.putExtra("type", "2");
+            intent.putExtra("updateData", tx + "|" + inPut);
+            intent.putExtra("addressId", addressId);
+            sendBroadcast(intent);
+            finish();
+        } else {
+            TextUtils.Toast(this, "详细地址不能为空！");
+        }
     }
 
     @Override
@@ -227,6 +229,22 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
         } else {
             return "";
         }
+    }
+
+    private void showInPutKeybord() {
+        mTextField2.setFocusable(true);
+        mTextField2.setFocusableInTouchMode(true);
+        mTextField2.requestFocus();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            }
+
+        }, 200);
     }
 
     public void onResume() {

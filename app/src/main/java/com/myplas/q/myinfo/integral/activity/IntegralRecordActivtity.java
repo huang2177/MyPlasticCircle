@@ -107,9 +107,11 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
                 }
             } else {
                 hasMoerData = false;
-                listView.setVisibility(View.GONE);
-                layout.setVisibility(View.VISIBLE);
-                textView.setText(new JSONObject(object.toString()).getString("msg"));
+                if (page == 1) {
+                    listView.setVisibility(View.GONE);
+                    layout.setVisibility(View.VISIBLE);
+                    textView.setText(new JSONObject(object.toString()).getString("msg"));
+                }
             }
         } catch (Exception e) {
         }

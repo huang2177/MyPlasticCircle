@@ -19,16 +19,17 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class SplashActivity extends BaseActivity {
     boolean isGuided = false;
+    private MyThread mMyThread = new MyThread();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_splash_activity);
         isGuided = SharedUtils.getSharedUtils().getBoolean(this, "isGuided");
-        new MyThread().start();
+        mMyThread.start();
     }
 
-    class MyThread extends Thread {
+    private class MyThread extends Thread {
 
         @Override
         public void run() {

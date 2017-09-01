@@ -29,6 +29,7 @@ import com.myplas.q.addresslist.fragment.Fragment_AddressList;
 import com.myplas.q.appupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ActivityManager;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
@@ -87,14 +88,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         StatusUtils.getStatusBarHeight(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_main);
+        ActivityManager.getActivityList().add(this);
         StatusUtils.setStatusBar(this, false, false);
         initView();
         firstInto();
         getVersion();
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         if (!sharedUtils.getBoolean(this, "isrequest")) {
             checkPermission();
         }
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
     //设置透明状态栏以及文字颜色
@@ -349,7 +351,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
         }
     }
-
 
 
     @Override

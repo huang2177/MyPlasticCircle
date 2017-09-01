@@ -1,16 +1,15 @@
 package com.myplas.q.headlines.fragment;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
+import android.support.v7.app.ActionBar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +18,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.androidadvance.topsnackbar.TSnackbar;
+import com.androidkun.xtablayout.XTabLayout;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
@@ -32,7 +32,6 @@ import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.adapter.HeadLineViewPagerAdapter;
 import com.umeng.analytics.MobclickAgent;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,15 +51,15 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private SharedUtils sharedUtils;
     private List<String> list1, list2;
 
-    private View view;
     private GridView gridView;
     private EditText editText;
+    private View view, mViewDivider;
     private CustomPopupWindow popupWindow;
     private TextView search_src_text, textView_refresh;
     private HeadLineViewPagerAdapter mViewPagerAdapter;
 
     private ViewPager mViewPager;
-    private TabLayout mTabLayout;
+    private XTabLayout mTabLayout;
     private ImageButton gd_imgbtn;
     private List<HeadLineListFragment> mFragments;
 
@@ -75,6 +74,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
         editText = F(R.id.find_edit);
         gd_imgbtn = F(R.id.fx_gd_imgbtn);
+        mViewDivider = F(R.id.headline_divider);
         mViewPager = F(R.id.headline_viewpager);
         mTabLayout = F(R.id.headline_tablayout);
         search_src_text = F(R.id.search_src_text);
@@ -98,6 +98,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 mViewPager.setCurrentItem(position);
                 mFragments.get(position).po = position;
                 mFragments.get(position).title = list1.get(position);
+                mViewDivider.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
             }
 
             @Override
@@ -107,31 +108,27 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     }
 
     public void initViewPager() {
-        mFragments = new ArrayList<>();
-        list1 = Arrays.asList("推荐", "塑料上游", "早盘预报", "企业动态", "中晨塑说", "美金市场", "期货资讯", "装置动态", "期刊报告", "独家解读");
-        list2 = Arrays.asList("", "2", "1", "9", "76", "5", "21", "11", "13", "22");
-        for (int i = 0; i < list1.size(); i++) {
-            mTabLayout.addTab(mTabLayout.newTab().setText(list1.get(i).toString()));
-            HeadLineListFragment fragment = new HeadLineListFragment();
-            fragment.setMyinterface(this);
-            fragment.po = i;
-            fragment.cate_id = list2.get(i);
-            mFragments.add(fragment);
-        }
-        mViewPagerAdapter = new HeadLineViewPagerAdapter(getChildFragmentManager(), mFragments, list1);
-        mViewPager.setAdapter(mViewPagerAdapter);
+        if (mFragments == null) {
+            mFragments = new ArrayList<>();
+            list1 = Arrays.asList("推荐", "塑料上游", "早盘预报", "企业动态", "中晨塑说", "美金市场", "期货资讯", "装置动态", "期刊报告", "独家解读");
+            list2 = Arrays.asList("", "2", "1", "9", "76", "20", "21", "11", "12", "22");
+            for (int i = 0; i < list1.size(); i++) {
+                mTabLayout.addTab(mTabLayout.newTab().setText(list1.get(i).toString()));
+                HeadLineListFragment fragment = new HeadLineListFragment();
+                fragment.setMyinterface(this);
+                fragment.po = i;
+                fragment.cate_id = list2.get(i);
+                mFragments.add(fragment);
+            }
+            mViewPagerAdapter = new HeadLineViewPagerAdapter(getChildFragmentManager(), mFragments, list1);
+            mViewPager.setAdapter(mViewPagerAdapter);
 
-        mViewPager.setCurrentItem(0);
-        //将选项卡和viewpager关连起来
-        mTabLayout.setupWithViewPager(mViewPager);
-        //给TabLayout设置适配器
-        mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
-        //mTabLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                setIndicator(mTabLayout,10,10);
-//            }
-//        });
+            mViewPager.setCurrentItem(0);
+            //将选项卡和viewpager关连起来
+            mTabLayout.setupWithViewPager(mViewPager);
+            //给TabLayout设置适配器
+            mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
+        }
     }
 
     @Nullable
@@ -210,40 +207,12 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             } else {
                 TextUtils.Toast(getActivity(), "已是最新头条信息！");
             }
-        }
-    }
-
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
+//            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
         }
     }
 
     public void onResume() {
         super.onResume();
-        String data = sharedUtils.getData(getActivity(), "refreshdata");
         boolean isLogined = sharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_H);
 
         //防止第一次登陆以后没有数据
@@ -251,17 +220,16 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             initViewPager();
             sharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_H, false);
         }
-        //从供求-qq页面跳转
-        if (!"".equals(data)) {
-            searchData(data);
-            editText.setText(data);
-            sharedUtils.setData(getActivity(), "refreshdata", "");
-        }
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
 
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

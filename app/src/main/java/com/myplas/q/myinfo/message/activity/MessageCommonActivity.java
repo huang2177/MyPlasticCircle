@@ -3,19 +3,24 @@ package com.myplas.q.myinfo.message.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.AbsListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.view.XListView;
-import com.myplas.q.myinfo.message.adapter.MessageCommonAdapter;
+import com.myplas.q.myinfo.beans.MsgChJBean;
+import com.myplas.q.myinfo.beans.MsgHFBean;
+import com.myplas.q.myinfo.beans.MsgSupDemBean;
+import com.myplas.q.myinfo.message.adapter.MessageCHJAdapter;
+import com.myplas.q.myinfo.message.adapter.MessageHFAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myinfo.beans.MyCommentBean;
+import com.myplas.q.myinfo.message.adapter.MessageSupDemAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -31,15 +36,18 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 16:22
  */
-public class MessageCommonActivity extends BaseActivity implements ResultCallBack, XListView.IXListViewListener {
-    private String title;
-    private SharedUtils sharedUtils;
-    private int page = 1, visibleItemCount;
-    private List<MyCommentBean.DataBean> list;
-    private List<MyCommentBean.DataBean> list1;
+public class MessageCommonActivity extends BaseActivity implements ResultCallBack {
+    private int page, count;
+    private String method, title;
+    private List<MsgHFBean.DataBean> mListHF;
+    private List<MsgChJBean.DataBean> mListChJ;
+    private List<MsgSupDemBean.DataBean> mListSupDem;
 
     private RecyclerView mRecyclerView;
-    private MessageCommonAdapter myCommentAdapter;
+    private MessageHFAdapter mHFAdapter;
+    private MessageCHJAdapter mCHJAdapter;
+    private NoResultLayout mNoResultLayout;
+    private MessageSupDemAdapter mSupDemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,72 +56,150 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
         initTileBar();
         title = getIntent().getStringExtra("title");
         setTitle(title);
+        initView();
+        getMyMsg("1", title);
 
-        list1 = new ArrayList<>();
+    }
+
+    private void initView() {
+        page = 1;
+        mListHF = new ArrayList<>();
+        mListChJ = new ArrayList<>();
+        mListSupDem = new ArrayList<>();
         mRecyclerView = F(R.id.wd_gj_listview);
-        sharedUtils = SharedUtils.getSharedUtils();
-
-
-        myCommentAdapter = new MessageCommonAdapter(this, list);
+        mNoResultLayout = F(R.id.mysupdem_noresultlayout);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);//设置为一个1列的纵向网格布局
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setAdapter(myCommentAdapter);
-
-
-//        getMyComments("1");
-//        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView view, int newState) {
-//                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mRecyclerView.getChildCount() > visibleItemCount) {
-//                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
-//                        page++;
-//                        getMyComments(String.valueOf(page));
-//                    }
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView view, int newState) {
+                LinearLayoutManager lm = (LinearLayoutManager) view.getLayoutManager();
+//                Log.e("-----11111",view.getChildAt(lm.findLastVisibleItemPosition()).getBottom()+"");
+//                Log.e("-----22222",lm.findLastVisibleItemPosition()+"");
+//                Log.e("-----33333",view.getChildCount()-1+"");
+//                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+//                        && lm.findLastVisibleItemPosition() == count
+//                        &&view.getChildAt(lm.findLastVisibleItemPosition()).getBottom()==0) {
+//                    page++;
+//                    getMyMsg(String.valueOf(page), title);
 //                }
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                MessageCommonActivity.this.visibleItemCount = visibleItemCount;
-//            }
-//        });
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            }
+        });
     }
 
 
-    public void getMyComments(String page) {
+    public void getMyMsg(String page, String title) {
+        int type;
+        if (title.equals("供求消息")) {
+            type = 1;
+            method = API.PLASTICMSG;
+        } else if (title.equals("出价消息")) {
+            type = 2;
+            method = API.CHUJIAMSG;
+        } else {
+            type = 3;
+            method = API.HUIFUMSG;
+        }
         Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
         map.put("page", page);
-        map.put("size", "20");
-        postAsyn(this, API.BASEURL + API.GET_MY_COMMENT, map, this, 1);
+        map.put("size", "30");
+        postAsyn(this, API.BASEURL + method, map, this, type);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            if (new JSONObject(object.toString()).getString("err").equals("0")) {
-                Gson gson = new Gson();
-                MyCommentBean myCommentBean = gson.fromJson(object.toString(), MyCommentBean.class);
-                list = myCommentBean.getData();
-                if (page == 1) {
-                    myCommentAdapter = new MessageCommonAdapter(this, list);
-                    mRecyclerView.setAdapter(myCommentAdapter);
+            Log.e("--------------", object.toString());
+            Gson gson = new Gson();
+            String err = new JSONObject(object.toString()).getString("err");
+            if (type == 1) {
+                if (err.equals("0")) {
+                    mNoResultLayout.setVisibility(false);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    MsgSupDemBean msgSupDemBean = gson.fromJson(object.toString(), MsgSupDemBean.class);
+                    if (page == 1) {
+                        mSupDemAdapter = new MessageSupDemAdapter(this, msgSupDemBean.getData());
+                        mRecyclerView.setAdapter(mSupDemAdapter);
 
-                    list1.clear();
-                    list1.addAll(list);
+                        mListSupDem.clear();
+                        mListSupDem.addAll(msgSupDemBean.getData());
+                    } else {
+                        mListSupDem.addAll(msgSupDemBean.getData());
+                        mSupDemAdapter.setList(mListSupDem);
+                        mSupDemAdapter.notifyDataSetChanged();
+                    }
+                    count = mListSupDem.size() - 1;
                 } else {
-                    if (list != null && list.size() != 0) {
-
-                        list1.addAll(list);
-                        myCommentAdapter.setList(list1);
-                        myCommentAdapter.notifyDataSetChanged();
+                    if (page == 1) {
+                        mRecyclerView.setVisibility(View.GONE);
+                        mNoResultLayout.setNoResultData(R.drawable.icon_follow1
+                                , new JSONObject(object.toString()).getString("msg")
+                                , true);
+                    } else {
+                        TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
                     }
                 }
-            } else {
-                list = null;
-                TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+            }
+            if (type == 2) {
+                if (err.equals("0")) {
+                    mNoResultLayout.setVisibility(false);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    MsgChJBean msgChJBean = gson.fromJson(object.toString(), MsgChJBean.class);
+                    if (page == 1) {
+                        mCHJAdapter = new MessageCHJAdapter(this, msgChJBean.getData());
+                        mRecyclerView.setAdapter(mCHJAdapter);
+
+                        mListChJ.clear();
+                        mListChJ.addAll(msgChJBean.getData());
+                    } else {
+                        mListChJ.addAll(msgChJBean.getData());
+                        mCHJAdapter.setList(mListChJ);
+                        mCHJAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    if (page == 1) {
+                        mRecyclerView.setVisibility(View.GONE);
+                        mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2
+                                , new JSONObject(object.toString()).getString("msg")
+                                , true);
+                    } else {
+                        TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                    }
+                }
+            }
+            if (type == 3) {
+                if (err.equals("0")) {
+                    mNoResultLayout.setVisibility(false);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    MsgHFBean msgHFBean = gson.fromJson(object.toString(), MsgHFBean.class);
+                    if (page == 1) {
+                        mHFAdapter = new MessageHFAdapter(this, msgHFBean.getData());
+                        mRecyclerView.setAdapter(mHFAdapter);
+
+                        mListHF.clear();
+                        mListHF.addAll(msgHFBean.getData());
+                    } else {
+                        mListHF.addAll(msgHFBean.getData());
+                        mHFAdapter.setList(mListHF);
+                        mHFAdapter.notifyDataSetChanged();
+                    }
+                    count = mListHF.size() - 1;
+                } else {
+                    if (page == 1) {
+                        mRecyclerView.setVisibility(View.GONE);
+                        mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2
+                                , new JSONObject(object.toString()).getString("msg")
+                                , true);
+                    } else {
+                        TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                    }
+                }
             }
         } catch (Exception e) {
         }
@@ -122,18 +208,6 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
     @Override
     public void failCallBack(int type) {
 
-    }
-
-    @Override
-    public void onRefresh() {
-        page = 1;
-        getMyComments(String.valueOf(page));
-    }
-
-    @Override
-    public void onLoadMore() {
-//        page++;
-//        getMyComments(String.valueOf(page));
     }
 
     public void onResume() {

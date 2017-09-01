@@ -173,10 +173,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 startActivityForResult(intent7, 7);
                 break;
             case R.id.setting_data_mainsell:
-                Intent intent8 = new Intent(this, DataCommonActivity.class);
-                intent8.putExtra("type", "2");
+                Intent intent8 = new Intent(this, (type.equals("4"))
+                        ? (MyMainPro_LogisticsActivity.class)
+                        : (DataCommonActivity.class));
                 intent8.putExtra("title", "我的主营");
-                intent8.putExtra("hint", (type.equals("4")) ? ("logistics") : (mainPro));
+                intent8.putExtra("type", "2");
+                intent8.putExtra("hint", mainPro);
                 startActivityForResult(intent8, 8);
                 break;
             case R.id.wd_zl_linear_ph:
@@ -191,39 +193,42 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     //保存资料。。。
     public void saveData() {
-        Map map = new HashMap();
-        String sMainPro = mainPro
-                .replace("  ", ",")
-                .replace(" ", ",")
-                .replace("，", ",")
-                .replace("|", ",")
-                .replace("、", ",")
-                .replace("/", ",")
-                .replace("。", ",")
-                .replace(".", ",");
-        String sModel = model
-                .replace("  ", ",")
-                .replace(" ", ",")
-                .replace("，", ",")
-                .replace("|", ",")
-                .replace("、", ",")
-                .replace("/", ",")
-                .replace("。", ",")
-                .replace(".", ",");
+        try {
+            Map map = new HashMap();
+            String sMainPro = mainPro
+                    .replace("  ", ",")
+                    .replace(" ", ",")
+                    .replace("，", ",")
+                    .replace("|", ",")
+                    .replace("、", ",")
+                    .replace("/", ",")
+                    .replace("。", ",")
+                    .replace(".", ",");
+            String sModel = model
+                    .replace("  ", ",")
+                    .replace(" ", ",")
+                    .replace("，", ",")
+                    .replace("|", ",")
+                    .replace("、", ",")
+                    .replace("/", ",")
+                    .replace("。", ",")
+                    .replace(".", ",");
 
-        if (type.equals("1")) {
-            map.put("month_consum", monthUse);
-            map.put("main_product", product);
+            if (type.equals("1")) {
+                map.put("month_consum", monthUse);
+                map.put("main_product", product);
+            }
+            map.put("type", type);
+            map.put("sex", sexInPut);
+            map.put("concern", sModel);
+            map.put("major", sMainPro);
+            map.put("address", address);
+            map.put("address_id", addressId);
+            map.put("dist", regionInPut);
+            map.put("token", sharedUtils.getData(this, "token"));
+            saveSelfInfo(API.SAVE_SELFINFO, map, 3);
+        } catch (Exception e) {
         }
-        map.put("type", type);
-        map.put("sex", sexInPut);
-        map.put("concern", sModel);
-        map.put("major", sMainPro);
-        map.put("address", address);
-        map.put("address_id", addressId);
-        map.put("dist", regionInPut);
-        map.put("token", sharedUtils.getData(this, "token"));
-        saveSelfInfo(API.SAVE_SELFINFO, map, 3);
     }
 
     public void requestNetData() {

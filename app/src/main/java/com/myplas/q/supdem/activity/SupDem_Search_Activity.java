@@ -444,11 +444,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        if (SharedUtils.getSharedUtils().getBoolean(this, "fromsearch")) {
-            SharedUtils.getSharedUtils().setBooloean(this, "fromsearch", false);
-            MainActivity.goToHeadLine();
-            finish();
-        }
     }
 
     public void onPause() {

@@ -119,6 +119,15 @@ public class API {
     public final static String GET_VIEW_HISTORY_DETAILS = "myInfo/getViewHistoryDetails";
     //获取格式化中国的地区
     public final static String GET_ALL_REGIONS = "myInfo/getAllRegions";
+    //获取我的消息
+    public final static String MYMSG = "myInfo/myMsg";
+    //获取我的消息--供求信息
+    public final static String PLASTICMSG = "myInfo/plasticMsg";
+    //获取我的消息--出价消息
+    public final static String CHUJIAMSG = "myInfo/chuJiaMsg";
+    //获取我的消息--回复消息
+    public final static String HUIFUMSG = "myInfo/huiFuMsg";
+
 
     /*product*/
     //塑料圈app之兑换置顶信息

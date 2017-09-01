@@ -459,6 +459,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                 showRefreshPopouinterface.showRefreshPopou(text);
             } else {
                 TextUtils.Toast(getActivity(), "已是最新供求信息！");
+                //TextUtils.topTSnackbar(time, "已是最新供求信息！");
             }
         }
     }

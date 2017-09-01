@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -20,13 +21,14 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.adapter.TTAdapter;
 import com.myplas.q.headlines.bean.SubcribleBean;
 import com.myplas.q.supdem.Beans.HistoryBean;
-import com.myplas.q.supdem.Beans.SearchNoResultBean;
+import com.myplas.q.headlines.bean.SearchNoResultBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
 import com.optimus.edittextfield.EditTextField;
 import com.umeng.analytics.MobclickAgent;
@@ -74,7 +76,14 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_layout_headline_search);
         goBack(findViewById(R.id.back));
         initView();
-        getSearch_Record();
+
+        String data = getIntent().getStringExtra("data");
+        if (TextUtils.isNullOrEmpty(data)) {//从供求qq页面跳转过来
+            editText.setText(data);
+            get_Subscribe(1, data);
+        } else {                            //从头条跳转过来
+            getSearch_Record();
+        }
     }
 
     public void initView() {
@@ -214,7 +223,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 page = 1;
                 isRefresh = true;
                 hasMoerData = true;
-                keywords = bean.getCombine().get(position);
+                keywords = bean.getRecommendation().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
                 get_Subscribe(page, keywords);
@@ -266,7 +275,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     search_result_linear_no.setVisibility(View.VISIBLE);
                     textView_no.setText("抱歉，未能找到相关搜索！");
                     bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
-                    adapter_grid = new SupDem_Search_Grid_Adapter(this, bean.getCombine());
+                    adapter_grid = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
                     gridview_subcribe_no.setAdapter(adapter_grid);
                 }
             }
@@ -305,6 +314,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        //从供求-qq页面跳转
     }
 
     public void onPause() {
