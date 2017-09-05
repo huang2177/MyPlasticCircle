@@ -229,12 +229,14 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
                         adapter.notifyDataSetChanged();
                     }
                 } else if (err.equals("2")) {
-                    showInfo("0", "0");
-                    hasMoreData = false;
-                    adapter = new LookMeAdapter(this, null);
-                    mListViews.get(position).setAdapter(adapter);
-                    String msg = new JSONObject(object.toString()).getString("msg");
-                    mView.get(position).setNoResultData(R.drawable.icon_null, msg, true);
+                    if (page == 1) {
+                        showInfo("0", "0");
+                        hasMoreData = false;
+                        adapter = new LookMeAdapter(this, null);
+                        mListViews.get(position).setAdapter(adapter);
+                        String msg = new JSONObject(object.toString()).getString("msg");
+                        mView.get(position).setNoResultData(R.drawable.icon_null, msg, true);
+                    }
                 }
             }
             //是否消耗积分

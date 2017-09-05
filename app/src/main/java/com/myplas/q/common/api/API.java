@@ -174,7 +174,7 @@ public class API {
     //删除我的供给或求购
     public final static String DELETE_MY_MSG = "releaseMsg/deleteMyMsg";
     //判断提交的发布报价(采购1、报价2)数据/user/mypurchase/pub
-    public final static String PUB = "releaseMsg/pub";
+    public final static String PUB = "releaseMsg/releaseNewDemand";
     //回复供求消息
     public final static String SAVE_MSG = "releaseMsg/saveMsg";
     //获取供求消息的出价

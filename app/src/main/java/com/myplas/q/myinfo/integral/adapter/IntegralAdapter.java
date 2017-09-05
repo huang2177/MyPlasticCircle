@@ -27,7 +27,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.IntegralBean;
 import com.myplas.q.myinfo.beans.TookDateBean;
-import com.myplas.q.myinfo.integral.activity.IntegralDialogActivity;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myinfo.integral.dialogutils.ClassifyDialogShowUtils;
 import com.myplas.q.myinfo.integral.dialogutils.DateDialogShowUtils;

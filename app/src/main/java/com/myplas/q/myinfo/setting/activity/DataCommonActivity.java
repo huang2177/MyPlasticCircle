@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.myplas.q.R;
+import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.setting.adapter.SettingSex_RegionAdapter;
@@ -101,11 +102,13 @@ public class DataCommonActivity extends BaseActivity {
             @Override
             public void onNext(Object o) {
                 dataBack = mTextField_other.getText().toString();
-                if (TextUtils.isNullOrEmpty(dataBack)) {
-                    Intent intent = new Intent();
-                    intent.putExtra("updateData", dataBack);
-                    setResult(1, intent);
-                    DataCommonActivity.this.finish();
+                if (NetUtils.isNetworkStateed(DataCommonActivity.this)) {
+                    if (TextUtils.isNullOrEmpty(dataBack)) {
+                        Intent intent = new Intent();
+                        intent.putExtra("updateData", dataBack);
+                        setResult(1, intent);
+                        DataCommonActivity.this.finish();
+                    }
                 }
             }
         };

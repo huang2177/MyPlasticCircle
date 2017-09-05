@@ -65,27 +65,30 @@ public class XQ_ListView_CHJAdapter extends BaseAdapter {
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
-        viewHolder.chj.setText(list.get(position).getPrice());
-        viewHolder.shj.setText(list.get(position).getInput_time());
-        viewHolder.gs.setText(list.get(position).getInfo().getC_name() + "\n" + list.get(position).getInput_time());
-        viewHolder.rz.setImageResource((("0".equals(list.get(position).getInfo().getIs_pass())))?(R.drawable.icon_identity):(R.drawable.icon_identity_hl));
+        try {
+            viewHolder.chj.setText(list.get(position).getPrice());
+            viewHolder.shj.setText(list.get(position).getInput_time());
+            viewHolder.gs.setText(list.get(position).getInfo().getC_name() + "\n" + list.get(position).getInput_time());
+            viewHolder.rz.setImageResource((("0".equals(list.get(position).getInfo().getIs_pass()))) ? (R.drawable.icon_identity) : (R.drawable.icon_identity_hl));
 
-        Glide.with(context)
-                .load(list.get(position).getInfo().getThumb())
-                .placeholder(R.drawable.contact_image_defaul_male)
-                .into(viewHolder.tx);
+            Glide.with(context)
+                    .load(list.get(position).getInfo().getThumb())
+                    .placeholder(R.drawable.contact_image_defaul_male)
+                    .into(viewHolder.tx);
 
-        boolean b=list.get(position).getInfo().getMobile().contains("*");
-        if(!b){
-            viewHolder.cz.setImageResource(R.drawable.btn_dial);
-            viewHolder.cz.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + list.get(position).getInfo().getMobile()));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-            });
+            boolean b = list.get(position).getInfo().getMobile().contains("*");
+            if (!b) {
+                viewHolder.cz.setImageResource(R.drawable.btn_dial);
+                viewHolder.cz.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + list.get(position).getInfo().getMobile()));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                });
+            }
+        } catch (Exception e) {
         }
 
         return convertView;

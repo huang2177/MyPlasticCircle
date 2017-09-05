@@ -62,7 +62,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     public void initView() {
         count = 60;
-        clicked = false;
+        clicked = true;
         sharedUtils = SharedUtils.getSharedUtils();
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
@@ -98,7 +98,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         button_nomal.setOnClickListener(this);
         button_phone.setOnClickListener(this);
         imageView_verification.setOnClickListener(this);
-        linearLayout_remember.setOnClickListener(this);
+        //linearLayout_remember.setOnClickListener(this);
 
         // 将账号和密码都设置到文本框中
         if (isRemember) {

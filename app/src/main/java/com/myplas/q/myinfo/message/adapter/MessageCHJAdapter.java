@@ -137,7 +137,7 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
         public void onClick(View v) {
             Intent intent = new Intent(context, SupDem_Detail_Activity.class);
             String id = mListChJ.get(position).getId();
-            String userid = SharedUtils.getSharedUtils().getData(context, Constant.USERID);
+            String userid = mListChJ.get(position).getUser_id();
 
             intent.putExtra("id", id);
             intent.putExtra("type", "1");

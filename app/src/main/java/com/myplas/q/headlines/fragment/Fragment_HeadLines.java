@@ -51,9 +51,9 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private SharedUtils sharedUtils;
     private List<String> list1, list2;
 
+    private View view;
     private GridView gridView;
     private EditText editText;
-    private View view, mViewDivider;
     private CustomPopupWindow popupWindow;
     private TextView search_src_text, textView_refresh;
     private HeadLineViewPagerAdapter mViewPagerAdapter;
@@ -74,7 +74,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
         editText = F(R.id.find_edit);
         gd_imgbtn = F(R.id.fx_gd_imgbtn);
-        mViewDivider = F(R.id.headline_divider);
+//        mViewDivider = F(R.id.headline_divider);
         mViewPager = F(R.id.headline_viewpager);
         mTabLayout = F(R.id.headline_tablayout);
         search_src_text = F(R.id.search_src_text);
@@ -98,7 +98,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 mViewPager.setCurrentItem(position);
                 mFragments.get(position).po = position;
                 mFragments.get(position).title = list1.get(position);
-                mViewDivider.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+//                mViewDivider.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
             }
 
             @Override

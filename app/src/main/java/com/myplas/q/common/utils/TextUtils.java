@@ -1,5 +1,6 @@
 package com.myplas.q.common.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.guide.activity.MainActivity;
 
 import java.util.regex.Matcher;
@@ -60,20 +62,19 @@ public class TextUtils {
     public static void topTSnackbar(View view, String s) {
         View view1 = null;
         try {
-            MainActivity mainActivity = (MainActivity) ActivityManager.getActivityList().get(0);
-            view1 = mainActivity.findViewById(android.R.id.content);
+            Activity activity = ActivityManager.getInstance().getCurrentActivity();
+            view1 = activity.findViewById(android.R.id.content);
         } catch (Exception e) {
-            Log.e("------", e.toString());
         }
 
         TSnackbar snackbar = TSnackbar.make(view1, s, Snackbar.LENGTH_SHORT);
         View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(Color.parseColor("#000000"));
+        snackbarView.setBackgroundColor(Color.WHITE);
         ViewGroup.LayoutParams lp = snackbarView.getLayoutParams();
         lp.height = 200;
         snackbarView.setLayoutParams(lp);
         TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
+        textView.setTextColor(Color.BLACK);
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(18);
         snackbar.show();

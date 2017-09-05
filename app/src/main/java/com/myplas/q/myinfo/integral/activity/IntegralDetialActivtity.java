@@ -209,10 +209,9 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                 }
             } else {
                 if (page == 1) {
+                    hasMoreData = false;
                     listView.setVisibility(View.GONE);
                     mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2, "没有更多数据！", true);
-                } else {
-                    hasMoreData = false;
                 }
             }
         } catch (Exception e) {

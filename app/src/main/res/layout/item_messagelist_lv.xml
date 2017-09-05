@@ -7,7 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <FrameLayout
@@ -30,6 +32,7 @@
                 android:layout_gravity="right"
                 android:padding="1dp"/>
         </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,9 +51,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="供求消息"
                     android:textColor="@color/color_balank"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/msglist_text_time"
@@ -64,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="你关注的张飞扬发布"
+                android:singleLine="true"
                 android:textSize="16.0sp"/>
         </LinearLayout>
     </LinearLayout>

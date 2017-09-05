@@ -137,7 +137,7 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
         public void onClick(View v) {
             Intent intent = new Intent(context, SupDem_Detail_Activity.class);
             String id = mListSupDem.get(position).getId();
-            String userid = SharedUtils.getSharedUtils().getData(context, Constant.USERID);
+            String userid = mListSupDem.get(position).getUser_id();
 
             intent.putExtra("id", id);
             intent.putExtra("type", "1");

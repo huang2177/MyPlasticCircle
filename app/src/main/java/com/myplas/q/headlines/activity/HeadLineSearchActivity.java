@@ -21,12 +21,14 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.adapter.TTAdapter;
 import com.myplas.q.headlines.bean.SubcribleBean;
+import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.myplas.q.supdem.Beans.HistoryBean;
 import com.myplas.q.headlines.bean.SearchNoResultBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
@@ -49,7 +51,7 @@ import java.util.Map;
  */
 
 public class HeadLineSearchActivity extends BaseActivity implements View.OnClickListener, ResultCallBack,
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener, DialogShowUtils.DialogShowInterface {
 
     private ListView listView;
     private ImageView imageView;
@@ -67,8 +69,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     private Handler handler;
     private String keywords;
-    private int page, visibleItemCount;
     private boolean hasMoerData, isRefresh;
+    private int page, visibleItemCount, position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +183,13 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         postAsyn(this, API.BASEURL + API.DEL_TOUTIAO_SEARCH_LOG, null, this, 3);
     }
 
+    //检查权限
+    public void isPaidSubscription(String cate_id) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", cate_id);
+        BaseActivity.postAsyn(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 4);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -229,10 +238,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 get_Subscribe(page, keywords);
                 break;
             case R.id.search_listview_result1:
-                Intent intent = new Intent(this, HeadLinesDetailActivity.class);
-                intent.putExtra("title", "推荐");
-                intent.putExtra("id", list.get(position).getId());
-                startActivity(intent);
+                HeadLineSearchActivity.this.position = position;
+                isPaidSubscription(list.get(position).getId());
                 break;
         }
     }
@@ -241,8 +248,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            boolean err = new JSONObject(object.toString()).getString("err").equals("0");
-            if (type == 1 && err) {
+            String err = new JSONObject(object.toString()).getString("err");
+            if (type == 1 && err.equals("0")) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 adapter_grid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
                 gridview_history.setAdapter(adapter_grid);
@@ -254,7 +261,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 search_result_linear.setVisibility(View.VISIBLE);
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                if (err) {
+                if (err.equals("0")) {
                     SubcribleBean subcribleBean = gson.fromJson(object.toString(), SubcribleBean.class);
                     if (page == 1) {
                         frameLayout.setVisibility(View.VISIBLE);
@@ -279,32 +286,32 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     gridview_subcribe_no.setAdapter(adapter_grid);
                 }
             }
-            if (type == 3 && err) {
+            if (type == 3 && err.equals("0")) {
                 TextUtils.Toast(this, "删除成功！");
                 adapter_grid = new SupDem_Search_Grid_Adapter(this, null);
                 gridview_history.setAdapter(adapter_grid);
+            }
+            if (type == 4) {
+                if (err.equals("0")) {
+                    Intent intent = new Intent(this, HeadLinesDetailActivity.class);
+                    intent.putExtra("id", list.get(position).getId());
+                    startActivity(intent);
+                } else {
+                    String content = new JSONObject(object.toString()).getString("msg");
+                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
+                }
             }
         } catch (Exception e) {
         }
     }
 
-    //展示刷新后的popou
-    public void showRefreshPopou(String text) {
-        if (isRefresh) {
-            textView_hint.setVisibility(View.VISIBLE);
-            isRefresh = false;
-            if (TextUtils.isNullOrEmpty(text)) {
-                textView_hint.setText(text);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        textView_hint.setVisibility(View.GONE);
-                    }
-                }, 1500);
-            } else {
-                TextUtils.Toast(this, "已是最新头条信息！");
-            }
-        }
+
+    @Override
+    public void ok(int type) {
+        Intent intent = new Intent(this, IntegralActivity.class);
+        intent.putExtra("type", "0");
+        startActivity(intent);
     }
 
     @Override

@@ -116,10 +116,12 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
                         }
                     }
                 } else {
-                    list = null;
-                    listView.setVisibility(View.GONE);
-                    String msg = new JSONObject(object.toString()).getString("msg");
-                    mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2, msg, true);
+                    if (page == 1) {
+                        list = null;
+                        listView.setVisibility(View.GONE);
+                        String msg = new JSONObject(object.toString()).getString("msg");
+                        mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2, msg, true);
+                    }
                 }
             }
         } catch (Exception e) {

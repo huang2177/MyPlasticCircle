@@ -108,14 +108,13 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
         }
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page);
-        map.put("size", "30");
+        map.put("size", "50");
         postAsyn(this, API.BASEURL + method, map, this, type);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("--------------", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
@@ -165,7 +164,7 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);
-                        mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2
+                        mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation1
                                 , new JSONObject(object.toString()).getString("msg")
                                 , true);
                     } else {

@@ -9,12 +9,14 @@ package com.myplas.q.common.view;
  */
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,9 +40,12 @@ public class XListViewHeader extends LinearLayout {
 	public final static int STATE_READY = 1;
 	public final static int STATE_REFRESHING = 2;
 
-	public XListViewHeader(Context context) {
+    private Context mContext;
+
+    public XListViewHeader(Context context) {
 		super(context);
-		initView(context);
+        this.mContext = context;
+        initView(context);
 	}
 
 	/**
@@ -49,7 +54,8 @@ public class XListViewHeader extends LinearLayout {
 	 */
 	public XListViewHeader(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		initView(context);
+        this.mContext = context;
+        initView(context);
 	}
 
 	private void initView(Context context) {
@@ -77,15 +83,22 @@ public class XListViewHeader extends LinearLayout {
 
 	public void setState(int state) {
 		if (state == mState) return ;
-		
-		if (state == STATE_REFRESHING) {	// ��ʾ����
+
+        if (state == STATE_REFRESHING) {
 //			mArrowImageView.clearAnimation();
 //			mArrowImageView.setVisibility(View.INVISIBLE);
 			mProgressBar.setVisibility(View.VISIBLE);
-		} else {	// ��ʾ��ͷͼƬ
+//			ImageView imageView = (ImageView) findViewById(R.id.xlistview_header_arrow);
+//			imageView.setVisibility(View.VISIBLE);
+//			AnimationDrawable spinner = (AnimationDrawable) imageView.getBackground();
+//			spinner.start();
+        } else {
 //			mArrowImageView.setVisibility(View.VISIBLE);
 			mProgressBar.setVisibility(View.INVISIBLE);
-		}
+//			ImageView imageView = (ImageView) findViewById(R.id.xlistview_header_arrow);
+//			AnimationDrawable spinner = (AnimationDrawable) imageView.getBackground();
+//			spinner.stop();
+        }
 		
 		switch(state){
 		case STATE_NORMAL:

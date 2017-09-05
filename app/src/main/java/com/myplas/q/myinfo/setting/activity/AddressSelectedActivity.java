@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.RegionsBean;
@@ -57,6 +58,8 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
     private int options1, options2, options3;
     private String tx, inPut, optionsId1, optionsId2, optionsId3, StringData;
 
+    private OptionsPickerView pvOptions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +92,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
 
 
     private void showInfo() {
-        showInPutKeybord();
+        //showInPutKeybord();
         isFormatAdd = addressId.equals("|");
         if (address.contains("|") && !isFormatAdd) {
             tx = address.substring(0, address.indexOf("|"));
@@ -108,45 +111,49 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
     }
 
     private void selectAddress() {
-        OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                tx = mPList.get(options1).getLabel()
-                        + mCList.get(options1).get(option2).getLabel()
-                        + mDList.get(options1).get(option2).get(options3).getLabel();
-                addressId = mPList.get(options1).getValue() + "|"
-                        + mCList.get(options1).get(option2).getValue() + "|"
-                        + mDList.get(options1).get(option2).get(options3).getValue();
-                mTextField1.setText(tx);
-            }
-        })
-                .setSubmitText("确定")//确定按钮文字
-                .setCancelText("取消")//取消按钮文字
-                .setTitleText("地址选择")//标题
-                .setSubCalSize(16)//确定和取消文字大小
-                .setTitleSize(18)//标题文字大小
-                .setLineSpacingMultiplier(2f)
-                .setDividerType(WheelView.DividerType.WRAP)
-                .setTitleColor(Color.BLACK)//标题文字颜色
-                .setSubmitColor(Color.parseColor("#0893b9"))//确定按钮文字颜色
-                .setCancelColor(Color.parseColor("#0893b9"))//取消按钮文字颜色
-                .setTitleBgColor(Color.parseColor("#e9e9e9"))//标题背景颜色 Night mode
-                .setBgColor(Color.WHITE)//滚轮背景颜色 Night mode
-                .setContentTextSize(18)//滚轮文字大小
-                .setDividerColor(Color.LTGRAY)
-                .setTextColorCenter(Color.BLACK)
-                .setTextColorOut(Color.LTGRAY)
-                .setLinkage(true)//设置是否联动，默认true
-                .setLabels("", "", "")//设置选择的三级单位
-                .setCyclic(false, false, false)//循环与否
-                .setSelectOptions(options1, options2, options3)  //设置默认选中项
-                .setOutSideCancelable(true)//点击外部dismiss default true
-                .isDialog(false)//是否显示为对话框样式
-                .build();
+        if (pvOptions == null) {
+            pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+                @Override
+                public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                    //返回的分别是三个级别的选中位置
+                    tx = mPList.get(options1).getLabel()
+                            + mCList.get(options1).get(option2).getLabel()
+                            + mDList.get(options1).get(option2).get(options3).getLabel();
+                    addressId = mPList.get(options1).getValue() + "|"
+                            + mCList.get(options1).get(option2).getValue() + "|"
+                            + mDList.get(options1).get(option2).get(options3).getValue();
+                    mTextField1.setText(tx);
+                }
+            })
+                    .setSubmitText("确定")//确定按钮文字
+                    .setCancelText("取消")//取消按钮文字
+                    .setTitleText("地址选择")//标题
+                    .setSubCalSize(16)//确定和取消文字大小
+                    .setTitleSize(18)//标题文字大小
+                    .setLineSpacingMultiplier(2f)
+                    .setDividerType(WheelView.DividerType.WRAP)
+                    .setTitleColor(Color.BLACK)//标题文字颜色
+                    .setSubmitColor(Color.parseColor("#0893b9"))//确定按钮文字颜色
+                    .setCancelColor(Color.parseColor("#0893b9"))//取消按钮文字颜色
+                    .setTitleBgColor(Color.parseColor("#e9e9e9"))//标题背景颜色 Night mode
+                    .setBgColor(Color.WHITE)//滚轮背景颜色 Night mode
+                    .setContentTextSize(18)//滚轮文字大小
+                    .setDividerColor(Color.LTGRAY)
+                    .setTextColorCenter(Color.BLACK)
+                    .setTextColorOut(Color.LTGRAY)
+                    .setLinkage(true)//设置是否联动，默认true
+                    .setLabels("", "", "")//设置选择的三级单位
+                    .setCyclic(false, false, false)//循环与否
+                    .setSelectOptions(options1, options2, options3)  //设置默认选中项
+                    .setOutSideCancelable(true)//点击外部dismiss default true
+                    .isDialog(false)//是否显示为对话框样式
+                    .build();
 
-        pvOptions.setPicker(mPList, mCList, mDList);//添加数据源
-        pvOptions.show();
+            pvOptions.setPicker(mPList, mCList, mDList);//添加数据源
+            pvOptions.show();
+        } else {
+            pvOptions.show();
+        }
     }
 
     @Override
@@ -167,15 +174,17 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
 
     private void setDataBack() {
         inPut = mTextField2.getText().toString();
-        if (TextUtils.isNullOrEmpty(inPut)) {
-            Intent intent = new Intent("com.broadcast.databack");
-            intent.putExtra("type", "2");
-            intent.putExtra("updateData", tx + "|" + inPut);
-            intent.putExtra("addressId", addressId);
-            sendBroadcast(intent);
-            finish();
-        } else {
-            TextUtils.Toast(this, "详细地址不能为空！");
+        if (NetUtils.isNetworkStateed(this)) {
+            if (TextUtils.isNullOrEmpty(inPut)) {
+                Intent intent = new Intent("com.broadcast.databack");
+                intent.putExtra("type", "2");
+                intent.putExtra("updateData", tx + "|" + inPut);
+                intent.putExtra("addressId", addressId);
+                sendBroadcast(intent);
+                finish();
+            } else {
+                TextUtils.Toast(this, "详细地址不能为空！");
+            }
         }
     }
 
@@ -194,7 +203,9 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
 //                        options1 = i;
 //                    }
                     for (int j = 0; j < mBean.getData().get(i).getChildren().size(); ++j) {
-                        List<RegionsBean.DataBean.ChildrenBeanX.ChildrenBean> cdist = mBean.getData().get(i).getChildren().get(j).getChildren();
+                        List<RegionsBean.DataBean.ChildrenBeanX.ChildrenBean> cdist = mBean.getData().get(i).getChildren().get(j).getChildren() == null
+                                ? new ArrayList<RegionsBean.DataBean.ChildrenBeanX.ChildrenBean>()
+                                : mBean.getData().get(i).getChildren().get(j).getChildren();
                         mcList.add(cdist);
 //                        if (mBean.getData().get(i).getChildren().get(j).getValue().equals(optionsId2)) {
 //                            options2 = j;

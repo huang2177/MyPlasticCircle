@@ -132,12 +132,15 @@ public class BaseActivity extends Activity {
             , String> map
             , ResultCallBack resultCallBack
             , int type) {
-        if (NetUtils.isNetworkStateed(context)) {
-            LoadingDialog.getInstance(context).show();
-            NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
-            netRequest.postAsyn();
-        } else {
-            resultCallBack.failCallBack(type);
+        try {
+            if (NetUtils.isNetworkStateed(context)) {
+                LoadingDialog.getInstance(context).show();
+                NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
+                netRequest.postAsyn();
+            } else {
+                resultCallBack.failCallBack(type);
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -149,14 +152,17 @@ public class BaseActivity extends Activity {
             , ResultCallBack resultCallBack
             , int type
             , boolean isShowDialog) {
-        if (NetUtils.isNetworkStateed(context)) {
-            if (isShowDialog) {
-                LoadingDialog.getInstance(context).show();
+        try {
+            if (NetUtils.isNetworkStateed(context)) {
+                if (isShowDialog) {
+                    LoadingDialog.getInstance(context).show();
+                }
+                NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
+                netRequest.postAsyn();
+            } else {
+                resultCallBack.failCallBack(type);
             }
-            NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
-            netRequest.postAsyn();
-        } else {
-            resultCallBack.failCallBack(type);
+        } catch (Exception e) {
         }
     }
 

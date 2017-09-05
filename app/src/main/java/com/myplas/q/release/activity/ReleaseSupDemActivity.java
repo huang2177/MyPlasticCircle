@@ -38,7 +38,7 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
     private int f_type = 1;
     private TextView title;
     private ImageView imageView;
-    private String type, str = "2";
+    private String type, mode = "1";
     private SharedUtils sharedUtils;
     private LinearLayout linearLayout;
     private Button btn_ks, btn_jz, fb;
@@ -62,7 +62,7 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
 
         editText = (EditText) findViewById(R.id.fb_edit);
         title = (TextView) findViewById(R.id.fb_titlebar);
-        imageView= (ImageView) findViewById(R.id.image_k_j);
+        imageView = (ImageView) findViewById(R.id.image_k_j);
         editText_jz_chj = (EditText) findViewById(R.id.jzfb_edit_cj);
         editText_jz_jg = (EditText) findViewById(R.id.jzfb_edit_jg);
         editText_jz_jhd = (EditText) findViewById(R.id.jzfb_edit_jhd);
@@ -70,12 +70,12 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
 
         linearLayout = (LinearLayout) findViewById(R.id.jzfb_linear);
 
+        fb.setOnClickListener(this);
         btn_ks.setOnClickListener(this);
         btn_jz.setOnClickListener(this);
-        fb.setOnClickListener(this);
 
-        type = getIntent().getStringExtra("type");
         id = getIntent().getStringExtra("id");
+        type = getIntent().getStringExtra("type");
         getSecondPub();
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -102,15 +102,15 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fb_jz:
-                str = "1";
+                mode = "2";
                 changeTextColor_Right();
                 break;
             case R.id.fb_ks:
-                str = "2";
+                mode = "1";
                 changeTextColor_Speed();
                 break;
             case R.id.fb_ok:
-                if ("1".equals(str)) {
+                if ("2".equals(mode)) {
                     if (TextUtils.isNullOrEmpty(editText_jz_jhd.getText().toString()) && TextUtils.isNullOrEmpty(editText_jz_chj.getText().toString())
                             && TextUtils.isNullOrEmpty(editText_jz_ph.getText().toString()) && TextUtils.isNullOrEmpty(editText_jz_jg.getText().toString())) {
                         Pub();
@@ -118,7 +118,7 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
                         TextUtils.Toast(this, "请输入正确的数据！");
                     }
                 }
-                if ("2".equals(str)) {
+                if ("1".equals(mode)) {
                     if (TextUtils.isNullOrEmpty(editText.getText().toString())) {
                         Pub();
                     } else {
@@ -154,14 +154,14 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
 
     public void Pub() {
         Map<String, String> map = new HashMap<>();
-        map.put("token", sharedUtils.getData(this, "token"));
-        map.put("data[0][model]", editText_jz_ph.getText().toString());
-        map.put("data[0][f_name]", editText_jz_chj.getText().toString());
-        map.put("data[0][store_house]", editText_jz_jhd.getText().toString());
-        map.put("data[0][price]", editText_jz_jg.getText().toString());
-        map.put("data[0][type]", type);
-        map.put("data[0][quan_type]", "1");
-        map.put("data[0][content]", editText.getText().toString());
+        map.put("type", type);
+        map.put("mode", mode);
+        map.put("channel", "1");
+        map.put("content", editText.getText().toString());
+        map.put("model", editText_jz_ph.getText().toString());
+        map.put("price", editText_jz_jg.getText().toString());
+        map.put("vendor", editText_jz_chj.getText().toString());
+        map.put("storehouse", editText_jz_jhd.getText().toString());
         postAsyn(this, API.BASEURL + API.PUB, map, this, 2);
     }
 
@@ -183,12 +183,12 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
                 editText_jz_ph.setSelection(editText_jz_ph.getText().length());
                 editText_jz_chj.setSelection(editText_jz_chj.getText().length());
                 editText_jz_jhd.setSelection(editText_jz_jhd.getText().length());
-                if (f_type == 1) {
-                    str = "1";
-                    changeTextColor_Right();
-                } else {
+                if (f_type == 2) {
+                    mode = "2";
                     changeTextColor_Speed();
-                    str = "2";
+                } else {
+                    changeTextColor_Right();
+                    mode = "1";
                 }
                 title.setText(this.type.equals("2") ? ("发布供给") : ("发布求购"));
             }
@@ -205,7 +205,7 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
                     //跳转到供求详情
                     Intent intent1 = new Intent(this, SupDem_Detail_Activity.class);
 
-                    String id_ =  new JSONObject(object.toString()).getString("pur_id");
+                    String id_ = new JSONObject(object.toString()).getString("id");
                     String user_id = sharedUtils.getData(this, "userid");
 
                     intent1.putExtra("id", id_);

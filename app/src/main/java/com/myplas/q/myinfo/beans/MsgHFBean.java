@@ -14,7 +14,7 @@ public class MsgHFBean {
     /**
      * err : 0
      * count : 1
-     * data : [{"id":"1610","name":"hh","c_name":"上海中晨电子商务股份有限公司","mobile":"15378412400","type":"1","hui_content":"还好","model":"","fa_content":"pp","hui_time":"1503282639","fa_time":"1503041335","f_name":""}]
+     * data : [{"id":"1610","user_id":"53402","name":"hh","c_name":"上海中晨电子商务股份有限公司","mobile":"15378412400","type":"1","hui_content":"还好","model":"","fa_content":"pp","hui_time":"8月21日 10:30","fa_time":"8月18日 15:28","f_name":"","detail_url":"/plasticzone/plastic#/releasedetail?id=1610&userid=53402&tab=2"}]
      */
 
     private int err;
@@ -48,6 +48,7 @@ public class MsgHFBean {
     public static class DataBean {
         /**
          * id : 1610
+         * user_id : 53402
          * name : hh
          * c_name : 上海中晨电子商务股份有限公司
          * mobile : 15378412400
@@ -55,12 +56,14 @@ public class MsgHFBean {
          * hui_content : 还好
          * model :
          * fa_content : pp
-         * hui_time : 1503282639
-         * fa_time : 1503041335
+         * hui_time : 8月21日 10:30
+         * fa_time : 8月18日 15:28
          * f_name :
+         * detail_url : /plasticzone/plastic#/releasedetail?id=1610&userid=53402&tab=2
          */
 
         private String id;
+        private String user_id;
         private String name;
         private String c_name;
         private String mobile;
@@ -71,6 +74,7 @@ public class MsgHFBean {
         private String hui_time;
         private String fa_time;
         private String f_name;
+        private String detail_url;
 
         public String getId() {
             return id;
@@ -78,6 +82,14 @@ public class MsgHFBean {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
         }
 
         public String getName() {
@@ -158,6 +170,14 @@ public class MsgHFBean {
 
         public void setF_name(String f_name) {
             this.f_name = f_name;
+        }
+
+        public String getDetail_url() {
+            return detail_url;
+        }
+
+        public void setDetail_url(String detail_url) {
+            this.detail_url = detail_url;
         }
     }
 }

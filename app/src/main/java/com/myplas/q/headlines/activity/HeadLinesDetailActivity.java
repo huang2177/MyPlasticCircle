@@ -243,15 +243,17 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_last:
-                if (!("").equals(sucribleDetailBean.getInfo().getLastOne())) {
-                    getNetData(sucribleDetailBean.getInfo().getLastOne());
+                clickId = sucribleDetailBean.getInfo().getLastOne();
+                if (!("").equals(clickId)) {
+                    isPaidSubscription(clickId);
                 } else {
                     TextUtils.Toast(this, "没有更多了！");
                 }
                 break;
             case R.id.btn_next:
-                if (!("").equals(sucribleDetailBean.getInfo().getNextOne())) {
-                    getNetData(sucribleDetailBean.getInfo().getNextOne());
+                clickId = sucribleDetailBean.getInfo().getNextOne();
+                if (!("").equals(clickId)) {
+                    isPaidSubscription(clickId);
                 } else {
                     TextUtils.Toast(this, "没有更多了！");
                 }
@@ -318,14 +320,14 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         textView_gq.setTextColor(resources.getColor(R.color.color_gray));
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack();// 返回前一个页面
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+//            webView.goBack();// 返回前一个页面
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     public void onResume() {
         super.onResume();

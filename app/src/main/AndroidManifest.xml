@@ -57,6 +57,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppBlankTheme"></activity>
         <activity
+            android:name="com.myplas.q.guide.activity.BaseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBlankTheme"></activity>
+        <activity
             android:name="com.myplas.q.supdem.activity.SupDem_Detail_Activity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
@@ -236,10 +240,6 @@
         <activity
             android:name="com.myplas.q.myinfo.message.activity.MessageListsActivity"
             android:screenOrientation="portrait"></activity>
-        <activity
-            android:name="com.myplas.q.myinfo.integral.activity.IntegralDialogActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/my_theme_animation"></activity>
 
         <!--适配6.0以上的系统安装apk-->
         <provider

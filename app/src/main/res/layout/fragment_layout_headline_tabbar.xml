@@ -33,10 +33,10 @@
                     app:xTabIndicatorWidth="25dp"
                     app:xTabMode="scrollable"
                     app:xTabSelectedTextColor="@color/color_red"
-                    app:xTabSelectedTextSize="48px"
+                    app:xTabSelectedTextSize="18.0sp"
                     app:xTabTextColor="@color/color_title_main"
                     app:xTabTextSelectedBold="true"
-                    app:xTabTextSize="46px">
+                    app:xTabTextSize="16.0sp">
                 </com.androidkun.xtablayout.XTabLayout>
 
                 <ImageButton
@@ -47,12 +47,12 @@
                     android:src="@drawable/btn_recommend"/>
             </LinearLayout>
 
-            <View
+            <ImageView
                 android:id="@+id/headline_divider"
                 android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="@color/color_gray"
-                android:visibility="gone"></View>
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/line"></ImageView>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/headline_viewpager"

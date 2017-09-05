@@ -77,24 +77,23 @@ public class MessageListsAdapter extends BaseAdapter {
         }
         if (list.get(position).getType().equals("1")) {
             title = "供求消息";
-            viewHolder.mDragView2.setVisibility(list.get(position).getCount().equals("0")
-                    ? View.GONE
-                    : View.VISIBLE);
             imgRes = R.drawable.icon_supply_and_demand_news;
         } else if (list.get(position).getType().equals("2")) {
             title = "出价消息";
-            viewHolder.mDragView2.setVisibility(View.GONE);
             imgRes = R.drawable.icon_bid_message;
         } else {
             title = "回复消息";
             imgRes = R.drawable.icon_reply_message;
-            viewHolder.mDragView2.setVisibility(View.GONE);
         }
         viewHolder.type.setText(title);
         viewHolder.mImageView.setImageResource(imgRes);
         viewHolder.dis.setText(list.get(position).getMsg());
-        viewHolder.mDragView2.setText(list.get(position).getCount());
         viewHolder.time.setText(list.get(position).getInput_time());
+        viewHolder.mDragView2.setText(list.get(position).getCount());
+
+        viewHolder.mDragView2.setVisibility(list.get(position).getCount().equals("0")
+                ? View.GONE
+                : View.VISIBLE);
         return convertView;
     }
 

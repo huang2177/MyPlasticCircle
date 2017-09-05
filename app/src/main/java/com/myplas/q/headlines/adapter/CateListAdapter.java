@@ -1,6 +1,8 @@
 package com.myplas.q.headlines.adapter;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -60,10 +62,13 @@ public class CateListAdapter extends BaseAdapter {
         }else {
             viewHolder=(viewHolder)convertView.getTag();
         }
+        AssetManager assets = context.getAssets();
+        Typeface fromAsset = Typeface.createFromAsset(assets, "fonts/hkzh.TTF");
+        viewHolder.title2.setTypeface(fromAsset);
         viewHolder.content.setText(list.get(position).getDescription());
-        viewHolder.num.setText(" " +list.get(position).getPv());
+        viewHolder.num.setText(list.get(position).getPv());
         viewHolder.title2.setText(replace(list.get(position).getTitle()));
-        viewHolder.time.setText(" " + list.get(position).getInput_time());
+        viewHolder.time.setText(list.get(position).getInput_time());
         viewHolder.author.setText(list.get(position).getType());
         return convertView;
     }

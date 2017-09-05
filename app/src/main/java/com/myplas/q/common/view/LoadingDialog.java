@@ -2,6 +2,7 @@ package com.myplas.q.common.view;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -16,7 +17,6 @@ import com.myplas.q.R;
  * 时间：2017/4/28 16:47
  */
 public class LoadingDialog {
-    private static TextView txt;
     private static AlertDialog dialog = null;
     public static AlertDialog getInstance(final Context context) {
         if (dialog == null) {
@@ -24,8 +24,6 @@ public class LoadingDialog {
         }
         View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_dialog, null);
         dialog.setView(view);
-        txt = (TextView) view.findViewById(R.id.loading_text);
-        txt.setText("loading...");
         return dialog;
     }
 }

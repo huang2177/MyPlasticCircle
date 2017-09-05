@@ -229,8 +229,8 @@ public class RefreshableView extends LinearLayout {
 	 */
 	public void onCompleteRefresh() {
 		if (STATE_REFRESHING == refreshState) {
-			progressBar.setVisibility(GONE);
-			setRefreshState(STATE_REFRESH_NORMAL);
+            progressBar.setVisibility(INVISIBLE);
+            setRefreshState(STATE_REFRESH_NORMAL);
 			startHeightAnimation(refreshHeaderView, refreshHeaderView.getMeasuredHeight(), refreshNormalHeight);
 		}
 	}
@@ -254,8 +254,8 @@ public class RefreshableView extends LinearLayout {
 					break;
 				case RefreshableView.STATE_REFRESH_ARRIVED:
 					tv.setText("松开刷新");
-					progressBar.setVisibility(GONE);
-					break;
+                    progressBar.setVisibility(INVISIBLE);
+                    break;
 				case RefreshableView.STATE_REFRESHING:
 					tv.setText("正在刷新");
 					progressBar.setVisibility(VISIBLE);

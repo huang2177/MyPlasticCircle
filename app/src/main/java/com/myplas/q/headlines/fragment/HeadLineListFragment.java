@@ -182,31 +182,36 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     }
 
     public void initBanner(List<SubcribleBean.BannerBean> list) {
-        mListId.clear();
-        mListImg.clear();
-        mListTitle.clear();
-        for (int i = 0; i < list.size(); i++) {
-            mListId.add(list.get(i).getId());
-            mListImg.add(list.get(i).getImg());
-            mListTitle.add(list.get(i).getTitle());
+        if (list.size() != 0) {
+            mListId.clear();
+            mListImg.clear();
+            mListTitle.clear();
+            for (int i = 0; i < list.size(); i++) {
+                mListId.add(list.get(i).getId());
+                mListImg.add(list.get(i).getImg());
+                mListTitle.add(list.get(i).getTitle());
+            }
+            mBanner.setVisibility(View.VISIBLE);
+            mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+            //设置图片加载器
+            mBanner.setImageLoader(new GlideImageLoader());
+            //设置图片集合
+            mBanner.setImages(mListImg);
+            //设置banner动画效果
+            mBanner.setBannerAnimation(Transformer.Accordion);
+            //设置标题集合（当banner样式有显示title时）
+            mBanner.setBannerTitles(mListTitle);
+            //设置自动轮播，默认为true
+            mBanner.isAutoPlay(true);
+            //设置轮播时间
+            mBanner.setDelayTime(3000);
+            //设置指示器位置（当banner模式中有指示器时）
+            mBanner.setIndicatorGravity(BannerConfig.RIGHT);
+            //banner设置方法全部调用完毕时最后调用
+            mBanner.start();
+        } else {
+            mBanner.setVisibility(View.GONE);
         }
-        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        //设置图片加载器
-        mBanner.setImageLoader(new GlideImageLoader());
-        //设置图片集合
-        mBanner.setImages(mListImg);
-        //设置banner动画效果
-        mBanner.setBannerAnimation(Transformer.Accordion);
-        //设置标题集合（当banner样式有显示title时）
-        mBanner.setBannerTitles(mListTitle);
-        //设置自动轮播，默认为true
-        mBanner.isAutoPlay(true);
-        //设置轮播时间
-        mBanner.setDelayTime(3000);
-        //设置指示器位置（当banner模式中有指示器时）
-        mBanner.setIndicatorGravity(BannerConfig.RIGHT);
-        //banner设置方法全部调用完毕时最后调用
-        mBanner.start();
     }
 
     //获取推荐
@@ -248,9 +253,6 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                     SubcribleBean subcribleBean = gson.fromJson(object.toString(), SubcribleBean.class);
                     list_subcirble = subcribleBean.getData();
                     if (page == 1) {
-                        //显示banner
-                        initBanner(subcribleBean.getBanner());
-
                         imageButton.setVisibility(View.GONE);
                         mXListView.setVisibility(View.VISIBLE);
                         mLayoutNoData.setVisibility(View.GONE);
@@ -264,6 +266,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                         lastvisibleItemCount = list_subcirble.size();
 
                         mMyinterface.callBack(subcribleBean.getShow_msg(), isRefresh);//展示刷新后的popou
+
+                        //显示banner
+                        initBanner(subcribleBean.getBanner());
                     } else {
                         isRefresh = false;
                         list_subcirble_more.addAll(list_subcirble);

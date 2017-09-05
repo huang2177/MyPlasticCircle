@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -36,7 +37,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     private Supply_DemandBean supply_demandBean;
     private SharedUtils sharedUtils;
     private Map<String, String> map = new HashMap<>();
-    private boolean isfinish=false;
+    private boolean isfinish = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         initView();
         getSupplyDemandList("1", 1);
         getSupplyDemandList("2", 2);
+        ActivityManager.addActivity(this);
     }
 
     public void initView() {
@@ -57,15 +60,17 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         textView_gj.setOnClickListener(this);
         imageButton_back.setOnClickListener(this);
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
-        isfinish=sharedUtils.getBoolean(this,"isfinish");
+        isfinish = sharedUtils.getBoolean(this, "isfinish");
         if (isfinish) {
             sharedUtils.setBooloean(this, "isfinish", false);
             this.finish();
         }
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -124,6 +129,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

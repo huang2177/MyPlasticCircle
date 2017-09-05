@@ -23,9 +23,9 @@
                 android:id="@+id/fx_tt_title_text2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:maxLines="2"
                 android:textColor="@color/color_title_main"
-                android:textSize="16.0sp"/>
+                android:textSize="17.0sp"/>
         </LinearLayout>
 
         <TextView
@@ -43,10 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingBottom="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="8dp">
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/fx_tt_title_author"
@@ -57,26 +57,37 @@
                 android:textColor="@color/color_content"
                 android:textSize="12.0sp"/>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="0.8dp"
+                android:src="@drawable/icon_time1"/>
 
             <TextView
                 android:id="@+id/fx_tt_title_shj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp"
                 android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/icon_time"
-                android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="@color/color_content"
                 android:textSize="12.0sp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0.8dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_see1"/>
 
             <TextView
                 android:id="@+id/fx_tt_title_num"
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_see"
-                android:gravity="center_vertical"
+                android:layout_marginLeft="3dp"
                 android:singleLine="true"
                 android:textColor="@color/color_red"
                 android:textSize="12.0sp"/>

@@ -162,9 +162,11 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                         }
                     }
                 } else {
-                    listView.setVisibility(View.GONE);
-                    String msg = new JSONObject(object.toString()).getString("msg");
-                    mNoResultLayout.setNoResultData(R.drawable.icon_null, msg, true);
+                    if (page == 1) {
+                        listView.setVisibility(View.GONE);
+                        String msg = new JSONObject(object.toString()).getString("msg");
+                        mNoResultLayout.setNoResultData(R.drawable.icon_null, msg, true);
+                    }
                 }
             } else if (type == 2) {
                 MyFollowBean wdgzBean = null;
@@ -186,9 +188,11 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                         }
                     }
                 } else {
-                    listView.setVisibility(View.GONE);
-                    String msg = new JSONObject(object.toString()).getString("msg");
-                    mNoResultLayout.setNoResultData(R.drawable.icon_null, msg, true);
+                    if (page == 1) {
+                        listView.setVisibility(View.GONE);
+                        String msg = new JSONObject(object.toString()).getString("msg");
+                        mNoResultLayout.setNoResultData(R.drawable.icon_null, msg, true);
+                    }
                 }
             }
             //是否消耗积分//
