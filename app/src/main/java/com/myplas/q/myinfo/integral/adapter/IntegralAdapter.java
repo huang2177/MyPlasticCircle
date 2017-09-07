@@ -25,6 +25,7 @@ import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.NoDoubleClickListener;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.IntegralBean;
 import com.myplas.q.myinfo.beans.TookDateBean;
@@ -154,54 +155,47 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             }
         });
         //兑换
-        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+        viewHolder.button.setOnClickListener(new NoDoubleClickListener() {
             @Override
-            public void onClick(View v) {
-                try {
-                    String dates = null;
-                    payPosition = position;
-                    String type = list.get(position).getType();
-                    if (type.equals("1")) { //供求
-                        dates = getDates(list_date_supdem);
-                        if (dates != null) {
-                            if (num != -1 && !viewHolder.isPay) {
-                                viewHolder.isPay = true;
-                                String id = list.get(datePosition).getId();
-                                String p_id = list_msg.get(num).getId();
-                                exchangeSupOrDem(id, dates, p_id, 1);
-                            } else {
-                                TextUtils.Toast(context, "你还没有选择置顶的供求信息！");
-                            }
-                        } else {
-                            TextUtils.Toast(context, "你还没有选择置顶的日期！");
-                        }
-
-                    }
-                    if (type.equals("2")) { //通讯录
-                        dates = getDates(list_date_conact);
-                        if (dates != null && !viewHolder.isPay) {
+            public void onNoDoubleClick(View view) {
+                String dates = null;
+                payPosition = position;
+                String type = list.get(position).getType();
+                if (type.equals("1")) { //供求
+                    dates = getDates(list_date_supdem);
+                    if (dates != null) {
+                        if (num != -1) {
                             viewHolder.isPay = true;
                             String id = list.get(datePosition).getId();
-                            exchangeSupOrDem(id, dates, "", 0);
+                            String p_id = list_msg.get(num).getId();
+                            exchangeSupOrDem(id, dates, p_id, 1);
                         } else {
-                            TextUtils.Toast(context, "你还没有选择置顶的日期！");
+                            TextUtils.Toast(context, "你还没有选择置顶的供求信息！");
                         }
+                    } else {
+                        TextUtils.Toast(context, "你还没有选择置顶的日期！");
                     }
-                    if (type.equals("3")) {
-                        int num = GetNumUtil.getNum(viewHolder.num_all.getText().toString());
-                        if (num != 0 && !viewHolder.isPay) {
-                            viewHolder.isPay = true;
-                            String goods_id = list.get(classifyPosition).getId();
-                            newExchangeToutiao(goods_id, plasticNum, cate_ids, month_num, 3);
-                        } else {
-                            TextUtils.Toast(context, "你还没有选择头条分类!");
-                        }
+
+                }
+                if (type.equals("2")) { //通讯录
+                    dates = getDates(list_date_conact);
+                    if (dates != null) {
+                        viewHolder.isPay = true;
+                        String id = list.get(datePosition).getId();
+                        exchangeSupOrDem(id, dates, "", 0);
+                    } else {
+                        TextUtils.Toast(context, "你还没有选择置顶的日期！");
                     }
-                    if (viewHolder.isPay) {
-                        TextUtils.Toast(context, "您的操作过于频繁，请稍后重试！");
+                }
+                if (type.equals("3")) {
+                    int num = GetNumUtil.getNum(viewHolder.num_all.getText().toString());
+                    if (num != 0) {
+                        viewHolder.isPay = true;
+                        String goods_id = list.get(classifyPosition).getId();
+                        newExchangeToutiao(goods_id, plasticNum, cate_ids, month_num, 3);
+                    } else {
+                        TextUtils.Toast(context, "你还没有选择头条分类!");
                     }
-                } catch (Exception e) {
-                    viewHolder.isPay = false;
                 }
             }
         });
@@ -330,6 +324,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("-------", object.toString());
             if (type == 0) {//通讯录
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {

@@ -92,7 +92,13 @@ public class ClassifyDialogShowUtils extends NoDoubleClickListener implements Vi
         mTextChoosed = (TextView) view1.findViewById(R.id.dl_classify_text_choosed);
         mAddSubUtils = (AddSubUtils) view1.findViewById(R.id.dl_classify_addsubutils);
 
-        mButton.setOnClickListener(this);
+        mButton.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            public void onNoDoubleClick(View view) {
+                num = -1;
+                myInterface.classifySelected(-1, fName, fId, childName, childId, mAddSubUtils.getNumber());
+            }
+        });
         mLayoutClose.setOnClickListener(this);
 
         theDialog.setContentView(view1);
@@ -205,10 +211,8 @@ public class ClassifyDialogShowUtils extends NoDoubleClickListener implements Vi
 
     @Override
     public void onNoDoubleClick(View view) {
-
+//
     }
-
-
     //设置dialog属性
     public void setDialogWindowAttr(Dialog dlg, Context context) {
         Window dialogWindow = dlg.getWindow();
