@@ -96,7 +96,7 @@ public class ClassifyDialogShowUtils extends NoDoubleClickListener implements Vi
             @Override
             public void onNoDoubleClick(View view) {
                 num = -1;
-                myInterface.classifySelected(-1, fName, fId, childName, childId, mAddSubUtils.getNumber());
+                myInterface.classifySelected(1, fName, childName, fId, childId, mAddSubUtils.getNumber());
             }
         });
         mLayoutClose.setOnClickListener(this);
@@ -237,7 +237,7 @@ public class ClassifyDialogShowUtils extends NoDoubleClickListener implements Vi
             @Override
             public void onDismiss(DialogInterface dialog) {
                 if (num == 1) {
-                    myInterface.classifySelected(1, fName, childName, fId, childId, mAddSubUtils.getNumber());
+                    myInterface.classifySelected(-1, fName, childName, fId, childId, mAddSubUtils.getNumber());
                 }
             }
         });

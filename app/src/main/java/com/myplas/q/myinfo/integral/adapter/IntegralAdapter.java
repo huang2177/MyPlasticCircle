@@ -190,7 +190,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 if (type.equals("3")) {
                     int num = GetNumUtil.getNum(viewHolder.num_all.getText().toString());
                     if (num != 0) {
-                        viewHolder.isPay = true;
                         String goods_id = list.get(classifyPosition).getId();
                         newExchangeToutiao(goods_id, plasticNum, cate_ids, month_num, 3);
                     } else {
