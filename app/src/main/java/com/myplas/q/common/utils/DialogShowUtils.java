@@ -25,6 +25,8 @@ public class DialogShowUtils {
     private DialogShowInterface dialogShowInterface;
     private TextView textView_content, textView_title;
 
+    private boolean isCanceledOnTouchOutside = true;
+
     public DialogShowUtils() {
     }
 
@@ -35,7 +37,7 @@ public class DialogShowUtils {
         if (normalDialog == null) {
             normalDialog = new Dialog(context, R.style.dialog);
             normalDialog.setCancelable(true);
-            normalDialog.setCanceledOnTouchOutside(true);
+            normalDialog.setCanceledOnTouchOutside(isCanceledOnTouchOutside);
             normalDialog.setContentView(view);
             setDialogWindowAttr(context);
         }
@@ -83,6 +85,10 @@ public class DialogShowUtils {
 
     public void setText(String content) {
         textView_content.setText(content);
+    }
+
+    public void setCanceledOnTouchOutside(boolean isCanceledOnTouchOutside) {
+        this.isCanceledOnTouchOutside = isCanceledOnTouchOutside;
     }
 
     //设置dialog属性

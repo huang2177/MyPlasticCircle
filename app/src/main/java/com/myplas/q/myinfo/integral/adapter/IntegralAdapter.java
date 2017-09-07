@@ -22,6 +22,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -71,7 +72,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     private Activity context;
     private String type, cate_ids;
     private TookDateBean tookDateBean;
-    private int num = -1, month_num, plasticNum, datePosition, supDemPosition, classifyPosition;
+    private int num = -1, month_num, plasticNum;
+    private int datePosition, supDemPosition, classifyPosition, payPosition;
 
     public IntegralAdapter(Context context, Activity activity, List<IntegralBean.InfoBean> list, MyInterface myInterface) {
         this.list = list;
@@ -155,37 +157,51 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String dates = null;
-                String type = list.get(position).getType();
-                if (type.equals("1")) { //供求
-                    dates = getDates(list_date_supdem);
-                    if (dates != null) {
-                        if (num != -1) {
-                            String id = list.get(datePosition).getId();
-                            String p_id = list_msg.get(num).getId();
-                            exchangeSupOrDem(id, dates, p_id, 1);
+                try {
+                    String dates = null;
+                    payPosition = position;
+                    String type = list.get(position).getType();
+                    if (type.equals("1")) { //供求
+                        dates = getDates(list_date_supdem);
+                        if (dates != null) {
+                            if (num != -1 && !viewHolder.isPay) {
+                                viewHolder.isPay = true;
+                                String id = list.get(datePosition).getId();
+                                String p_id = list_msg.get(num).getId();
+                                exchangeSupOrDem(id, dates, p_id, 1);
+                            } else {
+                                TextUtils.Toast(context, "你还没有选择置顶的供求信息！");
+                            }
                         } else {
-                            TextUtils.Toast(context, "你还没有选择置顶的供求信息！");
+                            TextUtils.Toast(context, "你还没有选择置顶的日期！");
                         }
-                    } else {
-                        TextUtils.Toast(context, "你还没有选择置顶的日期！");
-                    }
 
-                } else if (type.equals("2")) { //通讯录
-                    dates = getDates(list_date_conact);
-                    if (dates != null) {
-                        String id = list.get(datePosition).getId();
-                        exchangeSupOrDem(id, dates, "", 0);
-                    } else {
-                        TextUtils.Toast(context, "你还没有选择置顶的日期！");
                     }
-                } else {
-                    if (!viewHolder.num_all.getText().equals("共0件：")) {
-                        String goods_id = list.get(classifyPosition).getId();
-                        newExchangeToutiao(goods_id, plasticNum, cate_ids, month_num, 3);
-                    } else {
-                        TextUtils.Toast(context, "你还没有选择头条分类!");
+                    if (type.equals("2")) { //通讯录
+                        dates = getDates(list_date_conact);
+                        if (dates != null && !viewHolder.isPay) {
+                            viewHolder.isPay = true;
+                            String id = list.get(datePosition).getId();
+                            exchangeSupOrDem(id, dates, "", 0);
+                        } else {
+                            TextUtils.Toast(context, "你还没有选择置顶的日期！");
+                        }
                     }
+                    if (type.equals("3")) {
+                        int num = GetNumUtil.getNum(viewHolder.num_all.getText().toString());
+                        if (num != 0 && !viewHolder.isPay) {
+                            viewHolder.isPay = true;
+                            String goods_id = list.get(classifyPosition).getId();
+                            newExchangeToutiao(goods_id, plasticNum, cate_ids, month_num, 3);
+                        } else {
+                            TextUtils.Toast(context, "你还没有选择头条分类!");
+                        }
+                    }
+                    if (viewHolder.isPay) {
+                        TextUtils.Toast(context, "您的操作过于频繁，请稍后重试！");
+                    }
+                } catch (Exception e) {
+                    viewHolder.isPay = false;
                 }
             }
         });
@@ -282,6 +298,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
+        boolean isPay;
         Button button;
         GridView gridView;
         ImageView imageView;
@@ -291,6 +308,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
 
         public viewHolder(View convertView, int position) {
             super(convertView);
+            isPay = false;
             shm = (TextView) convertView.findViewById(R.id.shm);
             button = (Button) convertView.findViewById(R.id.commit);
             time = (TextView) convertView.findViewById(R.id.radio_1);
@@ -320,15 +338,18 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
                     mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, "兑换成功!", 2, this);
 
                     changeTextShow(list_date_conact);
                 } else if (err.equals("15")) {
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, "塑豆不足!", 1, this);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, content, 3, this);
                 }
             }
@@ -342,35 +363,41 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
                     mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, "兑换成功!", 2, this);
 
                     changeTextShow(list_date_supdem);
                 } else if (err.equals("15")) {
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, "塑豆不足!", 1, this);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, content, 3, this);
                 }
             }
             if (type == 3) {//分类
-                Log.e("----------", object.toString());
+                setIsPay();
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     myInterface.refresgData();
-                    mHolderMap.get(classifyPosition).num_all.setText("共0件");
+                    mHolderMap.get(classifyPosition).num_all.setText("共0件：");
                     mHolderMap.get(classifyPosition).type.setText("*请选择分类：");
                     mHolderMap.get(classifyPosition).point_all.setText("总计：0塑豆");
 
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, "兑换成功!", 2, this);
                 } else if (err.equals("15")) {
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, "塑豆不足!", 1, this);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
                     dialogShowUtils = new DialogShowUtils();
+                    dialogShowUtils.setCanceledOnTouchOutside(false);
                     dialogShowUtils.showDialog(context, content, 3, this);
                 }
             }
@@ -391,9 +418,18 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
 
     @Override
     public void failCallBack(int type) {
-
+        if (type == 3) {
+            setIsPay();
+        }
     }
 
+    //设置支付按钮可点击
+    public void setIsPay() {
+        if (utils != null) {
+            utils.setIsPay(false);
+        }
+        mHolderMap.get(payPosition).isPay = false;
+    }
 
     //日期选择后显示在列表上
     public void dateSelected() {

@@ -23,9 +23,12 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.NoDoubleClickListener;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.IntegralBean;
 import com.myplas.q.myinfo.integral.adapter.Integral_Diaolog_Classify_Adapter;
+import com.tencent.mm.sdk.platformtools.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +43,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/5/16 10:23
  */
-public class ClassifyDialogShowUtils implements View.OnClickListener {
+public class ClassifyDialogShowUtils extends NoDoubleClickListener implements View.OnClickListener {
     private int fPosition;
     private TextView mButton;
     private Dialog theDialog;
@@ -52,6 +55,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
     private TextView mTextPrice, mTextType, mTextChoosed;
 
     private int num;
+    private boolean isPay;
     private Context mContext;
     private MyInterface myInterface;
     private Integral_Diaolog_Classify_Adapter mAdapter1, mAdapter2;
@@ -183,6 +187,10 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
         mTextChoosed.setText(type);
     }
 
+    public void setIsPay(boolean isPay) {
+        this.isPay = isPay;
+    }
+
     public String getChildrenName(List<IntegralBean.InfoBean.ExtraConfigBean> list, int fPosition, int cPsition) {
         IntegralBean.InfoBean.ExtraConfigBean configBean = list.get(fPosition);
         boolean isNull = configBean.getChildren() == null || configBean.getChildren().size() == 0;
@@ -190,16 +198,16 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
         return (isNull) ? ("") : ("-" + configBean.getChildren().get(cPsition).getCate_name());
     }
 
-
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.dl_classify_ok) {
-            num = -1;
-            myInterface.classifySelected(-1, fName, childName, fId, childId, mAddSubUtils.getNumber());
-        } else {
-            theDialog.dismiss();
-        }
+        theDialog.dismiss();
     }
+
+    @Override
+    public void onNoDoubleClick(View view) {
+
+    }
+
 
     //设置dialog属性
     public void setDialogWindowAttr(Dialog dlg, Context context) {

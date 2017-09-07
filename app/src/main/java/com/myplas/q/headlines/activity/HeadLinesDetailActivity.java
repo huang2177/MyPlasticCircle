@@ -201,6 +201,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 }
             }
         } catch (Exception e) {
+            Log.e("----", e.toString());
         }
     }
 
