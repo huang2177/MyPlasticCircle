@@ -2,6 +2,8 @@ package com.myplas.q.myinfo.message.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -60,7 +62,12 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         viewHolder viewHolder = mHolderMap.get(position);
         viewHolder.time.setText(mListSupDem.get(position).getInput_time());
-        String supdem = mListSupDem.get(position).getType().equals("2") ? "供给" : "求购";
+        String supdem = mListSupDem.get(position).getType().equals("2")
+                ? "供给"
+                : "求购";
+        int imgRes = mListSupDem.get(position).getType().equals("2")
+                ? R.drawable.icon_supply
+                : R.drawable.icon_purchase;
         String title = "您关注的“<font color='#ff5000'>"
                 + mListSupDem.get(position).getUser_name()
                 + "</font>”发布新的<font color='#ff5000'>"
@@ -68,9 +75,15 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
                 + "</font>消息啦！";
         viewHolder.title.setText(Html.fromHtml(title));
         viewHolder.company.setText(mListSupDem.get(position).getC_name() + "  " + mListSupDem.get(position).getUser_name());
-        viewHolder.type.setText(" " + supdem);
+        viewHolder.type.setText(supdem);
         viewHolder.pro.setText(mListSupDem.get(position).getContent());
         viewHolder.ll_detail.setOnClickListener(new MyOnClickListener(position));
+
+        Resources res = context.getResources();
+        Drawable img = res.getDrawable(imgRes);
+        //调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
+        viewHolder.type.setCompoundDrawables(img, null, null, null); //设置左图标
     }
 
 

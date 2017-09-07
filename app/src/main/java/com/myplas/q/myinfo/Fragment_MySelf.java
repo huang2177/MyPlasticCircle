@@ -1,43 +1,31 @@
 package com.myplas.q.myinfo;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
-import com.myplas.q.appupdate.DownLoadUtils;
-import com.myplas.q.appupdate.DownloadApk;
-import com.myplas.q.common.utils.ImgUtils;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.guide.activity.ShareActivity;
-import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.R;
 import com.myplas.q.myinfo.credit.activity.LineOfCreditActivity;
 import com.myplas.q.myinfo.credit.activity.PlasticMoneyActivity;
@@ -46,8 +34,6 @@ import com.myplas.q.myinfo.fans.activity.MyFansFollowActivity;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 
@@ -63,15 +49,12 @@ import com.myplas.q.myinfo.setting.SettingActivity;
 import com.myplas.q.myinfo.supdem.activity.MySupDemActivity;
 import com.myplas.q.myinfo.websockethelper.WebSocketCallBack;
 import com.myplas.q.myinfo.websockethelper.WebSocketHelper;
-import com.tencent.mm.sdk.platformtools.Util;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import rx.Observer;
 
 /**
  * 编写： 黄双
@@ -97,10 +80,12 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private Toolbar mToolbar;
     private AppBarLayout mBarLayout;
     private FrameLayout mFrameLayout;
+    private NestedScrollView mNestedScrollView;
     private CollapsingToolbarLayoutState state;
     private CoordinatorLayout mCoordinatorLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
+    private Handler mHandler;
     private WebSocketHelper mSocketHelper;
 
 
@@ -114,6 +99,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     }
 
     private void initWebSocket() {
+        mHandler = new Handler();
         mSocketHelper = new WebSocketHelper(this);
         mSocketHelper.startConnect(getActivity());
     }
@@ -153,6 +139,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         mDragView = f(R.id.wd_logined_news_text);
         mFrameLayout = f(R.id.wd_logined_news_fl);
         scrollingView = f(R.id.scrollView_myself);
+        mNestedScrollView = f(R.id.scrollView_myself);
         mImageView_news = f(R.id.wd_logined_news_img);
 
         mToolbar = f(R.id.toolbar);
@@ -272,7 +259,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     @Override
     public void callBack(Object object, int type) {
         try {
-            mBarLayout.setExpanded(true, true);
             imageButton.setVisibility(View.GONE);
             scrollingView.setVisibility(View.VISIBLE);
             JSONObject jsonObject = new JSONObject(object.toString());
@@ -399,7 +385,14 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
 
     public void onPause() {
         super.onPause();
+        mBarLayout.setExpanded(true, true);
         MobclickAgent.onPageEnd("MainScreen");
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mNestedScrollView.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
     }
 
     @Override

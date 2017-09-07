@@ -23,6 +23,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.NetUtils;
+import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.XListView;
@@ -99,6 +100,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         if (po == 0) {
             mHeadView = LayoutInflater.from(getActivity()).inflate(R.layout.header_layout_deadline_banner, null, false);
             mBanner = (Banner) mHeadView.findViewById(R.id.headline_banner);
+            ViewGroup.LayoutParams lp = mBanner.getLayoutParams();
+            lp.height = (int) (ScreenUtils.getScreenWidth(getActivity()) / 2.1);
+            mBanner.setLayoutParams(lp);
             mXListView.addHeaderView(mHeadView);
 
             mBanner.setOnBannerListener(new OnBannerListener() {

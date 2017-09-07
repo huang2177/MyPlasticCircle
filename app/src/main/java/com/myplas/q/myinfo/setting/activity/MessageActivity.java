@@ -1,7 +1,9 @@
 package com.myplas.q.myinfo.setting.activity;
 
+import android.app.Service;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -37,6 +39,8 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
     private SharedUtils sharedUtils;
     private String allow_sendmsg_gz, allow_sendmsg_hf;
 
+    private Vibrator mVibrator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +59,7 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
 
         switch_hf.setOnCheckedChangeListener(this);
         switch_gz.setOnCheckedChangeListener(this);
-
+        mVibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
 
         mBean = (MySelfInfo.DataBean.AllowSendBean) getIntent().getSerializableExtra("Allow_send");
         if (mBean != null) {
@@ -68,6 +72,7 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
     public void onCheckedChanged(SwitchButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
             case R.id.message_switch_gz:
+//                mVibrator.vibrate(new long[]{0,100}, -1);
                 allow_sendmsg_gz = (isChecked) ? "0" : "1";
                 map.put("type", "0");
                 map.put("token", sharedUtils.getData(this, "token"));
@@ -75,6 +80,7 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
                 saveSelfInfo(API.FAVORATE_SET, map, 1);
                 break;
             case R.id.message_switch_hf:
+//                mVibrator.vibrate(new long[]{0,100}, -1);
                 allow_sendmsg_hf = (isChecked) ? "0" : "1";
                 map.put("type", "1");
                 map.put("is_allow", allow_sendmsg_hf);
@@ -97,6 +103,12 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mVibrator.cancel();
     }
 
     @Override

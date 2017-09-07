@@ -61,9 +61,9 @@ public class TTAdapter extends BaseAdapter {
         }else {
             viewHolder=(viewHolder)convertView.getTag();
         }
-        AssetManager assets = context.getAssets();
-        Typeface fromAsset = Typeface.createFromAsset(assets, "fonts/hkzh.TTF");
-        viewHolder.title2.setTypeface(fromAsset);
+//        AssetManager assets = context.getAssets();
+//        Typeface fromAsset = Typeface.createFromAsset(assets, "fonts/hkzh.TTF");
+//        viewHolder.title2.setTypeface(fromAsset);
         viewHolder.num.setText(list.get(position).getPv());
         viewHolder.title2.setText(replaceContent(list.get(position).getTitle()));
         viewHolder.time.setText(list.get(position).getInput_time());

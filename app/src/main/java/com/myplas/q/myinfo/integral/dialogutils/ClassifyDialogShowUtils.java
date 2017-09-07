@@ -44,10 +44,10 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
     private int fPosition;
     private TextView mButton;
     private Dialog theDialog;
-    private LinearLayout mLayout;
+    private ImageView mImageShow;
     private AddSubUtils mAddSubUtils;
     private GridView mGridView1, mGridView2;
-    private ImageView mImageShow, mImageClose;
+    private LinearLayout mLayout, mLayoutClose;
     private String fId, childId, fName, childName;
     private TextView mTextPrice, mTextType, mTextChoosed;
 
@@ -83,13 +83,13 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
         mTextType = (TextView) view1.findViewById(R.id.dl_classify_text_type);
         mImageShow = (ImageView) view1.findViewById(R.id.dl_classify_img_show);
         mTextPrice = (TextView) view1.findViewById(R.id.dl_classify_text_price);
-        mImageClose = (ImageView) view1.findViewById(R.id.dl_classify_img_close);
         mLayout = (LinearLayout) view1.findViewById(R.id.dl_classify_ll_children);
+        mLayoutClose = (LinearLayout) view1.findViewById(R.id.dl_classify_img_close);
         mTextChoosed = (TextView) view1.findViewById(R.id.dl_classify_text_choosed);
         mAddSubUtils = (AddSubUtils) view1.findViewById(R.id.dl_classify_addsubutils);
 
         mButton.setOnClickListener(this);
-        mImageClose.setOnClickListener(this);
+        mLayoutClose.setOnClickListener(this);
 
         theDialog.setContentView(view1);
         setDialogWindowAttr(theDialog, context);
@@ -218,7 +218,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
 
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.width = lp.MATCH_PARENT;
-        lp.height = (int) (height / 1.8);
+        lp.height = (int) (height / 2.2);
         dlg.getWindow().setAttributes(lp);
 
         dlg.setOnDismissListener(new DialogInterface.OnDismissListener() {

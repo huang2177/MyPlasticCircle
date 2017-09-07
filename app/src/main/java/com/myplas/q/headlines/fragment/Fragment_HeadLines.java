@@ -1,12 +1,12 @@
 package com.myplas.q.headlines.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -20,7 +20,6 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.androidkun.xtablayout.XTabLayout;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
@@ -66,7 +65,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_find_fragment, null, false);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_headlins, null, false);
 
         handler = new Handler();
         sharedUtils = SharedUtils.getSharedUtils();
@@ -150,6 +149,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             case R.id.find_edit:
                 Intent in = new Intent(getActivity(), HeadLineSearchActivity.class);
                 startActivity(in);
+                getActivity().overridePendingTransition(R.anim.fade, R.anim.fade);
                 break;
         }
     }

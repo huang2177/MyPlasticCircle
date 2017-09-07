@@ -62,9 +62,8 @@ public class CateListAdapter extends BaseAdapter {
         }else {
             viewHolder=(viewHolder)convertView.getTag();
         }
-        AssetManager assets = context.getAssets();
-        Typeface fromAsset = Typeface.createFromAsset(assets, "fonts/hkzh.TTF");
-        viewHolder.title2.setTypeface(fromAsset);
+//        AssetManager assets = context.getAssets();
+//        Typeface fromAsset = Typeface.createFromAsset(assets, "fonts/hkzh.TTF");
         viewHolder.content.setText(list.get(position).getDescription());
         viewHolder.num.setText(list.get(position).getPv());
         viewHolder.title2.setText(replace(list.get(position).getTitle()));

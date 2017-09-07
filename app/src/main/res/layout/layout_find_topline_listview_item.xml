@@ -24,8 +24,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/color_title_main"
-                android:textSize="17.0sp"/>
+                android:textSize="16.0sp"/>
         </LinearLayout>
 
         <TextView
@@ -55,13 +56,13 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:textColor="@color/color_content"
-                android:textSize="12.0sp"/>
+                android:textSize="14.0sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="0.8dp"
+                android:layout_marginTop="0.6dp"
                 android:src="@drawable/icon_time1"/>
 
             <TextView
@@ -73,13 +74,13 @@
                 android:layout_marginRight="10dp"
                 android:singleLine="true"
                 android:textColor="@color/color_content"
-                android:textSize="12.0sp"/>
+                android:textSize="14.0sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginTop="0.8dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginTop="0.5dp"
                 android:src="@drawable/icon_see1"/>
 
             <TextView
@@ -90,7 +91,7 @@
                 android:layout_marginLeft="3dp"
                 android:singleLine="true"
                 android:textColor="@color/color_red"
-                android:textSize="12.0sp"/>
+                android:textSize="14.0sp"/>
         </LinearLayout>
 
     </LinearLayout>

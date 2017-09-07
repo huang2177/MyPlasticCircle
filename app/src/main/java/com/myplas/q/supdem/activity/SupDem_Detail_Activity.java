@@ -302,11 +302,15 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     public void showInfo(SupplyDemandDetailBean supplyDemandDetailBean) {
         btn_gz.setText(supplyDemandDetailBean.getData().getInfo().getStatus());
-        Glide.with(this).load(supplyDemandDetailBean.getData().getInfo().getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(img_tx);
+        Glide.with(this)
+                .load(supplyDemandDetailBean.getData().getInfo().getThumb())
+                .placeholder(R.drawable.contact_image_defaul_male)
+                .into(img_tx);
         String s = supplyDemandDetailBean.getData().getInfo().getC_name();
         text_gs.setText("  " + s );
         text_name.setText("  " + supplyDemandDetailBean.getData().getInfo().getName());
-        text_fs.setText("  粉丝：" + supplyDemandDetailBean.getData().getInfo().getFans() + "   等级：" + supplyDemandDetailBean.getData().getInfo().getMember_level());
+        text_fs.setText("  粉丝：" + supplyDemandDetailBean.getData().getInfo().getFans()
+                + "   等级：" + supplyDemandDetailBean.getData().getInfo().getMember_level());
         text_shj.setText(supplyDemandDetailBean.getData().getInput_time());
         text_chj.setText("出价(" + supplyDemandDetailBean.getData().getDeliverPriceCount() + ")");
         text_hf.setText("回复(" + supplyDemandDetailBean.getData().getSaysCount() + ")");

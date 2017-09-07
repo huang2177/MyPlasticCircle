@@ -16,6 +16,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.AndroidUtil;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -54,8 +55,12 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_find_cate_popou);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
         initView();
         getProduct_Classify();
         getSubscription_Column();

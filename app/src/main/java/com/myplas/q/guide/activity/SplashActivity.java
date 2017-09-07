@@ -3,11 +3,13 @@ package com.myplas.q.guide.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 
 
 import com.myplas.q.R;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.VersionUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -24,6 +26,9 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(false, this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         setContentView(R.layout.layout_splash_activity);
         isGuided = SharedUtils.getSharedUtils().getBoolean(this, "isGuided");
         mMyThread.start();

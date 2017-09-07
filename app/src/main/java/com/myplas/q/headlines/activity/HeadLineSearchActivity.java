@@ -2,8 +2,11 @@ package com.myplas.q.headlines.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -41,6 +44,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -69,8 +74,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     private Handler handler;
     private String keywords;
-    private boolean hasMoerData, isRefresh;
     private int page, visibleItemCount, position;
+    private boolean hasMoerData, isRefresh, isFinifsh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_layout_headline_search);
         goBack(findViewById(R.id.back));
         initView();
-
         String data = getIntent().getStringExtra("data");
         if (TextUtils.isNullOrEmpty(data)) {//从供求qq页面跳转过来
             editText.setText(data);
@@ -244,6 +248,22 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    private void showInPutKeybord() {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            }
+
+        }, 200);
+    }
+
     @Override
     public void callBack(Object object, int type) {
         try {
@@ -293,6 +313,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             }
             if (type == 4) {
                 if (err.equals("0")) {
+                    isFinifsh = false;
                     Intent intent = new Intent(this, HeadLinesDetailActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     startActivity(intent);
@@ -320,12 +341,17 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     public void onResume() {
         super.onResume();
+        isFinifsh = true;
         MobclickAgent.onResume(this);
-        //从供求-qq页面跳转
     }
 
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+        if (isFinifsh) {
+            overridePendingTransition(R.anim.fade, R.anim.hold);
+        }
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 }

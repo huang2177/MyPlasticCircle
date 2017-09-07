@@ -52,6 +52,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
 import static com.umeng.analytics.pro.x.V;
@@ -95,6 +97,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private int page = 1, visibleItemCount;
     private boolean hasMoerData = true;
     private boolean spinnerSelected = false;
+    private boolean isFinifsh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,6 +304,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.search_listview_result:
+                isFinifsh = false;
                 if (list.get(position).getType().equals("9")) {//来自QQ群
                     Intent intent = new Intent(SupDem_Search_Activity.this, SupDem_QQ_DetailActivity.class);
                     intent.putExtra("company", list.get(position).getC_name());
@@ -441,20 +445,34 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         getPhysical_Search(1, keywords, time, is_buy, area);
     }
 
+    private void showInPutKeybord() {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            }
+
+        }, 200);
+    }
     public void onResume() {
         super.onResume();
+        isFinifsh = true;
         MobclickAgent.onResume(this);
     }
 
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        if (isFinifsh) {
+            overridePendingTransition(R.anim.fade, R.anim.hold);
+        }
     }
 }

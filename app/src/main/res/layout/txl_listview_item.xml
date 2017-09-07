@@ -40,7 +40,7 @@
                         android:drawablePadding="3dp"
                         android:singleLine="true"
                         android:textColor="@color/color_title_main"
-                        android:textSize="15.0sp"/>
+                        android:textSize="16.0sp"/>
 
                     <TextView
                         android:id="@+id/txl_listview_mz"
@@ -52,7 +52,7 @@
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textColor="@color/color_title_main"
-                        android:textSize="15.0sp"/>
+                        android:textSize="16.0sp"/>
 
                     <TextView
                         android:id="@+id/txl_listview_sex"
@@ -61,7 +61,7 @@
                         android:layout_weight="2.9"
                         android:singleLine="true"
                         android:textColor="@color/color_title_main"
-                        android:textSize="15.0sp"/>
+                        android:textSize="16.0sp"/>
                 </LinearLayout>
 
                 <TextView
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:textColor="@color/color_blue"
-                    android:textSize="12.0sp"/>
+                    android:textSize="14.0sp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:textColor="@color/color_content"
-                        android:textSize="12.0sp"/>
+                        android:textSize="14.0sp"/>
                     <!--<LinearLayout-->
                     <!--android:layout_width="0dp"-->
                     <!--android:layout_weight="7"-->
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:textColor="@color/color_content"
-                        android:textSize="12.0sp"/>
+                        android:textSize="14.0sp"/>
                     <!--</LinearLayout>-->
                 </LinearLayout>
             </LinearLayout>

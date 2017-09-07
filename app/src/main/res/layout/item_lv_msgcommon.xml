@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:drawableLeft="@drawable/icon_supply"
-                android:text=" 供给"
+                android:drawablePadding="3dp"
                 android:textColor="@color/color_red"/>
 
             <LinearLayout

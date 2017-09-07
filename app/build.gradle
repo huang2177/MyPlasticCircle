@@ -19,8 +19,8 @@ android {
         versionCode 94
         versionName "3.8.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.sign
     }
-
     buildTypes {
         debug {
             signingConfig signingConfigs.sign//这个很重要 打包时使用h5签名
@@ -35,6 +35,8 @@ android {
         preDexLibraries true
         maxProcessCount 8
         javaMaxHeapSize "2048m"
+    }
+    productFlavors {
     }
 }
 

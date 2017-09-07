@@ -1,14 +1,10 @@
 package com.myplas.q.myinfo.setting.activity;
 
-import android.annotation.SuppressLint;
-import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,26 +15,18 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.appupdate.DownLoadUtils;
 import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.api.API;
-import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.beans.MySelfInfo;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-
-import rx.Subscriber;
 
 
 /**
@@ -176,7 +164,9 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 Intent intent8 = new Intent(this, (type.equals("4"))
                         ? (MyMainPro_LogisticsActivity.class)
                         : (DataCommonActivity.class));
-                intent8.putExtra("title", "我的主营");
+                intent8.putExtra("title", (type.equals("1"))
+                        ? ("我的需求")
+                        : ("我的主营"));
                 intent8.putExtra("type", "2");
                 intent8.putExtra("hint", mainPro);
                 startActivityForResult(intent8, 8);
@@ -253,7 +243,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-=-=-=-=-=", object.toString());
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 mySelfInfo = null;

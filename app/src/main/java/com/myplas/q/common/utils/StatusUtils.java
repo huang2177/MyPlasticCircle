@@ -108,6 +108,15 @@ public class StatusUtils {
             activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
     }
+//    public static void setNavigationBarColor(Activity activity) {
+//        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        activity.getWindow().setFlags(
+//                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+//                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            //activity.getWindow().setNavigationBarColor(activity.getResources().getColor(R.color.colorAccent));
+//        }
+//    }
 
     public static void reMeasure(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();

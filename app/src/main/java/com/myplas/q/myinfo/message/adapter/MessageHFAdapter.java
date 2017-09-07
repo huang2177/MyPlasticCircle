@@ -2,6 +2,8 @@ package com.myplas.q.myinfo.message.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -62,15 +64,23 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
         String title = "“<font color='#ff5000'>"
                 + mListHF.get(position).getName()
                 + "</font>”回复您的消息啦！";
-
+        int imgRes = mListHF.get(position).getType().equals("2")
+                ? R.drawable.icon_supply
+                : R.drawable.icon_purchase;
         viewHolder.time.setText(mListHF.get(position).getHui_time());
         viewHolder.title.setText(Html.fromHtml(title));
         viewHolder.company.setText(mListHF.get(position).getC_name() + "  " + mListHF.get(position).getName());
-        viewHolder.type.setText(" " + supdem);
+        viewHolder.type.setText(supdem);
         viewHolder.tel.setText("联系电话：" + mListHF.get(position).getMobile());
         viewHolder.pro.setText("产品：" + mListHF.get(position).getModel());
         viewHolder.content.setText("回复内容：" + mListHF.get(position).getHui_content());
         viewHolder.ll_detail.setOnClickListener(new MyOnClickListener(position));
+
+        Resources res = context.getResources();
+        Drawable img = res.getDrawable(imgRes);
+        //调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
+        viewHolder.type.setCompoundDrawables(img, null, null, null); //设置左图标
     }
 
 

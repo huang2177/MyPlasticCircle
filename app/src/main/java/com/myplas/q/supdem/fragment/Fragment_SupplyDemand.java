@@ -178,6 +178,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         switch (v.getId()) {
             case R.id.supplydemand_edit:
                 startActivity(new Intent(getActivity(), SupDem_Search_Activity.class));
+                getActivity().overridePendingTransition(R.anim.fade, R.anim.fade);
                 break;
             case R.id.supplydemand_btn:
                 showPopou(mPopupWindow2);

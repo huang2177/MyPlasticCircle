@@ -5,8 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.WindowManager;
 
 import com.myplas.q.R;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.guide.adapter.Guide_Adapter;
 import com.myplas.q.guide.fragment.FirstFragment;
 import com.myplas.q.guide.fragment.SecondFragment;
@@ -33,6 +35,9 @@ public class GuideActivity extends FragmentActivity implements ViewPager.OnPageC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(true, this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         setContentView(R.layout.layout_guide_activity);
         initView();
     }

@@ -63,7 +63,9 @@ public class XQ_ListView_HFAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         viewHolder.content.setText(list.get(position).getContent());
-        viewHolder.gs.setText(list.get(position).getInfo().getC_name() + "  " + list.get(position).getInfo().getName() + "\n" + list.get(position).getInput_time());
+        viewHolder.gs.setText(list.get(position).getInfo().getC_name()
+                + "  " + list.get(position).getInfo().getName()
+                + "\n" + list.get(position).getInput_time());
         Glide.with(context)
                 .load(list.get(position).getInfo().getThumb())
                 .placeholder(R.drawable.contact_image_defaul_male)

@@ -183,7 +183,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                 setBackgroundAlpha(1f);
             }
         });
-        listString = Arrays.asList("全部", "分享", "充值", "拉新", "发布", "每日登录", "查看通讯录", "置顶");
+        listString = Arrays.asList("全部", "分享", "充值", "拉新", "发布", "每日登录", "查看通讯录", "兑换卡片");
         mGVAdapter = new Integral_Detial_GV_Adapter(this, listString, positionItem);
         mGridView.setAdapter(mGVAdapter);
     }

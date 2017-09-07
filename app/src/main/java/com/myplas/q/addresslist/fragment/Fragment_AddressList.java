@@ -147,7 +147,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 page = 1;
                 hasMoerData = true;
-                if (list != null) {
+                if (list != null && txl_listview_adapter != null) {
                     txl_listview_adapter.setList(list);
                     txl_listview_adapter.notifyDataSetChanged();
                 }
@@ -182,7 +182,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 page = 1;
                 hasMoerData = true;
-                if (list != null) {
+                if (list != null && txl_listview_adapter != null) {
                     txl_listview_adapter.setList(list);
                     txl_listview_adapter.notifyDataSetChanged();
                 }

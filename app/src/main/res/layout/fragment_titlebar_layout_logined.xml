@@ -24,14 +24,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
                 android:src="@drawable/btn_news"/>
 
             <com.myplas.q.common.view.DragView
                 android:id="@+id/wd_logined_news_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_gravity="right">
 
             </com.myplas.q.common.view.DragView>

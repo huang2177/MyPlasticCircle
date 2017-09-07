@@ -134,7 +134,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:drawableLeft="@drawable/icon_related_recommendations"
-                    android:text=" 相关搜索"
+                    android:text=" 相关推荐"
                     android:textColor="@color/color_balank"
                     android:textSize="16.0sp"
                     android:textStyle="bold"/>

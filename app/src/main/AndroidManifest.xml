@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <!--VISIBILITY_HIDDEN表示不显示任何通知栏提示的权限-->
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
@@ -54,15 +55,13 @@
             android:windowSoftInputMode="stateHidden|adjustPan"></activity>
         <activity
             android:name="com.myplas.q.guide.activity.GuideActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppBlankTheme"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.myplas.q.guide.activity.BaseActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppBlankTheme"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.myplas.q.supdem.activity.SupDem_Detail_Activity"
-            android:configChanges="keyboard|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity
@@ -80,6 +79,7 @@
         <activity
             android:name="com.myplas.q.headlines.activity.HeadLinesDetailActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.myplas.q.headlines.activity.MySelfActivity"
@@ -148,6 +148,7 @@
         <activity
             android:name="com.myplas.q.myinfo.fans.activity.PersonInfoActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".guide.activity.BigImageViewActivity"
@@ -176,7 +177,6 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.myplas.q.headlines.activity.Cate_Dialog_Activtiy"
-            android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/my_theme_animation"></activity>
         <activity

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.ActivityManager;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -42,6 +43,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_release_activity);
         initView();
         getSupplyDemandList("1", 1);
@@ -64,11 +67,11 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onRestart() {
         super.onRestart();
-        isfinish = sharedUtils.getBoolean(this, "isfinish");
-        if (isfinish) {
-            sharedUtils.setBooloean(this, "isfinish", false);
-            this.finish();
-        }
+//        isfinish = sharedUtils.getBoolean(this, "isfinish");
+//        if (isfinish) {
+//            sharedUtils.setBooloean(this, "isfinish", false);
+//            this.finish();
+//        }
     }
 
     @Override

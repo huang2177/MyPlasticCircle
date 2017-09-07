@@ -13,11 +13,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.api.API;
+import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.release.bean.SecondPurBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 import com.umeng.analytics.MobclickAgent;
@@ -184,27 +186,23 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
                 editText_jz_chj.setSelection(editText_jz_chj.getText().length());
                 editText_jz_jhd.setSelection(editText_jz_jhd.getText().length());
                 if (f_type == 2) {
-                    mode = "2";
+                    mode = "1";
                     changeTextColor_Speed();
                 } else {
+                    mode = "2";
                     changeTextColor_Right();
-                    mode = "1";
                 }
                 title.setText(this.type.equals("2") ? ("发布供给") : ("发布求购"));
             }
             if (type == 2) {
                 TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
                 if (new JSONObject(object.toString()).getString("err").equals("0")) {
-                    //发送广播关闭activity
-                    Intent intent = new Intent("com.broadcast.test");
-                    intent.putExtra("data", "1");
-                    intent.putExtra("what", "1");
-                    sendBroadcast(intent);
-                    sharedUtils.setBooloean(this, "isfinish", true);
+                    //关闭activity
+                    MainActivity.goToSupDem();
+                    ActivityManager.finishActivity(ReleaseActivity.class);
 
                     //跳转到供求详情
                     Intent intent1 = new Intent(this, SupDem_Detail_Activity.class);
-
                     String id_ = new JSONObject(object.toString()).getString("id");
                     String user_id = sharedUtils.getData(this, "userid");
 

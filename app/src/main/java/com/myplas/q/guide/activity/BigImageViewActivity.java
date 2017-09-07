@@ -2,10 +2,12 @@ package com.myplas.q.guide.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.myplas.q.R;
+import com.myplas.q.common.utils.StatusUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import uk.co.senab.photoview.PhotoView;
@@ -21,6 +23,9 @@ public class BigImageViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(true, this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         setContentView(R.layout.layout_bigimage_activity);
         PhotoView imageView= (PhotoView) findViewById(R.id.photoview);
         Glide.with(this)
