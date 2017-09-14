@@ -165,7 +165,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     dates = getDates(list_date_supdem);
                     if (dates != null) {
                         if (num != -1) {
-                            viewHolder.isPay = true;
+                            viewHolder.button.setClickable(false);
+                            //viewHolder.button.setBackgroundResource(R.drawable.btn_cacle);
                             String id = list.get(datePosition).getId();
                             String p_id = list_msg.get(num).getId();
                             exchangeSupOrDem(id, dates, p_id, 1);
@@ -180,7 +181,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 if (type.equals("2")) { //通讯录
                     dates = getDates(list_date_conact);
                     if (dates != null) {
-                        viewHolder.isPay = true;
+                        viewHolder.button.setClickable(false);
+                        //viewHolder.button.setBackgroundResource(R.drawable.btn_cacle);
                         String id = list.get(datePosition).getId();
                         exchangeSupOrDem(id, dates, "", 0);
                     } else {
@@ -190,6 +192,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 if (type.equals("3")) {
                     int num = GetNumUtil.getNum(viewHolder.num_all.getText().toString());
                     if (num != 0) {
+                        viewHolder.button.setClickable(false);
+                        //viewHolder.button.setBackgroundResource(R.drawable.btn_cacle);
                         String goods_id = list.get(classifyPosition).getId();
                         newExchangeToutiao(goods_id, plasticNum, cate_ids, month_num, 3);
                     } else {
@@ -249,9 +253,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 context.startActivity(new Intent(context, IntegralPayActivtity.class));
                 break;
             case 2:
-                if (utils != null) {
+                if (utils != null)
                     utils.dismiss();
-                }
                 break;
         }
     }
@@ -323,8 +326,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-------", object.toString());
             if (type == 0) {//通讯录
+                setIsPay();
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     list_date_conact.clear();
@@ -348,6 +351,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 }
             }
             if (type == 1) {//供求
+                setIsPay();
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     list_date_supdem.clear();
@@ -412,9 +416,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
 
     @Override
     public void failCallBack(int type) {
-        if (type == 3) {
+        if (type == 3)
             setIsPay();
-        }
     }
 
     //设置支付按钮可点击
@@ -422,8 +425,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         if (utils != null) {
             utils.setIsPay(false);
         }
-        mHolderMap.get(payPosition).isPay = false;
+        mHolderMap.get(payPosition).button.setClickable(true);
+        //mHolderMap.get(payPosition).button.setBackgroundResource(R.drawable.btn_xq_chujian);
     }
+
 
     //日期选择后显示在列表上
     public void dateSelected() {

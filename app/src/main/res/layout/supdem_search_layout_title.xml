@@ -71,7 +71,7 @@
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="40dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/toplines_shape_text"
             android:gravity="center"

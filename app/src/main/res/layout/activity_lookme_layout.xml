@@ -13,18 +13,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.TabLayout
+        <com.androidkun.xtablayout.XTabLayout
             android:id="@+id/look_me_tablayout"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/color_red"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/color_balank"
-            app:tabTextAppearance="@style/TabLayoutTextStyle"
-            app:tabTextColor="@color/color_gray">
-        </android.support.design.widget.TabLayout>
+            app:xTabIndicatorColor="@color/color_red"
+            app:xTabMode="scrollable"
+            app:xTabTextSize="16.0sp"
+            app:xTabSelectedTextColor="@color/color_balank"
+            app:xTabTextColor="@color/color_gray"
+            app:xTabIndicatorHeight="3dp"
+            app:xTabIndicatorWidth="33dp"
+            app:xTabTextSelectedBold="true">
+        </com.androidkun.xtablayout.XTabLayout>
 
         <View
             android:layout_width="match_parent"

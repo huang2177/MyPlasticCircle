@@ -50,10 +50,10 @@ public class DialogShowUtils {
         button_ok = (Button) view.findViewById(R.id.btn_ok);
         if (type == 2) {
             textView_title.setText("塑料圈通讯录");
-            button_cancle.setVisibility(View.INVISIBLE);
+            button_cancle.setVisibility(View.GONE);
         } else if (type == 5) {
             textView_title.setText("支付成功");
-            button_cancle.setVisibility(View.INVISIBLE);
+            button_cancle.setVisibility(View.GONE);
         } else if (type == 6) {
             textView_title.setText("支付失败");
         } else if (type == 7) {
@@ -102,8 +102,9 @@ public class DialogShowUtils {
         Window window = normalDialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.CENTER;
-        lp.width = (int) ((width * 2) / 3.2);//宽高可设置具体大小
+        lp.width = (int) ((width * 2) / 3.1);//宽高可设置具体大小
         lp.height = (int) (height / 4.9);
+//        lp.height=lp.WRAP_CONTENT;
         normalDialog.getWindow().setAttributes(lp);
     }
 

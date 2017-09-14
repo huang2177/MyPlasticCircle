@@ -121,6 +121,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
 
         webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
         webSettings.setDefaultTextEncodingName("UTF-8");
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webView.setWebViewClient(new WebViewClient());
@@ -144,17 +145,26 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 clickId = sucribleDetailBean.getInfo().getHot().get(position).getId();
-                isPaidSubscription(clickId);
+                boolean isFree = sucribleDetailBean.getInfo().getHot().get(position).getIs_free().equals("1");
+                if (isFree) {
+                    getNetData(clickId);
+                } else {
+                    isPaidSubscription(clickId);
+                }
             }
         });
         mListviewAbout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 clickId = sucribleDetailBean.getInfo().getSubscribe().get(position).getId();
-                isPaidSubscription(clickId);
+                boolean isFree = sucribleDetailBean.getInfo().getSubscribe().get(position).getIs_free().equals("1");
+                if (isFree) {
+                    getNetData(clickId);
+                } else {
+                    isPaidSubscription(clickId);
+                }
             }
         });
-
         firstInto();
         getNetData(getIntent().getStringExtra("id"));
     }
@@ -201,7 +211,6 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 }
             }
         } catch (Exception e) {
-            Log.e("----", e.toString());
         }
     }
 

@@ -79,13 +79,11 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.fb_qg_img:
                 Intent intent = new Intent(this, ReleaseSupDemActivity.class);
-                intent.putExtra("qg_gj", "发布求购");
                 intent.putExtra("type", "1");
                 startActivity(intent);
                 break;
             case R.id.fb_gj_img:
                 Intent intent1 = new Intent(this, ReleaseSupDemActivity.class);
-                intent1.putExtra("qg_gj", "发布供给");
                 intent1.putExtra("type", "2");
                 startActivity(intent1);
                 break;

@@ -64,9 +64,9 @@ public class MyFollowAdapter extends BaseAdapter {
         try {
             Glide.with(context).load(list.get(position).getFocused_id().getThumb()).
                     placeholder(R.drawable.contact_image_defaul_male).into(viewHolder.tx);
-            viewHolder.gs.setText("  "+list.get(position).getFocused_id().getC_name());
-            viewHolder.dh.setText("  "+list.get(position).getFocused_id().getMobile());
-            viewHolder.mz.setText("  "+list.get(position).getFocused_id().getName());
+            viewHolder.gs.setText(" " + list.get(position).getFocused_id().getC_name());
+            viewHolder.dh.setText(" " + list.get(position).getFocused_id().getMobile());
+            viewHolder.mz.setText(" " + list.get(position).getFocused_id().getName());
             viewHolder.gj.setText("发布供给："+list.get(position).getFocused_id().getSale()+"条    ");
             viewHolder.qg.setText("发布求购："+list.get(position).getFocused_id().getBuy()+"条");
             if(list.get(position).getFocused_id().getIs_pass().equals("0")){

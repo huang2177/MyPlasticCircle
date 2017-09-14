@@ -18,6 +18,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.MyFollowBean;
@@ -39,22 +40,18 @@ import java.util.Map;
  * 时间：2017/3/20 22:15
  */
 public class MyFansFollowActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface {
-
     private ListView listView;
     private Dialog normalDialog;
     private TextView textView_title;
-    private NoResultLayout mNoResultLayout;
     private MyFollowAdapter myFollowAdapter;
     private MyFansFollowAdapter wdgz_adapter;
-    private SharedUtils sharedUtils;
 
+    private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
     private String type = "1", user_id, id_;
 
-    private List<MyFansBean.DataBean> list;
-    private List<MyFollowBean.DataBean> list1;
-    private List<MyFansBean.DataBean> list_more;
-    private List<MyFollowBean.DataBean> list1_more;
+    private List<MyFansBean.DataBean> mListFans;
+    private List<MyFollowBean.DataBean> mListFloow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,25 +63,21 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
         type = getIntent().getStringExtra("type");
         sharedUtils = SharedUtils.getSharedUtils();
         listView = F(R.id.wdgz_listview);
-        mNoResultLayout = F(R.id.my_foolow_noresultlayout);
 
-        list1_more = new ArrayList<>();
-        list_more = new ArrayList<>();
+        mListFans = new ArrayList<>();
+        mListFloow = new ArrayList<>();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    Intent intent = new Intent(MyFansFollowActivity.this, PersonInfoActivity.class);
                     if (type.equals("1")) {
-                        user_id = ((list_more.size() == 0) ? (list) : (list_more)).get(position - 1).getUser_id().getUser_id();
-                        id_ = ((list_more.size() == 0) ? (list) : (list_more)).get(position - 1).getFocused_id();
-                        intent.putExtra("id", id_);
+                        user_id = mListFans.get(position).getUser_id().getUser_id();
+                        id_ = mListFans.get(position).getFocused_id();
                     }
                     if (type.equals("2")) {
-                        user_id = ((list1_more.size() == 0) ? (list1) : (list1_more)).get(position - 1).getFocused_id().getUser_id();
-                        id_ = ((list1_more.size() == 0) ? (list1) : (list1_more)).get(position - 1).getFocused_id().getUser_id();
-                        intent.putExtra("id", id_);
+                        user_id = mListFloow.get(position).getFocused_id().getUser_id();
+                        id_ = mListFloow.get(position).getFocused_id().getUser_id();
                     }
                     //判断是否消耗积分
                     getPersonInfoData(user_id, "1", 5);
@@ -95,7 +88,7 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() > visibleItemCount) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() >= visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
                         getMyFans(String.valueOf(page));
@@ -145,53 +138,46 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                 MyFansBean wdgzBean = null;
                 if (err.equals("0")) {
                     wdgzBean = gson.fromJson(object.toString(), MyFansBean.class);
-                    list = wdgzBean.getData();
                     if (page == 1) {
-                        mNoResultLayout.setVisibility(false);
-                        listView.setVisibility(View.VISIBLE);
-
-                        wdgz_adapter = new MyFansFollowAdapter(this, list);
+                        wdgz_adapter = new MyFansFollowAdapter(this, wdgzBean.getData());
                         listView.setAdapter(wdgz_adapter);
-                        list_more.clear();
-                        list_more.addAll(list);
+                        mListFans.clear();
+                        mListFans.addAll(wdgzBean.getData());
                     } else {
-                        if (list != null && list.size() != 0) {
-                            list_more.addAll(list);
-                            wdgz_adapter.setList(list_more);
-                            wdgz_adapter.notifyDataSetChanged();
-                        }
+                        mListFans.addAll(wdgzBean.getData());
+                        wdgz_adapter.setList(mListFans);
+                        wdgz_adapter.notifyDataSetChanged();
                     }
                 } else {
                     if (page == 1) {
-                        listView.setVisibility(View.GONE);
-                        String msg = new JSONObject(object.toString()).getString("msg");
-                        mNoResultLayout.setNoResultData(R.drawable.icon_null, msg, true);
+                        EmptyView emptyView = new EmptyView(this);
+                        emptyView.mustCallInitWay(listView);
+                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        emptyView.setMyManager(R.drawable.icon_null);
+                        listView.setEmptyView(emptyView);
                     }
                 }
             } else if (type == 2) {
                 MyFollowBean wdgzBean = null;
                 if (err.equals("0")) {
                     wdgzBean = gson.fromJson(object.toString(), MyFollowBean.class);
-                    list1 = wdgzBean.getData();
                     if (page == 1) {
-                        mNoResultLayout.setVisibility(false);
-                        listView.setVisibility(View.VISIBLE);
-                        myFollowAdapter = new MyFollowAdapter(this, list1);
+                        myFollowAdapter = new MyFollowAdapter(this, wdgzBean.getData());
                         listView.setAdapter(myFollowAdapter);
-                        list1_more.clear();
-                        list1_more.addAll(list1);
+                        mListFloow.clear();
+                        mListFloow.addAll(wdgzBean.getData());
                     } else {
-                        if (list1 != null && list1.size() != 0) {
-                            list1_more.addAll(list1);
-                            myFollowAdapter.setList(list1_more);
-                            myFollowAdapter.notifyDataSetChanged();
-                        }
+                        mListFloow.addAll(wdgzBean.getData());
+                        myFollowAdapter.setList(mListFloow);
+                        myFollowAdapter.notifyDataSetChanged();
                     }
                 } else {
                     if (page == 1) {
-                        listView.setVisibility(View.GONE);
-                        String msg = new JSONObject(object.toString()).getString("msg");
-                        mNoResultLayout.setNoResultData(R.drawable.icon_null, msg, true);
+                        EmptyView emptyView = new EmptyView(this);
+                        emptyView.mustCallInitWay(listView);
+                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        emptyView.setMyManager(R.drawable.icon_null);
+                        listView.setEmptyView(emptyView);
                     }
                 }
             }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/fx_linearlayout"
@@ -10,42 +9,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="8dp">
-
-            <TextView
-                android:id="@+id/fx_tt_title_text2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/color_title_main"
-                android:textSize="16.0sp"/>
-        </LinearLayout>
-
         <TextView
-            android:id="@+id/fx_tt_title_content"
+            android:id="@+id/fx_tt_title_text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:fontFamily="sans-serif-medium"
             android:maxLines="2"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="14.0sp"
-            android:visibility="gone"/>
+            android:padding="10dp"
+            android:textColor="@color/color_title_main"
+            android:textSize="16.0sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
@@ -59,10 +37,12 @@
                 android:textSize="14.0sp"/>
 
             <ImageView
+                android:id="@+id/fx_tt_img_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="0.6dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/icon_time1"/>
 
             <TextView
@@ -77,15 +57,16 @@
                 android:textSize="14.0sp"/>
 
             <ImageView
+                android:id="@+id/fx_tt_img_see"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="0.5dp"
                 android:src="@drawable/icon_see1"/>
 
             <TextView
                 android:id="@+id/fx_tt_title_num"
-                android:layout_width="45dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="3dp"
@@ -94,12 +75,20 @@
                 android:textSize="14.0sp"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/color_gray3"></View>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/color_gray3"></View>
-</LinearLayout>
+    <ImageView
+        android:id="@+id/headline_img_free"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/icon_free"
+        android:visibility="gone"/>
+</FrameLayout>

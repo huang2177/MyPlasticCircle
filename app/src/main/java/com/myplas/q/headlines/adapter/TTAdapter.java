@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myplas.q.R;
@@ -26,13 +27,15 @@ import java.util.List;
 public class TTAdapter extends BaseAdapter {
     Context context;
     List<SubcribleBean.DataBean> list;
-    public TTAdapter(Context context, List<SubcribleBean.DataBean> list){
-        this.context=context;
-        this.list=list;
+
+    public TTAdapter(Context context, List<SubcribleBean.DataBean> list) {
+        this.context = context;
+        this.list = list;
     }
+
     @Override
     public int getCount() {
-        if (list!=null)
+        if (list != null)
             return list.size();
         return 0;
     }
@@ -46,28 +49,29 @@ public class TTAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder = null;
-        if(convertView==null){
-            viewHolder=new viewHolder();
-            convertView= LayoutInflater.from(context).inflate(R.layout.layout_find_topline_listview_item,parent,false);
-            viewHolder.time= (TextView) convertView.findViewById(R.id.fx_tt_title_shj);
-            viewHolder.num= (TextView) convertView.findViewById(R.id.fx_tt_title_num);
+        if (convertView == null) {
+            viewHolder = new viewHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.layout_find_topline_listview_item, parent, false);
+            viewHolder.time = (TextView) convertView.findViewById(R.id.fx_tt_title_shj);
+            viewHolder.num = (TextView) convertView.findViewById(R.id.fx_tt_title_num);
             viewHolder.title2 = (TextView) convertView.findViewById(R.id.fx_tt_title_text2);
-            viewHolder.content= (TextView) convertView.findViewById(R.id.fx_tt_title_content);
-            viewHolder.author= (TextView) convertView.findViewById(R.id.fx_tt_title_author);
+            viewHolder.author = (TextView) convertView.findViewById(R.id.fx_tt_title_author);
+            viewHolder.mImgFree = (ImageView) convertView.findViewById(R.id.headline_img_free);
             convertView.setTag(viewHolder);
-        }else {
-            viewHolder=(viewHolder)convertView.getTag();
+        } else {
+            viewHolder = (viewHolder) convertView.getTag();
         }
-//        AssetManager assets = context.getAssets();
-//        Typeface fromAsset = Typeface.createFromAsset(assets, "fonts/hkzh.TTF");
-//        viewHolder.title2.setTypeface(fromAsset);
         viewHolder.num.setText(list.get(position).getPv());
-        viewHolder.title2.setText(replaceContent(list.get(position).getTitle()));
         viewHolder.time.setText(list.get(position).getInput_time());
         viewHolder.author.setText(replaceContent(list.get(position).getType()));
+        viewHolder.title2.setText(replaceContent(list.get(position).getTitle()));
+        viewHolder.mImgFree.setVisibility(list.get(position).getIs_free().equals("1")
+                ? View.VISIBLE
+                : View.GONE);
         return convertView;
     }
 
@@ -75,8 +79,9 @@ public class TTAdapter extends BaseAdapter {
         this.list = list;
     }
 
-    class viewHolder{
-        TextView title2, content, time, num, author;
+    class viewHolder {
+        ImageView mImgFree;
+        TextView title2, time, num, author;
     }
 
     public Spanned replace(String s) {

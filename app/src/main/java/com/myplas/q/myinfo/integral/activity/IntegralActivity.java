@@ -1,11 +1,9 @@
 package com.myplas.q.myinfo.integral.activity;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,9 +13,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.FullyLinearLayoutManager;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.beans.IntegralBean;
 import com.myplas.q.myinfo.integral.adapter.IntegralAdapter;
 import com.umeng.analytics.MobclickAgent;
@@ -61,7 +57,6 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setNestedScrollingEnabled(false);
-
 
         intergral_rule.setOnClickListener(this);
         intergral_chz.setOnClickListener(this);

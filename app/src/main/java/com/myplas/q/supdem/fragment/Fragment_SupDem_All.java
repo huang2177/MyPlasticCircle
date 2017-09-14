@@ -111,7 +111,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         gq_listview.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && gq_listview.getCount() > visibleItemCount) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && gq_listview.getCount() >= visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         itemBean.page++;
                         if (itemBean.hasMoreData) {
@@ -455,12 +455,9 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     public void showRefreshPopou(String text) {
         if (isRefresh) {
             isRefresh = false;
-            if (TextUtils.isNullOrEmpty(text)) {
-                showRefreshPopouinterface.showRefreshPopou(text);
-            } else {
-                TextUtils.Toast(getActivity(), "已是最新供求信息！");
-                //TextUtils.topTSnackbar(time, "已是最新供求信息！");
-            }
+            showRefreshPopouinterface.showRefreshPopou((TextUtils.isNullOrEmpty(text))
+                    ? (text)
+                    : "已是最新供求信息！");
         }
     }
 

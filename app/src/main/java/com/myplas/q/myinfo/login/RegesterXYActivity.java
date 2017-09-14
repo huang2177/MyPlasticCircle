@@ -30,13 +30,14 @@ public class RegesterXYActivity extends BaseActivity {
         webView = (WebView) findViewById(R.id.xy_web_re);
         WebSettings webSettings = webView.getSettings();
 
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setUseWideViewPort(true);//设置此属性，可任意比例缩放
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setBuiltInZoomControls(true);
         webSettings.setSupportZoom(true);
+        webSettings.setUseWideViewPort(true);//设置此属性，可任意比例缩放
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
         webSettings.setBlockNetworkImage(false);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setLoadWithOverviewMode(true);
 
         String url = "http://q.myplas.com/#/protocol2";
         webView.loadUrl(url);

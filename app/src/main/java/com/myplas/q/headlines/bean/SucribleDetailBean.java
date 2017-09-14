@@ -13,6 +13,7 @@ public class SucribleDetailBean {
 
     /**
      * err : 0
+     * info : {"id":"44959","title":"哈哈哈","cate_id":"9","input_time":"2017-09-11","source_from":"本站原创","author":"中晨","pv":601,"true_pv":1,"type":"pp","lastOne":"44954","nextOne":"","content":"的点点滴滴","cate_name":"企业动态","subscribe":[{"id":"44962","title":"早盘预测：听说，今天塑料市场能反弹","input_time":"09:31","pv":"559","physical_label":"高压重包","is_free":0},{"id":"44958","title":"呃呃呃","input_time":"2017-09-11","pv":"548","physical_label":"低压注塑","is_free":0},{"id":"8353","title":"【早盘预测】涨？跌？塑料市场走势任性","input_time":"2016-11-18","pv":"7127","physical":"","is_free":0},{"id":"8340","title":"PP进口市场膜料价格即时报盘（20161117）","input_time":"2016-11-17","pv":"6076","physical":"","is_free":0},{"id":"1733","title":"关于2016年国庆节放假期间调整各品种最低交易保证金标准和涨跌停板幅度及夜盘交易时间的通知","input_time":"2016-09-30","pv":"10750","physical":"","is_free":0}],"hot":[{"id":"44969","title":"中晨塑说：看了那么多环保消息，塑料人，你该看基本面了","pv":"558","free":"0","physical_label":"低压拉丝","time":"09:57","is_free":0},{"id":"44966","title":"内蒙君正化工PVC报价平稳","pv":"554","free":"1","physical_label":"均聚拉丝","time":"09:56","is_free":1},{"id":"44965","title":"齐鲁化工城PVC塑料市场早盘报价小幅下调","pv":"554","free":"0","physical_label":"低压拉丝","time":"09:56","is_free":0},{"id":"44964","title":"中晨塑说：刘官庄那些关停的塑料厂，现在怎么样了？","pv":"500","free":"0","physical_label":"管材","time":"09:32","is_free":0},{"id":"44963","title":"9月12日财经要闻","pv":"508","free":"0","physical_label":"管材","time":"09:31","is_free":0}]}
      */
 
     private int err;
@@ -36,20 +37,21 @@ public class SucribleDetailBean {
 
     public static class InfoBean {
         /**
-         * id : 44461
-         * title : 竞拍分析：本周神华PE竞拍详情分析
-         * cate_id : 76
-         * input_time : 2017-07-21
+         * id : 44959
+         * title : 哈哈哈
+         * cate_id : 9
+         * input_time : 2017-09-11
          * source_from : 本站原创
          * author : 中晨
-         * pv : 1699
-         * true_pv : 195
-         * type : pe
-         * lastOne : 44455
-         * nextOne : 44917
-         * cate_name : 中晨塑说
-         * subscribe : [{"id":"44910","title":"噜啦啦","input_time":"09:56","pv":"544","physical_label":"低压拉丝"},{"id":"44896","title":"装置动态","input_time":"2017-08-31","pv":"563","physical_label":"茂金属"},{"id":"44885","title":"早盘预测：油价连续两日暴跌，塑料市场能否延续强势","input_time":"2017-08-30","pv":"528","physical":""},{"id":"8340","title":"PP进口市场膜料价格即时报盘（20161117）","input_time":"2016-11-17","pv":"6075","physical":""},{"id":"1733","title":"关于2016年国庆节放假期间调整各品种最低交易保证金标准和涨跌停板幅度及夜盘交易时间的通知","input_time":"2016-09-30","pv":"10744","physical":""}]
-         * hot : [{"id":"44918","title":"独家解读","pv":"505","physical_label":"高压吹膜","time":"11:28"},{"id":"44917","title":"中晨塑说","pv":"538","physical_label":"高压涂覆","time":"11:27"},{"id":"44916","title":"666","pv":"520","physical_label":"茂金属","time":"11:19"},{"id":"44914","title":"哈哈哈","pv":"566","physical_label":"高压涂覆","time":"11:15"},{"id":"44912","title":"企业动态","pv":"564","physical_label":"共聚注塑","time":"11:14"}]
+         * pv : 601
+         * true_pv : 1
+         * type : pp
+         * lastOne : 44954
+         * nextOne :
+         * content : 的点点滴滴
+         * cate_name : 企业动态
+         * subscribe : [{"id":"44962","title":"早盘预测：听说，今天塑料市场能反弹","input_time":"09:31","pv":"559","physical_label":"高压重包","is_free":0},{"id":"44958","title":"呃呃呃","input_time":"2017-09-11","pv":"548","physical_label":"低压注塑","is_free":0},{"id":"8353","title":"【早盘预测】涨？跌？塑料市场走势任性","input_time":"2016-11-18","pv":"7127","physical":"","is_free":0},{"id":"8340","title":"PP进口市场膜料价格即时报盘（20161117）","input_time":"2016-11-17","pv":"6076","physical":"","is_free":0},{"id":"1733","title":"关于2016年国庆节放假期间调整各品种最低交易保证金标准和涨跌停板幅度及夜盘交易时间的通知","input_time":"2016-09-30","pv":"10750","physical":"","is_free":0}]
+         * hot : [{"id":"44969","title":"中晨塑说：看了那么多环保消息，塑料人，你该看基本面了","pv":"558","free":"0","physical_label":"低压拉丝","time":"09:57","is_free":0},{"id":"44966","title":"内蒙君正化工PVC报价平稳","pv":"554","free":"1","physical_label":"均聚拉丝","time":"09:56","is_free":1},{"id":"44965","title":"齐鲁化工城PVC塑料市场早盘报价小幅下调","pv":"554","free":"0","physical_label":"低压拉丝","time":"09:56","is_free":0},{"id":"44964","title":"中晨塑说：刘官庄那些关停的塑料厂，现在怎么样了？","pv":"500","free":"0","physical_label":"管材","time":"09:32","is_free":0},{"id":"44963","title":"9月12日财经要闻","pv":"508","free":"0","physical_label":"管材","time":"09:31","is_free":0}]
          */
 
         private String id;
@@ -190,11 +192,12 @@ public class SucribleDetailBean {
 
         public static class SubscribeBean {
             /**
-             * id : 44910
-             * title : 噜啦啦
-             * input_time : 09:56
-             * pv : 544
-             * physical_label : 低压拉丝
+             * id : 44962
+             * title : 早盘预测：听说，今天塑料市场能反弹
+             * input_time : 09:31
+             * pv : 559
+             * physical_label : 高压重包
+             * is_free : 0
              * physical :
              */
 
@@ -203,6 +206,7 @@ public class SucribleDetailBean {
             private String input_time;
             private String pv;
             private String physical_label;
+            private String is_free;
             private String physical;
 
             public String getId() {
@@ -245,6 +249,14 @@ public class SucribleDetailBean {
                 this.physical_label = physical_label;
             }
 
+            public String getIs_free() {
+                return is_free;
+            }
+
+            public void setIs_free(String is_free) {
+                this.is_free = is_free;
+            }
+
             public String getPhysical() {
                 return physical;
             }
@@ -256,18 +268,22 @@ public class SucribleDetailBean {
 
         public static class HotBean {
             /**
-             * id : 44918
-             * title : 独家解读
-             * pv : 505
-             * physical_label : 高压吹膜
-             * time : 11:28
+             * id : 44969
+             * title : 中晨塑说：看了那么多环保消息，塑料人，你该看基本面了
+             * pv : 558
+             * free : 0
+             * physical_label : 低压拉丝
+             * time : 09:57
+             * is_free : 0
              */
 
             private String id;
             private String title;
             private String pv;
+            private String free;
             private String physical_label;
             private String time;
+            private String is_free;
 
             public String getId() {
                 return id;
@@ -293,6 +309,14 @@ public class SucribleDetailBean {
                 this.pv = pv;
             }
 
+            public String getFree() {
+                return free;
+            }
+
+            public void setFree(String free) {
+                this.free = free;
+            }
+
             public String getPhysical_label() {
                 return physical_label;
             }
@@ -307,6 +331,14 @@ public class SucribleDetailBean {
 
             public void setTime(String time) {
                 this.time = time;
+            }
+
+            public String getIs_free() {
+                return is_free;
+            }
+
+            public void setIs_free(String is_free) {
+                this.is_free = is_free;
             }
         }
     }

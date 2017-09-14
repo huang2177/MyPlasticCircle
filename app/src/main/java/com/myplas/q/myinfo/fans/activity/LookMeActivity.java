@@ -5,12 +5,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
@@ -46,19 +48,21 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
     private String userid;
     private boolean hasMoreData;
     private StringBuffer promit1, promit2;
+    private Map<Integer, String> mStringMap1;
+    private Map<Integer, String> mStringMap2;
     private int page, visibleItemCount, position;
 
     private ViewPager mViewPager;
-    private TabLayout mTabLayout;
+    private XTabLayout mTabLayout;
     private LookMeAdapter adapter;
+    private TextView textView_num;
     private PinnedHeaderListView listView;
     private LookViewPagerAdapter mAdapter;
     private NoResultLayout mNoResultLayout1;
-    private TextView textView_num;
 
     private List<NoResultLayout> mView;
     private List<PinnedHeaderListView> mListViews;
-    private List<LookMeBean.DataBean.HistoryBean> list;
+    private List<LookMeBean.DataBean.HistoryBean> mList1, mList2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +72,12 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
         setTitle("谁看过我");
 
         page = 1;
-        mode = "0";
         hasMoreData = true;
-        list = new ArrayList<>();
         mView = new ArrayList<>();
+        mList1 = new ArrayList<>();
+        mList2 = new ArrayList<>();
+        mStringMap1 = new HashMap<>();
+        mStringMap2 = new HashMap<>();
         mListViews = new ArrayList<>();
         promit2 = new StringBuffer("今日看我：");
         promit1 = new StringBuffer("看过我的人的总数：");
@@ -90,8 +96,11 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
 
             @Override
             public void onPageSelected(int position) {
+                mViewPager.setCurrentItem(position);
                 LookMeActivity.this.position = position;
-                chageColor(position);
+                promit2 = new StringBuffer(position == 0 ? "今日看我：" : "今日查看：");
+                promit1 = new StringBuffer(position == 0 ? "看过我的人的总数：" : "我看过的人的总数：");
+                showInfo(mStringMap1.get(position), mStringMap2.get(position));
             }
 
             @Override
@@ -106,7 +115,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE &&
-                        mListViews.get(position).getCount() > visibleItemCount) {
+                        mListViews.get(position).getCount() >= visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         if (hasMoreData) {
                             page++;
@@ -131,31 +140,27 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
         titles.add("我看过谁");
         for (int i = 0; i < titles.size(); i++) {
             mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(i)));
-        }
-        for (int i = 0; i < 2; i++) {
+
             mNoResultLayout1 = new NoResultLayout(this);
             listView = (PinnedHeaderListView) mNoResultLayout1.findViewById(R.id.look_listview);
             listView.setPullRefreshEnable(false);
-            mView.add(mNoResultLayout1);
+
             mListViews.add(listView);
+            mView.add(mNoResultLayout1);
             setListener(i);
+
+            mode = i == 0 ? "0" : "1";
+            getViewHistoryDetails("1", i);
         }
         mAdapter = new LookViewPagerAdapter(mView, titles);
         mViewPager.setAdapter(mAdapter);
 
         mViewPager.setCurrentItem(0);
-        getViewHistoryDetails("1", 1);
 
         //将选项卡和viewpager关连起来
         mTabLayout.setupWithViewPager(mViewPager);
         //给TabLayout设置适配器
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
-        mTabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                setIndicator(mTabLayout, 30, 30);
-            }
-        });
     }
 
     public void getViewHistoryDetails(String page, int type) {
@@ -176,33 +181,14 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
     }
 
 
-    public void chageColor(int id) {
-        switch (id) {
-            case 0:
-                page = 1;
-                mode = "0";
-                hasMoreData = true;
-                getViewHistoryDetails("1", 1);
-                mViewPager.setCurrentItem(0);
-                promit2 = new StringBuffer("今日看我：");
-                promit1 = new StringBuffer("看过我的人的总数：");
-                break;
-            case 1:
-                page = 1;
-                mode = "1";
-                hasMoreData = true;
-                getViewHistoryDetails("1", 1);
-                mViewPager.setCurrentItem(1);
-                promit2 = new StringBuffer("今日查看：");
-                promit1 = new StringBuffer("我看过的人的总数：");
-                break;
-        }
-    }
-
     //listview的item点击事件
     @Override
-    public void onItemClick(int section, int position) {
-        userid = list.get(section).getPerson().get(position).getUserid();
+    public void onItemClick(int section, int p) {
+        userid = (position == 0 ? mList1 : mList2)
+                .get(section)
+                .getPerson()
+                .get(p)
+                .getUserid();
         getPersonInfoData(userid, "1", 5);
     }
 
@@ -210,8 +196,10 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
+            int position = type == 0 ? 0 : 1;
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1) {
+            List<LookMeBean.DataBean.HistoryBean> list = type == 0 ? mList1 : mList2;
+            if (type == position) {
                 LookMeBean lookMeBean = null;
                 if (err.equals("0")) {
                     mView.get(position).setVisibility(false);
@@ -220,9 +208,11 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
                         adapter = new LookMeAdapter(this, lookMeBean.getData().getHistory());
                         mListViews.get(position).setAdapter(adapter);
                         adapter.setOnItemClickListener(this);
-                        showInfo(lookMeBean.getData().getTotals(), lookMeBean.getData().getToday());
                         list.clear();
                         list.addAll(lookMeBean.getData().getHistory());
+                        mStringMap2.put(type, lookMeBean.getData().getToday());
+                        mStringMap1.put(type, lookMeBean.getData().getTotals());
+                        showInfo(mStringMap1.get(0), mStringMap2.get(0));
                     } else {
                         list.addAll(lookMeBean.getData().getHistory());
                         adapter.setList(list);
@@ -230,15 +220,18 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
                     }
                 } else if (err.equals("2")) {
                     if (page == 1) {
-                        showInfo("0", "0");
                         hasMoreData = false;
+                        mStringMap2.put(type, "0");
+                        mStringMap1.put(type, "0");
                         adapter = new LookMeAdapter(this, null);
                         mListViews.get(position).setAdapter(adapter);
+                        showInfo(mStringMap1.get(0), mStringMap2.get(0));
                         String msg = new JSONObject(object.toString()).getString("msg");
                         mView.get(position).setNoResultData(R.drawable.icon_null, msg, true);
                     }
                 }
             }
+
             //是否消耗积分
             if (type == 5 && err.equals("99")) {
                 String content = new JSONObject(object.toString()).getString("msg");
@@ -290,34 +283,6 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));
                 break;
-        }
-    }
-
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
         }
     }
 

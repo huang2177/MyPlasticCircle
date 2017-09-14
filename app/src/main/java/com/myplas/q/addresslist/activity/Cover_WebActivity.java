@@ -1,7 +1,9 @@
 package com.myplas.q.addresslist.activity;
 
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -25,30 +27,33 @@ public class Cover_WebActivity extends BaseActivity {
     private WebView webView;
     private TextView textView;
     private static final String APP_CACAHE_DIRNAME = "/webcache";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cover_activity);
         goBack(findViewById(R.id.back));
-        SharedUtils.getSharedUtils().setBooloean(this,"isshow",false);
+        SharedUtils.getSharedUtils().setBooloean(this, "isshow", false);
 
-        textView= (TextView) findViewById(R.id.fb_titlebar);
-        webView= (WebView) findViewById(R.id.cover_webview);
         clearWebViewCache();
-        WebSettings webSettings =   webView .getSettings();
+        textView = (TextView) findViewById(R.id.fb_titlebar);
+        webView = (WebView) findViewById(R.id.cover_webview);
+        WebSettings webSettings = webView.getSettings();
 
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setUseWideViewPort(true);//设置此属性，可任意比例缩放
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setBuiltInZoomControls(true);
         webSettings.setSupportZoom(true);
+        webSettings.setUseWideViewPort(true);   //设置此属性，可任意比例缩放
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setLoadWithOverviewMode(true);
+
 
         webView.setWebViewClient(new WebViewClient());
-
-        textView.setText(getIntent().getStringExtra("title"));
         webView.loadUrl(getIntent().getStringExtra("url"));
+        textView.setText(getIntent().getStringExtra("title"));
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
@@ -57,7 +62,8 @@ public class Cover_WebActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-    public void clearWebViewCache(){
+
+    public void clearWebViewCache() {
         //清理Webview缓存数据库
         try {
             deleteDatabase("webview.db");
@@ -66,14 +72,14 @@ public class Cover_WebActivity extends BaseActivity {
             e.printStackTrace();
         }
         //WebView 缓存文件
-        File appCacheDir = new File(getFilesDir().getAbsolutePath()+APP_CACAHE_DIRNAME);
-        File webviewCacheDir = new File(getCacheDir().getAbsolutePath()+"/webviewCache");
+        File appCacheDir = new File(getFilesDir().getAbsolutePath() + APP_CACAHE_DIRNAME);
+        File webviewCacheDir = new File(getCacheDir().getAbsolutePath() + "/webviewCache");
         //删除webview 缓存目录
-        if(webviewCacheDir.exists()){
+        if (webviewCacheDir.exists()) {
             deleteFile(webviewCacheDir);
         }
         //删除webview 缓存 缓存目录
-        if(appCacheDir.exists()){
+        if (appCacheDir.exists()) {
             deleteFile(appCacheDir);
         }
     }
@@ -92,10 +98,12 @@ public class Cover_WebActivity extends BaseActivity {
         } else {
         }
     }
+
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

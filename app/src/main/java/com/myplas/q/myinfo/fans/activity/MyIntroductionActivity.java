@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -34,13 +36,14 @@ import java.util.Map;
  * 时间：2017/3/23 17:46
  */
 public class MyIntroductionActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface {
-    private XListView listView;
-    private List<MyIntroductionBean.DataBean> list;
-    private List<MyIntroductionBean.DataBean> list_more;
-    private MyIntroductionAdapter wdyjAdapter;
-    private SharedUtils sharedUtils;
     private String userid;
+    private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
+
+    private ListView listView;
+    private MyIntroductionAdapter wdyjAdapter;
+
+    private List<MyIntroductionBean.DataBean> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +52,14 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
         initTileBar();
         setTitle("我的引荐");
 
-        listView = (XListView) findViewById(R.id.wd_yj_listview);
-        list_more = new ArrayList<>();
-        listView.setPullLoadEnable(true);
-        listView.setPullRefreshEnable(false);
+        mList = new ArrayList<>();
+        listView = F(R.id.wd_yj_listview);
         sharedUtils = SharedUtils.getSharedUtils();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                userid = ((list_more.size() == 0) ? (list) : (list_more)).get(position - 1).getUser_id();
+                userid = mList.get(position).getUser_id();
                 getPersonInfoData(userid, "1", 5);
             }
         });
@@ -105,24 +107,22 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
             if (type == 1) {
                 if (err.equals("0")) {
                     MyIntroductionBean myIntroductionBean = gson.fromJson(object.toString(), MyIntroductionBean.class);
-                    list = myIntroductionBean.getData();
                     if (page == 1) {
-                        wdyjAdapter = new MyIntroductionAdapter(this, list);
+                        wdyjAdapter = new MyIntroductionAdapter(this, myIntroductionBean.getData());
                         listView.setAdapter(wdyjAdapter);
-                        listView.stopRefresh();
-                        list_more.clear();
-                        list_more.addAll(list);
+                        mList.clear();
+                        mList.addAll(myIntroductionBean.getData());
                     } else {
-                        if (list != null && list.size() != 0) {
-                            listView.stopLoadMore();
-                            list_more.addAll(list);
-                            wdyjAdapter.setList(list_more);
-                            wdyjAdapter.notifyDataSetChanged();
-                        }
+                        mList.addAll(myIntroductionBean.getData());
+                        wdyjAdapter.setList(mList);
+                        wdyjAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    list = null;
-                    TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                    EmptyView emptyView = new EmptyView(this);
+                    emptyView.mustCallInitWay(listView);
+                    emptyView.setMyManager(R.drawable.icon_null);
+                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                    listView.setEmptyView(emptyView);
                 }
             }
             //是否消耗积分

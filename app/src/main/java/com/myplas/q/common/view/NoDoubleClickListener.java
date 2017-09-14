@@ -15,12 +15,11 @@ public abstract class NoDoubleClickListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         long currentTime = System.currentTimeMillis();
-        Log.e("+++++", currentTime - lastClickTime + "");
         if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
             lastClickTime = currentTime;
             onNoDoubleClick(v);
         } else {
-            TextUtils.Toast(v.getContext(), "您的操作过于频繁，请稍后重试！");
+            // TextUtils.Toast(v.getContext(), "您的操作过于频繁，请稍后重试！");
         }
     }
     public abstract void onNoDoubleClick(View view);

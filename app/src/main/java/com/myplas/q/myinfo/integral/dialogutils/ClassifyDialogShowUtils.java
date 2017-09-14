@@ -43,7 +43,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/5/16 10:23
  */
-public class ClassifyDialogShowUtils extends NoDoubleClickListener implements View.OnClickListener {
+public class ClassifyDialogShowUtils implements View.OnClickListener {
     private int fPosition;
     private TextView mButton;
     private Dialog theDialog;
@@ -96,7 +96,9 @@ public class ClassifyDialogShowUtils extends NoDoubleClickListener implements Vi
             @Override
             public void onNoDoubleClick(View view) {
                 num = -1;
-                myInterface.classifySelected(1, fName, childName, fId, childId, mAddSubUtils.getNumber());
+                mButton.setClickable(false);
+                //mButton.setBackgroundColor(context.getResources().getColor(R.color.color_gray3));
+                myInterface.classifySelected(-1, fName, childName, fId, childId, mAddSubUtils.getNumber());
             }
         });
         mLayoutClose.setOnClickListener(this);
@@ -194,7 +196,8 @@ public class ClassifyDialogShowUtils extends NoDoubleClickListener implements Vi
     }
 
     public void setIsPay(boolean isPay) {
-        this.isPay = isPay;
+        mButton.setClickable(true);
+        //mButton.setBackgroundColor(mContext.getResources().getColor(R.color.color_dl_integral_confirm));
     }
 
     public String getChildrenName(List<IntegralBean.InfoBean.ExtraConfigBean> list, int fPosition, int cPsition) {
@@ -209,10 +212,7 @@ public class ClassifyDialogShowUtils extends NoDoubleClickListener implements Vi
         theDialog.dismiss();
     }
 
-    @Override
-    public void onNoDoubleClick(View view) {
-//
-    }
+
     //设置dialog属性
     public void setDialogWindowAttr(Dialog dlg, Context context) {
         Window dialogWindow = dlg.getWindow();
@@ -237,7 +237,7 @@ public class ClassifyDialogShowUtils extends NoDoubleClickListener implements Vi
             @Override
             public void onDismiss(DialogInterface dialog) {
                 if (num == 1) {
-                    myInterface.classifySelected(-1, fName, childName, fId, childId, mAddSubUtils.getNumber());
+                    myInterface.classifySelected(1, fName, childName, fId, childId, mAddSubUtils.getNumber());
                 }
             }
         });

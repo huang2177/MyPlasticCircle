@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myplas.q.R;
@@ -63,27 +64,34 @@ public class HeadLinesDetail_More_LVAdapetr extends BaseAdapter {
             viewHolder.time = (TextView) convertView.findViewById(R.id.fx_tt_title_shj);
             viewHolder.num = (TextView) convertView.findViewById(R.id.fx_tt_title_num);
             viewHolder.title2 = (TextView) convertView.findViewById(R.id.fx_tt_title_text2);
-            viewHolder.content = (TextView) convertView.findViewById(R.id.fx_tt_title_content);
             viewHolder.author = (TextView) convertView.findViewById(R.id.fx_tt_title_author);
+            viewHolder.mImgFree = (ImageView) convertView.findViewById(R.id.headline_img_free);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
         if (mHotBeanList == null) {
             viewHolder.title2.setText(mSubscribeBeanList.get(position).getTitle());
-            viewHolder.time.setText(" " + mSubscribeBeanList.get(position).getInput_time());
+            viewHolder.time.setText(mSubscribeBeanList.get(position).getInput_time());
             viewHolder.author.setText(mSubscribeBeanList.get(position).getPhysical_label());
             viewHolder.num.setText(mSubscribeBeanList.get(position).getPv());
+            viewHolder.mImgFree.setVisibility(mSubscribeBeanList.get(position).getIs_free().equals("1")
+                    ? View.VISIBLE
+                    : View.GONE);
         } else {
             viewHolder.title2.setText(mHotBeanList.get(position).getTitle());
-            viewHolder.time.setText(" " + mHotBeanList.get(position).getTime());
+            viewHolder.time.setText(mHotBeanList.get(position).getTime());
             viewHolder.author.setText(mHotBeanList.get(position).getPhysical_label());
             viewHolder.num.setText(mHotBeanList.get(position).getPv());
+            viewHolder.mImgFree.setVisibility(mHotBeanList.get(position).getIs_free().equals("1")
+                    ? View.VISIBLE
+                    : View.GONE);
         }
         return convertView;
     }
 
     class viewHolder {
+        ImageView mImgFree;
         TextView title2, content, time, num, author;
     }
 

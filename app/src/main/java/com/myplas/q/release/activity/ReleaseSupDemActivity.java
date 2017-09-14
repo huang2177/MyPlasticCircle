@@ -78,6 +78,7 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
 
         id = getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
+        title.setText(this.type.equals("2") ? ("发布供给") : ("发布求购"));
         getSecondPub();
         editText.addTextChangedListener(new TextWatcher() {
             @Override

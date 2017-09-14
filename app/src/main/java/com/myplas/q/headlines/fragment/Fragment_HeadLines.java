@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
@@ -53,6 +54,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private View view;
     private GridView gridView;
     private EditText editText;
+    private LinearLayout mLayoutTitle;
     private CustomPopupWindow popupWindow;
     private TextView search_src_text, textView_refresh;
     private HeadLineViewPagerAdapter mViewPagerAdapter;
@@ -73,9 +75,9 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
         editText = F(R.id.find_edit);
         gd_imgbtn = F(R.id.fx_gd_imgbtn);
-//        mViewDivider = F(R.id.headline_divider);
         mViewPager = F(R.id.headline_viewpager);
         mTabLayout = F(R.id.headline_tablayout);
+        mLayoutTitle = F(R.id.headline_ll_title);
         search_src_text = F(R.id.search_src_text);
 
         editText.setOnClickListener(this);
@@ -96,7 +98,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 currentItem = position;
                 mViewPager.setCurrentItem(position);
                 mFragments.get(position).po = position;
-                mFragments.get(position).title = list1.get(position);
 //                mViewDivider.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
             }
 
@@ -188,25 +189,24 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void callBack(String s, boolean b) {
         if (b) {
             mFragments.get(currentItem).isRefresh = false;
-            if (TextUtils.isNullOrEmpty(s)) {
+            if (popupWindow == null) {
                 View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
                 textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
-                if (popupWindow == null) {
-                    popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                }
+                popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
                 popupWindow.setFocusable(true);
                 popupWindow.setOutsideTouchable(true);
-                textView_refresh.setText(s);
-                showPopou(popupWindow);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        popupWindow.dismiss();
-                    }
-                }, 1500);
-            } else {
-                TextUtils.Toast(getActivity(), "已是最新头条信息！");
+                popupWindow.setAnimationStyle(R.style.my_anim_popou);
             }
+            textView_refresh.setText((TextUtils.isNullOrEmpty(s))
+                    ? (s)
+                    : ("已是最新头条信息！"));
+            showPopou(popupWindow);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    popupWindow.dismiss();
+                }
+            }, 1500);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
         }
     }

@@ -81,7 +81,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private AppBarLayout mBarLayout;
     private FrameLayout mFrameLayout;
     private NestedScrollView mNestedScrollView;
-    private CollapsingToolbarLayoutState state;
     private CoordinatorLayout mCoordinatorLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
@@ -315,9 +314,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             text_look.setText(myZone.getMyviewhistory() + "  ");
 
             mDragView.setText(myZone.getMessage() + "  ");
-            mDragView.setVisibility(myZone.getMessage().equals("0")
-                    ? View.GONE
-                    : View.VISIBLE);
+//            mDragView.setVisibility(myZone.getMessage().equals("0")
+//                    ? View.GONE
+//                    : View.VISIBLE);
         } catch (Exception e) {
         }
     }
@@ -370,13 +369,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         //mDragView.setText(msg);
     }
 
-
-    private enum CollapsingToolbarLayoutState {
-        EXPANDED,
-        COLLAPSED,
-        INTERNEDIATE;
-    }
-
     public void onResume() {
         super.onResume();
         getLoginInfo(false);
@@ -385,8 +377,13 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
 
     public void onPause() {
         super.onPause();
-        mBarLayout.setExpanded(true, true);
         MobclickAgent.onPageEnd("MainScreen");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBarLayout.setExpanded(true, true);
         mHandler.post(new Runnable() {
             @Override
             public void run() {

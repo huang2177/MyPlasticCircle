@@ -7,15 +7,14 @@
 
     <include layout="@layout/titlebar_lauout"></include>
 
-    <com.myplas.q.common.view.XListView
+    <ListView
         android:id="@+id/wd_yj_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:divider="@color/color_lightgray"
-        android:dividerHeight="1.2px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:divider="@color/color_gray3"
+        android:dividerHeight="1px"
         android:scrollbars="none">
-    </com.myplas.q.common.view.XListView>
+    </ListView>
 </LinearLayout>

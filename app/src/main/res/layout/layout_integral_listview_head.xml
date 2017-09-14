@@ -76,7 +76,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text=" 购买记录"
+                    android:text=" 兑换记录"
                     android:textColor="@color/color_balank"
                     android:textSize="16.0sp"/>
             </LinearLayout>

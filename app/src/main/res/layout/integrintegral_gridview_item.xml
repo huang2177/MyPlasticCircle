@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:background="@drawable/corner_titlebar"
         android:orientation="vertical">
 
         <LinearLayout
@@ -109,13 +112,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
 
             <TextView
                 android:id="@+id/num_all"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="共0件："/>
@@ -133,11 +136,10 @@
                 android:id="@+id/commit"
                 android:layout_width="60dp"
                 android:layout_height="28dp"
-                android:layout_margin="10dp"
                 android:background="@drawable/btn_xq_chujian"
                 android:gravity="center"
-                android:text="支付"
+                android:text="兑换"
                 android:textColor="@color/color_white"/>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</android.support.v7.widget.CardView>

@@ -16,8 +16,8 @@ android {
         applicationId "com.myplas.q"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 94
-        versionName "3.8.0"
+        versionCode 95
+        versionName "3.8.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.sign
     }

@@ -287,7 +287,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() > visibleItemCount) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() >= visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
                         islogin = sharedUtils.getBoolean(getActivity(), "logined");
@@ -344,8 +344,8 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
     public void setPoPouProperty(CustomPopupWindow popupWindow) {
         //popupWindow.setFocusable(true);
         //popupWindow.setOutsideTouchable(true);
-        ColorDrawable dw = new ColorDrawable(0000000000);
-        popupWindow.setBackgroundDrawable(dw);
+//        ColorDrawable dw = new ColorDrawable(0000000000);
+//        popupWindow.setBackgroundDrawable(dw);
         popupWindow.setAnimationStyle(R.style.my_anim_popou);
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);//设置弹出窗体需要软键盘，
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);  //再设置模式，和Activity的一样，覆盖。
@@ -641,25 +641,25 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         if (list.size() != 0 && isRefresh) {
             isRefresh = false;
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(text)) ? (text) : ("已是最新通信录信息！"));
-            if (TextUtils.isNullOrEmpty(text)) {
+            if (popupWindow == null) {
                 View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
                 textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
-                popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+                popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
                 popupWindow.setFocusable(true);
                 popupWindow.setOutsideTouchable(true);
-                textView_refresh.setText(text);
-                showPopou(popupWindow);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        popupWindow.dismiss();
-                    }
-                }, 1500);
-            } else {
-                TextUtils.Toast(getActivity(), "已是最新通信录信息！");
+                popupWindow.setAnimationStyle(R.style.my_anim_popou);
             }
+            textView_refresh.setText((TextUtils.isNullOrEmpty(text))
+                    ? (text)
+                    : ("已是最新通信录信息！"));
+            showPopou(popupWindow);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    popupWindow.dismiss();
+                }
+            }, 1800);
         }
-
     }
 
     public void setBackgroundAlpha(float bgAlpha) {

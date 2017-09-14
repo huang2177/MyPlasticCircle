@@ -55,7 +55,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="#000000"
-            android:alpha="0.7"
+            android:alpha="0.5"
             android:id="@+id/img_adress">
         </View>
     </LinearLayout>

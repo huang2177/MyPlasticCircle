@@ -403,17 +403,15 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         if (isRefresh) {
             textView_hint.setVisibility(View.VISIBLE);
             isRefresh = false;
-            if (TextUtils.isNullOrEmpty(text)) {
-                textView_hint.setText(text);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        textView_hint.setVisibility(View.GONE);
-                    }
-                }, 1500);
-            } else {
-                TextUtils.Toast(this, "已是最新头条信息！");
-            }
+
+            textView_hint.setText(text);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    textView_hint.setVisibility(View.GONE);
+                }
+            }, 1500);
+
         }
     }
 
@@ -460,6 +458,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 
         }, 200);
     }
+
     public void onResume() {
         super.onResume();
         isFinifsh = true;

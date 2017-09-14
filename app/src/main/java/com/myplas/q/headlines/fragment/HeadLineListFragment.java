@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ import com.myplas.q.headlines.adapter.CateListAdapter;
 import com.myplas.q.headlines.adapter.TTAdapter;
 import com.myplas.q.headlines.bean.CateListBean;
 import com.myplas.q.headlines.bean.SubcribleBean;
-import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
 import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -50,9 +48,9 @@ import java.util.Map;
 
 public class HeadLineListFragment extends Fragment implements ResultCallBack, XListView.IXListViewListener, View.OnClickListener, DialogShowUtils.DialogShowInterface {
     public String keywords1;
-    public boolean isRefresh;
     private SharedUtils sharedUtils;
-    public String cate_id, keywords, title, clickId, clickTitle;
+    public boolean isRefresh, isFree;
+    public String cate_id, keywords, clickId;
     public int page, po, visibleItemCount, lastvisibleItemCount;
 
     private Banner mBanner;
@@ -65,8 +63,6 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
     private List<CateListBean.InfoBean> list_catelist;
     private List<SubcribleBean.DataBean> list_subcirble;
-    private List<CateListBean.InfoBean> list_catelist_more;
-    private List<SubcribleBean.DataBean> list_subcirble_more;
 
     private List<String> mListId;
     private List<String> mListImg;
@@ -81,8 +77,8 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         mListId = new ArrayList<>();
         mListImg = new ArrayList<>();
         mListTitle = new ArrayList<>();
-        list_catelist_more = new ArrayList<>();
-        list_subcirble_more = new ArrayList<>();
+        list_catelist = new ArrayList<>();
+        list_subcirble = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_headline_list_fm, null, false);
@@ -110,11 +106,18 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                 public void OnBannerClick(int position) {
                     if (NetUtils.isNetworkStateed(getActivity())) {
                         clickId = mListId.get(position);
-                        clickTitle = mListTitle.get(position);
-                        isPaidSubscription(clickId);
+                        //isFree=list_subcirble.
+                        if (isFree) {
+                            Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
+                            intent.putExtra("id", clickId);
+                            startActivity(intent);
+                        } else {
+                            isPaidSubscription(clickId);
+                        }
                     }
                 }
             });
+
             get_Subscribe(1, "", "2", true);
         } else {
             get_CateList(1, cate_id, false);
@@ -126,13 +129,18 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetUtils.isNetworkStateed(getActivity())) {
                     clickId = (po == 0 || po == -1)
-                            ? (list_subcirble_more.get(position - 2).getId())
-                            : (list_catelist_more.get(position - 1).getId());
-
-                    clickTitle = (po == 0 || po == -1)
-                            ? ("推荐")
-                            : (title);
-                    isPaidSubscription(clickId);
+                            ? (list_subcirble.get(position - 2).getId())
+                            : (list_catelist.get(position - 1).getId());
+                    isFree = (po == 0 || po == -1)
+                            ? (list_subcirble.get(position - 2).getIs_free().equals("1"))
+                            : (list_catelist.get(position - 1).getIs_free().equals("1"));
+                    if (isFree) {
+                        Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
+                        intent.putExtra("id", clickId);
+                        startActivity(intent);
+                    } else {
+                        isPaidSubscription(clickId);
+                    }
                 }
             }
         });
@@ -140,7 +148,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         mXListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mXListView.getCount() > visibleItemCount) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mXListView.getCount() >= visibleItemCount) {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
@@ -255,19 +263,18 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             if (type == 4) {//推荐
                 if (err.equals("0")) {
                     SubcribleBean subcribleBean = gson.fromJson(object.toString(), SubcribleBean.class);
-                    list_subcirble = subcribleBean.getData();
                     if (page == 1) {
                         imageButton.setVisibility(View.GONE);
                         mXListView.setVisibility(View.VISIBLE);
                         mLayoutNoData.setVisibility(View.GONE);
                         imageButton_backup.setVisibility(View.GONE);
 
-                        ttAdapter = new TTAdapter(getActivity(), list_subcirble);
+                        ttAdapter = new TTAdapter(getActivity(), subcribleBean.getData());
                         mXListView.setAdapter(ttAdapter);
                         mXListView.stopRefresh();
-                        list_subcirble_more.clear();
-                        list_subcirble_more.addAll(list_subcirble);
-                        lastvisibleItemCount = list_subcirble.size();
+                        list_subcirble.clear();
+                        list_subcirble.addAll(subcribleBean.getData());
+                        lastvisibleItemCount = subcribleBean.getData().size();
 
                         mMyinterface.callBack(subcribleBean.getShow_msg(), isRefresh);//展示刷新后的popou
 
@@ -275,8 +282,8 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                         initBanner(subcribleBean.getBanner());
                     } else {
                         isRefresh = false;
-                        list_subcirble_more.addAll(list_subcirble);
-                        ttAdapter.setList(list_subcirble_more);
+                        list_subcirble.addAll(subcribleBean.getData());
+                        ttAdapter.setList(list_subcirble);
                         ttAdapter.notifyDataSetChanged();
                     }
                 } else if (err.equals("1") || "998".equals(err)) {
@@ -301,28 +308,25 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             if (type == 5) {//其他
                 if (err.equals("0")) {
                     CateListBean cateListBean = gson.fromJson(object.toString(), CateListBean.class);
-                    list_catelist = cateListBean.getInfo();
                     if (page == 1) {
                         imageButton.setVisibility(View.GONE);
                         mXListView.setVisibility(View.VISIBLE);
                         mLayoutNoData.setVisibility(View.GONE);
                         imageButton_backup.setVisibility(View.GONE);
-                        cateListAdapter = new CateListAdapter(getActivity(), list_catelist);
+                        cateListAdapter = new CateListAdapter(getActivity(), cateListBean.getInfo());
                         mXListView.setAdapter(cateListAdapter);
                         mXListView.stopRefresh();
-                        list_catelist_more.clear();
-                        list_catelist_more.addAll(list_catelist);
-                        lastvisibleItemCount = list_catelist.size();
+                        list_catelist.clear();
+                        list_catelist.addAll(cateListBean.getInfo());
+                        lastvisibleItemCount = cateListBean.getInfo().size();
 
                         mMyinterface.callBack(cateListBean.getShow_msg(), isRefresh);//展示刷新后的popou
 
                     } else {
                         isRefresh = false;
-                        if (list_catelist != null && list_catelist.size() != 0) {
-                            list_catelist_more.addAll(list_catelist);
-                            cateListAdapter.setList(list_catelist_more);
-                            cateListAdapter.notifyDataSetChanged();
-                        }
+                        list_catelist.addAll(cateListBean.getInfo());
+                        cateListAdapter.setList(list_catelist);
+                        cateListAdapter.notifyDataSetChanged();
                     }
                 } else if (err.equals("1") || "998".equals(err)) {
                     isRefresh = false;
@@ -368,7 +372,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
     @Override
     public void failCallBack(int type) {
-        if (list_subcirble_more != null && list_subcirble_more.size() == 0) {
+        if (list_subcirble != null && list_subcirble.size() == 0) {
             mXListView.setVisibility(View.GONE);
             mLayoutNoData.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);

@@ -43,7 +43,7 @@ public class IntegralRuleActivtity extends BaseActivity {
         //设置支持缩放  
         webSettings.setBuiltInZoomControls(true);
 
-        //webSettings.setBlockNetworkImage(false);
+        webSettings.setDomStorageEnabled(true);
 
         webView.loadUrl("http://q.myplas.com/#/pointsrule2");
 

@@ -92,7 +92,7 @@ public class Fragment_SupDem_Other extends Fragment implements DialogShowUtils.D
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() > visibleItemCount) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() >= visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         itemBean.page++;
                         if (itemBean.hasMoreData) {

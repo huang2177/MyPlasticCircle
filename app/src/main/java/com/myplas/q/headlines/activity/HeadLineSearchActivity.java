@@ -2,6 +2,7 @@ package com.myplas.q.headlines.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -75,7 +76,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     private Handler handler;
     private String keywords;
     private int page, visibleItemCount, position;
-    private boolean hasMoerData, isRefresh, isFinifsh;
+    private boolean isRefresh, isFinifsh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         if (TextUtils.isNullOrEmpty(data)) {//从供求qq页面跳转过来
             editText.setText(data);
             get_Subscribe(1, data);
+            editText.setSelection(data.length());
         } else {                            //从头条跳转过来
             getSearch_Record();
         }
@@ -95,7 +97,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     public void initView() {
         page = 1;
         isRefresh = true;
-        hasMoerData = true;
         keywords = "7000F";
         handler = new Handler();
         list = new ArrayList<>();
@@ -131,7 +132,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
                     page = 1;
                     isRefresh = true;
-                    hasMoerData = true;
                     keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
                     get_Subscribe(page, keywords);
                     return true;
@@ -143,16 +143,12 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() > visibleItemCount) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() >= visibleItemCount) {
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
-                        if (hasMoerData) {
-                            get_Subscribe(page, keywords);
-                        } else {
-                            TextUtils.Toast(HeadLineSearchActivity.this, "没有更多数据了！");
-                        }
+                        get_Subscribe(page, keywords);
                     }
                 }
             }
@@ -200,8 +196,9 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             case R.id.supplydemand_btn_search:
                 page = 1;
                 isRefresh = true;
-                hasMoerData = true;
-                keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+                keywords = (editText.getText().toString().equals(""))
+                        ? ("7000f")
+                        : (editText.getText().toString());
                 get_Subscribe(page, keywords);
                 break;
             case R.id.img_search_delete:
@@ -217,7 +214,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             case R.id.mygrid_search_history://历史搜索
                 page = 1;
                 isRefresh = true;
-                hasMoerData = true;
                 keywords = historyBean.getHistory().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
@@ -226,7 +222,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             case R.id.mygrid_search_subcribe://猜你所想
                 page = 1;
                 isRefresh = true;
-                hasMoerData = true;
                 keywords = historyBean.getRecommend().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
@@ -235,7 +230,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             case R.id.mygrid_search_null://相关搜索
                 page = 1;
                 isRefresh = true;
-                hasMoerData = true;
                 keywords = bean.getRecommendation().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
@@ -297,13 +291,16 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                         ttAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    hasMoerData = false;
-                    frameLayout.setVisibility(View.GONE);
-                    search_result_linear_no.setVisibility(View.VISIBLE);
-                    textView_no.setText("抱歉，未能找到相关搜索！");
-                    bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
-                    adapter_grid = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
-                    gridview_subcribe_no.setAdapter(adapter_grid);
+                    if (page == 1) {
+                        frameLayout.setVisibility(View.GONE);
+                        search_result_linear_no.setVisibility(View.VISIBLE);
+                        textView_no.setText("抱歉，未能找到相关搜索！");
+                        bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
+                        adapter_grid = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
+                        gridview_subcribe_no.setAdapter(adapter_grid);
+                    } else {
+                        TextUtils.Toast(this, "没有更多数据了！");
+                    }
                 }
             }
             if (type == 3 && err.equals("0")) {
@@ -327,6 +324,21 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    //展示刷新后的popou
+    public void showRefreshPopou(String text) {
+        if (isRefresh) {
+            textView_hint.setVisibility(View.VISIBLE);
+            isRefresh = false;
+
+            textView_hint.setText(text);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    textView_hint.setVisibility(View.GONE);
+                }
+            }, 1500);
+        }
+    }
 
     @Override
     public void ok(int type) {

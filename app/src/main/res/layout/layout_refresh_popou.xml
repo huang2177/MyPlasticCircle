@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_refresh_fragement"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:alpha="0.85"
-        android:background="#f15f16"
+        android:layout_height="53dp"
+        android:alpha="0.87"
+        android:background="@color/color_red"
         android:gravity="center"
-        android:textColor="@color/color_white"
+        android:textColor="@color/colorAccent"
         android:textSize="18.0sp"/>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

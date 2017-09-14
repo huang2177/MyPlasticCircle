@@ -107,6 +107,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         mPopupWindow2.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mPopupWindow2.setFocusable(true);
         mPopupWindow2.setOutsideTouchable(true);
+        mPopupWindow2.setAnimationStyle(R.style.my_anim_popou);
         imageView_sd = (View) view2.findViewById(R.id.img_adress);
         imageView_sd.setOnClickListener(this);
         radioGroup_sd = (RadioGroup) view2.findViewById(R.id.radio_danxuan);
@@ -307,11 +308,14 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     //展示刷新多少数据的popou
     @Override
     public void showRefreshPopou(String text) {
-        View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
-        textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
-        popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
+        if (popupWindow == null) {
+            View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
+            textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
+            popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+            popupWindow.setFocusable(true);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setAnimationStyle(R.style.my_anim_popou);
+        }
         textView_refresh.setText(text);
         showPopou(popupWindow);
         handler.postDelayed(new Runnable() {
@@ -319,7 +323,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             public void run() {
                 popupWindow.dismiss();
             }
-        }, 1500);
+        }, 1800);
 //        TextUtils.topTSnackbar(editText, text);
     }
 

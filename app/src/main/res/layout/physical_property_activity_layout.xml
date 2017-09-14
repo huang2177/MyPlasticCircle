@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -15,7 +16,7 @@
             android:gravity="center"
             android:text="物性表查询"
             android:textColor="@color/color_white"
-            android:textSize="18.0sp" />
+            android:textSize="18.0sp"/>
 
         <LinearLayout
             android:id="@+id/back_img"
@@ -26,7 +27,7 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
+                android:src="@drawable/btn_back"/>
         </LinearLayout>
     </FrameLayout>
 
@@ -34,14 +35,15 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_margin="5dp">
+
         <TextView
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:padding="5dp"
             android:text="品种"
-            android:textStyle="bold"
-            android:textSize="16.0sp" />
+            android:textSize="16.0sp"
+            android:textStyle="bold"/>
 
         <View
             android:layout_width="3px"
@@ -56,8 +58,8 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="牌号"
-            android:textStyle="bold"
-            android:textSize="16.0sp" />
+            android:textSize="16.0sp"
+            android:textStyle="bold"/>
 
         <View
             android:layout_width="3px"
@@ -73,17 +75,19 @@
             android:gravity="left"
             android:padding="5dp"
             android:text="   厂家"
-            android:textStyle="bold"
-            android:textSize="16.0sp" />
+            android:textSize="16.0sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
     <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="4px"-->
-        <!--android:background="@color/color_litlegray"></View>-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="4px"-->
+    <!--android:background="@color/color_litlegray"></View>-->
     <ListView
-        android:layout_margin="5dp"
         android:id="@+id/physical_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:divider="@color/color_gray3"
+        android:dividerHeight="1px"></ListView>
 </LinearLayout>

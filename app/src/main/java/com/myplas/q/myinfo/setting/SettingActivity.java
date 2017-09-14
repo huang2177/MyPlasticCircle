@@ -87,7 +87,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = "确定退出？";
+                String content = "确定退出?";
                 DialogShowUtils dialogShowUtils = new DialogShowUtils();
                 dialogShowUtils.showDialog(SettingActivity.this, content, 4, SettingActivity.this);
             }

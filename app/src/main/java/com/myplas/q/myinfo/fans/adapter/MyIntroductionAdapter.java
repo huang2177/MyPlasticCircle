@@ -35,7 +35,7 @@ public class MyIntroductionAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list!=null)
+        if (list != null)
             return list.size();
         return 0;
     }
@@ -56,35 +56,36 @@ public class MyIntroductionAdapter extends BaseAdapter {
         if (convertView == null) {
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_lv_myself_fansfollow, parent, false);
-            viewHolder.tx= (ImageView) convertView.findViewById(R.id.xq_tx);
-            viewHolder.rz= (ImageView) convertView.findViewById(R.id.xq_rz);
-            viewHolder.gs= (TextView) convertView.findViewById(R.id.txl_listview_gs);
-            viewHolder.mz= (TextView) convertView.findViewById(R.id.txl_listview_mz);
-            viewHolder.gj= (TextView) convertView.findViewById(R.id.txl_listview_gj);
-            viewHolder.qg= (TextView) convertView.findViewById(R.id.txl_listview_qg);
-            viewHolder.dh= (TextView) convertView.findViewById(R.id.txl_listview_dh);
+            viewHolder.tx = (ImageView) convertView.findViewById(R.id.xq_tx);
+            viewHolder.rz = (ImageView) convertView.findViewById(R.id.xq_rz);
+            viewHolder.gs = (TextView) convertView.findViewById(R.id.txl_listview_gs);
+            viewHolder.mz = (TextView) convertView.findViewById(R.id.txl_listview_mz);
+            viewHolder.gj = (TextView) convertView.findViewById(R.id.txl_listview_gj);
+            viewHolder.qg = (TextView) convertView.findViewById(R.id.txl_listview_qg);
+            viewHolder.dh = (TextView) convertView.findViewById(R.id.txl_listview_dh);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
             Glide.with(context).load(list.get(position).getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(viewHolder.tx);
-            viewHolder.gs.setText("  "+list.get(position).getC_name());
-            viewHolder.dh.setText("  "+list.get(position).getMobile());
-            viewHolder.mz.setText("  "+list.get(position).getName());
-            viewHolder.gj.setText("发布供给："+list.get(position).getSale()+"条    ");
-            viewHolder.qg.setText("发布求购："+list.get(position).getBuy()+"条");
-            if(list.get(position).getIs_pass().equals("0")){
+            viewHolder.gs.setText(" " + list.get(position).getC_name());
+            viewHolder.dh.setText(" " + list.get(position).getMobile());
+            viewHolder.mz.setText(" " + list.get(position).getName());
+            viewHolder.gj.setText("发布供给：" + list.get(position).getSale() + "条    ");
+            viewHolder.qg.setText("发布求购：" + list.get(position).getBuy() + "条");
+            if (list.get(position).getIs_pass().equals("0")) {
                 viewHolder.rz.setImageResource(R.drawable.icon_identity);
-            }else if(list.get(position).getIs_pass().equals("1")) {
+            } else if (list.get(position).getIs_pass().equals("1")) {
                 viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
             }
         } catch (Exception e) {
         }
         return convertView;
     }
+
     class viewHolder {
-        TextView gs, mz, dh, gj,qg;
-        ImageView tx,rz;
+        TextView gs, mz, dh, gj, qg;
+        ImageView tx, rz;
     }
 }
