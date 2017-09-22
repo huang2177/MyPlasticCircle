@@ -2,11 +2,8 @@ package com.myplas.q.supdem.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -19,29 +16,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.addresslist.fragment.Fragment_AddressList;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
-import com.myplas.q.common.view.XListView;
+import com.myplas.q.common.view.wechatpopou.DropDownListView;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.myinfo.beans.SelectableBean;
 import com.myplas.q.supdem.Beans.HistoryBean;
 import com.myplas.q.supdem.Beans.SearchNoResultBean;
 import com.myplas.q.supdem.Beans.SearchResultBean;
 import com.myplas.q.supdem.Beans.TabCofigBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
 import com.myplas.q.supdem.adapter.SupDem_Search_List_Adapter;
-import com.myplas.q.supdem.adapter.SupDem_Search_QQ_Detail_Adapter;
 import com.myplas.q.supdem.popoushowutils.PopouShowUtils;
 import com.optimus.edittextfield.EditTextField;
 import com.umeng.analytics.MobclickAgent;
@@ -56,10 +47,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
-import static com.umeng.analytics.pro.x.V;
-import static com.umeng.analytics.pro.x.k;
-import static com.umeng.analytics.pro.x.o;
-import static com.umeng.analytics.pro.x.p;
 
 
 /**
@@ -71,7 +58,7 @@ import static com.umeng.analytics.pro.x.p;
 
 public class SupDem_Search_Activity extends BaseActivity implements View.OnClickListener, ResultCallBack,
         PopouShowUtils.poPouCallBackInterface, AdapterView.OnItemClickListener {
-    private Spinner spinner;
+    private DropDownListView spinner;
     private ListView listView;
     private ImageView imageView;
     private EditTextField editText;
@@ -140,8 +127,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         gridview_history.setOnItemClickListener(this);
         gridview_subcribe.setOnItemClickListener(this);
         gridview_subcribe_no.setOnItemClickListener(this);
-        editText.setHintTextColor(getResources().getColor(R.color.color_gray));
 
+        editText.setHintTextColor(getResources().getColor(R.color.color_gray));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item);
         level = new String[]{"供给", "求购"};//资源文件
@@ -150,28 +137,33 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             adapter.add(level[i]);
         }
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        spinner.setAdapter(adapter);
+        //spinner.setAdapter(adapter);
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("供给");
+        list.add("求购");
+        spinner.setItemsData(list);
         spinner.setVisibility(View.VISIBLE);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spinnerSelected) {
-                    page = 1;
-                    isRefresh = true;
-                    hasMoerData = true;
-                    is_buy = level1[position];
-                    keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-                    getPhysical_Search(1, keywords, time, is_buy, area);
-                } else {
-                    spinnerSelected = true;
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (spinnerSelected) {
+//                    page = 1;
+//                    isRefresh = true;
+//                    hasMoerData = true;
+//                    is_buy = level1[position];
+//                    keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+//                    getPhysical_Search(1, keywords, time, is_buy, area);
+//                } else {
+//                    spinnerSelected = true;
+//                }
+//            }
+
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//        });
         //edittext的回车监听
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -226,9 +218,9 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         map.put("page", page + "");
         map.put("size", "10");
         map.put("time", time);
-        map.put("is_buy", is_buy);
-        map.put("is_futures", "0");
-        map.put("area", area);
+        map.put("type", is_buy);
+        map.put("cargo_type", "0");
+        map.put("area_id", area);
         postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH, map, this, 2);
     }
 
@@ -249,11 +241,11 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.supplydemand_btn_search:
-                page = 1;
-                isRefresh = true;
-                hasMoerData = true;
-                keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-                getPhysical_Search(1, keywords, time, is_buy, area);
+//                page = 1;
+//                isRefresh = true;
+//                hasMoerData = true;
+//                keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+//                getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.img_search_delete:
                 delSearch_Record();
@@ -272,6 +264,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         popouShowUtils1.showAsDropDown(findViewById(R.id.divider_result));
         popouShowUtils1.setPoPouCallBackInterface(this);
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -341,6 +334,9 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 gridview_history.setAdapter(adapter_grid);
                 SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
                 gridview_subcribe.setAdapter(adapter_grid1);
+
+                keywords = historyBean.getHot_search().getContent();
+                editText.setHint(keywords);
             }
             if (type == 2) {
                 search_default_linear.setVisibility(View.GONE);

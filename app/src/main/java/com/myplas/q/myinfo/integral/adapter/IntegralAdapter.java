@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -50,7 +49,7 @@ import java.util.Map;
  * 时间：2017/3/23 16:29
  */
 public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallBack, Integral_Diaolog_SupDem_Adapter.MyInterface
-        , DialogShowUtils.DialogShowInterface, ClassifyDialogShowUtils.MyInterface {
+        , CommonDialog.DialogShowInterface, ClassifyDialogShowUtils.MyInterface {
 
     private MyInterface myInterface;
 
@@ -63,7 +62,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
 
     private List<Date> list_date_supdem;
     private ClassifyDialogShowUtils utils;
-    private DialogShowUtils dialogShowUtils;
+    private CommonDialog mCommonDialog;
     private List<IntegralBean.InfoBean> list;
     private List<IntegralBean.InfoBean.MyMsgBean> list_msg;
 
@@ -334,20 +333,20 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     myInterface.refresgData();
                     mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
                     mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, "兑换成功!", 2, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, "兑换成功!", 2, this);
 
                     changeTextShow(list_date_conact);
                 } else if (err.equals("15")) {
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, "塑豆不足!", 1, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, content, 3, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, content, 3, this);
                 }
             }
             if (type == 1) {//供求
@@ -360,20 +359,20 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mHolderMap.get(supDemPosition).linear_supdem_isselected.setVisibility(View.GONE);
                     mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
                     mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, "兑换成功!", 2, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, "兑换成功!", 2, this);
 
                     changeTextShow(list_date_supdem);
                 } else if (err.equals("15")) {
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, "塑豆不足!", 1, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, content, 3, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, content, 3, this);
                 }
             }
             if (type == 3) {//分类
@@ -385,18 +384,18 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mHolderMap.get(classifyPosition).type.setText("*请选择分类：");
                     mHolderMap.get(classifyPosition).point_all.setText("总计：0塑豆");
 
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, "兑换成功!", 2, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, "兑换成功!", 2, this);
                 } else if (err.equals("15")) {
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, "塑豆不足!", 1, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
-                    dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.setCanceledOnTouchOutside(false);
-                    dialogShowUtils.showDialog(context, content, 3, this);
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, content, 3, this);
                 }
             }
             //展示时间dialog

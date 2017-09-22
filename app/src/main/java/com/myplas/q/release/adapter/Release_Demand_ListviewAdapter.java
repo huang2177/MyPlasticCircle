@@ -23,13 +23,15 @@ import java.util.List;
 public class Release_Demand_ListviewAdapter extends BaseAdapter {
     Context context;
     List<Supply_DemandBean.DataBean> list;
-    public Release_Demand_ListviewAdapter(Context context, List<Supply_DemandBean.DataBean> list){
-        this.context=context;
-        this.list=list;
+
+    public Release_Demand_ListviewAdapter(Context context, List<Supply_DemandBean.DataBean> list) {
+        this.context = context;
+        this.list = list;
     }
+
     @Override
     public int getCount() {
-        if(list!=null)
+        if (list != null)
             return list.size();
         return 0;
     }
@@ -47,15 +49,15 @@ public class Release_Demand_ListviewAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder;
-        if(convertView==null){
-            viewHolder=new viewHolder();
-            convertView= LayoutInflater.from(context).inflate(R.layout.layout_fb_listview_item,parent,false);
-            viewHolder.shj= (TextView) convertView.findViewById(R.id.fb_listview_shj);
-            viewHolder.chf= (TextView) convertView.findViewById(R.id.fb_listview_chf);
-            viewHolder.content= (TextView) convertView.findViewById(R.id.fb_listview_content);
+        if (convertView == null) {
+            viewHolder = new viewHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.layout_fb_listview_item, parent, false);
+            viewHolder.shj = (TextView) convertView.findViewById(R.id.fb_listview_shj);
+            viewHolder.chf = (TextView) convertView.findViewById(R.id.fb_listview_chf);
+            viewHolder.content = (TextView) convertView.findViewById(R.id.fb_listview_content);
             convertView.setTag(viewHolder);
-        }else {
-            viewHolder= (viewHolder) convertView.getTag();
+        } else {
+            viewHolder = (viewHolder) convertView.getTag();
         }
         viewHolder.content.setText(list.get(position).getContent());
         viewHolder.shj.setText(list.get(position).getInput_time());
@@ -63,13 +65,15 @@ public class Release_Demand_ListviewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(context, ReleaseSupDemActivity.class);
-                intent1.putExtra("id",list.get(position).getP_id());
+                intent1.putExtra("id", list.get(position).getP_id());
+                intent1.putExtra("type", list.get(position).getType());
                 context.startActivity(intent1);
             }
         });
         return convertView;
     }
-    class viewHolder{
-        TextView shj,chf,content;
+
+    class viewHolder {
+        TextView shj, chf, content;
     }
 }

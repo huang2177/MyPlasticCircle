@@ -19,6 +19,7 @@ public class CateListBean {
 
     private int err;
     private String show_msg;
+    private String hot_search;
     private List<InfoBean> info;
 
     public int getErr() {
@@ -43,6 +44,14 @@ public class CateListBean {
 
     public void setInfo(List<InfoBean> info) {
         this.info = info;
+    }
+
+    public String getHot_search() {
+        return hot_search;
+    }
+
+    public void setHot_search(String hot_search) {
+        this.hot_search = hot_search;
     }
 
     public static class InfoBean {

@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
@@ -46,7 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HeadLineListFragment extends Fragment implements ResultCallBack, XListView.IXListViewListener, View.OnClickListener, DialogShowUtils.DialogShowInterface {
+public class HeadLineListFragment extends Fragment implements ResultCallBack, XListView.IXListViewListener, View.OnClickListener, CommonDialog.DialogShowInterface {
     public String keywords1;
     private SharedUtils sharedUtils;
     public boolean isRefresh, isFree;
@@ -148,14 +148,12 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         mXListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mXListView.getCount() >= visibleItemCount) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mXListView.getCount() > visibleItemCount) {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
-                        if (po == -1) {
-                            get_Subscribe(page, keywords, "1", false);
-                        } else if (po == 0) {
+                        if (po == 0) {
                             get_CateList(page, "999", false);
                         } else {
                             get_CateList(page, cate_id, false);
@@ -276,7 +274,10 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                         list_subcirble.addAll(subcribleBean.getData());
                         lastvisibleItemCount = subcribleBean.getData().size();
 
-                        mMyinterface.callBack(subcribleBean.getShow_msg(), isRefresh);//展示刷新后的popou
+                        //展示刷新后的popou
+                        mMyinterface.callBack(subcribleBean.getHot_search()
+                                , subcribleBean.getShow_msg()
+                                , isRefresh);
 
                         //显示banner
                         initBanner(subcribleBean.getBanner());
@@ -320,7 +321,10 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                         list_catelist.addAll(cateListBean.getInfo());
                         lastvisibleItemCount = cateListBean.getInfo().size();
 
-                        mMyinterface.callBack(cateListBean.getShow_msg(), isRefresh);//展示刷新后的popou
+                        //展示刷新后的popou
+                        mMyinterface.callBack(cateListBean.getHot_search()
+                                , cateListBean.getShow_msg()
+                                , isRefresh);
 
                     } else {
                         isRefresh = false;
@@ -355,8 +359,8 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                     startActivity(intent);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
-                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.showDialog(getActivity(), content, (err.equals("2")) ? (1) : (3), this);
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(getActivity(), content, (err.equals("2")) ? (1) : (3), this);
                 }
             }
         } catch (Exception e) {
@@ -372,6 +376,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
     @Override
     public void failCallBack(int type) {
+        mXListView.stopRefresh();
         if (list_subcirble != null && list_subcirble.size() == 0) {
             mXListView.setVisibility(View.GONE);
             mLayoutNoData.setVisibility(View.GONE);
@@ -383,9 +388,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     public void onRefresh() {
         page = 1;
         isRefresh = true;
-        if (po == -1) {
-            get_Subscribe(page, keywords1, "1", false);
-        } else if (po == 0) {
+        if (po == 0) {
             get_Subscribe(page, "", "2", false);
         } else {
             get_CateList(page, cate_id, false);
@@ -416,7 +419,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     }
 
     interface Myinterface {
-        void callBack(String s, boolean isRefresh);
+        void callBack(String hotSearch, String content, boolean isRefresh);
     }
 
     public void setMyinterface(Myinterface mMyinterface) {

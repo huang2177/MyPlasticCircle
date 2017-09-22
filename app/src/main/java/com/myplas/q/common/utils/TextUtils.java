@@ -43,10 +43,11 @@ public class TextUtils {
 
     public static void Toast(Context context, String s) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_toast, null);
-        Toast toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 30);
-        toast.setView(view);
         TextView textView = (TextView) view.findViewById(R.id.toast_text);
+
+        Toast toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 400);
+        toast.setView(view);
         textView.setText(s);
         toast.show();
     }

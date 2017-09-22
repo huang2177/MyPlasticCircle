@@ -20,6 +20,16 @@ public class Supply_DemandBean {
     private String show_msg;
     private TopBean top;
     private List<DataBean> data;
+    private String hot_search;
+
+    public void setHot_search(String hot_search) {
+        this.hot_search = hot_search;
+    }
+
+    public String getHot_search() {
+
+        return hot_search;
+    }
 
     public int getErr() {
         return err;

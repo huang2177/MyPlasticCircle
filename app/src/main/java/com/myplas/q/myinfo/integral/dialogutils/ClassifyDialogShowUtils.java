@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,21 +18,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jmf.addsubutils.AddSubUtils;
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
-import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.NoDoubleClickListener;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.IntegralBean;
 import com.myplas.q.myinfo.integral.adapter.Integral_Diaolog_Classify_Adapter;
-import com.tencent.mm.sdk.platformtools.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

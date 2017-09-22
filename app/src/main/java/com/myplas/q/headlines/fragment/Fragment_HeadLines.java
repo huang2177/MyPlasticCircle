@@ -186,8 +186,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
     //展示刷新后的popou
     @Override
-    public void callBack(String s, boolean b) {
-        if (b) {
+    public void callBack(String hotSearch, String content, boolean isRefresh) {
+        if (isRefresh) {
             mFragments.get(currentItem).isRefresh = false;
             if (popupWindow == null) {
                 View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
@@ -197,8 +197,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 popupWindow.setOutsideTouchable(true);
                 popupWindow.setAnimationStyle(R.style.my_anim_popou);
             }
-            textView_refresh.setText((TextUtils.isNullOrEmpty(s))
-                    ? (s)
+            textView_refresh.setText((TextUtils.isNullOrEmpty(content))
+                    ? (content)
                     : ("已是最新头条信息！"));
             showPopou(popupWindow);
             handler.postDelayed(new Runnable() {
@@ -209,18 +209,18 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             }, 1500);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
         }
+        editText.setText(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart("MainScreen");
         boolean isLogined = sharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_H);
 
-        //防止第一次登陆以后没有数据
-        if (isLogined) {
+        if (isLogined) {//防止第一次登陆以后没有数据
             initViewPager();
             sharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_H, false);
         }
-        MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
 
     public void onPause() {

@@ -14,9 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.utils.DialogShowUtils;
-import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.myinfo.beans.MsgHFBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
@@ -113,7 +111,7 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
     }
 
     //长按监听类
-    public class MyOnLongClickListener implements View.OnLongClickListener, DialogShowUtils.DialogShowInterface {
+    public class MyOnLongClickListener implements View.OnLongClickListener, CommonDialog.DialogShowInterface {
         int position;
 
         public MyOnLongClickListener(int position) {
@@ -122,8 +120,8 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
 
         @Override
         public boolean onLongClick(View v) {
-            DialogShowUtils dialogShowUtils = new DialogShowUtils();
-            dialogShowUtils.showDialog(context, "确认删除？", 1, this);
+            CommonDialog commonDialog = new CommonDialog();
+            commonDialog.showDialog(context, "确认删除？", 1, this);
             return true;
         }
 

@@ -23,31 +23,30 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.myplas.q.common.utils.NetUtils;
-import com.myplas.q.common.view.DragView;
-import com.myplas.q.guide.activity.ShareActivity;
+
 import com.myplas.q.R;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.NetUtils;
+import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.view.DragView;
+import com.myplas.q.common.view.MyImageView;
+import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.guide.activity.ShareActivity;
+import com.myplas.q.myinfo.beans.MyZone;
 import com.myplas.q.myinfo.credit.activity.LineOfCreditActivity;
 import com.myplas.q.myinfo.credit.activity.PlasticMoneyActivity;
 import com.myplas.q.myinfo.fans.activity.LookMeActivity;
 import com.myplas.q.myinfo.fans.activity.MyFansFollowActivity;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.view.MyImageView;
-import com.myplas.q.myinfo.integral.activity.IntegralActivity;
-
 import com.myplas.q.myinfo.fans.activity.MyIntroductionActivity;
-
-import com.myplas.q.common.api.API;
-
+import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.myplas.q.myinfo.invoices.activity.TradeOrderActivity;
-import com.myplas.q.myinfo.beans.MyZone;
 import com.myplas.q.myinfo.message.activity.MessageListsActivity;
-import com.myplas.q.myinfo.setting.activity.MyDataActivity;
 import com.myplas.q.myinfo.setting.SettingActivity;
+import com.myplas.q.myinfo.setting.activity.MyDataActivity;
 import com.myplas.q.myinfo.supdem.activity.MySupDemActivity;
-import com.myplas.q.myinfo.websockethelper.WebSocketCallBack;
+import com.myplas.q.myinfo.websockethelper.RabbitMQCallBack;
+import com.myplas.q.myinfo.websockethelper.RabbitMQHelper;
 import com.myplas.q.myinfo.websockethelper.WebSocketHelper;
 import com.umeng.analytics.MobclickAgent;
 
@@ -62,7 +61,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, WebSocketCallBack {
+public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, RabbitMQCallBack {
 
     private View view;
     private MyZone myZone;
@@ -85,25 +84,28 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private Handler mHandler;
+    private RabbitMQHelper mMQHelper;
     private WebSocketHelper mSocketHelper;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initWebSocket();
+        initRabbitMQ();
         initView();
         setAppBarListener();
         getLoginInfo(false);
     }
 
-    private void initWebSocket() {
-        mHandler = new Handler();
-        mSocketHelper = new WebSocketHelper(this);
-        mSocketHelper.startConnect(getActivity());
+    private void initRabbitMQ() {
+//        mSocketHelper = new WebSocketHelper(this);
+//        mSocketHelper.startConnect(getActivity());
+        mMQHelper = new RabbitMQHelper(this);
+        mMQHelper.onConnect();
     }
 
     public void initView() {
+        mHandler = new Handler();
         view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_myselffragment, null, false);
         //获取登陆后相关数据
         image_tx = f(R.id.xq_tx);
@@ -163,6 +165,16 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         mFrameLayout.setOnClickListener(this);
 
         image_tx.setBorderColor(getActivity(), R.color.color_white);
+//        new QBadgeView(getContext())
+//                .bindTarget(mImageView_news)
+//                .setBadgeNumber(23)
+//                .setBadgeGravity(Gravity.START | Gravity.BOTTOM)
+//                .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+//                    @Override
+//                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+//
+//                    }
+//                });
     }
 
     @Nullable
@@ -248,7 +260,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         }
     }
 
-
     public void getLoginInfo(boolean isShow) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", sharedUtils.getData(getActivity(), "token"));
@@ -309,11 +320,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
             text_fs.setText(myZone.getMyfans());
             text_gz.setText(myZone.getMyconcerns());
 
-            text_gj.setText(myZone.getS_out_count() + "  ");
-            text_qg.setText(myZone.getS_in_count() + "  ");
-            text_look.setText(myZone.getMyviewhistory() + "  ");
+            text_gj.setText(String.valueOf(myZone.getS_out_count()));
+            text_qg.setText(String.valueOf(myZone.getS_in_count()));
+            text_look.setText(String.valueOf(myZone.getMyviewhistory()));
 
-            mDragView.setText(myZone.getMessage() + "  ");
+            mDragView.setText(myZone.getMessage());
 //            mDragView.setVisibility(myZone.getMessage().equals("0")
 //                    ? View.GONE
 //                    : View.VISIBLE);
@@ -345,7 +356,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     //设置展开时各控件的透明度
     public void setToolbar1Alpha(int alpha) {
         text_title.setTextColor(Color.TRANSPARENT);
-
         image_rz.getDrawable().setAlpha(alpha);
         mImage_more.getDrawable().setAlpha(alpha);
         mImageView_news.getDrawable().setAlpha(alpha);
@@ -395,6 +405,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mSocketHelper.stopConnect();
+        mMQHelper.onDisConnect();
+        //mSocketHelper.stopConnect();
     }
 }

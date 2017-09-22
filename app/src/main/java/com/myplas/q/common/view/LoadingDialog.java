@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 
+import java.util.LinkedHashMap;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
@@ -18,12 +20,19 @@ import com.myplas.q.R;
  */
 public class LoadingDialog {
     private static AlertDialog dialog = null;
-    public static AlertDialog getInstance(final Context context) {
-        if (dialog == null) {
+    private static LinkedHashMap<Context, AlertDialog> mHashMap = new LinkedHashMap();
+
+    public static AlertDialog getInstance(Context context) {
+        if (mHashMap.get(context) == null) {
             dialog = new AlertDialog.Builder(context, R.style.dialog).create();
+            mHashMap.put(context, dialog);
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_dialog, null);
+            dialog.setView(view);
         }
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_dialog, null);
-        dialog.setView(view);
-        return dialog;
+        return mHashMap.get(context);
+    }
+
+    public static void clearLinkHashMap() {
+        mHashMap.clear();
     }
 }

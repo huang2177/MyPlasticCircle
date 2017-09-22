@@ -60,14 +60,14 @@
                         android:layout_width="72dp"
                         android:layout_height="72dp"
                         android:layout_margin="8dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop"
+                        android:transitionName="sharedView"/>
 
                     <ImageView
                         android:id="@+id/xq_rz"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|right"
-                        android:src="@drawable/icon_identity"/>
+                        android:layout_gravity="bottom|right"/>
                 </FrameLayout>
 
                 <LinearLayout
@@ -127,7 +127,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/color_lightgray"></View>
+                    android:background="@color/color_lightgray"/>
 
                 <TextView
                     android:id="@+id/personinfo_address_text"
@@ -140,7 +140,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/color_lightgray"></View>
+                    android:background="@color/color_lightgray"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,7 +166,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/color_lightgray"></View>
+                    android:background="@color/color_lightgray"/>
 
 
                 <TextView
@@ -182,7 +182,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/color_lightgray"></View>
+                    android:background="@color/color_lightgray"/>
 
                 <LinearLayout
                     android:id="@+id/linear_show_close"
@@ -207,7 +207,7 @@
                             style="@style/wd_zl_text_style"
                             android:layout_gravity="center_vertical"
                             android:gravity="center_vertical"
-                            android:textColor="#171717"></TextView>
+                            android:textColor="#171717"/>
                     </LinearLayout>
 
                     <View
@@ -231,13 +231,13 @@
                             style="@style/wd_zl_text_style"
                             android:layout_gravity="center_vertical"
                             android:gravity="center_vertical"
-                            android:textColor="#171717"></TextView>
+                            android:textColor="#171717"/>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2px"
-                        android:background="@color/color_lightgray"></View>
+                        android:background="@color/color_lightgray"/>
                 </LinearLayout>
 
 

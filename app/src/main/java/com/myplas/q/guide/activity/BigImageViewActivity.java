@@ -8,10 +8,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.StatusUtils;
+import com.sobot.chat.widget.photoview.PhotoView;
+import com.sobot.chat.widget.photoview.PhotoViewAttacher;
 import com.umeng.analytics.MobclickAgent;
 
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 编写： 黄双
@@ -27,14 +27,14 @@ public class BigImageViewActivity extends BaseActivity {
         StatusUtils.setStatusTextColor(true, this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         setContentView(R.layout.layout_bigimage_activity);
-        PhotoView imageView= (PhotoView) findViewById(R.id.photoview);
+        PhotoView imageView = F(R.id.photoview);
         Glide.with(this)
                 .load(getIntent().getStringExtra("imgurl"))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(imageView);
         imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
             @Override
-            public void onPhotoTap(View arg0, float arg1, float arg2) {
+            public void onPhotoTap(View view, float x, float y) {
                 finish();
             }
         });

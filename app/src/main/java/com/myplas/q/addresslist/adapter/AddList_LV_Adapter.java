@@ -13,9 +13,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.addresslist.Beans.TXL_Bean;
+import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.common.view.SectionedBaseAdapter;
+import com.tencent.mm.sdk.platformtools.Log;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 编写： 黄双
@@ -25,23 +29,25 @@ import java.util.List;
  */
 public class AddList_LV_Adapter extends SectionedBaseAdapter {
     Context context;
-
-    public void setList(List<TXL_Bean.PersonsBean> list) {
-        this.list = list;
-    }
-
-    List<TXL_Bean.PersonsBean> list;
-    TXL_Bean.TopBean topBean;
     viewHolder viewHolder;
+    TXL_Bean.TopBean topBean;
+    List<TXL_Bean.PersonsBean> list;
+
+    public Map<Integer, ImageView> mMap;
 
     public void setTopBean(TXL_Bean.TopBean topBean) {
         this.topBean = topBean;
     }
 
-    public AddList_LV_Adapter(Context context, List<TXL_Bean.PersonsBean> list, TXL_Bean.TopBean topBean) {
-        this.context = context;
+    public void setList(List<TXL_Bean.PersonsBean> list) {
         this.list = list;
+    }
+
+    public AddList_LV_Adapter(Context context, List<TXL_Bean.PersonsBean> list, TXL_Bean.TopBean topBean) {
+        this.list = list;
+        this.context = context;
         this.topBean = topBean;
+        mMap = new HashMap<>();
     }
 
     @Override
@@ -77,6 +83,7 @@ public class AddList_LV_Adapter extends SectionedBaseAdapter {
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
+        mMap.put(position, viewHolder.tx);
         shouInfo(viewHolder, position);
         return convertView;
     }
@@ -122,6 +129,7 @@ public class AddList_LV_Adapter extends SectionedBaseAdapter {
                 viewHolder.gj.setVisibility(View.VISIBLE);
                 viewHolder.gj.setText("主营产品：" + replace(list.get(position).getNeed_product()));
             }
+            Log.e("------", list.get(position).getIs_pass());
             viewHolder.rz.setImageResource(list.get(position).getIs_pass().equals("0")
                     ? R.drawable.icon_identity
                     : R.drawable.icon_identity_hl);
@@ -176,11 +184,9 @@ public class AddList_LV_Adapter extends SectionedBaseAdapter {
                 viewHolder.gj.setVisibility(View.VISIBLE);
                 viewHolder.gj.setText("主营产品：" + replace(topBean.getNeed_product()));
             }
-            if (topBean.getIs_pass().equals("0")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity);
-            } else if (topBean.getIs_pass().equals("1")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
-            }
+            viewHolder.rz.setImageResource(topBean.getIs_pass().equals("0")
+                    ? R.drawable.icon_identity
+                    : R.drawable.icon_identity_hl);
         } catch (Exception e) {
         }
         return (topBean == null) ? new LinearLayout(context) : layout;

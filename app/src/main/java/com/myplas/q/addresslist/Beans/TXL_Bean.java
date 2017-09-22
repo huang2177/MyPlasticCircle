@@ -48,6 +48,7 @@ public class TXL_Bean {
     private int show_ctype;
     private String show_msg;
     private TopBean top;
+    private String hot_search;
     private List<PersonsBean> persons;
 
     public int getErr() {
@@ -192,6 +193,14 @@ public class TXL_Bean {
 
     public void setPersons(List<PersonsBean> persons) {
         this.persons = persons;
+    }
+
+    public String getHot_search() {
+        return hot_search;
+    }
+
+    public void setHot_search(String hot_search) {
+        this.hot_search = hot_search;
     }
 
     public static class TopBean {

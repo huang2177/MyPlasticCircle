@@ -6,8 +6,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
@@ -21,7 +19,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
@@ -50,7 +48,7 @@ import java.util.Map;
  * 时间：2017/3/21 16:18
  */
 public class HeadLinesDetailActivity extends BaseActivity implements ResultCallBack
-        , View.OnClickListener, DialogShowUtils.DialogShowInterface {
+        , View.OnClickListener, CommonDialog.DialogShowInterface {
     private WebView webView;
     private Resources resources;
     private WebSettings webSettings;
@@ -206,8 +204,8 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                     getNetData(clickId);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
-                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
                 }
             }
         } catch (Exception e) {

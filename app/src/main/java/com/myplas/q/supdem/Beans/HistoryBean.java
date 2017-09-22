@@ -10,13 +10,16 @@ import java.util.List;
 
 public class HistoryBean {
 
+
     /**
      * err : 0
-     * history : ["7000","胖","245","700","776"]
-     * recommend : []
+     * history : ["人民币","分分孤狐给","pp","7000f","哈哈"]
+     * recommend : ["HDPE","or","储蓄罐","哈哈","人民币","测试","PVCbaa","50","7000y"]
+     * hot_search : {"content":"7000F","num":"315"}
      */
 
     private int err;
+    private HotSearchBean hot_search;
     private List<String> history;
     private List<String> recommend;
 
@@ -26,6 +29,14 @@ public class HistoryBean {
 
     public void setErr(int err) {
         this.err = err;
+    }
+
+    public HotSearchBean getHot_search() {
+        return hot_search;
+    }
+
+    public void setHot_search(HotSearchBean hot_search) {
+        this.hot_search = hot_search;
     }
 
     public List<String> getHistory() {
@@ -42,5 +53,31 @@ public class HistoryBean {
 
     public void setRecommend(List<String> recommend) {
         this.recommend = recommend;
+    }
+
+    public static class HotSearchBean {
+        /**
+         * content : 7000F
+         * num : 315
+         */
+
+        private String content;
+        private String num;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
+        }
     }
 }

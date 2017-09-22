@@ -21,6 +21,7 @@ public class SubcribleBean {
     private String show_msg;
     private List<DataBean> data;
     private List<BannerBean> banner;
+    private String hot_search;
 
     public int getErr() {
         return err;
@@ -54,6 +55,13 @@ public class SubcribleBean {
         this.banner = banner;
     }
 
+    public String getHot_search() {
+        return hot_search;
+    }
+
+    public void setHot_search(String hot_search) {
+        this.hot_search = hot_search;
+    }
     public static class DataBean {
         /**
          * id : 44962
@@ -94,6 +102,7 @@ public class SubcribleBean {
         private String update_time;
         private String cate_name;
         private String is_free;
+
 
         public String getId() {
             return id;

@@ -9,7 +9,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:background="@color/color_red"></View>
+        android:background="@color/color_red"/>
 
     <FrameLayout
         android:layout_width="match_parent"

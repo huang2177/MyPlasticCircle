@@ -1,68 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:transitionName="sharedView1">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
         android:layout_marginBottom="15dp"
+        android:layout_marginTop="60dp"
         android:layout_weight="1"
         android:orientation="horizontal">
+
         <ListView
+            android:id="@+id/fb_qg_listview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
-            android:scrollbars="none"
-            android:id="@+id/fb_qg_listview">
+            android:layout_weight="1"
+            android:scrollbars="none">
         </ListView>
+
         <View
             android:layout_width="3px"
             android:layout_height="match_parent"
-            android:background="@color/color_lightgray"></View>
+            android:background="@color/color_lightgray"/>
+
         <ListView
+            android:id="@+id/fb_gj_listview"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:scrollbars="none"
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:id="@+id/fb_gj_listview">
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
         </ListView>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
             android:id="@+id/fb_qg_img"
-            android:text="发布求购"
-            android:gravity="center"
-            android:drawableTop="@drawable/btn_release_purchasing"/>
-        <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="发布供给"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/btn_release_purchasing"
             android:gravity="center"
+            android:text="发布求购"/>
+
+        <TextView
             android:id="@+id/fb_gj_img"
-            android:drawableTop="@drawable/btn_release_supply"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/btn_release_supply"
+            android:gravity="center"
+            android:text="发布供给"/>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="3px"
-        android:background="#d0d2d2"></View>
+        android:background="#d0d2d2"/>
+
     <ImageButton
+        android:id="@+id/fb_back_imgbtn"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:src="@drawable/btn_skip3"
+        android:layout_gravity="center"
         android:background="@null"
-        android:id="@+id/fb_back_imgbtn"
-        android:layout_gravity="center"/>
+        android:src="@drawable/btn_skip3"/>
 </LinearLayout>

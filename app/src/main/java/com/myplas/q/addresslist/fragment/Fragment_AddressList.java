@@ -1,14 +1,14 @@
 package com.myplas.q.addresslist.fragment;
 
 import android.app.ActionBar;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -36,7 +36,7 @@ import com.myplas.q.addresslist.activity.Cover_WebActivity;
 import com.myplas.q.addresslist.adapter.AddList_LV_Adapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
@@ -63,7 +63,7 @@ import java.util.Map;
  * 时间：2017/3/17 14:45
  */
 public class Fragment_AddressList extends Fragment implements View.OnClickListener
-        , ResultCallBack, PinnedHeaderListView.IXListViewListener, DialogShowUtils.DialogShowInterface {
+        , ResultCallBack, PinnedHeaderListView.IXListViewListener, CommonDialog.DialogShowInterface {
     public String content;
     private SharedUtils sharedUtils;
     private int page, position, visibleItemCount;
@@ -127,6 +127,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.txl_dropdown_popouwindow, null, false);
         mPopupWindow1 = new CustomPopupWindow(view1, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
         setPoPouProperty(mPopupWindow1);
+        mPopupWindow1.setAnimationStyle(R.style.my_anim_popou);
         imageView_tm = (View) view1.findViewById(R.id.img_tm);
         radioGroup_time = (RadioGroup) view1.findViewById(R.id.radio_danxuan);
         imageView_tm.setOnClickListener(this);
@@ -134,6 +135,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         View view2 = LayoutInflater.from(getActivity()).inflate(R.layout.txl_dropdown_popouwindow_address, null, false);
         mPopupWindow2 = new CustomPopupWindow(view2, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         setPoPouProperty(mPopupWindow2);
+        mPopupWindow2.setAnimationStyle(R.style.my_anim_popou);
         imageView_adress = (View) view2.findViewById(R.id.img_adress);
         imageView_adress.setOnClickListener(this);
         radioGroup_address = (RadioGroup) view2.findViewById(R.id.radio_danxuan);
@@ -174,7 +176,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 getNetData("1", keywords, c_type, region, true);
                 mPopupWindow1.dismiss();
                 zh_zj.setTextColor(getResources().getColor(R.color.color_red));
-                zh_zj.setText("  " + radio_choice);
+                zh_zj.setText(radio_choice);
             }
         });
         radioGroup_address.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -209,7 +211,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 getNetData("1", keywords, c_type, region, true);
                 mPopupWindow2.dismiss();
                 textView_address.setTextColor(getResources().getColor(R.color.color_red));
-                textView_address.setText("  " + radio_choice);
+                textView_address.setText(radio_choice);
             }
         });
         //点击item判断是否消耗积分
@@ -233,8 +235,8 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                         }
                         getPersonInfoData(userid, "1", 2);
                     } else {
-                        DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                        dialogShowUtils.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
+                        CommonDialog commonDialog = new CommonDialog();
+                        commonDialog.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
                     }
                 } catch (Exception e) {
                 }
@@ -276,8 +278,8 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                             zh_zj.setVisibility(View.GONE);
                         }
                     } else {
-                        DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                        dialogShowUtils.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
+                        CommonDialog commonDialog = new CommonDialog();
+                        commonDialog.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
                     }
                 } catch (Exception e) {
                 }
@@ -298,8 +300,8 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                                 TextUtils.Toast(getActivity(), "没有更多数据了！");
                             }
                         } else if (page > 4) {
-                            DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                            dialogShowUtils.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
+                            CommonDialog commonDialog = new CommonDialog();
+                            commonDialog.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
                         }
                     }
                 }
@@ -346,7 +348,6 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         //popupWindow.setOutsideTouchable(true);
 //        ColorDrawable dw = new ColorDrawable(0000000000);
 //        popupWindow.setBackgroundDrawable(dw);
-        popupWindow.setAnimationStyle(R.style.my_anim_popou);
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);//设置弹出窗体需要软键盘，
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);  //再设置模式，和Activity的一样，覆盖。
     }
@@ -438,8 +439,8 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                     break;
             }
         } else {
-            DialogShowUtils dialogShowUtils = new DialogShowUtils();
-            dialogShowUtils.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
+            CommonDialog commonDialog = new CommonDialog();
+            commonDialog.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
         }
     }
 
@@ -461,7 +462,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         map.put("user_id", userid);
         map.put("showType", showtype);
         String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn(getActivity(), url, map, this, type);
+        BaseActivity.postAsyn1(getActivity(), url, map, this, type, false);
     }
 
     @Override
@@ -493,8 +494,8 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             //是否消耗积分
             if (type == 2 && err.equals("99")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(getActivity(), content, 1, this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(getActivity(), content, 1, this);
             }
             //已经消费了积分
             if (type == 2 && err.equals("0")) {
@@ -502,6 +503,13 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 intent.putExtra("userid", userid);
                 intent.putExtra("id", userid);
                 startActivity(intent);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()
+//                                , txl_listview_adapter.mMap.get(position)
+//                                , "sharedView").toBundle());
+//                    }
+//                }
             }
             //减积分成功
             if (type == 3 && err.equals("0")) {
@@ -509,13 +517,19 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 intent.putExtra("userid", userid);
                 intent.putExtra("id", userid);
                 startActivity(intent);
-
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()
+//                                , txl_listview_adapter.mMap.get(position)
+//                                , "sharedView").toBundle());
+//                    }
+//                }
             }
             //积分不够
             if (type == 3 && !err.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(getActivity(), content, (err.equals("100")) ? (2) : (3), this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(getActivity(), content, (err.equals("100")) ? (2) : (3), this);
             }
             if (type == 10 && !err.equals("0")) {
                 sharedUtils.setData(getActivity(), "token", "");
@@ -535,6 +549,8 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             topBean = (new JSONObject(json).getJSONObject("top").length() != 0) ? txlBean.getTop() : (null);
             if (page == 1) {
                 rs.setText("塑料圈通讯录(" + new JSONObject(json).getString("member") + "人)");
+//                editText.setText(txlBean.getHot_search());
+//                editText.setSelection(txlBean.getHot_search().length());
                 //显示数据
                 txl_listview_adapter = new AddList_LV_Adapter(getActivity(), list, topBean);
                 listView.setAdapter(txl_listview_adapter);
@@ -684,7 +700,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         //统计页面，"MainScreen"为页面名称，可自定义
         MobclickAgent.onPageStart("MainScreen");
         //检查登录状态
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10);
+        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
     }
 
     public void onPause() {

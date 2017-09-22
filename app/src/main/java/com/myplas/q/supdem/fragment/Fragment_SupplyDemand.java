@@ -178,7 +178,8 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         itemBean = ItemBean.getItemBean();
         switch (v.getId()) {
             case R.id.supplydemand_edit:
-                startActivity(new Intent(getActivity(), SupDem_Search_Activity.class));
+                Intent intent = new Intent(getActivity(), SupDem_Search_Activity.class);
+                startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.fade, R.anim.fade);
                 break;
             case R.id.supplydemand_btn:
@@ -307,24 +308,30 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 
     //展示刷新多少数据的popou
     @Override
-    public void showRefreshPopou(String text) {
-        if (popupWindow == null) {
-            View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
-            textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
-            popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-            popupWindow.setFocusable(true);
-            popupWindow.setOutsideTouchable(true);
-            popupWindow.setAnimationStyle(R.style.my_anim_popou);
-        }
-        textView_refresh.setText(text);
-        showPopou(popupWindow);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                popupWindow.dismiss();
+    public void showRefreshPopou(String hotSearch, String content, boolean isRefresh) {
+        if (isRefresh) {
+            fragment_all.isRefresh = false;
+            if (popupWindow == null) {
+                View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
+                textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
+                popupWindow = new CustomPopupWindow(view, android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT, android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
+                popupWindow.setFocusable(true);
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setAnimationStyle(R.style.my_anim_popou);
             }
-        }, 1800);
-//        TextUtils.topTSnackbar(editText, text);
+            textView_refresh.setText((TextUtils.isNullOrEmpty(content))
+                    ? (content)
+                    : ("已是最新供求信息！"));
+            showPopou(popupWindow);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    popupWindow.dismiss();
+                }
+            }, 1500);
+//            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
+        }
+        editText.setText(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
     public void onResume() {

@@ -1,13 +1,13 @@
 package com.myplas.q.guide.activity;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +17,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,10 +25,11 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.addresslist.fragment.Fragment_AddressList;
+import com.myplas.q.common.view.LoadingDialog;
 import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener, VersionUpdateDialogUtils.VersionUpdateInterface,
-        ResultCallBack, ViewPager.OnPageChangeListener, DialogShowUtils.DialogShowInterface {
+        ResultCallBack, ViewPager.OnPageChangeListener, CommonDialog.DialogShowInterface {
 
     private boolean logined;
     private String promit, url;
@@ -176,12 +176,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     break;
                 case R.id.buttom_linear_jia:
                     Intent intent = new Intent(this, ReleaseActivity.class);
-                    startActivity(intent);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this
+                                , layout_jia
+                                , "sharedView1").toBundle());
+                    } else {
+                        startActivity(intent);
+                    }
                     break;
             }
         } else {
-            DialogShowUtils dialogShowUtils = new DialogShowUtils();
-            dialogShowUtils.showDialog(this, fragment_txl.content, 4, this);
+            CommonDialog commonDialog = new CommonDialog();
+            commonDialog.showDialog(this, fragment_txl.content, 4, this);
         }
     }
 
@@ -254,9 +260,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             exitTime = System.currentTimeMillis();
         } else {
             //moveTaskToBack(false);
-            MobclickAgent.onKillProcess(this);
             finish();
             System.exit(0);
+            LoadingDialog.clearLinkHashMap();
+            MobclickAgent.onKillProcess(this);
         }
     }
 

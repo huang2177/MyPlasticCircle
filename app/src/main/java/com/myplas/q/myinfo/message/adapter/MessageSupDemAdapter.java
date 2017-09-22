@@ -1,5 +1,6 @@
 package com.myplas.q.myinfo.message.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -14,10 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.utils.DialogShowUtils;
-import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.myinfo.beans.MsgHFBean;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.myinfo.beans.MsgSupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
@@ -37,6 +35,7 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
     Map<Integer, TextView> mViewMap;
     Map<Integer, viewHolder> mHolderMap;
 
+    @SuppressLint("UseSparseArrays")
     public MessageSupDemAdapter(Context context, List<MsgSupDemBean.DataBean> mListSupDem) {
         this.mListSupDem = mListSupDem;
         this.context = context;
@@ -119,7 +118,7 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
     }
 
     //长按监听类
-    public class MyOnLongClickListener implements View.OnLongClickListener, DialogShowUtils.DialogShowInterface {
+    public class MyOnLongClickListener implements View.OnLongClickListener, CommonDialog.DialogShowInterface {
         int position;
 
         public MyOnLongClickListener(int position) {
@@ -128,8 +127,8 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
 
         @Override
         public boolean onLongClick(View v) {
-            DialogShowUtils dialogShowUtils = new DialogShowUtils();
-            dialogShowUtils.showDialog(context, "确认删除？", 1, this);
+            CommonDialog commonDialog = new CommonDialog();
+            commonDialog.showDialog(context, "确认删除？", 1, this);
             return true;
         }
 

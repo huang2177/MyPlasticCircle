@@ -1,15 +1,9 @@
 package com.myplas.q.myinfo.fans.activity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
 import android.widget.AbsListView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
@@ -17,7 +11,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.NoResultLayout;
@@ -31,7 +25,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +36,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:15
  */
-public class LookMeActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface, LookMeAdapter.OnItemClickListener {
+public class LookMeActivity extends BaseActivity implements ResultCallBack, CommonDialog.DialogShowInterface, LookMeAdapter.OnItemClickListener {
     private String mode;
     private String userid;
     private boolean hasMoreData;
@@ -235,8 +228,8 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
             //是否消耗积分
             if (type == 5 && err.equals("99")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(this, content, 1, this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(this, content, 1, this);
             }
             //已经消耗积分
             if (type == 5 && err.equals("0")) {
@@ -255,8 +248,8 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Dial
             //积分不足
             if (type == 2 && !err.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
             }
         } catch (Exception e) {
         }

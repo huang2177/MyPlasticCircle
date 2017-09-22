@@ -1,95 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/linearlayout_login_nomal"
-    android:orientation="vertical">
-    <EditText
-        android:textSize="14.0sp"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="请填写手机号码"
-        android:layout_margin="15dp"
-        android:layout_marginTop="30dp"
-        android:paddingLeft="3dp"
-        android:paddingRight="5dp"
-        android:inputType="number"
-        android:maxLength="11"
-        android:drawableRight="@drawable/icon_username"
-        android:textSelectHandle="@drawable/textselecthandle"
-        android:textSelectHandleLeft="@drawable/textselecthandle"
-        android:textSelectHandleRight="@drawable/textselecthandle"
-        android:textCursorDrawable="@drawable/text_cursor_shape"
-        android:background="@drawable/corner_titlebar"
-        android:id="@+id/dl_tel"/>
-    <EditText
-        android:textSize="14.0sp"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="请填写密码"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:paddingLeft="3dp"
-        android:paddingRight="5dp"
-        android:drawableRight="@drawable/icon_password"
-        android:textSelectHandle="@drawable/textselecthandle"
-        android:textSelectHandleLeft="@drawable/textselecthandle"
-        android:textSelectHandleRight="@drawable/textselecthandle"
-        android:textCursorDrawable="@drawable/text_cursor_shape"
-        android:inputType="textPassword"
-        android:background="@drawable/corner_titlebar"
-        android:id="@+id/dl_pass"/>
-    <LinearLayout
-        android:id="@+id/linear_jzhmm"
+              xmlns:huang="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/linearlayout_login_nomal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:visibility="gone"
-        android:gravity="center_vertical">
+        android:textColorHint="@color/colorAccent"
+        huang:counterOverflowTextAppearance="@style/counterOverflowTextColor">
 
-        <ImageView
-            android:id="@+id/img_jzh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_checkbox_disabled" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="记住密码" />
-    </LinearLayout>
+        <EditText
+            android:id="@+id/dl_tel"
+            style="@style/login_edittext"
+            android:drawableLeft="@drawable/icon_username"
+            android:hint="请填写手机号"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textCursorDrawable="@drawable/text_cursor_shape"
+            android:textSelectHandle="@drawable/textselecthandle"
+            android:textSelectHandleLeft="@drawable/textselecthandle"
+            android:textSelectHandleRight="@drawable/textselecthandle"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textColorHint="@color/colorAccent"
+        huang:errorTextAppearance="@style/counterOverflowTextColor"
+        huang:passwordToggleEnabled="false"
+        huang:passwordToggleTint="@color/color_red"
+        huang:passwordToggleTintMode="src_atop">
+
+        <EditText
+            android:id="@+id/dl_pass"
+            style="@style/login_edittext"
+            android:drawableLeft="@drawable/icon_passworld"
+            android:hint="请填写密码"
+            android:inputType="textPassword"
+            android:textCursorDrawable="@drawable/text_cursor_shape"
+            android:textSelectHandle="@drawable/textselecthandle"
+            android:textSelectHandleLeft="@drawable/textselecthandle"
+            android:textSelectHandleRight="@drawable/textselecthandle"/>
+
+    </android.support.design.widget.TextInputLayout>
+
     <Button
+        android:id="@+id/dl_ok"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_btn_shape"
         android:text="登录"
         android:textColor="@color/color_white"
-        android:textSize="16.0sp"
-        android:id="@+id/dl_ok"
-        android:background="@drawable/btn_xq_chujian"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="30dp"/>
+        android:textSize="16.0sp"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_marginTop="15dp">
+
         <TextView
+            android:id="@+id/dl_zhc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/dl_zhc"
-            android:text="注册"
-            android:textSize="16.0sp"
-            android:textColor="@color/color_blue"/>
+            android:text="新用户注册"
+            android:textColor="@color/colorAccent"
+            android:textSize="16.0sp"/>
+
         <TextView
+            android:id="@+id/dl_wjmm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:id="@+id/dl_wjmm"
-            android:text="忘记密码"
-            android:textSize="16.0sp"
-            android:textColor="@color/color_blue"/>
+            android:text="忘记密码?"
+            android:textColor="@color/colorAccent"
+            android:textSize="16.0sp"/>
     </RelativeLayout>
 </LinearLayout>

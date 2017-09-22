@@ -11,8 +11,9 @@
         <com.myplas.q.common.view.MyViewPager
             android:id="@+id/viewpager_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1" />
-        <include layout="@layout/layout_buttom"></include>
+
+        <include layout="@layout/layout_buttom"/>
     </LinearLayout>
 </LinearLayout>

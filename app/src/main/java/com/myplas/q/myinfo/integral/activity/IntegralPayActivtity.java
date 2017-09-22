@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -41,7 +41,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/29 09:57
  */
-public class IntegralPayActivtity extends BaseActivity implements View.OnClickListener, ResultCallBack, DialogShowUtils.DialogShowInterface {
+public class IntegralPayActivtity extends BaseActivity implements View.OnClickListener, ResultCallBack, CommonDialog.DialogShowInterface {
     private int money;
     private Button button;
     private int plasticBean;
@@ -263,18 +263,18 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                 String data = intent.getStringExtra("errcode");
                 if (data.equals("0")) {//支付成功
                     type = 4;
-                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.showDialog(context, "支付成功!", 5, IntegralPayActivtity.this);
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(context, "支付成功!", 5, IntegralPayActivtity.this);
                 }
                 if (data.equals("-1")) {//支付失败
                     type = -4;
-                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.showDialog(context, "请重新充值!", 6, IntegralPayActivtity.this);
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(context, "请重新充值!", 6, IntegralPayActivtity.this);
                 }
                 if (data.equals("-2")) {//支付取消
                     type = -3;
-                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.showDialog(context, "您已取消支付!", 7, IntegralPayActivtity.this);
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(context, "您已取消支付!", 7, IntegralPayActivtity.this);
                 }
                 callWeChat(order_id, type + "");
             }

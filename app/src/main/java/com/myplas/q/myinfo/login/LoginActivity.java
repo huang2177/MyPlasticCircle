@@ -16,19 +16,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
+import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.api.API;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
-
 import com.myplas.q.myinfo.setting.activity.FindPSWActivity;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -44,17 +43,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private int count;
     private String key;
     private Handler mHandler;
+    private Button button, button1;
     private SharedUtils sharedUtils;
     private boolean clicked, isRemember;
-    private TextView textView_zhc, textView_wj, textView_title;
-    private ImageView imageView, imageView3, imageView_verification;
-    private Button button, button1, button_nomal, button_phone, button_send;
-    private LinearLayout linearLayout_nomal, linearLayout_phone, linearLayout_remember;
+    private TextView textView_zhc, textView_wj, textView_title, mTextView_send;
+    private ImageView imageView1, imageView2, imageView_verification;
+    private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone;
     private EditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(false, this);
         setContentView(R.layout.layout_login_activity);
         goBack(findViewById(R.id.back));
         initView();
@@ -66,34 +67,33 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         sharedUtils = SharedUtils.getSharedUtils();
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
-        editText_tel = (EditText) findViewById(R.id.dl_tel);
-        editText_pass = (EditText) findViewById(R.id.dl_pass);
-        editText_tel1 = (EditText) findViewById(R.id.dl_tel2);
-        editText_verification1 = (EditText) findViewById(R.id.dl_verification1);
-        editText_verification2 = (EditText) findViewById(R.id.dl_verification2);
+        editText_tel = F(R.id.dl_tel);
+        editText_pass = F(R.id.dl_pass);
+        editText_tel1 = F(R.id.dl_tel2);
+        editText_verification1 = F(R.id.dl_verification1);
+        editText_verification2 = F(R.id.dl_verification2);
 
-        imageView = (ImageView) findViewById(R.id.img_jzh);
-        imageView3 = (ImageView) findViewById(R.id.imageView3);
-        imageView_verification = (ImageView) findViewById(R.id.login_phone_send1);
+        imageView1 = F(R.id.imageView1);
+        imageView2 = F(R.id.imageView2);
+        imageView_verification = F(R.id.login_phone_send1);
 
-        button = (Button) findViewById(R.id.dl_ok);
-        button1 = (Button) findViewById(R.id.dl_ok2);
-        button_send = (Button) findViewById(R.id.zhc_hq_yzm);
-        button_nomal = (Button) findViewById(R.id.btn_login_nomal);
-        button_phone = (Button) findViewById(R.id.btn_login_phone);
+        button = F(R.id.dl_ok);
+        button1 = F(R.id.dl_ok2);
+        mTextView_send = F(R.id.zhc_hq_yzm);
+        button_nomal = F(R.id.ll_login_nomal);
+        button_phone = F(R.id.ll_login_phone);
 
-        textView_wj = (TextView) findViewById(R.id.dl_wjmm);
-        textView_zhc = (TextView) findViewById(R.id.dl_zhc);
-        textView_title = (TextView) findViewById(R.id.title_rs);
+        textView_wj = F(R.id.dl_wjmm);
+        textView_zhc = F(R.id.dl_zhc);
+        textView_title = F(R.id.title_rs);
 
-        linearLayout_remember = (LinearLayout) findViewById(R.id.linear_jzhmm);
-        linearLayout_nomal = (LinearLayout) findViewById(R.id.linearlayout_login_nomal);
-        linearLayout_phone = (LinearLayout) findViewById(R.id.linearlayout_login_phone);
+        linearLayout_nomal = F(R.id.linearlayout_login_nomal);
+        linearLayout_phone = F(R.id.linearlayout_login_phone);
 
         button.setOnClickListener(this);
         button1.setOnClickListener(this);
         textView_wj.setOnClickListener(this);
-        button_send.setOnClickListener(this);
+        mTextView_send.setOnClickListener(this);
         textView_zhc.setOnClickListener(this);
         button_nomal.setOnClickListener(this);
         button_phone.setOnClickListener(this);
@@ -106,7 +106,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             String password = sharedUtils.getData(this, "password");
             editText_tel.setText(account);
             editText_pass.setText(password);
-            imageView.setImageResource(R.drawable.btn_checkbox_hl);
+//            imageView.setImageResource(R.drawable.btn_checkbox_hl);
             editText_pass.setSelection(editText_pass.getText().length());
             editText_tel.setSelection(editText_tel.getText().length());
         }
@@ -114,11 +114,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
-                    button_send.setText(msg.obj.toString() + "秒后重试");
-                    button_send.setClickable(false);
+                    mTextView_send.setText(msg.obj.toString() + "秒后重试");
+                    mTextView_send.setClickable(false);
                     if (msg.obj.toString().equals("0")) {
-                        button_send.setText("重新发送");
-                        button_send.setClickable(true);
+                        mTextView_send.setText("重新发送");
+                        mTextView_send.setClickable(true);
                     }
                 }
             }
@@ -168,26 +168,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     TextUtils.Toast(this, "手机号码或验证码输入有误！");
                 }
                 break;
-            case R.id.linear_jzhmm:
-                if (clicked == false) {
-                    clicked = true;
-                    imageView.setImageResource(R.drawable.btn_checkbox_hl);
-                } else {
-                    clicked = false;
-                    imageView.setImageResource(R.drawable.btn_checkbox_disabled);
-                }
-                break;
-            case R.id.btn_login_nomal:
+
+            case R.id.ll_login_nomal:
                 textView_title.setText("普通登录");
-                imageView3.setImageResource(R.drawable.btn_switch_common);
+                imageView2.setVisibility(View.GONE);
+                imageView1.setVisibility(View.VISIBLE);
                 linearLayout_phone.setVisibility(View.GONE);
                 linearLayout_nomal.setVisibility(View.VISIBLE);
                 break;
-            case R.id.btn_login_phone:
+            case R.id.ll_login_phone:
                 textView_title.setText("手机动态码登录");
-                imageView3.setImageResource(R.drawable.switch_quick);
-                linearLayout_phone.setVisibility(View.VISIBLE);
+                imageView1.setVisibility(View.GONE);
+                imageView2.setVisibility(View.VISIBLE);
                 linearLayout_nomal.setVisibility(View.GONE);
+                linearLayout_phone.setVisibility(View.VISIBLE);
                 break;
             case R.id.zhc_hq_yzm:
                 checkVCide();

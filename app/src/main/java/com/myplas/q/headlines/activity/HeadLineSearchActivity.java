@@ -2,13 +2,8 @@ package com.myplas.q.headlines.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -25,8 +20,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
-import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -57,7 +51,7 @@ import java.util.TimerTask;
  */
 
 public class HeadLineSearchActivity extends BaseActivity implements View.OnClickListener, ResultCallBack,
-        AdapterView.OnItemClickListener, DialogShowUtils.DialogShowInterface {
+        AdapterView.OnItemClickListener, CommonDialog.DialogShowInterface {
 
     private ListView listView;
     private ImageView imageView;
@@ -121,6 +115,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         gridview_history.setOnItemClickListener(this);
         gridview_subcribe.setOnItemClickListener(this);
         gridview_subcribe_no.setOnItemClickListener(this);
+
         editText.setHintTextColor(getResources().getColor(R.color.color_gray));
         editText.setPadding(20, 0, 0, 0);
 
@@ -269,6 +264,9 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 gridview_history.setAdapter(adapter_grid);
                 SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
                 gridview_subcribe.setAdapter(adapter_grid1);
+
+                keywords = historyBean.getHot_search().getContent();
+                editText.setHint(keywords);
             }
             if (type == 2) {
                 search_default_linear.setVisibility(View.GONE);
@@ -316,8 +314,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     startActivity(intent);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
-                    DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                    dialogShowUtils.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
                 }
             }
         } catch (Exception e) {

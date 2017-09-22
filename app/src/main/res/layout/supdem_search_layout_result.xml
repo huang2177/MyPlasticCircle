@@ -51,7 +51,7 @@
         android:id="@+id/divider_result"
         android:layout_width="match_parent"
         android:layout_height="3px"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <FrameLayout
         android:id="@+id/search_result_framelayout"
@@ -62,7 +62,7 @@
             android:id="@+id/search_listview_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"></ListView>
+            android:divider="@null"/>
 
         <TextView
             android:id="@+id/text_result"
@@ -70,11 +70,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:alpha="0.9"
+            android:alpha="0.8"
             android:background="@drawable/coner_toast"
             android:gravity="center"
             android:padding="10dp"
-            android:textColor="@color/color_white"/>
+            android:textColor="@color/color_white"
+            android:textSize="16.0sp"
+            android:visibility="gone"/>
     </FrameLayout>
 
     <LinearLayout
@@ -109,6 +111,6 @@
             android:layout_marginRight="20dp"
             android:horizontalSpacing="8dp"
             android:numColumns="3"
-            android:verticalSpacing="10dp"></com.myplas.q.common.view.MyGridview>
+            android:verticalSpacing="10dp"/>
     </LinearLayout>
 </LinearLayout>

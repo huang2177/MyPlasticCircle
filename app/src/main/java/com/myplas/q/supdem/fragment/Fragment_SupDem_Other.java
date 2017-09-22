@@ -20,7 +20,7 @@ import com.myplas.q.R;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
@@ -45,7 +45,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_SupDem_Other extends Fragment implements DialogShowUtils.DialogShowInterface,
+public class Fragment_SupDem_Other extends Fragment implements CommonDialog.DialogShowInterface,
         ResultCallBack, View.OnClickListener {
     public int visibleItemCount;
     private SharedUtils sharedUtils;
@@ -243,8 +243,8 @@ public class Fragment_SupDem_Other extends Fragment implements DialogShowUtils.D
             //是否消耗积分
             if (type == 2 && result.equals("99")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(getActivity(), content, 1, this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(getActivity(), content, 1, this);
             }
             //已经消费了积分
             if (type == 2 && result.equals("0")) {
@@ -264,8 +264,8 @@ public class Fragment_SupDem_Other extends Fragment implements DialogShowUtils.D
             //积分不够
             if (type == 3 && !result.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(getActivity(), content, (result.equals("100")) ? (2) : (3), this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(getActivity(), content, (result.equals("100")) ? (2) : (3), this);
             }
         } catch (Exception e) {
         }

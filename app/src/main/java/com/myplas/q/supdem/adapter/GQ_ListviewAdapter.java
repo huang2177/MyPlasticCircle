@@ -18,7 +18,7 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
@@ -42,7 +42,7 @@ import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/19 14:55
  */
-public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, DialogShowUtils.DialogShowInterface {
+public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, CommonDialog.DialogShowInterface {
     Context context;
     String type, user_id, id_;
     List<Supply_DemandBean.DataBean> list;
@@ -107,7 +107,7 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
         try {
             Glide.with(context)
                     .load(list.get(position).getThumb())
-                    .placeholder((list.get(position).getSex().equals("男"))?(R.drawable.contact_image_defaul_male):(R.drawable.contact_image_defaul_female))
+                    .placeholder((list.get(position).getSex().equals("男")) ? (R.drawable.contact_image_defaul_male) : (R.drawable.contact_image_defaul_female))
                     .into(viewHolder.tx);
             Spanned s1 = replace(list.get(position).getC_name());
             viewHolder.gs.setText((s1.length() > 15) ? (s1.subSequence(0, 15) + "...") : (s1));
@@ -153,14 +153,14 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
         viewHolder.isbuyed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               goToDetail(position,"1");
+                goToDetail(position, "1");
             }
         });
         //回复
         viewHolder.repeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDetail(position,"2");
+                goToDetail(position, "2");
             }
         });
         //重发
@@ -169,6 +169,7 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
             public void onClick(View v) {
                 Intent intent = new Intent(context, ReleaseSupDemActivity.class);
                 intent.putExtra("id", (list.get(position).getId()));
+                intent.putExtra("type", list.get(position).getType());
                 context.startActivity(intent);
             }
         });
@@ -176,19 +177,20 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
         viewHolder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s=(list.get(position).getType().equals("1"))?("求购信息："):("供给信息：");
+                String s = (list.get(position).getType().equals("1")) ? ("求购信息：") : ("供给信息：");
                 Intent in = new Intent(context, ShareActivity.class);
                 in.putExtra("type", "4");
                 in.putExtra("id", list.get(position).getId());
-                in.putExtra("title", s+ list.get(position).getContents());
+                in.putExtra("title", s + list.get(position).getContents());
                 in.putExtra("t", list.get(position).getType());
                 context.startActivity(in);
             }
         });
         return convertView;
     }
+
     //跳转至详情
-    public void goToDetail(int position,String type){
+    public void goToDetail(int position, String type) {
         Intent intent = new Intent(context, SupDem_Detail_Activity.class);
         String id_ = list.get(position).getId();
         String userid = list.get(position).getUser_id();
@@ -224,8 +226,8 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
             //是否消耗积分
             if (type == 1 && err.equals("99")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(context, content, 1, this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(context, content, 1, this);
             }
             //已经消费了积分
             if (type == 1 && err.equals("0")) {
@@ -245,8 +247,8 @@ public class GQ_ListviewAdapter extends BaseAdapter implements ResultCallBack, D
             //积分不够
             if (type == 2 && !err.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(context, content, (err.equals("100")) ? (2) : (3), this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(context, content, (err.equals("100")) ? (2) : (3), this);
             }
         } catch (JSONException e) {
         }

@@ -25,7 +25,7 @@ import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyLinearLayout;
@@ -52,11 +52,11 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_SupDem_All extends Fragment implements View.OnClickListener, DialogShowUtils.DialogShowInterface,
+public class Fragment_SupDem_All extends Fragment implements View.OnClickListener, CommonDialog.DialogShowInterface,
         ResultCallBack, RefreshableView.onRefreshListener {
     private Activity context;
     private ItemBean itemBean;
-    private boolean isRefresh;
+    public boolean isRefresh;
     public int visibleItemCount;
     private SharedUtils sharedUtils;
 
@@ -73,7 +73,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     private TextView gs, content, time, isbuyed, repeat;
     private List<Supply_DemandBean.DataBean> list, list_more;
     private LinearLayout linearLayout_prompt, linearLayout_firstitem, linearLayout_up, linearLayout_down;
-    private ShowRefreshPopouinterface showRefreshPopouinterface;
+
+    private ShowRefreshPopouinterface mPopouinterface;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -266,10 +267,10 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                         gq_listview.setAdapter(gq_listviewAdapter);
                         list_more = list;
                         list = null;
+
                         //展示已更新多少数据
-                        showRefreshPopou(supply_demandBean.getShow_msg());
-                        //加载更多
-                    } else if (list.size() != 0) {
+                        mPopouinterface.showRefreshPopou(supply_demandBean.getHot_search(), supply_demandBean.getShow_msg(), isRefresh);
+                    } else if (list.size() != 0) { //加载更多
                         isRefresh = false;
                         list_more.addAll(list);
                         gq_listviewAdapter.setList(list_more);
@@ -349,8 +350,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             //是否消耗积分
             if (type == 2 && result.equals("99")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(getActivity(), content, 1, this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(getActivity(), content, 1, this);
             }
             //已经消费了积分
             if (type == 2 && result.equals("0")) {
@@ -369,8 +370,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             //积分不够
             if (type == 3 && !result.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(getActivity(), content, (result.equals("100")) ? (2) : (3), this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(getActivity(), content, (result.equals("100")) ? (2) : (3), this);
             }
         } catch (Exception e) {
         }
@@ -452,21 +453,13 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         getNetData(getActivity(), itemBean.page + "", itemBean.keywords, itemBean.sortField1, itemBean.sortField2, itemBean.type, false);
     }
 
-    public void showRefreshPopou(String text) {
-        if (isRefresh) {
-            isRefresh = false;
-            showRefreshPopouinterface.showRefreshPopou((TextUtils.isNullOrEmpty(text))
-                    ? (text)
-                    : "已是最新供求信息！");
-        }
-    }
 
     public void setShowRefreshPopouinterface(ShowRefreshPopouinterface showRefreshPopouinterface) {
-        this.showRefreshPopouinterface = showRefreshPopouinterface;
+        this.mPopouinterface = showRefreshPopouinterface;
     }
 
     public interface ShowRefreshPopouinterface {
-        void showRefreshPopou(String text);
+        void showRefreshPopou(String content, String hotSearch, boolean isRefresh);
     }
 }
 

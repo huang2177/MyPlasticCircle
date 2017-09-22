@@ -7,13 +7,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <LinearLayout
         android:id="@+id/wd_linear_dd"
@@ -36,20 +36,19 @@
             android:id="@+id/wd_text_dd"
             style="@style/wd_text2_style"
             android:layout_weight="0"
-            android:drawableRight="@drawable/icon_more"
-            android:text="  "/>
+            android:drawableRight="@drawable/icon_more"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,14 +75,14 @@
                 android:id="@+id/wd_text_gj"
                 style="@style/wd_text2_style"
                 android:layout_weight="0"
-                android:drawableRight="@drawable/icon_more"
-                android:text="  "/>
+                android:drawablePadding="3dp"
+                android:drawableRight="@drawable/icon_more"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_in"></View>
+            android:background="@color/color_gray_divider_in"/>
 
         <LinearLayout
             android:id="@+id/wd_linear_qg"
@@ -104,21 +103,21 @@
                 android:id="@+id/wd_text_qg"
                 style="@style/wd_text2_style"
                 android:layout_weight="0"
-                android:drawableRight="@drawable/icon_more"
-                android:text="  "/>
+                android:drawablePadding="3dp"
+                android:drawableRight="@drawable/icon_more"/>
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
 
     <LinearLayout
@@ -161,13 +160,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
 
     <LinearLayout
@@ -192,20 +191,20 @@
             android:id="@+id/wd_text_look"
             style="@style/wd_text2_style"
             android:layout_weight="0"
-            android:drawableRight="@drawable/icon_more"
-            android:text="  "/>
+            android:drawablePadding="3dp"
+            android:drawableRight="@drawable/icon_more"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -238,7 +237,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_in"></View>
+            android:background="@color/color_gray_divider_in"/>
 
         <LinearLayout
             android:id="@+id/wd_linear_pz"
@@ -258,21 +257,20 @@
             <TextView
                 style="@style/wd_text2_style"
                 android:layout_weight="0"
-                android:drawableRight="@drawable/icon_more"
-                android:text="  "/>
+                android:drawableRight="@drawable/icon_more"/>
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
     <LinearLayout
         android:id="@+id/wd_linear_set"
@@ -297,14 +295,13 @@
             android:id="@+id/wd_text_set"
             style="@style/wd_text2_style"
             android:layout_weight="0"
-            android:drawableRight="@drawable/icon_more"
-            android:text="  "/>
+            android:drawableRight="@drawable/icon_more"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginBottom="20dp"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
 </LinearLayout>

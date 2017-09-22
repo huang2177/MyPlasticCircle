@@ -1,7 +1,9 @@
 package com.myplas.q.myinfo.fans.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +23,7 @@ import com.myplas.q.myinfo.fans.adapter.PersonSupplyDemandAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myinfo.beans.PersonInfoBean;
 import com.myplas.q.myinfo.beans.PersonSupplyDemadBean;
+import com.tencent.mm.sdk.platformtools.Log;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -104,6 +107,12 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 case R.id.xq_tx:
                     Intent In = new Intent(this, BigImageViewActivity.class);
                     In.putExtra("imgurl", personinfo.getData().getThumb());
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        startActivity(In, ActivityOptions.makeSceneTransitionAnimation(this
+//                                , image_tx
+//                                , "sharedView").toBundle());
+//                    } else {
+//                    }
                     startActivity(In);
                     break;
                 case R.id.more_demand:
@@ -166,7 +175,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         map.put("page", "1");//求购
         map.put("size", "50");
         String url = API.BASEURL + API.GET_TA_PUR;
-        postAsyn(this, url, map, this, type1);
+        postAsyn1(this, url, map, this, type1, false);
     }
 
     public void showInfo(PersonInfoBean mySelfInfo) {
@@ -180,6 +189,8 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
             image_rz.setImageResource((mySelfInfo.getData().getIs_pass().equals("0"))
                     ? (R.drawable.icon_identity)
                     : (R.drawable.icon_identity_hl));
+
+            Log.e("------", mySelfInfo.getData().getIs_pass());
             btn_care.setText(mySelfInfo.getData().getStatus());
             text_name.setText(mySelfInfo.getData().getName()
                     + "  " + mySelfInfo.getData().getSex());

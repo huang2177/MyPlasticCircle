@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical">
 
     <TextView
@@ -10,9 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:background="@drawable/coner_signed"
         android:padding="5dp"
-        android:layout_marginTop="8dp"
         android:textColor="@color/color_white"/>
 
     <android.support.v7.widget.CardView
@@ -20,10 +20,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:cardElevation="8dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/msg_detail_title"
                 android:layout_width="match_parent"
@@ -34,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/shape_dashedline"
-                android:layerType="software"></View>
+                android:layerType="software"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,15 +47,13 @@
                 <TextView
                     android:id="@+id/msg_detail_company"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="上海中晨电子商务有限公司"/>
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/msg_detail_tel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="联系电话：15378412400"/>
+                    android:layout_marginTop="5dp"/>
 
                 <TextView
                     android:id="@+id/msg_detail_type"
@@ -79,23 +79,21 @@
                         android:id="@+id/msg_detail_pro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="产品：7000F泰国  BL3  7000F 7000F泰国  BL3  7000F"/>
+                        android:maxLines="1"/>
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/msg_detail_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="回复内容：你好！我需要30吨，宝山自提，什么价格？你好！我需要30吨，宝山自提，什么价格？你好！我需要30吨，宝山自提，什么价格？"/>
+                    android:layout_marginTop="5dp"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/shape_dashedline"
-                android:layerType="software"></View>
+                android:layerType="software"/>
 
             <LinearLayout
                 android:id="@+id/msg_detail_detail"
@@ -105,14 +103,16 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="详情"/>
+                    android:text="详情"
+                    android:textColor="@color/color_transparent"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:src="@drawable/btn_more_small"/>
             </LinearLayout>
         </LinearLayout>

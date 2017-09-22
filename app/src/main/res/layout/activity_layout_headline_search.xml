@@ -4,9 +4,9 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/supdem_search_layout_title"></include>
+    <include layout="@layout/supdem_search_layout_title"/>
 
-    <include layout="@layout/supdem_search_layout_default"></include>
+    <include layout="@layout/supdem_search_layout_default"/>
 
-    <include layout="@layout/activity_layout_headline_search_result"></include>
+    <include layout="@layout/activity_layout_headline_search_result"/>
 </LinearLayout>

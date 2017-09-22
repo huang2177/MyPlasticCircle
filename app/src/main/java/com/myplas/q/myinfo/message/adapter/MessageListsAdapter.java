@@ -1,5 +1,6 @@
 package com.myplas.q.myinfo.message.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class MessageListsAdapter extends BaseAdapter {
     Map<Integer, View> mViewMap;
     List<MyMessageBean.DataBean> list;
 
+    @SuppressLint("UseSparseArrays")
     public MessageListsAdapter(Context context, List<MyMessageBean.DataBean> list) {
         this.list = list;
         this.context = context;

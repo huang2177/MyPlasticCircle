@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -31,7 +31,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 16:29
  */
-public class SupDemAdapter extends BaseAdapter implements ResultCallBack, DialogShowUtils.DialogShowInterface {
+public class SupDemAdapter extends BaseAdapter implements ResultCallBack, CommonDialog.DialogShowInterface {
     String type;
     Context context;
     MyInterface myInterface;
@@ -136,8 +136,8 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Dialog
             @Override
             public void onClick(View v) {
                 SupDemAdapter.this.position = position;
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(context, "确定删除?", 1, SupDemAdapter.this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(context, "确定删除?", 1, SupDemAdapter.this);
             }
         });
         //分享

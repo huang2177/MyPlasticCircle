@@ -31,7 +31,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_in"></View>
+            android:background="@color/color_gray_divider_in"/>
 
         <LinearLayout
             android:id="@+id/supply_demand_listview"
@@ -55,7 +55,7 @@
                     android:text="*请选择要置顶的供求信息(限选一条):"/>
             </LinearLayout>
 
-            <include layout="@layout/layout_integral_supdem_issleteced1"></include>
+            <include layout="@layout/layout_integral_supdem_issleteced1"/>
 
             <TextView
                 android:layout_width="45dp"
@@ -70,7 +70,7 @@
             android:id="@+id/shm"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_in"></TextView>
+            android:background="@color/color_gray_divider_in"/>
 
         <LinearLayout
             android:id="@+id/linear_time_dialog"
@@ -94,7 +94,7 @@
                     android:text="*请选择置顶日期："/>
             </LinearLayout>
 
-            <include layout="@layout/layout_integral_date_issleteced"></include>
+            <include layout="@layout/layout_integral_date_issleteced"/>
 
             <TextView
                 android:layout_width="45dp"
@@ -108,7 +108,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_in"></View>
+            android:background="@color/color_gray_divider_in"/>
 
         <LinearLayout
             android:layout_width="match_parent"

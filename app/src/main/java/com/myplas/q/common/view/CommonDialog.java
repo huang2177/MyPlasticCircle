@@ -1,4 +1,4 @@
-package com.myplas.q.common.utils;
+package com.myplas.q.common.view;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,7 +18,7 @@ import com.myplas.q.R;
  * 邮箱：15378412400@163.com
  * 时间：2017/5/16 20:05
  */
-public class DialogShowUtils {
+public class CommonDialog {
     private int type;
     private Dialog normalDialog;
     private Button button_cancle, button_ok;
@@ -27,7 +27,7 @@ public class DialogShowUtils {
 
     private boolean isCanceledOnTouchOutside = true;
 
-    public DialogShowUtils() {
+    public CommonDialog() {
     }
 
     public void showDialog(Context context, String content, int type, DialogShowInterface dialogShowInterface) {
@@ -65,8 +65,8 @@ public class DialogShowUtils {
         button_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (DialogShowUtils.this.type != 3) {
-                    DialogShowUtils.this.dialogShowInterface.ok(DialogShowUtils.this.type);
+                if (CommonDialog.this.type != 3) {
+                    CommonDialog.this.dialogShowInterface.ok(CommonDialog.this.type);
                 }
                 normalDialog.dismiss();
             }
@@ -103,7 +103,7 @@ public class DialogShowUtils {
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.CENTER;
         lp.width = (int) ((width * 2) / 3.1);//宽高可设置具体大小
-        lp.height = (int) (height / 4.9);
+        lp.height = (int) (height / 4.88);
 //        lp.height=lp.WRAP_CONTENT;
         normalDialog.getWindow().setAttributes(lp);
     }

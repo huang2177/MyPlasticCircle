@@ -9,12 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -23,10 +21,9 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.FileUtils;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.view.MyListview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.beans.MySelfInfo;
@@ -50,7 +47,7 @@ import java.util.Map;
  * Created by Administrator on 2017/7/31 0031.
  */
 
-public class SettingActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface, SettingAdapter.mySwitchCheckedListenler {
+public class SettingActivity extends BaseActivity implements ResultCallBack, CommonDialog.DialogShowInterface, SettingAdapter.mySwitchCheckedListenler {
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
@@ -88,8 +85,8 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
             @Override
             public void onClick(View v) {
                 String content = "确定退出?";
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(SettingActivity.this, content, 4, SettingActivity.this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(SettingActivity.this, content, 4, SettingActivity.this);
             }
         });
 
@@ -152,8 +149,8 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
                         break;
                     case 6:
                         String content = "确定清除？";
-                        DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                        dialogShowUtils.showDialog(SettingActivity.this, content, 10, SettingActivity.this);
+                        CommonDialog commonDialog = new CommonDialog();
+                        commonDialog.showDialog(SettingActivity.this, content, 10, SettingActivity.this);
                         break;
                     case 7:
                         Uri uri = Uri.parse("market://details?id=" + getPackageName());
@@ -177,9 +174,9 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
         postAsyn(this, url, map, this, 3);
     }
 
-    public void saveSelfInfo(String method, Map map, int type) {
+    public void saveSelfInfo(String method, Map map, int type, boolean isShowDialog) {
         String url = API.BASEURL + method;
-        postAsyn(this, url, map, this, type);
+        postAsyn1(this, url, map, this, type, isShowDialog);
     }
 
     @Override
@@ -225,7 +222,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
         map.put("type", "2");
         map.put("is_allow", s);
         map.put("token", sharedUtils.getData(this, "token"));
-        saveSelfInfo(API.FAVORATE_SET, map, 2);
+        saveSelfInfo(API.FAVORATE_SET, map, 2, false);
     }
 
     @Override
@@ -234,12 +231,12 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
             Map<String, String> map = new HashMap<String, String>();
             map.put("token", sharedUtils.getData(this, "token"));
             String url = API.BASEURL + API.MY_ZONE;
-            BaseActivity.postAsyn1(this, url, map, this, 1, true);
+            postAsyn(this, url, map, this, 1);
         }
         if (type == 10) {//清除缓存；
-            showDialog();
+//            showDialog();
             FileUtils.clearAllCache(this);
-            normalDialog.dismiss();
+            //normalDialog.dismiss();
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -276,8 +273,8 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Dia
 
     public void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
         requestNetData();
+        MobclickAgent.onResume(this);
     }
 
     public void onPause() {

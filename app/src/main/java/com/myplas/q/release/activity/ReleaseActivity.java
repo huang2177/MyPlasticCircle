@@ -88,7 +88,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
                 startActivity(intent1);
                 break;
             case R.id.fb_back_imgbtn:
-                finish();
+                onBackPressed();
+//                finish();
                 break;
         }
     }
@@ -98,7 +99,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         map.put("type", type);
         map.put("page", "1");
         map.put("size", "5");
-        postAsyn(this, API.BASEURL + API.SUPPLYDEMAND_LIST, map, this, t);
+        postAsyn1(this, API.BASEURL + API.SUPPLYDEMAND_LIST, map, this, t, false);
     }
 
     @Override

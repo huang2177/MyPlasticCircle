@@ -1,22 +1,22 @@
 package com.myplas.q.myinfo.integral.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.myinfo.integral.adapter.Integral_Record_Adapter;
-import com.myplas.q.myinfo.beans.RecordBean;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.myinfo.beans.RecordBean;
+import com.myplas.q.myinfo.integral.adapter.Integral_Record_Adapter;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -50,9 +50,9 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
         goBack(findViewById(R.id.back));
 
         list = new ArrayList<>();
-        sharedUtils = SharedUtils.getSharedUtils();
         textView = F(R.id.integral_text);
         layout = F(R.id.integral_prompt);
+        sharedUtils = SharedUtils.getSharedUtils();
         listView = F(R.id.integral_record_listview);
 
         //加载更多

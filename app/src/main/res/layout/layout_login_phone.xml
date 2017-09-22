@@ -1,105 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/linearlayout_login_phone"
-    android:visibility="gone"
-    android:orientation="vertical">
-    <EditText
-        android:textSize="14.0sp"
+              xmlns:huang="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/linearlayout_login_phone"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:visibility="gone">
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_user_name"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="请填写手机号码"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:paddingLeft="3dp"
-        android:paddingRight="5dp"
-        android:inputType="number"
-        android:maxLength="11"
-        android:drawableRight="@drawable/icon_username"
-        android:textSelectHandle="@drawable/textselecthandle"
-        android:textSelectHandleLeft="@drawable/textselecthandle"
-        android:textSelectHandleRight="@drawable/textselecthandle"
-        android:textCursorDrawable="@drawable/text_cursor_shape"
-        android:background="@drawable/corner_titlebar"
-        android:id="@+id/dl_tel2"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/colorAccent"
+        huang:counterOverflowTextAppearance="@style/counterOverflowTextColor">
+
         <EditText
-            android:textSize="14.0sp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:hint="请填写验证码"
-            android:paddingLeft="3dp"
-            android:paddingRight="5dp"
-            android:drawableRight="@drawable/icon_text"
+            android:id="@+id/dl_tel2"
+            style="@style/login_edittext"
+            android:background="@null"
+            android:drawableLeft="@drawable/icon_username"
+            android:hint="请填写手机号"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textCursorDrawable="@drawable/text_cursor_shape"
             android:textSelectHandle="@drawable/textselecthandle"
             android:textSelectHandleLeft="@drawable/textselecthandle"
-            android:textSelectHandleRight="@drawable/textselecthandle"
-            android:textCursorDrawable="@drawable/text_cursor_shape"
-            android:background="@drawable/corner_titlebar"
-            android:id="@+id/dl_verification1"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/bg_verification_code"
-            android:id="@+id/login_phone_send1"/>
-    </LinearLayout>
+            android:textSelectHandleRight="@drawable/textselecthandle"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorAccent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
-        <EditText
-            android:textSize="14.0sp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:hint="请填写动态码"
-            android:paddingLeft="3dp"
-            android:paddingRight="5dp"
-            android:drawableRight="@drawable/icon_phone"
-            android:textSelectHandle="@drawable/textselecthandle"
-            android:textSelectHandleLeft="@drawable/textselecthandle"
-            android:textSelectHandleRight="@drawable/textselecthandle"
-            android:textCursorDrawable="@drawable/text_cursor_shape"
-            android:background="@drawable/corner_titlebar"
-            android:id="@+id/dl_verification2"/>
-        <Button
-            android:id="@+id/zhc_hq_yzm"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            android:textColorHint="@color/colorAccent"
+            huang:errorTextAppearance="@style/counterOverflowTextColor"
+            huang:passwordToggleEnabled="false"
+            huang:passwordToggleTint="@color/color_red"
+            huang:passwordToggleTintMode="src_atop">
+
+            <EditText
+                android:id="@+id/dl_verification1"
+                style="@style/login_edittext"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_number_code"
+                android:hint="请填写验证码"
+                android:inputType="textPassword"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
+                android:textSelectHandle="@drawable/textselecthandle"
+                android:textSelectHandleLeft="@drawable/textselecthandle"
+                android:textSelectHandleRight="@drawable/textselecthandle"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/login_phone_send1"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_verification_code"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorAccent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:textColorHint="@color/colorAccent"
+            huang:errorTextAppearance="@style/counterOverflowTextColor"
+            huang:passwordToggleEnabled="false"
+            huang:passwordToggleTint="@color/color_red"
+            huang:passwordToggleTintMode="src_atop">
+
+            <EditText
+                android:id="@+id/dl_verification2"
+                style="@style/login_edittext"
+                android:background="@null"
+                android:drawableLeft="@drawable/icon_phone_code"
+                android:hint="请填写动态码"
+                android:inputType="textPassword"
+                android:textCursorDrawable="@drawable/text_cursor_shape"
+                android:textSelectHandle="@drawable/textselecthandle"
+                android:textSelectHandleLeft="@drawable/textselecthandle"
+                android:textSelectHandleRight="@drawable/textselecthandle"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/zhc_hq_yzm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
             android:layout_marginLeft="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/btn_xq_yzm"
+            android:gravity="center"
+            android:padding="5dp"
             android:text="获取动态码"
-            android:textColor="@color/color_white" />
+            android:textColor="@color/color_white"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorAccent"/>
+
     <Button
+        android:id="@+id/dl_ok2"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_btn_shape"
         android:text="登录"
         android:textColor="@color/color_white"
-        android:textSize="16.0sp"
-        android:id="@+id/dl_ok2"
-        android:background="@drawable/btn_xq_chujian"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="30dp"/>
+        android:textSize="16.0sp"/>
 </LinearLayout>

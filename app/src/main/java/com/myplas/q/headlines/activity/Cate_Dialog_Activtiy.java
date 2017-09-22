@@ -13,10 +13,8 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.AndroidUtil;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -40,7 +38,7 @@ import java.util.Map;
  * 时间： 2017/6/81123.
  */
 
-public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack, View.OnClickListener, DialogShowUtils.DialogShowInterface {
+public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack, View.OnClickListener, CommonDialog.DialogShowInterface {
     private MyCateBean myCateBean;
     private ImageView cate_img_back;
     private HeadLine_Column_Adapetr column_adapetr;
@@ -265,8 +263,8 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            DialogShowUtils dialogShowUtils = new DialogShowUtils();
-            dialogShowUtils.showDialog(this, "您所选栏目还未保存！确定离开？", 1, this);
+            CommonDialog commonDialog = new CommonDialog();
+            commonDialog.showDialog(this, "您所选栏目还未保存！确定离开？", 1, this);
         }
         return true;
     }

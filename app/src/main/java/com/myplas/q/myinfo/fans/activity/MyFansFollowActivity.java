@@ -15,11 +15,10 @@ import com.myplas.q.addresslist.Beans.MyFansBean;
 import com.myplas.q.addresslist.adapter.MyFansFollowAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.DialogShowUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.MyFollowBean;
 import com.myplas.q.myinfo.fans.adapter.MyFollowAdapter;
@@ -39,7 +38,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:15
  */
-public class MyFansFollowActivity extends BaseActivity implements ResultCallBack, DialogShowUtils.DialogShowInterface {
+public class MyFansFollowActivity extends BaseActivity implements ResultCallBack, CommonDialog.DialogShowInterface {
     private ListView listView;
     private Dialog normalDialog;
     private TextView textView_title;
@@ -184,8 +183,8 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
             //是否消耗积分//
             if (type == 5 && err.equals("99")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(this, content, 1, this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(this, content, 1, this);
             }
             //已经消耗积分
             if (type == 5 && err.equals("0")) {
@@ -204,8 +203,8 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
             //积分不足
             if (type == 3 && !err.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
-                DialogShowUtils dialogShowUtils = new DialogShowUtils();
-                dialogShowUtils.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
             }
         } catch (Exception e) {
         }
