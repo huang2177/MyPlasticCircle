@@ -77,4 +77,5 @@ dependencies {
     compile 'com.androidadvance:topsnackbar:1.1.1'
     compile 'q.rorbin:badgeview:1.0.5'
     compile 'com.rabbitmq:amqp-client:4.2.1'
+    compile 'com.github.jiang111:IndicatorDialog:v1.2.2'
 }

@@ -2,8 +2,10 @@ package com.myplas.q.supdem.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -25,7 +27,10 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
-import com.myplas.q.common.view.wechatpopou.DropDownListView;
+import com.huangbryant.mylibrary.wechatpopou.BaseAdapter;
+import com.huangbryant.mylibrary.wechatpopou.DropDownListView;
+import com.huangbryant.mylibrary.wechatpopou.IndicatorBuilder;
+import com.huangbryant.mylibrary.wechatpopou.IndicatorDialog;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.supdem.Beans.HistoryBean;
 import com.myplas.q.supdem.Beans.SearchNoResultBean;
@@ -85,6 +90,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private boolean hasMoerData = true;
     private boolean spinnerSelected = false;
     private boolean isFinifsh;
+    private ArrayList<String> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +115,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         layout_add = F(R.id.relative_result_add);
         layout_time = F(R.id.relative_result_time);
         textView = F(R.id.supplydemand_btn_search);
-        textView_no = F(R.id.search_result_text_null);
         editText = F(R.id.supplydemand_search_edit);
+        textView_no = F(R.id.search_result_text_null);
         frameLayout = F(R.id.search_result_framelayout);
         gridview_subcribe_no = F(R.id.mygrid_search_null);
         gridview_history = F(R.id.mygrid_search_history);
@@ -138,10 +144,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         }
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         //spinner.setAdapter(adapter);
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("供给");
-        list.add("求购");
-        spinner.setItemsData(list);
+        mList = new ArrayList<String>();
+        mList.add("供给");
+        mList.add("求购");
+        spinner.setItemsData(mList);
         spinner.setVisibility(View.VISIBLE);
 
 
@@ -246,6 +252,55 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 //                hasMoerData = true;
 //                keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
 //                getPhysical_Search(1, keywords, time, is_buy, area);
+                IndicatorDialog dialog = new IndicatorBuilder(this) //must be activity
+                        .width(200)   // the dialog width in px
+                        .height(-1)  // the dialog max height in px or -1 (means auto fit)
+                        .ArrowDirection(IndicatorBuilder.TOP)  // the  position of dialog's arrow indicator  (TOP or BOTTOM)
+                        .bgColor(Color.parseColor("#999898"))  // the bg color of the dialog
+                        .gravity(IndicatorBuilder.GRAVITY_LEFT)   // dialog' sgravity (GRAVITY_LEFT or GRAVITY_RIGHT or GRAVITY_CENTER)
+                        .radius(8) // the radius in dialog
+                        .ArrowRectage(0.2f)  // the arrow's offset Relative to the dialog's width
+                        .arrowWidth(0)
+                        .layoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+                        .dimEnabled(false)
+                        .adapter(new BaseAdapter() {
+                            @Override
+                            public void onBindView(BaseViewHolder holder, int position) {
+                                TextView tv = holder.getView(R.id.item_add);
+                                tv.setText(mList.get(position));
+                                //  tv.setCompoundDrawablesWithIntrinsicBounds(mICons.get(position), 0, 0, 0);
+
+//                                if (position == list.size() - 1) {
+//                                    holder.setVisibility(R.id.item_line, BaseViewHolder.GONE);
+//                                } else {
+//                                    holder.setVisibility(R.id.item_line, BaseViewHolder.VISIBLE);
+//
+//                                }
+                            }
+
+                            @Override
+                            public int getLayoutID(int position) {
+                                return R.layout.popou_wechat_item_layout;
+                            }
+
+                            @Override
+                            public boolean clickable() {
+                                return true;
+                            }
+
+                            @Override
+                            public void onItemClick(View v, int position) {
+                            }
+
+                            @Override
+                            public int getItemCount() {
+                                return mList.size();
+                            }
+                        }).create();
+                dialog.setCanceledOnTouchOutside(true); // outside cancelable
+                dialog.show(spinner); // or use dialog.show(x,y); to determine the location of dialog
+//                dialog.dismiss();  //dismiss the dialog
+//                dialog.getDialog(); // get the real dialog object
                 break;
             case R.id.img_search_delete:
                 delSearch_Record();

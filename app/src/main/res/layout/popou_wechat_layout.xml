@@ -10,7 +10,7 @@
     card_view:cardMaxElevation="0dp">
 
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/j_dialog_rv"
         android:layout_width="70dp"
         android:layout_height="wrap_content"/>
