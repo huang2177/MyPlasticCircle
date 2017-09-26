@@ -219,8 +219,6 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             mBanner.setIndicatorGravity(BannerConfig.RIGHT);
             //banner设置方法全部调用完毕时最后调用
             mBanner.start();
-        } else {
-            mBanner.setVisibility(View.GONE);
         }
     }
 

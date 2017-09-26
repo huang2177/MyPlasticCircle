@@ -176,13 +176,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     break;
                 case R.id.buttom_linear_jia:
                     Intent intent = new Intent(this, ReleaseActivity.class);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this
-                                , layout_jia
-                                , "sharedView1").toBundle());
-                    } else {
-                        startActivity(intent);
-                    }
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this
+//                                , layout_jia
+//                                , "sharedView1").toBundle());
+//                    } else {
+//                    }
+                    startActivity(intent);
                     break;
             }
         } else {

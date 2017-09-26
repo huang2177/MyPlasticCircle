@@ -46,18 +46,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private String key;
     private Handler mHandler;
     private SharedUtils sharedUtils;
-    private boolean clicked, isRemember;
     private ImageView mImageView1, mImageView2;
-    private TextView textView_zhc, textView_wj, textView_title, mTextView_send;
+    private boolean clicked, isRemember, isNomalNull, isPhoneNull;
     private ImageView imageView1, imageView2, imageView_verification;
+    private TextView textView_zhc, textView_wj, textView_title, mTextView_send;
     private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone;
     private MyEditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusUtils.setStatusBar(this, false, false);
-        StatusUtils.setStatusTextColor(true, this);
+//        StatusUtils.setStatusBar(this, false, false);
+//        StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_login_activity);
         goBack(findViewById(R.id.back));
         initView();
@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             String password = sharedUtils.getData(this, "password");
             editText_tel.setText(account);
             editText_pass.setText(password);
-//            imageView.setImageResource(R.drawable.btn_checkbox_hl);
+            mImageView1.setImageResource(R.drawable.btn_login_hl);
             editText_pass.setSelection(editText_pass.getText().length());
             editText_tel.setSelection(editText_tel.getText().length());
         }
@@ -155,6 +155,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     map.put("password", editText_pass.getText().toString());
                     map.put("chanel", "6");
                     postAsyn(this, API.BASEURL + API.LOGIN, map, this, 1);
+                    mImageView1.setClickable(false);
+                    mImageView1.setImageResource(R.drawable.btn_login);
                 } else {
                     TextUtils.Toast(this, "手机号码或密码输入有误！");
                 }
@@ -171,6 +173,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     map.put("key", key);
                     //登陆；
                     postAsyn(this, API.BASEURL + API.SIMPLE_LOGIN, map, this, 1);
+                    mImageView2.setClickable(false);
+                    mImageView2.setImageResource(R.drawable.btn_login);
                 } else {
                     TextUtils.Toast(this, "手机号码或验证码输入有误！");
                 }
@@ -237,6 +241,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         try {
             String s = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
+                mImageView1.setClickable(true);
+                mImageView2.setClickable(true);
+                mImageView1.setImageResource(isNomalNull ? R.drawable.btn_login_hl : R.drawable.btn_login);
+                mImageView2.setImageResource(isPhoneNull ? R.drawable.btn_login_hl : R.drawable.btn_login);
+
                 String msg = new JSONObject(object.toString()).getString("msg");
                 TextUtils.Toast(this, msg);
                 if (s.equals("0")) {
@@ -280,26 +289,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void failCallBack(int type) {
-
+        if (type == 1) {
+            mImageView1.setClickable(true);
+            mImageView2.setClickable(true);
+            mImageView1.setImageResource(isNomalNull
+                    ? R.drawable.btn_login_hl
+                    : R.drawable.btn_login);
+            mImageView2.setImageResource(isPhoneNull
+                    ? R.drawable.btn_login_hl
+                    : R.drawable.btn_login);
+        }
     }
 
     //edittext的内容变化监听：
     @Override
     public void onTextChanged(View v, String s) {
-        Log.e("-------", s + "-------");
         if (linearLayout_nomal.getVisibility() == View.VISIBLE) {
-            boolean isNull = TextUtils.isNullOrEmpty(editText_tel.getText().toString())
+
+            isNomalNull = TextUtils.isNullOrEmpty(editText_tel.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_pass.getText().toString());
-            if (isNull) {
-                imageView1.setImageResource(R.drawable.btn_login_hl);
-            }
+            mImageView1.setImageResource(isNomalNull
+                    ? R.drawable.btn_login_hl
+                    : R.drawable.btn_login);
         } else {
-            boolean isNull = TextUtils.isNullOrEmpty(editText_tel1.getText().toString())
+            isPhoneNull = TextUtils.isNullOrEmpty(editText_tel1.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_verification1.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_verification1.getText().toString());
-            if (isNull) {
-                imageView2.setImageResource(R.drawable.btn_login_hl);
-            }
+            mImageView2.setImageResource(isPhoneNull
+                    ? R.drawable.btn_login_hl
+                    : R.drawable.btn_login);
         }
 
     }

@@ -40,7 +40,7 @@ public class MyEditText extends EditText implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         String string = s.toString();
-        if (TextUtils.isNullOrEmpty(string)) {
+        if (mOnTextWatcher != null) {
             mOnTextWatcher.onTextChanged(this, string);
         }
     }

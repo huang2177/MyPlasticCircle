@@ -16,8 +16,8 @@ android {
         applicationId "com.myplas.q"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 93
-        versionName "3.8."
+        versionCode 95
+        versionName "3.8.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -43,8 +43,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.okio:okio:1.5.0'
@@ -52,13 +53,27 @@ dependencies {
     compile 'io.github.openfeign:feign-gson:9.4.0'
     compile files('libs/glide-3.6.1.jar')
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
-    compile files('libs/libammsdk.jar')
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile('com.sobot.chat:sobotsdk:2.1.0') {
         exclude group: 'com.android.support'
     }
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.3.4'
     compile 'com.optimus:editTextField:0.2.0'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1+'
+    compile 'com.yanzhenjie:album:1.0.7'
+    compile 'com.yanzhenjie:durban:1.0.1'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.youth.banner:banner:1.4.9'
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    compile files('libs/JavaWebSocket_fat.jar')
+    compile files('libs/autobahn-0.5.0.jar')
+    compile 'com.mengfei:AddSubUtils:1.5.0'
+    compile 'com.contrarywind:Android-PickerView:3.2.5'
+    compile 'com.github.zcweng:switch-button:0.0.3@aar'
+    compile 'com.androidkun:XTabLayout:1.1.3'
+    compile 'com.androidadvance:topsnackbar:1.1.1'
+    compile 'q.rorbin:badgeview:1.0.5'
+    compile 'com.rabbitmq:amqp-client:4.2.1'
+    compile 'com.github.huangbryant210707:HIndicatorDialog:2.1.0'
 }
