@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,18 +14,16 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.adapter.HeadLine_Column_Adapetr;
 import com.myplas.q.headlines.adapter.HeadLine_Product_Adapetr;
 import com.myplas.q.headlines.bean.CateListSelectBean;
 import com.myplas.q.headlines.bean.MyCateBean;
-
 
 import org.json.JSONObject;
 
@@ -50,14 +49,14 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     private List<CateListSelectBean> list_cateselect_Column, list_cateselect_Product;
     private List list_Product_Classify, list_Subscription_Column, list1, list2;
 
-    private boolean isFirstIoto;
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_find_cate_popou);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         initView();
@@ -69,13 +68,12 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     public void initView() {
         list_column_selected = new ArrayList<>();
         list_product_selected = new ArrayList<>();
-        isFirstIoto = SharedUtils.getSharedUtils().getBoolean(this, Constant.ISFIRSTINTOHEADCATE);
-
         cate_img_back = (ImageView) findViewById(R.id.cate_img_back);
         gridView_column = (MyGridview) findViewById(R.id.fx_gd_wd_girdview);
         gridView_product = (MyGridview) findViewById(R.id.fx_gd_qb_girdview);
 
         cate_img_back.setOnClickListener(this);
+        //myCateBean= (MyCateBean) getIntent().getSerializableExtra("mycatebean");
 
         gridView_column.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -106,7 +104,7 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     public void getSelectCate() {
         Map<String, String> map = new HashMap<>();
         map.put("type", "2");
-        postAsyn(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 2);
+        postAsyn1(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 2, false);
     }
 
     //保存我的频道
@@ -115,7 +113,7 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
         map.put("type", "1");
         map.put("cate_id", getData(list_column_selected));
         map.put("prop_id", getData(list_product_selected));
-        postAsyn(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 3);
+        postAsyn1(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 3, false);
     }
 
     //初始化订阅栏目 item数据
@@ -205,41 +203,28 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("-------", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 2 && err.equals("0")) {
                 myCateBean = gson.fromJson(object.toString(), MyCateBean.class);
                 for (int i = 0; i < list1.size(); i++) {
-//                    if (!isFirstIoto) {
-//                        list_column_selected.addAll(list1);
-//                        list_cateselect_Column.get(i).setIssaveed(true);
-//                        list_cateselect_Column.get(i).setSelected(true);
-//                    } else {
                     if (myCateBean.getData().getSubscribe().contains(list1.get(i))) {
                         //已经订阅的频道设置为已选择
                         list_cateselect_Column.get(i).setIssaveed(true);
                         list_cateselect_Column.get(i).setSelected(true);
                     }
-//                    }
                     //设置不可选
                     if (myCateBean.getData().getUnconcealed_subscribe().contains(list1.get(i))) {
                         list_cateselect_Column.get(i).setUnSelecteable(true);
                     }
                 }
-
                 for (int i = 0; i < list2.size(); i++) {
-//                    if (!isFirstIoto) {
-//                        list_product_selected.addAll(list2);
-//                        list_cateselect_Product.get(i).setIssaveed(true);
-//                        list_cateselect_Product.get(i).setSelected(true);
-//                    } else {
                     if (myCateBean.getData().getProperty().contains(list2.get(i))) {
-                        //已经订阅的栏目设置为已选择
+                        //已经订阅的频道设置为已选择
                         list_cateselect_Product.get(i).setIssaveed(true);
                         list_cateselect_Product.get(i).setSelected(true);
                     }
-//                    }
-
                 }
 
                 list_column_selected.clear();
@@ -251,8 +236,6 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
                 list_product_selected.addAll(myCateBean.getData().getProperty());
                 product_adapetr.setList(list_cateselect_Product);
                 product_adapetr.notifyDataSetChanged();
-
-                //SharedUtils.getSharedUtils().setBooloean(this, Constant.ISFIRSTINTOHEADCATE, true);
             }
         } catch (Exception e) {
         }
@@ -266,8 +249,8 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(this, "您所选栏目还未保存！确定离开？", 1, this);
+            CommonDialog dialogShowUtils = new CommonDialog();
+            dialogShowUtils.showDialog(this, "您所选栏目还未保存！确定离开？", 1, this);
         }
         return true;
     }

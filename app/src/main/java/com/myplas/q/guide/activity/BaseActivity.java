@@ -134,12 +134,12 @@ public class BaseActivity extends Activity {
             , int type) {
         try {
             if (NetUtils.isNetworkStateed(context)) {
-                LoadingDialog.getInstance(context).show();
                 NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
                 netRequest.postAsyn();
             } else {
                 resultCallBack.failCallBack(type);
             }
+            LoadingDialog.getInstance(context).show();
         } catch (Exception e) {
         }
     }
@@ -154,13 +154,13 @@ public class BaseActivity extends Activity {
             , boolean isShowDialog) {
         try {
             if (NetUtils.isNetworkStateed(context)) {
-                if (isShowDialog) {
-                    LoadingDialog.getInstance(context).show();
-                }
                 NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
                 netRequest.postAsyn();
             } else {
                 resultCallBack.failCallBack(type);
+            }
+            if (isShowDialog) {
+                LoadingDialog.getInstance(context).show();
             }
         } catch (Exception e) {
         }
