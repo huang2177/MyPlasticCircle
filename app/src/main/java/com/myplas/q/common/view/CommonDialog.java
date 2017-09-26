@@ -102,9 +102,9 @@ public class CommonDialog {
         Window window = normalDialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.CENTER;
-        lp.width = (int) ((width * 2) / 3.1);//宽高可设置具体大小
-        lp.height = (int) (height / 4.88);
-//        lp.height=lp.WRAP_CONTENT;
+        lp.width = (int) ((width * 2) / 3.0);//宽高可设置具体大小
+//        lp.height = (int) (height / 4.88);
+        lp.height = lp.WRAP_CONTENT;
         normalDialog.getWindow().setAttributes(lp);
     }
 

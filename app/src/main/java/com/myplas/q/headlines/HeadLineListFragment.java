@@ -1,4 +1,4 @@
-package com.myplas.q.headlines.fragment;
+package com.myplas.q.headlines;
 
 import android.content.Context;
 import android.content.Intent;
@@ -338,7 +338,6 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                     sharedUtils.setData(getActivity(), "token", "");
                     sharedUtils.setData(getActivity(), "userid", "");
                     sharedUtils.setBooloean(getActivity(), "logined", false);
-                    sharedUtils.setData(getActivity(), "toast_msg", new JSONObject(object.toString()).getString("msg"));
                 } else {
                     isRefresh = false;
                     if (page == 1) {

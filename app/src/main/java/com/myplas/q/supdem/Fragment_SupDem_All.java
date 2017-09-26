@@ -1,4 +1,4 @@
-package com.myplas.q.supdem.fragment;
+package com.myplas.q.supdem;
 
 import android.app.Activity;
 import android.content.Intent;

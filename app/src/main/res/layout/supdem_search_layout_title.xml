@@ -34,32 +34,36 @@
             android:layout_weight="1"
             android:background="@drawable/toplines_shape_edit">
 
-            <com.huangbryant.mylibrary.wechatpopou.DropDownListView
+            <TextView
                 android:id="@+id/spinner_content"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:visibility="visible"/>
+                android:layout_gravity="center"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/down"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:text="供给"
+                android:textColor="@color/color_balank"
+                android:visibility="gone"/>
 
             <com.optimus.edittextfield.EditTextField
                 android:id="@+id/supplydemand_search_edit"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@null"
                 android:hint="7000F"
                 android:imeOptions="actionSearch"
-                android:maxLines="1"
                 android:paddingLeft="8dp"
-                android:paddingRight="5dp"
+                android:paddingRight="8dp"
                 android:textColor="@color/color_balank"
                 android:textColorHint="@color/color_balank"
                 android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"
                 android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textSize="@dimen/x66"
+                android:textSize="@dimen/x65"
                 app:clearButtonMode="whileEditing"/>
         </LinearLayout>
 

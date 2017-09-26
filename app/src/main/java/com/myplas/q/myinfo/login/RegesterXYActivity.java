@@ -2,6 +2,8 @@ package com.myplas.q.myinfo.login;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -34,18 +36,16 @@ public class RegesterXYActivity extends BaseActivity {
         webSettings.setUseWideViewPort(true);//设置此属性，可任意比例缩放
         webSettings.setDomStorageEnabled(true);
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setJavaScriptEnabled(true);
         webSettings.setBlockNetworkImage(false);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+
         webSettings.setBuiltInZoomControls(true);
         webSettings.setLoadWithOverviewMode(true);
 
+        webView.addJavascriptInterface(new AndroidtoJs(), "test");//AndroidtoJS类对象映射到js的test对象
         String url = "http://q.myplas.com/#/protocol2";
+//        webView.loadUrl("file:///android_asset/demo.html");
         webView.loadUrl(url);
-        webView.addJavascriptInterface(new Object() {
-            @SuppressWarnings("unused")
-            public void oneClick(final String locX, final String locY) {//此处的参数可传入作为js参数
-            }
-        }, "document.getElementById('bigCustomerHeader').style.display='none'");//
     }
 
     class MyWebClient extends WebViewClient {
@@ -71,4 +71,16 @@ public class RegesterXYActivity extends BaseActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+    // 继承自Object类
+    public class AndroidtoJs extends Object {
+
+        // 定义JS需要调用的方法
+        // 被JS调用的方法必须加入@JavascriptInterface注解
+        @JavascriptInterface
+        public void hello(String msg) {
+            Log.e("-------", msg + "-----");
+        }
+    }
+
 }

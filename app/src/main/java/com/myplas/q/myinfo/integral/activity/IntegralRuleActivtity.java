@@ -1,5 +1,6 @@
 package com.myplas.q.myinfo.integral.activity;
 
+import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -27,6 +28,7 @@ public class IntegralRuleActivtity extends BaseActivity {
     private WebView webView;
     private static final String APP_CACAHE_DIRNAME = "/webcache";
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,8 @@ public class IntegralRuleActivtity extends BaseActivity {
         webSettings.setBuiltInZoomControls(true);
 
         webSettings.setDomStorageEnabled(true);
+
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
         webView.loadUrl("http://q.myplas.com/#/pointsrule2");
 

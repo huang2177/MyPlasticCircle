@@ -1,10 +1,8 @@
-package com.myplas.q.addresslist.fragment;
+package com.myplas.q.addresslist;
 
 import android.app.ActionBar;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -549,8 +547,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             topBean = (new JSONObject(json).getJSONObject("top").length() != 0) ? txlBean.getTop() : (null);
             if (page == 1) {
                 rs.setText("塑料圈通讯录(" + new JSONObject(json).getString("member") + "人)");
-//                editText.setText(txlBean.getHot_search());
-//                editText.setSelection(txlBean.getHot_search().length());
+                //editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
                 //显示数据
                 txl_listview_adapter = new AddList_LV_Adapter(getActivity(), list, topBean);
                 listView.setAdapter(txl_listview_adapter);

@@ -3,11 +3,8 @@ package com.myplas.q.headlines.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.myplas.q.common.view.XListView;
-import com.myplas.q.headlines.fragment.HeadLineListFragment;
+import com.myplas.q.headlines.HeadLineListFragment;
 
 import java.util.List;
 

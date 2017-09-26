@@ -96,13 +96,13 @@
                 android:background="@color/colorAccent"
                 android:orientation="vertical">
 
-                <WebView
-                    android:id="@+id/find_detail_text"
+                <LinearLayout
+                    android:id="@+id/find_detail_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@null"
-                    android:scrollbars="none"/>
+                    android:orientation="horizontal"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

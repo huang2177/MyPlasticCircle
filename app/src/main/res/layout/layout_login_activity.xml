@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -20,7 +19,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="普通登录"
-            android:textColor="@color/color_white"
+            android:textColor="@color/color_balank"
             android:textSize="18.0sp"/>
 
         <LinearLayout
@@ -68,7 +67,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
                         android:text="普通登录"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/color_balank"
                         android:textSize="16.0sp"/>
 
                     <ImageView
@@ -76,7 +75,7 @@
                         android:layout_width="40dp"
                         android:layout_height="2dp"
                         android:layout_gravity="center_horizontal"
-                        android:background="@color/colorAccent"/>
+                        android:background="@color/color_red"/>
 
                 </LinearLayout>
 
@@ -93,7 +92,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
                         android:text="手机动态码登录"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/color_content"
                         android:textSize="16.0sp"/>
 
                     <ImageView
@@ -101,7 +100,7 @@
                         android:layout_width="80dp"
                         android:layout_height="2dp"
                         android:layout_gravity="center_horizontal"
-                        android:background="@color/colorAccent"
+                        android:background="@color/color_red"
                         android:visibility="gone"/>
                 </LinearLayout>
 
@@ -111,6 +110,29 @@
             <include layout="@layout/layout_login_nomal"/>
 
             <include layout="@layout/layout_login_phone"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/dl_zhc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新用户注册"
+                    android:textColor="@color/color_content"
+                    android:textSize="16.0sp"/>
+
+                <TextView
+                    android:id="@+id/dl_wjmm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="忘记密码?"
+                    android:textColor="@color/color_content"
+                    android:textSize="16.0sp"/>
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

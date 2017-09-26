@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.setting.activity.FindPSWActivity;
@@ -39,23 +41,23 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/24 11:41
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, ResultCallBack, MyEditText.OnTextWatcher {
     private int count;
     private String key;
     private Handler mHandler;
-    private Button button, button1;
     private SharedUtils sharedUtils;
     private boolean clicked, isRemember;
+    private ImageView mImageView1, mImageView2;
     private TextView textView_zhc, textView_wj, textView_title, mTextView_send;
     private ImageView imageView1, imageView2, imageView_verification;
     private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone;
-    private EditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
+    private MyEditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusUtils.setStatusBar(this, false, false);
-        StatusUtils.setStatusTextColor(false, this);
+        StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_login_activity);
         goBack(findViewById(R.id.back));
         initView();
@@ -77,8 +79,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         imageView2 = F(R.id.imageView2);
         imageView_verification = F(R.id.login_phone_send1);
 
-        button = F(R.id.dl_ok);
-        button1 = F(R.id.dl_ok2);
+        mImageView1 = F(R.id.dl_ok);
+        mImageView2 = F(R.id.dl_ok2);
         mTextView_send = F(R.id.zhc_hq_yzm);
         button_nomal = F(R.id.ll_login_nomal);
         button_phone = F(R.id.ll_login_phone);
@@ -90,15 +92,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         linearLayout_nomal = F(R.id.linearlayout_login_nomal);
         linearLayout_phone = F(R.id.linearlayout_login_phone);
 
-        button.setOnClickListener(this);
-        button1.setOnClickListener(this);
+        mImageView1.setOnClickListener(this);
+        mImageView2.setOnClickListener(this);
         textView_wj.setOnClickListener(this);
         mTextView_send.setOnClickListener(this);
         textView_zhc.setOnClickListener(this);
         button_nomal.setOnClickListener(this);
         button_phone.setOnClickListener(this);
         imageView_verification.setOnClickListener(this);
-        //linearLayout_remember.setOnClickListener(this);
+
+        editText_tel.addOnTextWatcher(this);
+        editText_pass.addOnTextWatcher(this);
+        editText_tel1.addOnTextWatcher(this);
+        editText_verification1.addOnTextWatcher(this);
+        editText_verification2.addOnTextWatcher(this);
 
         // 将账号和密码都设置到文本框中
         if (isRemember) {
@@ -173,12 +180,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 textView_title.setText("普通登录");
                 imageView2.setVisibility(View.GONE);
                 imageView1.setVisibility(View.VISIBLE);
+                textView_wj.setVisibility(View.VISIBLE);
                 linearLayout_phone.setVisibility(View.GONE);
                 linearLayout_nomal.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_login_phone:
                 textView_title.setText("手机动态码登录");
                 imageView1.setVisibility(View.GONE);
+                textView_wj.setVisibility(View.GONE);
                 imageView2.setVisibility(View.VISIBLE);
                 linearLayout_nomal.setVisibility(View.GONE);
                 linearLayout_phone.setVisibility(View.VISIBLE);
@@ -274,6 +283,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
+    //edittext的内容变化监听：
+    @Override
+    public void onTextChanged(View v, String s) {
+        Log.e("-------", s + "-------");
+        if (linearLayout_nomal.getVisibility() == View.VISIBLE) {
+            boolean isNull = TextUtils.isNullOrEmpty(editText_tel.getText().toString())
+                    && TextUtils.isNullOrEmpty(editText_pass.getText().toString());
+            if (isNull) {
+                imageView1.setImageResource(R.drawable.btn_login_hl);
+            }
+        } else {
+            boolean isNull = TextUtils.isNullOrEmpty(editText_tel1.getText().toString())
+                    && TextUtils.isNullOrEmpty(editText_verification1.getText().toString())
+                    && TextUtils.isNullOrEmpty(editText_verification1.getText().toString());
+            if (isNull) {
+                imageView2.setImageResource(R.drawable.btn_login_hl);
+            }
+        }
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -324,7 +354,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void setData(JSONObject jsonObject) {
         try {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(button.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(mImageView1.getWindowToken(), 0);
 
             sharedUtils.setData(this, Constant.TOKEN, jsonObject.getString("dataToken"));
             sharedUtils.setData(this, Constant.USERID, jsonObject.getString("user_id"));
@@ -335,4 +365,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         } catch (Exception e) {
         }
     }
+
 }

@@ -19,17 +19,20 @@
         android:id="@+id/dialog_message"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="center_horizontal"
+        android:maxLines="3"
         android:textColor="@color/color_transparent"
         android:textSize="16.0sp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_bg"/>
+        android:background="@color/color_lightgray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +52,7 @@
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/color_gray_bg"/>
+            android:background="@color/color_lightgray"/>
 
         <Button
             android:id="@+id/btn_ok"

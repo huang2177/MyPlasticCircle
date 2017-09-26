@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:drawableRight="@drawable/btn_xiala"
+                android:drawableRight="@drawable/icon_down"
                 android:gravity="center"
                 android:textColor="@color/color_balank"
                 android:textSize="16.0sp"/>
@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="5dp"
-                android:drawableRight="@drawable/btn_xiala"
+                android:drawableRight="@drawable/icon_down"
                 android:gravity="center"
                 android:textColor="@color/color_balank"
                 android:textSize="16.0sp"/>

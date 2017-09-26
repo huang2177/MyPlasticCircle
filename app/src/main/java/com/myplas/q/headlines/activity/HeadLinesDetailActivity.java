@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -61,7 +62,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     private TextView imageView_btn_next, imageView_btn_last;
     private TextView textView_gq, textView_wd, textView_fx, textView_txl;
     private ImageView imageView_gq, imageView_wd, imageView_fx, imageView_txl;
-    private LinearLayout layout_gq, layout_txl, layout_jia, layout_fx, layout_wd;
+    private LinearLayout layout_gq, layout_txl, layout_jia, layout_fx, layout_wd, mlayoutWebView;
 
     private Handler mHandler;
     private ScrollView mScrollView;
@@ -80,12 +81,12 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         resources = getResources();
         sharedUtils = SharedUtils.getSharedUtils();
 
-        webView = F(R.id.find_detail_text);
         textView_content = F(R.id.hot_search);
         imageView_btn_last = F(R.id.btn_last);
         imageView_btn_next = F(R.id.btn_next);
         textView_title = F(R.id.fx_ttxq_title);
         textView_shj = F(R.id.fx_tt_title_shj);
+        mlayoutWebView = F(R.id.find_detail_ll);
         mScrollView = F(R.id.headline_sceollview);
         mListviewHot = F(R.id.find_detail_mliatview);
         textView_tt_title = F(R.id.fx_tt_title_text);
@@ -117,26 +118,19 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         imageView_btn_next.setOnClickListener(this);
         linearLayout_share.setOnClickListener(this);
 
+        webView = new WebView(getApplicationContext());
+        mlayoutWebView.addView(webView);
+        webView.setVerticalScrollBarEnabled(false);
+
         webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDefaultTextEncodingName("UTF-8");
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        webView.setWebViewClient(new WebViewClient());
 
-        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        int width = wm.getDefaultDisplay().getWidth();
-//        if (width > 650) {
-//            webView.setInitialScale(220);
-//        } else if (width > 520) {
-//            webView.setInitialScale(200);
-//        } else if (width > 450) {
-//            webView.setInitialScale(180);
-//        } else if (width > 300) {
-//            webView.setInitialScale(160);
-//        } else {
-//            webView.setInitialScale(140);
-//        }
+//        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+//        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+
         webView.setWebViewClient(new WebViewClient());
 
         mListviewHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -345,5 +339,18 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (webView != null) {
+            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            webView.clearHistory();
+
+            ((ViewGroup) webView.getParent()).removeView(webView);
+            webView.destroy();
+            webView = null;
+        }
+        super.onDestroy();
     }
 }

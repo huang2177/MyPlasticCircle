@@ -1,5 +1,6 @@
 package com.myplas.q.supdem.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,19 +19,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.huangbryant.hindicator.HIndicatorAdapter;
+import com.huangbryant.hindicator.HIndicatorBuilder;
+import com.huangbryant.hindicator.HIndicatorDialog;
+import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
-import com.huangbryant.mylibrary.wechatpopou.BaseAdapter;
-import com.huangbryant.mylibrary.wechatpopou.DropDownListView;
-import com.huangbryant.mylibrary.wechatpopou.IndicatorBuilder;
-import com.huangbryant.mylibrary.wechatpopou.IndicatorDialog;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.supdem.Beans.HistoryBean;
 import com.myplas.q.supdem.Beans.SearchNoResultBean;
@@ -63,21 +65,20 @@ import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
 
 public class SupDem_Search_Activity extends BaseActivity implements View.OnClickListener, ResultCallBack,
         PopouShowUtils.poPouCallBackInterface, AdapterView.OnItemClickListener {
-    private DropDownListView spinner;
     private ListView listView;
     private ImageView imageView;
     private EditTextField editText;
     private FrameLayout frameLayout;
     private RelativeLayout layout_time, layout_add;
     private MyGridview gridview_history, gridview_subcribe, gridview_subcribe_no;
-    private TextView textView, textView_time, textView_add, textView_hint, textView_no;
     private LinearLayout search_default_linear, search_result_linear, search_result_linear_no;
+    private TextView textView, textView_time, textView_add, textView_hint, textView_no, mTextViewType;
 
     private Handler handler;
     private boolean isRefresh;
     private SearchNoResultBean bean;
+    private HIndicatorDialog dialog;
     private HistoryBean historyBean;
-    private String level[], level1[];
     private TabCofigBean tabCofigBean;
     private List<SearchResultBean.ListBean> list;
     private SupDem_Search_Grid_Adapter adapter_grid;
@@ -87,10 +88,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 
     private String keywords = "7000f", is_buy = "1", area, time;
     private int page = 1, visibleItemCount;
-    private boolean hasMoerData = true;
     private boolean spinnerSelected = false;
+    private boolean hasMoerData = true;
+    private List<String> mList;
     private boolean isFinifsh;
-    private ArrayList<String> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,10 +107,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         isRefresh = true;
         list = new ArrayList<>();
         handler = new Handler();
-        spinner = F(R.id.spinner_content);
         textView_hint = F(R.id.text_result);
-        textView_add = F(R.id.text_result_add);
         imageView = F(R.id.img_search_delete);
+        textView_add = F(R.id.text_result_add);
+        mTextViewType = F(R.id.spinner_content);
         textView_time = F(R.id.text_result_time);
         listView = F(R.id.search_listview_result);
         layout_add = F(R.id.relative_result_add);
@@ -130,46 +131,18 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         layout_add.setOnClickListener(this);
         layout_time.setOnClickListener(this);
         listView.setOnItemClickListener(this);
+        mTextViewType.setOnClickListener(this);
         gridview_history.setOnItemClickListener(this);
         gridview_subcribe.setOnItemClickListener(this);
         gridview_subcribe_no.setOnItemClickListener(this);
 
+        mTextViewType.setVisibility(View.VISIBLE);
         editText.setHintTextColor(getResources().getColor(R.color.color_gray));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item);
-        level = new String[]{"供给", "求购"};//资源文件
-        level1 = new String[]{"1", "0"};//资源文件
-        for (int i = 0; i < level.length; i++) {
-            adapter.add(level[i]);
-        }
-        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        //spinner.setAdapter(adapter);
-        mList = new ArrayList<String>();
+        mList = new ArrayList<>();
         mList.add("供给");
         mList.add("求购");
-        spinner.setItemsData(mList);
-        spinner.setVisibility(View.VISIBLE);
 
-
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (spinnerSelected) {
-//                    page = 1;
-//                    isRefresh = true;
-//                    hasMoerData = true;
-//                    is_buy = level1[position];
-//                    keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-//                    getPhysical_Search(1, keywords, time, is_buy, area);
-//                } else {
-//                    spinnerSelected = true;
-//                }
-//            }
-
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//        });
         //edittext的回车监听
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -185,6 +158,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 return false;
             }
         });
+
         //加载更多
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -247,60 +221,11 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.supplydemand_btn_search:
-//                page = 1;
-//                isRefresh = true;
-//                hasMoerData = true;
-//                keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-//                getPhysical_Search(1, keywords, time, is_buy, area);
-                IndicatorDialog dialog = new IndicatorBuilder(this) //must be activity
-                        .width(200)   // the dialog width in px
-                        .height(-1)  // the dialog max height in px or -1 (means auto fit)
-                        .ArrowDirection(IndicatorBuilder.TOP)  // the  position of dialog's arrow indicator  (TOP or BOTTOM)
-                        .bgColor(Color.parseColor("#999898"))  // the bg color of the dialog
-                        .gravity(IndicatorBuilder.GRAVITY_LEFT)   // dialog' sgravity (GRAVITY_LEFT or GRAVITY_RIGHT or GRAVITY_CENTER)
-                        .radius(8) // the radius in dialog
-                        .ArrowRectage(0.2f)  // the arrow's offset Relative to the dialog's width
-                        .arrowWidth(0)
-                        .layoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-                        .dimEnabled(false)
-                        .adapter(new BaseAdapter() {
-                            @Override
-                            public void onBindView(BaseViewHolder holder, int position) {
-                                TextView tv = holder.getView(R.id.item_add);
-                                tv.setText(mList.get(position));
-                                //  tv.setCompoundDrawablesWithIntrinsicBounds(mICons.get(position), 0, 0, 0);
-
-//                                if (position == list.size() - 1) {
-//                                    holder.setVisibility(R.id.item_line, BaseViewHolder.GONE);
-//                                } else {
-//                                    holder.setVisibility(R.id.item_line, BaseViewHolder.VISIBLE);
-//
-//                                }
-                            }
-
-                            @Override
-                            public int getLayoutID(int position) {
-                                return R.layout.popou_wechat_item_layout;
-                            }
-
-                            @Override
-                            public boolean clickable() {
-                                return true;
-                            }
-
-                            @Override
-                            public void onItemClick(View v, int position) {
-                            }
-
-                            @Override
-                            public int getItemCount() {
-                                return mList.size();
-                            }
-                        }).create();
-                dialog.setCanceledOnTouchOutside(true); // outside cancelable
-                dialog.show(spinner); // or use dialog.show(x,y); to determine the location of dialog
-//                dialog.dismiss();  //dismiss the dialog
-//                dialog.getDialog(); // get the real dialog object
+                page = 1;
+                isRefresh = true;
+                hasMoerData = true;
+                keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+                getPhysical_Search(1, keywords, time, is_buy, area);
                 break;
             case R.id.img_search_delete:
                 delSearch_Record();
@@ -310,6 +235,29 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 break;
             case R.id.relative_result_add:
                 showPopou(1, R.layout.supdem_result_add_popou);
+                break;
+            case R.id.spinner_content:
+                dialog = new HIndicatorBuilder(this)
+                        .width(200)
+                        .height(-1)
+                        .ArrowDirection(HIndicatorBuilder.TOP)
+                        .bgColor(Color.parseColor("#cacacb"))
+                        .gravity(HIndicatorBuilder.GRAVITY_LEFT)
+                        .radius(8)
+                        .ArrowRectage(0.2f)
+                        .layoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+                        .dimEnabled(false)
+                        .adapter(new MyAdapter())
+                        .create();
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show(mTextViewType);
+                mTextViewType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up, 0);
+                dialog.setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(Dialog dialog) {
+                        mTextViewType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
+                    }
+                });
                 break;
         }
     }
@@ -390,8 +338,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
                 gridview_subcribe.setAdapter(adapter_grid1);
 
-                keywords = historyBean.getHot_search().getContent();
-                editText.setHint(keywords);
+//                keywords = historyBean.getHot_search().getContent();
+//                editText.setHint(keywords);
             }
             if (type == 2) {
                 search_default_linear.setVisibility(View.GONE);
@@ -523,6 +471,49 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         if (isFinifsh) {
             overridePendingTransition(R.anim.fade, R.anim.hold);
+        }
+    }
+
+    public class MyAdapter extends HIndicatorAdapter {
+        @Override
+        public void onBindView(BaseViewHolder holder, int position) {
+            TextView tv = holder.getView(R.id.item_tv);
+            tv.setText(mList.get(position));
+//            tv.setCompoundDrawablesWithIntrinsicBounds(mICons.get(position), 0, 0, 0);
+
+            if (position == mList.size() - 1) {
+                holder.setVisibility(R.id.item_line, BaseViewHolder.GONE);
+            } else {
+                holder.setVisibility(R.id.item_line, BaseViewHolder.VISIBLE);
+            }
+        }
+
+        @Override
+        public int getLayoutID(int position) {
+            return R.layout.hindicator_item_layout;
+        }
+
+        @Override
+        public boolean clickable() {
+            return true;
+        }
+
+        @Override
+        public void onItemClick(View v, int position) {
+            dialog.dismiss();
+            mTextViewType.setText(mList.get(position));
+            mTextViewType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
+
+            page = 1;
+            hasMoerData = true;
+            is_buy = position == 0 ? "1" : "0";
+            keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+            getPhysical_Search(1, keywords, time, is_buy, area);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mList.size();
         }
     }
 }

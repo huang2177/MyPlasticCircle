@@ -1,4 +1,4 @@
-package com.myplas.q.supdem.fragment;
+package com.myplas.q.supdem;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -331,7 +331,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             }, 1500);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
         }
-        editText.setText(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
+        //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
     public void onResume() {

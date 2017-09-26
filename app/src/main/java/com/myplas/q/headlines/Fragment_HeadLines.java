@@ -1,9 +1,7 @@
-package com.myplas.q.headlines.fragment;
+package com.myplas.q.headlines;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -209,7 +207,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             }, 1500);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
         }
-        editText.setText(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
+        //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
     public void onResume() {

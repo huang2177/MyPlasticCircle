@@ -265,8 +265,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
                 gridview_subcribe.setAdapter(adapter_grid1);
 
-                keywords = historyBean.getHot_search().getContent();
-                editText.setHint(keywords);
+//                keywords = historyBean.getHot_search().getContent();
+//                editText.setHint(keywords);
             }
             if (type == 2) {
                 search_default_linear.setVisibility(View.GONE);
