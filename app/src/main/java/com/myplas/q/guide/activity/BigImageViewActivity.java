@@ -1,6 +1,8 @@
 package com.myplas.q.guide.activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -20,6 +22,7 @@ import com.umeng.analytics.MobclickAgent;
  * 时间：2017/3/31 09:11
  */
 public class BigImageViewActivity extends BaseActivity {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +38,16 @@ public class BigImageViewActivity extends BaseActivity {
         imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
             @Override
             public void onPhotoTap(View view, float x, float y) {
-                finish();
+                onBackPressed();
             }
         });
     }
+
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

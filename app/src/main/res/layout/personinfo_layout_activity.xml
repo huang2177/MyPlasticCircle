@@ -41,7 +41,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -51,17 +51,18 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
+                    android:id="@+id/person_layout_fl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp">
+                    android:layout_marginLeft="2dp"
+                    android:transitionName="bigImageView">
 
                     <com.myplas.q.common.view.MyImageView
                         android:id="@+id/xq_tx"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_margin="8dp"
-                        android:scaleType="centerCrop"
-                        android:transitionName="sharedView"/>
+                        android:scaleType="centerCrop"/>
 
                     <ImageView
                         android:id="@+id/xq_rz"
@@ -241,13 +242,20 @@
                 </LinearLayout>
 
 
-                <ImageView
-                    android:id="@+id/wd_zl_show"
-                    android:layout_width="100dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="10dp"
-                    android:scaleType="fitXY"/>
+                <FrameLayout
+                    android:id="@+id/wd_zl_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/wd_zl_show"
+                        android:layout_width="100dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitXY"
+                        android:transitionName="bigImageView"/>
+                </FrameLayout>
             </LinearLayout>
 
             <LinearLayout

@@ -2,16 +2,19 @@ package com.myplas.q.myinfo.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private int count;
     private String key;
     private Handler mHandler;
+    private ScrollView mScrollView;
     private SharedUtils sharedUtils;
     private ImageView mImageView1, mImageView2;
     private boolean clicked, isRemember, isNomalNull, isPhoneNull;
@@ -53,11 +57,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone;
     private MyEditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
 
+    private View decorView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        StatusUtils.setStatusBar(this, false, false);
-//        StatusUtils.setStatusTextColor(true, this);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_login_activity);
         goBack(findViewById(R.id.back));
         initView();
@@ -70,6 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
         editText_tel = F(R.id.dl_tel);
+        mScrollView = F(R.id.sv_login);
         editText_pass = F(R.id.dl_pass);
         editText_tel1 = F(R.id.dl_tel2);
         editText_verification1 = F(R.id.dl_verification1);
@@ -89,6 +96,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         textView_zhc = F(R.id.dl_zhc);
         textView_title = F(R.id.title_rs);
 
+        decorView = getWindow().getDecorView();
         linearLayout_nomal = F(R.id.linearlayout_login_nomal);
         linearLayout_phone = F(R.id.linearlayout_login_phone);
 
@@ -117,6 +125,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             editText_pass.setSelection(editText_pass.getText().length());
             editText_tel.setSelection(editText_tel.getText().length());
         }
+        //解决设置透明状态栏以后 页面不能滑动的问题
+        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                decorView.getWindowVisibleDisplayFrame(rect);
+                int screenHeight = decorView.getRootView().getHeight();
+                int heightDifference = screenHeight - rect.bottom;//计算软键盘占有的高度  = 屏幕高度 - 视图可见高度
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mScrollView.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, heightDifference);//设置ScrollView的marginBottom的值为软键盘占有的高度即可
+                mScrollView.requestLayout();
+            }
+        });
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,18 +40,20 @@ import java.util.Map;
  * 时间：2017/3/23 13:39
  */
 public class PersonInfoActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
-    private ImageView image_rz, image_show, image_call;
-    private TextView btn_care, text_name, text_gs, text_dh, text_gj, textView_dzh, textView_zhy, textView_show1, textView_show2, textView_num, textView_product;
-    private TextView textView_supply, textView_demand;
     private SharedUtils sharedUtils;
-    private Map<String, String> map;
-    private List<PersonSupplyDemadBean.DataBean> list;
-    private ImageView image_tx;
-    private MyListview myListview_supply, myListview_demand;
+
+    private LinearLayout linearLayout;
     private PersonInfoBean personinfo;
+    private FrameLayout mFLHead, mFLShow;
+    private TextView textView_supply, textView_demand;
+    private ImageView image_tx, image_rz, image_show, image_call;
+    private MyListview myListview_supply, myListview_demand;
+    private TextView btn_care, text_name, text_gs, text_dh, text_gj, textView_dzh, textView_zhy, textView_show1, textView_show2, textView_num, textView_product;
+
+    private Map<String, String> map;
     private PersonSupplyDemadBean p1, p2;
     private PersonSupplyDemandAdapter p_adapter;
-    private LinearLayout linearLayout;
+    private List<PersonSupplyDemadBean.DataBean> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +71,12 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         sharedUtils = SharedUtils.getSharedUtils();
 
         image_tx = f(R.id.xq_tx);
+        mFLShow = f(R.id.wd_zl_fl);
         image_rz = f(R.id.xq_rz);
         text_gj = f(R.id.wd_zl_gjqg);
         text_name = f(R.id.wd_zl_name);
         image_show = f(R.id.wd_zl_show);
+        mFLHead = f(R.id.person_layout_fl);
         textView_supply = f(R.id.more_supply);
         textView_demand = f(R.id.more_demand);
         textView_num = f(R.id.wd_zl_text_num);
@@ -104,17 +109,6 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         if (personinfo != null) {
             switch (v.getId()) {
-                case R.id.xq_tx:
-                    Intent In = new Intent(this, BigImageViewActivity.class);
-                    In.putExtra("imgurl", personinfo.getData().getThumb());
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                        startActivity(In, ActivityOptions.makeSceneTransitionAnimation(this
-//                                , image_tx
-//                                , "sharedView").toBundle());
-//                    } else {
-//                    }
-                    startActivity(In);
-                    break;
                 case R.id.more_demand:
                     Intent intent = new Intent(this, LookPersonInfoActivity.class);
                     intent.putExtra("tel", personinfo.getData().getMobile());
@@ -129,11 +123,6 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                     intent1.putExtra("type", "求购信息");
                     startActivity(intent1);
                     break;
-                case R.id.wd_zl_show:
-                    Intent In1 = new Intent(this, BigImageViewActivity.class);
-                    In1.putExtra("imgurl", personinfo.getData().getThumbcard());
-                    startActivity(In1);
-                    break;
                 case R.id.personinfo_care_btn:
                     focusOrCance();
                     break;
@@ -141,6 +130,28 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                     Intent intent3 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + personinfo.getData().getMobile()));
                     intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent3);
+                    break;
+                case R.id.xq_tx:
+                    Intent In = new Intent(this, BigImageViewActivity.class);
+                    In.putExtra("imgurl", personinfo.getData().getThumb());
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        startActivity(In, ActivityOptions.makeSceneTransitionAnimation(this
+//                                , mFLHead
+//                                , "bigImageView").toBundle());
+//                    } else {
+                    startActivity(In);
+//                    }
+                    break;
+                case R.id.wd_zl_show:
+                    Intent In1 = new Intent(this, BigImageViewActivity.class);
+                    In1.putExtra("imgurl", personinfo.getData().getThumbcard());
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        startActivity(In1, ActivityOptions.makeSceneTransitionAnimation(this
+//                                , mFLShow
+//                                , "bigImageView").toBundle());
+//                    } else {
+                    startActivity(In1);
+//                    }
                     break;
             }
         }

@@ -1,7 +1,9 @@
 package com.myplas.q.headlines.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -50,6 +52,7 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
 
     private boolean isFirstIoto;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
