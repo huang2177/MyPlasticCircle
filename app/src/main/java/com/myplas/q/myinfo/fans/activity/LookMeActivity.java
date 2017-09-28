@@ -38,6 +38,7 @@ import java.util.Map;
  */
 public class LookMeActivity extends BaseActivity implements ResultCallBack, CommonDialog.DialogShowInterface, LookMeAdapter.OnItemClickListener {
     private String mode;
+
     private String userid;
     private boolean hasMoreData;
     private StringBuffer promit1, promit2;
