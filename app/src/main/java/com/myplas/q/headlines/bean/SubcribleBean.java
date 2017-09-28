@@ -62,6 +62,7 @@ public class SubcribleBean {
     public void setHot_search(String hot_search) {
         this.hot_search = hot_search;
     }
+
     public static class DataBean {
         /**
          * id : 44962
@@ -259,6 +260,7 @@ public class SubcribleBean {
         private String id;
         private String title;
         private String img;
+        private String is_free;
 
         public String getId() {
             return id;
@@ -282,6 +284,14 @@ public class SubcribleBean {
 
         public void setImg(String img) {
             this.img = img;
+        }
+
+        public String getIs_free() {
+            return is_free;
+        }
+
+        public void setIs_free(String is_free) {
+            this.is_free = is_free;
         }
     }
 }

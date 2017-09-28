@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.view.ACache;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.FileUtils;
 import com.myplas.q.common.utils.SharedUtils;
@@ -44,7 +45,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2017/7/31 0031.
+ * 作者:huangshuang
+ * 事件 2017/7/31 0031.
+ * 邮箱： 15378412400@163.com
  */
 
 public class SettingActivity extends BaseActivity implements ResultCallBack, CommonDialog.DialogShowInterface, SettingAdapter.mySwitchCheckedListenler {
@@ -153,10 +156,13 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Com
                         commonDialog.showDialog(SettingActivity.this, content, 10, SettingActivity.this);
                         break;
                     case 7:
-                        Uri uri = Uri.parse("market://details?id=" + getPackageName());
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        try {
+                            Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                        }
                         break;
                     case 8:
                         Intent intent8 = new Intent(SettingActivity.this, AboutPlasticActivity.class);
@@ -235,6 +241,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Com
         }
         if (type == 10) {//清除缓存；
 //            showDialog();
+            ACache.get(this).clear();
             FileUtils.clearAllCache(this);
             //normalDialog.dismiss();
             mAdapter.notifyDataSetChanged();
@@ -244,7 +251,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Com
     public void showDialog() {
         View view = View.inflate(this, R.layout.dialog_layout_clearcache, null);
         if (normalDialog == null) {
-            normalDialog = new Dialog(this, R.style.dialog);
+            normalDialog = new Dialog(this, R.style.commondialog_style);
             normalDialog.setCancelable(true);
             normalDialog.setCanceledOnTouchOutside(true);
             normalDialog.setContentView(view);

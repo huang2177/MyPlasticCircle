@@ -36,7 +36,18 @@ android {
         maxProcessCount 8
         javaMaxHeapSize "2048m"
     }
+    //这里修改apk文件名
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name.replace("app", "塑料圈-${defaultConfig.versionName}")
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -62,7 +73,6 @@ dependencies {
     compile 'com.yanzhenjie:durban:1.0.1'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
-    compile 'com.youth.banner:banner:1.4.9'
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     compile files('libs/JavaWebSocket_fat.jar')
@@ -74,5 +84,6 @@ dependencies {
     compile 'com.androidadvance:topsnackbar:1.1.1'
     compile 'q.rorbin:badgeview:1.0.5'
     compile 'com.rabbitmq:amqp-client:4.2.1'
+    compile 'com.github.huangbryant210707:MyBanner:2.6.1'
     compile 'com.github.huangbryant210707:HIndicatorDialog:2.1.0'
 }

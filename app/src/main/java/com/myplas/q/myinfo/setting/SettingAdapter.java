@@ -1,19 +1,16 @@
 package com.myplas.q.myinfo.setting;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.common.utils.FileUtils;
+import com.myplas.q.common.utils.NumUtils;
 import com.suke.widget.SwitchButton;
 
 import java.util.HashMap;
@@ -37,9 +34,9 @@ public class SettingAdapter extends RecyclerView.Adapter {
     Map<Integer, SwitchButton> mSwitchMap;
 
     public SettingAdapter(Context context, List<String> list, List<Integer> list1) {
-        this.context = context;
         this.list = list;
         this.mList = list1;
+        this.context = context;
         mViewMap = new HashMap<>();
         mSwitchMap = new HashMap<>();
     }
@@ -73,7 +70,14 @@ public class SettingAdapter extends RecyclerView.Adapter {
         }
         if (position == 6) {
             String cacheSize = FileUtils.getTotalCacheSize(context);
-            viewHolder.mTextView1.setText(cacheSize + "  ");
+            if (NumUtils.getNum(cacheSize) > 6) {
+//                FileUtils.clearAllCache(context);
+                //int cache = Integer.parseInt(cacheSize);
+                viewHolder.mTextView1.setText("6.1M ");
+            } else {
+                StringBuffer cacheSize1 = new StringBuffer(FileUtils.getTotalCacheSize(context) + " ");
+                viewHolder.mTextView1.setText(cacheSize1);
+            }
         }
         viewHolder.mTextView.setText(list.get(position));
         viewHolder.mImageView.setImageResource(mList.get(position));

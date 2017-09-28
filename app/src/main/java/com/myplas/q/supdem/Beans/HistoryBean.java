@@ -13,13 +13,13 @@ public class HistoryBean {
 
     /**
      * err : 0
-     * history : ["人民币","分分孤狐给","pp","7000f","哈哈"]
-     * recommend : ["HDPE","or","储蓄罐","哈哈","人民币","测试","PVCbaa","50","7000y"]
-     * hot_search : {"content":"7000F","num":"315"}
+     * history : ["7000f"]
+     * recommend : ["7000F","7042","2426H","BL3","52518","5000S"]
+     * hot_search : 上海
      */
 
     private int err;
-    private HotSearchBean hot_search;
+    private String hot_search;
     private List<String> history;
     private List<String> recommend;
 
@@ -31,11 +31,11 @@ public class HistoryBean {
         this.err = err;
     }
 
-    public HotSearchBean getHot_search() {
+    public String getHot_search() {
         return hot_search;
     }
 
-    public void setHot_search(HotSearchBean hot_search) {
+    public void setHot_search(String hot_search) {
         this.hot_search = hot_search;
     }
 
@@ -53,31 +53,5 @@ public class HistoryBean {
 
     public void setRecommend(List<String> recommend) {
         this.recommend = recommend;
-    }
-
-    public static class HotSearchBean {
-        /**
-         * content : 7000F
-         * num : 315
-         */
-
-        private String content;
-        private String num;
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getNum() {
-            return num;
-        }
-
-        public void setNum(String num) {
-            this.num = num;
-        }
     }
 }

@@ -17,9 +17,16 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.huangbryant.hbanner.HBanner;
+import com.huangbryant.hbanner.HBannerConfig;
+import com.huangbryant.hbanner.Transformer;
+import com.huangbryant.hbanner.listener.OnHBannerClickListener;
+import com.huangbryant.hbanner.loader.ImageLoader;
+import com.huangbryant.hbanner.view.TagImageView;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.view.ACache;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.ScreenUtils;
@@ -29,15 +36,10 @@ import com.myplas.q.common.view.XListView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.headlines.adapter.CateListAdapter;
-import com.myplas.q.headlines.adapter.TTAdapter;
+import com.myplas.q.headlines.adapter.SubcribleAdapter;
 import com.myplas.q.headlines.bean.CateListBean;
 import com.myplas.q.headlines.bean.SubcribleBean;
 import com.myplas.q.myinfo.integral.activity.IntegralActivity;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
 
 import org.json.JSONObject;
 
@@ -53,32 +55,42 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     public String cate_id, keywords, clickId;
     public int page, po, visibleItemCount, lastvisibleItemCount;
 
-    private Banner mBanner;
+    private HBanner mBanner;
+    private SubcribleAdapter mSubcribleAdapter;
     private View view, mHeadView;
-    private TTAdapter ttAdapter;
     private XListView mXListView;
+    private ImageView mBannerImg;
     private LinearLayout mLayoutNoData;
     private CateListAdapter cateListAdapter;
     private ImageButton imageButton, imageButton_backup;
 
+    private List<SubcribleBean.BannerBean> mBeanList;
     private List<CateListBean.InfoBean> list_catelist;
     private List<SubcribleBean.DataBean> list_subcirble;
 
     private List<String> mListId;
     private List<String> mListImg;
-    public Myinterface mMyinterface;
+    private List<Boolean> mListTag;
     private List<String> mListTitle;
+    public Myinterface mMyinterface;
+
+    private ACache mACache;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = 1;
+        intiView();
+    }
+
+    private void intiView() {
         isRefresh = false;
         mListId = new ArrayList<>();
         mListImg = new ArrayList<>();
+        mListTag = new ArrayList<>();
         mListTitle = new ArrayList<>();
         list_catelist = new ArrayList<>();
         list_subcirble = new ArrayList<>();
+        mACache = ACache.get(getActivity());
         sharedUtils = SharedUtils.getSharedUtils();
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_headline_list_fm, null, false);
@@ -95,18 +107,19 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
         if (po == 0) {
             mHeadView = LayoutInflater.from(getActivity()).inflate(R.layout.header_layout_deadline_banner, null, false);
-            mBanner = (Banner) mHeadView.findViewById(R.id.headline_banner);
+            mBanner = (HBanner) mHeadView.findViewById(R.id.headline_banner);
+            mBannerImg = (ImageView) mHeadView.findViewById(R.id.headline_banner_img);
             ViewGroup.LayoutParams lp = mBanner.getLayoutParams();
             lp.height = (int) (ScreenUtils.getScreenWidth(getActivity()) / 2.1);
             mBanner.setLayoutParams(lp);
             mXListView.addHeaderView(mHeadView);
 
-            mBanner.setOnBannerListener(new OnBannerListener() {
+            mBanner.setOnBannerListener(new OnHBannerClickListener() {
                 @Override
                 public void OnBannerClick(int position) {
+                    boolean isFree = mBeanList.get(position).getIs_free().equals("1");
                     if (NetUtils.isNetworkStateed(getActivity())) {
                         clickId = mListId.get(position);
-                        //isFree=list_subcirble.
                         if (isFree) {
                             Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
                             intent.putExtra("id", clickId);
@@ -117,7 +130,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
                     }
                 }
             });
-
+            loadCache(); //先读缓存中的数据
             get_Subscribe(1, "", "2", true);
         } else {
             get_CateList(1, cate_id, false);
@@ -186,6 +199,15 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         });
     }
 
+    private void loadCache() {
+        page = 1;
+        mACache = ACache.get(getActivity());
+        String data = mACache.getAsString("subcrible_cache");
+        if (TextUtils.isNullOrEmpty(data)) {
+            loadCacheSubcrible(data);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return view;
@@ -195,14 +217,16 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         if (list.size() != 0) {
             mListId.clear();
             mListImg.clear();
+            mListTag.clear();
             mListTitle.clear();
             for (int i = 0; i < list.size(); i++) {
                 mListId.add(list.get(i).getId());
                 mListImg.add(list.get(i).getImg());
+                mListTag.add(list.get(i).getIs_free().equals("1") ? true : false);
                 mListTitle.add(list.get(i).getTitle());
             }
             mBanner.setVisibility(View.VISIBLE);
-            mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+            mBanner.setBannerStyle(HBannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
             //设置图片加载器
             mBanner.setImageLoader(new GlideImageLoader());
             //设置图片集合
@@ -216,7 +240,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
             //设置轮播时间
             mBanner.setDelayTime(3000);
             //设置指示器位置（当banner模式中有指示器时）
-            mBanner.setIndicatorGravity(BannerConfig.RIGHT);
+            mBanner.setIndicatorGravity(HBannerConfig.RIGHT);
             //banner设置方法全部调用完毕时最后调用
             mBanner.start();
         }
@@ -248,7 +272,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", cate_id);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 6);
+        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 6, false);
     }
 
     @Override
@@ -256,53 +280,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 4) {//推荐
-                if (err.equals("0")) {
-                    SubcribleBean subcribleBean = gson.fromJson(object.toString(), SubcribleBean.class);
-                    if (page == 1) {
-                        imageButton.setVisibility(View.GONE);
-                        mXListView.setVisibility(View.VISIBLE);
-                        mLayoutNoData.setVisibility(View.GONE);
-                        imageButton_backup.setVisibility(View.GONE);
-
-                        ttAdapter = new TTAdapter(getActivity(), subcribleBean.getData());
-                        mXListView.setAdapter(ttAdapter);
-                        mXListView.stopRefresh();
-                        list_subcirble.clear();
-                        list_subcirble.addAll(subcribleBean.getData());
-                        lastvisibleItemCount = subcribleBean.getData().size();
-
-                        //展示刷新后的popou
-                        mMyinterface.callBack(subcribleBean.getHot_search()
-                                , subcribleBean.getShow_msg()
-                                , isRefresh);
-
-                        //显示banner
-                        initBanner(subcribleBean.getBanner());
-                    } else {
-                        isRefresh = false;
-                        list_subcirble.addAll(subcribleBean.getData());
-                        ttAdapter.setList(list_subcirble);
-                        ttAdapter.notifyDataSetChanged();
-                    }
-                } else if (err.equals("1") || "998".equals(err)) {
-                    isRefresh = false;
-                    mXListView.stopRefresh();
-                    sharedUtils.setData(getActivity(), "token", "");
-                    sharedUtils.setData(getActivity(), "userid", "");
-                    sharedUtils.setBooloean(getActivity(), "logined", false);
-
-                } else {
-                    isRefresh = false;
-                    if (page == 1) {
-                        mXListView.stopRefresh();
-                        mXListView.setVisibility(View.GONE);
-                        mLayoutNoData.setVisibility(View.VISIBLE);
-                        imageButton_backup.setVisibility(View.GONE);
-                    } else {
-                        TextUtils.Toast(getActivity(), "没有更多数据了！");
-                    }
-                }
+            if (type == 4 && err.equals("0")) {//推荐
+                loadCacheSubcrible(object.toString());
+                mACache.put("subcrible_cache", object.toString());//加入缓存
             }
             if (type == 5) {//其他
                 if (err.equals("0")) {
@@ -364,6 +344,60 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
         }
     }
 
+    private void loadCacheSubcrible(String data) {
+        try {
+            Gson gson = new Gson();
+            String err = new JSONObject(data.toString()).getString("err");
+            if (err.equals("0")) {
+                SubcribleBean subcribleBean = gson.fromJson(data.toString(), SubcribleBean.class);
+                if (page == 1) {
+                    imageButton.setVisibility(View.GONE);
+                    mXListView.setVisibility(View.VISIBLE);
+                    mLayoutNoData.setVisibility(View.GONE);
+                    imageButton_backup.setVisibility(View.GONE);
+
+                    mSubcribleAdapter = new SubcribleAdapter(getActivity(), subcribleBean.getData());
+                    mXListView.setAdapter(mSubcribleAdapter);
+                    mXListView.stopRefresh();
+                    list_subcirble.clear();
+                    list_subcirble.addAll(subcribleBean.getData());
+                    lastvisibleItemCount = subcribleBean.getData().size();
+
+                    //展示刷新后的popou
+                    mMyinterface.callBack(subcribleBean.getHot_search()
+                            , subcribleBean.getShow_msg()
+                            , isRefresh);
+
+                    //显示banner
+                    mBeanList = subcribleBean.getBanner();
+                    initBanner(mBeanList);
+                } else {
+                    isRefresh = false;
+                    list_subcirble.addAll(subcribleBean.getData());
+                    mSubcribleAdapter.setList(list_subcirble);
+                    mSubcribleAdapter.notifyDataSetChanged();
+                }
+            } else if (err.equals("1") || "998".equals(err)) {
+                isRefresh = false;
+                mXListView.stopRefresh();
+                sharedUtils.setData(getActivity(), "token", "");
+                sharedUtils.setData(getActivity(), "userid", "");
+                sharedUtils.setBooloean(getActivity(), "logined", false);
+            } else {
+                isRefresh = false;
+                if (page == 1) {
+                    mXListView.stopRefresh();
+                    mXListView.setVisibility(View.GONE);
+                    mLayoutNoData.setVisibility(View.VISIBLE);
+                    imageButton_backup.setVisibility(View.GONE);
+                } else {
+                    TextUtils.Toast(getActivity(), "没有更多数据了！");
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
     @Override
     public void ok(int type) {
         Intent intent = new Intent(getActivity(), IntegralActivity.class);
@@ -374,10 +408,18 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
     @Override
     public void failCallBack(int type) {
         mXListView.stopRefresh();
-        if (list_subcirble != null && list_subcirble.size() == 0) {
-            mXListView.setVisibility(View.GONE);
-            mLayoutNoData.setVisibility(View.GONE);
-            imageButton.setVisibility(View.VISIBLE);
+        if (po != 0) {
+            if (list_catelist.size() == 0) {
+                mXListView.setVisibility(View.GONE);
+                mLayoutNoData.setVisibility(View.GONE);
+                imageButton.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (list_subcirble.size() == 0) {
+                mXListView.setVisibility(View.GONE);
+                mLayoutNoData.setVisibility(View.GONE);
+                imageButton.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -425,15 +467,20 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack, XL
 
     public class GlideImageLoader extends ImageLoader {
         @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(context).load(path).into(imageView);
+        public void displayImage(Context context, Object path, ImageView imageView, int position) {
+            try {
+                TagImageView tagImageView = (TagImageView) imageView;
+                tagImageView.setCenterImgShow(mListTag.get(position), R.drawable.icon_free);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                Glide.with(context).load(path).into(imageView);
+            } catch (Exception e) {
+            }
         }
 
         @Override
         public ImageView createImageView(Context context) {
-            ImageView simpleDraweeView = new ImageView(context);
-            return simpleDraweeView;
+            return new TagImageView(context);
+
         }
     }
 

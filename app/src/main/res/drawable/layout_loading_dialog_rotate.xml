@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <rotate
-            android:drawable="@drawable/loading2"
-            android:duration="1000"
+            android:drawable="@drawable/icon_loading"
+            android:duration="200"
             android:fromDegrees="0"
             android:pivotX="50%"
             android:pivotY="50%"

@@ -3,13 +3,14 @@
               xmlns:huang="http://schemas.android.com/apk/res-auto"
               android:id="@+id/linearlayout_login_nomal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:textColorHint="@color/color_content"
         huang:counterOverflowTextAppearance="@style/counterOverflowTextColor"
         huang:hintEnabled="false">
@@ -41,7 +42,7 @@
         android:id="@+id/text_input_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:textColorHint="@color/color_content"
         huang:errorTextAppearance="@style/counterOverflowTextColor"
         huang:hintEnabled="false"
@@ -71,14 +72,14 @@
         android:layout_marginTop="4dp"
         android:background="@color/color_red"/>
 
-    <ImageView
+    <Button
         android:id="@+id/dl_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:src="@drawable/btn_login"
-        android:text="登录"
+        android:background="@drawable/login_btn_shape"
+        android:text="登 录"
         android:textColor="@color/color_white"
         android:textSize="16.0sp"/>
 

@@ -65,7 +65,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         textView_content = (TextView) view.findViewById(R.id.dialog_message);
         mNumberProgressBar = (ProgressBar) view.findViewById(R.id.versionupdate_numberbar);
 
-        normalDialog = new Dialog(mContext, R.style.dialog);
+        normalDialog = new Dialog(mContext, R.style.commondialog_style);
         normalDialog.setCanceledOnTouchOutside(false);
         normalDialog.setContentView(view);
         normalDialog.show();

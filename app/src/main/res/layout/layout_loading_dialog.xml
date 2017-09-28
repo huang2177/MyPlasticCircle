@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateDrawable="@drawable/layout_loading_dialog_rotate" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/loading_text"
-            android:textColor="@color/colorAccent"
-            android:text="loading..."
-            android:textSize="14.0sp" />
-    </LinearLayout>
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="110dp"
+            android:layout_height="85dp"
+            android:layout_gravity="center"
+            android:alpha="0.85"
+            android:background="@drawable/dialog_loading_backgroud_shape"/>
+
+        <LinearLayout
+            android:layout_width="110dp"
+            android:layout_height="85dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateDrawable="@drawable/layout_loading_dialog_rotate"/>
+
+            <TextView
+                android:id="@+id/loading_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="正在获取数据"
+                android:textColor="@color/colorAccent"
+                android:textSize="14.0sp"/>
+        </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>
 

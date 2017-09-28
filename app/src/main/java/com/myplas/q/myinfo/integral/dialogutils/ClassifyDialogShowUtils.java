@@ -65,7 +65,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
         this.mDefFPostionMap = mDefFMap;
         this.mDefCPostionMap = mDefCMap;
         if (theDialog == null) {
-            theDialog = new Dialog(context, R.style.dialog);
+            theDialog = new Dialog(context, R.style.commondialog_style);
         }
         View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_layout_intergral_classify, null, false);
 

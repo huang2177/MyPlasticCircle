@@ -49,14 +49,12 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     private List<CateListSelectBean> list_cateselect_Column, list_cateselect_Product;
     private List list_Product_Classify, list_Subscription_Column, list1, list2;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusUtils.setStatusBar(this, false, false);
-        StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_find_cate_popou);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         initView();

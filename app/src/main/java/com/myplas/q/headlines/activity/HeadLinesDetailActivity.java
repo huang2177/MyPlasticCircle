@@ -139,7 +139,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 clickId = sucribleDetailBean.getInfo().getHot().get(position).getId();
                 boolean isFree = sucribleDetailBean.getInfo().getHot().get(position).getIs_free().equals("1");
                 if (isFree) {
-                    getNetData(clickId);
+                    getNetData(clickId, 2);
                 } else {
                     isPaidSubscription(clickId);
                 }
@@ -151,28 +151,28 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 clickId = sucribleDetailBean.getInfo().getSubscribe().get(position).getId();
                 boolean isFree = sucribleDetailBean.getInfo().getSubscribe().get(position).getIs_free().equals("1");
                 if (isFree) {
-                    getNetData(clickId);
+                    getNetData(clickId, 2);
                 } else {
                     isPaidSubscription(clickId);
                 }
             }
         });
         firstInto();
-        getNetData(getIntent().getStringExtra("id"));
+        getNetData(getIntent().getStringExtra("id"), 1);
     }
 
-    public void getNetData(String id) {
+    public void getNetData(String id, int type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", id);
         map.put("token", sharedUtils.getData(this, "token"));
-        BaseActivity.postAsyn(this, API.BASEURL + API.GET_DETAIL_INFO, map, this, 1);
+        BaseActivity.postAsyn(this, API.BASEURL + API.GET_DETAIL_INFO, map, this, type);
     }
 
     //检查权限
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", cate_id);
-        BaseActivity.postAsyn(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 6);
+        BaseActivity.postAsyn(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 3);
     }
 
     @Override
@@ -180,12 +180,14 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("err");
-            if (type == 1 && err.equals("0")) {
+            if (type == 1 || type == 2 && err.equals("0")) {
                 Gson gson = new Gson();
                 sucribleDetailBean = gson.fromJson(object.toString(), SucribleDetailBean.class);
                 showInfo(sucribleDetailBean);
 
-                //滚动到顶部
+            }
+            //滚动到顶部
+            if (type == 2) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -193,9 +195,9 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                     }
                 });
             }
-            if (type == 6) {
+            if (type == 3) {
                 if (err.equals("0")) {
-                    getNetData(clickId);
+                    getNetData(clickId, 2);
                 } else {
                     String content = new JSONObject(object.toString()).getString("msg");
                     CommonDialog commonDialog = new CommonDialog();

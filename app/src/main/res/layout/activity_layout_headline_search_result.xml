@@ -65,6 +65,6 @@
             android:layout_marginRight="20dp"
             android:horizontalSpacing="8dp"
             android:numColumns="3"
-            android:verticalSpacing="10dp"></com.myplas.q.common.view.MyGridview>
+            android:verticalSpacing="10dp"/>
     </LinearLayout>
 </LinearLayout>

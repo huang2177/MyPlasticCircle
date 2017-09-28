@@ -62,10 +62,10 @@
         android:id="@+id/header_view"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:background="@color/color_lightgray"></View>
+        android:background="@color/color_lightgray"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/color_white"></View>
+        android:background="@color/color_white"/>
 </LinearLayout>

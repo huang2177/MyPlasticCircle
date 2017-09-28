@@ -152,7 +152,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     isRefresh = true;
                     hasMoerData = true;
                     keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-                    getPhysical_Search(1, keywords, time, is_buy, area);
+                    getPhysical_Search(1, keywords, time, is_buy, area, true);
                     return true;
                 }
                 return false;
@@ -169,7 +169,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
                         if (hasMoerData) {
-                            getPhysical_Search(page, keywords, time, is_buy, area);
+                            getPhysical_Search(page, keywords, time, is_buy, area, false);
                         } else {
                             TextUtils.Toast(SupDem_Search_Activity.this, "没有更多数据了！");
                         }
@@ -192,7 +192,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     }
 
     //查询
-    public void getPhysical_Search(int page, String keyWords, String time, String is_buy, String area) {
+    public void getPhysical_Search(int page, String keyWords, String time, String is_buy, String area, boolean isShowLoading) {
         Map map = new HashMap();
         map.put("keywords", keyWords);
         map.put("page", page + "");
@@ -201,7 +201,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         map.put("type", is_buy);
         map.put("cargo_type", "0");
         map.put("area_id", area);
-        postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH, map, this, 2);
+        postAsyn1(this, API.BASEURL + API.PLASTIC_SEARCH, map, this, 2, isShowLoading);
     }
 
     //获取时间和地区
@@ -225,7 +225,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 isRefresh = true;
                 hasMoerData = true;
                 keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-                getPhysical_Search(1, keywords, time, is_buy, area);
+                getPhysical_Search(1, keywords, time, is_buy, area, true);
                 break;
             case R.id.img_search_delete:
                 delSearch_Record();
@@ -279,7 +279,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 keywords = historyBean.getHistory().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
-                getPhysical_Search(1, keywords, time, is_buy, area);
+                getPhysical_Search(1, keywords, time, is_buy, area, true);
                 break;
             case R.id.mygrid_search_subcribe://猜你所想
                 page = 1;
@@ -288,7 +288,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 keywords = historyBean.getRecommend().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
-                getPhysical_Search(1, keywords, time, is_buy, area);
+                getPhysical_Search(1, keywords, time, is_buy, area, true);
                 break;
             case R.id.mygrid_search_null://相关搜索
                 page = 1;
@@ -297,7 +297,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 keywords = bean.getCombine().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
-                getPhysical_Search(1, keywords, time, is_buy, area);
+                getPhysical_Search(1, keywords, time, is_buy, area, true);
                 break;
             case R.id.search_listview_result:
                 isFinifsh = false;
@@ -427,7 +427,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         textView_add.setText(list_area.get(po_pro).getData().get(position).getShow());
         textView_add.setTextColor(getResources().getColor(R.color.color_red));
         area = list_area.get(po_pro).getData().get(position).getValue();
-        getPhysical_Search(1, keywords, time, is_buy, area);
+        getPhysical_Search(1, keywords, time, is_buy, area, true);
     }
 
     //时间回调
@@ -439,7 +439,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         textView_time.setText(list_time.get(po).getShow());
         textView_time.setTextColor(getResources().getColor(R.color.color_red));
         time = list_time.get(po).getValue();
-        getPhysical_Search(1, keywords, time, is_buy, area);
+        getPhysical_Search(1, keywords, time, is_buy, area, true);
     }
 
     private void showInPutKeybord() {
@@ -508,7 +508,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             hasMoerData = true;
             is_buy = position == 0 ? "1" : "0";
             keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-            getPhysical_Search(1, keywords, time, is_buy, area);
+            getPhysical_Search(1, keywords, time, is_buy, area, true);
         }
 
         @Override

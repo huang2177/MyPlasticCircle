@@ -49,7 +49,8 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="0dp">
+            android:elevation="0dp"
+            android:visibility="gone">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

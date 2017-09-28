@@ -131,7 +131,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
     public void showDialog(final viewHolder viewHolder, String num, final double unit_price, final int pos) {
         View view = View.inflate(context, R.layout.dialog_layout_modify_num, null);
 
-        normalDialog = new Dialog(context, R.style.dialog);
+        normalDialog = new Dialog(context, R.style.commondialog_style);
         normalDialog.setContentView(view);
         normalDialog.setCancelable(true);
         normalDialog.setCanceledOnTouchOutside(true);

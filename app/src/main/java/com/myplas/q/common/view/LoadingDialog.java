@@ -24,7 +24,7 @@ public class LoadingDialog {
 
     public static AlertDialog getInstance(Context context) {
         if (mHashMap.get(context) == null) {
-            dialog = new AlertDialog.Builder(context, R.style.dialog).create();
+            dialog = new AlertDialog.Builder(context, R.style.loadind_dialog_style).create();
             mHashMap.put(context, dialog);
             View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_dialog, null);
             dialog.setView(view);

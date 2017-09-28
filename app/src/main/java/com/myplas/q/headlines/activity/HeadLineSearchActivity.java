@@ -24,8 +24,9 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.headlines.adapter.TTAdapter;
-import com.myplas.q.headlines.bean.SubcribleBean;
+import com.myplas.q.headlines.adapter.HeadSearch_LV_Adapter;
+import com.myplas.q.headlines.adapter.SubcribleAdapter;
+import com.myplas.q.headlines.bean.HeadSearchBean;
 import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.myplas.q.supdem.Beans.HistoryBean;
 import com.myplas.q.headlines.bean.SearchNoResultBean;
@@ -61,11 +62,11 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     private MyGridview gridview_history, gridview_subcribe, gridview_subcribe_no;
     private LinearLayout search_default_linear, search_result_linear, search_result_linear_no;
 
-    private TTAdapter ttAdapter;
     private HistoryBean historyBean;
     private SearchNoResultBean bean;
-    private List<SubcribleBean.DataBean> list;
-    private SupDem_Search_Grid_Adapter adapter_grid;
+    private List<HeadSearchBean.DataBean> list;
+    private HeadSearch_LV_Adapter mSearchLvAdapter;
+    private SupDem_Search_Grid_Adapter mSearchGridAdapter;
 
     private Handler handler;
     private String keywords;
@@ -81,7 +82,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         String data = getIntent().getStringExtra("data");
         if (TextUtils.isNullOrEmpty(data)) {//从供求qq页面跳转过来
             editText.setText(data);
-            get_Subscribe(1, data);
+            get_Subscribe(1, data, true);
             editText.setSelection(data.length());
         } else {                            //从头条跳转过来
             getSearch_Record();
@@ -128,7 +129,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     page = 1;
                     isRefresh = true;
                     keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-                    get_Subscribe(page, keywords);
+                    get_Subscribe(page, keywords, true);
                     return true;
                 }
                 return false;
@@ -143,7 +144,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
-                        get_Subscribe(page, keywords);
+                        get_Subscribe(page, keywords, false);
                     }
                 }
             }
@@ -163,13 +164,13 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     }
 
     //查询
-    public void get_Subscribe(int page, String keywords) {
+    public void get_Subscribe(int page, String keywords, boolean isShowLoading) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page + "");
         map.put("size", "15");
         map.put("keywords", keywords);
         map.put("subscribe", "1");
-        BaseActivity.postAsyn(this, API.BASEURL + API.GET_SUBSCRIBE, map, this, 2);
+        postAsyn1(this, API.BASEURL + API.GET_SUBSCRIBE, map, this, 2, isShowLoading);
     }
 
 
@@ -194,7 +195,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 keywords = (editText.getText().toString().equals(""))
                         ? ("7000f")
                         : (editText.getText().toString());
-                get_Subscribe(page, keywords);
+                get_Subscribe(page, keywords, true);
                 break;
             case R.id.img_search_delete:
                 delSearch_Record();
@@ -212,7 +213,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 keywords = historyBean.getHistory().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
-                get_Subscribe(page, keywords);
+                get_Subscribe(page, keywords, true);
                 break;
             case R.id.mygrid_search_subcribe://猜你所想
                 page = 1;
@@ -220,7 +221,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 keywords = historyBean.getRecommend().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
-                get_Subscribe(page, keywords);
+                get_Subscribe(page, keywords, true);
                 break;
             case R.id.mygrid_search_null://相关搜索
                 page = 1;
@@ -228,7 +229,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 keywords = bean.getRecommendation().get(position);
                 editText.setText(keywords);
                 editText.setSelection(keywords.length());
-                get_Subscribe(page, keywords);
+                get_Subscribe(page, keywords, true);
                 break;
             case R.id.search_listview_result1:
                 HeadLineSearchActivity.this.position = position;
@@ -260,8 +261,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1 && err.equals("0")) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
-                adapter_grid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
-                gridview_history.setAdapter(adapter_grid);
+                mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
+                gridview_history.setAdapter(mSearchGridAdapter);
                 SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
                 gridview_subcribe.setAdapter(adapter_grid1);
 
@@ -274,19 +275,19 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 if (err.equals("0")) {
-                    SubcribleBean subcribleBean = gson.fromJson(object.toString(), SubcribleBean.class);
+                    HeadSearchBean searchBean = gson.fromJson(object.toString(), HeadSearchBean.class);
                     if (page == 1) {
                         frameLayout.setVisibility(View.VISIBLE);
                         search_result_linear_no.setVisibility(View.GONE);
-                        ttAdapter = new TTAdapter(this, subcribleBean.getData());
-                        listView.setAdapter(ttAdapter);
-                        //showRefreshPopou("为你搜索" + subcribleBean.getTotal() + "条信息");
+                        mSearchLvAdapter = new HeadSearch_LV_Adapter(this, searchBean.getData());
+                        listView.setAdapter(mSearchLvAdapter);
+                        showRefreshPopou("为你搜索" + searchBean.getTotal() + "条信息");
                         list.clear();
-                        list.addAll(subcribleBean.getData());
+                        list.addAll(searchBean.getData());
                     } else {
-                        list.addAll(subcribleBean.getData());
-                        ttAdapter.setList(list);
-                        ttAdapter.notifyDataSetChanged();
+                        list.addAll(searchBean.getData());
+                        mSearchLvAdapter.setList(list);
+                        mSearchLvAdapter.notifyDataSetChanged();
                     }
                 } else {
                     if (page == 1) {
@@ -294,8 +295,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                         search_result_linear_no.setVisibility(View.VISIBLE);
                         textView_no.setText("抱歉，未能找到相关搜索！");
                         bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
-                        adapter_grid = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
-                        gridview_subcribe_no.setAdapter(adapter_grid);
+                        mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
+                        gridview_subcribe_no.setAdapter(mSearchGridAdapter);
                     } else {
                         TextUtils.Toast(this, "没有更多数据了！");
                     }
@@ -303,8 +304,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             }
             if (type == 3 && err.equals("0")) {
                 TextUtils.Toast(this, "删除成功！");
-                adapter_grid = new SupDem_Search_Grid_Adapter(this, null);
-                gridview_history.setAdapter(adapter_grid);
+                mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
+                gridview_history.setAdapter(mSearchGridAdapter);
             }
             if (type == 4) {
                 if (err.equals("0")) {
@@ -325,10 +326,9 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     //展示刷新后的popou
     public void showRefreshPopou(String text) {
         if (isRefresh) {
-            textView_hint.setVisibility(View.VISIBLE);
             isRefresh = false;
-
             textView_hint.setText(text);
+            textView_hint.setVisibility(View.VISIBLE);
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {

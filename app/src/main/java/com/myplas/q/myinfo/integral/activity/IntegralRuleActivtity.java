@@ -47,7 +47,7 @@ public class IntegralRuleActivtity extends BaseActivity {
 
         webSettings.setDomStorageEnabled(true);
 
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        //webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
         webView.loadUrl("http://q.myplas.com/#/pointsrule2");
 
@@ -70,7 +70,6 @@ public class IntegralRuleActivtity extends BaseActivity {
             deleteDatabase("webview.db");
             deleteDatabase("webviewCache.db");
         } catch (Exception e) {
-            e.printStackTrace();
         }
         //WebView 缓存文件
         File appCacheDir = new File(getFilesDir().getAbsolutePath() + APP_CACAHE_DIRNAME);

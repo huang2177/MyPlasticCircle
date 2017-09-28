@@ -43,7 +43,6 @@ public class Cover_WebActivity extends BaseActivity {
         webSettings.setSupportZoom(true);
         webSettings.setUseWideViewPort(true);   //设置此属性，可任意比例缩放
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setLoadWithOverviewMode(true);

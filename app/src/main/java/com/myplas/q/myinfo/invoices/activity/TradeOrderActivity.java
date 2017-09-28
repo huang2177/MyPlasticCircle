@@ -2,6 +2,7 @@ package com.myplas.q.myinfo.invoices.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,10 +50,10 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
-    //private View mViewHeader;
     private EditText mEditText;
     private ImageView mImageView;
     private RecyclerView mListView;
+    private AppBarLayout mBarLayout;
     private NoResultLayout mNoResultLayout;
 
     private TradeOrderListviewAdapter mAdapter;
@@ -69,8 +70,8 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     }
 
     public void initView() {
+        mBarLayout = F(R.id.appbar);
         mImageView = F(R.id.img_contact);
-
         mListView = F(R.id.trade_order_listview);
         mNoResultLayout = F(R.id.trade_order_noresultlayout);
         //mViewHeader = View.inflate(this, R.layout.header_layout_tradeorder, null);
@@ -150,6 +151,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                 if (err.equals("0")) {
                     mNoResultLayout.setVisibility(false);
                     mListView.setVisibility(View.VISIBLE);
+                    mBarLayout.setVisibility(View.VISIBLE);
                     OrderListsBean bean = gson.fromJson(object.toString(), OrderListsBean.class);
                     mList = bean.getData().getList();
                     mAdapter = new TradeOrderListviewAdapter(this, mList);
@@ -157,6 +159,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                     mListView.setAdapter(mAdapter);
                 } else {
                     mListView.setVisibility(View.GONE);
+                    mBarLayout.setVisibility(View.GONE);
                     String msg = new JSONObject(object.toString()).getString("msg");
                     mNoResultLayout.setNoResultData(R.drawable.icon_invoices_null, "", true);
                 }

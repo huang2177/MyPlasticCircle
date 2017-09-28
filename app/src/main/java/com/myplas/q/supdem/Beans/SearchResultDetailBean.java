@@ -52,6 +52,7 @@ public class SearchResultDetailBean {
          * physical :
          */
 
+        private String is_free;
         private String c_name;
         private String produce_place;
         private String cargo_type;
@@ -66,6 +67,14 @@ public class SearchResultDetailBean {
         private List<ShowInformationBean> show_information;
         private List<FindRelevantBean> find_relevant;
         private List<MobileListBean> mobile_list;
+
+        public String getIs_free() {
+            return is_free;
+        }
+
+        public void setIs_free(String is_free) {
+            this.is_free = is_free;
+        }
 
         public String getC_name() {
             return c_name;

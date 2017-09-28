@@ -9,8 +9,11 @@ import android.view.Window;
 import android.widget.Toast;
 
 /**
- * Created by Administrator on 2016/12/16.
+ * 作者:huangshuang
+ * 事件 2016/12/16.
+ * 邮箱： 15378412400@163.com
  */
+
 public class NetUtils {
     public static boolean isNetworkStateed(Context context) {
         try {

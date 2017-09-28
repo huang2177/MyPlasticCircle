@@ -21,7 +21,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.common.utils.GetNumUtil;
+import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.NoDoubleClickListener;
@@ -189,7 +189,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     }
                 }
                 if (type.equals("3")) {
-                    int num = GetNumUtil.getNum(viewHolder.num_all.getText().toString());
+                    int num = NumUtils.getNum(viewHolder.num_all.getText().toString());
                     if (num != 0) {
                         viewHolder.button.setClickable(false);
                         //viewHolder.button.setBackgroundResource(R.drawable.btn_cacle);

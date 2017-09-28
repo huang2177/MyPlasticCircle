@@ -59,7 +59,8 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personinfo_layout_activity);
-        goBack(findViewById(R.id.back));
+        initTileBar();
+        setTitle("详细信息");
         initView();
         getPersonInfoData();
         getTaPur("1", 2);

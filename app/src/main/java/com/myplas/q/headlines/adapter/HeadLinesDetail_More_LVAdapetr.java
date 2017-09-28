@@ -70,22 +70,25 @@ public class HeadLinesDetail_More_LVAdapetr extends BaseAdapter {
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
-        if (mHotBeanList == null) {
-            viewHolder.title2.setText(mSubscribeBeanList.get(position).getTitle());
-            viewHolder.time.setText(mSubscribeBeanList.get(position).getInput_time());
-            viewHolder.author.setText(mSubscribeBeanList.get(position).getPhysical_label());
-            viewHolder.num.setText(mSubscribeBeanList.get(position).getPv());
-            viewHolder.mImgFree.setVisibility(mSubscribeBeanList.get(position).getIs_free().equals("1")
-                    ? View.VISIBLE
-                    : View.GONE);
-        } else {
-            viewHolder.title2.setText(mHotBeanList.get(position).getTitle());
-            viewHolder.time.setText(mHotBeanList.get(position).getTime());
-            viewHolder.author.setText(mHotBeanList.get(position).getPhysical_label());
-            viewHolder.num.setText(mHotBeanList.get(position).getPv());
-            viewHolder.mImgFree.setVisibility(mHotBeanList.get(position).getIs_free().equals("1")
-                    ? View.VISIBLE
-                    : View.GONE);
+        try {
+            if (mHotBeanList == null) {
+                viewHolder.title2.setText(mSubscribeBeanList.get(position).getTitle());
+                viewHolder.time.setText(mSubscribeBeanList.get(position).getInput_time());
+                viewHolder.author.setText(mSubscribeBeanList.get(position).getPhysical_label());
+                viewHolder.num.setText(mSubscribeBeanList.get(position).getPv());
+                viewHolder.mImgFree.setVisibility(mSubscribeBeanList.get(position).getIs_free().equals("1")
+                        ? View.VISIBLE
+                        : View.GONE);
+            } else {
+                viewHolder.title2.setText(mHotBeanList.get(position).getTitle());
+                viewHolder.time.setText(mHotBeanList.get(position).getTime());
+                viewHolder.author.setText(mHotBeanList.get(position).getPhysical_label());
+                viewHolder.num.setText(mHotBeanList.get(position).getPv());
+                viewHolder.mImgFree.setVisibility(mHotBeanList.get(position).getIs_free().equals("1")
+                        ? View.VISIBLE
+                        : View.GONE);
+            }
+        } catch (Exception e) {
         }
         return convertView;
     }

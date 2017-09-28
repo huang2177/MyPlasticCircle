@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.headlines.bean.HeadSearchBean;
 import com.myplas.q.headlines.bean.SubcribleBean;
 
 import java.util.List;
@@ -24,11 +25,11 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/21 15:40
  */
-public class TTAdapter extends BaseAdapter {
+public class SubcribleAdapter extends BaseAdapter {
     Context context;
     List<SubcribleBean.DataBean> list;
 
-    public TTAdapter(Context context, List<SubcribleBean.DataBean> list) {
+    public SubcribleAdapter(Context context, List<SubcribleBean.DataBean> list) {
         this.context = context;
         this.list = list;
     }

@@ -2,10 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
+    android:clickable="true"
     android:orientation="vertical">
 
     <FrameLayout
@@ -31,7 +31,7 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back"/>
+                android:src="@drawable/btn_login_back"/>
         </LinearLayout>
     </FrameLayout>
 
@@ -39,14 +39,15 @@
         android:id="@+id/sv_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="30dp"
+        android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="45dp"
-            android:layout_marginTop="40dp"
             android:orientation="vertical">
 
             <RelativeLayout

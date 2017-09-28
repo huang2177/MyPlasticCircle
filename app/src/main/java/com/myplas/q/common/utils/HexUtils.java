@@ -1,6 +1,6 @@
 package com.myplas.q.common.utils;
 
-public class HexUtil {
+public class HexUtils {
     /**
      * 将字节数组转换成16进制字符串
      *

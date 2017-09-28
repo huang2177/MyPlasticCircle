@@ -56,8 +56,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     private String method = API.DELIVER_PRICE;
     private Button btn_gz, btn_chj, btn_hf, btn_chj_ok;
     private LinearLayout linearLayout, linearLayout_edit;
-    private ImageView img_tx, img_rz, img_gong_qiu,imageView;
-    private TextView text_gs, text_name,text_fs,text_content, text_shj, text_chj, text_hf;
+    private ImageView img_tx, img_rz, img_gong_qiu, imageView;
+    private TextView text_gs, text_name, text_fs, text_content, text_shj, text_chj, text_hf;
 
     private XQ_ListView_HFAdapter hfAdapter;
     private XQ_ListView_CHJAdapter chjAdapter;
@@ -70,28 +70,30 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.supdem_detail_layout);
-        goBack(findViewById(R.id.back_img));
+        initTileBar();
+        setTitle("详情");
         initView();
         getNetData();
-        String s=getIntent().getStringExtra("type");
-        if (s.equals("0")||s.equals("1")) {
+        String s = getIntent().getStringExtra("type");
+        if (s.equals("0") || s.equals("1")) {
             intDeLiverPrice();
         } else {
             intReply();
         }
     }
+
     public void initView() {
         img_tx = F(R.id.xq_tx);
         img_rz = F(R.id.xq_rz);
         btn_gz = F(R.id.xq_gz);
-        text_fs=F(R.id.xq_fs);
+        text_fs = F(R.id.xq_fs);
         text_gs = F(R.id.xq_gs);
         btn_hf = F(R.id.xq_hfxx);
-        text_name=F(R.id.xq_name);
+        text_name = F(R.id.xq_name);
         text_shj = F(R.id.xq_shj);
         text_hf = F(R.id.gq_huifu);
         btn_chj = F(R.id.xq_chjxx);
-        imageView=F(R.id.image_d_r);
+        imageView = F(R.id.image_d_r);
         text_chj = F(R.id.gq_chujian);
         editText = F(R.id.edit_chj_hf);
         btn_chj_ok = F(R.id.btn_chj_hf);
@@ -127,6 +129,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 //                break;
 //        }
     }
+
     //获取首页数据
     public void getNetData() {
         try {
@@ -185,9 +188,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 break;
         }
     }
+
     //出价消息
     public void intDeLiverPrice() {
-        list_hf=null;
+        list_hf = null;
         hfAdapter.setList(list_hf);
         hfAdapter.notifyDataSetChanged();
 
@@ -202,9 +206,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         type = 5;
         getDeLiverPrice();
     }
+
     //回复
     public void intReply() {
-        list_chj=null;
+        list_chj = null;
         chjAdapter.setList(list_chj);
         chjAdapter.notifyDataSetChanged();
 
@@ -307,7 +312,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 .placeholder(R.drawable.contact_image_defaul_male)
                 .into(img_tx);
         String s = supplyDemandDetailBean.getData().getInfo().getC_name();
-        text_gs.setText("  " + s );
+        text_gs.setText("  " + s);
         text_name.setText("  " + supplyDemandDetailBean.getData().getInfo().getName());
         text_fs.setText("  粉丝：" + supplyDemandDetailBean.getData().getInfo().getFans()
                 + "   等级：" + supplyDemandDetailBean.getData().getInfo().getMember_level());

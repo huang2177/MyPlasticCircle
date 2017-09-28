@@ -14,13 +14,16 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.RoundImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
+import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.myplas.q.supdem.Beans.PhysicalBean;
 import com.myplas.q.supdem.Beans.SearchResultDetailBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_QQ_Detail_Adapter;
@@ -40,17 +43,20 @@ import static com.myplas.q.R.id.supdem_qq_listview_find;
  * 时间：2017/3/19 15:44
  */
 
-public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnClickListener, ResultCallBack, AdapterView.OnItemClickListener {
+public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnClickListener, ResultCallBack
+        , AdapterView.OnItemClickListener, CommonDialog.DialogShowInterface {
     private RoundImageView roundImagView;
     private ImageView img_tell, img_zx, img_find;
     private MyListview listview_tell, listView_zx, listView_find;
     private LinearLayout layout_zx, layout_find, layout_wx, layout_tell, layout_zx_more;
     private TextView text_gs, text_qq_num, text_hw, text_ph, text_chd, text_jg, text_xq, text_qq, title_rs;
 
-    private boolean isClicked1, isClicked2, isClicked3;
+    private PhysicalBean bean;
     private SupDem_Search_QQ_Detail_Adapter adapter;
     private SearchResultDetailBean.DataBean detailBean;
-    private PhysicalBean bean;
+
+    private String clickId;
+    private boolean isClicked1, isClicked2, isClicked3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +120,13 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         Map map = new HashMap();
         map.put("keywords", getIntent().getStringExtra("plastic_number"));
         postAsyn(this, API.BASEURL + API.PHYSICAL_SEARCH, map, this, 2);
+    }
+
+    //检查文章权限
+    public void isPaidSubscription(String cate_id) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", cate_id);
+        postAsyn1(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 3, false);
     }
 
     @Override
@@ -208,10 +221,12 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         try {
             switch (parent.getId()) {
                 case R.id.supdem_qq_listview_zx:
-                    Intent intent = new Intent(this, HeadLinesDetailActivity.class);
-                    intent.putExtra("title", detailBean.getShow_information().get(position).getCate_name());
-                    intent.putExtra("id", detailBean.getShow_information().get(position).getId());
-                    startActivity(intent);
+//                    boolean isFree = detailBean.getShow_information().get(position).getIs_free().equals("1");
+                    clickId = detailBean.getShow_information().get(position).getId();
+//                        Intent intent = new Intent(this, HeadLinesDetailActivity.class);
+//                        intent.putExtra("id", clickId);
+//                        startActivity(intent);
+                    isPaidSubscription(clickId);
                     break;
                 case R.id.supdem_qq_listview_find:
                     break;
@@ -227,8 +242,8 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            boolean err = new JSONObject(object.toString()).getString("err").equals("0");
-            if (type == 1 && err) {
+            String err = new JSONObject(object.toString()).getString("err");
+            if (type == 1 && err.equals("0")) {
                 SearchResultDetailBean bean = gson.fromJson(object.toString(), SearchResultDetailBean.class);
                 detailBean = bean.getData();
                 showInfo(detailBean);
@@ -237,11 +252,28 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                 adapter.setList_showinfo(detailBean.getShow_information());
                 listView_zx.setAdapter(adapter);
             }
-            if (type == 2 && err) {
+            if (type == 2 && err.equals("0")) {
                 bean = gson.fromJson(object.toString(), PhysicalBean.class);
+            }
+            if (type == 3) {
+                if (err.equals("0")) {
+                    Intent intent = new Intent(this, HeadLinesDetailActivity.class);
+                    intent.putExtra("id", clickId);
+                    startActivity(intent);
+                } else {
+                    String content = new JSONObject(object.toString()).getString("msg");
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
+                }
             }
         } catch (Exception e) {
         }
+    }
+
+    @Override
+    public void ok(int type) {
+        Intent intent = new Intent(this, IntegralActivity.class);
+        startActivity(intent);
     }
 
     public void showInfo(SearchResultDetailBean.DataBean detailBean) {

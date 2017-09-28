@@ -50,11 +50,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private Handler mHandler;
     private ScrollView mScrollView;
     private SharedUtils sharedUtils;
-    private ImageView mImageView1, mImageView2;
+    private Button mButtonNomal, mButtonPhone;
     private boolean clicked, isRemember, isNomalNull, isPhoneNull;
     private ImageView imageView1, imageView2, imageView_verification;
     private TextView textView_zhc, textView_wj, textView_title, mTextView_send;
-    private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone;
+    private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone, mLayoutRoot;
     private MyEditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
 
     private View decorView;
@@ -86,8 +86,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         imageView2 = F(R.id.imageView2);
         imageView_verification = F(R.id.login_phone_send1);
 
-        mImageView1 = F(R.id.dl_ok);
-        mImageView2 = F(R.id.dl_ok2);
+        mButtonNomal = F(R.id.dl_ok);
+        mButtonPhone = F(R.id.dl_ok2);
         mTextView_send = F(R.id.zhc_hq_yzm);
         button_nomal = F(R.id.ll_login_nomal);
         button_phone = F(R.id.ll_login_phone);
@@ -96,17 +96,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         textView_zhc = F(R.id.dl_zhc);
         textView_title = F(R.id.title_rs);
 
+        mLayoutRoot = F(R.id.login_rootview);
         decorView = getWindow().getDecorView();
         linearLayout_nomal = F(R.id.linearlayout_login_nomal);
         linearLayout_phone = F(R.id.linearlayout_login_phone);
 
-        mImageView1.setOnClickListener(this);
-        mImageView2.setOnClickListener(this);
+        mLayoutRoot.setOnClickListener(this);
+        mButtonNomal.setOnClickListener(this);
+        mButtonPhone.setOnClickListener(this);
         textView_wj.setOnClickListener(this);
-        mTextView_send.setOnClickListener(this);
         textView_zhc.setOnClickListener(this);
         button_nomal.setOnClickListener(this);
         button_phone.setOnClickListener(this);
+        mTextView_send.setOnClickListener(this);
         imageView_verification.setOnClickListener(this);
 
         editText_tel.addOnTextWatcher(this);
@@ -121,23 +123,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             String password = sharedUtils.getData(this, "password");
             editText_tel.setText(account);
             editText_pass.setText(password);
-            mImageView1.setImageResource(R.drawable.btn_login_hl);
+            mButtonNomal.setBackgroundResource(R.drawable.login_btn_shape_hl);
             editText_pass.setSelection(editText_pass.getText().length());
             editText_tel.setSelection(editText_tel.getText().length());
         }
         //解决设置透明状态栏以后 页面不能滑动的问题
-        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect rect = new Rect();
-                decorView.getWindowVisibleDisplayFrame(rect);
-                int screenHeight = decorView.getRootView().getHeight();
-                int heightDifference = screenHeight - rect.bottom;//计算软键盘占有的高度  = 屏幕高度 - 视图可见高度
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mScrollView.getLayoutParams();
-                layoutParams.setMargins(0, 0, 0, heightDifference);//设置ScrollView的marginBottom的值为软键盘占有的高度即可
-                mScrollView.requestLayout();
-            }
-        });
+//        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                Rect rect = new Rect();
+//                decorView.getWindowVisibleDisplayFrame(rect);
+//                int screenHeight = decorView.getRootView().getHeight();
+//                int navigationBarHeight = StatusUtils.checkDeviceHasNavigationBar(LoginActivity.this)
+//                        ? StatusUtils.getNavigationBarHeight(LoginActivity.this)
+//                        : 0;
+////                Log.e("-------", navigationBarHeight + "");
+//                int heightDifference = screenHeight - rect.bottom;//计算软键盘占有的高度  = 屏幕高度 - 视图可见高度
+//                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mScrollView.getLayoutParams();
+//                layoutParams.setMargins(0, 0, 0, heightDifference - navigationBarHeight);//设置ScrollView的marginBottom的值为软键盘占有的高度即可
+//                mScrollView.requestLayout();
+//            }
+//        });
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -176,8 +182,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     map.put("password", editText_pass.getText().toString());
                     map.put("chanel", "6");
                     postAsyn(this, API.BASEURL + API.LOGIN, map, this, 1);
-                    mImageView1.setClickable(false);
-                    mImageView1.setImageResource(R.drawable.btn_login);
+                    mButtonNomal.setClickable(false);
+                    mButtonNomal.setBackgroundResource(R.drawable.login_btn_shape);
                 } else {
                     TextUtils.Toast(this, "手机号码或密码输入有误！");
                 }
@@ -194,8 +200,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     map.put("key", key);
                     //登陆；
                     postAsyn(this, API.BASEURL + API.SIMPLE_LOGIN, map, this, 1);
-                    mImageView2.setClickable(false);
-                    mImageView2.setImageResource(R.drawable.btn_login);
+                    mButtonPhone.setClickable(false);
+                    mButtonPhone.setBackgroundResource(R.drawable.login_btn_shape);
                 } else {
                     TextUtils.Toast(this, "手机号码或验证码输入有误！");
                 }
@@ -224,6 +230,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 //获取验证码
                 String url1 = API.BASEURL_API + API.VCODE;
                 postAsyn(this, url1, null, this, 2);
+                break;
+            case R.id.login_rootview:
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mButtonNomal.getWindowToken(), 0);
                 break;
         }
     }
@@ -262,10 +272,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         try {
             String s = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
-                mImageView1.setClickable(true);
-                mImageView2.setClickable(true);
-                mImageView1.setImageResource(isNomalNull ? R.drawable.btn_login_hl : R.drawable.btn_login);
-                mImageView2.setImageResource(isPhoneNull ? R.drawable.btn_login_hl : R.drawable.btn_login);
+                mButtonNomal.setClickable(true);
+                mButtonPhone.setClickable(true);
+                mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
+                mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
 
                 String msg = new JSONObject(object.toString()).getString("msg");
                 TextUtils.Toast(this, msg);
@@ -311,14 +321,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void failCallBack(int type) {
         if (type == 1) {
-            mImageView1.setClickable(true);
-            mImageView2.setClickable(true);
-            mImageView1.setImageResource(isNomalNull
-                    ? R.drawable.btn_login_hl
-                    : R.drawable.btn_login);
-            mImageView2.setImageResource(isPhoneNull
-                    ? R.drawable.btn_login_hl
-                    : R.drawable.btn_login);
+            mButtonNomal.setClickable(true);
+            mButtonPhone.setClickable(true);
+            mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
+            mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
         }
     }
 
@@ -329,16 +335,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
             isNomalNull = TextUtils.isNullOrEmpty(editText_tel.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_pass.getText().toString());
-            mImageView1.setImageResource(isNomalNull
-                    ? R.drawable.btn_login_hl
-                    : R.drawable.btn_login);
+            mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
         } else {
             isPhoneNull = TextUtils.isNullOrEmpty(editText_tel1.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_verification1.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_verification1.getText().toString());
-            mImageView2.setImageResource(isPhoneNull
-                    ? R.drawable.btn_login_hl
-                    : R.drawable.btn_login);
+            mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
+
         }
 
     }
@@ -393,7 +396,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void setData(JSONObject jsonObject) {
         try {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(mImageView1.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(mButtonNomal.getWindowToken(), 0);
 
             sharedUtils.setData(this, Constant.TOKEN, jsonObject.getString("dataToken"));
             sharedUtils.setData(this, Constant.USERID, jsonObject.getString("user_id"));

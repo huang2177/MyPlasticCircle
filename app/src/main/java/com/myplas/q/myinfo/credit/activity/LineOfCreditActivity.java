@@ -165,7 +165,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
         Dialog normalDialog = null;
         View view = View.inflate(this, R.layout.layout_edu_dialog, null);
         if (normalDialog == null) {
-            normalDialog = new Dialog(this, R.style.dialog);
+            normalDialog = new Dialog(this, R.style.commondialog_style);
             normalDialog.setContentView(view);
             setDialogWindowAttr(normalDialog);
         }

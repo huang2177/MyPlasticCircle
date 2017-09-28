@@ -9,7 +9,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="toolbarStyle">@style/ClubToolbar</item>
-        <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorAccent</item>
+        <!--<item name="android:colorControlNormal">@color/colorAccent</item>-->
     </style>
 
     <style name="Theme.FloatActivity" parent="android:style/Theme.Dialog">
@@ -107,7 +107,18 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
     <!--更新dialog-->
-    <style name="dialog" parent="@android:style/Theme.Dialog">
+    <style name="loadind_dialog_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+    </style>
+
+    <style name="commondialog_style" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>

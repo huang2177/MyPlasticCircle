@@ -35,7 +35,7 @@ public class CommonDialog {
         this.dialogShowInterface = dialogShowInterface;
         View view = View.inflate(context, R.layout.dialog_layout_common, null);
         if (normalDialog == null) {
-            normalDialog = new Dialog(context, R.style.dialog);
+            normalDialog = new Dialog(context, R.style.commondialog_style);
             normalDialog.setCancelable(true);
             normalDialog.setCanceledOnTouchOutside(isCanceledOnTouchOutside);
             normalDialog.setContentView(view);

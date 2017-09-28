@@ -2,15 +2,12 @@ package com.myplas.q.guide.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
 
 
 import com.myplas.q.R;
-import com.myplas.q.common.utils.GetNumUtil;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
-import com.myplas.q.common.utils.VersionUtils;
 import com.umeng.analytics.MobclickAgent;
 
 /**

@@ -100,7 +100,8 @@
         <activity
             android:name="com.myplas.q.myinfo.login.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name="com.myplas.q.myinfo.login.RegesterActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"

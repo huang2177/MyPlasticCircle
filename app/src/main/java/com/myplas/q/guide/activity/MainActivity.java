@@ -1,7 +1,6 @@
 package com.myplas.q.guide.activity;
 
 import android.Manifest;
-import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -30,7 +29,7 @@ import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.common.utils.GetNumUtil;
+import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -288,8 +287,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if (type == 3 && err.equals("1")) {
                 url = new JSONObject(object.toString()).getString("url");
                 promit = new JSONObject(object.toString()).getString("msg");
-                versionLocate = GetNumUtil.getNum(VersionUtils.getVersionName(this));
-                versionService = GetNumUtil.getNum(new JSONObject(object.toString()).getString("new_version"));
+                versionLocate = NumUtils.getNum(VersionUtils.getVersionName(this));
+                versionService = NumUtils.getNum(new JSONObject(object.toString()).getString("new_version"));
                 //比较版本号
                 if (versionService > versionLocate) {
                     mUpdateDialogUtils = new VersionUpdateDialogUtils(this, promit, url);

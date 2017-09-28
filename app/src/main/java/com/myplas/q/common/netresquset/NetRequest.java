@@ -146,11 +146,16 @@ public class NetRequest implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
-        message.what = 2;
-        message.arg1 = type;
-        message.obj = resultCallBack;
-        myHandler.sendMessage(message);
-        LoadingDialog.getInstance(context).dismiss();
+        try {
+            message.what = 2;
+            message.arg1 = type;
+            message.obj = resultCallBack;
+            myHandler.sendMessage(message);
+            if (LoadingDialog.getInstance(context) != null) {
+                LoadingDialog.getInstance(context).dismiss();
+            }
+        } catch (Exception e1) {
+        }
     }
 
     @Override
