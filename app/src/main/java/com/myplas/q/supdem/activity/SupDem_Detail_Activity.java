@@ -2,7 +2,9 @@ package com.myplas.q.supdem.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
@@ -10,6 +12,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.style.AbsoluteSizeSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -17,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.bumptech.glide.Glide;
@@ -27,9 +31,11 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.supdem.BaseInterFace;
 import com.myplas.q.supdem.Beans.SupDemDetailBean;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_CHJ;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_HF;
+import com.myplas.q.supdem.OnKeyboardChangeListener;
 import com.myplas.q.supdem.adapter.SupDem_Detail_ViewPager_Adapter;
 import com.myplas.q.common.api.API;
 import com.umeng.analytics.MobclickAgent;
@@ -49,18 +55,20 @@ import java.util.Map;
  * 时间：2017/3/19 15:44
  */
 
-public class SupDem_Detail_Activity extends BaseActivity implements View.OnClickListener, ResultCallBack {
-    private boolean isSelf;
+public class SupDem_Detail_Activity extends BaseActivity implements View.OnClickListener
+        , ResultCallBack
+        , BaseInterFace
+        , OnKeyboardChangeListener.OnChangeListener {
     private int currentItem;
-    private SpannableString ss;
-    private AbsoluteSizeSpan ass;
     private SharedUtils sharedUtils;
+    private boolean isSelf, isKeyboardShow;
 
     private Button mButton;
     private EditText mEditText;
     private ViewPager mViewPager;
-    private LinearLayout mLayout;
     private XTabLayout mTabLayout;
+    private AppBarLayout mBarLayout;
+    private LinearLayout mLayout, mLayoutRoot;
     private ImageView mIVHead, mIVStart, mIVFollow, mIVCall;
     private TextView mTVCompany, mTVFans, mTVType, mTVTime, mTVGoodsposition, mTVMode, mTVStorehouse, mTVPirce, mTVNf, mTVProduction;
 
@@ -70,6 +78,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     private Fragment_SupDem_Detail_HF detail_hf;
     private Fragment_SupDem_Detail_CHJ detail_chj;
     private SupDem_Detail_ViewPager_Adapter mPagerAdapter;
+
+    private String sign, id, pur_id, send_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +97,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
-        ass = new AbsoluteSizeSpan(16, true);
+        sign = "0";
+        id = getIntent().getStringExtra("id");
+        send_id = getIntent().getStringExtra("userid");
+
         sharedUtils = SharedUtils.getSharedUtils();
 
         mIVHead = F(R.id.xq_tx);
@@ -95,12 +108,14 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTabLayout = F(R.id.tabLayout);
         mViewPager = F(R.id.viewpager);
         mTVNf = F(R.id.supdem_detail_nf);
+        mBarLayout = F(R.id.appbar_layout);
         mIVCall = F(R.id.titlebar_img_right);
         mTVType = F(R.id.supdem_detail_type);
         mTVTime = F(R.id.supdem_detail_time);
         mTVFans = F(R.id.supdem_detail_fans);
         mTVMode = F(R.id.supdem_detail_mode);
         mTVPirce = F(R.id.supdem_detail_pirce);
+        mLayoutRoot = F(R.id.supdem_detail_ll);
         mIVFollow = F(R.id.supdem_detail_follow);
         mTVCompany = F(R.id.supdem_detail_company);
         mLayout = F(R.id.fragment_supdem_detail_ll);
@@ -113,11 +128,11 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mIVCall.setOnClickListener(this);
         mButton.setOnClickListener(this);
         mIVFollow.setOnClickListener(this);
+        mLayoutRoot.addOnLayoutChangeListener(new OnKeyboardChangeListener(this, this));
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -140,6 +155,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTabLayout.addTab(mTabLayout.newTab().setText("出价消息"));
         mTabLayout.addTab(mTabLayout.newTab().setText("回复消息"));
         detail_hf = new Fragment_SupDem_Detail_HF();
+        detail_hf.mBaseInterFace = this;
+
         detail_chj = new Fragment_SupDem_Detail_CHJ();
         mFragmentList.add(detail_chj);
         mFragmentList.add(detail_hf);
@@ -176,18 +193,35 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     //出价或者回复
     public void deliverOrReply(String s) {
         Map<String, String> map = new HashMap<>();
-        map.put("token", sharedUtils.getData(this, "token"));
         map.put("type", mDetailBean.getData().getType());
-        if (currentItem == 1) {
-            map.put("pur_id", getIntent().getStringExtra("id"));
-            map.put("content", s);
-            map.put("send_id", getIntent().getStringExtra("userid"));
-            postAsyn(this, API.BASEURL + API.SAVE_MSG, map, this, 3);
-        } else {
+        map.put("token", sharedUtils.getData(this, "token"));
+
+        if (currentItem == 0) {//出价
             map.put("id", getIntent().getStringExtra("id"));
             map.put("rev_id", getIntent().getStringExtra("userid"));
             map.put("price", s);
             postAsyn(this, API.BASEURL + API.DELIVER_PRICE, map, this, 4);
+
+        } else {               //回复
+            map.put("content", s);
+            map.put("pur_id", id);
+            map.put("send_id", send_id);
+            map.put("id", id);
+            map.put("sign", "0");
+            postAsyn(this, API.BASEURL + API.SAVE_MSG, map, this, 3);
+        }
+    }
+
+    //设置回复 出价的输入框
+    public void setDeliverReplyView(int position) {
+        if (position == 1) {
+            mButton.setText("回复");
+            mEditText.setHint("期待您的回复...");
+            mLayout.setVisibility(View.VISIBLE);
+        } else {
+            mButton.setText("出价");
+            mEditText.setHint("期待您的出价...");
+            mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
         }
     }
 
@@ -217,25 +251,14 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         }
     }
 
-
-    //设置回复 出价的输入框
-    public void setDeliverReplyView(int position) {
-        if (position == 1) {
-            mButton.setText("回复");
-            ss = new SpannableString("期待您的回复...");
-            ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            mEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-            mEditText.setHint(new SpannedString(ss));
-            mLayout.setVisibility(View.VISIBLE);
-        } else {
-            mButton.setText("出价");
-            ss = new SpannableString("期待您的出价...");
-            ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            mEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            mEditText.setHint(new SpannedString(ss));
-            mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
-        }
+    /*出价或者回复的点击事件*/
+    @Override
+    public void onItemClick(String sign, String name, String pur_id, String id, String rev_id, String user_id) {
+        mEditText.setHint("回复" + name);
+        mBarLayout.setExpanded(false, true);
+        showInPutKeybord(mEditText);
     }
+
 
     @Override
     public void callBack(Object object, int type) {
@@ -295,7 +318,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 ? R.drawable.icon_identity
                 : R.drawable.icon_identity_hl);
 
-        mIVFollow.setImageResource(mDetailBean.getData().getStatus().equals("关注")
+        mIVFollow.setImageResource(mDetailBean.getData().getStatus().equals("0")
                 ? R.drawable.img_supdem_detail_follow
                 : R.drawable.img_supdem_detail_followed);
 
@@ -317,7 +340,19 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 ? "现货"
                 : "期货"));
 
-        isSelf = (mDetailBean.getData().getUser_id()) == sharedUtils.getData(this, Constant.USERID);
+        isSelf = (mDetailBean.getData().getUser_id()).equals(sharedUtils.getData(this, Constant.USERID));
+        mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
+        mIVFollow.setVisibility(isSelf ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void onKeyboardHidden() {
+        sign = "0";
+        isKeyboardShow = false;
+        id = getIntent().getStringExtra("id");
+        send_id = getIntent().getStringExtra("userid");
+
+        mEditText.setHint("期待您的回复...");
     }
 
     public void onResume() {

@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/supdem_detail_ll"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -8,9 +9,11 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_white">
@@ -58,12 +61,12 @@
     <LinearLayout
         android:id="@+id/fragment_supdem_detail_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_gravity="bottom"
+        android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp">
+        android:paddingTop="5dp">
 
         <EditText
             android:id="@+id/fragment_supdem_detail_ev"

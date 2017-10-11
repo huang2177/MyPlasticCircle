@@ -68,8 +68,7 @@
                             android:id="@+id/supdem_detail_follow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/img_supdem_detail_follow"/>
+                            android:layout_marginRight="10dp"/>
                     </LinearLayout>
 
 

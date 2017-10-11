@@ -26,6 +26,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
+import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.Cate_Dialog_Activtiy;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
@@ -55,6 +56,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private GridView gridView;
     private EditText editText;
     private LinearLayout mLayoutTitle;
+    private RefreshPopou mRefreshPopou;
     private CustomPopupWindow popupWindow;
     private TextView search_src_text, textView_refresh;
     private HeadLineViewPagerAdapter mViewPagerAdapter;
@@ -70,7 +72,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         initView();
         if (logined)
             initViewPager();
-
     }
 
     private void initView() {
@@ -181,26 +182,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void callBack(String hotSearch, String content, boolean isRefresh) {
         if (isRefresh) {
             mFragments.get(currentItem).isRefresh = false;
-            if (popupWindow == null) {
-                View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
-                textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
-                popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-                popupWindow.setBackgroundDrawable(new BitmapDrawable());
-                //popupWindow.setAnimationStyle(R.style.my_anim_popou);
-                popupWindow.setOutsideTouchable(true);
-                popupWindow.setFocusable(true);
-                popupWindow.update();
-            }
-            textView_refresh.setText((TextUtils.isNullOrEmpty(content)) ? (content) : ("已是最新头条信息！"));
-            BaseActivity.showPopou(getActivity(), popupWindow, editText);
-            if (popupWindow.isShowing()) {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        popupWindow.dismiss();
-                    }
-                }, 1500);
-            }
+            mRefreshPopou = new RefreshPopou(getActivity(), 1);
+            mRefreshPopou.show(mTabLayout, content);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
         }
         //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
@@ -220,6 +203,9 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
+        if (mRefreshPopou != null) {
+            mRefreshPopou.dismiss();
+        }
     }
 
     @Override

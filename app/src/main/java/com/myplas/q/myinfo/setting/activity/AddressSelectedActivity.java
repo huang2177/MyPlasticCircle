@@ -242,22 +242,6 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
         }
     }
 
-    private void showInPutKeybord() {
-        mTextField2.setFocusable(true);
-        mTextField2.setFocusableInTouchMode(true);
-        mTextField2.requestFocus();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-            }
-
-        }, 200);
-    }
-
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);

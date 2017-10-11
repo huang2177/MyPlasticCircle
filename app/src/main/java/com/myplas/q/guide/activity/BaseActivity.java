@@ -14,6 +14,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +29,8 @@ import com.myplas.q.common.view.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import rx.Observable;
 import rx.Observer;
@@ -192,5 +196,21 @@ public class BaseActivity extends FragmentActivity {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    public void showInPutKeybord(final EditText editText) {
+        editText.requestFocus();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(editText, 0);
+                }
+            }
+
+        }, 100);
     }
 }

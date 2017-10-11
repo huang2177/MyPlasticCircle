@@ -69,7 +69,7 @@ public class DataCommonActivity extends BaseActivity {
         mTextField_other = F(R.id.datacommon_input_edit);
 
         if (type.equals("2")) {
-            showInPutKeybord();
+            showInPutKeybord(mTextField_other);
             setLeftTVVisibility(View.VISIBLE);
             setRightTVVisibility(View.VISIBLE);
             mListView.setVisibility(View.GONE);
@@ -154,23 +154,6 @@ public class DataCommonActivity extends BaseActivity {
         });
 
     }
-
-    private void showInPutKeybord() {
-        mTextField_other.setFocusable(true);
-        mTextField_other.setFocusableInTouchMode(true);
-        mTextField_other.requestFocus();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-            }
-
-        }, 200);
-    }
-
 
     public void onResume() {
         super.onResume();

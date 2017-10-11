@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -434,22 +435,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         textView_time.setTextColor(getResources().getColor(R.color.color_red));
         time = list_time.get(po).getValue();
         getPhysical_Search(1, keywords, time, is_buy, area, true);
-    }
-
-    private void showInPutKeybord() {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-            }
-
-        }, 200);
     }
 
     public void onResume() {

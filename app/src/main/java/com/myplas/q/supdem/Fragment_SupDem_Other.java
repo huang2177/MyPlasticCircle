@@ -26,6 +26,7 @@ import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.myplas.q.release.activity.ReleaseActivity;
+import com.myplas.q.release.activity.ReleaseSupDemActivity;
 import com.myplas.q.supdem.Beans.ConfigData;
 import com.myplas.q.supdem.Beans.SupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
@@ -158,8 +159,8 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
             case R.id.supply_demand_follow:
                 if (follow_release.equals("follow")) {
                     MainActivity.firstInto();
-                } else if (follow_release.equals("release")) {
-                    startActivity(new Intent(getActivity(), ReleaseActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), ReleaseSupDemActivity.class));
                 }
                 break;
         }
@@ -169,7 +170,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
     public void callBack(Object object, int type) {
         try {
             if (object.toString().equals(mLastData)) {
-                return;
+                //return;
             }
             mLastData = object.toString();
             Gson gson = new Gson();

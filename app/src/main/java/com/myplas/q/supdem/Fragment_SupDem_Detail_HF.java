@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -49,19 +50,17 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
 
     private Intent mIntent;
     private SharedUtils mSharedUtils;
+    private List<ReplyBean.DataBean> mBeanList;
     private SupDem_Detail_LV_HFAdapter mHFAdapter;
-    private List<ReplyBean.DataBeanX.DataBean> mBeanList;
 
-    public Fragment_SupDem_Detail_HF() {
-
-    }
+    public BaseInterFace mBaseInterFace;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mIntent = getActivity().getIntent();
         mSharedUtils = SharedUtils.getSharedUtils();
-        mHFAdapter = new SupDem_Detail_LV_HFAdapter(getActivity());
+        mHFAdapter = new SupDem_Detail_LV_HFAdapter(getActivity(), mBaseInterFace);
 
         mView = View.inflate(getActivity(), R.layout.fragment_layout_supdem_detail_hf, null);
         mEmptyView = (EmptyView) mView.findViewById(R.id.fragment_supdem_detail_editview);
@@ -69,7 +68,6 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
         mScrollView = (NestedScrollView) mView.findViewById(R.id.scrollview);
 
         mMyListview.setAdapter(mHFAdapter);
-
         getReply();
         return mView;
     }
@@ -104,7 +102,7 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
                     setListener(false);
                     mEmptyView.setVisibility(View.GONE);
                     ReplyBean replyBean = gson.fromJson(object.toString(), ReplyBean.class);
-                    //mBeanList = replyBean.getData().getData();
+                    mBeanList = replyBean.getData();
                     mHFAdapter.setList(mBeanList);
                     mHFAdapter.notifyDataSetChanged();
                     mMyListview.setAdapter(mHFAdapter);

@@ -58,7 +58,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private View view, imageView_sd;
     private RadioGroup radioGroup_sd;
     private TextView tvType, tvRefresh;
-    private CustomPopupWindow mPopupWindow2, popupWindow;
 
     private boolean logined;
     private List<String> mList;
@@ -71,6 +70,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private HIndicatorDialog dialog;
+    private RefreshPopou refreshPopou;
     private Fragment_SupDem_All mFragmentAll;
     private SupDem_ViewPager_Adapter mViewPagerAdapter;
 
@@ -78,8 +78,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-        if (logined)
-            initViewPager();
+        initViewPager();
     }
 
     private void initView() {
@@ -166,9 +165,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.fade, R.anim.fade);
                 break;
-            case R.id.img_adress:
-                mPopupWindow2.dismiss();
-                break;
             case R.id.supplydemand_btn:
                 dialog = new HIndicatorBuilder(getActivity())
                         .width(ScreenUtils.getScreenWidth(getActivity()))
@@ -201,11 +197,10 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private void getChirldData(int position, boolean isShowLoading) {
         if (mFragments != null) {
             if (position == 0) {
-                Fragment_SupDem_All fragmentA = ((Fragment_SupDem_All) mFragments.get(0));
-                if (fragmentA != null) {
-                    fragmentA.page = 1;
-                    fragmentA.type = sType;
-                    fragmentA.getNetData("1", isShowLoading);
+                if (mFragmentAll != null) {
+                    mFragmentAll.page = 1;
+                    mFragmentAll.type = sType;
+                    mFragmentAll.getNetData("1", isShowLoading);
                 }
             } else {
                 Fragment_SupDem_Other fragmentO = ((Fragment_SupDem_Other) mFragments.get(position));
@@ -241,7 +236,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     public void showRefreshPopou(String hotSearch, String content, boolean isRefresh) {
         if (isRefresh) {
             mFragmentAll.isRefresh = false;
-            RefreshPopou refreshPopou = new RefreshPopou(getActivity(), 3);
+            refreshPopou = new RefreshPopou(getActivity(), 3);
             refreshPopou.show(mTabLayout, content);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
         }
@@ -294,18 +289,13 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("MainScreen");
-        boolean isLogined = mSharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_SD);
-        if (isLogined) {//防止第一次登陆以后没有数据
-            initViewPager();
-            mSharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_SD, false);
-        }
     }
 
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
-        if (popupWindow != null) {
-            popupWindow.dismiss();
+        if (refreshPopou != null) {
+            refreshPopou.dismiss();
         }
     }
 

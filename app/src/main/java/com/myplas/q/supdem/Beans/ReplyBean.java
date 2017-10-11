@@ -10,13 +10,14 @@ import java.util.List;
  */
 public class ReplyBean {
 
+
     /**
      * err : 0
-     * data : {"count":"date_selected","data":[{"id":"1451","rev_id":"3858","user_id":"32788","is_read":"date_selected","content":"什么料？","input_time":"4天前","info":{"user_id":"32788","name":"戴先生","c_id":"39566","is_pass":"0","mobile":"15017069076","sex":"男","thumb":"http://statics.myplas.com/upload/16/09/02/logos.jpg","thumbqq":"","thumbcard":"","c_name":"双益塑胶有限公司","need_product":"尼龙，轮胎料，ABS.PC.PC/ABS","address":"东莞市"}}]}
+     * data : [{"id":"1706","rev_id":"3858","user_id":"53397","is_read":"1","content":"多少吨？","input_time":"10-10 10:07","pur_id":"114111","reply_id":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0","replay":[{"id":"1733","rev_id":"9266","reply_id":"1730","user_id":"3858","is_read":"1","content":"YAO5","input_time":"01-01 08:00:00","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"},{"id":"1734","rev_id":"53397","reply_id":"1731","user_id":"3858","is_read":"1","content":"YAO8","input_time":"01-01 08:00:00","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"李一帆"},{"id":"1730","rev_id":"9266","reply_id":"1707","user_id":"3858","is_read":"1","content":"yao5","input_time":"10-10 16:22:25","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"},{"id":"1731","rev_id":"53397","reply_id":"1708","user_id":"3858","is_read":"1","content":"yao8","input_time":"10-10 16:22:27","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"李一帆"},{"id":"1732","rev_id":"9266","reply_id":"1717","user_id":"3858","is_read":"1","content":"yao10","input_time":"10-10 16:22:30","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"}]}]
      */
 
     private int err;
-    private DataBeanX data;
+    private List<DataBean> data;
 
     public int getErr() {
         return err;
@@ -26,57 +27,203 @@ public class ReplyBean {
         this.err = err;
     }
 
-    public DataBeanX getData() {
+    public List<DataBean> getData() {
         return data;
     }
 
-    public void setData(DataBeanX data) {
+    public void setData(List<DataBean> data) {
         this.data = data;
     }
 
-    public static class DataBeanX {
+    public static class DataBean {
         /**
-         * count : date_selected
-         * data : [{"id":"1451","rev_id":"3858","user_id":"32788","is_read":"date_selected","content":"什么料？","input_time":"4天前","info":{"user_id":"32788","name":"戴先生","c_id":"39566","is_pass":"0","mobile":"15017069076","sex":"男","thumb":"http://statics.myplas.com/upload/16/09/02/logos.jpg","thumbqq":"","thumbcard":"","c_name":"双益塑胶有限公司","need_product":"尼龙，轮胎料，ABS.PC.PC/ABS","address":"东莞市"}}]
+         * id : 1706
+         * rev_id : 3858
+         * user_id : 53397
+         * is_read : 1
+         * content : 多少吨？
+         * input_time : 10-10 10:07
+         * pur_id : 114111
+         * reply_id : 0
+         * name : 测试
+         * thumb : http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png
+         * c_name : 上海测试科技
+         * mobile : 18817391111
+         * thumbqq :
+         * is_pass : 0
+         * replay : [{"id":"1733","rev_id":"9266","reply_id":"1730","user_id":"3858","is_read":"1","content":"YAO5","input_time":"01-01 08:00:00","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"},{"id":"1734","rev_id":"53397","reply_id":"1731","user_id":"3858","is_read":"1","content":"YAO8","input_time":"01-01 08:00:00","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"李一帆"},{"id":"1730","rev_id":"9266","reply_id":"1707","user_id":"3858","is_read":"1","content":"yao5","input_time":"10-10 16:22:25","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"},{"id":"1731","rev_id":"53397","reply_id":"1708","user_id":"3858","is_read":"1","content":"yao8","input_time":"10-10 16:22:27","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"李一帆"},{"id":"1732","rev_id":"9266","reply_id":"1717","user_id":"3858","is_read":"1","content":"yao10","input_time":"10-10 16:22:30","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"}]
          */
 
-        private String count;
-        private List<DataBean> data;
+        private String id;
+        private String rev_id;
+        private String user_id;
+        private String is_read;
+        private String content;
+        private String input_time;
+        private String pur_id;
+        private String reply_id;
+        private String name;
+        private String thumb;
+        private String c_name;
+        private String mobile;
+        private String thumbqq;
+        private String is_pass;
+        private List<ReplayBean> replay;
 
-        public String getCount() {
-            return count;
+        public String getId() {
+            return id;
         }
 
-        public void setCount(String count) {
-            this.count = count;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public List<DataBean> getData() {
-            return data;
+        public String getRev_id() {
+            return rev_id;
         }
 
-        public void setData(List<DataBean> data) {
-            this.data = data;
+        public void setRev_id(String rev_id) {
+            this.rev_id = rev_id;
         }
 
-        public static class DataBean {
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
+        }
+
+        public String getIs_read() {
+            return is_read;
+        }
+
+        public void setIs_read(String is_read) {
+            this.is_read = is_read;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getInput_time() {
+            return input_time;
+        }
+
+        public void setInput_time(String input_time) {
+            this.input_time = input_time;
+        }
+
+        public String getPur_id() {
+            return pur_id;
+        }
+
+        public void setPur_id(String pur_id) {
+            this.pur_id = pur_id;
+        }
+
+        public String getReply_id() {
+            return reply_id;
+        }
+
+        public void setReply_id(String reply_id) {
+            this.reply_id = reply_id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getThumb() {
+            return thumb;
+        }
+
+        public void setThumb(String thumb) {
+            this.thumb = thumb;
+        }
+
+        public String getC_name() {
+            return c_name;
+        }
+
+        public void setC_name(String c_name) {
+            this.c_name = c_name;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getThumbqq() {
+            return thumbqq;
+        }
+
+        public void setThumbqq(String thumbqq) {
+            this.thumbqq = thumbqq;
+        }
+
+        public String getIs_pass() {
+            return is_pass;
+        }
+
+        public void setIs_pass(String is_pass) {
+            this.is_pass = is_pass;
+        }
+
+        public List<ReplayBean> getReplay() {
+            return replay;
+        }
+
+        public void setReplay(List<ReplayBean> replay) {
+            this.replay = replay;
+        }
+
+        public static class ReplayBean {
             /**
-             * id : 1451
-             * rev_id : 3858
-             * user_id : 32788
-             * is_read : date_selected
-             * content : 什么料？
-             * input_time : 4天前
-             * info : {"user_id":"32788","name":"戴先生","c_id":"39566","is_pass":"0","mobile":"15017069076","sex":"男","thumb":"http://statics.myplas.com/upload/16/09/02/logos.jpg","thumbqq":"","thumbcard":"","c_name":"双益塑胶有限公司","need_product":"尼龙，轮胎料，ABS.PC.PC/ABS","address":"东莞市"}
+             * id : 1733
+             * rev_id : 9266
+             * reply_id : 1730
+             * user_id : 3858
+             * is_read : 1
+             * content : YAO5
+             * input_time : 01-01 08:00:00
+             * pur_id : 114111
+             * name : 成平
+             * is_pass : 0
+             * mobile : 13701995655
+             * thumb : 17/09/13/59b8f2d78f813.jpg
+             * thumbqq : http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png
+             * c_name : 上海梓辰实业有限公司
+             * hui_name : 李一帆
              */
 
             private String id;
             private String rev_id;
+            private String reply_id;
             private String user_id;
             private String is_read;
             private String content;
             private String input_time;
-            private InfoBean info;
+            private String pur_id;
+            private String name;
+            private String is_pass;
+            private String mobile;
+            private String thumb;
+            private String thumbqq;
+            private String c_name;
+            private String hui_name;
 
             public String getId() {
                 return id;
@@ -92,6 +239,14 @@ public class ReplyBean {
 
             public void setRev_id(String rev_id) {
                 this.rev_id = rev_id;
+            }
+
+            public String getReply_id() {
+                return reply_id;
+            }
+
+            public void setReply_id(String reply_id) {
+                this.reply_id = reply_id;
             }
 
             public String getUser_id() {
@@ -126,138 +281,68 @@ public class ReplyBean {
                 this.input_time = input_time;
             }
 
-            public InfoBean getInfo() {
-                return info;
+            public String getPur_id() {
+                return pur_id;
             }
 
-            public void setInfo(InfoBean info) {
-                this.info = info;
+            public void setPur_id(String pur_id) {
+                this.pur_id = pur_id;
             }
 
-            public static class InfoBean {
-                /**
-                 * user_id : 32788
-                 * name : 戴先生
-                 * c_id : 39566
-                 * is_pass : 0
-                 * mobile : 15017069076
-                 * sex : 男
-                 * thumb : http://statics.myplas.com/upload/16/09/02/logos.jpg
-                 * thumbqq :
-                 * thumbcard :
-                 * c_name : 双益塑胶有限公司
-                 * need_product : 尼龙，轮胎料，ABS.PC.PC/ABS
-                 * address : 东莞市
-                 */
+            public String getName() {
+                return name;
+            }
 
-                private String user_id;
-                private String name;
-                private String c_id;
-                private String is_pass;
-                private String mobile;
-                private String sex;
-                private String thumb;
-                private String thumbqq;
-                private String thumbcard;
-                private String c_name;
-                private String need_product;
-                private String address;
+            public void setName(String name) {
+                this.name = name;
+            }
 
-                public String getUser_id() {
-                    return user_id;
-                }
+            public String getIs_pass() {
+                return is_pass;
+            }
 
-                public void setUser_id(String user_id) {
-                    this.user_id = user_id;
-                }
+            public void setIs_pass(String is_pass) {
+                this.is_pass = is_pass;
+            }
 
-                public String getName() {
-                    return name;
-                }
+            public String getMobile() {
+                return mobile;
+            }
 
-                public void setName(String name) {
-                    this.name = name;
-                }
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
+            }
 
-                public String getC_id() {
-                    return c_id;
-                }
+            public String getThumb() {
+                return thumb;
+            }
 
-                public void setC_id(String c_id) {
-                    this.c_id = c_id;
-                }
+            public void setThumb(String thumb) {
+                this.thumb = thumb;
+            }
 
-                public String getIs_pass() {
-                    return is_pass;
-                }
+            public String getThumbqq() {
+                return thumbqq;
+            }
 
-                public void setIs_pass(String is_pass) {
-                    this.is_pass = is_pass;
-                }
+            public void setThumbqq(String thumbqq) {
+                this.thumbqq = thumbqq;
+            }
 
-                public String getMobile() {
-                    return mobile;
-                }
+            public String getC_name() {
+                return c_name;
+            }
 
-                public void setMobile(String mobile) {
-                    this.mobile = mobile;
-                }
+            public void setC_name(String c_name) {
+                this.c_name = c_name;
+            }
 
-                public String getSex() {
-                    return sex;
-                }
+            public String getHui_name() {
+                return hui_name;
+            }
 
-                public void setSex(String sex) {
-                    this.sex = sex;
-                }
-
-                public String getThumb() {
-                    return thumb;
-                }
-
-                public void setThumb(String thumb) {
-                    this.thumb = thumb;
-                }
-
-                public String getThumbqq() {
-                    return thumbqq;
-                }
-
-                public void setThumbqq(String thumbqq) {
-                    this.thumbqq = thumbqq;
-                }
-
-                public String getThumbcard() {
-                    return thumbcard;
-                }
-
-                public void setThumbcard(String thumbcard) {
-                    this.thumbcard = thumbcard;
-                }
-
-                public String getC_name() {
-                    return c_name;
-                }
-
-                public void setC_name(String c_name) {
-                    this.c_name = c_name;
-                }
-
-                public String getNeed_product() {
-                    return need_product;
-                }
-
-                public void setNeed_product(String need_product) {
-                    this.need_product = need_product;
-                }
-
-                public String getAddress() {
-                    return address;
-                }
-
-                public void setAddress(String address) {
-                    this.address = address;
-                }
+            public void setHui_name(String hui_name) {
+                this.hui_name = hui_name;
             }
         }
     }

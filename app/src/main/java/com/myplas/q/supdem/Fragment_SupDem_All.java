@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
@@ -404,6 +405,16 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     public void loadMore() {
         page++;
         getNetData(page + "", false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boolean isLogined = sharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_SD);
+        if (isLogined) {//防止第一次登陆以后没有数据
+            getNetData("1", false);
+            sharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_SD, false);
+        }
     }
 
     public interface RefreshPopouInterface {
