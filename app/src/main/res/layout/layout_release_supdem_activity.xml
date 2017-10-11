@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
-    >
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="发布求购"
+            android:text="发布信息"
             android:textColor="@color/color_white"
             android:textSize="18.0sp"/>
 
@@ -30,184 +30,51 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/btn_back"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/release_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/color_white"
+            android:textSize="16.0sp"/>
     </FrameLayout>
 
-    <FrameLayout
+    <com.androidkun.xtablayout.XTabLayout
+        android:id="@+id/release_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        app:xTabDividerWidthWidthText="true"
+        app:xTabIndicatorColor="@color/color_red"
+        app:xTabSelectedTextColor="@color/color_transparent"
+        app:xTabSelectedTextSize="16.0sp"
+        app:xTabTextSelectedBold="true"
+        app:xTabTextSize="16.0sp">
 
-        <ImageView
-            android:id="@+id/image_k_j"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/btn_switch_quick_release"/>
+    </com.androidkun.xtablayout.XTabLayout>
 
-        <Button
-            android:id="@+id/fb_ks"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="50dp"
-            android:alpha="0"/>
-
-        <Button
-            android:id="@+id/fb_jz"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="50dp"
-            android:alpha="0"/>
-    </FrameLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="13dp"
-        android:text="快速发布：简单粘贴或复制供求，快速录入；\n\n精准发布：填写准确供求，参与系统比价；"/>
-
-    <EditText
-        android:id="@+id/fb_edit"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/release_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="13dp"
-        android:layout_weight="1"
-        android:background="@drawable/shape_txl_edit"
-        android:gravity="start"
-        android:hint="在次文本框中，可快速复制粘贴供求信息，限制100字内！"
-        android:maxLength="100"
-        android:padding="4dp"
-        android:textCursorDrawable="@drawable/text_cursor_shape"
-        android:textSelectHandle="@drawable/textselecthandle"
-        android:textSelectHandleLeft="@drawable/textselecthandle"
-        android:textSelectHandleRight="@drawable/textselecthandle"
-        android:textSize="15.0sp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <LinearLayout
-        android:id="@+id/jzfb_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="13dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+    </android.support.v4.view.ViewPager>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="牌号"
-                android:textColor="@color/color_balank"
-                android:textSize="16.0sp"/>
-
-            <EditText
-                android:id="@+id/jzfb_edit_ph"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="2"
-                android:background="@drawable/release_edit_shape"
-                android:paddingLeft="2dp"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:textSelectHandle="@drawable/textselecthandle"
-                android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textSize="14.0sp"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:text="厂家"
-                android:textColor="@color/color_balank"
-                android:textSize="16.0sp"/>
-
-            <EditText
-                android:id="@+id/jzfb_edit_cj"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="2"
-                android:background="@drawable/release_edit_shape"
-                android:maxLines="1"
-                android:paddingLeft="2dp"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:textSelectHandle="@drawable/textselecthandle"
-                android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textSize="14.0sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="价格"
-                android:textColor="@color/color_balank"
-                android:textSize="16.0sp"/>
-
-            <EditText
-                android:id="@+id/jzfb_edit_jg"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="2"
-                android:background="@drawable/release_edit_shape"
-                android:paddingLeft="2dp"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:textSelectHandle="@drawable/textselecthandle"
-                android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textSize="14.0sp"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:text="交货地"
-                android:textColor="@color/color_balank"
-                android:textSize="16.0sp"/>
-
-            <EditText
-                android:id="@+id/jzfb_edit_jhd"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="2"
-                android:background="@drawable/release_edit_shape"
-                android:paddingLeft="2dp"
-                android:textCursorDrawable="@drawable/text_cursor_shape"
-                android:textSelectHandle="@drawable/textselecthandle"
-                android:textSelectHandleLeft="@drawable/textselecthandle"
-                android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textSize="14.0sp"/>
-        </LinearLayout>
-    </LinearLayout>
 
     <Button
-        android:id="@+id/fb_ok"
+        android:id="@+id/release_btn"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_margin="13dp"
-        android:background="@drawable/shape_btn_red"
-        android:text="发布"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_release_shape"
+        android:text="确认发布"
         android:textColor="@color/color_white"
-        android:textSize="18.0sp"/>
+        android:textSize="18.0sp"
+        android:transitionName="sharedView_Release"/>
 </LinearLayout>

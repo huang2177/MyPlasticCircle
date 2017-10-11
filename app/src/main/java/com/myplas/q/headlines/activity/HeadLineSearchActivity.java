@@ -70,8 +70,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     private Handler handler;
     private String keywords;
+    private boolean isRefresh;
     private int page, visibleItemCount, position;
-    private boolean isRefresh, isFinifsh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,7 +309,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             }
             if (type == 4) {
                 if (err.equals("0")) {
-                    isFinifsh = false;
                     Intent intent = new Intent(this, HeadLinesDetailActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     startActivity(intent);
@@ -351,17 +350,17 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     public void onResume() {
         super.onResume();
-        isFinifsh = true;
         MobclickAgent.onResume(this);
     }
 
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        if (isFinifsh) {
-            overridePendingTransition(R.anim.fade, R.anim.hold);
-        }
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade, R.anim.hold);
     }
 }

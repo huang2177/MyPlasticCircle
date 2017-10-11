@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:focusable="true"
@@ -9,21 +10,36 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:background="@color/color_red"></View>
+        android:background="@color/color_red"/>
 
-    <include layout="@layout/layout_titlebar_gq"></include>
+    <include layout="@layout/layout_titlebar_gq"/>
 
-    <include layout="@layout/layout_titlebar_gq_down"></include>
+    <com.androidkun.xtablayout.XTabLayout
+        android:id="@+id/supdem_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:xTabIndicatorColor="@color/color_red"
+        app:xTabIndicatorHeight="3dp"
+        app:xTabIndicatorWidth="28dp"
+        app:xTabMode="scrollable"
+        app:xTabDisplayNum="4"
+        app:xTabSelectedTextColor="@color/color_red"
+        app:xTabSelectedTextSize="18.0sp"
+        app:xTabTextColor="@color/color_title_main"
+        app:xTabTextSelectedBold="true"
+        app:xTabTextSize="16.0sp">
+    </com.androidkun.xtablayout.XTabLayout>
 
     <View
+        android:id="@+id/headline_divider"
         android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#acadaf"></View>
+        android:layout_height="3dp"
+        android:background="@drawable/shape_shande"/>
 
-    <com.myplas.q.common.view.MyViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/supdem_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.myplas.q.common.view.MyViewPager>
+    </android.support.v4.view.ViewPager>
 </LinearLayout>
 

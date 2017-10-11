@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/fb_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="13dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_txl_edit"
+        android:gravity="start"
+        android:hint="在次文本框中，可快速复制粘贴供求信息，限制100字内！"
+        android:maxLength="100"
+        android:padding="4dp"
+        android:textCursorDrawable="@drawable/text_cursor_shape"
+        android:textSelectHandle="@drawable/textselecthandle"
+        android:textSelectHandleLeft="@drawable/textselecthandle"
+        android:textSelectHandleRight="@drawable/textselecthandle"
+        android:textSize="15.0sp"
+        />
+</LinearLayout>

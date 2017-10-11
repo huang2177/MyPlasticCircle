@@ -1,7 +1,6 @@
 package com.myplas.q.myinfo.invoices.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +16,6 @@ import com.myplas.q.common.view.MyListview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.invoices.adapter.ApplyInvoiceAdapter;
 import com.myplas.q.myinfo.beans.ApplyInvoiceBean;
-import com.myplas.q.myinfo.invoices.adapter.ApplyInvoiceAdapter;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.umeng.analytics.MobclickAgent;

@@ -1,5 +1,7 @@
 package com.myplas.q.common.api;
 
+import com.myplas.q.BuildConfig;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
@@ -8,12 +10,9 @@ package com.myplas.q.common.api;
  */
 public class API {
     /*base url*/
-    //测试
-//    public final static String BASEURL = "https://ssl.myplas.com/qapi_3/";
-    //    正式
-    public final static String BASEURL = "https://api.myplas.com/qapi_3/";
-    //测试_快速登陆
-//    public final static String BASEURL_API = "https://ssl.myplas.com/";
+    public final static String BASEURL = (BuildConfig.API_ENV)
+            ? ("https://api.myplas.com/qapi_3/")
+            : ("https://ssl.myplas.com/qapi_3/");
     //正式_快速登陆
     public final static String BASEURL_API = "https://api.myplas.com/";
 

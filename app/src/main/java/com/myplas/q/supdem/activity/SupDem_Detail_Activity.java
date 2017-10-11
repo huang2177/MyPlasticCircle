@@ -1,8 +1,10 @@
 package com.myplas.q.supdem.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Html;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -14,26 +16,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.supdem.Beans.DeliverPriceBean;
-import com.myplas.q.supdem.Beans.ReplyBean;
-import com.myplas.q.supdem.Beans.SupplyDemandDetailBean;
-import com.myplas.q.supdem.adapter.XQ_ListView_CHJAdapter;
-import com.myplas.q.supdem.adapter.XQ_ListView_HFAdapter;
+import com.myplas.q.supdem.Beans.SupDemDetailBean;
+import com.myplas.q.supdem.Fragment_SupDem_Detail_CHJ;
+import com.myplas.q.supdem.Fragment_SupDem_Detail_HF;
+import com.myplas.q.supdem.adapter.SupDem_Detail_ViewPager_Adapter;
 import com.myplas.q.common.api.API;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,98 +50,144 @@ import java.util.Map;
  */
 
 public class SupDem_Detail_Activity extends BaseActivity implements View.OnClickListener, ResultCallBack {
-    private String what;
-    private int type = 5;
-    private EditText editText;
+    private boolean isSelf;
+    private int currentItem;
     private SpannableString ss;
     private AbsoluteSizeSpan ass;
     private SharedUtils sharedUtils;
-    private ListView xq_listview_chj;
-    private String method = API.DELIVER_PRICE;
-    private Button btn_gz, btn_chj, btn_hf, btn_chj_ok;
-    private LinearLayout linearLayout, linearLayout_edit;
-    private ImageView img_tx, img_rz, img_gong_qiu, imageView;
-    private TextView text_gs, text_name, text_fs, text_content, text_shj, text_chj, text_hf;
 
-    private XQ_ListView_HFAdapter hfAdapter;
-    private XQ_ListView_CHJAdapter chjAdapter;
-    private Map<String, String> map = new HashMap<>();
-    private List<ReplyBean.DataBeanX.DataBean> list_hf;
-    private SupplyDemandDetailBean supplyDemandDetailBean;
-    private List<DeliverPriceBean.DataBeanX.DataBean> list_chj;
+    private Button mButton;
+    private EditText mEditText;
+    private ViewPager mViewPager;
+    private LinearLayout mLayout;
+    private XTabLayout mTabLayout;
+    private ImageView mIVHead, mIVStart, mIVFollow, mIVCall;
+    private TextView mTVCompany, mTVFans, mTVType, mTVTime, mTVGoodsposition, mTVMode, mTVStorehouse, mTVPirce, mTVNf, mTVProduction;
+
+    private List<String> mStringList;
+    private List<Fragment> mFragmentList;
+    private SupDemDetailBean mDetailBean;
+    private Fragment_SupDem_Detail_HF detail_hf;
+    private Fragment_SupDem_Detail_CHJ detail_chj;
+    private SupDem_Detail_ViewPager_Adapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.supdem_detail_layout);
+        setContentView(R.layout.activity_layout_supdem_detail);
+
         initTileBar();
-        setTitle("详情");
+        setTitle("详情信息");
+        setRightIVResId(R.drawable.btn_customer_service);
+
         initView();
+        initViewPager();
         getNetData();
-        String s = getIntent().getStringExtra("type");
-        if (s.equals("0") || s.equals("1")) {
-            intDeLiverPrice();
-        } else {
-            intReply();
-        }
+        setDeliverReplyView(0);
     }
 
-    public void initView() {
-        img_tx = F(R.id.xq_tx);
-        img_rz = F(R.id.xq_rz);
-        btn_gz = F(R.id.xq_gz);
-        text_fs = F(R.id.xq_fs);
-        text_gs = F(R.id.xq_gs);
-        btn_hf = F(R.id.xq_hfxx);
-        text_name = F(R.id.xq_name);
-        text_shj = F(R.id.xq_shj);
-        text_hf = F(R.id.gq_huifu);
-        btn_chj = F(R.id.xq_chjxx);
-        imageView = F(R.id.image_d_r);
-        text_chj = F(R.id.gq_chujian);
-        editText = F(R.id.edit_chj_hf);
-        btn_chj_ok = F(R.id.btn_chj_hf);
-        linearLayout = F(R.id.linear_chj);
-        text_content = F(R.id.xq_content);
-        img_gong_qiu = F(R.id.img_gong_qiu);
-        linearLayout_edit = F(R.id.detail_edit);
-        xq_listview_chj = F(R.id.xq_listview_chj);
-
-        btn_gz.setOnClickListener(this);
-        btn_hf.setOnClickListener(this);
-        btn_chj.setOnClickListener(this);
-        editText.setOnClickListener(this);
-        btn_chj_ok.setOnClickListener(this);
-
+    private void initView() {
         ass = new AbsoluteSizeSpan(16, true);
         sharedUtils = SharedUtils.getSharedUtils();
 
-        chjAdapter = new XQ_ListView_CHJAdapter(this);
-        hfAdapter = new XQ_ListView_HFAdapter(this);
+        mIVHead = F(R.id.xq_tx);
+        mIVStart = F(R.id.xq_rz);
+        mTabLayout = F(R.id.tabLayout);
+        mViewPager = F(R.id.viewpager);
+        mTVNf = F(R.id.supdem_detail_nf);
+        mIVCall = F(R.id.titlebar_img_right);
+        mTVType = F(R.id.supdem_detail_type);
+        mTVTime = F(R.id.supdem_detail_time);
+        mTVFans = F(R.id.supdem_detail_fans);
+        mTVMode = F(R.id.supdem_detail_mode);
+        mTVPirce = F(R.id.supdem_detail_pirce);
+        mIVFollow = F(R.id.supdem_detail_follow);
+        mTVCompany = F(R.id.supdem_detail_company);
+        mLayout = F(R.id.fragment_supdem_detail_ll);
+        mButton = F(R.id.fragment_supdem_detail_btn);
+        mEditText = F(R.id.fragment_supdem_detail_ev);
+        mTVStorehouse = F(R.id.supdem_detail_storehouse);
+        mTVProduction = F(R.id.supdem_detail_production);
+        mTVGoodsposition = F(R.id.supdem_detail_goodsposition);
 
-        //是否显示编辑框
-        what = getIntent().getStringExtra("what");
-//        switch (what) {
-//            case "1":
-//            case "2":
-//            case "3":
-//                linearLayout_edit.setVisibility(View.VISIBLE);
-//                break;
-//            case "4":
-//            case "5":
-//                linearLayout_edit.setVisibility(View.GONE);
-//                break;
-//        }
+        mIVCall.setOnClickListener(this);
+        mButton.setOnClickListener(this);
+        mIVFollow.setOnClickListener(this);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentItem = position;
+                setDeliverReplyView(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void initViewPager() {
+        mFragmentList = new ArrayList<>();
+        mStringList = Arrays.asList("出价消息", "回复消息");
+
+        mTabLayout.addTab(mTabLayout.newTab().setText("出价消息"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("回复消息"));
+        detail_hf = new Fragment_SupDem_Detail_HF();
+        detail_chj = new Fragment_SupDem_Detail_CHJ();
+        mFragmentList.add(detail_chj);
+        mFragmentList.add(detail_hf);
+        mPagerAdapter = new SupDem_Detail_ViewPager_Adapter(getSupportFragmentManager()
+                , mFragmentList
+                , mStringList);
+        mViewPager.setAdapter(mPagerAdapter);
+
+        mViewPager.setCurrentItem(0);
+        //将选项卡和viewpager关连起来
+        mTabLayout.setupWithViewPager(mViewPager);
+        //给TabLayout设置适配器
+        mTabLayout.setTabsFromPagerAdapter(mPagerAdapter);
     }
 
     //获取首页数据
     public void getNetData() {
-        try {
-            map.put("token", sharedUtils.getData(this, "token"));
-            map.put("user_id", getIntent().getStringExtra("userid"));
+        Map<String, String> map = new HashMap<>();
+        map.put("id", getIntent().getStringExtra("id"));
+        map.put("token", sharedUtils.getData(this, "token"));
+        map.put("user_id", getIntent().getStringExtra("userid"));
+        postAsyn(this, API.BASEURL + API.GET_RELEASE_MSG_DETAIL, map, this, 1);
+    }
+
+    //关注
+    public void follow() {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", sharedUtils.getData(this, "token"));
+        map.put("focused_id", getIntent().getStringExtra("userid"));
+        String url = API.BASEURL + API.FOCUS_OR_CANCEL;
+        postAsyn(this, url, map, this, 2);
+    }
+
+    //出价或者回复
+    public void deliverOrReply(String s) {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", sharedUtils.getData(this, "token"));
+        map.put("type", mDetailBean.getData().getType());
+        if (currentItem == 1) {
+            map.put("pur_id", getIntent().getStringExtra("id"));
+            map.put("content", s);
+            map.put("send_id", getIntent().getStringExtra("userid"));
+            postAsyn(this, API.BASEURL + API.SAVE_MSG, map, this, 3);
+        } else {
             map.put("id", getIntent().getStringExtra("id"));
-            postAsyn(this, API.BASEURL + API.GET_RELEASE_MSG_DETAIL, map, this, 1);
-        } catch (Exception e) {
+            map.put("rev_id", getIntent().getStringExtra("userid"));
+            map.put("price", s);
+            postAsyn(this, API.BASEURL + API.DELIVER_PRICE, map, this, 4);
         }
     }
 
@@ -148,153 +198,74 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.xq_gz:
-                if (what.equals("5")) {
-                    TextUtils.Toast(this, "自己不能关注自己！");
-                } else {
-                    map.put("token", sharedUtils.getData(this, "token"));
-                    map.put("focused_id", getIntent().getStringExtra("userid"));
-                    String url = API.BASEURL + API.FOCUS_OR_CANCEL;
-                    postAsyn(this, url, map, this, 2);
+            case R.id.titlebar_img_right:
+                if (mDetailBean != null) {
+                    //call(mDetailBean.getData().get);
                 }
                 break;
-            case R.id.xq_chjxx://出价
-                intDeLiverPrice();
+            case R.id.supdem_detail_follow:
+                follow();
                 break;
-            case R.id.xq_hfxx://回复消息
-                intReply();
-                break;
-            case R.id.btn_chj_hf://提交
-                String s = editText.getText().toString();
-                if (TextUtils.isNullOrEmpty(s)) {
-                    map.put("token", sharedUtils.getData(this, "token"));
-                    map.put("type", supplyDemandDetailBean.getData().getType());
-                    if (type == 6) {
-                        map.put("pur_id", getIntent().getStringExtra("id"));
-                        map.put("content", s);
-                        map.put("send_id", getIntent().getStringExtra("userid"));
-                    } else {
-                        map.put("id", getIntent().getStringExtra("id"));
-                        map.put("rev_id", getIntent().getStringExtra("userid"));
-                        map.put("price", s);
-                    }
-                    String url4 = API.BASEURL + method;
-                    postAsyn(this, url4, map, this, type);
-                } else {
+            case R.id.fragment_supdem_detail_btn://提交
+                String s = mEditText.getText().toString();
+                if (!TextUtils.isNullOrEmpty(s)) {
                     TextUtils.Toast(this, "内容不能为空！");
+                    return;
                 }
-                break;
-            case R.id.edit_chj_hf:
+                deliverOrReply(s);
                 break;
         }
     }
 
-    //出价消息
-    public void intDeLiverPrice() {
-        list_hf = null;
-        hfAdapter.setList(list_hf);
-        hfAdapter.notifyDataSetChanged();
 
-        imageView.setImageResource(R.drawable.btn_switch_bid_message);
-        linearLayout.setVisibility(View.VISIBLE);
-        btn_chj_ok.setText("出价");
-        ss = new SpannableString("期待您的出价...");
-        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        editText.setHint(new SpannedString(ss));
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        method = API.DELIVER_PRICE;
-        type = 5;
-        getDeLiverPrice();
-    }
-
-    //回复
-    public void intReply() {
-        list_chj = null;
-        chjAdapter.setList(list_chj);
-        chjAdapter.notifyDataSetChanged();
-
-        imageView.setImageResource(R.drawable.btn_switch_reply_message);
-        linearLayout.setVisibility(View.GONE);
-        btn_chj_ok.setText("回复");
-        ss = new SpannableString("期待您的回复...");
-        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        editText.setHint(new SpannedString(ss));
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        method = API.SAVE_MSG;
-        type = 6;
-        getReply();
-    }
-
-    public void getDeLiverPrice() {
-        map.put("token", sharedUtils.getData(this, "token"));
-        map.put("id", getIntent().getStringExtra("id"));
-        map.put("rev_id", getIntent().getStringExtra("userid"));
-        map.put("page", "1");
-        map.put("size", "10");
-        String url1 = API.BASEURL + API.GET_DELIVER_PRICE;
-        postAsyn(this, url1, map, this, 3);
-    }
-
-    public void getReply() {
-        map.put("token", sharedUtils.getData(this, "token"));
-        map.put("id", getIntent().getStringExtra("id"));
-        map.put("user_id", getIntent().getStringExtra("userid"));
-        map.put("page", "1");
-        map.put("size", "10");
-        String url3 = API.BASEURL + API.GET_RELEASE_MSG_DETAIL_REPLY;
-        postAsyn(this, url3, map, this, 4);
+    //设置回复 出价的输入框
+    public void setDeliverReplyView(int position) {
+        if (position == 1) {
+            mButton.setText("回复");
+            ss = new SpannableString("期待您的回复...");
+            ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+            mEditText.setHint(new SpannedString(ss));
+            mLayout.setVisibility(View.VISIBLE);
+        } else {
+            mButton.setText("出价");
+            ss = new SpannableString("期待您的出价...");
+            ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            mEditText.setHint(new SpannedString(ss));
+            mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
+            String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
-                if (new JSONObject(object.toString()).getString("err").equals("0")) {
-                    supplyDemandDetailBean = gson.fromJson(object.toString(), SupplyDemandDetailBean.class);
-                    showInfo(supplyDemandDetailBean);
+                if (err.equals("0")) {
+                    mDetailBean = gson.fromJson(object.toString(), SupDemDetailBean.class);
+                    showInfo(mDetailBean);
                 }
             }
-            if (type == 2 && new JSONObject(object.toString()).getString("err").equals("0")) {
+            if (type == 2 && err.equals("0")) {
                 TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
-                if (new JSONObject(object.toString()).getString("msg").equals("关注成功")) {
-                    btn_gz.setText("取消关注");
-                } else {
-                    btn_gz.setText("关注");
-                }
+                String msg = new JSONObject(object.toString()).getString("msg");
+                mIVFollow.setImageResource(msg.equals("关注成功")
+                        ? R.drawable.img_supdem_detail_followed
+                        : R.drawable.img_supdem_detail_follow);
             }
-            //出价消息的结果
-            if (type == 3 && new JSONObject(object.toString()).getString("err").equals("0")) {
-                DeliverPriceBean deliverPriceBean = gson.fromJson(object.toString(), DeliverPriceBean.class);
-                list_chj = deliverPriceBean.getData().getData();
-                chjAdapter.setList(list_chj);
-                chjAdapter.notifyDataSetChanged();
-                xq_listview_chj.setAdapter(chjAdapter);
-
-            }
-            //得到回复消息的结果
-            if (type == 4 && new JSONObject(object.toString()).getString("err").equals("0")) {
-                ReplyBean replyBean = gson.fromJson(object.toString(), ReplyBean.class);
-                list_hf = replyBean.getData().getData();
-                hfAdapter.setList(list_hf);
-                hfAdapter.notifyDataSetChanged();
-                xq_listview_chj.setAdapter(hfAdapter);
-            }
-            //提交后的刷新
-            if (type == 5 && new JSONObject(object.toString()).getString("err").equals("0")) {
-                TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
-                getDeLiverPrice();
+            if (type == 3 && err.equals("0") && detail_hf != null) {
+                mEditText.setText("");
+                detail_hf.getReply();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                editText.setText("");
+                imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
             }
-            //提交后的刷新
-            if (type == 6 && new JSONObject(object.toString()).getString("err").equals("0")) {
-                TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
-                getReply();
+            if (type == 4 && err.equals("0") && detail_chj != null) {
+                mEditText.setText("");
+                detail_chj.getDeLiverPrice();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                editText.setText("");
+                imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
             }
         } catch (Exception e) {
         }
@@ -305,41 +276,48 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     }
 
-    public void showInfo(SupplyDemandDetailBean supplyDemandDetailBean) {
-        btn_gz.setText(supplyDemandDetailBean.getData().getInfo().getStatus());
+    @SuppressLint("SetTextI18n")
+    public void showInfo(SupDemDetailBean mDetailBean) {
         Glide.with(this)
-                .load(supplyDemandDetailBean.getData().getInfo().getThumb())
+                .load(mDetailBean.getData().getThumb())
                 .placeholder(R.drawable.contact_image_defaul_male)
-                .into(img_tx);
-        String s = supplyDemandDetailBean.getData().getInfo().getC_name();
-        text_gs.setText("  " + s);
-        text_name.setText("  " + supplyDemandDetailBean.getData().getInfo().getName());
-        text_fs.setText("  粉丝：" + supplyDemandDetailBean.getData().getInfo().getFans()
-                + "   等级：" + supplyDemandDetailBean.getData().getInfo().getMember_level());
-        text_shj.setText(supplyDemandDetailBean.getData().getInput_time());
-        text_chj.setText("出价(" + supplyDemandDetailBean.getData().getDeliverPriceCount() + ")");
-        text_hf.setText("回复(" + supplyDemandDetailBean.getData().getSaysCount() + ")");
-        if (supplyDemandDetailBean.getData().getInfo().getStatus().equals("0")) {
-            img_rz.setImageResource(R.drawable.icon_identity);
-        } else if (supplyDemandDetailBean.getData().getInfo().getStatus().equals("0")) {
-            img_rz.setImageResource(R.drawable.icon_identity_hl);
-        }
-        if (supplyDemandDetailBean.getData().getType().equals("1")) {
-            String html1 = "<font color='#EEAD0E'>" + " 求购：" + "</font>" + supplyDemandDetailBean.getData().getContents();
-            img_gong_qiu.setImageResource(R.drawable.icon_purchase);
-            text_content.setText(Html.fromHtml(html1));
-        } else {
-            img_gong_qiu.setImageResource(R.drawable.icon_supply);
-            String html1 = "<font color='#36648B'>" + " 供给：" + "</font>" + supplyDemandDetailBean.getData().getContents();
-            text_content.setText(Html.fromHtml(html1));
-        }
-        if (supplyDemandDetailBean.getData().getContents().equals("")) {
-            img_gong_qiu.setVisibility(View.GONE);
-            text_content.setVisibility(View.GONE);
-        } else {
-            img_gong_qiu.setVisibility(View.VISIBLE);
-            text_content.setVisibility(View.VISIBLE);
-        }
+                .into(mIVHead);
+        String companyName = mDetailBean.getData().getC_name()
+                + " "
+                + mDetailBean.getData().getName();
+        mTVCompany.setText(companyName);
+
+        mTVFans.setText("粉丝：" + mDetailBean.getData().getFans()
+                + "   等级："
+                + mDetailBean.getData().getMember_level());
+
+        mIVStart.setImageResource(mDetailBean.getData().getStatus().equals("0")
+                ? R.drawable.icon_identity
+                : R.drawable.icon_identity_hl);
+
+        mIVFollow.setImageResource(mDetailBean.getData().getStatus().equals("关注")
+                ? R.drawable.img_supdem_detail_follow
+                : R.drawable.img_supdem_detail_followed);
+
+        mTVType.setText(mDetailBean.getData().getType().equals("1")
+                ? "求购"
+                : "供给");
+
+        mTVType.setCompoundDrawablesWithIntrinsicBounds(mDetailBean.getData().getType().equals("1")
+                ? R.drawable.icon_purchase_content
+                : R.drawable.icon_supply_content, 0, 0, 0);
+
+        mTVTime.setText(mDetailBean.getData().getInput_time());
+        mTVMode.setText("牌号:" + mDetailBean.getData().getModel());
+        mTVPirce.setText("价格:" + mDetailBean.getData().getUnit_price());
+        mTVStorehouse.setText("厂家:" + mDetailBean.getData().getF_name());
+        mTVGoodsposition.setText("货物位置:" + mDetailBean.getData().getStore_house());
+
+        mTVNf.setText("现货/期货:" + (mDetailBean.getData().getCargo_type().equals("1")
+                ? "现货"
+                : "期货"));
+
+        isSelf = (mDetailBean.getData().getUser_id()) == sharedUtils.getData(this, Constant.USERID);
     }
 
     public void onResume() {

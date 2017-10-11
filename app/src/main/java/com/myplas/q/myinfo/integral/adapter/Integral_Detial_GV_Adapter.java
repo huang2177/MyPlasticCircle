@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.utils.SharedUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +66,7 @@ public class Integral_Detial_GV_Adapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         if (position == this.position) {
-            viewHolder.mTextView.setBackgroundResource(R.drawable.btn_xq_chujian);
+            viewHolder.mTextView.setBackgroundResource(R.drawable.btn_shape_red_coners);
             viewHolder.mTextView.setTextColor(context.getResources().getColor(R.color.colorAccent));
         }
         viewHolder.mTextView.setText(list.get(position));
@@ -87,7 +86,7 @@ public class Integral_Detial_GV_Adapter extends BaseAdapter {
             mTextViewMap.get(i).setTextColor(context.getResources().getColor(R.color.color_balank));
             mTextViewMap.get(i).setBackgroundResource(R.drawable.corner_titlebar);
         }
-        mTextViewMap.get(position).setBackgroundResource(R.drawable.btn_xq_chujian);
+        mTextViewMap.get(position).setBackgroundResource(R.drawable.btn_shape_red_coners);
         mTextViewMap.get(position).setTextColor(context.getResources().getColor(R.color.colorAccent));
     }
 }

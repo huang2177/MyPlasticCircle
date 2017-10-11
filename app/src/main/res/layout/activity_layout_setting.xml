@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/titlebar_lauout"></include>
+    <include layout="@layout/common_layout_titlebar"></include>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/btn_xq_chujian"
+                android:background="@drawable/btn_shape_red_coners"
                 android:gravity="center"
                 android:text="退出登录"
                 android:textColor="@color/color_white"

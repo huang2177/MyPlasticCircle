@@ -72,10 +72,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
     public void setAdapter(ListAdapter adapter) {
         mCurrentHeader = null;
         mAdapter = (PinnedSectionedHeaderAdapter) adapter;
-        if (mIsFooterReady == false) {
-//            mIsFooterReady = true;
-//            addFooterView(mFooterView);
-        }
         super.setAdapter(adapter);
     }
 
@@ -222,12 +218,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
     private boolean mEnablePullRefresh = true;
     private boolean mPullRefreshing = false; // is refreashing.
 
-    // -- footer view
-    private XListViewFooter mFooterView;
-    private boolean mEnablePullLoad;
-    private boolean mPullLoading;
-    private boolean mIsFooterReady = false;
-
     // total list items, used to detect is at the bottom of listview.
     private int mTotalItemCount;
 
@@ -252,9 +242,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         mHeaderTimeView = (TextView) mHeaderView
                 .findViewById(R.id.xlistview_header_time);
         addHeaderView(mHeaderView);
-        // init footer view
-        mFooterView = new XListViewFooter(context);
-
         // init header height
         mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -276,36 +263,11 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         mEnablePullRefresh = enable;
         if (!mEnablePullRefresh) { // disable, hide the content
             mHeaderViewContent.setVisibility(View.GONE);
-            findViewById(R.id.header_view).setVisibility(GONE);
         } else {
             mHeaderViewContent.setVisibility(View.VISIBLE);
-            findViewById(R.id.header_view).setVisibility(VISIBLE);
         }
     }
 
-    /**
-     * enable or disable pull up load more feature.
-     *
-     * @param enable
-     */
-    public void setPullLoadEnable(boolean enable) {
-        mEnablePullLoad = enable;
-        if (!mEnablePullLoad) {
-            mFooterView.hide();
-            mFooterView.setOnClickListener(null);
-        } else {
-            mPullLoading = false;
-            mFooterView.show();
-            mFooterView.setState(XListViewFooter.STATE_NORMAL);
-            // both "pull up" and "click" will invoke load more.
-            mFooterView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startLoadMore();
-                }
-            });
-        }
-    }
 
     /**
      * stop refresh, reset header view.
@@ -314,16 +276,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         if (mPullRefreshing == true) {
             mPullRefreshing = false;
             resetHeaderHeight();
-        }
-    }
-
-    /**
-     * stop load more, reset footer view.
-     */
-    public void stopLoadMore() {
-        if (mPullLoading == true) {
-            mPullLoading = false;
-            mFooterView.setState(XListViewFooter.STATE_NORMAL);
         }
     }
 
@@ -379,37 +331,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         invalidate();
     }
 
-    private void updateFooterHeight(float delta) {
-        int height = mFooterView.getBottomMargin() + (int) delta;
-        if (mEnablePullLoad && !mPullLoading) {
-            if (height > PULL_LOAD_MORE_DELTA) { // height enough to invoke load
-                // more.
-                mFooterView.setState(XListViewFooter.STATE_READY);
-            } else {
-                mFooterView.setState(XListViewFooter.STATE_NORMAL);
-            }
-        }
-        mFooterView.setBottomMargin(height);
-//		setSelection(mTotalItemCount - date_selected); // scroll to bottom
-    }
-
-    private void resetFooterHeight() {
-        int bottomMargin = mFooterView.getBottomMargin();
-        if (bottomMargin > 0) {
-            mScrollBack = SCROLLBACK_FOOTER;
-            mScroller.startScroll(0, bottomMargin, 0, -bottomMargin,
-                    SCROLL_DURATION);
-            invalidate();
-        }
-    }
-
-    private void startLoadMore() {
-        mPullLoading = true;
-        mFooterView.setState(XListViewFooter.STATE_LOADING);
-        if (mListViewListener != null) {
-            mListViewListener.onLoadMore();
-        }
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
@@ -427,10 +348,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
                     // the first item is showing, header has shown or pull down.
                     updateHeaderHeight(deltaY / OFFSET_RADIO);
                     invokeOnScrolling();
-                } else if (getLastVisiblePosition() == mTotalItemCount - 1
-                        && (mFooterView.getBottomMargin() > 0 || deltaY < 0)) {
-                    // last item, already pulled up or want to pull up.
-                    updateFooterHeight(-deltaY / OFFSET_RADIO);
                 }
                 break;
             default:
@@ -446,13 +363,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
                         }
                     }
                     resetHeaderHeight();
-                } else if (getLastVisiblePosition() == mTotalItemCount - 1) {
-                    // invoke load more.
-                    if (mEnablePullLoad
-                            && mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
-                        startLoadMore();
-                    }
-                    resetFooterHeight();
                 }
                 break;
         }
@@ -464,8 +374,6 @@ public class PinnedHeaderListView extends ListView implements OnScrollListener {
         if (mScroller.computeScrollOffset()) {
             if (mScrollBack == SCROLLBACK_HEADER) {
                 mHeaderView.setVisiableHeight(mScroller.getCurrY());
-            } else {
-                mFooterView.setBottomMargin(mScroller.getCurrY());
             }
             postInvalidate();
             invokeOnScrolling();

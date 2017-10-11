@@ -2,15 +2,19 @@ package com.myplas.q.release.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.transition.ArcMotion;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.ActivityManager;
@@ -18,15 +22,18 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.api.API;
 import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.release.adapter.ReleaseViewPagerAdapter;
 import com.myplas.q.release.bean.SecondPurBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,72 +54,93 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
     private Map<String, String> map = new HashMap<>();
     private EditText editText, editText_jz_ph, editText_jz_chj, editText_jz_jg, editText_jz_jhd;
 
+    private XTabLayout tabLayout;
+    private ViewPager viewPager;
+    private Button button;
+    private TextView tvCancle;
+    private LinearLayout layoutBack;
+    private List<Fragment> fragmentList;
+    private List<String> listTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_release_supdem_activity);
-        goBack(findViewById(R.id.back_img));
+        //goBack(findViewById(R.id.back_img));
         initView();
+        initViewPager();
     }
 
     public void initView() {
+        listTitle = new ArrayList<>();
+        fragmentList = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
 
-        fb = (Button) findViewById(R.id.fb_ok);
-        btn_ks = (Button) findViewById(R.id.fb_ks);
-        btn_jz = (Button) findViewById(R.id.fb_jz);
+        tabLayout = F(R.id.release_tablayout);
+        viewPager = F(R.id.release_viewpager);
+        button = F(R.id.release_btn);
+        layoutBack = F(R.id.back_img);
+        tvCancle = F(R.id.release_cancle);
 
-        editText = (EditText) findViewById(R.id.fb_edit);
-        title = (TextView) findViewById(R.id.fb_titlebar);
-        imageView = (ImageView) findViewById(R.id.image_k_j);
-        editText_jz_chj = (EditText) findViewById(R.id.jzfb_edit_cj);
-        editText_jz_jg = (EditText) findViewById(R.id.jzfb_edit_jg);
-        editText_jz_jhd = (EditText) findViewById(R.id.jzfb_edit_jhd);
-        editText_jz_ph = (EditText) findViewById(R.id.jzfb_edit_ph);
+        button.setOnClickListener(this);
+        layoutBack.setOnClickListener(this);
+        tvCancle.setOnClickListener(this);
 
-        linearLayout = (LinearLayout) findViewById(R.id.jzfb_linear);
+//        id = getIntent().getStringExtra("id");
+//        type = getIntent().getStringExtra("type");
+//        title.setText(this.type.equals("2") ? ("发布供给") : ("发布求购"));
+//        getSecondPub();
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                String s1 = s.toString();
+//                if (s.length() >= 100) {
+//                    TextUtils.Toast(ReleaseSupDemActivity.this, "输入的字符已达上限！");
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
+    }
 
-        fb.setOnClickListener(this);
-        btn_ks.setOnClickListener(this);
-        btn_jz.setOnClickListener(this);
+    public void initViewPager() {
+        listTitle = Arrays.asList("标准发布", "快速发布");
+        tabLayout.addTab(tabLayout.newTab().setText("标准发布"));
+        tabLayout.addTab(tabLayout.newTab().setText("快速发布"));
+        StandardFragment standardFragment = new StandardFragment();
+        fragmentList.add(standardFragment);
+        QuicklyFragment quicklyFragment = new QuicklyFragment();
+        fragmentList.add(quicklyFragment);
+        ReleaseViewPagerAdapter adapter = new ReleaseViewPagerAdapter(getSupportFragmentManager(), fragmentList, listTitle);
+        viewPager.setAdapter(adapter);
 
-        id = getIntent().getStringExtra("id");
-        type = getIntent().getStringExtra("type");
-        title.setText(this.type.equals("2") ? ("发布供给") : ("发布求购"));
-        getSecondPub();
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String s1 = s.toString();
-                if (s.length() >= 100) {
-                    TextUtils.Toast(ReleaseSupDemActivity.this, "输入的字符已达上限！");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        viewPager.setCurrentItem(0);
+        //将选项卡和viewpager关连起来
+        tabLayout.setupWithViewPager(viewPager);
+        //给TabLayout设置适配器
+        tabLayout.setTabsFromPagerAdapter(adapter);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fb_jz:
+            case R.id.release_cancle:
                 mode = "2";
                 changeTextColor_Right();
                 break;
-            case R.id.fb_ks:
+            case R.id.back_img:
                 mode = "1";
                 changeTextColor_Speed();
                 break;
-            case R.id.fb_ok:
+            case R.id.release_btn:
                 if ("2".equals(mode)) {
                     if (TextUtils.isNullOrEmpty(editText_jz_jhd.getText().toString()) && TextUtils.isNullOrEmpty(editText_jz_chj.getText().toString())
                             && TextUtils.isNullOrEmpty(editText_jz_ph.getText().toString()) && TextUtils.isNullOrEmpty(editText_jz_jg.getText().toString())) {
@@ -150,7 +178,7 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
         try {
             map.put("token", sharedUtils.getData(this, "token"));
             map.put("id", id);
-            postAsyn(this, API.BASEURL + API.SECOND_PUB, map, this, 1);
+            //postAsyn(this, API.BASEURL + API.SECOND_PUB, map, this, 1);
         } catch (Exception e) {
         }
     }
@@ -165,7 +193,7 @@ public class ReleaseSupDemActivity extends BaseActivity implements View.OnClickL
         map.put("price", editText_jz_jg.getText().toString());
         map.put("vendor", editText_jz_chj.getText().toString());
         map.put("storehouse", editText_jz_jhd.getText().toString());
-        postAsyn(this, API.BASEURL + API.PUB, map, this, 2);
+        //postAsyn(this, API.BASEURL + API.PUB, map, this, 2);
     }
 
     @Override

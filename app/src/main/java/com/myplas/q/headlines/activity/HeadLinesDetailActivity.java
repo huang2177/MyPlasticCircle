@@ -1,6 +1,5 @@
 package com.myplas.q.headlines.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.os.Handler;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -184,7 +182,6 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 Gson gson = new Gson();
                 sucribleDetailBean = gson.fromJson(object.toString(), SucribleDetailBean.class);
                 showInfo(sucribleDetailBean);
-
             }
             //滚动到顶部
             if (type == 2) {
@@ -345,6 +342,8 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
         if (webView != null) {
             webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             webView.clearHistory();
@@ -353,6 +352,5 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
             webView.destroy();
             webView = null;
         }
-        super.onDestroy();
     }
 }

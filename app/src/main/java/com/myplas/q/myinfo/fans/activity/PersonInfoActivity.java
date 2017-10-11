@@ -1,9 +1,7 @@
 package com.myplas.q.myinfo.fans.activity;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -47,7 +45,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     private FrameLayout mFLHead, mFLShow;
     private TextView textView_supply, textView_demand;
     private ImageView image_tx, image_rz, image_show, image_call;
-    private MyListview myListview_supply, myListview_demand;
+    private MyListview mMyListview_supply, mMyListview_demand;
     private TextView btn_care, text_name, text_gs, text_dh, text_gj, textView_dzh, textView_zhy, textView_show1, textView_show2, textView_num, textView_product;
 
     private Map<String, String> map;
@@ -89,8 +87,8 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         textView_zhy = f(R.id.personinfo_mysale_text);
         textView_product = f(R.id.wd_zl_text_products);
         textView_dzh = f(R.id.personinfo_address_text);
-        myListview_demand = f(R.id.personinfo_more_demand_listview);
-        myListview_supply = f(R.id.personinfo_more_supply_listview);
+        mMyListview_demand = f(R.id.personinfo_more_demand_listview);
+        mMyListview_supply = f(R.id.personinfo_more_supply_listview);
         textView_show1 = f(R.id.person_supplydemand_listview_text_show1);
         textView_show2 = f(R.id.person_supplydemand_listview_text_show2);
 
@@ -246,7 +244,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                     p1 = gson.fromJson(object.toString(), PersonSupplyDemadBean.class);
                     list = p1.getData();
                     p_adapter = new PersonSupplyDemandAdapter(this, list);
-                    myListview_supply.setAdapter(p_adapter);
+                    mMyListview_supply.setAdapter(p_adapter);
                     textView_supply.setClickable(true);
                 } else {
                     textView_show1.setText("没有更多求购信息！");
@@ -259,7 +257,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                     p2 = gson.fromJson(object.toString(), PersonSupplyDemadBean.class);
                     list = p2.getData();
                     p_adapter = new PersonSupplyDemandAdapter(this, list);
-                    myListview_demand.setAdapter(p_adapter);
+                    mMyListview_demand.setAdapter(p_adapter);
                     textView_demand.setClickable(true);
                 } else {
                     textView_show2.setText("没有更多供给信息！");

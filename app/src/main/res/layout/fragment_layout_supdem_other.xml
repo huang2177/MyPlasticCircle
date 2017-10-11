@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.myplas.q.common.view.XListView
+        android:id="@+id/fragment_other_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/color_gray_bg"
+        android:dividerHeight="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/supply_demand_prompt_linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone"/>
+
+</LinearLayout>

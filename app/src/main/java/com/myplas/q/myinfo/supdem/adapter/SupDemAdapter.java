@@ -2,11 +2,15 @@ package com.myplas.q.myinfo.supdem.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,7 +21,7 @@ import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.api.API;
-import com.myplas.q.myinfo.beans.MyCommentBean;
+import com.myplas.q.myinfo.beans.MySupDemBean;
 
 import org.json.JSONObject;
 
@@ -33,23 +37,19 @@ import java.util.Map;
  */
 public class SupDemAdapter extends BaseAdapter implements ResultCallBack, CommonDialog.DialogShowInterface {
     String type;
+    int position;
     Context context;
     MyInterface myInterface;
     SharedUtils sharedUtils;
     Map<Integer, View> viewMap;
-    int lastPosition,position;
-    viewHolder viewHolder = null;
-    List<MyCommentBean.DataBean> list;
+    List<MySupDemBean.DataBean> list;
 
-    public void setLastPosition(int lastPosition) {
-        this.lastPosition = lastPosition;
-    }
 
-    public void setList(List<MyCommentBean.DataBean> list) {
+    public void setList(List<MySupDemBean.DataBean> list) {
         this.list = list;
     }
 
-    public SupDemAdapter(Context context, List<MyCommentBean.DataBean> list, String type, MyInterface myInterface) {
+    public SupDemAdapter(Context context, List<MySupDemBean.DataBean> list, String type, MyInterface myInterface) {
         this.context = context;
         this.list = list;
         this.type = type;
@@ -77,90 +77,88 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
-        if (viewMap.get(position) == null) {
+        viewHolder viewHolder = null;
+        if (convertView == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.wd_qg_listview_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_myself_supdem_layout, parent, false);
             viewMap.put(position, convertView);
-            viewHolder.xtxx = (TextView) convertView.findViewById(R.id.wd_qg_xtxx);
-            viewHolder.shc = (TextView) convertView.findViewById(R.id.wd_wdqg_shc);
-            viewHolder.pirce = (TextView) convertView.findViewById(R.id.wd_qg_price);
-            viewHolder.time = (TextView) convertView.findViewById(R.id.wd_wdqg_shj);
-            viewHolder.share = (TextView) convertView.findViewById(R.id.wd_wdqg_share);
-            viewHolder.suliao_img = (TextView) convertView.findViewById(R.id.suliao_img);
-            viewHolder.content = (TextView) convertView.findViewById(R.id.wd_qg_content);
-            viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.mycomment_says);
-            convertView.setTag(viewHolder);
-        } else {
-            convertView = viewMap.get(position);
-            viewHolder = (viewHolder) convertView.getTag();
-        }
-        if (type.equals("1")) {
-            viewHolder.content.setText("  我的求购：" + list.get(position).getContents());
-        } else {
-            viewHolder.content.setText("  我的供给：" + list.get(position).getContents());
-        }
-        viewHolder.time.setText(list.get(position).getInput_time());
-        viewHolder.xtxx.setText("在信息库中，没有找到在卖（买）此牌号的商家！");
-        viewHolder.pirce.setText("塑料圈查无此价格！");
-        if (list.get(position).getSays().size() != 0) {
-            TextView textView = null;
-            viewHolder.suliao_img.setVisibility(View.VISIBLE);
-            //判断父布局中不为空；
-            if (textView == null && viewHolder.linearLayout.getChildAt(0) == null) {
-                textView = new TextView(context);
-                viewHolder.linearLayout.addView(textView);
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textView.getLayoutParams();
-                lp.setMargins(10, 15, 10, 15);
-                textView.setLayoutParams(lp);
-                for (int i = 0; i < list.get(position).getSays().size(); i++) {
-                    if (i == 0) {
-                        String html = "<font color='#36648B'>" + list.get(position).getSays().get(0).getUser_name() + "</font>" + " 说：" + list.get(position).getSays().get(0).getContent();
-                        textView.setText(Html.fromHtml(html));
-                    } else {
-                        textView = new TextView(context);
-                        viewHolder.linearLayout.addView(textView);
-                        LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams) textView.getLayoutParams();
-                        lp1.setMargins(10, 10, 10, 15);
-                        textView.setLayoutParams(lp1);
-                        String html1 = "<font color='#36648B'>" + list.get(position).getSays().get(i).getUser_name() + "</font>" + "说：" + list.get(position).getSays().get(i).getContent();
-                        textView.setText(Html.fromHtml(html1));
+            viewHolder.name = (TextView) convertView.findViewById(R.id.gq_listview_name);
+            viewHolder.company = (TextView) convertView.findViewById(R.id.gq_listview_gs);
+            viewHolder.time = (TextView) convertView.findViewById(R.id.supply_demand_time);
+            viewHolder.typeSupDem = (ImageView) convertView.findViewById(R.id.supdem_img_type);
+            viewHolder.content = (TextView) convertView.findViewById(R.id.supply_demand_content);
+            viewHolder.mImageS = (ImageView) convertView.findViewById(R.id.myself_supdem_img_share);
+            viewHolder.mImageD = (ImageView) convertView.findViewById(R.id.myself_supdem_img_delete);
+            viewHolder.mLayout = (LinearLayout) convertView.findViewById(R.id.supply_demand_company);
+            viewHolder.mImageR = (ImageView) convertView.findViewById(R.id.myself_supdem_img_repeat);
+            viewHolder.typeNowFutures = (ImageView) convertView.findViewById(R.id.supply_demand_now_futures);
+            try {
+                viewHolder.name.setText(list.get(position).getName());
+                viewHolder.company.setText(list.get(position).getC_name());
+                String reply = "出价:" + list.get(position).getHui_count() + "  出价:" + list.get(position).getChu_count();
+                viewHolder.time.setText(reply);
+
+                viewHolder.content.setText(Html.fromHtml(getContent(position)));
+
+                viewHolder.typeSupDem.setImageResource(list.get(position).getType().equals("1")
+                        ? R.drawable.icon_supdem_purchase
+                        : R.drawable.icon_supdem_supply);
+                viewHolder.typeNowFutures.setImageResource(list.get(position).getCargo_type().equals("1")
+                        ? R.drawable.icon_now
+                        : R.drawable.icon_futures);
+
+
+                //重发
+                viewHolder.mImageR.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                Intent intent = new Intent(context, ReleaseSupDemActivity.class);
+//                intent.putExtra("id", (list.get(position).getId()));
+//                intent.putExtra("type", list.get(position).getType());
+//                context.startActivity(intent);
                     }
-                }
+                });
+                //删除
+                viewHolder.mImageD.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SupDemAdapter.this.position = position;
+                        CommonDialog commonDialog = new CommonDialog();
+                        commonDialog.showDialog(context, "确定删除?", 1, SupDemAdapter.this);
+                    }
+                });
+                //分享
+                viewHolder.mImageR.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String s = (list.get(position).getType().equals("1")) ? ("求购信息:") : ("供给信息：");
+                        Intent in = new Intent(context, ShareActivity.class);
+                        in.putExtra("type", "4");
+                        in.putExtra("id", list.get(position).getId());
+                        in.putExtra("title", s + getContent(position));
+                        in.putExtra("t", list.get(position).getType());
+                        context.startActivity(in);
+                    }
+                });
+            } catch (Exception e) {
             }
-        }else {
-            viewHolder.suliao_img.setVisibility(View.GONE);
         }
-        //删除
-        viewHolder.shc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SupDemAdapter.this.position = position;
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(context, "确定删除?", 1, SupDemAdapter.this);
-            }
-        });
-        //分享
-        viewHolder.share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String s = (list.get(position).getType().equals("1")) ? ("求购信息:") : ("供给信息：");
-                Intent in = new Intent(context, ShareActivity.class);
-                in.putExtra("type", "4");
-                in.putExtra("id", list.get(position).getId());
-                in.putExtra("title", s + list.get(position).getContents());
-                in.putExtra("t", list.get(position).getType());
-                context.startActivity(in);
-            }
-        });
         return convertView;
     }
 
-    class viewHolder {
-
-        LinearLayout linearLayout;
-        TextView shc, content, time, xtxx, pirce, share, suliao_img;
+    private String getContent(int position) {
+        return "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + list.get(position).getStore_house()
+                + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + list.get(position).getModel()
+                + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + list.get(position).getF_name()
+                + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + list.get(position).getUnit_price();
     }
+
+    class viewHolder {
+        LinearLayout mLayout;
+        TextView company, name, content, time;
+        ImageView typeSupDem, typeNowFutures, mImageR, mImageS, mImageD;
+    }
+
     @Override
     public void callBack(Object object, int type) {
         try {
@@ -187,10 +185,12 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
                 break;
         }
     }
+
     @Override
     public void failCallBack(int type) {
 
     }
+
     public interface MyInterface {
         void reQuestNet();
     }

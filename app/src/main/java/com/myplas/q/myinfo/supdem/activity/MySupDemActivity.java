@@ -1,19 +1,19 @@
 package com.myplas.q.myinfo.supdem.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.view.NoResultLayout;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.XListView;
 import com.myplas.q.common.api.API;
-import com.myplas.q.myinfo.beans.MyCommentBean;
+import com.myplas.q.myinfo.beans.MySupDemBean;
 import com.myplas.q.myinfo.supdem.adapter.SupDemAdapter;
 import com.umeng.analytics.MobclickAgent;
 
@@ -30,18 +30,16 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 16:22
  */
-public class MySupDemActivity extends BaseActivity implements ResultCallBack, SupDemAdapter.MyInterface
-        , XListView.IXListViewListener {
+public class MySupDemActivity extends BaseActivity implements ResultCallBack, SupDemAdapter.MyInterface {
 
     private String type;
     private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
 
     private TextView textView;
-    private XListView listView;
-    private NoResultLayout mNoResultLayout;
-    private List<MyCommentBean.DataBean> list;
-    private List<MyCommentBean.DataBean> list_more;
+    private ListView listView;
+    private List<MySupDemBean.DataBean> list;
+    private List<MySupDemBean.DataBean> list_more;
 
     private SupDemAdapter supplyDemandAdapter;
 
@@ -54,12 +52,8 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
 
         list_more = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
-        mNoResultLayout = F(R.id.mysupdem_noresultlayout);
-        listView = (XListView) findViewById(R.id.wd_gj_listview);
+        listView = F(R.id.wd_gj_listview);
 
-        listView.setPullLoadEnable(true);
-        listView.setPullRefreshEnable(false);
-        listView.setXListViewListener(this);
         type = getIntent().getStringExtra("type");
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -96,20 +90,15 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
             Gson gson = new Gson();
             if (type == 1) {
                 if (new JSONObject(object.toString()).getString("err").equals("0")) {
-                    MyCommentBean supplyDemandBean = gson.fromJson(object.toString(), MyCommentBean.class);
+                    MySupDemBean supplyDemandBean = gson.fromJson(object.toString(), MySupDemBean.class);
                     list = supplyDemandBean.getData();
                     if (page == 1) {
-                        mNoResultLayout.setVisibility(false);
-                        listView.setVisibility(View.VISIBLE);
-
                         supplyDemandAdapter = new SupDemAdapter(this, list, getIntent().getStringExtra("type"), this);
                         listView.setAdapter(supplyDemandAdapter);
-                        listView.stopRefresh();
                         list_more.clear();
                         list_more.addAll(list);
                     } else {
                         if (list != null && list.size() != 0) {
-                            listView.stopLoadMore();
                             list_more.addAll(list);
                             supplyDemandAdapter.setList(list_more);
                             supplyDemandAdapter.notifyDataSetChanged();
@@ -117,10 +106,11 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
                     }
                 } else {
                     if (page == 1) {
-                        list = null;
-                        listView.setVisibility(View.GONE);
-                        String msg = new JSONObject(object.toString()).getString("msg");
-                        mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2, msg, true);
+                        EmptyView emptyView = new EmptyView(this);
+                        emptyView.mustCallInitWay(listView);
+                        emptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
+                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        listView.setEmptyView(emptyView);
                     }
                 }
             }
@@ -139,19 +129,12 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
         getSupplyDemandList(String.valueOf(page));
     }
 
-    //刷新
-    @Override
-    public void onRefresh() {
-        page = 1;
-        getSupplyDemandList(String.valueOf(page));
-    }
-
-    //加载
-    @Override
-    public void onLoadMore() {
-//        page++;
+//    //刷新
+//    @Override
+//    public void onRefresh() {
+//        page = 1;
 //        getSupplyDemandList(String.valueOf(page));
-    }
+//    }
 
     public void onResume() {
         super.onResume();

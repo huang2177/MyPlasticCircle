@@ -3,6 +3,7 @@ package com.myplas.q.myinfo.fans.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.NoResultLayout;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.PinnedHeaderListView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.fans.adapter.LookMeAdapter;
@@ -46,30 +47,30 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Comm
     private Map<Integer, String> mStringMap2;
     private int page, visibleItemCount, position;
 
+    private View mView;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private LookMeAdapter adapter;
     private TextView textView_num;
     private PinnedHeaderListView listView;
     private LookViewPagerAdapter mAdapter;
-    private NoResultLayout mNoResultLayout1;
 
-    private List<NoResultLayout> mView;
+    private List<View> mViewList;
     private List<PinnedHeaderListView> mListViews;
     private List<LookMeBean.DataBean.HistoryBean> mList1, mList2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lookme_layout);
+        setContentView(R.layout.activity_layout_lookme);
         initTileBar();
         setTitle("谁看过我");
 
         page = 1;
         hasMoreData = true;
-        mView = new ArrayList<>();
         mList1 = new ArrayList<>();
         mList2 = new ArrayList<>();
+        mViewList = new ArrayList<>();
         mStringMap1 = new HashMap<>();
         mStringMap2 = new HashMap<>();
         mListViews = new ArrayList<>();
@@ -111,12 +112,8 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Comm
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE &&
                         mListViews.get(position).getCount() >= visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        if (hasMoreData) {
-                            page++;
-                            getViewHistoryDetails(String.valueOf(page), 1);
-                        } else {
-                            TextUtils.Toast(LookMeActivity.this, "没有更多数据！");
-                        }
+                        page++;
+                        getViewHistoryDetails(String.valueOf(page), 1, false);
                     }
                 }
             }
@@ -135,18 +132,18 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Comm
         for (int i = 0; i < titles.size(); i++) {
             mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(i)));
 
-            mNoResultLayout1 = new NoResultLayout(this);
-            listView = (PinnedHeaderListView) mNoResultLayout1.findViewById(R.id.look_listview);
+            mView = View.inflate(this, R.layout.activity_layout_lookme_vp, null);
+            listView = (PinnedHeaderListView) mView.findViewById(R.id.look_listview);
             listView.setPullRefreshEnable(false);
 
             mListViews.add(listView);
-            mView.add(mNoResultLayout1);
+            mViewList.add(mView);
             setListener(i);
 
             mode = i == 0 ? "0" : "1";
-            getViewHistoryDetails("1", i);
+            getViewHistoryDetails("1", i, true);
         }
-        mAdapter = new LookViewPagerAdapter(mView, titles);
+        mAdapter = new LookViewPagerAdapter(mViewList, titles);
         mViewPager.setAdapter(mAdapter);
 
         mViewPager.setCurrentItem(0);
@@ -157,12 +154,12 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Comm
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
     }
 
-    public void getViewHistoryDetails(String page, int type) {
+    public void getViewHistoryDetails(String page, int type, boolean isShowLoading) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page);
         map.put("size", "15");
         map.put("mode", mode);
-        postAsyn(this, API.BASEURL + API.GET_VIEW_HISTORY_DETAILS, map, this, type);
+        postAsyn1(this, API.BASEURL + API.GET_VIEW_HISTORY_DETAILS, map, this, type, isShowLoading);
     }
 
     public void getPersonInfoData(String userid, String showtype, int type) {
@@ -196,7 +193,6 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Comm
             if (type == position) {
                 LookMeBean lookMeBean = null;
                 if (err.equals("0")) {
-                    mView.get(position).setVisibility(false);
                     lookMeBean = gson.fromJson(object.toString(), LookMeBean.class);
                     if (page == 1) {
                         adapter = new LookMeAdapter(this, lookMeBean.getData().getHistory());
@@ -213,15 +209,19 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Comm
                         adapter.notifyDataSetChanged();
                     }
                 } else if (err.equals("2")) {
+                    String msg = new JSONObject(object.toString()).getString("msg");
                     if (page == 1) {
-                        hasMoreData = false;
                         mStringMap2.put(type, "0");
                         mStringMap1.put(type, "0");
-                        adapter = new LookMeAdapter(this, null);
-                        mListViews.get(position).setAdapter(adapter);
                         showInfo(mStringMap1.get(0), mStringMap2.get(0));
-                        String msg = new JSONObject(object.toString()).getString("msg");
-                        mView.get(position).setNoResultData(R.drawable.icon_null, msg, true);
+
+                        EmptyView emptyView = new EmptyView(this);
+                        emptyView.mustCallInitWay(mListViews.get(position));
+                        emptyView.setNoMessageText(msg);
+                        emptyView.setMyManager(R.drawable.icon_null);
+                        mListViews.get(position).setEmptyView(emptyView);
+                    } else {
+                        TextUtils.Toast(this, msg);
                     }
                 }
             }

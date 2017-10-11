@@ -45,9 +45,9 @@ import com.myplas.q.myinfo.message.activity.MessageListsActivity;
 import com.myplas.q.myinfo.setting.SettingActivity;
 import com.myplas.q.myinfo.setting.activity.MyDataActivity;
 import com.myplas.q.myinfo.supdem.activity.MySupDemActivity;
-import com.myplas.q.myinfo.websockethelper.RabbitMQCallBack;
-import com.myplas.q.myinfo.websockethelper.RabbitMQHelper;
-import com.myplas.q.myinfo.websockethelper.WebSocketHelper;
+import com.myplas.q.myinfo.rabbitmqhelper.RabbitMQCallBack;
+import com.myplas.q.myinfo.rabbitmqhelper.RabbitMQHelper;
+import com.myplas.q.myinfo.rabbitmqhelper.WebSocketHelper;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -62,17 +62,15 @@ import java.util.Map;
  * 时间：2017/3/17 14:45
  */
 public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, RabbitMQCallBack {
-
     private View view;
     private MyZone myZone;
 
     private ImageView image_rz;
     private DragView mDragView;
     private MyImageView image_tx;
+    private SharedUtils sharedUtils;
     private ImageButton imageButton;
-    private NestedScrollView scrollingView;
-    private ImageView mImageView_news, mImage_more;
-    private SharedUtils sharedUtils = SharedUtils.getSharedUtils();
+    private ImageView mImage_news, mImage_more;
     private TextView text_title, text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
     private LinearLayout linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_jf, linear_look, linear_edu, linear_pz, linear_set;
 
@@ -80,7 +78,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     private AppBarLayout mBarLayout;
     private FrameLayout mFrameLayout;
     private NestedScrollView mNestedScrollView;
-    private CoordinatorLayout mCoordinatorLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private Handler mHandler;
@@ -98,15 +95,14 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     }
 
     private void initRabbitMQ() {
-//        mSocketHelper = new WebSocketHelper(this);
-//        mSocketHelper.startConnect(getActivity());
         mMQHelper = new RabbitMQHelper(this);
         mMQHelper.onConnect();
     }
 
     public void initView() {
         mHandler = new Handler();
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_myselffragment, null, false);
+        sharedUtils = SharedUtils.getSharedUtils();
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_myself, null, false);
         //获取登陆后相关数据
         image_tx = f(R.id.xq_tx);
         image_rz = f(R.id.xq_rz);
@@ -139,13 +135,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_yj = f(R.id.wd_linear_introdus);
         mDragView = f(R.id.wd_logined_news_text);
         mFrameLayout = f(R.id.wd_logined_news_fl);
-        scrollingView = f(R.id.scrollView_myself);
+        mImage_news = f(R.id.wd_logined_news_img);
         mNestedScrollView = f(R.id.scrollView_myself);
-        mImageView_news = f(R.id.wd_logined_news_img);
 
         mToolbar = f(R.id.toolbar);
         mBarLayout = f(R.id.app_bar_layout);
-        mCoordinatorLayout = f(R.id.coordinatorlayout);
         mCollapsingToolbarLayout = f(R.id.collapsing_toolbar);
 
         linear_dd.setOnClickListener(this);
@@ -270,7 +264,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void callBack(Object object, int type) {
         try {
             imageButton.setVisibility(View.GONE);
-            scrollingView.setVisibility(View.VISIBLE);
+            mNestedScrollView.setVisibility(View.VISIBLE);
             JSONObject jsonObject = new JSONObject(object.toString());
             Gson gson = new Gson();
             if (type == 2) {
@@ -292,7 +286,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void failCallBack(int type) {
         if (myZone == null) {
             mBarLayout.setExpanded(false);
-            scrollingView.setVisibility(View.GONE);
+            mNestedScrollView.setVisibility(View.GONE);
             imageButton.setVisibility(View.VISIBLE);
         }
     }
@@ -358,7 +352,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         text_title.setTextColor(Color.TRANSPARENT);
         image_rz.getDrawable().setAlpha(alpha);
         mImage_more.getDrawable().setAlpha(alpha);
-        mImageView_news.getDrawable().setAlpha(alpha);
+        mImage_news.getDrawable().setAlpha(alpha);
         image_tx.getDrawable().mutate().setAlpha(alpha);
         text_pm.setTextColor(Color.argb(alpha, 255, 255, 255));
         text_gs.setTextColor(Color.argb(alpha, 255, 255, 255));
@@ -394,18 +388,19 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
     public void onStop() {
         super.onStop();
         mBarLayout.setExpanded(true, true);
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mNestedScrollView.fullScroll(ScrollView.FOCUS_UP);
-            }
-        });
+//        mHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mNestedScrollView.fullScroll(ScrollView.FOCUS_UP);
+//            }
+//        });
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mMQHelper.onDisConnect();
+        mHandler.removeCallbacksAndMessages(null);
         //mSocketHelper.stopConnect();
     }
 }

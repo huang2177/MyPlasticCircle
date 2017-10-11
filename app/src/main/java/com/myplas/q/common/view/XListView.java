@@ -10,14 +10,12 @@ package com.myplas.q.common.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
@@ -43,14 +41,6 @@ public class XListView extends ListView implements OnScrollListener {
     private int mHeaderViewHeight; // header view's height
     private boolean mEnablePullRefresh = true;
     private boolean mPullRefreshing = false; // is refreashing.
-    private View mViewDivider;
-
-    // -- footer view
-    //private XListViewFooter mFooterView;
-    private boolean mEnablePullLoad;
-    private boolean mPullLoading;
-    private boolean mIsFooterReady = false;
-
     // total list items, used to detect is at the bottom of listview.
     private int mTotalItemCount;
 
@@ -87,8 +77,7 @@ public class XListView extends ListView implements OnScrollListener {
         mHeaderView = new XListViewHeader(context);
         mHeaderViewContent = (RelativeLayout) mHeaderView.findViewById(R.id.xlistview_header_content);
         mHeaderTimeView = (TextView) mHeaderView.findViewById(R.id.xlistview_header_time);
-        mViewDivider = mHeaderView.findViewById(R.id.header_view);
-        addHeaderView(mHeaderView);
+        addHeaderView(mHeaderView, null, true);
         mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new OnGlobalLayoutListener() {
                     @Override
@@ -99,15 +88,6 @@ public class XListView extends ListView implements OnScrollListener {
                 });
     }
 
-    @Override
-    public void setAdapter(ListAdapter adapter) {
-        // make sure XListViewFooter is the last footer view, and only add once.
-        if (mIsFooterReady == false) {
-            mIsFooterReady = true;
-            //addFooterView(mFooterView);
-        }
-        super.setAdapter(adapter);
-    }
 
     /**
      * enable or disable pull down refresh feature.
@@ -123,18 +103,6 @@ public class XListView extends ListView implements OnScrollListener {
         }
     }
 
-    /**
-     * enable or disable pull up load more feature.
-     *
-     * @param enable
-     */
-    public void setPullLoadEnable(boolean enable) {
-        mEnablePullLoad = enable;
-        if (!mEnablePullLoad) {
-        } else {
-            mPullLoading = false;
-        }
-    }
 
     /**
      * stop refresh, reset header view.
@@ -146,19 +114,6 @@ public class XListView extends ListView implements OnScrollListener {
         }
     }
 
-    public void setDividerViewVisibility(boolean visibility) {
-        mViewDivider.setVisibility((visibility) ? (VISIBLE) : (GONE));
-    }
-
-    /**
-     * stop load more, reset footer view.
-     */
-    public void stopLoadMore() {
-        if (mPullLoading == true) {
-            mPullLoading = false;
-            //mFooterView.setState(XListViewFooter.STATE_NORMAL);
-        }
-    }
 
     /**
      * set last refresh time
@@ -257,8 +212,6 @@ public class XListView extends ListView implements OnScrollListener {
         if (mScroller.computeScrollOffset()) {
             if (mScrollBack == SCROLLBACK_HEADER) {
                 mHeaderView.setVisiableHeight(mScroller.getCurrY());
-            } else {
-//				mFooterView.setBottomMargin(mScroller.getCurrY());
             }
             postInvalidate();
             invokeOnScrolling();

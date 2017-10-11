@@ -34,7 +34,7 @@ public class NoResultLayout extends LinearLayout {
         initView(context);
     }
     public void initView(Context context){
-        mView= LayoutInflater.from(context).inflate(R.layout.linearlayout_noresult,this,true);
+        mView = LayoutInflater.from(context).inflate(R.layout.emptyview_ll_layout, this, true);
         mTextView= (TextView) mView.findViewById(R.id.noresult_text);
         mImageView= (ImageView) mView.findViewById(R.id.noresult_image);
         mLinearLayout= (LinearLayout) mView.findViewById(R.id.layout_noresult);

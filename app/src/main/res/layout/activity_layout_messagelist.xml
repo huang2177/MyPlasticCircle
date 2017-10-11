@@ -5,7 +5,7 @@
               android:background="@color/color_gray_bg"
               android:orientation="vertical">
 
-    <include layout="@layout/titlebar_lauout"></include>
+    <include layout="@layout/common_layout_titlebar"></include>
 
     <ListView
         android:id="@+id/messagelist_listview"

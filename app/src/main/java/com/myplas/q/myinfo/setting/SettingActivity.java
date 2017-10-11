@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.view.ACache;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.FileUtils;
 import com.myplas.q.common.utils.SharedUtils;

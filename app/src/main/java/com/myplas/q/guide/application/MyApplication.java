@@ -2,10 +2,16 @@ package com.myplas.q.guide.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.stetho.Stetho;
+import com.myplas.q.BuildConfig;
 import com.myplas.q.common.appcontext.ActivityManager;
+import com.myplas.q.common.view.LoadingDialog;
 
 /**
  * 作者：  黄双
@@ -17,14 +23,16 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(
-                                Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(
-                                Stetho.defaultInspectorModulesProvider(this))
-                        .build());
 
+        if (BuildConfig.USE_STETHO) {
+            Stetho.initialize(
+                    Stetho.newInitializerBuilder(this)
+                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                            .build());
+        }
+
+        /*注册activity生命周期的监听*/
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -43,7 +51,11 @@ public class MyApplication extends Application {
 
             @Override
             public void onActivityPaused(Activity activity) {
-
+                final View v = activity.getWindow().peekDecorView();
+                if (v != null && v.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
             }
 
             @Override
@@ -58,7 +70,11 @@ public class MyApplication extends Application {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-
+                LoadingDialog.clear(activity);
+                AlertDialog dialog = LoadingDialog.getInstance(activity);
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         });
     }

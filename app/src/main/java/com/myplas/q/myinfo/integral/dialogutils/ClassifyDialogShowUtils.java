@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jmf.addsubutils.AddSubUtils;
 import com.myplas.q.R;
-import com.myplas.q.common.view.NoDoubleClickListener;
 import com.myplas.q.myinfo.beans.IntegralBean;
 import com.myplas.q.myinfo.integral.adapter.Integral_Diaolog_Classify_Adapter;
 
@@ -80,9 +79,9 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
         mTextChoosed = (TextView) view1.findViewById(R.id.dl_classify_text_choosed);
         mAddSubUtils = (AddSubUtils) view1.findViewById(R.id.dl_classify_addsubutils);
 
-        mButton.setOnClickListener(new NoDoubleClickListener() {
+        mButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNoDoubleClick(View view) {
+            public void onClick(View view) {
                 num = -1;
                 mButton.setClickable(false);
                 //mButton.setBackgroundColor(context.getResources().getColor(R.color.color_gray3));

@@ -1,6 +1,5 @@
 package com.myplas.q.supdem;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,25 +11,25 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
-import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
-import com.myplas.q.release.activity.ReleaseActivity;
+import com.myplas.q.common.view.CommonDialog;
+import com.myplas.q.common.view.XListView;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.supdem.Beans.ItemBean;
-import com.myplas.q.supdem.Beans.Supply_DemandBean;
+import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
+import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
+import com.myplas.q.release.activity.ReleaseActivity;
+import com.myplas.q.supdem.Beans.ConfigData;
+import com.myplas.q.supdem.Beans.SupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
-import com.myplas.q.supdem.adapter.GQ_ListviewAdapter;
+import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
 
 import org.json.JSONObject;
 
@@ -47,41 +46,51 @@ import java.util.Map;
  */
 public class Fragment_SupDem_Other extends Fragment implements CommonDialog.DialogShowInterface,
         ResultCallBack, View.OnClickListener {
-    public int visibleItemCount;
     private SharedUtils sharedUtils;
+    public int page, visibleItemCount, position;
 
-    public String follow_release, user_id;
-    private Supply_DemandBean supply_demandBean;
-    private GQ_ListviewAdapter gq_listviewAdapter;
+    private String mLastData;
+    private SupDemBean mSupDemBean;
+    public String follow_release, user_id, type;
+    private SupDem_LV_Adapter mSupDemLVAdapter;
 
     private View view;
-    public ItemBean itemBean;
-    private ListView listView;
+    private XListView mListView;
     private LinearLayout linearLayout_prompt;
-    private List<Supply_DemandBean.DataBean> list, list_more;
+    private List<SupDemBean.DataBean> mDataBeanList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_fragment_other, null, false);
-        list_more = new ArrayList<>();
-        itemBean=ItemBean.getItemBean();
-        listView = (ListView) view.findViewById(R.id.fragment_other_listview);
-        linearLayout_prompt = (LinearLayout) view.findViewById(R.id.supply_demand_prompt_linear);
+        initView();
+    }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void initView() {
+        page = 1;
+        type = "0";
+        mDataBeanList = new ArrayList<>();
+        sharedUtils = SharedUtils.getSharedUtils();
+
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_supdem_other, null, false);
+        mListView = F(R.id.fragment_other_listview);
+        linearLayout_prompt = F(R.id.supply_demand_prompt_linear);
+
+        mListView.setPullRefreshEnable(false);
+        mListView.setHeaderDividersEnabled(false);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
-                    String id_ = list_more.get(position).getId();
-                    String userid = list_more.get(position).getUser_id();
+                    String p_id = mDataBeanList.get(position).getId();
+                    String userid = mDataBeanList.get(position).getUser_id();
                     String user_id = sharedUtils.getData(getActivity(), "userid");
 
-                    intent.putExtra("id", id_);
+                    intent.putExtra("id", p_id);
                     intent.putExtra("type", "0");
                     intent.putExtra("userid", userid);
-                    intent.putExtra("what", (user_id.equals(userid))?("5"):(itemBean.what));
+                    intent.putExtra("what", (user_id.equals(userid)) ? ("5") : (ConfigData.what));
 
                     startActivity(intent);
                 } catch (Exception e) {
@@ -89,24 +98,24 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
             }
         });
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() >= visibleItemCount) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mListView.getCount() > visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        itemBean.page++;
-                        if (itemBean.hasMoreData) {
-                            getNetData(getActivity(), itemBean.page + "", itemBean.keywords, itemBean.sortField1, itemBean.sortField2, itemBean.type, false);
-                        } else {
-                            TextUtils.Toast(getActivity(), "没有更多数据了！");
-                        }
+                        page++;
+                        getNetData(page + "", false);
                     }
                 }
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Fragment_SupDem_Other.this.visibleItemCount = visibleItemCount;
             }
         });
+        ConfigData.setCurrentItem(position);
+        getNetData("1", false);
     }
 
     @Nullable
@@ -115,20 +124,17 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
 
         return view;
     }
-    public void getNetData(Activity context, String page, String keywords, String sortField1, String sortField2, String type, boolean a) {
-        try {
-            Map<String, String> map = new HashMap<String, String>();
-            sharedUtils = SharedUtils.getSharedUtils();
-            map.put("token", sharedUtils.getData(getActivity(), "token"));
-            map.put("page", page);
-            map.put("size", "15");
-            map.put("keywords", keywords);
-            map.put("sortField1", sortField1);
-            map.put("sortField2", sortField2);
-            map.put("type", type);
-            BaseActivity.postAsyn1(context, API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, a);
-        } catch (Exception e) {
-        }
+
+    public void getNetData(String page, boolean isShowLoading) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("page", page);
+        map.put("size", "15");
+        map.put("keywords", "");
+        map.put("type", type);
+        map.put("sortField1", ConfigData.sortField1);
+        map.put("sortField2", ConfigData.sortField2);
+        map.put("token", sharedUtils.getData(getActivity(), "token"));
+        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
     //判断是否消耗积分
@@ -140,6 +146,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
         String url = API.BASEURL + API.GET_ZONE_FRIEND;
         BaseActivity.postAsyn(getActivity(), url, map, this, type);
     }
+
 
     public <T extends View> T F(int id) {
         return (T) view.findViewById(id);
@@ -161,30 +168,32 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
     @Override
     public void callBack(Object object, int type) {
         try {
+            if (object.toString().equals(mLastData)) {
+                return;
+            }
+            mLastData = object.toString();
             Gson gson = new Gson();
             String result = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 if (result.equals("0")) {
-                    supply_demandBean = gson.fromJson(object.toString(), Supply_DemandBean.class);
-                    listView.setVisibility(View.VISIBLE);
+                    mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
+                    mListView.setVisibility(View.VISIBLE);
                     linearLayout_prompt.setVisibility(View.GONE);
-                    list = supply_demandBean.getData();
-                    if (itemBean.page == 1) {
-                        gq_listviewAdapter = new GQ_ListviewAdapter(itemBean.what, getActivity(), list);
-                        listView.setAdapter(gq_listviewAdapter);
-                        list_more = list;
-                        list = null;
+                    if (page == 1) {
+                        mSupDemLVAdapter = new SupDem_LV_Adapter(ConfigData.what, getActivity(), mSupDemBean.getData());
+                        mListView.setAdapter(mSupDemLVAdapter);
+                        mDataBeanList.clear();
+                        mDataBeanList.addAll(mSupDemBean.getData());
                         //加载更多
-                    } else if (list.size() != 0) {
-                        list_more.addAll(list);
-                        gq_listviewAdapter.setList(list_more);
-                        gq_listviewAdapter.notifyDataSetChanged();
+                    } else {
+                        mDataBeanList.addAll(mSupDemBean.getData());
+                        mSupDemLVAdapter.setList(mDataBeanList);
+                        mSupDemLVAdapter.notifyDataSetChanged();
                     }
 
                 } else {//显示提示信息：
-                    itemBean.hasMoreData = false;
-                    if (itemBean.page == 1) {
-                        listView.setVisibility(View.GONE);
+                    if (page == 1) {
+                        mListView.setVisibility(View.GONE);
                         linearLayout_prompt.setVisibility(View.VISIBLE);
                         linearLayout_prompt.removeAllViews();
                         switch (result) {
@@ -237,6 +246,8 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
                                 view2.findViewById(R.id.img_supplydemad_down).setVisibility(View.GONE);
                                 break;
                         }
+                    } else {
+                        TextUtils.Toast(getContext(), "没有更多数据了！");
                     }
                 }
             }
@@ -273,22 +284,20 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
 
     @Override
     public void failCallBack(int type) {
-        if (list_more.size()==0) {
-            listView.setVisibility(View.GONE);
+        if (mDataBeanList.size() == 0) {
+            mListView.setVisibility(View.GONE);
             linearLayout_prompt.setVisibility(View.VISIBLE);
             linearLayout_prompt.removeAllViews();
 
-            ImageButton imageButton=new ImageButton(getActivity());
+            ImageButton imageButton = new ImageButton(getActivity());
             imageButton.setImageResource(R.drawable.img_reload);
             linearLayout_prompt.addView(imageButton);
             imageButton.setBackgroundColor(getResources().getColor(R.color.color_white));
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemBean = ItemBean.getItemBean();
-                    itemBean.page = 1;
-                    itemBean.hasMoreData = true;
-                    getNetData(getActivity(), "1", itemBean.keywords, itemBean.sortField1, itemBean.sortField2, itemBean.type, true);
+                    page = 1;
+                    getNetData("1", true);
                 }
             });
         }

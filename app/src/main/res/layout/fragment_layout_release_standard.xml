@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="牌号"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
+
+                <EditText
+                    android:id="@+id/release_ev_mode"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@null"
+                    android:hint="7000F"
+                    android:textCursorDrawable="@drawable/text_cursor_shape"
+                    android:textSelectHandle="@drawable/textselecthandle"
+                    android:textSelectHandleLeft="@drawable/textselecthandle"
+                    android:textSelectHandleRight="@drawable/textselecthandle"
+                    android:textSize="14.0sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_gray3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="厂家"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
+
+                <EditText
+                    android:id="@+id/release_ev_chj"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@null"
+                    android:hint="上海"
+                    android:maxLines="1"
+                    android:textCursorDrawable="@drawable/text_cursor_shape"
+                    android:textSelectHandle="@drawable/textselecthandle"
+                    android:textSelectHandleLeft="@drawable/textselecthandle"
+                    android:textSelectHandleRight="@drawable/textselecthandle"
+                    android:textSize="14.0sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_gray3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="交货地"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
+
+                <EditText
+                    android:id="@+id/jzfb_edit_jhd"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@null"
+                    android:hint="上海"
+                    android:textCursorDrawable="@drawable/text_cursor_shape"
+                    android:textSelectHandle="@drawable/textselecthandle"
+                    android:textSelectHandleLeft="@drawable/textselecthandle"
+                    android:textSelectHandleRight="@drawable/textselecthandle"
+                    android:textSize="14.0sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_gray3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="价格"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
+
+                <EditText
+                    android:id="@+id/jzfb_edit_jg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@null"
+                    android:hint="10000"
+                    android:textCursorDrawable="@drawable/text_cursor_shape"
+                    android:textSelectHandle="@drawable/textselecthandle"
+                    android:textSelectHandleLeft="@drawable/textselecthandle"
+                    android:textSelectHandleRight="@drawable/textselecthandle"
+                    android:textSize="14.0sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_gray3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="现货/期货"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
+
+                <TextView
+                    android:id="@+id/release_ev_nowfutrue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:text="现货/期货"
+                    android:textSize="16.0sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icon_more"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_gray3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="供给/求购"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
+
+                <TextView
+                    android:id="@+id/release_ev_type"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:text="供给/求购"
+                    android:textSize="16.0sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icon_more"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_gray3"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

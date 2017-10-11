@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.release.activity.ReleaseSupDemActivity;
-import com.myplas.q.supdem.Beans.Supply_DemandBean;
+import com.myplas.q.supdem.Beans.SupDemBean;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class Release_Demand_ListviewAdapter extends BaseAdapter {
     Context context;
-    List<Supply_DemandBean.DataBean> list;
+    List<SupDemBean.DataBean> list;
 
-    public Release_Demand_ListviewAdapter(Context context, List<Supply_DemandBean.DataBean> list) {
+    public Release_Demand_ListviewAdapter(Context context, List<SupDemBean.DataBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -59,13 +59,13 @@ public class Release_Demand_ListviewAdapter extends BaseAdapter {
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
-        viewHolder.content.setText(list.get(position).getContent());
+        //viewHolder.content.setText(list.get(position).getContent());
         viewHolder.shj.setText(list.get(position).getInput_time());
         viewHolder.chf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(context, ReleaseSupDemActivity.class);
-                intent1.putExtra("id", list.get(position).getP_id());
+                //intent1.putExtra("id", list.get(position).getP_id());
                 intent1.putExtra("type", list.get(position).getType());
                 context.startActivity(intent1);
             }

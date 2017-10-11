@@ -11,9 +11,8 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.supdem.Beans.TabCofigBean;
-import com.myplas.q.supdem.popoushowutils.PopouShowUtils;
+import com.myplas.q.supdem.PopouShowUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

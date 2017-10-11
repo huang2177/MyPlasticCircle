@@ -51,7 +51,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
     private String sobot_appkey = "c1ff771c06254db796cd7ce1433d2004";
 
     private EditText edu_edit;
-    private MyListview myListview;
+    private MyListview mMyListview;
     private TextView textView_title;
     private SharedUtils sharedUtils;
     private ImageView img_contact_sobot;
@@ -75,7 +75,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
         sharedUtils = SharedUtils.getSharedUtils();
 
         edu_edit = (EditText) findViewById(R.id.edu_edit);
-        myListview = (MyListview) findViewById(R.id.edu_listview);
+        mMyListview = (MyListview) findViewById(R.id.edu_listview);
         textView_title = (TextView) findViewById(R.id.fx_ttxq_title);
         textView_company = (TextView) findViewById(R.id.text_company);
         textView_search = (TextView) findViewById(R.id.search_src_text);
@@ -155,7 +155,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
                 String html1 = "<font color='#ff4500'>" + eDuBean.getC_name() + "</font>";
                 textView_company.setText(Html.fromHtml(html1));
                 aDapter = new EDu_Listview_ADapter(this, eDuBean.getData());
-                myListview.setAdapter(aDapter);
+                mMyListview.setAdapter(aDapter);
             }
         } catch (Exception e) {
         }

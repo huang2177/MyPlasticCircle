@@ -12,7 +12,7 @@
         android:background="@color/colorAccent"
         android:orientation="horizontal">
 
-        <include layout="@layout/layout_tx"/>
+        <include layout="@layout/vimageview_layout"/>
 
         <FrameLayout
             android:layout_width="0dp"

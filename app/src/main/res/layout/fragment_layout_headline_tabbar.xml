@@ -30,7 +30,7 @@
                     app:tabGravity="fill"
                     app:xTabIndicatorColor="@color/color_red"
                     app:xTabIndicatorHeight="3dp"
-                    app:xTabIndicatorWidth="25dp"
+                    app:xTabIndicatorWidth="28dp"
                     app:xTabMode="scrollable"
                     app:xTabSelectedTextColor="@color/color_red"
                     app:xTabSelectedTextSize="18.0sp"

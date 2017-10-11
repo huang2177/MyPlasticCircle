@@ -70,7 +70,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/btn_xq_chujian"
+        android:background="@drawable/btn_shape_red_coners"
         android:text="确定"
         android:textColor="@color/color_white"
         android:textSize="18.0sp" />

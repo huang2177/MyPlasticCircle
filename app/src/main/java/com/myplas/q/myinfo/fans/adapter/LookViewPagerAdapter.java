@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class LookViewPagerAdapter extends PagerAdapter {
     List<String> mTitles;
-    List<NoResultLayout> viewLists;
+    List<View> viewLists;
 
-    public LookViewPagerAdapter(List<NoResultLayout> list, List<String> titles) {
+    public LookViewPagerAdapter(List<View> list, List<String> titles) {
         this.viewLists = list;
         this.mTitles=titles;
     }

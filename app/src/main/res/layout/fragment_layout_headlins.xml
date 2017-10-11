@@ -24,10 +24,10 @@
 
         <EditText
             android:id="@+id/find_edit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:background="@drawable/corner_titlebar"
             android:drawableLeft="@drawable/icon_search"

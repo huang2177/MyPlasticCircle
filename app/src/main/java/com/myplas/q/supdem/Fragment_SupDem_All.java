@@ -1,43 +1,39 @@
 package com.myplas.q.supdem;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.utils.NetUtils;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.view.CommonDialog;
+import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.MyLinearLayout;
-import com.myplas.q.common.view.RefreshableView;
-import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
-import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
-import com.myplas.q.release.activity.ReleaseActivity;
+import com.myplas.q.common.view.CommonDialog;
+import com.myplas.q.common.view.MyListview;
+import com.myplas.q.common.view.MyNestedScrollView;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.supdem.Beans.ItemBean;
-import com.myplas.q.supdem.Beans.Supply_DemandBean;
+import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
+import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
+import com.myplas.q.release.activity.ReleaseActivity;
+import com.myplas.q.supdem.Beans.ConfigData;
+import com.myplas.q.supdem.Beans.SupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
-import com.myplas.q.supdem.adapter.GQ_ListviewAdapter;
+import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
 
 import org.json.JSONObject;
 
@@ -52,94 +48,87 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_SupDem_All extends Fragment implements View.OnClickListener, CommonDialog.DialogShowInterface,
-        ResultCallBack, RefreshableView.onRefreshListener {
-    private Activity context;
-    private ItemBean itemBean;
+public class Fragment_SupDem_All extends Fragment implements View.OnClickListener
+        , CommonDialog.DialogShowInterface
+        , ResultCallBack
+        , SwipeRefreshLayout.OnRefreshListener
+        , MyNestedScrollView.onScrollIterface {
     public boolean isRefresh;
-    public int visibleItemCount;
     private SharedUtils sharedUtils;
+    public int visibleItemCount, page;
 
-    public String follow_release, user_id;
-    private Supply_DemandBean.TopBean topBean;
-    private Supply_DemandBean supply_demandBean;
-    private GQ_ListviewAdapter gq_listviewAdapter;
+    private SupDemBean.TopBean topBean;
+    private SupDem_LV_Adapter mSupDemLVAdapter;
+    private SupDemBean mSupDemBean;
 
-    private View view;
-    private ListView gq_listview;
-    private ImageView tx, rz, img;
-    private MyLinearLayout myLinearLayout;
-    private RefreshableView refreshableView;
-    private TextView gs, content, time, isbuyed, repeat;
-    private List<Supply_DemandBean.DataBean> list, list_more;
-    private LinearLayout linearLayout_prompt, linearLayout_firstitem, linearLayout_up, linearLayout_down;
+    private View view, mViewHead;
+    private MyListview mListView;
+    private LinearLayout mLayout;
+    private MyNestedScrollView mScrollView;
+    private TextView company, content, time;
+    private SwipeRefreshLayout mRefreshLayout;
+    private ImageView typeSupDem, typeNowFutures, imgUp;
+    private List<SupDemBean.DataBean> mDataBeanList;
+    private LinearLayout layoutPrompt, layoutFirstitem, layoutUp, layoutDown;
 
-    private ShowRefreshPopouinterface mPopouinterface;
+    private String mLastData, hotSearch;
+    public String follow_release, user_id, type;
+    private RefreshPopouInterface mPopouinterface;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_fragment_all, null, false);
+        initView();
+        getNetData("1", false);
+    }
 
-        list_more = new ArrayList<>();
-        itemBean = ItemBean.getItemBean();
-        gq_listview = F(R.id.gq_listview);
-        myLinearLayout = F(R.id.mylinearlayout);
-        refreshableView = F(R.id.refreshableview);
-        linearLayout_firstitem = (LinearLayout) view.findViewById(R.id.gq_first_item);
-        linearLayout_prompt = (LinearLayout) view.findViewById(R.id.supply_demand_prompt_linear);
-
-        initView(linearLayout_firstitem);
+    private void initView() {
+        page = 1;
+        type = "0";
+        mDataBeanList = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
 
-        repeat.setOnClickListener(this);
-        isbuyed.setOnClickListener(this);
-        refreshableView.setOnRefreshListener(this);
-        linearLayout_firstitem.setOnClickListener(this);
+        mViewHead = LayoutInflater.from(getActivity()).inflate(R.layout.xlistview_header, null, false);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_supdem_all_layout, null, false);
+        mListView = F(R.id.gq_listview);
+        mScrollView = F(R.id.mynested_sv);
+        mRefreshLayout = F(R.id.smartlayout);
+        layoutFirstitem = F(R.id.supdem_head_ll);
+        layoutPrompt = F(R.id.supply_demand_prompt_linear);
+
+        mScrollView.setOnScrollIterface(this);
+        layoutFirstitem.setOnClickListener(this);
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setColorSchemeResources(R.color.color_red);
 
         //item详情
-        gq_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    if (NetUtils.isNetworkStateed(context)) {
-                        goToDetail("0", list_more.get(position).getId(), list_more.get(position).getUser_id());
-                    }
-                } catch (Exception e) {
+                if (NetUtils.isNetworkStateed(getActivity())) {
+                    goToDetail("0"
+                            , mDataBeanList.get(position).getId()
+                            , mDataBeanList.get(position).getUser_id());
                 }
-            }
-        });
-        gq_listview.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && gq_listview.getCount() >= visibleItemCount) {
-                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        itemBean.page++;
-                        if (itemBean.hasMoreData) {
-                            getNetData(context, itemBean.page + "", itemBean.keywords, itemBean.sortField1, itemBean.sortField2, itemBean.type, false);
-                        } else {
-                            TextUtils.Toast(getActivity(), "没有更多数据了！");
-                        }
-                    }
-                }
-                View firstVisibleItem1 = gq_listview.getChildAt(0);
-                if (scrollState == 0 && firstVisibleItem1 != null && firstVisibleItem1.getTop() != 0) {
-                    myLinearLayout.setEnnablerefresh(false);
-                }
-            }
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                Fragment_SupDem_All.this.visibleItemCount = visibleItemCount;
-                View firstVisibleItem1 = gq_listview.getChildAt(0);
-                if (firstVisibleItem1 != null && firstVisibleItem1.getTop() == 0) {
-                    myLinearLayout.setEnnablerefresh(true);
-                } else {
-                    myLinearLayout.setEnnablerefresh(false);
-                }
             }
         });
-        getNetData(getActivity(), "1", "", "ALL", "", itemBean.type, true);
+
+        initFirstItem();
+    }
+
+    //实例化置顶控件
+    public void initFirstItem() {
+        company = F(R.id.gq_listview_gs);
+        time = F(R.id.supply_demand_time);
+        typeSupDem = F(R.id.supdem_img_type);
+        content = F(R.id.supply_demand_content);
+        layoutUp = F(R.id.supply_demand_company);
+        layoutDown = F(R.id.supply_demand_detail);
+        typeNowFutures = F(R.id.supply_demand_now_futures);
+
+        layoutUp.setOnClickListener(this);
+        layoutDown.setOnClickListener(this);
     }
 
     @Nullable
@@ -148,47 +137,6 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        itemBean.page = 1;
-        itemBean.hasMoreData = true;
-        myLinearLayout.setEnnablerefresh(false);
-        boolean isLogined = sharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_SD);
-        if (isLogined) {
-            getNetData(getActivity(), "1", "", "ALL", "", itemBean.type, true);
-            sharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_SD, false);
-        }
-    }
-
-    //实例化置顶控件
-    public void initView(View viewfirst) {
-        tx = (ImageView) viewfirst.findViewById(R.id.xq_tx);
-        rz = (ImageView) viewfirst.findViewById(R.id.xq_rz);
-        img = (ImageView) viewfirst.findViewById(R.id.supply_demand_img);
-        gs = (TextView) viewfirst.findViewById(R.id.gq_listview_gs);
-        content = (TextView) viewfirst.findViewById(R.id.supply_demand_content);
-        linearLayout_up = (LinearLayout) viewfirst.findViewById(R.id.supply_demand_linear);
-        linearLayout_down = (LinearLayout) viewfirst.findViewById(R.id.first_item);
-        time = (TextView) viewfirst.findViewById(R.id.supply_demand_time);
-        repeat = (TextView) viewfirst.findViewById(R.id.supply_demand_repeat);
-        isbuyed = (TextView) viewfirst.findViewById(R.id.supply_demand_isbuyed);
-        linearLayout_up.setOnClickListener(this);
-        linearLayout_down.setOnClickListener(this);
-    }
-
-    //跳转至详情
-    public void goToDetail(String type, String id_, String userid) {
-        Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
-        String user_id = sharedUtils.getData(getActivity(), "userid");
-
-        intent.putExtra("id", id_);
-        intent.putExtra("type", "0");
-        intent.putExtra("userid", userid);
-        intent.putExtra("what", (user_id.equals(userid)) ? ("5") : (itemBean.what));
-
-        startActivity(intent);
-    }
 
     public <T extends View> T F(int id) {
         return (T) view.findViewById(id);
@@ -197,19 +145,12 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.supply_demand_linear:
+            case R.id.supply_demand_company://判断是否消耗积分
                 getPersonInfoData(user_id, "1", 2);
                 break;
-            case R.id.first_item:
+            case R.id.supply_demand_detail://跳转到详情
                 goToDetail("0", topBean.getId(), topBean.getUser_id());
                 break;
-            case R.id.supply_demand_isbuyed:
-                goToDetail("1", topBean.getId(), topBean.getUser_id());
-                break;
-            case R.id.supply_demand_repeat:
-                goToDetail("2", topBean.getId(), topBean.getUser_id());
-                break;
-
             case R.id.supply_demand_follow:
                 if (follow_release.equals("follow")) {
                     MainActivity.firstInto();
@@ -217,10 +158,19 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     startActivity(new Intent(getActivity(), ReleaseActivity.class));
                 }
                 break;
-            case R.id.img_reload:
-                getNetData(getActivity(), "1", "", "ALL", "AUTO", "0", true);
-                break;
         }
+    }
+
+    public void getNetData(String page, boolean isShowLoading) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("page", page);
+        map.put("size", "15");
+        map.put("type", type);
+        map.put("keywords", "");
+        map.put("sortField2", "");
+        map.put("sortField1", "ALL");
+        map.put("token", sharedUtils.getData(getActivity(), "token"));
+        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
     //判断是否消耗积分
@@ -233,101 +183,99 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         BaseActivity.postAsyn(getActivity(), url, map, this, type);
     }
 
-    public void getNetData(Activity context, String page, String keywords, String sortField1, String sortField2, String type, boolean a) {
-        try {
-            this.context = context;
-            Map<String, String> map = new HashMap<String, String>();
-            sharedUtils = SharedUtils.getSharedUtils();
-            map.put("token", sharedUtils.getData(getActivity(), "token"));
-            map.put("page", page);
-            map.put("size", "15");
-            map.put("keywords", keywords);
-            map.put("sortField1", sortField1);
-            map.put("sortField2", sortField2);
-            map.put("type", type);
-            BaseActivity.postAsyn1(context, API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, a);
-        } catch (Exception e) {
-        }
+    //跳转至详情
+    public void goToDetail(String type, String id_, String userid) {
+        String userId = sharedUtils.getData(getActivity(), "userid");
+        Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
+        intent.putExtra("id", id_);
+        intent.putExtra("type", "0");
+        intent.putExtra("userid", userid);
+        intent.putExtra("what", (userId.equals(userid)) ? ("5") : "1");
+        startActivity(intent);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
+            if (object.toString().equals(mLastData)) {
+                mRefreshLayout.setRefreshing(false);
+                mPopouinterface.showRefreshPopou(hotSearch, "", isRefresh);
+                return;
+            }
+            mLastData = object.toString();
             Gson gson = new Gson();
             String result = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 if (result.equals("0")) {
-                    refreshableView.setVisibility(View.VISIBLE);
-                    linearLayout_prompt.setVisibility(View.GONE);
-                    supply_demandBean = gson.fromJson(object.toString(), Supply_DemandBean.class);
-                    list = supply_demandBean.getData();
-                    if (itemBean.page == 1) {
-                        refreshableView.onCompleteRefresh();
-                        gq_listviewAdapter = new GQ_ListviewAdapter(itemBean.what, getActivity(), list);
-                        gq_listview.setAdapter(gq_listviewAdapter);
-                        list_more = list;
-                        list = null;
+                    mListView.setVisibility(View.VISIBLE);
+                    layoutPrompt.setVisibility(View.GONE);
+                    mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
+                    if (page == 1) {
+                        mRefreshLayout.setRefreshing(false);
+                        mSupDemLVAdapter = new SupDem_LV_Adapter(ConfigData.what, getActivity(), mSupDemBean.getData());
+                        mListView.setAdapter(mSupDemLVAdapter);
+                        mDataBeanList.clear();
+                        mDataBeanList.addAll(mSupDemBean.getData());
 
-                        //展示已更新多少数据
-                        mPopouinterface.showRefreshPopou(supply_demandBean.getHot_search(), supply_demandBean.getShow_msg(), isRefresh);
-                    } else if (list.size() != 0) { //加载更多
+                        hotSearch = mSupDemBean.getHot_search();
+                        mPopouinterface.showRefreshPopou(hotSearch, mSupDemBean.getShow_msg(), isRefresh);
+                    } else { //加载更多
                         isRefresh = false;
-                        list_more.addAll(list);
-                        gq_listviewAdapter.setList(list_more);
-                        gq_listviewAdapter.notifyDataSetChanged();
+                        mDataBeanList.addAll(mSupDemBean.getData());
+                        mSupDemLVAdapter.setList(mDataBeanList);
+                        mSupDemLVAdapter.notifyDataSetChanged();
                     }
                     //展示头部
                     if (new JSONObject(object.toString()).getJSONObject("top").length() != 0) {
-                        topBean = supply_demandBean.getTop();
-                        linearLayout_firstitem.setVisibility(View.VISIBLE);
+                        topBean = mSupDemBean.getTop();
+                        layoutFirstitem.setVisibility(View.VISIBLE);
                         user_id = topBean.getUser_id();
-                        showInfo(topBean);
+                        showTopInfo(topBean);
                     } else {
                         topBean = null;
-                        linearLayout_firstitem.setVisibility(View.GONE);
+                        layoutFirstitem.setVisibility(View.GONE);
                     }
 
                 } else {//显示提示信息：
                     isRefresh = false;
-                    itemBean.hasMoreData = false;
-                    if (itemBean.page == 1) {
-                        refreshableView.onCompleteRefresh();
-                        refreshableView.setVisibility(View.GONE);
-                        linearLayout_prompt.setVisibility(View.VISIBLE);
-                        linearLayout_prompt.removeAllViews();
+                    if (page == 1) {
+                        mRefreshLayout.setRefreshing(false);
+                        mListView.setVisibility(View.GONE);
+                        layoutPrompt.setVisibility(View.VISIBLE);
+                        layoutPrompt.removeAllViews();
                         switch (result) {
                             case "1":
                             case "998":
-//                                sharedUtils.setData(getActivity(), "token", "");
-//                                sharedUtils.setData(getActivity(), "userid", "");
-//                                sharedUtils.setBooloean(getActivity(), "logined", false);
+                                sharedUtils.setData(getActivity(), "token", "");
+                                sharedUtils.setData(getActivity(), "userid", "");
+                                sharedUtils.setBooloean(getActivity(), "logined", false);
                                 break;
                             //没有更多数据
                             case "2":
                                 View v = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null);
-                                linearLayout_prompt.addView(v);
+                                layoutPrompt.addView(v);
                                 TextView text = (TextView) v.findViewById(R.id.supply_demand_text);
                                 text.setText(new JSONObject(object.toString()).getString("msg"));
                                 break;
                             //未匹配
                             case "4":
-                                linearLayout_prompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null));
+                                layoutPrompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null));
                                 break;
                             case "9"://去关注
                                 follow_release = "follow";
                                 View view = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care1, null);
-                                linearLayout_prompt.addView(view);
+                                layoutPrompt.addView(view);
                                 view.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
                                 break;
                             //关注 ——未发布
                             case "6":
-                                linearLayout_prompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care2, null));
+                                layoutPrompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care2, null));
                                 break;
                             //职能推荐——区发布
                             case "7":
                                 follow_release = "release";
                                 View view3 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
-                                linearLayout_prompt.addView(view3);
+                                layoutPrompt.addView(view3);
                                 TextView t = (TextView) view3.findViewById(R.id.supply_demand_text);
                                 t.setText(new JSONObject(object.toString()).getString("msg"));
                                 view3.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
@@ -337,13 +285,15 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                             case "8":
                                 follow_release = "release";
                                 View view2 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
-                                linearLayout_prompt.addView(view2);
+                                layoutPrompt.addView(view2);
                                 TextView textView = (TextView) view2.findViewById(R.id.supply_demand_text);
                                 textView.setText(new JSONObject(object.toString()).getString("msg"));
                                 view2.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
                                 view2.findViewById(R.id.img_supplydemad_down).setVisibility(View.GONE);
                                 break;
                         }
+                    } else {
+                        TextUtils.Toast(getContext(), "没有更多数据了！");
                     }
                 }
             }
@@ -379,54 +329,48 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
     @Override
     public void failCallBack(int type) {
-        if (list_more.size() == 0) {
-            refreshableView.setVisibility(View.GONE);
-            linearLayout_prompt.setVisibility(View.VISIBLE);
-            linearLayout_prompt.removeAllViews();
+        isRefresh = false;
+        mRefreshLayout.setRefreshing(false);
+        if (mDataBeanList.size() == 0) {
+            mListView.setVisibility(View.GONE);
+            layoutPrompt.setVisibility(View.VISIBLE);
+            layoutPrompt.removeAllViews();
 
             ImageButton imageButton = new ImageButton(getActivity());
             imageButton.setImageResource(R.drawable.img_reload);
-            linearLayout_prompt.addView(imageButton);
+            layoutPrompt.addView(imageButton);
             imageButton.setBackgroundColor(getResources().getColor(R.color.color_white));
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemBean = ItemBean.getItemBean();
-                    itemBean.page = 1;
-                    itemBean.hasMoreData = true;
-                    getNetData(getActivity(), "1", itemBean.keywords, itemBean.sortField1, itemBean.sortField2, itemBean.type, true);
+                    page = 1;
+                    getNetData("1", true);
                 }
             });
         }
     }
 
-    public void showInfo(Supply_DemandBean.TopBean topBean) {
+    public void showTopInfo(SupDemBean.TopBean topBean) {
         if (topBean != null) {
-            Glide.with(getActivity()).load(topBean.getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(tx);
-            gs.setText("  " + topBean.getC_name() + "  " + topBean.getName());
-            time.setText("  " + topBean.getInput_time());
-            isbuyed.setText("出价(" + topBean.getDeliverPriceCount() + ")");
-            repeat.setText("回复(" + topBean.getSaysCount() + ")");
-            if (topBean.getIs_pass().equals("0")) {
-                rz.setImageResource(R.drawable.icon_identity);
-            } else if (topBean.getIs_pass().equals("1")) {
-                rz.setImageResource(R.drawable.icon_identity_hl);
-            }
-            if (topBean.getType().equals("1")) {
-                String html1 = "<font color='#EEAD0E'>" + " 求购：" + "</font>" + topBean.getContents();
-                img.setImageResource(R.drawable.icon_purchase);
+            try {
+                company.setText(topBean.getC_name() + "  " + topBean.getName());
+
+//                String s = topBean.getFrom().equals("1") ? "来自供求 " : "来自QQ群 " + topBean.getInput_time();
+//                time.setText(s);
+
+                String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + topBean.getStore_house()
+                        + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + topBean.getModel()
+                        + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + topBean.getF_name()
+                        + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + topBean.getUnit_price();
                 content.setText(Html.fromHtml(html1));
-            } else {
-                img.setImageResource(R.drawable.icon_supply);
-                String html1 = "<font color='#36648B'>" + " 供给：" + "</font>" + topBean.getContents();
-                content.setText(Html.fromHtml(html1));
-            }
-            if (topBean.getContents().equals("")) {
-                img.setVisibility(View.GONE);
-                content.setVisibility(View.GONE);
-            } else {
-                img.setVisibility(View.VISIBLE);
-                content.setVisibility(View.VISIBLE);
+
+                typeSupDem.setImageResource(topBean.getType().equals("1")
+                        ? R.drawable.icon_supdem_purchase
+                        : R.drawable.icon_supdem_supply);
+                typeNowFutures.setImageResource(topBean.getCargo_type().equals("1")
+                        ? R.drawable.icon_now
+                        : R.drawable.icon_futures);
+            } catch (Exception e) {
             }
         }
     }
@@ -444,21 +388,25 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         }
     }
 
-    //下拉刷新
+    public void setRefreshPopouInterface(RefreshPopouInterface refreshPopouinterface) {
+        this.mPopouinterface = refreshPopouinterface;
+    }
+
+
     @Override
-    public void refresh() {
+    public void onRefresh() {
+        page = 1;
         isRefresh = true;
-        itemBean.page = 1;
-        itemBean.hasMoreData = true;
-        getNetData(getActivity(), itemBean.page + "", itemBean.keywords, itemBean.sortField1, itemBean.sortField2, itemBean.type, false);
+        getNetData(page + "", false);
     }
 
-
-    public void setShowRefreshPopouinterface(ShowRefreshPopouinterface showRefreshPopouinterface) {
-        this.mPopouinterface = showRefreshPopouinterface;
+    @Override
+    public void loadMore() {
+        page++;
+        getNetData(page + "", false);
     }
 
-    public interface ShowRefreshPopouinterface {
+    public interface RefreshPopouInterface {
         void showRefreshPopou(String content, String hotSearch, boolean isRefresh);
     }
 }

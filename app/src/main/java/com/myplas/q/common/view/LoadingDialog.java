@@ -32,7 +32,9 @@ public class LoadingDialog {
         return mHashMap.get(context);
     }
 
-    public static void clearLinkHashMap() {
-        mHashMap.clear();
+    public static void clear(Context context) {
+        if (mHashMap != null) {
+            mHashMap.remove(context);
+        }
     }
 }

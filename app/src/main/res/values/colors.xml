@@ -8,7 +8,7 @@
     <color name="color_blue">#6485a3</color>
     <color name="color_balank">#3b3a3a</color>
     <color name="color_title_main">#333</color>
-    <color name="color_content">#999</color>
+    <color name="color_content">#9c9c9c</color>
     <color name="color_edit_hint">#bbb</color>
     <color name="color_gray">#797878</color>
     <color name="color_orange">#d47508</color>
@@ -18,6 +18,7 @@
     <color name="color_zondse">#fd60180c</color>
     <color name="color_litlegray">#cacacb</color>
     <color name="color_transparent">#000000</color>
+    <color name="color_transparent_">#00000000</color>
 
     <color name="color_gray0">#f5f5f5</color>
     <color name="color_gray1">#e9e9e9</color>

@@ -1,6 +1,7 @@
 package com.myplas.q.myinfo.login;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -30,6 +31,7 @@ import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,17 +43,19 @@ import java.util.Map;
  */
 public class RegesterActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
     private int count = 60;
-    private Handler mHandler;
+    private static Handler mHandler;
     private boolean clicked = true;
     private SharedUtils sharedUtils;
     private String string_radiogroup = "1";
 
-    private ImageView img;
     private TextView textView_xy;
+    private ImageView img, mIVRead;
     private Button button_next, button_yzm;
     private EditText editText_name, editText_company;
     private EditText editText_tel, editText_pass, editText_yzm;
     private RadioButton radioButton_sl, radioButton_wl, radioButton_yl;
+
+    private WeakReference<Activity> wr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,68 +65,49 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
         initView();
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     public void initView() {
+        wr = new WeakReference<Activity>(this);
         sharedUtils = SharedUtils.getSharedUtils();
-        editText_tel = (EditText) findViewById(R.id.zhc_tel);
-        editText_pass = (EditText) findViewById(R.id.zhc_pass);
-        editText_yzm = (EditText) findViewById(R.id.zhc_yzm);
-        //myGridview = (MyGridview) findViewById(R.id.major_gridview);
-        editText_name = (EditText) findViewById(R.id.zhc_name);
-        editText_company = (EditText) findViewById(R.id.zhc_company);
-        //editText_c_address = (EditText) findViewById(R.id.zhc_c_address);
-        //editText_major = (EditText) findViewById(R.id.zhc_major);
-        button_yzm = (Button) findViewById(R.id.zhc_hq_yzm);
 
-        img = (ImageView) findViewById(R.id.img_jzh);
-        button_next = (Button) findViewById(R.id.zhc_next);
-        findViewById(R.id.img_jzh).setOnClickListener(this);
-        textView_xy = (TextView) findViewById(R.id.xy_text);
+        img = F(R.id.img_jzh);
+        mIVRead = F(R.id.img_jzh);
+        textView_xy = F(R.id.xy_text);
+        editText_tel = F(R.id.zhc_tel);
+        editText_yzm = F(R.id.zhc_yzm);
+        button_next = F(R.id.zhc_next);
+        button_yzm = F(R.id.zhc_hq_yzm);
+        editText_name = F(R.id.zhc_name);
+        editText_pass = F(R.id.zhc_pass);
+        editText_company = F(R.id.zhc_company);
+        radioButton_wl = F(R.id.radio_address_c_t);
+        radioButton_yl = F(R.id.radio_address_trade);
+        radioButton_sl = F(R.id.radio_company_fatory);
 
-        radioButton_sl = (RadioButton) findViewById(R.id.radio_company_fatory);
-        radioButton_yl = (RadioButton) findViewById(R.id.radio_address_trade);
-        radioButton_wl = (RadioButton) findViewById(R.id.radio_address_c_t);
+        mIVRead.setOnClickListener(this);
+        button_yzm.setOnClickListener(this);
+        textView_xy.setOnClickListener(this);
+        button_next.setOnClickListener(this);
         radioButton_wl.setOnClickListener(this);
         radioButton_yl.setOnClickListener(this);
         radioButton_sl.setOnClickListener(this);
-        textView_xy.setOnClickListener(this);
-        button_next.setOnClickListener(this);
-        button_yzm.setOnClickListener(this);
-        button_yzm.setClickable(false);
+
         String html1 = "已阅读" + "<font color='#0099cc'>" + "《塑料圈通讯录协议》" + "</font>";
         textView_xy.setText(Html.fromHtml(html1));
-        //editText_c_address.setOnClickListener(this);
+
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                if (msg.what == 1) {
+                Activity activity = wr.get();
+                if (msg.what == 1 && activity != null) {
                     button_yzm.setText(msg.obj.toString() + "秒后重试");
-                    // yzm_bt.setBackgroundResource(R.color.huoquyanzhengma);
                     button_yzm.setClickable(false);
                     if (msg.obj.toString().equals("0")) {
                         button_yzm.setText("重新发送");
                         button_yzm.setClickable(true);
-                        //yzm_bt.setBackgroundResource(R.color.green);
                     }
                 }
             }
         };
-        editText_tel.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (editText_tel.getText().toString().length() != 0) {
-                    button_yzm.setClickable(true);
-                }
-            }
-        });
     }
 
     @Override
@@ -149,7 +134,6 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
                     Toast.makeText(this, "手机号输入有误！", Toast.LENGTH_SHORT).show();
                     button_yzm.setClickable(false);
                 } else {
-
                     //发送验证码
                     Map<String, String> map1 = new HashMap<String, String>();
                     map1.put("mobile", tel);
@@ -165,7 +149,7 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
                 String yzm = editText_yzm.getText().toString();
                 String name = editText_name.getText().toString();
                 String company = editText_company.getText().toString();
-                //得到major
+
                 if (TextUtils.isNullOrEmpty(phone) && TextUtils.isNullOrEmpty(pass) && TextUtils.isNullOrEmpty(yzm)
                         && TextUtils.isNullOrEmpty(name) && TextUtils.isNullOrEmpty(company)) {
                     if (clicked) {
@@ -180,8 +164,8 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
                         map.put("chanel", "6");
                         map.put("quan_type", "1");
                         map.put("c_type", "1");
-//                        注册：
-                        sendMsg(API.REGISTER, map, 2);
+                        //注册：
+                        getNetData(API.REGISTER, map, 2);
                     } else {
                         TextUtils.Toast(this, "请您先阅读《塑料圈通讯录》！");
                     }
@@ -195,7 +179,7 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
                     img.setImageResource(R.drawable.btn_checkbox_hl);
                 } else {
                     clicked = false;
-                    img.setImageResource(R.drawable.btn_checkbox);
+                    img.setImageResource(R.drawable.btn_checkbox1);
                 }
                 break;
             case R.id.xy_text:
@@ -204,7 +188,7 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    public void sendMsg(String method, Map<String, String> map, int type) {
+    public void getNetData(String method, Map<String, String> map, int type) {
         String url = API.BASEURL + method;
         postAsyn(this, url, map, this, type);
     }
@@ -237,25 +221,13 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
                     TextUtils.Toast(this, jsonObject.getString("msg"));
                 }
             }
-            if (type == 10) {
-                // Log.e("10101010101",object.toString());
-            }
-        } catch (JSONException e) {
+        } catch (Exception e) {
         }
     }
 
     @Override
     public void failCallBack(int type) {
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == 2 && data != null) {
-//            editText_c_address.setText(data.getStringExtra("address"));
-//            address=data.getStringExtra("id");
-        }
     }
 
     public void initThread() {
@@ -284,5 +256,13 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
     }
 }

@@ -37,12 +37,11 @@ public class EmptyView extends LinearLayout {
     private void init() {
         // TODO Auto-generated method stub
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View view = inflater.inflate(R.layout.linearlayout_noresult, null);
+        View view = inflater.inflate(R.layout.emptyview_ll_layout, null);
         iv_empety_mageger = (ImageView) view.findViewById(R.id.noresult_image);
         tv_no_message = (TextView) view.findViewById(R.id.noresult_text);
         ll_no_message_root = (LinearLayout) view.findViewById(R.id.ll_no_message_root);
         addView(view);
-
     }
 
     /**

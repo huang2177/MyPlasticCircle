@@ -13,13 +13,11 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -34,26 +32,26 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.supdem.Beans.ConfigData;
 import com.myplas.q.supdem.Beans.HistoryBean;
 import com.myplas.q.supdem.Beans.SearchNoResultBean;
 import com.myplas.q.supdem.Beans.SearchResultBean;
 import com.myplas.q.supdem.Beans.TabCofigBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
 import com.myplas.q.supdem.adapter.SupDem_Search_List_Adapter;
-import com.myplas.q.supdem.popoushowutils.PopouShowUtils;
+import com.myplas.q.supdem.PopouShowUtils;
 import com.optimus.edittextfield.EditTextField;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.myplas.q.supdem.Beans.ItemBean.itemBean;
 
 
 /**
@@ -91,7 +89,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private boolean spinnerSelected = false;
     private boolean hasMoerData = true;
     private List<String> mList;
-    private boolean isFinifsh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,9 +136,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         mTextViewType.setVisibility(View.VISIBLE);
         editText.setHintTextColor(getResources().getColor(R.color.color_gray));
 
-        mList = new ArrayList<>();
-        mList.add("供给");
-        mList.add("求购");
+        mList = Arrays.asList("供给", "求购");
 
         //edittext的回车监听
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -300,7 +295,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 getPhysical_Search(1, keywords, time, is_buy, area, true);
                 break;
             case R.id.search_listview_result:
-                isFinifsh = false;
                 if (list.get(position).getType().equals("9")) {//来自QQ群
                     Intent intent = new Intent(SupDem_Search_Activity.this, SupDem_QQ_DetailActivity.class);
                     intent.putExtra("company", list.get(position).getC_name());
@@ -316,7 +310,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                         intent.putExtra("id", id_);
                         intent.putExtra("type", "0");
                         intent.putExtra("userid", userid);
-                        intent.putExtra("what", (user_id.equals(userid)) ? ("5") : (itemBean.what));
+                        intent.putExtra("what", (user_id.equals(userid)) ? ("5") : (ConfigData.what));
 
                         startActivity(intent);
                     } catch (Exception e) {
@@ -460,18 +454,18 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 
     public void onResume() {
         super.onResume();
-        isFinifsh = true;
         MobclickAgent.onResume(this);
     }
 
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        if (isFinifsh) {
-            overridePendingTransition(R.anim.fade, R.anim.hold);
-        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade, R.anim.hold);
     }
 
     public class MyAdapter extends HIndicatorAdapter {
@@ -479,8 +473,6 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         public void onBindView(BaseViewHolder holder, int position) {
             TextView tv = holder.getView(R.id.item_tv);
             tv.setText(mList.get(position));
-//            tv.setCompoundDrawablesWithIntrinsicBounds(mICons.get(position), 0, 0, 0);
-
             if (position == mList.size() - 1) {
                 holder.setVisibility(R.id.item_line, BaseViewHolder.GONE);
             } else {

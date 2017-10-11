@@ -1,5 +1,6 @@
 package com.myplas.q.myinfo.setting.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +35,13 @@ import java.util.Map;
  */
 public class FindPSWActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
     private int count = 60;
-    private Handler mHandler;
+    private static Handler mHandler;
 
     private TextView mTextView;
     private Button button_next, button_yzm;
     private EditText editText_tel, editText_pass, editText_yzm;
+
+    private WeakReference<Activity> weakReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,21 +59,21 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
         button_yzm = F(R.id.zhh_hq_yzm);
         editText_pass = F(R.id.zhh_pass);
 
-        button_yzm.setClickable(false);
         button_yzm.setOnClickListener(this);
         button_next.setOnClickListener(this);
+
+        weakReference = new WeakReference<Activity>(FindPSWActivity.this);
+
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if (msg.what == 1) {
+                Activity activity = weakReference.get();
+                if (msg.what == 1 && activity != null) {
                     button_yzm.setText(msg.obj.toString() + "秒后重试");
-                    // yzm_bt.setBackgroundResource(R.color.huoquyanzhengma);
                     button_yzm.setClickable(false);
                     if (msg.obj.toString().equals("0")) {
                         button_yzm.setText("重新发送");
                         button_yzm.setClickable(true);
-                        //yzm_bt.setBackgroundResource(R.color.green);
                     }
                 }
             }
@@ -89,20 +93,20 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                     map1.put("mobile", tel);
                     map1.put("type", "1");
                     //发送验证码
-                    sendMsg(API.SEND_MSG, map1, 1);
+                    getNetData(API.SEND_MSG, map1, 1);
                 }
                 break;
             case R.id.zhh_next:
+                String yzm = editText_yzm.getText().toString();
                 String phone = editText_tel.getText().toString();
                 String pass = editText_pass.getText().toString();
-                String yzm = editText_yzm.getText().toString();
                 if (TextUtils.isNullOrEmpty(phone) && TextUtils.isNullOrEmpty(pass) && TextUtils.isNullOrEmpty(yzm)) {
                     Map<String, Object> map = new HashMap<String, Object>();
                     map.put("mobile", phone);
                     map.put("password", pass);
                     map.put("code", yzm);
 
-                    sendMsg(API.FINF_MY_PWD, map, 2);
+                    getNetData(API.FINF_MY_PWD, map, 2);
                 } else {
                     TextUtils.Toast(this, "请输入完整信息！");
                 }
@@ -110,7 +114,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    public void sendMsg(String method, Map map, int type) {
+    public void getNetData(String method, Map map, int type) {
         String url = API.BASEURL + method;
         postAsyn(this, url, map, this, type);
     }
@@ -120,7 +124,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void run() {
                 for (int i = count; i >= 0; i--) {
-                    Message msg = new Message();
+                    Message msg = Message.obtain();
                     msg.what = 1;
                     msg.obj = i;
                     mHandler.sendMessage(msg);
@@ -172,5 +176,13 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
     }
 }

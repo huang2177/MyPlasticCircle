@@ -2,6 +2,7 @@ package com.myplas.q.headlines;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.Cate_Dialog_Activtiy;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.adapter.HeadLineViewPagerAdapter;
@@ -65,6 +67,13 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initView();
+        if (logined)
+            initViewPager();
+
+    }
+
+    private void initView() {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_headlins, null, false);
 
         handler = new Handler();
@@ -82,10 +91,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         gd_imgbtn.setOnClickListener(this);
         search_src_text.setOnClickListener(this);
 
-        if (logined) {
-            initViewPager();
-        }
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -94,9 +99,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             @Override
             public void onPageSelected(int position) {
                 currentItem = position;
-                mViewPager.setCurrentItem(position);
+                // mViewPager.setCurrentItem(position);
                 mFragments.get(position).po = position;
-//                mViewDivider.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
             }
 
             @Override
@@ -105,7 +109,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         });
     }
 
-    public void initViewPager() {
+    private void initViewPager() {
         if (mFragments == null) {
             mFragments = new ArrayList<>();
             list1 = Arrays.asList("推荐", "塑料上游", "早盘预报", "企业动态", "中晨塑说", "美金市场", "期货资讯", "装置动态", "期刊报告", "独家解读");
@@ -172,16 +176,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     }
 
 
-    public void showPopou(CustomPopupWindow popupWindow) {
-        if (android.os.Build.VERSION.SDK_INT >= 24) {
-            int[] a = new int[2];
-            editText.getLocationInWindow(a);
-            popupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.NO_GRAVITY, 0, a[1] + editText.getHeight());
-        } else {
-            popupWindow.showAsDropDown(editText);
-        }
-    }
-
     //展示刷新后的popou
     @Override
     public void callBack(String hotSearch, String content, boolean isRefresh) {
@@ -190,21 +184,23 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             if (popupWindow == null) {
                 View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
                 textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
-                popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-                popupWindow.setFocusable(true);
+                popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+                popupWindow.setBackgroundDrawable(new BitmapDrawable());
+                //popupWindow.setAnimationStyle(R.style.my_anim_popou);
                 popupWindow.setOutsideTouchable(true);
-                popupWindow.setAnimationStyle(R.style.my_anim_popou);
+                popupWindow.setFocusable(true);
+                popupWindow.update();
             }
-            textView_refresh.setText((TextUtils.isNullOrEmpty(content))
-                    ? (content)
-                    : ("已是最新头条信息！"));
-            showPopou(popupWindow);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    popupWindow.dismiss();
-                }
-            }, 1500);
+            textView_refresh.setText((TextUtils.isNullOrEmpty(content)) ? (content) : ("已是最新头条信息！"));
+            BaseActivity.showPopou(getActivity(), popupWindow, editText);
+            if (popupWindow.isShowing()) {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow.dismiss();
+                    }
+                }, 1500);
+            }
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
         }
         //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");

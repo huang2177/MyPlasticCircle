@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp">
 
-        <include layout="@layout/layout_tx"></include>
+        <include layout="@layout/vimageview_layout"></include>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -5,19 +5,13 @@
               android:background="@color/color_gray_bg"
               android:orientation="vertical">
 
-    <include layout="@layout/titlebar_lauout"></include>
+    <include layout="@layout/common_layout_titlebar"/>
 
-    <com.myplas.q.common.view.XListView
+    <ListView
         android:id="@+id/wd_gj_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:scrollbars="none">
-    </com.myplas.q.common.view.XListView>
-
-    <com.myplas.q.common.view.NoResultLayout
-        android:id="@+id/mysupdem_noresultlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"></com.myplas.q.common.view.NoResultLayout>
+        android:layout_height="wrap_content"
+        android:divider="@color/color_gray_bg"
+        android:dividerHeight="5dp">
+    </ListView>
 </LinearLayout>

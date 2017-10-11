@@ -1,11 +1,8 @@
 package com.myplas.q.myinfo.invoices.activity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
@@ -14,7 +11,6 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.myinfo.beans.ApplyInvoiceBean;
 import com.myplas.q.myinfo.beans.InvoiceDetailBean;
 
 

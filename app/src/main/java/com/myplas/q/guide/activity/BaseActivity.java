@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.netresquset.NetRequest;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
+import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -36,7 +38,7 @@ import rx.Subscriber;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 11:46
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends FragmentActivity {
     private View mView;
     private LinearLayout mLayout_back;
     private ImageView mImageView_conact;
@@ -65,6 +67,12 @@ public class BaseActivity extends Activity {
     //右边确定按钮
     public void setRightTVVisibility(int isShow) {
         mTextView_right.setVisibility(isShow);
+    }
+
+    //设置右边图片
+    public void setRightIVResId(int resId) {
+        mImageView_conact.setImageResource(resId);
+        mImageView_conact.setVisibility(View.VISIBLE);
     }
 
     //左边取消按钮

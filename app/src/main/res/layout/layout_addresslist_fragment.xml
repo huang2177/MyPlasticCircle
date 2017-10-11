@@ -88,7 +88,7 @@
             android:layout_marginRight="1dp"
             android:layout_marginTop="1dp"
             android:layout_weight="0.8"
-            android:background="@drawable/btn_xq_chujian"
+            android:background="@drawable/btn_shape_red_coners"
             android:gravity="center"
             android:text="搜索"
             android:textColor="@color/color_white"

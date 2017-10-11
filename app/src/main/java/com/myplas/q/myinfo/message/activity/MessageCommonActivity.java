@@ -3,9 +3,7 @@ package com.myplas.q.myinfo.message.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
@@ -19,7 +17,6 @@ import com.myplas.q.myinfo.beans.MsgSupDemBean;
 import com.myplas.q.myinfo.message.adapter.MessageCHJAdapter;
 import com.myplas.q.myinfo.message.adapter.MessageHFAdapter;
 import com.myplas.q.common.api.API;
-import com.myplas.q.myinfo.beans.MyCommentBean;
 import com.myplas.q.myinfo.message.adapter.MessageSupDemAdapter;
 import com.umeng.analytics.MobclickAgent;
 

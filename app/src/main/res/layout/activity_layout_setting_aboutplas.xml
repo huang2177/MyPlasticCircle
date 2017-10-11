@@ -5,7 +5,7 @@
               android:background="@color/color_gray_bg"
               android:orientation="vertical">
 
-    <include layout="@layout/titlebar_lauout"></include>
+    <include layout="@layout/common_layout_titlebar"></include>
 
     <LinearLayout
         android:layout_width="match_parent"

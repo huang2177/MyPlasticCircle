@@ -1,5 +1,7 @@
 package com.myplas.q.common.view;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.view.Gravity;
@@ -10,13 +12,15 @@ import com.myplas.q.common.utils.ScreenUtils;
 
 public class CustomPopupWindow extends PopupWindow {
     View mView;
-    public CustomPopupWindow(View contentView, int width, int height){
-        super(contentView,width,height);
+
+    public CustomPopupWindow(View contentView, int width, int height) {
+        super(contentView, width, height);
         this.mView = contentView;
     }
+
     @Override
     public void showAsDropDown(View anchor) {
-        if(Build.VERSION.SDK_INT >= 24) {
+        if (Build.VERSION.SDK_INT >= 24) {
             Rect rect = new Rect();
             anchor.getGlobalVisibleRect(rect);
             int h = anchor.getResources().getDisplayMetrics().heightPixels - rect.bottom;
@@ -25,9 +29,10 @@ public class CustomPopupWindow extends PopupWindow {
         super.showAsDropDown(anchor);
 
     }
+
     @Override
     public void showAsDropDown(View anchor, int xoff, int yoff) {
-        if(Build.VERSION.SDK_INT == 24) {
+        if (Build.VERSION.SDK_INT == 24) {
             Rect rect = new Rect();
             anchor.getGlobalVisibleRect(rect);
             int h = anchor.getResources().getDisplayMetrics().heightPixels - rect.bottom;
@@ -42,8 +47,6 @@ public class CustomPopupWindow extends PopupWindow {
         windowPos[0] -= xOff;
         showAtLocation(viewLoaction, Gravity.TOP | Gravity.START, windowPos[0], windowPos[1]);
     }
-
-    ;
 
     /**
      * 计算出来的位置，y方向就在anchorView的上面和下面对齐显示，x方向就是与屏幕右边对齐显示

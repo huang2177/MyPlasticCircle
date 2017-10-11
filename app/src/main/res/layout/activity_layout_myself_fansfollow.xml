@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/titlebar_lauout"></include>
+    <include layout="@layout/common_layout_titlebar"></include>
 
     <ListView
         android:id="@+id/wdgz_listview"

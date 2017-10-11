@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="48dp">
+              android:id="@+id/supdem_titlebar_ll"
+              android:layout_width="match_parent"
+              android:layout_height="50dp">
 
     <FrameLayout
         android:id="@+id/fragment_gq_titlebar"
@@ -12,53 +13,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
             android:gravity="center"
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/supplydemand_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_supdemxiala"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/x66"/>
+
             <EditText
                 android:id="@+id/supplydemand_edit"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:layout_weight="5"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/corner_titlebar"
                 android:drawableLeft="@drawable/icon_search"
+                android:focusable="false"
                 android:hint="请输入厂家或牌号"
                 android:imeOptions="actionSearch"
+                android:maxLines="1"
                 android:paddingLeft="5dp"
-                android:singleLine="true"
-                android:focusable="false"
                 android:textColor="#3b3a3a"
                 android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"
                 android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textSize="@dimen/x65" />
-
-            <!--<TextView-->
-                <!--android:id="@+id/supplydemand_btn_search"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_margin="8dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:background="@drawable/corner_titlebar"-->
-                <!--android:gravity="center"-->
-                <!--android:text="搜索"-->
-                <!--android:textColor="#4b4b4b"-->
-                <!--android:textSize="@dimen/x66" />-->
-
-            <TextView
-                android:id="@+id/supplydemand_btn"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:layout_weight="1.5"
-                android:background="@drawable/corner_titlebar"
-                android:gravity="center"
-                android:text="全部"
-                android:textColor="#4b4b4b"
-                android:textSize="@dimen/x66" />
+                android:textSize="@dimen/x66"/>
 
         </LinearLayout>
     </FrameLayout>

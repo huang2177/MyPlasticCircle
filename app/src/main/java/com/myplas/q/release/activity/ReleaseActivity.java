@@ -17,7 +17,7 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.release.adapter.Release_Demand_ListviewAdapter;
 import com.myplas.q.release.adapter.Release_Supply_ListviewAdapter;
 import com.myplas.q.common.api.API;
-import com.myplas.q.supdem.Beans.Supply_DemandBean;
+import com.myplas.q.supdem.Beans.SupDemBean;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     private ImageButton imageButton_back;
     private Release_Demand_ListviewAdapter release_demandAdapter;
     private Release_Supply_ListviewAdapter release_supplyAdapter;
-    private Supply_DemandBean supply_demandBean;
+    private SupDemBean mSupDemBean;
     private SharedUtils sharedUtils;
     private Map<String, String> map = new HashMap<>();
     private boolean isfinish = false;
@@ -108,14 +108,14 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
             Gson gson = new Gson();
             //供给
             if (type == 2) {
-                supply_demandBean = gson.fromJson(object.toString(), Supply_DemandBean.class);
-                release_demandAdapter = new Release_Demand_ListviewAdapter(this, supply_demandBean.getData());
+                mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
+                release_demandAdapter = new Release_Demand_ListviewAdapter(this, mSupDemBean.getData());
                 listView_gj.setAdapter(release_demandAdapter);
             }
             //求购
             if (type == 1) {
-                supply_demandBean = gson.fromJson(object.toString(), Supply_DemandBean.class);
-                release_supplyAdapter = new Release_Supply_ListviewAdapter(this, supply_demandBean.getData());
+                mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
+                release_supplyAdapter = new Release_Supply_ListviewAdapter(this, mSupDemBean.getData());
                 listView_qg.setAdapter(release_supplyAdapter);
             }
         } catch (Exception e) {

@@ -16,18 +16,22 @@ android {
         applicationId "com.myplas.q"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 95
-        versionName "3.8.1"
+        versionCode 96
+        versionName "4.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.sign//这个很重要 打包时使用h5签名
+            signingConfig signingConfigs.sign
+            buildConfigField("boolean", "API_ENV", "false")
+            buildConfigField("boolean", "USE_STETHO", "true")
         }
         release {
-            signingConfig signingConfigs.sign//这个很重要 使用h5签名
             minifyEnabled false
+            signingConfig signingConfigs.sign
+            buildConfigField("boolean", "API_ENV", "true")
+            buildConfigField("boolean", "USE_STETHO", "false")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -58,32 +62,36 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
+    /*okhttp*/
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.okio:okio:1.5.0'
-    compile files('libs/libammsdk.jar')
-    compile 'io.github.openfeign:feign-gson:9.4.0'
-    compile files('libs/glide-3.6.1.jar')
+    /*umeng和智齿*/
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile('com.sobot.chat:sobotsdk:2.1.0') {
         exclude group: 'com.android.support'
     }
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.3.4'
-    compile 'com.optimus:editTextField:0.2.0'
-    compile 'com.yanzhenjie:album:1.0.7'
-    compile 'com.yanzhenjie:durban:1.0.1'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
+    /*stetho调试工具*/
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
-    compile files('libs/JavaWebSocket_fat.jar')
-    compile files('libs/autobahn-0.5.0.jar')
+    /*rxjava rxandroid*/
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    /*rabbitmq*/
+    compile 'com.rabbitmq:amqp-client:4.2.1'
+    /*wechat*/
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.3.4'
+    /*glide与gson*/
+    compile files('libs/glide-3.6.1.jar')
+    compile 'io.github.openfeign:feign-gson:9.4.0'
+    /*其他第三方框架*/
+    compile 'com.yanzhenjie:album:1.0.7'
+    compile 'com.yanzhenjie:durban:1.0.1'
     compile 'com.mengfei:AddSubUtils:1.5.0'
-    compile 'com.contrarywind:Android-PickerView:3.2.5'
-    compile 'com.github.zcweng:switch-button:0.0.3@aar'
+    compile 'com.optimus:editTextField:0.2.0'
     compile 'com.androidkun:XTabLayout:1.1.3'
     compile 'com.androidadvance:topsnackbar:1.1.1'
-    compile 'q.rorbin:badgeview:1.0.5'
-    compile 'com.rabbitmq:amqp-client:4.2.1'
+    compile 'com.contrarywind:Android-PickerView:3.2.5'
+    compile 'com.github.zcweng:switch-button:0.0.3@aar'
     compile 'com.github.huangbryant210707:MyBanner:2.6.1'
-    compile 'com.github.huangbryant210707:HIndicatorDialog:2.1.0'
+    compile 'com.github.huangbryant210707:HIndicatorDialog:2.2.0'
 }

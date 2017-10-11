@@ -3,6 +3,7 @@ package com.myplas.q.addresslist;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -587,7 +588,6 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 }
             } else {
                 isRefresh = false;
-                listView.stopLoadMore();
                 list_more.addAll(list);
                 txl_listview_adapter.setList(list_more);
                 txl_listview_adapter.notifyDataSetChanged();
@@ -658,20 +658,24 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
                 textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
                 popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-                popupWindow.setFocusable(true);
-                popupWindow.setOutsideTouchable(true);
+                popupWindow.setBackgroundDrawable(new BitmapDrawable());
                 popupWindow.setAnimationStyle(R.style.my_anim_popou);
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setFocusable(true);
+                popupWindow.update();
             }
             textView_refresh.setText((TextUtils.isNullOrEmpty(text))
                     ? (text)
                     : ("已是最新通信录信息！"));
             showPopou(popupWindow);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    popupWindow.dismiss();
-                }
-            }, 1800);
+            if (popupWindow.isShowing()) {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow.dismiss();
+                    }
+                }, 1500);
+            }
         }
     }
 

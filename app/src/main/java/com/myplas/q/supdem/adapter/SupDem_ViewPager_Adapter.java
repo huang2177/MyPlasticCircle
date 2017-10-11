@@ -2,7 +2,8 @@ package com.myplas.q.supdem.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -12,23 +13,32 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:52
  */
-public class SupDem_ViewPager_Adapter extends FragmentPagerAdapter {
-    List<Fragment> list;
+public class SupDem_ViewPager_Adapter extends FragmentStatePagerAdapter {
+    private List<String> mTitles;
+    private List<Fragment> mFragments;
 
-    public SupDem_ViewPager_Adapter(FragmentManager fm, List<Fragment> list) {
+    public SupDem_ViewPager_Adapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
-        this.list = list;
+        mTitles = titles;
+        mFragments = fragments;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return list.get(position);
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        if (list.size() != 0)
-            return list.size();
-        return 0;
+        return mFragments.size();
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTitles.get(position);
     }
 }

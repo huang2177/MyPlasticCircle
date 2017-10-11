@@ -1,6 +1,7 @@
 package com.myplas.q.guide.activity;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.addresslist.Fragment_AddressList;
 import com.myplas.q.common.view.LoadingDialog;
+import com.myplas.q.release.activity.ReleaseSupDemActivity;
 import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -63,6 +65,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private Button button_ok;
     private Dialog normalDialog;
+    private ImageView mIVRelease;
     public static MyViewPager viewPager;
     private List<Fragment> fragmentlist;
     private Fragment_MySelf fragment_wd;
@@ -124,10 +127,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         layout_wd = F(R.id.buttom_linear_wd);
         layout_fx = F(R.id.buttom_linear_fx);
 
+        mIVRelease = F(R.id.buttom_img_jia);
         imageView_fx = F(R.id.buttom_img_fx);
         imageView_gq = F(R.id.buttom_img_gq);
-        imageView_txl = F(R.id.buttom_img_txl);
         imageView_wd = F(R.id.buttom_img_wd);
+        imageView_txl = F(R.id.buttom_img_txl);
 
         textView_fx = F(R.id.buttom_text_fx);
         textView_gq = F(R.id.buttom_text_gq);
@@ -174,14 +178,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     goToMySelf();
                     break;
                 case R.id.buttom_linear_jia:
-                    Intent intent = new Intent(this, ReleaseActivity.class);
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this
-//                                , layout_jia
-//                                , "sharedView1").toBundle());
-//                    } else {
-//                    }
-                    startActivity(intent);
+                    Intent intent = new Intent(this, ReleaseSupDemActivity.class);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this
+                                , mIVRelease
+                                , "sharedView_Release");
+                        startActivity(intent, options.toBundle());
+                    } else {
+                        startActivity(intent);
+                    }
                     break;
             }
         } else {
@@ -261,7 +266,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             //moveTaskToBack(false);
             finish();
             System.exit(0);
-            LoadingDialog.clearLinkHashMap();
+            viewPager.removeAllViews();
             MobclickAgent.onKillProcess(this);
         }
     }

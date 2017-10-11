@@ -10,5 +10,5 @@
         android:textColor="@color/color_white"
         android:id="@+id/moder_gird_text"
         android:gravity="center"
-        android:background="@drawable/btn_xq_chujian"/>
+        android:background="@drawable/btn_shape_red_coners"/>
 </LinearLayout>

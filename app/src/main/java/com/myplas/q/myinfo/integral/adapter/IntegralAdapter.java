@@ -24,7 +24,6 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.NoDoubleClickListener;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.beans.IntegralBean;
 import com.myplas.q.myinfo.beans.TookDateBean;
@@ -96,7 +95,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.integrintegral_gridview_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_integral_rv_layout, parent, false);
         viewHolder viewHolder = new viewHolder(view, viewType);
         mHolderMap.put(viewType, viewHolder);
         return viewHolder;
@@ -154,9 +153,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             }
         });
         //兑换
-        viewHolder.button.setOnClickListener(new NoDoubleClickListener() {
+        viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNoDoubleClick(View view) {
+            public void onClick(View view) {
                 String dates = null;
                 payPosition = position;
                 String type = list.get(position).getType();
