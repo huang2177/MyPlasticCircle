@@ -18,7 +18,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
-import com.myplas.q.myinfo.fans.adapter.PersonSupplyDemandAdapter;
+import com.myplas.q.myinfo.fans.adapter.PersonSupDemAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myinfo.beans.PersonInfoBean;
 import com.myplas.q.myinfo.beans.PersonSupplyDemadBean;
@@ -50,7 +50,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
     private Map<String, String> map;
     private PersonSupplyDemadBean p1, p2;
-    private PersonSupplyDemandAdapter p_adapter;
+    private PersonSupDemAdapter p_adapter;
     private List<PersonSupplyDemadBean.DataBean> list;
 
     @Override
@@ -243,7 +243,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 if (new JSONObject(object.toString()).getString("err").equals("0")) {
                     p1 = gson.fromJson(object.toString(), PersonSupplyDemadBean.class);
                     list = p1.getData();
-                    p_adapter = new PersonSupplyDemandAdapter(this, list);
+                    p_adapter = new PersonSupDemAdapter(this, list);
                     mMyListview_supply.setAdapter(p_adapter);
                     textView_supply.setClickable(true);
                 } else {
@@ -256,7 +256,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 if (new JSONObject(object.toString()).getString("err").equals("0")) {
                     p2 = gson.fromJson(object.toString(), PersonSupplyDemadBean.class);
                     list = p2.getData();
-                    p_adapter = new PersonSupplyDemandAdapter(this, list);
+                    p_adapter = new PersonSupDemAdapter(this, list);
                     mMyListview_demand.setAdapter(p_adapter);
                     textView_demand.setClickable(true);
                 } else {

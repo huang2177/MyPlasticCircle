@@ -7,5 +7,5 @@ package com.myplas.q.supdem;
  */
 
 public interface BaseInterFace {
-    void onItemClick(String sign, String name, String pur_id, String id, String rev_id, String user_id);
+    void onItemClick(String sign, String name, String id, String pur_id, String user_id);
 }

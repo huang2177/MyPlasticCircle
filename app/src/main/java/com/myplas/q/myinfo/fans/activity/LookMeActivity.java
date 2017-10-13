@@ -37,7 +37,9 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:15
  */
-public class LookMeActivity extends BaseActivity implements ResultCallBack, CommonDialog.DialogShowInterface, LookMeAdapter.OnItemClickListener {
+public class LookMeActivity extends BaseActivity implements ResultCallBack
+        , CommonDialog.DialogShowInterface
+        , LookMeAdapter.OnItemClickListener {
     private String mode;
 
     private String userid;
@@ -134,7 +136,6 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack, Comm
 
             mView = View.inflate(this, R.layout.activity_layout_lookme_vp, null);
             listView = (PinnedHeaderListView) mView.findViewById(R.id.look_listview);
-            listView.setPullRefreshEnable(false);
 
             mListViews.add(listView);
             mViewList.add(mView);

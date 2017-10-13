@@ -68,26 +68,6 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);//设置为一个1列的纵向网格布局
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView view, int newState) {
-                LinearLayoutManager lm = (LinearLayoutManager) view.getLayoutManager();
-//                Log.e("-----11111",view.getChildAt(lm.findLastVisibleItemPosition()).getBottom()+"");
-//                Log.e("-----22222",lm.findLastVisibleItemPosition()+"");
-//                Log.e("-----33333",view.getChildCount()-1+"");
-//                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
-//                        && lm.findLastVisibleItemPosition() == count
-//                        &&view.getChildAt(lm.findLastVisibleItemPosition()).getBottom()==0) {
-//                    page++;
-//                    getMyMsg(String.valueOf(page), title);
-//                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            }
-        });
     }
 
 

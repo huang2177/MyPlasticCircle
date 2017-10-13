@@ -20,11 +20,11 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/29 10:57
  */
-public class PersonSupplyDemandAdapter extends BaseAdapter {
+public class PersonSupDemAdapter extends BaseAdapter {
     Context context;
     List<PersonSupplyDemadBean.DataBean> list;
 
-    public PersonSupplyDemandAdapter(Context context, List<PersonSupplyDemadBean.DataBean> list) {
+    public PersonSupDemAdapter(Context context, List<PersonSupplyDemadBean.DataBean> list) {
         this.context = context;
         this.list = list;
     }

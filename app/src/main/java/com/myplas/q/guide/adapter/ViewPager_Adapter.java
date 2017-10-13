@@ -26,9 +26,9 @@ public class ViewPager_Adapter extends FragmentPagerAdapter {
         return list.get(position);
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-    }
+//    @Override
+//    public void destroyItem(ViewGroup container, int position, Object object) {
+//    }
 
     @Override
     public int getCount() {

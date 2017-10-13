@@ -2,6 +2,7 @@ package com.myplas.q.myinfo.message.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -48,7 +49,6 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
         View view = LayoutInflater.from(context).inflate(R.layout.item_lv_msgcommon, parent, false);
         viewHolder viewHolder = new viewHolder(view, "", viewType);
         mHolderMap.put(viewType, viewHolder);
-        //view.setOnLongClickListener(new MyOnLongClickListener(viewType));
         return viewHolder;
     }
 
@@ -63,7 +63,7 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
         viewHolder.title.setText(Html.fromHtml(title));
         viewHolder.company.setText(mListChJ.get(position).getC_name() + "  " + mListChJ.get(position).getUser_name());
         viewHolder.tel.setText("联系电话：" + mListChJ.get(position).getUser_mobile());
-        viewHolder.pro.setText("产品：" + mListChJ.get(position).getModel());
+        viewHolder.pro.setText("产品：" + mListChJ.get(position).getFa_content());
         viewHolder.content.setText(Html.fromHtml("价格：<font color='#ff5000'>¥"
                 + mListChJ.get(position).getPrice()
                 + "</font>"));
@@ -133,9 +133,12 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
             String id = mListChJ.get(position).getId();
             String userid = mListChJ.get(position).getUser_id();
 
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", 0);
+
             intent.putExtra("id", id);
-            intent.putExtra("type", "1");
             intent.putExtra("userid", userid);
+            intent.putExtra("bundle", bundle);
 
             context.startActivity(intent);
         }

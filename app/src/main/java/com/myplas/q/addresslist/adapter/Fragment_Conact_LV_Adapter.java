@@ -6,14 +6,15 @@ import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.addresslist.Beans.TXL_Bean;
-import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.common.view.SectionedBaseAdapter;
 import com.tencent.mm.sdk.platformtools.Log;
 
@@ -27,7 +28,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 19:31
  */
-public class AddList_LV_Adapter extends SectionedBaseAdapter {
+public class Fragment_Conact_LV_Adapter extends BaseAdapter {
     Context context;
     viewHolder viewHolder;
     TXL_Bean.TopBean topBean;
@@ -43,41 +44,36 @@ public class AddList_LV_Adapter extends SectionedBaseAdapter {
         this.list = list;
     }
 
-    public AddList_LV_Adapter(Context context, List<TXL_Bean.PersonsBean> list, TXL_Bean.TopBean topBean) {
+    public Fragment_Conact_LV_Adapter(Context context, List<TXL_Bean.PersonsBean> list, TXL_Bean.TopBean topBean) {
         this.list = list;
         this.context = context;
         this.topBean = topBean;
         mMap = new HashMap<>();
     }
 
-    @Override
-    public Object getItem(int section, int position) {
-        return null;
-    }
 
     @Override
-    public long getItemId(int section, int position) {
-        return 0;
-    }
-
-    @Override
-    public int getSectionCount() {
-        return 1;
-    }
-
-    @Override
-    public int getCountForSection(int section) {
+    public int getCount() {
         if (list != null)
             return list.size();
         return 0;
     }
 
-    //listview item
     @Override
-    public View getItemView(int section, int position, View convertView, ViewGroup parent) {
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.txl_listview_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_fragment_conact_lv_layout, parent, false);
             initView(convertView);
             convertView.setTag(viewHolder);
         } else {
@@ -92,6 +88,7 @@ public class AddList_LV_Adapter extends SectionedBaseAdapter {
         View view;
         LinearLayout gd;
         ImageView tx, rz, top_img;
+        RelativeLayout mLayoutClassify, mLayoutRegion;
         TextView gs, mz, sex, gj, zg, zhy, need_text;
     }
 
@@ -129,7 +126,6 @@ public class AddList_LV_Adapter extends SectionedBaseAdapter {
                 viewHolder.gj.setVisibility(View.VISIBLE);
                 viewHolder.gj.setText("主营产品：" + replace(list.get(position).getNeed_product()));
             }
-            Log.e("------", list.get(position).getIs_pass());
             viewHolder.rz.setImageResource(list.get(position).getIs_pass().equals("0")
                     ? R.drawable.icon_identity
                     : R.drawable.icon_identity_hl);
@@ -139,64 +135,11 @@ public class AddList_LV_Adapter extends SectionedBaseAdapter {
         }
     }
 
-    //listview 头部信息
-    @Override
-    public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
-        LinearLayout layout = null;
-        if (convertView == null) {
-            viewHolder = new viewHolder();
-            LayoutInflater inflator = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            layout = (LinearLayout) inflator.inflate(R.layout.txl_listview_item, null);
-            initView(layout);
-            layout.setTag(viewHolder);
-        } else {
-            layout = (LinearLayout) convertView;
-            viewHolder = (viewHolder) layout.getTag();
-        }
-        try {
-            // viewHolder.gd.setBackgroundColor(context.getResources().getColor(R.color.color_lightgray));
-            viewHolder.top_img.setVisibility((topBean == null) ? (View.GONE) : (View.VISIBLE));
-            Glide.with(context).load(topBean.getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(viewHolder.tx);
-            String s1 = topBean.getC_name();
-            viewHolder.gs.setText((s1.length() > 10) ? (s1.subSequence(0, 8) + "...") : (s1));
-            viewHolder.mz.setText(replace(topBean.getName()));
-            viewHolder.sex.setText(topBean.getSex());
-            String type = topBean.getType();
-            CharSequence product = replace(topBean.getMain_product());
-            if (type.equals("1")) {
-                viewHolder.zg.setVisibility(View.VISIBLE);
-                viewHolder.gj.setVisibility(View.VISIBLE);
-                viewHolder.gj.setText("供给:"
-                        + topBean.getSale_count()
-                        + " 求购:" + topBean.getBuy_count()
-                        + " 需求:" + replace(topBean.getNeed_product()));
-                viewHolder.zg.setText("产品："
-                        + product
-                        + "  月用量：" + topBean.getMonth_consum());
-            } else if (type.equals("2")) {
-                viewHolder.zg.setVisibility(View.INVISIBLE);
-                viewHolder.gj.setVisibility(View.VISIBLE);
-                viewHolder.gj.setText("供给:" + topBean.getSale_count()
-                        + " 求购:" + topBean.getBuy_count()
-                        + " 主营:" + replace(topBean.getNeed_product()));
-            } else {
-                viewHolder.zg.setVisibility(View.INVISIBLE);
-                viewHolder.gj.setVisibility(View.VISIBLE);
-                viewHolder.gj.setText("主营产品：" + replace(topBean.getNeed_product()));
-            }
-            viewHolder.rz.setImageResource(topBean.getIs_pass().equals("0")
-                    ? R.drawable.icon_identity
-                    : R.drawable.icon_identity_hl);
-        } catch (Exception e) {
-        }
-        return (topBean == null) ? new LinearLayout(context) : layout;
-    }
-
     public void initView(View layout) {
         viewHolder.tx = (ImageView) layout.findViewById(R.id.xq_tx);
         viewHolder.rz = (ImageView) layout.findViewById(R.id.xq_rz);
         viewHolder.top_img = (ImageView) layout.findViewById(R.id.top_img);
-        viewHolder.gd = (LinearLayout) layout.findViewById(R.id.linear_txl_item);
+        viewHolder.gd = (LinearLayout) layout.findViewById(R.id.item_top_ll);
         viewHolder.gs = (TextView) layout.findViewById(R.id.txl_listview_gs);
         viewHolder.mz = (TextView) layout.findViewById(R.id.txl_listview_mz);
         viewHolder.gj = (TextView) layout.findViewById(R.id.txl_listview_gj);

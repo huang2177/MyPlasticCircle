@@ -44,20 +44,20 @@ import rx.Subscriber;
  */
 public class BaseActivity extends FragmentActivity {
     private View mView;
-    private LinearLayout mLayout_back;
-    private ImageView mImageView_conact;
-    public TextView mTextView, mTextView_left, mTextView_right;
+    public LinearLayout mLayoutBack;
+    public ImageView mIVConact;
+    public TextView mTextView, mTVLeft, mTVRight;
 
     private String type;
     private Observer observer;
 
     public void initTileBar() {
+        mTVLeft = F(R.id.titlebar_text_left);
+        mTVRight = F(R.id.titlebar_text_right);
         mTextView = F(R.id.titlebar_text_title);
-        mLayout_back = F(R.id.titlebar_img_back);
-        mTextView_left = F(R.id.titlebar_text_left);
-        mTextView_right = F(R.id.titlebar_text_right);
-        mImageView_conact = F(R.id.titlebar_img_right);
-        goBack(mLayout_back);
+        mLayoutBack = F(R.id.titlebar_img_back);
+        mIVConact = F(R.id.titlebar_img_right);
+        goBack(mLayoutBack);
     }
 
     public void setTitle(String title) {
@@ -65,25 +65,31 @@ public class BaseActivity extends FragmentActivity {
     }
 
     public void setRightIVVisibility(int isShow) {
-        mImageView_conact.setVisibility(isShow);
+        mIVConact.setVisibility(isShow);
     }
 
     //右边确定按钮
     public void setRightTVVisibility(int isShow) {
-        mTextView_right.setVisibility(isShow);
+        mTVRight.setVisibility(isShow);
+    }
+
+    //右边设置文字（默认为确定）
+    public void setRightTVText(String text) {
+        mTVRight.setText(text);
+        mTVRight.setVisibility(View.VISIBLE);
     }
 
     //设置右边图片
     public void setRightIVResId(int resId) {
-        mImageView_conact.setImageResource(resId);
-        mImageView_conact.setVisibility(View.VISIBLE);
+        mIVConact.setImageResource(resId);
+        mIVConact.setVisibility(View.VISIBLE);
     }
 
     //左边取消按钮
     public void setLeftTVVisibility(int isShow) {
-        mTextView_left.setVisibility(isShow);
+        mTVLeft.setVisibility(isShow);
         findViewById(R.id.titlebar_img_left).setVisibility(View.GONE);
-        mTextView_left.setOnClickListener(new View.OnClickListener() {
+        mTVLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -95,7 +101,7 @@ public class BaseActivity extends FragmentActivity {
     public void setObserver(Observer observer, String type) {
         this.type = type;
         this.observer = observer;
-        mTextView_right.setOnClickListener(new View.OnClickListener() {
+        mTVRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Observable observable = Observable.create(new Observable.OnSubscribe<String>() {

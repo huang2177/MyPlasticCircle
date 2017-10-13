@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:alpha="0.6"
-        android:background="#000000"></View>
+        android:background="#000000"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray_divider_in"></View>
+                android:background="@color/color_gray_divider_in"/>
 
             <TextView
                 android:id="@+id/takephoto_pick"

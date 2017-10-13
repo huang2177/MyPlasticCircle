@@ -69,11 +69,7 @@
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.myplas.q.release.activity.ReleaseActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.myplas.q.release.activity.ReleaseSupDemActivity"
+            android:name="com.myplas.q.release.ReleaseActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity

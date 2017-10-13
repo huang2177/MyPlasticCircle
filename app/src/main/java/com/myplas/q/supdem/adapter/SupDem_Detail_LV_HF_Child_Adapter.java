@@ -100,9 +100,8 @@ public class SupDem_Detail_LV_HF_Child_Adapter extends BaseAdapter {
                     if (mBaseInterFace != null) {
                         mBaseInterFace.onItemClick("2"
                                 , list.get(position).getName()
+                                , list.get(position).getReply_id()
                                 , list.get(position).getPur_id()
-                                , list.get(position).getId()
-                                , list.get(position).getRev_id()
                                 , list.get(position).getUser_id());
                     }
                 }

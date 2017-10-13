@@ -24,6 +24,7 @@ import com.myplas.q.guide.activity.BaseActivity;
 
 public class RefreshPopou implements View.OnTouchListener {
     private Handler mHandler;
+    private boolean canShowPopou;
     private StringBuffer defautContent;
 
     private View mDismissView;
@@ -44,25 +45,27 @@ public class RefreshPopou implements View.OnTouchListener {
     }
 
     public void show(View locationView, String content) {
-        if (mPopupWindow == null) {
-            View view = View.inflate(mContext, R.layout.layout_refresh_popou, null);
-            mDismissView = view.findViewById(R.id.refresh_view);
-            tvRefresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
-            mPopupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-            mPopupWindow.setAnimationStyle(R.style.my_anim_popou);
-            mPopupWindow.setOutsideTouchable(true);
-            mPopupWindow.setFocusable(true);
-        }
-        mDismissView.setOnTouchListener(this);
-        tvRefresh.setText((TextUtils.isNullOrEmpty(content)) ? (content) : (defautContent));
-        showRefreshPopou(locationView);
-        if (mPopupWindow.isShowing()) {
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPopupWindow.dismiss();
-                }
-            }, 1800);
+        if (canShowPopou) {
+            if (mPopupWindow == null) {
+                View view = View.inflate(mContext, R.layout.layout_refresh_popou, null);
+                mDismissView = view.findViewById(R.id.refresh_view);
+                tvRefresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
+                mPopupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+                mPopupWindow.setAnimationStyle(R.style.my_anim_popou);
+                mPopupWindow.setOutsideTouchable(true);
+                mPopupWindow.setFocusable(true);
+            }
+            mDismissView.setOnTouchListener(this);
+            tvRefresh.setText((TextUtils.isNullOrEmpty(content)) ? (content) : (defautContent));
+            showRefreshPopou(locationView);
+            if (mPopupWindow.isShowing()) {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPopupWindow.dismiss();
+                    }
+                }, 1800);
+            }
         }
 
     }
@@ -84,6 +87,10 @@ public class RefreshPopou implements View.OnTouchListener {
 //        } else {
         mPopupWindow.showAsDropDown(v);
 //        }
+    }
+
+    public void setCanShowPopou(boolean canShowPopou) {
+        this.canShowPopou = canShowPopou;
     }
 
     @Override

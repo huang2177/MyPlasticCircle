@@ -59,9 +59,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         , ResultCallBack
         , BaseInterFace
         , OnKeyboardChangeListener.OnChangeListener {
-    private int currentItem;
+
+    private boolean isSelf;
     private SharedUtils sharedUtils;
-    private boolean isSelf, isKeyboardShow;
+    private int currentItem, position;
 
     private Button mButton;
     private EditText mEditText;
@@ -91,18 +92,12 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         setRightIVResId(R.drawable.btn_customer_service);
 
         initView();
-        initViewPager();
+        initViewPager(position);
+
         getNetData();
-        setDeliverReplyView(0);
     }
 
     private void initView() {
-        sign = "0";
-        id = getIntent().getStringExtra("id");
-        send_id = getIntent().getStringExtra("userid");
-
-        sharedUtils = SharedUtils.getSharedUtils();
-
         mIVHead = F(R.id.xq_tx);
         mIVStart = F(R.id.xq_rz);
         mTabLayout = F(R.id.tabLayout);
@@ -128,7 +123,11 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mIVCall.setOnClickListener(this);
         mButton.setOnClickListener(this);
         mIVFollow.setOnClickListener(this);
+        sharedUtils = SharedUtils.getSharedUtils();
         mLayoutRoot.addOnLayoutChangeListener(new OnKeyboardChangeListener(this, this));
+
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        position = (bundle == null) ? 0 : bundle.getInt("position");
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -148,7 +147,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         });
     }
 
-    private void initViewPager() {
+    private void initViewPager(int position) {
         mFragmentList = new ArrayList<>();
         mStringList = Arrays.asList("出价消息", "回复消息");
 
@@ -165,7 +164,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 , mStringList);
         mViewPager.setAdapter(mPagerAdapter);
 
-        mViewPager.setCurrentItem(0);
+        mTabLayout.getTabAt(position).select();
+        mViewPager.setCurrentItem(position);
         //将选项卡和viewpager关连起来
         mTabLayout.setupWithViewPager(mViewPager);
         //给TabLayout设置适配器
@@ -197,17 +197,17 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         map.put("token", sharedUtils.getData(this, "token"));
 
         if (currentItem == 0) {//出价
+            map.put("price", s);
             map.put("id", getIntent().getStringExtra("id"));
             map.put("rev_id", getIntent().getStringExtra("userid"));
-            map.put("price", s);
             postAsyn(this, API.BASEURL + API.DELIVER_PRICE, map, this, 4);
 
         } else {               //回复
-            map.put("content", s);
-            map.put("pur_id", id);
-            map.put("send_id", send_id);
             map.put("id", id);
-            map.put("sign", "0");
+            map.put("sign", sign);
+            map.put("content", s);
+            map.put("pur_id", pur_id);
+            map.put("send_id", send_id);
             postAsyn(this, API.BASEURL + API.SAVE_MSG, map, this, 3);
         }
     }
@@ -234,7 +234,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.titlebar_img_right:
                 if (mDetailBean != null) {
-                    //call(mDetailBean.getData().get);
+                    call(mDetailBean.getData().getModel());
                 }
                 break;
             case R.id.supdem_detail_follow:
@@ -253,7 +253,11 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     /*出价或者回复的点击事件*/
     @Override
-    public void onItemClick(String sign, String name, String pur_id, String id, String rev_id, String user_id) {
+    public void onItemClick(String sign, String name, String id, String pur_id, String user_id) {
+        this.id = id;
+        this.sign = sign;
+        this.pur_id = pur_id;
+        this.send_id = user_id;
         mEditText.setHint("回复" + name);
         mBarLayout.setExpanded(false, true);
         showInPutKeybord(mEditText);
@@ -339,6 +343,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTVNf.setText("现货/期货:" + (mDetailBean.getData().getCargo_type().equals("1")
                 ? "现货"
                 : "期货"));
+        id = "";
+        sign = "0";
+        pur_id = mDetailBean.getData().getId();
+        send_id = mDetailBean.getData().getUser_id();
 
         isSelf = (mDetailBean.getData().getUser_id()).equals(sharedUtils.getData(this, Constant.USERID));
         mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
@@ -347,10 +355,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     @Override
     public void onKeyboardHidden() {
+        id = "";
         sign = "0";
-        isKeyboardShow = false;
-        id = getIntent().getStringExtra("id");
-        send_id = getIntent().getStringExtra("userid");
+        pur_id = mDetailBean.getData().getId();
+        send_id = mDetailBean.getData().getUser_id();
 
         mEditText.setHint("期待您的回复...");
     }

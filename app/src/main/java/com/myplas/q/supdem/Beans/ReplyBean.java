@@ -10,10 +10,9 @@ import java.util.List;
  */
 public class ReplyBean {
 
-
     /**
      * err : 0
-     * data : [{"id":"1706","rev_id":"3858","user_id":"53397","is_read":"1","content":"多少吨？","input_time":"10-10 10:07","pur_id":"114111","reply_id":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0","replay":[{"id":"1733","rev_id":"9266","reply_id":"1730","user_id":"3858","is_read":"1","content":"YAO5","input_time":"01-01 08:00:00","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"},{"id":"1734","rev_id":"53397","reply_id":"1731","user_id":"3858","is_read":"1","content":"YAO8","input_time":"01-01 08:00:00","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"李一帆"},{"id":"1730","rev_id":"9266","reply_id":"1707","user_id":"3858","is_read":"1","content":"yao5","input_time":"10-10 16:22:25","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"},{"id":"1731","rev_id":"53397","reply_id":"1708","user_id":"3858","is_read":"1","content":"yao8","input_time":"10-10 16:22:27","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"李一帆"},{"id":"1732","rev_id":"9266","reply_id":"1717","user_id":"3858","is_read":"1","content":"yao10","input_time":"10-10 16:22:30","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"}]}]
+     * data : [{"id":"1757","rev_id":"3858","user_id":"53402","is_read":"1","content":"下班了","input_time":"10-11 19:08","pur_id":"114111","reply_id":"0","name":"hh","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","c_name":"上海中晨电子商务股份有限公司","mobile":"15378412400","thumbqq":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","is_pass":"0","replay":[{"id":"1760","rev_id":"3858","reply_id":"1759","user_id":"3858","is_read":"0","content":"keyi","input_time":"10-12 09:15:11","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"李一帆"},{"id":"1759","rev_id":"53402","reply_id":"1757","user_id":"3858","is_read":"0","content":"zao","input_time":"10-12 09:14:48","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"}]},{"id":"1738","rev_id":"3858","user_id":"53402","is_read":"1","content":"123","input_time":"10-11 15:54","pur_id":"114111","reply_id":"0","name":"hh","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","c_name":"上海中晨电子商务股份有限公司","mobile":"15378412400","thumbqq":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","is_pass":"0","replay":[{"id":"1756","rev_id":"53402","reply_id":"1738","user_id":"3858","is_read":"1","content":"xixi","input_time":"10-11 19:07:11","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"},{"id":"1755","rev_id":"3858","reply_id":"1754","user_id":"3858","is_read":"1","content":"000","input_time":"10-11 18:57:52","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"李一帆"},{"id":"1754","rev_id":"53402","reply_id":"1738","user_id":"3858","is_read":"1","content":"test1","input_time":"10-11 18:57:28","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"},{"id":"1744","rev_id":"53402","reply_id":"1738","user_id":"3858","is_read":"1","content":"no","input_time":"10-11 17:51:45","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"},{"id":"1743","rev_id":"53402","reply_id":"1738","user_id":"3858","is_read":"1","content":"yes","input_time":"10-11 17:42:49","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"},{"id":"1741","rev_id":"53402","reply_id":"1738","user_id":"53397","is_read":"1","content":"ceshi2222","input_time":"10-11 17:29:53","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"hh"}]},{"id":"1706","rev_id":"3858","user_id":"53397","is_read":"1","content":"多少吨？","input_time":"10-10 10:07","pur_id":"114111","reply_id":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0","replay":[{"id":"1732","rev_id":"9266","reply_id":"1717","user_id":"3858","is_read":"1","content":"yao10","input_time":"10-10 16:22:30","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"成平"},{"id":"1731","rev_id":"53397","reply_id":"1708","user_id":"3858","is_read":"1","content":"yao8","input_time":"10-10 16:22:27","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"测试"},{"id":"1730","rev_id":"9266","reply_id":"1707","user_id":"3858","is_read":"1","content":"yao5","input_time":"10-10 16:22:25","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"成平"},{"id":"1717","rev_id":"53397","reply_id":"1706","user_id":"3858","is_read":"1","content":"10吨","input_time":"10-10 16:22:21","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"测试"},{"id":"1707","rev_id":"53397","reply_id":"1706","user_id":"3858","is_read":"1","content":"5吨","input_time":"10-10 10:07:59","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"测试"},{"id":"1708","rev_id":"9266","reply_id":"1706","user_id":"3858","is_read":"1","content":"我有8吨","input_time":"10-10 09:46:40","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"成平"}]}]
      */
 
     private int err;
@@ -37,21 +36,21 @@ public class ReplyBean {
 
     public static class DataBean {
         /**
-         * id : 1706
+         * id : 1757
          * rev_id : 3858
-         * user_id : 53397
+         * user_id : 53402
          * is_read : 1
-         * content : 多少吨？
-         * input_time : 10-10 10:07
+         * content : 下班了
+         * input_time : 10-11 19:08
          * pur_id : 114111
          * reply_id : 0
-         * name : 测试
-         * thumb : http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png
-         * c_name : 上海测试科技
-         * mobile : 18817391111
-         * thumbqq :
+         * name : hh
+         * thumb : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
+         * c_name : 上海中晨电子商务股份有限公司
+         * mobile : 15378412400
+         * thumbqq : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
          * is_pass : 0
-         * replay : [{"id":"1733","rev_id":"9266","reply_id":"1730","user_id":"3858","is_read":"1","content":"YAO5","input_time":"01-01 08:00:00","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"},{"id":"1734","rev_id":"53397","reply_id":"1731","user_id":"3858","is_read":"1","content":"YAO8","input_time":"01-01 08:00:00","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"李一帆"},{"id":"1730","rev_id":"9266","reply_id":"1707","user_id":"3858","is_read":"1","content":"yao5","input_time":"10-10 16:22:25","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"},{"id":"1731","rev_id":"53397","reply_id":"1708","user_id":"3858","is_read":"1","content":"yao8","input_time":"10-10 16:22:27","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"李一帆"},{"id":"1732","rev_id":"9266","reply_id":"1717","user_id":"3858","is_read":"1","content":"yao10","input_time":"10-10 16:22:30","pur_id":"114111","name":"成平","is_pass":"0","mobile":"13701995655","thumb":"17/09/13/59b8f2d78f813.jpg","thumbqq":"http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png","c_name":"上海梓辰实业有限公司","hui_name":"李一帆"}]
+         * replay : [{"id":"1760","rev_id":"3858","reply_id":"1759","user_id":"3858","is_read":"0","content":"keyi","input_time":"10-12 09:15:11","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"李一帆"},{"id":"1759","rev_id":"53402","reply_id":"1757","user_id":"3858","is_read":"0","content":"zao","input_time":"10-12 09:14:48","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"}]
          */
 
         private String id;
@@ -192,20 +191,20 @@ public class ReplyBean {
 
         public static class ReplayBean {
             /**
-             * id : 1733
-             * rev_id : 9266
-             * reply_id : 1730
+             * id : 1760
+             * rev_id : 3858
+             * reply_id : 1759
              * user_id : 3858
-             * is_read : 1
-             * content : YAO5
-             * input_time : 01-01 08:00:00
+             * is_read : 0
+             * content : keyi
+             * input_time : 10-12 09:15:11
              * pur_id : 114111
-             * name : 成平
+             * name : 李一帆
              * is_pass : 0
-             * mobile : 13701995655
-             * thumb : 17/09/13/59b8f2d78f813.jpg
-             * thumbqq : http://statics.myplas.com/upload/16/10/25/580ebd01ea3db.png
-             * c_name : 上海梓辰实业有限公司
+             * mobile : 13764999601
+             * thumb : http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0
+             * thumbqq : http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG
+             * c_name : 上海中晨电子商务股份有限公司
              * hui_name : 李一帆
              */
 

@@ -122,6 +122,21 @@ public class ActivityManager {
     }
 
     /**
+     * 得到指定类名的Activity
+     */
+    public synchronized static Activity getActivity(Class<?> cls) {
+        Activity _activity = null;
+        synchronized (sActivityStack) {
+            for (Activity activity : sActivityStack) {
+                if (activity.getClass().equals(cls)) {
+                    _activity = activity;
+                }
+            }
+        }
+        return _activity;
+    }
+
+    /**
      * 结束所有Activity
      */
     public synchronized static void finishAllActivity() {

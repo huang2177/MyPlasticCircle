@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -58,27 +59,29 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         viewHolder viewHolder = mHolderMap.get(position);
-        String supdem = mListHF.get(position).getType().equals("2") ? "供给" : "求购";
         String title = "“<font color='#ff5000'>"
                 + mListHF.get(position).getName()
                 + "</font>”回复您的消息啦！";
-        int imgRes = mListHF.get(position).getType().equals("2")
-                ? R.drawable.icon_supply
-                : R.drawable.icon_purchase;
-        viewHolder.time.setText(mListHF.get(position).getHui_time());
         viewHolder.title.setText(Html.fromHtml(title));
-        viewHolder.company.setText(mListHF.get(position).getC_name() + "  " + mListHF.get(position).getName());
+        viewHolder.time.setText(mListHF.get(position).getHui_time());
+        viewHolder.company.setText(mListHF.get(position).getC_name()
+                + "  "
+                + mListHF.get(position).getName());
+
+        String supdem = mListHF.get(position).getType().equals("2")
+                ? "供给"
+                : "求购";
         viewHolder.type.setText(supdem);
+
         viewHolder.tel.setText("联系电话：" + mListHF.get(position).getMobile());
-        viewHolder.pro.setText("产品：" + mListHF.get(position).getModel());
+        viewHolder.pro.setText("产品：" + mListHF.get(position).getFa_content());
         viewHolder.content.setText("回复内容：" + mListHF.get(position).getHui_content());
         viewHolder.ll_detail.setOnClickListener(new MyOnClickListener(position));
 
-        Resources res = context.getResources();
-        Drawable img = res.getDrawable(imgRes);
-        //调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
-        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-        viewHolder.type.setCompoundDrawables(img, null, null, null); //设置左图标
+        int imgRes = mListHF.get(position).getType().equals("2")
+                ? R.drawable.icon_supply
+                : R.drawable.icon_purchase;
+        viewHolder.type.setCompoundDrawablesWithIntrinsicBounds(imgRes, 0, 0, 0); //设置左图标
     }
 
 
@@ -127,7 +130,6 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
 
         @Override
         public void ok(int type) {
-            Log.e("------", "------------");
         }
     }
 
@@ -143,9 +145,11 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
             Intent intent = new Intent(context, SupDem_Detail_Activity.class);
             String id = mListHF.get(position).getId();
             String userid = mListHF.get(position).getUser_id();
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", 1);
 
             intent.putExtra("id", id);
-            intent.putExtra("type", "2");
+            intent.putExtra("bundle", bundle);
             intent.putExtra("userid", userid);
 
             context.startActivity(intent);

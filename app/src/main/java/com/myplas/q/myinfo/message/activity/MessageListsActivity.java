@@ -70,7 +70,6 @@ public class MessageListsActivity extends BaseActivity implements ResultCallBack
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("--------------", object.toString());
             if (new JSONObject(object.toString()).getString("err").equals("0")) {
                 Gson gson = new Gson();
                 MyMessageBean myMessageBean = gson.fromJson(object.toString(), MyMessageBean.class);

@@ -48,7 +48,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
+                android:layout_height="1px"
                 android:background="@color/color_gray3"/>
 
             <LinearLayout
@@ -66,7 +66,7 @@
                     android:textSize="16.0sp"/>
 
                 <EditText
-                    android:id="@+id/release_ev_chj"
+                    android:id="@+id/release_ev_production"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
@@ -82,7 +82,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
+                android:layout_height="1px"
                 android:background="@color/color_gray3"/>
 
             <LinearLayout
@@ -100,7 +100,7 @@
                     android:textSize="16.0sp"/>
 
                 <EditText
-                    android:id="@+id/jzfb_edit_jhd"
+                    android:id="@+id/release_ev_jh"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
@@ -115,7 +115,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
+                android:layout_height="1px"
                 android:background="@color/color_gray3"/>
 
             <LinearLayout
@@ -133,7 +133,7 @@
                     android:textSize="16.0sp"/>
 
                 <EditText
-                    android:id="@+id/jzfb_edit_jg"
+                    android:id="@+id/release_ev_pirce"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
@@ -148,7 +148,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
+                android:layout_height="1px"
                 android:background="@color/color_gray3"/>
 
             <LinearLayout
@@ -182,7 +182,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
+                android:layout_height="1px"
                 android:background="@color/color_gray3"/>
 
             <LinearLayout
@@ -216,7 +216,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
+                android:layout_height="1px"
                 android:background="@color/color_gray3"/>
         </LinearLayout>
     </ScrollView>

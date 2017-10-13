@@ -112,7 +112,7 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
                 viewHolder.mImageR.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                Intent intent = new Intent(context, ReleaseSupDemActivity.class);
+//                Intent intent = new Intent(context, ReleaseActivity.class);
 //                intent.putExtra("id", (list.get(position).getId()));
 //                intent.putExtra("type", list.get(position).getType());
 //                context.startActivity(intent);

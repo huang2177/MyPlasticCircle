@@ -30,7 +30,7 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
-import com.myplas.q.release.activity.ReleaseActivity;
+import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.supdem.Beans.ConfigData;
 import com.myplas.q.supdem.Beans.SupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;

@@ -31,7 +31,7 @@ import com.myplas.q.headlines.adapter.HeadLinesDetail_More_LVAdapetr;
 import com.myplas.q.common.api.API;
 import com.myplas.q.headlines.bean.SucribleDetailBean;
 import com.myplas.q.myinfo.integral.activity.IntegralActivity;
-import com.myplas.q.release.activity.ReleaseActivity;
+import com.myplas.q.release.ReleaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -35,7 +36,6 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
     Map<Integer, TextView> mViewMap;
     Map<Integer, viewHolder> mHolderMap;
 
-    @SuppressLint("UseSparseArrays")
     public MessageSupDemAdapter(Context context, List<MsgSupDemBean.DataBean> mListSupDem) {
         this.mListSupDem = mListSupDem;
         this.context = context;
@@ -134,7 +134,6 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
 
         @Override
         public void ok(int type) {
-            Log.e("------", "------------");
         }
     }
 
@@ -151,9 +150,12 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
             String id = mListSupDem.get(position).getId();
             String userid = mListSupDem.get(position).getUser_id();
 
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", 0);
+
             intent.putExtra("id", id);
-            intent.putExtra("type", "1");
             intent.putExtra("userid", userid);
+            intent.putExtra("bundle", bundle);
 
             context.startActivity(intent);
         }

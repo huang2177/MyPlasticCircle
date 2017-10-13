@@ -7,12 +7,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -21,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,14 +36,17 @@ import com.myplas.q.R;
 import com.myplas.q.addresslist.Beans.TXL_Bean;
 import com.myplas.q.addresslist.activity.AD_DialogActivtiy;
 import com.myplas.q.addresslist.activity.Cover_WebActivity;
-import com.myplas.q.addresslist.adapter.AddList_LV_Adapter;
+import com.myplas.q.addresslist.adapter.Fragment_Conact_LV_Adapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
+import com.myplas.q.common.view.MyListview;
+import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.PinnedHeaderListView;
+import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
@@ -61,30 +68,35 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_AddressList extends Fragment implements View.OnClickListener
-        , ResultCallBack, PinnedHeaderListView.IXListViewListener, CommonDialog.DialogShowInterface {
+public class Fragment_Conact extends Fragment implements View.OnClickListener
+        , ResultCallBack
+        , CommonDialog.DialogShowInterface
+        , MyNestedScrollView.onScrollIterface
+        , SwipeRefreshLayout.OnRefreshListener {
+
     public String content;
+    private boolean islogin;
     private SharedUtils sharedUtils;
     private int page, position, visibleItemCount;
-    private boolean islogin, hasMoerData = true, isRefresh = false;
     private String radio_choice, userid, keywords = "", region = "0", c_type = "0", banner_url, img_url, jumpToWhere, jumpTitle;
 
     private TXL_Bean.TopBean topBean;
     private List<TXL_Bean.PersonsBean> list, list_more;
-    private AddList_LV_Adapter txl_listview_adapter;
+    private Fragment_Conact_LV_Adapter mLVAdapter;
 
     private Handler handler;
     private TXL_Bean txlBean;
-    private EditText editText;
     private ImageButton imageButton;
     private CustomPopupWindow popupWindow;
-    private PinnedHeaderListView listView;
-    private ImageView imageView_intergral, jia;
-    private RadioGroup radioGroup_address, radioGroup_time;
-    private RadioButton radioButton_address, radioButton_time;
-    private View view, viewheader, imageView_tm, imageView_adress;
+    private ListView listView;
+    private ImageView imageView_intergral;
+    private View view, imageView_tm, imageView_adress;
     public CustomPopupWindow mPopupWindow1, mPopupWindow2, mPopupWindow3;
-    private TextView rs, zh_zj, wgz, gzw, textView_address, search_text, textView_refresh;
+
+    private AppBarLayout appBarLayout;
+    private RefreshPopou mRefreshPopou;
+    private MyNestedScrollView mScrollView;
+    private SwipeRefreshLayout mRefreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,42 +105,30 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         region = "0";
         c_type = "0";
         keywords = "";
-        hasMoerData = true;
         list_more = new ArrayList();
         content = "您还未登录,请先登录塑料圈!";
 
         handler = new Handler();
+        mRefreshPopou = new RefreshPopou(getActivity(), 2);
         sharedUtils = SharedUtils.getSharedUtils();
         islogin = sharedUtils.getBoolean(getActivity(), "logined");
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_addresslist_fragment, null, false);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_conact, null, false);
 
-        zh_zj = (TextView) view.findViewById(R.id.zh_zj);
-        rs = (TextView) view.findViewById(R.id.title_rs);
-        jia = (ImageView) view.findViewById(R.id.title_jia);
-        editText = (EditText) view.findViewById(R.id.txl_edit);
+        listView = (ListView) view.findViewById(R.id.conact_lv);
         imageButton = (ImageButton) view.findViewById(R.id.img_reload);
-        textView_address = (TextView) view.findViewById(R.id.address);
-        search_text = (TextView) view.findViewById(R.id.search_src_text);
-        listView = (PinnedHeaderListView) view.findViewById(R.id.txl_listview);
-        viewheader = View.inflate(getActivity(), R.layout.layout_contact_listview_header, null);
+        appBarLayout = (AppBarLayout) view.findViewById(R.id.conact_appbarlayout);
+        mScrollView = (MyNestedScrollView) view.findViewById(R.id.conact_scrollview);
+        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.conact_swipelayout);
 
-        editText.setText("");
-        listView.addHeaderView(viewheader);
-
-        zh_zj.setOnClickListener(this);
-        editText.setOnClickListener(this);
-        listView.setXListViewListener(this);
-        listView.setPullRefreshEnable(true);
-        search_text.setOnClickListener(this);
-        textView_address.setOnClickListener(this);
-
+        mScrollView.setOnScrollIterface(this);
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setColorSchemeResources(R.color.color_red);
         //排序
         View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.txl_dropdown_popouwindow, null, false);
         mPopupWindow1 = new CustomPopupWindow(view1, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
         setPoPouProperty(mPopupWindow1);
         mPopupWindow1.setAnimationStyle(R.style.my_anim_popou);
         imageView_tm = (View) view1.findViewById(R.id.img_tm);
-        radioGroup_time = (RadioGroup) view1.findViewById(R.id.radio_danxuan);
         imageView_tm.setOnClickListener(this);
         //地区
         View view2 = LayoutInflater.from(getActivity()).inflate(R.layout.txl_dropdown_popouwindow_address, null, false);
@@ -137,82 +137,81 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         mPopupWindow2.setAnimationStyle(R.style.my_anim_popou);
         imageView_adress = (View) view2.findViewById(R.id.img_adress);
         imageView_adress.setOnClickListener(this);
-        radioGroup_address = (RadioGroup) view2.findViewById(R.id.radio_danxuan);
         //search
         View view3 = LayoutInflater.from(getActivity()).inflate(R.layout.layout_address_search_popou, null, false);
         mPopupWindow3 = new CustomPopupWindow(view3, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         setPoPouProperty(mPopupWindow3);
         view3.findViewById(R.id.view_search).setOnClickListener(this);
-        radioGroup_time.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                page = 1;
-                hasMoerData = true;
-                if (list != null && txl_listview_adapter != null) {
-                    txl_listview_adapter.setList(list);
-                    txl_listview_adapter.notifyDataSetChanged();
-                }
-                keywords = editText.getText().toString();
-                radioButton_time = (RadioButton) group.findViewById(checkedId);
-                radio_choice = radioButton_time.getText().toString();
-                switch (radio_choice) {
-                    case "所有分类":
-                        c_type = "0";
-                        break;
-                    case "塑料制品厂":
-                        c_type = "1";
-                        break;
-                    case "原料供应商":
-                        c_type = "2";
-                        break;
-                    case "物流服务商":
-                        c_type = "4";
-                        break;
-                    case "其他":
-                        c_type = "5";
-                        break;
-                }
-                getNetData("1", keywords, c_type, region, true);
-                mPopupWindow1.dismiss();
-                zh_zj.setTextColor(getResources().getColor(R.color.color_red));
-                zh_zj.setText(radio_choice);
-            }
-        });
-        radioGroup_address.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                page = 1;
-                hasMoerData = true;
-                if (list != null && txl_listview_adapter != null) {
-                    txl_listview_adapter.setList(list);
-                    txl_listview_adapter.notifyDataSetChanged();
-                }
-                keywords = editText.getText().toString();
-                radioButton_address = (RadioButton) group.findViewById(checkedId);
-                radio_choice = radioButton_address.getText().toString();
-                switch (radio_choice) {
-                    case "全国站":
-                        region = "0";
-                        break;
-                    case "华北":
-                        region = "2";
-                        break;
-                    case "华南":
-                        region = "3";
-                        break;
-                    case "华东":
-                        region = "1";
-                        break;
-                    case "其他":
-                        region = "4";
-                        break;
-                }
-                getNetData("1", keywords, c_type, region, true);
-                mPopupWindow2.dismiss();
-                textView_address.setTextColor(getResources().getColor(R.color.color_red));
-                textView_address.setText(radio_choice);
-            }
-        });
+//        radioGroup_time.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                page = 1;
+//                hasMoerData = true;
+//                if (list != null && mLVAdapter != null) {
+//                    mLVAdapter.setList(list);
+//                    mLVAdapter.notifyDataSetChanged();
+//                }
+//                keywords = editText.getText().toString();
+//                radioButton_time = (RadioButton) group.findViewById(checkedId);
+//                radio_choice = radioButton_time.getText().toString();
+//                switch (radio_choice) {
+//                    case "所有分类":
+//                        c_type = "0";
+//                        break;
+//                    case "塑料制品厂":
+//                        c_type = "1";
+//                        break;
+//                    case "原料供应商":
+//                        c_type = "2";
+//                        break;
+//                    case "物流服务商":
+//                        c_type = "4";
+//                        break;
+//                    case "其他":
+//                        c_type = "5";
+//                        break;
+//                }
+//                getNetData("1", keywords, c_type, region, true);
+//                mPopupWindow1.dismiss();
+//                zh_zj.setTextColor(getResources().getColor(R.color.color_red));
+//                zh_zj.setText(radio_choice);
+//            }
+//        });
+//        radioGroup_address.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                page = 1;
+//                hasMoerData = true;
+//                if (list != null && mLVAdapter != null) {
+//                    mLVAdapter.setList(list);
+//                    mLVAdapter.notifyDataSetChanged();
+//                }
+//                keywords = editText.getText().toString();
+//                radioButton_address = (RadioButton) group.findViewById(checkedId);
+//                radio_choice = radioButton_address.getText().toString();
+//                switch (radio_choice) {
+//                    case "全国站":
+//                        region = "0";
+//                        break;
+//                    case "华北":
+//                        region = "2";
+//                        break;
+//                    case "华南":
+//                        region = "3";
+//                        break;
+//                    case "华东":
+//                        region = "1";
+//                        break;
+//                    case "其他":
+//                        region = "4";
+//                        break;
+//                }
+//                getNetData("1", keywords, c_type, region, true);
+//                mPopupWindow2.dismiss();
+//                textView_address.setTextColor(getResources().getColor(R.color.color_red));
+//                textView_address.setText(radio_choice);
+//            }
+//        });
         //点击item判断是否消耗积分
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -222,97 +221,108 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                     if (islogin) {
                         if (topBean != null) {
                             if (rawPosition == 2 || rawPosition - listView.getFirstVisiblePosition() <= 1) {
-                                Fragment_AddressList.this.position = -1;
-                                userid = topBean.getUser_id();
+//                                Fragment_Conact.this.position = -1;
+//                                userid = topBean.getUser_id();
                             } else {
-                                Fragment_AddressList.this.position = rawPosition - 3;
+                                Fragment_Conact.this.position = rawPosition - 3;
                                 userid = list_more.get(position).getUser_id();
                             }
                         } else {
-                            Fragment_AddressList.this.position = rawPosition - 3;
+                            Fragment_Conact.this.position = rawPosition - 3;
                             userid = list_more.get(position).getUser_id();
                         }
                         getPersonInfoData(userid, "1", 2);
                     } else {
                         CommonDialog commonDialog = new CommonDialog();
-                        commonDialog.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
+                        commonDialog.showDialog(getActivity(), content, 4, Fragment_Conact.this);
                     }
                 } catch (Exception e) {
                 }
             }
         });
 
-        //edittext的回车监听
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-                page = 1;
-                hasMoerData = true;
-                txl_listview_adapter.setList(list);
-                txl_listview_adapter.notifyDataSetChanged();
-                if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
-                    keywords = (editText.getText().toString().equals("")) ? ("") : (editText.getText().toString());
-                    getNetData(page + "", keywords, c_type, region, true);
-                    search_text.setVisibility(View.GONE);
-                    textView_address.setVisibility(View.VISIBLE);
-                    zh_zj.setVisibility(View.VISIBLE);
-                    hideKey(true);
-                    return true;
-                }
-                return false;
-            }
-        });
+//        //edittext的回车监听
+//        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+//                page = 1;
+//                hasMoerData = true;
+//                mLVAdapter.setList(list);
+//                mLVAdapter.notifyDataSetChanged();
+//                if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
+//                    keywords = (editText.getText().toString().equals("")) ? ("") : (editText.getText().toString());
+//                    getNetData(page + "", keywords, c_type, region, true);
+//                    search_text.setVisibility(View.GONE);
+//                    textView_address.setVisibility(View.VISIBLE);
+//                    zh_zj.setVisibility(View.VISIBLE);
+//                    hideKey(true);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
         //edittext焦点事件
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                try {
-                    islogin = sharedUtils.getBoolean(getActivity(), "logined");
-                    if (islogin) {
-                        if (hasFocus) {
-                            hideKey(false);
-                            showPopou(mPopupWindow3);
-                            search_text.setVisibility(View.VISIBLE);
-                            textView_address.setVisibility(View.GONE);
-                            zh_zj.setVisibility(View.GONE);
-                        }
-                    } else {
-                        CommonDialog commonDialog = new CommonDialog();
-                        commonDialog.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
-                    }
-                } catch (Exception e) {
-                }
-            }
-        });
-        //加载更多
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() >= visibleItemCount) {
-                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        page++;
-                        islogin = sharedUtils.getBoolean(getActivity(), "logined");
-                        if (islogin || page <= 4) {
-                            if (hasMoerData) {
-                                getNetData(page + "", keywords, c_type, region, false);
-                            } else {
-                                TextUtils.Toast(getActivity(), "没有更多数据了！");
-                            }
-                        } else if (page > 4) {
-                            CommonDialog commonDialog = new CommonDialog();
-                            commonDialog.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                Fragment_AddressList.this.visibleItemCount = visibleItemCount;
-            }
-        });
+//        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                try {
+//                    islogin = sharedUtils.getBoolean(getActivity(), "logined");
+//                    if (islogin) {
+//                        if (hasFocus) {
+//                            hideKey(false);
+//                            showPopou(mPopupWindow3);
+//                            search_text.setVisibility(View.VISIBLE);
+//                            textView_address.setVisibility(View.GONE);
+//                            zh_zj.setVisibility(View.GONE);
+//                        }
+//                    } else {
+//                        CommonDialog commonDialog = new CommonDialog();
+//                        commonDialog.showDialog(getActivity(), content, 4, Fragment_Conact.this);
+//                    }
+//                } catch (Exception e) {
+//                }
+//            }
+//        });
+//        //加载更多
+//        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() >= visibleItemCount) {
+//                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
+//                        page++;
+//                        islogin = sharedUtils.getBoolean(getActivity(), "logined");
+//                        if (islogin || page <= 4) {
+//                            getNetData(page + "", keywords, c_type, region, false);
+//                        } else if (page > 4) {
+//                            CommonDialog commonDialog = new CommonDialog();
+//                            commonDialog.showDialog(getActivity(), content, 4, Fragment_Conact.this);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//                Fragment_Conact.this.visibleItemCount = visibleItemCount;
+//            }
+//        });
+//        mScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+//            @Override
+//            public void onScrollChanged() {
+//                mRefreshLayout.setEnabled(mScrollView.getScrollY() == 0);
+//            }
+//        });
+//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                if (!mRefreshLayout.isRefreshing()) {    //如果不在刷新状态
+//                    //判断是否滑动到最顶部
+//                    mRefreshLayout.setEnabled(mScrollView.getScrollY() == verticalOffset);
+//                }
+//            }
+//        });
         //填充数据
-        parse_ShowData(new Gson(), sharedUtils.getData(getActivity(), "txlBean"), false);
+        loadCacheData(new Gson(), sharedUtils.getData(getActivity(), "txlBean"), false);
         //首次进入 请求数据
         getNetData("1", "", "0", "0", true);
     }
@@ -324,19 +334,6 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 getNetData("1", "", "0", "0", true);
-            }
-        });
-        jia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (SharedUtils.getSharedUtils().getBoolean(getActivity(), "logined")) {
-//                    TextUtils.Toast(getActivity(), "您已登录塑料圈通讯录！");
-//                } else {
-//                    Intent in = new Intent(getActivity(), LoginActivity.class);
-//                    startActivity(in);
-//                }
-                Intent in = new Intent(getActivity(), LoginActivity.class);
-                startActivity(in);
             }
         });
         return view;
@@ -368,43 +365,43 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         boolean logined = sharedUtils.getBoolean(getActivity(), "logined");
         if (logined) {
             switch (v.getId()) {
-                case R.id.zh_zj:
-                    keywords = editText.getText().toString();
-                    hideKey(false);
-                    showPopou(mPopupWindow1);
-                    break;
-                case R.id.address:
-                    keywords = editText.getText().toString();
-                    hideKey(false);
-                    showPopou(mPopupWindow2);
-                    break;
-                case R.id.text_wgz:
-                    Intent intent4 = new Intent(getActivity(), MyFansFollowActivity.class);
-                    intent4.putExtra("titlename", "我的关注");
-                    intent4.putExtra("type", "2");
-                    startActivity(intent4);
-                    break;
-                case R.id.text_gzw:
-                    Intent intent3 = new Intent(getActivity(), MyFansFollowActivity.class);
-                    intent3.putExtra("titlename", "我的粉丝");
-                    intent3.putExtra("type", "1");
-                    startActivity(intent3);
-                    break;
-                case R.id.txl_edit:
-                    editText.requestFocus();
-                    if (mPopupWindow1.isShowing()) {
-                        mPopupWindow1.dismiss();
-                    }
-                    if (mPopupWindow2.isShowing()) {
-                        mPopupWindow2.dismiss();
-                    }
-                    if (!mPopupWindow3.isShowing()) {
-                        showPopou(mPopupWindow3);
-                    }
-                    search_text.setVisibility(View.VISIBLE);
-                    textView_address.setVisibility(View.GONE);
-                    zh_zj.setVisibility(View.GONE);
-                    break;
+//                case R.id.zh_zj:
+//                    keywords = editText.getText().toString();
+//                    hideKey(false);
+//                    showPopou(mPopupWindow1);
+//                    break;
+//                case R.id.address:
+//                    keywords = editText.getText().toString();
+//                    hideKey(false);
+//                    showPopou(mPopupWindow2);
+//                    break;
+//                case R.id.text_wgz:
+//                    Intent intent4 = new Intent(getActivity(), MyFansFollowActivity.class);
+//                    intent4.putExtra("titlename", "我的关注");
+//                    intent4.putExtra("type", "2");
+//                    startActivity(intent4);
+//                    break;
+//                case R.id.text_gzw:
+//                    Intent intent3 = new Intent(getActivity(), MyFansFollowActivity.class);
+//                    intent3.putExtra("titlename", "我的粉丝");
+//                    intent3.putExtra("type", "1");
+//                    startActivity(intent3);
+//                    break;
+//                case R.id.txl_edit:
+//                    editText.requestFocus();
+//                    if (mPopupWindow1.isShowing()) {
+//                        mPopupWindow1.dismiss();
+//                    }
+//                    if (mPopupWindow2.isShowing()) {
+//                        mPopupWindow2.dismiss();
+//                    }
+//                    if (!mPopupWindow3.isShowing()) {
+//                        showPopou(mPopupWindow3);
+//                    }
+//                    search_text.setVisibility(View.VISIBLE);
+//                    textView_address.setVisibility(View.GONE);
+//                    zh_zj.setVisibility(View.GONE);
+//                    break;
                 case R.id.contact_img:
                     JumpToWhere(jumpToWhere);
                     break;
@@ -415,31 +412,25 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                     mPopupWindow2.dismiss();
                     break;
 
-                case R.id.view_search:
-                    search_text.setVisibility(View.GONE);
-                    textView_address.setVisibility(View.VISIBLE);
-                    zh_zj.setVisibility(View.VISIBLE);
-                    hideKey(true);
-                    break;
-                //搜索
-                case R.id.search_src_text:
-                    page = 1;
-                    hasMoerData = true;
-                    if (list != null) {
-                        txl_listview_adapter.setList(list);
-                        txl_listview_adapter.notifyDataSetChanged();
-                    }
-                    keywords = editText.getText().toString();
-                    getNetData(page + "", keywords, c_type, region, true);
-                    search_text.setVisibility(View.GONE);
-                    textView_address.setVisibility(View.VISIBLE);
-                    zh_zj.setVisibility(View.VISIBLE);
-                    hideKey(true);
-                    break;
+//                //搜索
+//                case R.id.search_src_text:
+//                    page = 1;
+//                    hasMoerData = true;
+//                    if (list != null) {
+//                        mLVAdapter.setList(list);
+//                        mLVAdapter.notifyDataSetChanged();
+//                    }
+//                    keywords = editText.getText().toString();
+//                    getNetData(page + "", keywords, c_type, region, true);
+//                    search_text.setVisibility(View.GONE);
+//                    textView_address.setVisibility(View.VISIBLE);
+//                    zh_zj.setVisibility(View.VISIBLE);
+//                    hideKey(true);
+//                    break;
             }
         } else {
             CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(getActivity(), content, 4, Fragment_AddressList.this);
+            commonDialog.showDialog(getActivity(), content, 4, Fragment_Conact.this);
         }
     }
 
@@ -474,20 +465,16 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             if (type == 1) {
                 if (err.equals("0")) {
                     sharedUtils.setData(getActivity(), "txlBean", object.toString());
-                    parse_ShowData(gson, object.toString(), true);
+                    loadCacheData(gson, object.toString(), true);
                 }
                 if (err.equals("2") || err.equals("3")) {
                     list = null;
-                    isRefresh = false;
-                    hasMoerData = false;
-                    listView.stopRefresh();
                     TextUtils.Toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
                 }
                 if (err.equals("1") || "998".equals(err)) {
-                    listView.stopRefresh();
-                    sharedUtils.setBooloean(getActivity(), "logined", false);
                     sharedUtils.setData(getActivity(), "token", "");
                     sharedUtils.setData(getActivity(), "userid", "");
+                    sharedUtils.setBooloean(getActivity(), "logined", false);
                 }
             }
             //是否消耗积分
@@ -505,7 +492,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 //                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()
-//                                , txl_listview_adapter.mMap.get(position)
+//                                , mLVAdapter.mMap.get(position)
 //                                , "sharedView").toBundle());
 //                    }
 //                }
@@ -519,7 +506,7 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 //                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()
-//                                , txl_listview_adapter.mMap.get(position)
+//                                , mLVAdapter.mMap.get(position)
 //                                , "sharedView").toBundle());
 //                    }
 //                }
@@ -540,19 +527,19 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
         }
     }
 
-    public void parse_ShowData(Gson gson, String json, boolean isShowCover) {
+    public void loadCacheData(Gson gson, String json, boolean isShowCover) {
         try {
             txlBean = gson.fromJson(json, TXL_Bean.class);
             list = txlBean.getPersons();
             //展示头部
             topBean = (new JSONObject(json).getJSONObject("top").length() != 0) ? txlBean.getTop() : (null);
             if (page == 1) {
-                rs.setText("塑料圈通讯录(" + new JSONObject(json).getString("member") + "人)");
+                //rs.setText("塑料圈通讯录(" + new JSONObject(json).getString("member") + "人)");
                 //editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
                 //显示数据
-                txl_listview_adapter = new AddList_LV_Adapter(getActivity(), list, topBean);
-                listView.setAdapter(txl_listview_adapter);
-                listView.stopRefresh();
+                mLVAdapter = new Fragment_Conact_LV_Adapter(getActivity(), list, topBean);
+                listView.setAdapter(mLVAdapter);
+                mRefreshLayout.setRefreshing(false);
                 list_more.clear();
                 list_more = list;
                 //展示已更新多少数据
@@ -564,18 +551,6 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                     jumpToWhere = txlBean.getIs_banner_jump_native() + "";
                     jumpTitle = txlBean.getBanner_jump_url_title();
 
-                    viewheader.findViewById(R.id.linearlayout_care_fans).setVisibility(View.GONE);
-                    viewheader.findViewById(R.id.contact_img).setVisibility(View.VISIBLE);
-                    imageView_intergral = (ImageView) viewheader.findViewById(R.id.contact_img);
-                    Glide.with(getContext()).load(img_url).into(imageView_intergral);
-                    imageView_intergral.setOnClickListener(this);
-                } else {
-                    viewheader.findViewById(R.id.linearlayout_care_fans).setVisibility(View.VISIBLE);
-                    viewheader.findViewById(R.id.contact_img).setVisibility(View.GONE);
-                    wgz = (TextView) viewheader.findViewById(R.id.text_wgz);
-                    gzw = (TextView) viewheader.findViewById(R.id.text_gzw);
-                    wgz.setOnClickListener(this);
-                    gzw.setOnClickListener(this);
                 }
                 //判断图层是否显示
                 boolean isshow = sharedUtils.getBoolean(getActivity(), "isshow");
@@ -587,10 +562,10 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                     startActivity(intent);
                 }
             } else {
-                isRefresh = false;
+
                 list_more.addAll(list);
-                txl_listview_adapter.setList(list_more);
-                txl_listview_adapter.notifyDataSetChanged();
+                mLVAdapter.setList(list_more);
+                mLVAdapter.notifyDataSetChanged();
             }
         } catch (Exception e) {
         }
@@ -622,8 +597,8 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
 
     public void hideKey(boolean hidekey) {
         if (hidekey) {
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            //InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            //imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         }
         if (mPopupWindow1.isShowing()) {
             mPopupWindow1.dismiss();
@@ -639,24 +614,19 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
     @Override
     public void onRefresh() {
         page = 1;
-        isRefresh = true;
-        hasMoerData = true;
+        mRefreshPopou.setCanShowPopou(true);
         getNetData("1", keywords, c_type, region, false);
 
     }
 
-    @Override
-    public void onLoadMore() {
-    }
 
     //展示刷新后的popou
     public void showRefreshPopou(String text) {
-        if (list.size() != 0 && isRefresh) {
-            isRefresh = false;
+        if (list.size() != 0) {
+            mRefreshPopou.setCanShowPopou(false);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(text)) ? (text) : ("已是最新通信录信息！"));
             if (popupWindow == null) {
                 View view = View.inflate(getActivity(), R.layout.layout_refresh_popou, null);
-                textView_refresh = (TextView) view.findViewById(R.id.text_refresh_fragement);
                 popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
                 popupWindow.setBackgroundDrawable(new BitmapDrawable());
                 popupWindow.setAnimationStyle(R.style.my_anim_popou);
@@ -664,18 +634,18 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
                 popupWindow.setFocusable(true);
                 popupWindow.update();
             }
-            textView_refresh.setText((TextUtils.isNullOrEmpty(text))
-                    ? (text)
-                    : ("已是最新通信录信息！"));
-            showPopou(popupWindow);
-            if (popupWindow.isShowing()) {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        popupWindow.dismiss();
-                    }
-                }, 1500);
-            }
+//            textView_refresh.setText((TextUtils.isNullOrEmpty(text))
+//                    ? (text)
+//                    : ("已是最新通信录信息！"));
+//            showPopou(popupWindow);
+//            if (popupWindow.isShowing()) {
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        popupWindow.dismiss();
+//                    }
+//                }, 1500);
+//            }
         }
     }
 
@@ -686,13 +656,13 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
     }
 
     public void showPopou(CustomPopupWindow popupWindow) {
-        if (android.os.Build.VERSION.SDK_INT >= 24) {
-            int[] a = new int[2];
-            editText.getLocationInWindow(a);
-            popupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.NO_GRAVITY, 0, a[1] + editText.getHeight());
-        } else {
-            popupWindow.showAsDropDown(editText);
-        }
+//        if (android.os.Build.VERSION.SDK_INT >= 24) {
+//            int[] a = new int[2];
+//            editText.getLocationInWindow(a);
+//            popupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.NO_GRAVITY, 0, a[1] + editText.getHeight());
+//        } else {
+//            popupWindow.showAsDropDown(editText);
+//        }
     }
 
     @Override
@@ -719,12 +689,24 @@ public class Fragment_AddressList extends Fragment implements View.OnClickListen
             return true;
         }
         if (mPopupWindow3 != null && mPopupWindow3.isShowing()) {
-            search_text.setVisibility(View.GONE);
-            textView_address.setVisibility(View.VISIBLE);
-            zh_zj.setVisibility(View.VISIBLE);
+//            search_text.setVisibility(View.GONE);
+//            textView_address.setVisibility(View.VISIBLE);
             mPopupWindow3.dismiss();
             return true;
         }
         return false;
+    }
+
+
+    @Override
+    public void loadMore() {
+        page++;
+        islogin = sharedUtils.getBoolean(getActivity(), "logined");
+        if (islogin || page <= 4) {
+            getNetData(page + "", keywords, c_type, region, false);
+        } else if (page > 4) {
+            CommonDialog commonDialog = new CommonDialog();
+            commonDialog.showDialog(getActivity(), content, 4, Fragment_Conact.this);
+        }
     }
 }

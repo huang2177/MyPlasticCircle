@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,7 +47,7 @@ import java.util.Map;
 public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBack {
     private View mView;
     private EmptyView mEmptyView;
-    private MyListview mMyListview;
+    private RecyclerView mRecyclerView;
     private NestedScrollView mScrollView;
 
     private Intent mIntent;
@@ -61,24 +63,26 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
         mIntent = getActivity().getIntent();
         mSharedUtils = SharedUtils.getSharedUtils();
         mHFAdapter = new SupDem_Detail_LV_HFAdapter(getActivity(), mBaseInterFace);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
 
         mView = View.inflate(getActivity(), R.layout.fragment_layout_supdem_detail_hf, null);
         mEmptyView = (EmptyView) mView.findViewById(R.id.fragment_supdem_detail_editview);
-        mMyListview = (MyListview) mView.findViewById(R.id.fragment_supdem_detail_lv);
-        mScrollView = (NestedScrollView) mView.findViewById(R.id.scrollview);
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.fragment_supdem_detail_rv);
+        //mScrollView = (NestedScrollView) mView.findViewById(R.id.scrollview);
 
-        mMyListview.setAdapter(mHFAdapter);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setAdapter(mHFAdapter);
         getReply();
         return mView;
     }
 
     private void setListener(final boolean scrollabled) {
-        mScrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return scrollabled;
-            }
-        });
+//        mScrollView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return scrollabled;
+//            }
+//        });
     }
 
     public void getReply() {
@@ -105,7 +109,6 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
                     mBeanList = replyBean.getData();
                     mHFAdapter.setList(mBeanList);
                     mHFAdapter.notifyDataSetChanged();
-                    mMyListview.setAdapter(mHFAdapter);
                 } else {
                     setListener(true);
                     mEmptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);

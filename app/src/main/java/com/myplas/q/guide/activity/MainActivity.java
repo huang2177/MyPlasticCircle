@@ -22,27 +22,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.myplas.q.R;
-import com.myplas.q.addresslist.Fragment_AddressList;
-import com.myplas.q.common.view.LoadingDialog;
-import com.myplas.q.release.activity.ReleaseSupDemActivity;
-import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
+import com.myplas.q.addresslist.Fragment_Conact;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.VersionUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.Fragment_HeadLines;
-import com.myplas.q.myinfo.login.LoginActivity;
 import com.myplas.q.myinfo.Fragment_MySelf;
-import com.myplas.q.release.activity.ReleaseActivity;
+import com.myplas.q.myinfo.login.LoginActivity;
+import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.supdem.Fragment_SupplyDemand;
+import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -72,7 +69,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Fragment_HeadLines fragment_fx;
 
     private Fragment_SupplyDemand fragment_gq;
-    private Fragment_AddressList fragment_txl;
+    private Fragment_Conact fragment_txl;
     private MyReciver_AcitivityFinish myReciver;
     private ViewPager_Adapter viewPager_adapter;
     private static TextView textView_gq, textView_wd, textView_fx, textView_txl;
@@ -146,7 +143,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         fragment_fx = new Fragment_HeadLines();
         fragmentlist.add(fragment_fx);
-        fragment_txl = new Fragment_AddressList();
+        fragment_txl = new Fragment_Conact();
         fragmentlist.add(fragment_txl);
         fragment_gq = new Fragment_SupplyDemand();
         fragmentlist.add(fragment_gq);
@@ -178,7 +175,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     goToMySelf();
                     break;
                 case R.id.buttom_linear_jia:
-                    Intent intent = new Intent(this, ReleaseSupDemActivity.class);
+                    Intent intent = new Intent(this, ReleaseActivity.class);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this
                                 , mIVRelease

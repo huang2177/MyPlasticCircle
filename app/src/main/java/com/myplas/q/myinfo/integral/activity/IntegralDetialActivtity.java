@@ -81,7 +81,6 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
         mGridView = (GridView) view.findViewById(R.id.integral_detial_gv);
 
         mTextView.setOnClickListener(this);
-        listView.setPullRefreshEnable(false);
 
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
