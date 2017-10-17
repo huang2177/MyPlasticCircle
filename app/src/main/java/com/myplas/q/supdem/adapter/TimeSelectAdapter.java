@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.supdem.Beans.TabCofigBean;
+import com.myplas.q.supdem.beans.TabCofigBean;
 import com.myplas.q.supdem.PopouShowUtils;
 
 import java.util.HashMap;

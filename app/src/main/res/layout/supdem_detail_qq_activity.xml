@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#edeeef"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#edeeef"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/color_white"
-            android:textSize="18.0sp" />
+            android:textSize="18.0sp"/>
 
         <LinearLayout
             android:id="@+id/back"
@@ -29,7 +29,7 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
+                android:src="@drawable/btn_back"/>
         </LinearLayout>
     </FrameLayout>
 
@@ -54,7 +54,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_margin="13dp"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/qq_number"
@@ -62,13 +62,13 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:textSize="16.0sp"
-                    android:textColor="#171717" />
+                    android:textColor="#171717"
+                    android:textSize="16.0sp"/>
             </LinearLayout>
 
-            <include layout="@layout/supdem_detail_qq_baseinfo"></include>
+            <include layout="@layout/supdem_detail_qq_baseinfo"/>
 
-            <include layout="@layout/supdem_detail_qq_otherinfo"></include>
+            <include layout="@layout/supdem_detail_qq_otherinfo"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

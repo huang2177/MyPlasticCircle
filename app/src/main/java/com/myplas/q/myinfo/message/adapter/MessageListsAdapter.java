@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.view.DragView2;
+import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.myinfo.beans.MyMessageBean;
 
@@ -63,7 +63,7 @@ public class MessageListsAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_messagelist_lv, parent, false);
             viewHolder.mView = convertView.findViewById(R.id.msglist_view_divider);
             viewHolder.dis = (TextView) convertView.findViewById(R.id.msglist_text_dis);
-            viewHolder.mDragView2 = (DragView2) convertView.findViewById(R.id.msglist_text_num);
+            viewHolder.mDragView = (DragView) convertView.findViewById(R.id.msglist_text_num);
             viewHolder.type = (TextView) convertView.findViewById(R.id.msglist_text_type);
             viewHolder.time = (TextView) convertView.findViewById(R.id.msglist_text_time);
             viewHolder.mImageView = (MyImageView) convertView.findViewById(R.id.msglist_img);
@@ -91,9 +91,9 @@ public class MessageListsAdapter extends BaseAdapter {
         viewHolder.mImageView.setImageResource(imgRes);
         viewHolder.dis.setText(list.get(position).getMsg());
         viewHolder.time.setText(list.get(position).getInput_time());
-        viewHolder.mDragView2.setText(list.get(position).getCount());
+        viewHolder.mDragView.setText(list.get(position).getCount());
 
-        viewHolder.mDragView2.setVisibility(list.get(position).getCount().equals("0")
+        viewHolder.mDragView.setVisibility(list.get(position).getCount().equals("0")
                 ? View.GONE
                 : View.VISIBLE);
         return convertView;
@@ -105,7 +105,7 @@ public class MessageListsAdapter extends BaseAdapter {
 
     class viewHolder {
         View mView;
-        DragView2 mDragView2;
+        DragView mDragView;
         MyImageView mImageView;
         TextView type, time, dis;
     }

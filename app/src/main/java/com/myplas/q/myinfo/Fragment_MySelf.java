@@ -7,10 +7,10 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +18,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -42,12 +40,12 @@ import com.myplas.q.myinfo.fans.activity.MyIntroductionActivity;
 import com.myplas.q.myinfo.integral.activity.IntegralActivity;
 import com.myplas.q.myinfo.invoices.activity.TradeOrderActivity;
 import com.myplas.q.myinfo.message.activity.MessageListsActivity;
+import com.myplas.q.sockethelper.RabbitMQCallBack;
+import com.myplas.q.sockethelper.RabbitMQHelper;
 import com.myplas.q.myinfo.setting.SettingActivity;
 import com.myplas.q.myinfo.setting.activity.MyDataActivity;
-import com.myplas.q.myinfo.supdem.activity.MySupDemActivity;
-import com.myplas.q.myinfo.rabbitmqhelper.RabbitMQCallBack;
-import com.myplas.q.myinfo.rabbitmqhelper.RabbitMQHelper;
-import com.myplas.q.myinfo.rabbitmqhelper.WebSocketHelper;
+import com.myplas.q.myinfo.supdem.MySupDemActivity;
+import com.myplas.q.sockethelper.Result;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -61,7 +59,9 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_MySelf extends Fragment implements View.OnClickListener, ResultCallBack, RabbitMQCallBack {
+public class Fragment_MySelf extends Fragment implements View.OnClickListener
+        , ResultCallBack
+        , RabbitMQCallBack {
     private View view;
     private MyZone myZone;
 
@@ -82,21 +82,15 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
 
     private Handler mHandler;
     private RabbitMQHelper mMQHelper;
-    private WebSocketHelper mSocketHelper;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initRabbitMQ();
         initView();
         setAppBarListener();
         getLoginInfo(false);
-    }
-
-    private void initRabbitMQ() {
-        mMQHelper = new RabbitMQHelper(this);
-        mMQHelper.onConnect();
+        RabbitMQHelper.getInstance(getActivity()).setResultCallBack(this);
     }
 
     public void initView() {
@@ -158,17 +152,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         linear_title.setOnClickListener(this);
         mFrameLayout.setOnClickListener(this);
 
-        image_tx.setBorderColor(getActivity(), R.color.color_white);
-//        new QBadgeView(getContext())
-//                .bindTarget(mImageView_news)
-//                .setBadgeNumber(23)
-//                .setBadgeGravity(Gravity.START | Gravity.BOTTOM)
-//                .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-//                    @Override
-//                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
-//
-//                    }
-//                });
+        image_tx.setBorderColor(getResources().getColor(R.color.color_white));
     }
 
     @Nullable
@@ -367,10 +351,10 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener, R
         mCollapsingToolbarLayout.setContentScrimColor(Color.argb(alpha, 255, 80, 0));
     }
 
-    //websocket回调
+    /*rabbitmq */
     @Override
-    public void callback(String msg) {
-        //mDragView.setText(msg);
+    public void r_Callback(Result result) {
+        Log.e("5555555", "======");
     }
 
     public void onResume() {

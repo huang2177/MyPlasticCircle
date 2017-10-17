@@ -29,7 +29,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/x70</item>
         <item name="android:textColor">@color/color_gray</item>
-        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginTop">3dp</item>
     </style>
 
     <style name="mycheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
@@ -51,7 +51,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15.0sp</item>
-        <item name="android:gravity">clip_vertical</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:layout_weight">1</item>
     </style>
 

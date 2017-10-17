@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.supdem.Beans.PhysicalBean;
+import com.myplas.q.supdem.beans.PhysicalBean;
 
 import java.util.List;
 

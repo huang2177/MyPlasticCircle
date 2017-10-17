@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:id="@+id/layout_buttom"
               android:layout_width="match_parent"
               android:layout_height="60dp"
@@ -15,52 +16,73 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/buttom_linear_fx"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/buttom_linear_txl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/buttom_img_txl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/tabbar_contacts"/>
+
+                <TextView
+                    android:id="@+id/buttom_text_txl"
+                    style="@style/layout_buttoom_text"
+                    android:layout_gravity="center"
+                    android:text="通讯录"/>
+            </LinearLayout>
+
+            <com.myplas.q.common.view.DragView
+                android:id="@+id/dragview_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:translationX="16dp"
+                android:translationY="1dp"
+                app:bubbleColor="@color/color_red"
+                app:bubbleRadius="5dp"
+                app:textColor="@color/color_white"
+                app:textSize="9.0sp"/>
+        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/buttom_linear_fx"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/buttom_img_fx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:src="@drawable/tabbar_headlines"/>
 
             <TextView
                 android:id="@+id/buttom_text_fx"
                 style="@style/layout_buttoom_text"
+                android:layout_gravity="center"
                 android:text="头条"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/buttom_linear_txl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/buttom_img_txl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tabbar_contacts"/>
-
-            <TextView
-                android:id="@+id/buttom_text_txl"
-                style="@style/layout_buttoom_text"
-                android:text="通讯录"/>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/buttom_linear_jia"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center">
 
             <ImageView
@@ -72,46 +94,88 @@
                 android:transitionName="sharedView_Release"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/buttom_linear_gq"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center">
 
-            <ImageView
-                android:id="@+id/buttom_img_gq"
+            <LinearLayout
+                android:id="@+id/buttom_linear_gq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tabbar_trade"/>
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/buttom_text_gq"
-                style="@style/layout_buttoom_text"
-                android:text="供求"/>
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/buttom_img_gq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/tabbar_trade"/>
 
+                <TextView
+                    android:id="@+id/buttom_text_gq"
+                    style="@style/layout_buttoom_text"
+                    android:layout_gravity="center"
+                    android:text="供求"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/buttom_linear_wd"
-            android:layout_width="match_parent"
+            <com.myplas.q.common.view.DragView
+                android:id="@+id/dragview_supdem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:translationX="16dp"
+                android:translationY="1dp"
+                app:bubbleColor="@color/color_red"
+                app:bubbleRadius="8dp"
+                app:text="112"
+                app:textColor="@color/color_white"
+                app:textSize="9.0sp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center">
 
-            <ImageView
-                android:id="@+id/buttom_img_wd"
+            <LinearLayout
+                android:id="@+id/buttom_linear_wd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tabbar_me"/>
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/buttom_text_wd"
-                style="@style/layout_buttoom_text"
-                android:text="我的"/>
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/buttom_img_wd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/tabbar_me"/>
+
+                <TextView
+                    android:id="@+id/buttom_text_wd"
+                    style="@style/layout_buttoom_text"
+                    android:layout_gravity="center"
+                    android:text="我的"/>
+            </LinearLayout>
+
+            <com.myplas.q.common.view.DragView
+                android:id="@+id/dragview_myself"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:translationX="15dp"
+                android:translationY="1dp"
+                app:bubbleColor="@color/color_red"
+                app:bubbleRadius="8dp"
+                app:text="99+"
+                app:textColor="@color/color_white"
+                app:textSize="9.0sp"/>
+        </FrameLayout>
+
     </LinearLayout>
 
 </LinearLayout>

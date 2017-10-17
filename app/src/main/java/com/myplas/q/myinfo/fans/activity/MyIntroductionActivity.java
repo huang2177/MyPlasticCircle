@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -131,7 +132,7 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
             }
             //已经消耗积分
             if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, PersonInfoActivity.class);
+                Intent intent = new Intent(this, Contact_Detail_Activity.class);
                 intent.putExtra("userid", userid);
                 intent.putExtra("id", userid);
                 startActivity(intent);
@@ -139,7 +140,7 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
             //减积分成功
             if (type == 2 && err.equals("0")) {
                 sharedUtils.setBooloean(this, userid, true);
-                Intent intent = new Intent(this, PersonInfoActivity.class);
+                Intent intent = new Intent(this, Contact_Detail_Activity.class);
                 intent.putExtra("userid", userid);
                 intent.putExtra("id", userid);
                 startActivity(intent);

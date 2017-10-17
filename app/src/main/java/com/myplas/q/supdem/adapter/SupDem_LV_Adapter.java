@@ -19,9 +19,9 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
-import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
+import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
 
-import com.myplas.q.supdem.Beans.SupDemBean;
+import com.myplas.q.supdem.beans.SupDemBean;
 
 import org.json.JSONObject;
 
@@ -149,14 +149,14 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
             }
             //已经消费了积分
             if (type == 1 && err.equals("0")) {
-                Intent intent = new Intent(context, PersonInfoActivity.class);
+                Intent intent = new Intent(context, Contact_Detail_Activity.class);
                 intent.putExtra("userid", user_id);
                 intent.putExtra("id", user_id);
                 context.startActivity(intent);
             }
             //减积分成功
             if (type == 2 && err.equals("0")) {
-                Intent intent = new Intent(context, PersonInfoActivity.class);
+                Intent intent = new Intent(context, Contact_Detail_Activity.class);
                 intent.putExtra("userid", user_id);
                 intent.putExtra("id", user_id);
                 context.startActivity(intent);

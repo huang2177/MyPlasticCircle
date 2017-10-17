@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
@@ -26,13 +27,14 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.MyNestedScrollView;
+import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
+import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.myplas.q.release.ReleaseActivity;
-import com.myplas.q.supdem.Beans.ConfigData;
-import com.myplas.q.supdem.Beans.SupDemBean;
+import com.myplas.q.supdem.beans.ConfigData;
+import com.myplas.q.supdem.beans.SupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
 
@@ -54,7 +56,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         , ResultCallBack
         , SwipeRefreshLayout.OnRefreshListener
         , MyNestedScrollView.onScrollIterface {
-    public boolean isRefresh;
+
     private SharedUtils sharedUtils;
     public int visibleItemCount, page;
 
@@ -62,9 +64,10 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     private SupDem_LV_Adapter mSupDemLVAdapter;
     private SupDemBean mSupDemBean;
 
-    private View view, mViewHead;
+    private View view;
     private MyListview mListView;
     private LinearLayout mLayout;
+    public RefreshPopou refreshPopou;
     private MyNestedScrollView mScrollView;
     private TextView company, content, time;
     private SwipeRefreshLayout mRefreshLayout;
@@ -88,8 +91,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         type = "0";
         mDataBeanList = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
+        refreshPopou = new RefreshPopou(getActivity(), 3);
 
-        mViewHead = LayoutInflater.from(getActivity()).inflate(R.layout.xlistview_header, null, false);
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_supdem_all_layout, null, false);
         mListView = F(R.id.gq_listview);
         mScrollView = F(R.id.mynested_sv);
@@ -154,7 +157,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                 break;
             case R.id.supply_demand_follow:
                 if (follow_release.equals("follow")) {
-                    MainActivity.firstInto();
+                    MainActivity mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
+                    mainActivity.firstInto();
                 } else if (follow_release.equals("release")) {
                     startActivity(new Intent(getActivity(), ReleaseActivity.class));
                 }
@@ -200,7 +204,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         try {
             if (object.toString().equals(mLastData)) {
                 mRefreshLayout.setRefreshing(false);
-                mPopouinterface.showRefreshPopou(hotSearch, "", isRefresh);
+                mPopouinterface.showRefreshPopou(hotSearch, "");
                 return;
             }
             mLastData = object.toString();
@@ -212,16 +216,15 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     layoutPrompt.setVisibility(View.GONE);
                     mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
                     if (page == 1) {
-                        mRefreshLayout.setRefreshing(false);
                         mSupDemLVAdapter = new SupDem_LV_Adapter(ConfigData.what, getActivity(), mSupDemBean.getData());
                         mListView.setAdapter(mSupDemLVAdapter);
                         mDataBeanList.clear();
                         mDataBeanList.addAll(mSupDemBean.getData());
 
                         hotSearch = mSupDemBean.getHot_search();
-                        mPopouinterface.showRefreshPopou(hotSearch, mSupDemBean.getShow_msg(), isRefresh);
+                        mPopouinterface.showRefreshPopou(hotSearch, mSupDemBean.getShow_msg());
                     } else { //加载更多
-                        isRefresh = false;
+                        refreshPopou.setCanShowPopou(false);
                         mDataBeanList.addAll(mSupDemBean.getData());
                         mSupDemLVAdapter.setList(mDataBeanList);
                         mSupDemLVAdapter.notifyDataSetChanged();
@@ -238,7 +241,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     }
 
                 } else {//显示提示信息：
-                    isRefresh = false;
+                    refreshPopou.setCanShowPopou(false);
                     if (page == 1) {
                         mRefreshLayout.setRefreshing(false);
                         mListView.setVisibility(View.GONE);
@@ -306,14 +309,14 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             }
             //已经消费了积分
             if (type == 2 && result.equals("0")) {
-                Intent intent = new Intent(getActivity(), PersonInfoActivity.class);
+                Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
                 intent.putExtra("userid", user_id);
                 intent.putExtra("id", user_id);
                 startActivity(intent);
             }
             //减积分成功
             if (type == 3 && result.equals("0")) {
-                Intent intent = new Intent(getActivity(), PersonInfoActivity.class);
+                Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
                 intent.putExtra("userid", user_id);
                 intent.putExtra("id", user_id);
                 startActivity(intent);
@@ -330,7 +333,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
     @Override
     public void failCallBack(int type) {
-        isRefresh = false;
+        refreshPopou.setCanShowPopou(false);
         mRefreshLayout.setRefreshing(false);
         if (mDataBeanList.size() == 0) {
             mListView.setVisibility(View.GONE);
@@ -397,8 +400,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     @Override
     public void onRefresh() {
         page = 1;
-        isRefresh = true;
         getNetData(page + "", false);
+        refreshPopou.setCanShowPopou(true);
     }
 
     @Override
@@ -418,7 +421,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     }
 
     public interface RefreshPopouInterface {
-        void showRefreshPopou(String content, String hotSearch, boolean isRefresh);
+        void showRefreshPopou(String content, String hotSearch);
     }
 }
 

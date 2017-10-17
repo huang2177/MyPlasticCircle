@@ -86,7 +86,7 @@
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.myplas.q.myinfo.supdem.activity.MySupDemActivity"
+            android:name="com.myplas.q.myinfo.supdem.MySupDemActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity
@@ -143,7 +143,7 @@
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.myplas.q.myinfo.fans.activity.PersonInfoActivity"
+            android:name="com.myplas.q.addresslist.activity.Contact_Detail_Activity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>

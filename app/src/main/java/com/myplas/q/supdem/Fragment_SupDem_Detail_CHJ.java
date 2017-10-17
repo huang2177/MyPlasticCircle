@@ -1,19 +1,14 @@
 package com.myplas.q.supdem;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -21,14 +16,10 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.common.view.MyListview;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.supdem.Beans.DeliverPriceBean;
-import com.myplas.q.supdem.Beans.ReplyBean;
+import com.myplas.q.supdem.beans.DeliverPriceBean;
 import com.myplas.q.supdem.adapter.SupDem_Detail_LV_CHJAdapter;
-import com.myplas.q.supdem.adapter.SupDem_Detail_LV_HFAdapter;
 
 import org.json.JSONObject;
 
@@ -53,9 +44,6 @@ public class Fragment_SupDem_Detail_CHJ extends Fragment implements ResultCallBa
     private SupDem_Detail_LV_CHJAdapter mCHJAdapter;
     private List<DeliverPriceBean.DataBean> mBeanList;
 
-    public Fragment_SupDem_Detail_CHJ() {
-
-    }
 
     @Nullable
     @Override

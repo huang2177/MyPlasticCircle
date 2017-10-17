@@ -2,17 +2,10 @@ package com.myplas.q.supdem.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.InputType;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.SpannedString;
-import android.text.style.AbsoluteSizeSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -20,19 +13,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.supdem.BaseInterFace;
-import com.myplas.q.supdem.Beans.SupDemDetailBean;
+import com.myplas.q.supdem.beans.SupDemDetailBean;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_CHJ;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_HF;
 import com.myplas.q.supdem.OnKeyboardChangeListener;
@@ -66,11 +59,12 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     private Button mButton;
     private EditText mEditText;
+    private MyImageView mIVHead;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private AppBarLayout mBarLayout;
     private LinearLayout mLayout, mLayoutRoot;
-    private ImageView mIVHead, mIVStart, mIVFollow, mIVCall;
+    private ImageView mIVStart, mIVFollow, mIVCall;
     private TextView mTVCompany, mTVFans, mTVType, mTVTime, mTVGoodsposition, mTVMode, mTVStorehouse, mTVPirce, mTVNf, mTVProduction;
 
     private List<String> mStringList;
@@ -119,6 +113,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTVStorehouse = F(R.id.supdem_detail_storehouse);
         mTVProduction = F(R.id.supdem_detail_production);
         mTVGoodsposition = F(R.id.supdem_detail_goodsposition);
+
 
         mIVCall.setOnClickListener(this);
         mButton.setOnClickListener(this);
@@ -348,7 +343,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         pur_id = mDetailBean.getData().getId();
         send_id = mDetailBean.getData().getUser_id();
 
-        isSelf = (mDetailBean.getData().getUser_id()).equals(sharedUtils.getData(this, Constant.USERID));
+        isSelf = (mDetailBean.getData().getUser_id())
+                .equals(sharedUtils.getData(this, Constant.USERID));
         mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
         mIVFollow.setVisibility(isSelf ? View.GONE : View.VISIBLE);
     }
@@ -363,13 +359,4 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mEditText.setHint("期待您的回复...");
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

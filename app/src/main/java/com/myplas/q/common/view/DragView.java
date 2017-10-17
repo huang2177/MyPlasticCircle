@@ -17,7 +17,6 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -130,10 +129,10 @@ public class DragView extends View {
     public void init(Context context) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DragBubbleView, defStyleAttr, 0);
         mBubbleRadius = ta.getDimension(R.styleable.DragBubbleView_bubbleRadius, AndroidUtil.dp2px(context, 8));
-        mBubbleColor = ta.getColor(R.styleable.DragBubbleView_bubbleColor, Color.WHITE);
+        mBubbleColor = ta.getColor(R.styleable.DragBubbleView_bubbleColor, Color.parseColor("#ff5000"));
         mText = ta.getString(R.styleable.DragBubbleView_text);
         mTextSize = ta.getDimension(R.styleable.DragBubbleView_textSize, AndroidUtil.dp2px(context, 10));
-        mTextColor = ta.getColor(R.styleable.DragBubbleView_textColor, Color.RED);
+        mTextColor = ta.getColor(R.styleable.DragBubbleView_textColor, Color.WHITE);
         mState = STATE_DEFAULT;
         mStatus = 0;
         mCircleRadius = mBubbleRadius;
@@ -247,63 +246,63 @@ public class DragView extends View {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (mState != STATE_DISMISS) {
-                    getParent().requestDisallowInterceptTouchEvent(true);
-                    d = (float) Math.hypot(event.getX() - mBubbleCenterX, event.getY() - mBubbleCenterY);
-                    if (d > mBubbleRadius && d < mBubbleRadius + maxD / 4) {
-                        //当指尖坐标在圆内的时候，才认为是可拖拽的
-                        //一般气泡比较小，增加(maxD/4)像素是为了更轻松的拖拽
-                        mState = STATE_DRAG;
-                    } else {
-                        mState = STATE_DEFAULT;
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (mState != STATE_DEFAULT) {
-                    getParent().requestDisallowInterceptTouchEvent(true);
-                    mBubbleCenterX = event.getX();
-                    mBubbleCenterY = event.getY();
-                    //计算气泡圆心与黏连小球圆心的间距
-                    d = (float) Math.hypot(mBubbleCenterX - mCircleCenterX, mBubbleCenterY - mCircleCenterY);
-//                float d = (float) Math.sqrt(Math.pow(mBubbleCenterX - mCircleCenterX, 2) + Math.pow(mBubbleCenterY - mCircleCenterY, 2));
-                    if (mState == STATE_DRAG) {//如果可拖拽
-                        //间距小于可黏连的最大距离
-                        if (d < maxD - maxD / 4) {//减去(maxD/4)的像素大小，是为了让黏连小球半径到一个较小值快消失时直接消失
-                            mCircleRadius = mBubbleRadius - d / 8;//使黏连小球半径渐渐变小
-                            if (mOnBubbleStateListener != null) {
-                                mOnBubbleStateListener.onDrag();
-                            }
-                        } else {//间距大于于可黏连的最大距离
-                            mState = STATE_MOVE;//改为移动状态
-                            if (mOnBubbleStateListener != null) {
-                                mOnBubbleStateListener.onMove();
-                            }
-                        }
-                    }
-                    invalidate();
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                getParent().requestDisallowInterceptTouchEvent(false);
-                if (mState == STATE_DRAG) {//正在拖拽时松开手指，气泡恢复原来位置并颤动一下
-                    setBubbleRestoreAnim();
-                } else if (mState == STATE_MOVE) {//正在移动时松开手指
-                    //如果在移动状态下间距回到两倍半径之内，我们认为用户不想取消该气泡
-                    if (d < 2 * mBubbleRadius) {//那么气泡恢复原来位置并颤动一下
-                        setBubbleRestoreAnim();
-                    } else {//气泡消失
-                        setBubbleDismissAnim();
-                    }
-                }
-                break;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                if (mState != STATE_DISMISS) {
+//                    getParent().requestDisallowInterceptTouchEvent(true);
+//                    d = (float) Math.hypot(event.getX() - mBubbleCenterX, event.getY() - mBubbleCenterY);
+//                    if (d > mBubbleRadius && d < mBubbleRadius + maxD / 4) {
+//                        //当指尖坐标在圆内的时候，才认为是可拖拽的
+//                        //一般气泡比较小，增加(maxD/4)像素是为了更轻松的拖拽
+//                        mState = STATE_DRAG;
+//                    } else {
+//                        mState = STATE_DEFAULT;
+//                    }
+//                }
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                if (mState != STATE_DEFAULT) {
+//                    getParent().requestDisallowInterceptTouchEvent(true);
+//                    mBubbleCenterX = event.getX();
+//                    mBubbleCenterY = event.getY();
+//                    //计算气泡圆心与黏连小球圆心的间距
+//                    d = (float) Math.hypot(mBubbleCenterX - mCircleCenterX, mBubbleCenterY - mCircleCenterY);
+////                float d = (float) Math.sqrt(Math.pow(mBubbleCenterX - mCircleCenterX, 2) + Math.pow(mBubbleCenterY - mCircleCenterY, 2));
+//                    if (mState == STATE_DRAG) {//如果可拖拽
+//                        //间距小于可黏连的最大距离
+//                        if (d < maxD - maxD / 4) {//减去(maxD/4)的像素大小，是为了让黏连小球半径到一个较小值快消失时直接消失
+//                            mCircleRadius = mBubbleRadius - d / 8;//使黏连小球半径渐渐变小
+//                            if (mOnBubbleStateListener != null) {
+//                                mOnBubbleStateListener.onDrag();
+//                            }
+//                        } else {//间距大于于可黏连的最大距离
+//                            mState = STATE_MOVE;//改为移动状态
+//                            if (mOnBubbleStateListener != null) {
+//                                mOnBubbleStateListener.onMove();
+//                            }
+//                        }
+//                    }
+//                    invalidate();
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                getParent().requestDisallowInterceptTouchEvent(false);
+//                if (mState == STATE_DRAG) {//正在拖拽时松开手指，气泡恢复原来位置并颤动一下
+//                    setBubbleRestoreAnim();
+//                } else if (mState == STATE_MOVE) {//正在移动时松开手指
+//                    //如果在移动状态下间距回到两倍半径之内，我们认为用户不想取消该气泡
+//                    if (d < 2 * mBubbleRadius) {//那么气泡恢复原来位置并颤动一下
+//                        setBubbleRestoreAnim();
+//                    } else {//气泡消失
+//                        setBubbleDismissAnim();
+//                    }
+//                }
+//                break;
+//        }
+//        return false;
+//    }
 
     /**
      * 设置气泡复原的动画

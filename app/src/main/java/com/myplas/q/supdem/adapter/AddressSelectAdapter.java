@@ -1,7 +1,6 @@
 package com.myplas.q.supdem.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.supdem.Beans.TabCofigBean;
+import com.myplas.q.supdem.beans.TabCofigBean;
 
 import java.util.HashMap;
 import java.util.List;

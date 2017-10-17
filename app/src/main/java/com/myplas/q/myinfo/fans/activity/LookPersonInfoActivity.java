@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
+import com.myplas.q.addresslist.beans.ContactSupDemBean;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.BigImageViewActivity;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.myinfo.fans.adapter.LookPersonSupDemAdapter;
-import com.myplas.q.myinfo.beans.PersonSupplyDemadBean;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ public class LookPersonInfoActivity extends BaseActivity implements View.OnClick
     private ImageView image_rz, image_tx;
     private TextView text_name, text_gs, text_dh, textView_title;
     private SharedUtils sharedUtils;
-    private List<PersonSupplyDemadBean.DataBean> list;
+    private List<ContactSupDemBean.DataBean> list;
     private ListView myListview_supply;
-    private PersonSupplyDemadBean personinfo;
+    private ContactSupDemBean personinfo;
     private LookPersonSupDemAdapter p_adapter;
 
     @Override
@@ -51,7 +51,7 @@ public class LookPersonInfoActivity extends BaseActivity implements View.OnClick
         text_dh = f(R.id.lookperson_tel);
         text_gs = f(R.id.lookperson_company);
         myListview_supply = f(R.id.personinfo_more_supply_listview);
-        personinfo = (PersonSupplyDemadBean) getIntent().getSerializableExtra("bean");
+        personinfo = (ContactSupDemBean) getIntent().getSerializableExtra("bean");
         if (personinfo != null) {
             showInfo(personinfo);
         }
@@ -74,7 +74,7 @@ public class LookPersonInfoActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    public void showInfo(PersonSupplyDemadBean mySelfInfo) {
+    public void showInfo(ContactSupDemBean mySelfInfo) {
         try {
             Glide.with(this).load(mySelfInfo.getData().get(0).getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(image_tx);
             if (mySelfInfo.getData().get(0).getIs_pass().equals("0")) {

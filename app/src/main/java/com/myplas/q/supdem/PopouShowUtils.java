@@ -2,7 +2,6 @@ package com.myplas.q.supdem;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +14,13 @@ import android.widget.PopupWindow;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.SystemUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
-import com.myplas.q.supdem.Beans.TabCofigBean;
+import com.myplas.q.supdem.beans.TabCofigBean;
 import com.myplas.q.supdem.adapter.AddressSelectAdapter;
 import com.myplas.q.supdem.adapter.TimeSelectAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static com.umeng.analytics.pro.x.I;
-import static com.umeng.analytics.pro.x.b;
 
 
 /**

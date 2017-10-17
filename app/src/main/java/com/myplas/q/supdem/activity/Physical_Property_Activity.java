@@ -3,7 +3,6 @@ package com.myplas.q.supdem.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,7 +12,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.supdem.Beans.PhysicalBean;
+import com.myplas.q.supdem.beans.PhysicalBean;
 import com.myplas.q.supdem.adapter.Physical_Property_Adapter;
 
 import org.json.JSONObject;

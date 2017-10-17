@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.supdem.BaseInterFace;
-import com.myplas.q.supdem.Beans.ReplyBean;
+import com.myplas.q.supdem.beans.ReplyBean;
 
 import java.util.List;
 

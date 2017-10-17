@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.androidkun.xtablayout.XTabLayout;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
@@ -235,14 +236,14 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
             }
             //已经消耗积分
             if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, PersonInfoActivity.class);
+                Intent intent = new Intent(this, Contact_Detail_Activity.class);
                 intent.putExtra("userid", userid);
                 intent.putExtra("id", userid);
                 startActivity(intent);
             }
             //减积分成功
             if (type == 2 && err.equals("0")) {
-                Intent intent = new Intent(this, PersonInfoActivity.class);
+                Intent intent = new Intent(this, Contact_Detail_Activity.class);
                 intent.putExtra("userid", userid);
                 intent.putExtra("id", userid);
                 startActivity(intent);

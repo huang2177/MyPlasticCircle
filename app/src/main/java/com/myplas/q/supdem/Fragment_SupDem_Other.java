@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -23,11 +24,11 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.XListView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.myinfo.fans.activity.PersonInfoActivity;
+import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
 import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
 import com.myplas.q.release.ReleaseActivity;
-import com.myplas.q.supdem.Beans.ConfigData;
-import com.myplas.q.supdem.Beans.SupDemBean;
+import com.myplas.q.supdem.beans.ConfigData;
+import com.myplas.q.supdem.beans.SupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
 
@@ -56,6 +57,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
 
     private View view;
     private XListView mListView;
+    private MainActivity mainActivity;
     private LinearLayout linearLayout_prompt;
     private List<SupDemBean.DataBean> mDataBeanList;
 
@@ -157,7 +159,8 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
         switch (v.getId()) {
             case R.id.supply_demand_follow:
                 if (follow_release.equals("follow")) {
-                    MainActivity.firstInto();
+                    mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
+                    mainActivity.firstInto();
                 } else {
                     startActivity(new Intent(getActivity(), ReleaseActivity.class));
                 }
@@ -259,14 +262,14 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
             }
             //已经消费了积分
             if (type == 2 && result.equals("0")) {
-                Intent intent = new Intent(getActivity(), PersonInfoActivity.class);
+                Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
                 intent.putExtra("userid", user_id);
                 intent.putExtra("id", user_id);
                 startActivity(intent);
             }
             //减积分成功
             if (type == 3 && result.equals("0")) {
-                Intent intent = new Intent(getActivity(), PersonInfoActivity.class);
+                Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
                 intent.putExtra("userid", user_id);
                 intent.putExtra("id", user_id);
                 startActivity(intent);

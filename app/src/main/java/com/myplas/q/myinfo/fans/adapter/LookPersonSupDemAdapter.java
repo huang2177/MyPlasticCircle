@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.myinfo.beans.PersonSupplyDemadBean;
+import com.myplas.q.addresslist.beans.ContactSupDemBean;
 
 import java.util.List;
 
@@ -22,10 +22,10 @@ import java.util.List;
  */
 public class LookPersonSupDemAdapter extends BaseAdapter {
     Context context;
-    List<PersonSupplyDemadBean.DataBean> list;
+    List<ContactSupDemBean.DataBean> list;
     String type;
 
-    public LookPersonSupDemAdapter(Context context, List<PersonSupplyDemadBean.DataBean> list, String type) {
+    public LookPersonSupDemAdapter(Context context, List<ContactSupDemBean.DataBean> list, String type) {
         this.context = context;
         this.list = list;
         this.type=type;

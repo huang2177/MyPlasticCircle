@@ -2,14 +2,11 @@ package com.myplas.q.headlines;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +23,6 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
-import com.myplas.q.common.view.RefreshPopou;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.Cate_Dialog_Activtiy;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.adapter.HeadLineViewPagerAdapter;
@@ -44,7 +39,8 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_HeadLines extends Fragment implements View.OnClickListener, HeadLineListFragment.Myinterface {
+public class Fragment_HeadLines extends Fragment implements View.OnClickListener
+        , HeadLineListFragment.Myinterface {
     private Handler handler;
     private String keywords;
     private int currentItem;
@@ -56,7 +52,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private GridView gridView;
     private EditText editText;
     private LinearLayout mLayoutTitle;
-    private RefreshPopou mRefreshPopou;
     private CustomPopupWindow popupWindow;
     private TextView search_src_text, textView_refresh;
     private HeadLineViewPagerAdapter mViewPagerAdapter;
@@ -179,13 +174,9 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
 
     //展示刷新后的popou
     @Override
-    public void callBack(String hotSearch, String content, boolean isRefresh) {
-        if (isRefresh) {
-            mFragments.get(currentItem).isRefresh = false;
-            mRefreshPopou = new RefreshPopou(getActivity(), 1);
-            mRefreshPopou.show(mTabLayout, content);
+    public void callBack(String hotSearch, String content) {
+        mFragments.get(currentItem).mRefreshPopou.show(mTabLayout, content);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
-        }
         //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
@@ -203,8 +194,9 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
-        if (mRefreshPopou != null) {
-            mRefreshPopou.dismiss();
+        if (mFragments != null
+                && mFragments.get(currentItem).mRefreshPopou != null) {
+            mFragments.get(currentItem).mRefreshPopou.dismiss();
         }
     }
 

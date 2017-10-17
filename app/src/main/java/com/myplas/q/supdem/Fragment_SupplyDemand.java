@@ -4,14 +4,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +29,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.CustomPopupWindow;
-import com.myplas.q.common.view.RefreshPopou;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.supdem.Beans.ConfigData;
+import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.activity.SupDem_Search_Activity;
 import com.myplas.q.supdem.adapter.SupDem_ViewPager_Adapter;
 import com.umeng.analytics.MobclickAgent;
@@ -49,7 +44,8 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_SupplyDemand extends Fragment implements View.OnClickListener, Fragment_SupDem_All.RefreshPopouInterface {
+public class Fragment_SupplyDemand extends Fragment implements View.OnClickListener
+        , Fragment_SupDem_All.RefreshPopouInterface {
     private Handler handler;
     private Resources resources;
 
@@ -70,7 +66,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private HIndicatorDialog dialog;
-    private RefreshPopou refreshPopou;
+
     private Fragment_SupDem_All mFragmentAll;
     private SupDem_ViewPager_Adapter mViewPagerAdapter;
 
@@ -195,21 +191,25 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     }
 
     private void getChirldData(int position, boolean isShowLoading) {
-        if (mFragments != null) {
-            if (position == 0) {
-                if (mFragmentAll != null) {
-                    mFragmentAll.page = 1;
-                    mFragmentAll.type = sType;
-                    mFragmentAll.getNetData("1", isShowLoading);
-                }
-            } else {
-                Fragment_SupDem_Other fragmentO = ((Fragment_SupDem_Other) mFragments.get(position));
-                if (fragmentO != null) {
-                    fragmentO.page = 1;
-                    fragmentO.type = sType;
-                    fragmentO.getNetData("1", isShowLoading);
+        try {
+            if (mFragments != null) {
+                if (position == 0) {
+                    if (mFragmentAll != null) {
+                        mFragmentAll.page = 1;
+                        mFragmentAll.type = sType;
+                        mFragmentAll.getNetData("1", isShowLoading);
+                    }
+                } else {
+                    Fragment_SupDem_Other fragmentO = ((Fragment_SupDem_Other) mFragments.get(position));
+                    if (fragmentO != null) {
+                        fragmentO.page = 1;
+                        fragmentO.type = sType;
+                        fragmentO.getNetData("1", isShowLoading);
+                    }
                 }
             }
+        } catch (Exception e) {
+            Log.e("------", e.toString() + "--");
         }
     }
 
@@ -233,13 +233,9 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 
     //展示刷新多少数据的popou
     @Override
-    public void showRefreshPopou(String hotSearch, String content, boolean isRefresh) {
-        if (isRefresh) {
-            mFragmentAll.isRefresh = false;
-            refreshPopou = new RefreshPopou(getActivity(), 3);
-            refreshPopou.show(mTabLayout, content);
+    public void showRefreshPopou(String hotSearch, String content) {
+        mFragmentAll.refreshPopou.show(mTabLayout, content);
 //            TextUtils.topTSnackbar(editText, (TextUtils.isNullOrEmpty(s)) ? (s) : ("已是最新头条信息！"));
-        }
         //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
@@ -294,8 +290,8 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
-        if (refreshPopou != null) {
-            refreshPopou.dismiss();
+        if (mFragmentAll.refreshPopou != null) {
+            mFragmentAll.refreshPopou.dismiss();
         }
     }
 

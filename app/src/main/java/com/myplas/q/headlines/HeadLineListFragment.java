@@ -28,16 +28,17 @@ import com.huangbryant.hbanner.view.TagImageView;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.AndroidUtil;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyNestedScrollView;
+import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.headlines.adapter.CateListAdapter;
@@ -58,9 +59,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         , CommonDialog.DialogShowInterface
         , MyNestedScrollView.onScrollIterface
         , SwipeRefreshLayout.OnRefreshListener {
+    public boolean isFree;
     public String keywords1;
     private SharedUtils sharedUtils;
-    public boolean isRefresh, isFree;
     public String cate_id, keywords, clickId;
     public int page, po, visibleItemCount, lastvisibleItemCount;
 
@@ -69,6 +70,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     private EmptyView emptyView;
     private View view, mHeadView;
     private ImageView mBannerImg;
+    public RefreshPopou mRefreshPopou;
     private MyNestedScrollView mScrollView;
     private CateListAdapter cateListAdapter;
     private SwipeRefreshLayout mRefreshLayout;
@@ -95,7 +97,6 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     }
 
     private void intiView() {
-        isRefresh = false;
         mHandler = new Handler();
         mListId = new ArrayList<>();
         mListImg = new ArrayList<>();
@@ -106,6 +107,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         mACache = ACache.get(getActivity());
         emptyView = new EmptyView(getActivity());
         sharedUtils = SharedUtils.getSharedUtils();
+        mRefreshPopou = new RefreshPopou(getActivity(), 1);
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_headline_list_fm, null, false);
         imageButton = (ImageButton) view.findViewById(R.id.img_reload);
@@ -285,23 +287,22 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
 
                         //展示刷新后的popou
                         mMyinterface.callBack(cateListBean.getHot_search()
-                                , cateListBean.getShow_msg()
-                                , isRefresh);
+                                , cateListBean.getShow_msg());
 
                     } else {
-                        isRefresh = false;
+                        mRefreshPopou.setCanShowPopou(false);
                         list_catelist.addAll(cateListBean.getInfo());
                         cateListAdapter.setList(list_catelist);
                         cateListAdapter.notifyDataSetChanged();
                     }
                 } else if (err.equals("1") || "998".equals(err)) {
-                    isRefresh = false;
+                    mRefreshPopou.setCanShowPopou(false);
                     mRefreshLayout.setRefreshing(false);
                     sharedUtils.setData(getActivity(), "token", "");
                     sharedUtils.setData(getActivity(), "userid", "");
                     sharedUtils.setBooloean(getActivity(), "logined", false);
                 } else {
-                    isRefresh = false;
+                    mRefreshPopou.setCanShowPopou(false);
                     if (page == 1) {
                         mRefreshLayout.setRefreshing(false);
                         imageButton_backup.setVisibility(View.GONE);
@@ -349,26 +350,25 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
 
                     //展示刷新后的popou
                     mMyinterface.callBack(subcribleBean.getHot_search()
-                            , subcribleBean.getShow_msg()
-                            , isRefresh);
+                            , subcribleBean.getShow_msg());
 
                     //显示banner
                     mBeanList = subcribleBean.getBanner();
                     initBanner(mBeanList);
                 } else {
-                    isRefresh = false;
+                    mRefreshPopou.setCanShowPopou(false);
                     list_subcirble.addAll(subcribleBean.getData());
                     mSubcribleAdapter.setList(list_subcirble);
                     mSubcribleAdapter.notifyDataSetChanged();
                 }
             } else if (err.equals("1") || "998".equals(err)) {
-                isRefresh = false;
                 mRefreshLayout.setRefreshing(false);
+                mRefreshPopou.setCanShowPopou(false);
                 sharedUtils.setData(getActivity(), "token", "");
                 sharedUtils.setData(getActivity(), "userid", "");
                 sharedUtils.setBooloean(getActivity(), "logined", false);
             } else {
-                isRefresh = false;
+                mRefreshPopou.setCanShowPopou(false);
                 if (page == 1) {
                     mRefreshLayout.setRefreshing(false);
                     imageButton_backup.setVisibility(View.GONE);
@@ -408,7 +408,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     @Override
     public void onRefresh() {
         page = 1;
-        isRefresh = true;
+        mRefreshPopou.setCanShowPopou(true);
         if (po == 0) {
             get_Subscribe(page, "", "2", false);
         } else {
@@ -452,7 +452,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     }
 
     interface Myinterface {
-        void callBack(String hotSearch, String content, boolean isRefresh);
+        void callBack(String hotSearch, String content);
     }
 
     public void setMyinterface(Myinterface mMyinterface) {

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -66,6 +67,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     private ScrollView mScrollView;
 
     private String clickId;
+    private MainActivity mMainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         mHandler = new Handler();
         resources = getResources();
         sharedUtils = SharedUtils.getSharedUtils();
+        mMainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
 
         textView_content = F(R.id.hot_search);
         imageView_btn_last = F(R.id.btn_last);
@@ -274,26 +277,25 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 clearColor();
                 imageView_gq.setImageResource(R.drawable.tabbar_tradehl);
                 textView_gq.setTextColor(resources.getColor(R.color.color_red));
-                MainActivity.goToSupDem();
+                mMainActivity.goToSupDem();
                 break;
             case R.id.buttom_linear_txl:
                 finish();
                 clearColor();
                 imageView_txl.setImageResource(R.drawable.tabbar_contactshl);
                 textView_txl.setTextColor(resources.getColor(R.color.color_red));
-                MainActivity.firstInto();
+                mMainActivity.firstInto();
                 break;
             case R.id.buttom_linear_fx:
                 finish();
-                firstInto();
-                MainActivity.goToHeadLine();
+                mMainActivity.goToHeadLine();
                 break;
             case R.id.buttom_linear_wd:
                 finish();
                 clearColor();
                 imageView_wd.setImageResource(R.drawable.tabbar_mehl);
                 textView_wd.setTextColor(resources.getColor(R.color.color_red));
-                MainActivity.goToMySelf();
+                mMainActivity.goToMySelf();
                 break;
             case R.id.buttom_linear_jia:
                 finish();

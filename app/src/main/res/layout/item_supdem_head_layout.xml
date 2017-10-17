@@ -5,7 +5,7 @@
               android:layout_height="wrap_content"
               android:background="@color/color_white"
               android:orientation="vertical"
-              android:visibility="visible">
+              android:visibility="gone">
 
     <LinearLayout
         android:id="@+id/supply_demand_company"

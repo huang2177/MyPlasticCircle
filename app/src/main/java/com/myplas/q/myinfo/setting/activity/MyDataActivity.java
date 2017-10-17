@@ -37,6 +37,7 @@ import java.util.Map;
  */
 public class MyDataActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
 
+    private IntentFilter mFilter;
     private MyReceiver myReceiver;
 
     private int regionPosition;
@@ -46,34 +47,34 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private String sexInPut, regionInPut;
     private String type, address, addressId, sex, region, product, monthUse, mainPro, model;
 
-    private ImageView image_shch;
     private MyImageView image_tx;
+    private ImageView image_shch, cardMore, headMore;
     private RadioGroup radioGroup_sex, radioGroup_address;
     private LinearLayout ll_pro_month, ll_add, ll_sex, ll_region, ll_pro, ll_mothonuse, ll_mainsell, ll_mode;
     private TextView text_xb, textView_dzh, text_gs, text_dh, textView_zhy, textView_ph, textView_num, textView_product,
             textView_address, textView_company, my_main_prod, my_main_prod_save;
+
+    private boolean isFromContact;
+    private final String ACTION = "com.broadcast.databack";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_seeting_data);
         initTileBar();
-        setTitle("个人信息");
+        setTitle("个人资料");
         initView();
-        requestNetData();
     }
 
     public void initView() {
-        //注册广播；
-        myReceiver = new MyReceiver();
-        IntentFilter filter = new IntentFilter("com.broadcast.databack");
-        registerReceiver(myReceiver, filter);
-
         map = new HashMap<String, String>();
         sharedUtils = SharedUtils.getSharedUtils();
+        isFromContact = getIntent().getStringExtra("userid") == null ? false : true;
 
         text_gs = F(R.id.wd_zl_gs);
         text_dh = F(R.id.wd_zl_tel);
+        cardMore = F(R.id.data_img_card);
+        headMore = F(R.id.data_head_card);
         image_tx = F(R.id.wd_zl_text_headimg);
         image_shch = F(R.id.wd_zl_text_upload);
 
@@ -96,17 +97,36 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         ll_mainsell = F(R.id.setting_data_mainsell);
         ll_mothonuse = F(R.id.setting_data_monthlyuse);
 
-        image_tx.setOnClickListener(this);
-        image_shch.setOnClickListener(this);
-        ll_mode.setOnClickListener(this);
-        ll_sex.setOnClickListener(this);
-        ll_pro.setOnClickListener(this);
-        ll_add.setOnClickListener(this);
-        ll_region.setOnClickListener(this);
-        ll_mainsell.setOnClickListener(this);
-        ll_pro_month.setOnClickListener(this);
-        ll_mothonuse.setOnClickListener(this);
+        if (!isFromContact) {
+            requestNetData();
 
+            setTitle("个人信息");
+            cardMore.setVisibility(View.VISIBLE);
+            headMore.setVisibility(View.VISIBLE);
+            text_xb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            textView_ph.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            textView_num.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            textView_zhy.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            textView_dzh.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            textView_address.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            textView_product.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+
+            //注册广播；
+            myReceiver = new MyReceiver();
+            mFilter = new IntentFilter(ACTION);
+            registerReceiver(myReceiver, mFilter);
+
+            ll_add.setOnClickListener(this);
+            ll_sex.setOnClickListener(this);
+            ll_pro.setOnClickListener(this);
+            ll_mode.setOnClickListener(this);
+            image_tx.setOnClickListener(this);
+            ll_region.setOnClickListener(this);
+            image_shch.setOnClickListener(this);
+            ll_mainsell.setOnClickListener(this);
+            ll_pro_month.setOnClickListener(this);
+            ll_mothonuse.setOnClickListener(this);
+        }
     }
 
 
@@ -400,7 +420,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     public class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("com.broadcast.databack")) {
+            if (intent.getAction().equals(ACTION)) {
                 String type = intent.getStringExtra("type");
                 String data = intent.getStringExtra("updateData");
                 if (type.equals("0")) {
@@ -416,26 +436,17 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 } else {
                     address = data;
                     addressId = intent.getStringExtra("addressId");
-                    Log.e("******", addressId + "----");
                     saveData();
                 }
             }
         }
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(myReceiver);
+        if (myReceiver != null) {
+            unregisterReceiver(myReceiver);
+        }
     }
 }

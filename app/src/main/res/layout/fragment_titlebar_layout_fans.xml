@@ -36,7 +36,7 @@
     <View
         android:layout_width="1px"
         android:layout_height="match_parent"
-        android:background="@color/color_gray_divider_in"></View>
+        android:background="@color/color_gray_divider_in"/>
 
     <LinearLayout
         android:id="@+id/wd_linear_follow"

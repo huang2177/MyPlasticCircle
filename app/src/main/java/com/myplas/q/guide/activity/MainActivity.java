@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -23,8 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.addresslist.Fragment_Conact;
+import com.myplas.q.addresslist.Fragment_Contact;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.ActivityManager;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.SharedUtils;
@@ -32,14 +35,19 @@ import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.common.view.CommonDialog;
+import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.Fragment_HeadLines;
 import com.myplas.q.myinfo.Fragment_MySelf;
 import com.myplas.q.myinfo.login.LoginActivity;
 import com.myplas.q.release.ReleaseActivity;
+import com.myplas.q.sockethelper.RabbitMQCallBack;
+import com.myplas.q.sockethelper.RabbitMQConfig;
+import com.myplas.q.sockethelper.RabbitMQHelper;
+import com.myplas.q.sockethelper.Result;
 import com.myplas.q.supdem.Fragment_SupplyDemand;
-import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
+import com.myplas.q.appupdate.VersionUpdateDialogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -49,8 +57,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener, VersionUpdateDialogUtils.VersionUpdateInterface,
-        ResultCallBack, ViewPager.OnPageChangeListener, CommonDialog.DialogShowInterface {
+public class MainActivity extends FragmentActivity implements View.OnClickListener
+        , ResultCallBack
+        , RabbitMQCallBack
+        , CommonDialog.DialogShowInterface
+        , VersionUpdateDialogUtils.VersionUpdateInterface {
 
     private boolean logined;
     private String promit, url;
@@ -60,69 +71,44 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private int versionService, versionLocate;
 
 
-    private Button button_ok;
-    private Dialog normalDialog;
     private ImageView mIVRelease;
-    public static MyViewPager viewPager;
+    private MyViewPager viewPager;
     private List<Fragment> fragmentlist;
     private Fragment_MySelf fragment_wd;
+    private Fragment_Contact fragment_txl;
     private Fragment_HeadLines fragment_fx;
-
     private Fragment_SupplyDemand fragment_gq;
-    private Fragment_Conact fragment_txl;
-    private MyReciver_AcitivityFinish myReciver;
+
     private ViewPager_Adapter viewPager_adapter;
-    private static TextView textView_gq, textView_wd, textView_fx, textView_txl;
-    private static ImageView imageView_gq, imageView_wd, imageView_fx, imageView_txl;
+    private TextView textView_gq, textView_wd, textView_fx, textView_txl;
+    private ImageView imageView_gq, imageView_wd, imageView_fx, imageView_txl;
     private LinearLayout layout_gq, layout_txl, layout_jia, layout_fx, layout_wd;
 
-    protected boolean useStatusBarColor = false;//是否使用状态栏文字和图标为暗色，如果状态栏采用了白色系，则需要使状态栏和图标为暗色，android6.0以上可以设置
-    protected boolean useThemestatusBarColor = false;//是否使用特殊的标题栏背景颜色，android5.0以上可以设置状态栏背景色，如果不使用则使用透明色值
-
     private VersionUpdateDialogUtils mUpdateDialogUtils;
+    private DragView mMsgContact, mMsgSupDem, mMsgMySelf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StatusUtils.getStatusBarHeight(this);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(false, this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_main);
-        StatusUtils.setStatusBar(this, false, false);
-        initView();
-        firstInto();
-        getVersion();
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        if (!sharedUtils.getBoolean(this, "isrequest")) {
-            checkPermission();
-        }
-    }
+        ActivityManager.addActivity(this);
 
-    public void checkPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS,
-                    Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW,
-                    Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
-            ActivityCompat.requestPermissions(this, mPermissionList, 100);
-        }
+        initView();
     }
 
     public void initView() {
-        //注册广播；
-        myReciver = new MyReciver_AcitivityFinish();
-        IntentFilter filter = new IntentFilter("com.broadcast.test");
-        registerReceiver(myReciver, filter);
-
-        //保存首页是否显示图层的标签
-        sharedUtils = SharedUtils.getSharedUtils();
-        viewPager = F(R.id.viewpager_main);
-        fragmentlist = new ArrayList<Fragment>();
         resources = getResources();
+        fragmentlist = new ArrayList<Fragment>();
+        sharedUtils = SharedUtils.getSharedUtils();
+
+        viewPager = F(R.id.viewpager_main);
         layout_gq = F(R.id.buttom_linear_gq);
-        layout_txl = F(R.id.buttom_linear_txl);
-        layout_jia = F(R.id.buttom_linear_jia);
         layout_wd = F(R.id.buttom_linear_wd);
         layout_fx = F(R.id.buttom_linear_fx);
+        layout_txl = F(R.id.buttom_linear_txl);
+        layout_jia = F(R.id.buttom_linear_jia);
 
         mIVRelease = F(R.id.buttom_img_jia);
         imageView_fx = F(R.id.buttom_img_fx);
@@ -132,8 +118,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         textView_fx = F(R.id.buttom_text_fx);
         textView_gq = F(R.id.buttom_text_gq);
-        textView_txl = F(R.id.buttom_text_txl);
         textView_wd = F(R.id.buttom_text_wd);
+        textView_txl = F(R.id.buttom_text_txl);
+
+        mMsgSupDem = F(R.id.dragview_supdem);
+        mMsgMySelf = F(R.id.dragview_myself);
+        mMsgContact = F(R.id.dragview_contact);
 
         layout_fx.setOnClickListener(this);
         layout_wd.setOnClickListener(this);
@@ -141,10 +131,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         layout_txl.setOnClickListener(this);
         layout_gq.setOnClickListener(this);
 
+        fragment_txl = new Fragment_Contact();
+        fragmentlist.add(fragment_txl);
         fragment_fx = new Fragment_HeadLines();
         fragmentlist.add(fragment_fx);
-        fragment_txl = new Fragment_Conact();
-        fragmentlist.add(fragment_txl);
         fragment_gq = new Fragment_SupplyDemand();
         fragmentlist.add(fragment_gq);
         fragment_wd = new Fragment_MySelf();
@@ -152,43 +142,46 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         viewPager_adapter = new ViewPager_Adapter(getSupportFragmentManager(), fragmentlist);
         viewPager.setAdapter(viewPager_adapter);
-        viewPager.setOnPageChangeListener(this);
         sharedUtils.setBooloean(this, "isshow", true);
 
+        firstInto();
+        getVersion();
+        RabbitMQHelper.getInstance(this).setResultCallBack(this);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        if (!sharedUtils.getBoolean(this, "isrequest")) {
+            checkPermission();
+        }
     }
 
     @Override
     public void onClick(View v) {
-        logined = sharedUtils.getBoolean(this, "logined");
-        if (logined) {
-            switch (v.getId()) {
-                case R.id.buttom_linear_gq:
-                    goToSupDem();
-                    break;
-                case R.id.buttom_linear_txl:
-                    firstInto();
-                    break;
-                case R.id.buttom_linear_fx:
-                    goToHeadLine();
-                    break;
-                case R.id.buttom_linear_wd:
-                    goToMySelf();
-                    break;
-                case R.id.buttom_linear_jia:
-                    Intent intent = new Intent(this, ReleaseActivity.class);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this
-                                , mIVRelease
-                                , "sharedView_Release");
-                        startActivity(intent, options.toBundle());
-                    } else {
-                        startActivity(intent);
-                    }
-                    break;
-            }
-        } else {
-            CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(this, fragment_txl.content, 4, this);
+        if (!checkIsLogin()) {
+            return;
+        }
+        switch (v.getId()) {
+            case R.id.buttom_linear_gq:
+                goToSupDem();
+                break;
+            case R.id.buttom_linear_txl:
+                firstInto();
+                break;
+            case R.id.buttom_linear_fx:
+                goToHeadLine();
+                break;
+            case R.id.buttom_linear_wd:
+                goToMySelf();
+                break;
+            case R.id.buttom_linear_jia:
+                Intent intent = new Intent(this, ReleaseActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this
+                            , mIVRelease
+                            , "sharedView_Release");
+                    startActivity(intent, options.toBundle());
+                } else {
+                    startActivity(intent);
+                }
+                break;
         }
     }
 
@@ -196,8 +189,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return (T) findViewById(id);
     }
 
-
-    public static void clearColor() {
+    public void clearColor() {
         imageView_wd.setImageResource(R.drawable.tabbar_me);
         imageView_gq.setImageResource(R.drawable.tabbar_trade);
         imageView_fx.setImageResource(R.drawable.tabbar_headlines);
@@ -209,63 +201,45 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         textView_gq.setTextColor(resources.getColor(R.color.color_gray));
     }
 
+
     //通讯录
-    public static void firstInto() {
+    public void firstInto() {
         clearColor();
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(0);
         imageView_txl.setImageResource(R.drawable.tabbar_contactshl);
         textView_txl.setTextColor(resources.getColor(R.color.color_red));
     }
 
+    //头条
+    public void goToHeadLine() {
+        clearColor();
+        viewPager.setCurrentItem(1);
+        imageView_fx.setImageResource(R.drawable.tabbar_headlines_hl);
+        textView_fx.setTextColor(resources.getColor(R.color.color_red));
+    }
     //供求
-    public static void goToSupDem() {
+    public void goToSupDem() {
         clearColor();
         viewPager.setCurrentItem(2);
         imageView_gq.setImageResource(R.drawable.tabbar_tradehl);
         textView_gq.setTextColor(resources.getColor(R.color.color_red));
     }
-
-    //头条
-    public static void goToHeadLine() {
-        clearColor();
-        viewPager.setCurrentItem(0);
-        imageView_fx.setImageResource(R.drawable.tabbar_headlines_hl);
-        textView_fx.setTextColor(resources.getColor(R.color.color_red));
-    }
-
     //我的
-    public static void goToMySelf() {
+    public void goToMySelf() {
         clearColor();
         viewPager.setCurrentItem(3);
         imageView_wd.setImageResource(R.drawable.tabbar_mehl);
         textView_wd.setTextColor(resources.getColor(R.color.color_red));
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (!fragment_txl.onKeyDown()) {
-                exit();
-                return true;
-            } else {
-                return fragment_txl.onKeyDown();
-            }
-        } else {
-            return super.onKeyDown(keyCode, event);
+    /*检查是否登录*/
+    private boolean checkIsLogin() {
+        boolean logined = sharedUtils.getBoolean(this, Constant.LOGINED);
+        if (!logined) {
+            CommonDialog commonDialog = new CommonDialog();
+            commonDialog.showDialog(this, fragment_txl.content.toString(), 4, this);
         }
-    }
-
-    public void exit() {
-        if ((System.currentTimeMillis() - exitTime) > 2500) {
-            TextUtils.Toast(getApplicationContext(), "再按一次塑料圈通讯录!");
-            exitTime = System.currentTimeMillis();
-        } else {
-            //moveTaskToBack(false);
-            finish();
-            System.exit(0);
-            viewPager.removeAllViews();
-            MobclickAgent.onKillProcess(this);
-        }
+        return logined;
     }
 
     @Override
@@ -313,38 +287,64 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         exit();
     }
 
-    //其他页面返回来的跳转
-    class MyReciver_AcitivityFinish extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                if (intent.getAction().equals("com.broadcast.test")) {
-                    String data = intent.getStringExtra("data");
-                    String what = intent.getStringExtra("what");
-                    clearColor();
-                    if (data.equals("0")) {//通讯录
-                        firstInto();
-                        fragment_txl.getNetData("1", "", "0", "0", true);
-                    } else {//供求
-                        if (what.equals("1")) {
-                            goToSupDem();
-                            fragment_gq.refreshData(1);
-                        } else if (what.equals("4")) {
-                            goToSupDem();
-                            fragment_gq.refreshData(4);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-            }
+    /*rabbitmq*/
+    @Override
+    public void r_Callback(Result result) {
+        Log.e("2222222", "====");
+//        mMsgMySelf.setText();
+//        mMsgSupDem.setText();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            sharedUtils.setBooloean(this, "isrequest", true);
         }
     }
 
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2500) {
+            TextUtils.Toast(getApplicationContext(), "再按一次塑料圈通讯录!");
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+            viewPager.removeAllViews();
+            MobclickAgent.onKillProcess(this);
+            RabbitMQConfig.getInstance(this).closed();
+        }
+    }
+
+    public void checkPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.READ_LOGS
+                    , Manifest.permission.CALL_PHONE
+                    , Manifest.permission.GET_ACCOUNTS
+                    , Manifest.permission.SET_DEBUG_APP
+                    , Manifest.permission.READ_PHONE_STATE
+                    , Manifest.permission.SYSTEM_ALERT_WINDOW
+                    , Manifest.permission.ACCESS_FINE_LOCATION
+                    , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    , Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(this, mPermissionList, 100);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(myReciver);
         if (mUpdateDialogUtils != null) {
             mUpdateDialogUtils.unregisterReceiver();
         }
@@ -358,47 +358,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        try {
-            switch (position) {
-                case 0:
-                    //fragment_fx.get_Subscribe("1", "", "2",true);
-                    StatusUtils.setStatusTextColor(false, this);
-                    break;
-                case 1:
-                    // fragment_txl.getNetData("1", "", "0", "0", true);
-                    StatusUtils.setStatusTextColor(false, this);
-                    break;
-                case 2:
-                    //fragment_gq.initData();
-                    StatusUtils.setStatusTextColor(false, this);
-                    break;
-                case 3:
-                    //fragment_wd.getLoginInfo();
-                    StatusUtils.setStatusTextColor(true, this);
-                    break;
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 100) {
-            sharedUtils.setBooloean(this, "isrequest", true);
-        }
     }
 }
 

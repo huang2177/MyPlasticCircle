@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,7 +19,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.ShareActivity;
-import com.myplas.q.supdem.Beans.PhysicalDetailBean;
+import com.myplas.q.supdem.beans.PhysicalDetailBean;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;

@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.view.CommonDialog;
@@ -33,6 +34,7 @@ import com.myplas.q.myinfo.setting.activity.FindPSWActivity;
 import com.myplas.q.myinfo.setting.activity.HelpActivity;
 import com.myplas.q.myinfo.setting.activity.MessageActivity;
 import com.myplas.q.myinfo.setting.activity.MyDataActivity;
+import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.umeng.analytics.MobclickAgent;
@@ -64,6 +66,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Com
 
     private MySelfInfo mySelfInfo;
     private SharedUtils sharedUtils;
+    private MainActivity mainActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -196,7 +199,10 @@ public class SettingActivity extends BaseActivity implements ResultCallBack, Com
                     sharedUtils.setBooloean(this, "logined", false);
                     sharedUtils.setData(this, "token", "");
                     sharedUtils.setData(this, "userid", "");
-                    MainActivity.firstInto();
+                    RabbitMQConfig.getInstance(this).closed();
+
+                    mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
+                    mainActivity.firstInto();
                     finish();
                 }
             }

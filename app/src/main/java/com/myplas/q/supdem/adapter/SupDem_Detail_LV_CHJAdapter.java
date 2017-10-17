@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.supdem.Beans.DeliverPriceBean;
+import com.myplas.q.supdem.beans.DeliverPriceBean;
 
 import java.util.List;
 

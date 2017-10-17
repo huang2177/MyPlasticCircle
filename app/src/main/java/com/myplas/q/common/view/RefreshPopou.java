@@ -46,6 +46,7 @@ public class RefreshPopou implements View.OnTouchListener {
 
     public void show(View locationView, String content) {
         if (canShowPopou) {
+            canShowPopou = false;
             if (mPopupWindow == null) {
                 View view = View.inflate(mContext, R.layout.layout_refresh_popou, null);
                 mDismissView = view.findViewById(R.id.refresh_view);

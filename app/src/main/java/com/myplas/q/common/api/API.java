@@ -11,7 +11,7 @@ import com.myplas.q.BuildConfig;
 public class API {
     /*base url*/
     public final static String BASEURL = (BuildConfig.API_ENV)
-            ? ("https://api.myplas.com/qapi_3/")
+            ? ("https://api.myplas.com/qapi_4/")
             : ("https://ssl.myplas.com/qapi_4/");
     //正式_快速登陆
     public final static String BASEURL_API = "https://api.myplas.com/";
@@ -39,6 +39,16 @@ public class API {
     public final static String SAVE_SHARE_LOG = "wechat/saveShareLog";
 
 
+    /*socket*/
+    //rabbitmq链接配置文件
+    public final static String INIT = "socket/init";
+    //rabbitmq链接关闭后回调通知服务器
+    public final static String CLOSED = "socket/closed";
+    //rabbitmq链接成功后回调通知服务器
+    public final static String CONNECTED = "socket/connected";
+    //更新已读的红点推送
+    public final static String READ = "socket/read";
+
     /*Credit*/
     //企查查
     public final static String GET_QI_CHACHA = "credit/getQiChaCha";
@@ -52,7 +62,7 @@ public class API {
 
     /*User*/
     //初始化界面
-    public final static String INIT = "user/init";
+    //public final static String INIT = "user/init";
     //发送验证码
     public final static String SEND_MSG = "user/sendMsg";
     //找回密码
@@ -183,15 +193,15 @@ public class API {
     //获取我的供给或求购
     public final static String GET_MY_MSG = "releaseMsg/getMyMsg";
     //搜索记录查询
-    public final static String SEARCH_RECORD = "releaseMsg/SearchLog";
+    public final static String SEARCH_RECORD = "releaseMsg/getSearchLogNew";
     //物性表查询列表
     public final static String PHYSICAL_SEARCH = "releaseMsg/physicalSearch";
     //搜塑料app接口
-    public final static String PLASTIC_SEARCH = "releaseMsg/plasticSearch";
+    public final static String PLASTIC_SEARCH = "releaseMsg/getplasticSearch";
     //供求信息置顶之搜索选项配置栏目
     public final static String GET_TAB_CONFIG = "releaseMsg/getTabConfig";
     //删除搜索历史记录
-    public final static String DEL_SEARCH_RECORD = "releaseMsg/delSearchRecord";
+    public final static String DEL_SEARCH_RECORD = "releaseMsg/delplasticSearchRecord";
     //搜塑料app接口22
     public final static String PLASTIC_SEARCH_DETAIL = "releaseMsg/plasticSearchDetail";
     //物性表查询详情

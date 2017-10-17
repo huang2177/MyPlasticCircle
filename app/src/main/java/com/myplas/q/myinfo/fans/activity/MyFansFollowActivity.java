@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.addresslist.Beans.MyFansBean;
+import com.myplas.q.addresslist.beans.MyFansBean;
+import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
 import com.myplas.q.addresslist.adapter.MyFansFollowAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -188,14 +189,14 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
             }
             //已经消耗积分
             if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, PersonInfoActivity.class);
+                Intent intent = new Intent(this, Contact_Detail_Activity.class);
                 intent.putExtra("userid", user_id);
                 intent.putExtra("id", user_id);
                 startActivity(intent);
             }
             //减积分成功
             if (type == 3 && err.equals("0")) {
-                Intent intent = new Intent(this, PersonInfoActivity.class);
+                Intent intent = new Intent(this, Contact_Detail_Activity.class);
                 intent.putExtra("id", id_);
                 intent.putExtra("userid", user_id);
                 startActivity(intent);

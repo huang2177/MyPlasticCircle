@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.addresslist.Beans.MyFansBean;
+import com.myplas.q.addresslist.beans.MyFansBean;
 
 import java.util.List;
 

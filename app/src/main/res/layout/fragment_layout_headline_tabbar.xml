@@ -33,7 +33,7 @@
                     app:xTabIndicatorWidth="28dp"
                     app:xTabMode="scrollable"
                     app:xTabSelectedTextColor="@color/color_red"
-                    app:xTabSelectedTextSize="18.0sp"
+                    app:xTabSelectedTextSize="17.0sp"
                     app:xTabTextColor="@color/color_title_main"
                     app:xTabTextSelectedBold="true"
                     app:xTabTextSize="16.0sp">

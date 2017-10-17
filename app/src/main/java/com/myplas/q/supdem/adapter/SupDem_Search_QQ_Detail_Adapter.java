@@ -10,15 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.supdem.Beans.SearchResultDetailBean;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.myplas.q.supdem.beans.SearchResultDetailBean;
 
 import java.util.List;
-
-import static android.R.id.list;
 
 /**
  * 编写： 黄双
