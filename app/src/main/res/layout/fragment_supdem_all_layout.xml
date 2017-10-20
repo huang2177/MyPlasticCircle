@@ -16,34 +16,28 @@
         <com.myplas.q.common.view.MyNestedScrollView
             android:id="@+id/mynested_sv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
 
-            <LinearLayout
+            <com.myplas.q.common.view.MyListview
+                android:id="@+id/gq_listview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_white"
-                android:orientation="vertical">
-
-                <com.myplas.q.common.view.MyListview
-                    android:id="@+id/gq_listview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@color/color_gray_bg"
-                    android:dividerHeight="5dp"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"/>
-
-                <LinearLayout
-                    android:id="@+id/supply_demand_prompt_linear"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone"/>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:divider="#dadae1"
+                android:dividerHeight="5dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"/>
 
         </com.myplas.q.common.view.MyNestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/supply_demand_prompt_linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

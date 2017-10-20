@@ -18,8 +18,8 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
-import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
+import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
+import com.myplas.q.contact.activity.Contact_Detail_Activity;
 
 import com.myplas.q.supdem.beans.SupDemBean;
 
@@ -95,10 +95,10 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
                     + list.get(position).getInput_time();
             viewHolder.time.setText(time);
 
-            String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + list.get(position).getStore_house()
-                    + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + list.get(position).getModel()
-                    + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + list.get(position).getF_name()
-                    + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + list.get(position).getUnit_price();
+            String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + list.get(position).getStore_house()
+                    + "<font color='#9c9c9c'>" + "   牌号:" + "</font>" + list.get(position).getModel()
+                    + "<font color='#9c9c9c'>" + "   厂家:" + "</font>" + list.get(position).getF_name()
+                    + "<font color='#9c9c9c'>" + "   价格:" + "</font>" + list.get(position).getUnit_price();
             viewHolder.content.setText(replace(html1));
 
             viewHolder.typeSupDem.setImageResource(list.get(position).getType().equals("1")

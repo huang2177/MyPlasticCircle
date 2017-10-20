@@ -24,6 +24,7 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.release.MyOnPageChangeListener;
 import com.myplas.q.supdem.BaseInterFace;
 import com.myplas.q.supdem.beans.SupDemDetailBean;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_CHJ;
@@ -51,6 +52,7 @@ import java.util.Map;
 public class SupDem_Detail_Activity extends BaseActivity implements View.OnClickListener
         , ResultCallBack
         , BaseInterFace
+        , MyOnPageChangeListener.OnPageChangeListener
         , OnKeyboardChangeListener.OnChangeListener {
 
     private boolean isSelf;
@@ -92,6 +94,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
+        sharedUtils = SharedUtils.getSharedUtils();
+
         mIVHead = F(R.id.xq_tx);
         mIVStart = F(R.id.xq_rz);
         mTabLayout = F(R.id.tabLayout);
@@ -118,28 +122,12 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mIVCall.setOnClickListener(this);
         mButton.setOnClickListener(this);
         mIVFollow.setOnClickListener(this);
-        sharedUtils = SharedUtils.getSharedUtils();
+        mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
         mLayoutRoot.addOnLayoutChangeListener(new OnKeyboardChangeListener(this, this));
 
         Bundle bundle = getIntent().getBundleExtra("bundle");
         position = (bundle == null) ? 0 : bundle.getInt("position");
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentItem = position;
-                setDeliverReplyView(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private void initViewPager(int position) {
@@ -225,6 +213,12 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     }
 
     @Override
+    public void onPageSelected(int position) {
+        currentItem = position;
+        setDeliverReplyView(position);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.titlebar_img_right:
@@ -257,7 +251,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mBarLayout.setExpanded(false, true);
         showInPutKeybord(mEditText);
     }
-
 
     @Override
     public void callBack(Object object, int type) {

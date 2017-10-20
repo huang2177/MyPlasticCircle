@@ -44,6 +44,7 @@
                         android:id="@+id/supdem_detail_company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:textColor="@color/color_title_main"

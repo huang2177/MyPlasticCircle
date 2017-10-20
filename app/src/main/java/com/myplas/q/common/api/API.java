@@ -99,7 +99,18 @@ public class API {
     public final static String GET_TA_PUR = "friend/getTaPur";
     //获取通讯录首页数据
     public final static String GET_PLASTIC_PERSON = "friend/getPlasticPerson";
-
+    //获得通讯录搜索记录和推荐
+    public final static String GETF_RECORD = "friend/getFriendSearchRecord";
+    //删除通讯录搜索记录
+    public final static String DELETEF_RECORD = "friend/deleteFriendSearchRecord";
+    //获取用户资料
+    public final static String GETINFORMATION = "friend/getInformation";
+    //获取用户关注
+    public final static String GETFOLLOWERS = "friend/getFollowers";
+    //获取用户粉丝
+    public final static String GETRECOMMENDATION = "friend/getRecommendation";
+    //获取用户引荐
+    public final static String GETFANS = "friend/getFans";
 
     /*myInfo*/
     //[我的]首页数据

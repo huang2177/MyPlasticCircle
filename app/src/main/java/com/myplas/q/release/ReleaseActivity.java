@@ -10,6 +10,9 @@ import android.widget.Button;
 import com.androidkun.xtablayout.XTabLayout;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.ActivityManager;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -19,7 +22,9 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 编写： 黄双
@@ -36,64 +41,52 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     private List<String> listTitle;
     private List<Fragment> fragmentList;
 
-    private int currentItem;
-    private SharedUtils sharedUtils;
+    private CommonDialog mCommonDialog;
     private QuicklyFragment mQ_Fragment;
     private StandardFragment mS_Fragment;
+
+    private String type, id;
+    private SharedUtils sharedUtils;
+    private int currentItem, position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_release_supdem_activity);
+        ActivityManager.addActivity(this);
 
         initView();
-        initViewPager();
+        initViewPager(position);
     }
 
     public void initView() {
         initTileBar();
         setTitle("发布信息");
         setRightTVText("取消");
+        setLeftIVVisibility(View.GONE);
         listTitle = new ArrayList<>();
         fragmentList = new ArrayList<>();
+        id = getIntent().getStringExtra("id");
+        type = getIntent().getStringExtra("type");
         sharedUtils = SharedUtils.getSharedUtils();
+        position = id == null ? 0 : (type.equals("1") ? 0 : 1);
+
 
         button = F(R.id.release_btn);
         tabLayout = F(R.id.release_tablayout);
         viewPager = F(R.id.release_viewpager);
 
         button.setOnClickListener(this);
-        mTVLeft.setOnClickListener(this);
+        mTVRight.setOnClickListener(this);
         mLayoutBack.setOnClickListener(this);
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
 
-//        id = getIntent().getStringExtra("id");
-//        type = getIntent().getStringExtra("type");
-//        title.setText(this.type.equals("2") ? ("发布供给") : ("发布求购"));
-//        getSecondPub();
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String s1 = s.toString();
-//                if (s.length() >= 100) {
-//                    TextUtils.Toast(ReleaseActivity.this, "输入的字符已达上限！");
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-
+        if (id != null) {
+            secondPub();
+        }
     }
 
-    public void initViewPager() {
+    public void initViewPager(int position) {
         listTitle = Arrays.asList("标准发布", "快速发布");
         tabLayout.addTab(tabLayout.newTab().setText("标准发布"));
         tabLayout.addTab(tabLayout.newTab().setText("快速发布"));
@@ -104,11 +97,18 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         ReleaseViewPagerAdapter adapter = new ReleaseViewPagerAdapter(getSupportFragmentManager(), fragmentList, listTitle);
         viewPager.setAdapter(adapter);
 
-        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(position);
+        tabLayout.getTabAt(position).select();
         //将选项卡和viewpager关连起来
         tabLayout.setupWithViewPager(viewPager);
         //给TabLayout设置适配器
         tabLayout.setTabsFromPagerAdapter(adapter);
+    }
+
+    public void secondPub() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", id);
+        postAsyn(this, API.BASEURL + API.SECOND_PUB, map, this, 1);
     }
 
     @Override
@@ -120,16 +120,21 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.titlebar_text_right:
+                if (!mS_Fragment.isInputContent(1) && !mQ_Fragment.isInPutContent(1)) {
+                    onBackPressed();
+                } else {
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.showDialog(this, "确定放弃编辑?", 3, null);
+                }
                 break;
             case R.id.titlebar_img_back:
                 onBackPressed();
                 break;
             case R.id.release_btn:
-                Log.e("------", currentItem + "---");
                 if (currentItem == 0) {
                     mS_Fragment.pub();
                 } else {
-                    mQ_Fragment.pub();
+                    mQ_Fragment.showDialog();
                 }
                 break;
         }
@@ -153,13 +158,6 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
 //                editText_jz_ph.setSelection(editText_jz_ph.getText().length());
 //                editText_jz_chj.setSelection(editText_jz_chj.getText().length());
 //                editText_jz_jhd.setSelection(editText_jz_jhd.getText().length());
-//                if (f_type == 2) {
-//                    mode = "1";
-////                    changeTextColor_Speed();
-//                } else {
-//                    mode = "2";
-////                    changeTextColor_Right();
-//                }
             }
 
         } catch (Exception e) {
@@ -170,16 +168,5 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     public void failCallBack(int type) {
 
     }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
-
 
 }

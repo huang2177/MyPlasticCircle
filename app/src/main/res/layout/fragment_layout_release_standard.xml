@@ -15,17 +15,16 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="40dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:gravity="center_vertical"
                     android:text="牌号"
                     android:textColor="@color/color_balank"
@@ -49,17 +48,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray3"/>
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp">
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:gravity="center_vertical"
                     android:text="厂家"
                     android:textColor="@color/color_balank"
@@ -83,17 +82,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray3"/>
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp">
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:gravity="center_vertical"
                     android:text="交货地"
                     android:textColor="@color/color_balank"
@@ -116,17 +115,17 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray3"/>
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp">
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:gravity="center_vertical"
                     android:text="价格"
                     android:textColor="@color/color_balank"
@@ -149,29 +148,31 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray3"/>
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp">
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.7"
                     android:gravity="center_vertical"
                     android:text="现货/期货"
                     android:textColor="@color/color_balank"
                     android:textSize="16.0sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/release_ev_nowfutrue"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
+                    android:background="@null"
+                    android:focusable="false"
                     android:gravity="center_vertical"
-                    android:text="现货/期货"
+                    android:hint="现货/期货"
                     android:textSize="16.0sp"/>
 
                 <ImageView
@@ -183,29 +184,31 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray3"/>
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp">
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.7"
                     android:gravity="center_vertical"
                     android:text="供给/求购"
                     android:textColor="@color/color_balank"
                     android:textSize="16.0sp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/release_ev_type"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
+                    android:background="@null"
+                    android:focusable="false"
                     android:gravity="center_vertical"
-                    android:text="供给/求购"
+                    android:hint="供给/求购"
                     android:textSize="16.0sp"/>
 
                 <ImageView
@@ -217,7 +220,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray3"/>
+                android:background="@color/color_gray_divider_out"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

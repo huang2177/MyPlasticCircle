@@ -53,10 +53,10 @@ public class BaseActivity extends FragmentActivity {
 
     public void initTileBar() {
         mTVLeft = F(R.id.titlebar_text_left);
+        mIVConact = F(R.id.titlebar_img_right);
         mTVRight = F(R.id.titlebar_text_right);
         mTextView = F(R.id.titlebar_text_title);
         mLayoutBack = F(R.id.titlebar_img_back);
-        mIVConact = F(R.id.titlebar_img_right);
         goBack(mLayoutBack);
     }
 
@@ -95,6 +95,11 @@ public class BaseActivity extends FragmentActivity {
                 finish();
             }
         });
+    }
+
+    //左边返回按钮
+    public void setLeftIVVisibility(int isShow) {
+        mLayoutBack.setVisibility(isShow);
     }
 
     //绑定订阅者

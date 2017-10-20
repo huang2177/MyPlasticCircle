@@ -29,6 +29,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     private Context context;
     private static RabbitMQConfig mRabbitMQConfig;
 
+
     private RabbitMQConfig(Context context) {
         this.context = context;
         mACache = ACache.get(context);
@@ -65,11 +66,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1 && err.equals("0")) {
-                _ConfigBean bean = gson.fromJson(object.toString(), _ConfigBean.class);
-                mACache.put("config", bean);
-
-                RabbitMQHelper mMQHelper = RabbitMQHelper.getInstance(context);
-                mMQHelper.onConnect();
+                mACache.put("config", object.toString());
             }
         } catch (Exception e) {
 

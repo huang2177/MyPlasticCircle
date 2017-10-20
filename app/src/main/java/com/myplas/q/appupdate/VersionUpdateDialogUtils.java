@@ -59,7 +59,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
     }
 
     //弹出dialog 点击安装
-    public void showDialog() {
+    public void showDialog(final boolean isForce) {
         View view = View.inflate(mContext, R.layout.dialog_layout_appupdate, null);
         button_ok = (Button) view.findViewById(R.id.btn_ok);
         textView_content = (TextView) view.findViewById(R.id.dialog_message);
@@ -96,10 +96,10 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         normalDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && versionUpdateInterface != null) {
                     versionUpdateInterface.exitCallBack();
                 }
-                return true;
+                return isForce;
             }
         });
     }

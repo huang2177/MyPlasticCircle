@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.release.MyOnPageChangeListener;
 import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.activity.SupDem_Search_Activity;
 import com.myplas.q.supdem.adapter.SupDem_ViewPager_Adapter;
@@ -45,7 +47,8 @@ import java.util.List;
  * 时间：2017/3/17 14:45
  */
 public class Fragment_SupplyDemand extends Fragment implements View.OnClickListener
-        , Fragment_SupDem_All.RefreshPopouInterface {
+        , Fragment_SupDem_All.RefreshPopouInterface
+        , MyOnPageChangeListener.OnPageChangeListener {
     private Handler handler;
     private Resources resources;
 
@@ -94,25 +97,8 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 
         tvType.setOnClickListener(this);
         editText.setOnClickListener(this);
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentItem = position;
-                ConfigData.setCurrentItem(position);
-                getChirldData(position, false);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
+        mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
     }
-
 
     @Nullable
     @Override
@@ -141,7 +127,8 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 
             mViewPager.setCurrentItem(0);
             //将选项卡和viewpager关连起来
-            mViewPager.setOffscreenPageLimit(4);
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            mTabLayout.setxTabDisplayNum(4);
             mTabLayout.setupWithViewPager(mViewPager);
             //给TabLayout设置适配器
             mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
@@ -190,6 +177,13 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onPageSelected(int position) {
+        currentItem = position;
+        ConfigData.setCurrentItem(position);
+        getChirldData(position, false);
+    }
+
     private void getChirldData(int position, boolean isShowLoading) {
         try {
             if (mFragments != null) {
@@ -209,7 +203,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                 }
             }
         } catch (Exception e) {
-            Log.e("------", e.toString() + "--");
         }
     }
 

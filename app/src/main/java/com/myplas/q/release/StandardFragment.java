@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -40,12 +41,11 @@ public class StandardFragment extends Fragment implements View.OnClickListener
         , ResultCallBack {
     private View view;
     private BottomSheetDialog dialog;
-    private TextView mTV_NF, mTV_Type;
-    private EditText mEditModel, mEditF_Name, mEdit_JH, mEditPirce;
+    private EditText mEditModel, mEditF_Name, mEdit_JH, mEditPirce, mTV_NF, mTV_Type;
 
     private int which = 0;
+    private SharedUtils mSharedUtils;
     private String model, production, jhd, pirce, nf, type;
-    private SharedUtils sharedUtils;
 
 
     @Override
@@ -56,7 +56,7 @@ public class StandardFragment extends Fragment implements View.OnClickListener
     }
 
     private void initView() {
-        sharedUtils = SharedUtils.getSharedUtils();
+        mSharedUtils = SharedUtils.getSharedUtils();
         view = View.inflate(getActivity(), R.layout.fragment_layout_release_standard, null);
 
         mEdit_JH = F(R.id.release_ev_jh);
@@ -81,7 +81,9 @@ public class StandardFragment extends Fragment implements View.OnClickListener
     }
 
     public void pub() {
-        getText();
+        if (!isInputContent(2)) {
+            return;
+        }
         Map<String, String> map = new HashMap<>();
         map.put("mode", "2");
         map.put("type", type);
@@ -94,25 +96,6 @@ public class StandardFragment extends Fragment implements View.OnClickListener
         map.put("vendor", production);
         map.put("transaction_type", nf);
         BaseActivity.postAsyn(getActivity(), API.BASEURL + API.PUB, map, this, 1);
-    }
-
-    public void getText() {
-        jhd = mEdit_JH.getText().toString();
-        model = mEditModel.getText().toString();
-        pirce = mEditPirce.getText().toString();
-        production = mEditF_Name.getText().toString();
-        nf = ("现货".equals(mTV_NF.getText())) ? ("0") : ("1");
-        type = ("供给".equals(mTV_Type.getText())) ? ("2") : ("1");
-
-        if (!TextUtils.isNullOrEmpty(jhd)
-                || !TextUtils.isNullOrEmpty(nf)
-                || !TextUtils.isNullOrEmpty(type)
-                || !TextUtils.isNullOrEmpty(model)
-                || !TextUtils.isNullOrEmpty(pirce)
-                || !TextUtils.isNullOrEmpty(production)) {
-            TextUtils.Toast(getActivity(), "请输入正确的数据！");
-            return;
-        }
     }
 
     @Override
@@ -165,10 +148,9 @@ public class StandardFragment extends Fragment implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-------", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 2) {
+            if (type == 1) {
                 TextUtils.Toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
                 if (err.equals("0")) {
                     //关闭activity
@@ -177,6 +159,8 @@ public class StandardFragment extends Fragment implements View.OnClickListener
 
                     //跳转到供求详情
                     Intent intent1 = new Intent(getActivity(), SupDem_Detail_Activity.class);
+                    intent1.putExtra("id", new JSONObject(object.toString()).getString("id"));
+                    intent1.putExtra("userid", mSharedUtils.getData(getActivity(), Constant.USERID));
                     startActivity(intent1);
 
                     ActivityManager.finishActivity(ReleaseActivity.class);
@@ -188,6 +172,40 @@ public class StandardFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void failCallBack(int type) {
+
+    }
+
+    public boolean isInputContent(int _type) {
+        jhd = mEdit_JH.getText().toString();
+        model = mEditModel.getText().toString();
+        pirce = mEditPirce.getText().toString();
+        String t = mTV_Type.getText().toString();
+        String nowF = mTV_NF.getText().toString();
+        production = mEditF_Name.getText().toString();
+        nf = ("现货".equals(mTV_NF.getText())) ? ("0") : ("1");
+        type = ("供给".equals(mTV_Type.getText())) ? ("2") : ("1");
+
+        if (_type == 1) {
+            return !TextUtils.isNullOrEmpty(jhd)
+                    && !TextUtils.isNullOrEmpty(t)
+                    && !TextUtils.isNullOrEmpty(nowF)
+                    && !TextUtils.isNullOrEmpty(model)
+                    && !TextUtils.isNullOrEmpty(pirce)
+                    && !TextUtils.isNullOrEmpty(production) ? false : true;
+
+        } else {
+            if (!TextUtils.isNullOrEmpty(jhd)
+                    || !TextUtils.isNullOrEmpty(t)
+                    || !TextUtils.isNullOrEmpty(nowF)
+                    || !TextUtils.isNullOrEmpty(model)
+                    || !TextUtils.isNullOrEmpty(pirce)
+                    || !TextUtils.isNullOrEmpty(production)) {
+                TextUtils.Toast(getActivity(), "请输入完整的数据！");
+                return false;
+            } else {
+                return true;
+            }
+        }
 
     }
 }

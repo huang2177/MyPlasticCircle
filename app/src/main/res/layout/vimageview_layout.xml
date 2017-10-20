@@ -4,8 +4,11 @@
                 android:layout_height="wrap_content">
 
     <FrameLayout
+        android:id="@+id/head_fl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="1dp">
 
         <com.myplas.q.common.view.MyImageView
             android:id="@+id/xq_tx"
@@ -14,7 +17,7 @@
             android:layout_margin="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/contact_image_defaul_male"
-            android:transitionName="sharedView"/>
+            android:transitionName="shareView1"/>
 
         <ImageView
             android:id="@+id/xq_rz"

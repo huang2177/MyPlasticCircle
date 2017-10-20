@@ -23,10 +23,11 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
+import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.adapter.HeadSearch_LV_Adapter;
 import com.myplas.q.headlines.bean.HeadSearchBean;
-import com.myplas.q.myinfo.integral.activity.IntegralActivity;
+import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.supdem.beans.HistoryBean;
 import com.myplas.q.headlines.bean.SearchNoResultBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
@@ -50,16 +51,18 @@ import java.util.TimerTask;
  * 时间：2017/3/19 15:44
  */
 
-public class HeadLineSearchActivity extends BaseActivity implements View.OnClickListener, ResultCallBack,
-        AdapterView.OnItemClickListener, CommonDialog.DialogShowInterface {
+public class HeadLineSearchActivity extends BaseActivity implements View.OnClickListener
+        , ResultCallBack
+        , AdapterView.OnItemClickListener
+        , CommonDialog.DialogShowInterface {
 
     private ListView listView;
     private ImageView imageView;
     private EditTextField editText;
-    private FrameLayout frameLayout;
-    private TextView textView, textView_hint, textView_no;
-    private MyGridview gridview_history, gridview_subcribe, gridview_subcribe_no;
-    private LinearLayout search_default_linear, search_result_linear, search_result_linear_no;
+    private RefreshPopou mRefreshPopou;
+    private TextView textView, textView_no;
+    private MyGridview mGV_History, mGV_Empty, mGV_Subcribe;
+    private LinearLayout mLayoutDefault, mLayoutResult, mLayoutEmpty;
 
     private HistoryBean historyBean;
     private SearchNoResultBean bean;
@@ -67,9 +70,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     private HeadSearch_LV_Adapter mSearchLvAdapter;
     private SupDem_Search_Grid_Adapter mSearchGridAdapter;
 
-    private Handler handler;
     private String keywords;
-    private boolean isRefresh;
     private int page, visibleItemCount, position;
 
     @Override
@@ -90,31 +91,28 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     public void initView() {
         page = 1;
-        isRefresh = true;
         keywords = "7000F";
-        handler = new Handler();
         list = new ArrayList<>();
+        mRefreshPopou = new RefreshPopou(this, 1);
 
-        textView_hint = F(R.id.text_result);
         imageView = F(R.id.img_search_delete);
+        mGV_Empty = F(R.id.mygrid_search_null);
         listView = F(R.id.search_listview_result1);
         textView = F(R.id.supplydemand_btn_search);
-        textView_no = F(R.id.search_result_text_null);
         editText = F(R.id.supplydemand_search_edit);
-        frameLayout = F(R.id.search_result_framelayout);
-        gridview_subcribe_no = F(R.id.mygrid_search_null);
-        gridview_history = F(R.id.mygrid_search_history);
-        gridview_subcribe = F(R.id.mygrid_search_subcribe);
-        search_result_linear = F(R.id.search_result_linear);
-        search_default_linear = F(R.id.search_default_linear);
-        search_result_linear_no = F(R.id.search_result_linear_null);
+        mGV_History = F(R.id.mygrid_search_history);
+        mLayoutResult = F(R.id.search_result_linear);
+        mGV_Subcribe = F(R.id.mygrid_search_subcribe);
+        textView_no = F(R.id.search_result_text_null);
+        mLayoutDefault = F(R.id.search_default_linear);
+        mLayoutEmpty = F(R.id.search_result_linear_null);
 
         textView.setOnClickListener(this);
         imageView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
-        gridview_history.setOnItemClickListener(this);
-        gridview_subcribe.setOnItemClickListener(this);
-        gridview_subcribe_no.setOnItemClickListener(this);
+        mGV_Empty.setOnItemClickListener(this);
+        mGV_History.setOnItemClickListener(this);
+        mGV_Subcribe.setOnItemClickListener(this);
 
         editText.setHintTextColor(getResources().getColor(R.color.color_gray));
         editText.setPadding(20, 0, 0, 0);
@@ -126,7 +124,9 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
                 if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
                     page = 1;
-                    isRefresh = true;
+                    mRefreshPopou.setCanShowPopou(true);
+                    mLayoutDefault.setVisibility(View.GONE);
+                    mLayoutResult.setVisibility(View.VISIBLE);
                     keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
                     get_Subscribe(page, keywords, true);
                     return true;
@@ -190,7 +190,9 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.supplydemand_btn_search:
                 page = 1;
-                isRefresh = true;
+                mRefreshPopou.setCanShowPopou(true);
+                mLayoutDefault.setVisibility(View.GONE);
+                mLayoutResult.setVisibility(View.VISIBLE);
                 keywords = (editText.getText().toString().equals(""))
                         ? ("7000f")
                         : (editText.getText().toString());
@@ -207,34 +209,33 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.mygrid_search_history://历史搜索
-                page = 1;
-                isRefresh = true;
                 keywords = historyBean.getHistory().get(position);
-                editText.setText(keywords);
-                editText.setSelection(keywords.length());
-                get_Subscribe(page, keywords, true);
+                getData(keywords);
                 break;
             case R.id.mygrid_search_subcribe://猜你所想
-                page = 1;
-                isRefresh = true;
                 keywords = historyBean.getRecommend().get(position);
-                editText.setText(keywords);
-                editText.setSelection(keywords.length());
-                get_Subscribe(page, keywords, true);
+                getData(keywords);
                 break;
             case R.id.mygrid_search_null://相关搜索
-                page = 1;
-                isRefresh = true;
                 keywords = bean.getRecommendation().get(position);
-                editText.setText(keywords);
-                editText.setSelection(keywords.length());
-                get_Subscribe(page, keywords, true);
+                getData(keywords);
                 break;
             case R.id.search_listview_result1:
                 HeadLineSearchActivity.this.position = position;
                 isPaidSubscription(list.get(position).getId());
                 break;
         }
+    }
+
+    private void getData(String keywords) {
+        page = 1;
+        mRefreshPopou.setCanShowPopou(true);
+        mLayoutDefault.setVisibility(View.GONE);
+        mLayoutResult.setVisibility(View.VISIBLE);
+
+        editText.setText(keywords);
+        editText.setSelection(keywords.length());
+        get_Subscribe(page, keywords, true);
     }
 
     private void showInPutKeybord() {
@@ -261,28 +262,27 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             if (type == 1 && err.equals("0")) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
-                gridview_history.setAdapter(mSearchGridAdapter);
+                mGV_History.setAdapter(mSearchGridAdapter);
                 SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
-                gridview_subcribe.setAdapter(adapter_grid1);
+                mGV_Subcribe.setAdapter(adapter_grid1);
 
 //                keywords = historyBean.getHot_search().getContent();
 //                editText.setHint(keywords);
             }
             if (type == 2) {
-                search_default_linear.setVisibility(View.GONE);
-                search_result_linear.setVisibility(View.VISIBLE);
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 if (err.equals("0")) {
                     HeadSearchBean searchBean = gson.fromJson(object.toString(), HeadSearchBean.class);
                     if (page == 1) {
-                        frameLayout.setVisibility(View.VISIBLE);
-                        search_result_linear_no.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
+                        mLayoutEmpty.setVisibility(View.GONE);
                         mSearchLvAdapter = new HeadSearch_LV_Adapter(this, searchBean.getData());
                         listView.setAdapter(mSearchLvAdapter);
-                        showRefreshPopou("为你搜索" + searchBean.getTotal() + "条信息");
+
                         list.clear();
                         list.addAll(searchBean.getData());
+                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + searchBean.getTotal() + "条信息");
                     } else {
                         list.addAll(searchBean.getData());
                         mSearchLvAdapter.setList(list);
@@ -290,12 +290,12 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     }
                 } else {
                     if (page == 1) {
-                        frameLayout.setVisibility(View.GONE);
-                        search_result_linear_no.setVisibility(View.VISIBLE);
+                        listView.setVisibility(View.GONE);
+                        mLayoutEmpty.setVisibility(View.VISIBLE);
                         textView_no.setText("抱歉，未能找到相关搜索！");
                         bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
                         mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
-                        gridview_subcribe_no.setAdapter(mSearchGridAdapter);
+                        mGV_Empty.setAdapter(mSearchGridAdapter);
                     } else {
                         TextUtils.Toast(this, "没有更多数据了！");
                     }
@@ -304,7 +304,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             if (type == 3 && err.equals("0")) {
                 TextUtils.Toast(this, "删除成功！");
                 mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
-                gridview_history.setAdapter(mSearchGridAdapter);
+                mGV_History.setAdapter(mSearchGridAdapter);
             }
             if (type == 4) {
                 if (err.equals("0")) {
@@ -321,21 +321,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    //展示刷新后的popou
-    public void showRefreshPopou(String text) {
-        if (isRefresh) {
-            isRefresh = false;
-            textView_hint.setText(text);
-            textView_hint.setVisibility(View.VISIBLE);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    textView_hint.setVisibility(View.GONE);
-                }
-            }, 1500);
-        }
-    }
-
     @Override
     public void ok(int type) {
         Intent intent = new Intent(this, IntegralActivity.class);
@@ -347,15 +332,6 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     public void failCallBack(int type) {
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 
     @Override
     public void onBackPressed() {

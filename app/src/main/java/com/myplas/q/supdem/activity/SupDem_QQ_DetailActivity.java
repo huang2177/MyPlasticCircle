@@ -20,11 +20,10 @@ import com.myplas.q.common.view.RoundImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
-import com.myplas.q.myinfo.integral.activity.IntegralActivity;
+import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.supdem.beans.PhysicalBean;
 import com.myplas.q.supdem.beans.SearchResultDetailBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_QQ_Detail_Adapter;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 

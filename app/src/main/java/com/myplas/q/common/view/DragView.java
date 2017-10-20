@@ -129,7 +129,7 @@ public class DragView extends View {
     public void init(Context context) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DragBubbleView, defStyleAttr, 0);
         mBubbleRadius = ta.getDimension(R.styleable.DragBubbleView_bubbleRadius, AndroidUtil.dp2px(context, 8));
-        mBubbleColor = ta.getColor(R.styleable.DragBubbleView_bubbleColor, Color.parseColor("#ff5000"));
+        mBubbleColor = ta.getColor(R.styleable.DragBubbleView_bubbleColor, Color.parseColor("#ff0000"));
         mText = ta.getString(R.styleable.DragBubbleView_text);
         mTextSize = ta.getDimension(R.styleable.DragBubbleView_textSize, AndroidUtil.dp2px(context, 10));
         mTextColor = ta.getColor(R.styleable.DragBubbleView_textColor, Color.WHITE);

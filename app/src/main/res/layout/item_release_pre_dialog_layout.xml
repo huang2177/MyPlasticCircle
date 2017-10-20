@@ -22,9 +22,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/pre_goodsposition"
                 android:layout_width="0dp"
+                android:background="@null"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"

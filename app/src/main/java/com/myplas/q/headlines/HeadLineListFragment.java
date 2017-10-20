@@ -45,7 +45,7 @@ import com.myplas.q.headlines.adapter.CateListAdapter;
 import com.myplas.q.headlines.adapter.SubcribleAdapter;
 import com.myplas.q.headlines.bean.CateListBean;
 import com.myplas.q.headlines.bean.SubcribleBean;
-import com.myplas.q.myinfo.integral.activity.IntegralActivity;
+import com.myplas.q.myself.integral.activity.IntegralActivity;
 
 import org.json.JSONObject;
 

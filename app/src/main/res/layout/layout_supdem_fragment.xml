@@ -16,13 +16,14 @@
 
     <com.androidkun.xtablayout.XTabLayout
         android:id="@+id/supdem_tablayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        app:xTabDisplayNum="4"
         app:xTabIndicatorColor="@color/color_red"
         app:xTabIndicatorHeight="3dp"
         app:xTabIndicatorWidth="28dp"
         app:xTabMode="scrollable"
-        app:xTabDisplayNum="4"
         app:xTabSelectedTextColor="@color/color_red"
         app:xTabSelectedTextSize="17.0sp"
         app:xTabTextColor="@color/color_title_main"

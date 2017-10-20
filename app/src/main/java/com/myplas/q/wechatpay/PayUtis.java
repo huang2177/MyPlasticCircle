@@ -1,10 +1,9 @@
 package com.myplas.q.wechatpay;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.myplas.q.common.api.API;
-import com.myplas.q.myinfo.beans.OrderBean;
+import com.myplas.q.myself.beans.OrderBean;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;

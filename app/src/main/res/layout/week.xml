@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.myplas.q.myinfo.integral.datehelper.CalendarRowView
+<com.myplas.q.myself.integral.datehelper.CalendarRowView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     >
 
-    <com.myplas.q.myinfo.integral.datehelper.CalendarCellView
+    <com.myplas.q.myself.integral.datehelper.CalendarCellView
       style="@style/CalendarCell.CalendarDate"
       />
 
-    <com.myplas.q.myinfo.integral.datehelper.CalendarCellView
+    <com.myplas.q.myself.integral.datehelper.CalendarCellView
       style="@style/CalendarCell.CalendarDate"
       />
 
-    <com.myplas.q.myinfo.integral.datehelper.CalendarCellView
+    <com.myplas.q.myself.integral.datehelper.CalendarCellView
       style="@style/CalendarCell.CalendarDate"
       />
 
-    <com.myplas.q.myinfo.integral.datehelper.CalendarCellView
+    <com.myplas.q.myself.integral.datehelper.CalendarCellView
       style="@style/CalendarCell.CalendarDate"
       />
 
-    <com.myplas.q.myinfo.integral.datehelper.CalendarCellView
+    <com.myplas.q.myself.integral.datehelper.CalendarCellView
       style="@style/CalendarCell.CalendarDate"
       />
 
-    <com.myplas.q.myinfo.integral.datehelper.CalendarCellView
+    <com.myplas.q.myself.integral.datehelper.CalendarCellView
       style="@style/CalendarCell.CalendarDate"
       />
 
-    <com.myplas.q.myinfo.integral.datehelper.CalendarCellView
+    <com.myplas.q.myself.integral.datehelper.CalendarCellView
       style="@style/CalendarCell.CalendarDate"
       />
-</com.myplas.q.myinfo.integral.datehelper.CalendarRowView>
+</com.myplas.q.myself.integral.datehelper.CalendarRowView>

@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.SharedUtils;
@@ -27,22 +29,22 @@ import java.util.List;
  */
 
 public class RabbitMQHelper {
+    private static Context mContext;
     private Thread subscribeThread;
     private Connection mConnection;
     private _ConfigBean mConfigBean;
-    private Context mContext;
     private ConnectionFactory mFactory;
     private static RabbitMQHelper mRabbitMQHelper;
 
     private String userid;
-    private List<RabbitMQCallBack> mList;
+    private SharedUtils mSharedUtils;
+    private boolean isLogined, isInterrupt;
+    private static List<RabbitMQCallBack> mList;
 
     private RabbitMQHelper(Context context) {
         this.mContext = context;
         mList = new ArrayList<>();
-        userid = SharedUtils
-                .getSharedUtils()
-                .getData(context.getApplicationContext(), Constant.USERID);
+        mSharedUtils = SharedUtils.getSharedUtils();
     }
 
     public static RabbitMQHelper getInstance(Context context) {
@@ -61,8 +63,14 @@ public class RabbitMQHelper {
 
 
     public void onConnect() {
-        mConfigBean = (_ConfigBean) ACache.get(mContext).getAsObject("config");
-        if (mConfigBean == null) {
+        isLogined = mSharedUtils.getBoolean(mContext, Constant.LOGINED);
+        mConfigBean = new Gson().fromJson(ACache
+                .get(mContext)
+                .getAsString("config"), _ConfigBean.class);
+        userid = isLogined
+                ? mSharedUtils.getData(mContext, Constant.USERID)
+                : "";
+        if (mConfigBean == null || !isLogined) {
             return;
         }
         //连接设置
@@ -71,21 +79,21 @@ public class RabbitMQHelper {
         final Handler incomingMessageHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                String message = msg.getData().getString("msg");
-                Result result = new Gson().fromJson(message, Result.class);
-                for (int i = 0; i < mList.size(); i++) {
-                    RabbitMQCallBack callback = mList.get(i);
-                    if (callback != null) {
-                        callback.r_Callback(result);
+                try {
+                    String message = msg.getData().getString("msg");
+                    //Result result = new Gson().fromJson(message, Result.class);
+                    for (int i = 0; i < mList.size(); i++) {
+                        RabbitMQCallBack callback = mList.get(i);
+                        if (callback != null) {
+                            callback.r_Callback(null);
+                        }
                     }
+                } catch (Exception e) {
                 }
             }
         };
         //开启消费者线程
         subscribe(incomingMessageHandler);
-
-        //通知服务器链接成功
-        RabbitMQConfig.getInstance(mContext).connected();
     }
 
     /**
@@ -115,8 +123,9 @@ public class RabbitMQHelper {
                     Channel channel = mConnection.createChannel();
                     //一次只发送一个，处理完成一个再获取下一个
                     channel.basicQos(1);
-
-                    AMQP.Queue.DeclareOk q = channel.queueDeclare(mConfigBean.getConfig().getQueue_config().getName() + userid
+                    String queueName = mConfigBean.getConfig().getQueue_config().getName().substring(0
+                            , mConfigBean.getConfig().getQueue_config().getName().lastIndexOf("_") + 1);
+                    AMQP.Queue.DeclareOk q = channel.queueDeclare(queueName + userid
                             , mConfigBean.getConfig().getQueue_config().isDurable()
                             , mConfigBean.getConfig().getQueue_config().isExclusive()
                             , mConfigBean.getConfig().getQueue_config().isAuto_delete()
@@ -130,17 +139,17 @@ public class RabbitMQHelper {
                             , null);
                     //将队列绑定到消息交换机exchange上
                     //                  queue         exchange              routingKey路由关键字，exchange根据这个关键字进行消息投递。
-                    channel.queueBind(mConfigBean.getConfig().getQueue_config().getName()
+                    channel.queueBind(queueName + userid
                             , mConfigBean.getConfig().getExchange_config().getName()
                             , mConfigBean.getConfig().getRoute_key());
 
                     //创建消费者
                     QueueingConsumer consumer = new QueueingConsumer(channel);
-                    channel.basicConsume(mConfigBean.getConfig().getQueue_config().getName()
+                    channel.basicConsume(queueName + userid
                             , true
                             , consumer);
 
-                    while (true) {
+                    while (!isInterrupt) {
                         //wait for the next message delivery and return it.
                         QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                         String message = new String(delivery.getBody());
@@ -152,7 +161,10 @@ public class RabbitMQHelper {
                         msg.setData(bundle);
                         handler.sendMessage(msg);
                     }
+                } catch (InterruptedException ie) {
+                    isInterrupt = true;
                 } catch (Exception e) {
+                    Log.e("------>RabbitMQ", e.toString());
                 }
 
             }
@@ -164,7 +176,6 @@ public class RabbitMQHelper {
         subscribeThread.interrupt();
         if (mConnection != null && mConnection.isOpen()) {
             try {
-                mContext = null;
                 mConnection.close();
                 mConnection = null;
             } catch (Exception e) {

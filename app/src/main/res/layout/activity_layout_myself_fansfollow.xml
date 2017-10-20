@@ -4,13 +4,13 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/common_layout_titlebar"></include>
+    <include layout="@layout/common_layout_titlebar"/>
 
     <ListView
         android:id="@+id/wdgz_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginRight="10dp"
         android:divider="@null"
         android:scrollbars="none">

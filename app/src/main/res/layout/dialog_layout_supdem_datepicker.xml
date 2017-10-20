@@ -7,7 +7,7 @@
 
     <include layout="@layout/dialog_datepicker_selected_date"/>
 
-    <com.myplas.q.myinfo.integral.datehelper.CalendarPickerView
+    <com.myplas.q.myself.integral.datehelper.CalendarPickerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"

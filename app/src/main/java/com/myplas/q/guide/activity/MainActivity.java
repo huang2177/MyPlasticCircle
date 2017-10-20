@@ -2,11 +2,7 @@ package com.myplas.q.guide.activity;
 
 import android.Manifest;
 import android.app.ActivityOptions;
-import android.app.Dialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,17 +10,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.addresslist.Fragment_Contact;
+import com.myplas.q.contact.Fragment_Contact;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
@@ -39,8 +33,8 @@ import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.Fragment_HeadLines;
-import com.myplas.q.myinfo.Fragment_MySelf;
-import com.myplas.q.myinfo.login.LoginActivity;
+import com.myplas.q.myself.Fragment_MySelf;
+import com.myplas.q.myself.login.LoginActivity;
 import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
@@ -146,6 +140,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         firstInto();
         getVersion();
+        getConfig();
+        onConnect();
         RabbitMQHelper.getInstance(this).setResultCallBack(this);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         if (!sharedUtils.getBoolean(this, "isrequest")) {
@@ -217,6 +213,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         imageView_fx.setImageResource(R.drawable.tabbar_headlines_hl);
         textView_fx.setTextColor(resources.getColor(R.color.color_red));
     }
+
     //供求
     public void goToSupDem() {
         clearColor();
@@ -224,6 +221,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         imageView_gq.setImageResource(R.drawable.tabbar_tradehl);
         textView_gq.setTextColor(resources.getColor(R.color.color_red));
     }
+
     //我的
     public void goToMySelf() {
         clearColor();
@@ -253,7 +251,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Map<String, String> map = new HashMap<String, String>();
         map.put("version", VersionUtils.getVersionName(this));
         map.put("platform", "android");
-        BaseActivity.postAsyn(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 3);
+        BaseActivity.postAsyn1(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 3, false);
     }
 
     @Override
@@ -269,7 +267,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 if (versionService > versionLocate) {
                     mUpdateDialogUtils = new VersionUpdateDialogUtils(this, promit, url);
                     mUpdateDialogUtils.setVersionUpdateInterface(this);
-                    mUpdateDialogUtils.showDialog();
+                    mUpdateDialogUtils.showDialog(true);
                 }
             }
         } catch (Exception e) {
@@ -342,9 +340,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
+    /*获取rabbitMQ配置参数*/
+    private void getConfig() {
+        RabbitMQConfig.getInstance(this).getConfig();
+    }
+
+    /*rabbitMQ链接*/
+    public void onConnect() {
+        RabbitMQHelper.getInstance(this).onConnect();
+        RabbitMQConfig.getInstance(this).connected();
+    }
+
+    /*rabbitMQ断开链接*/
+    public void onClosed() {
+        RabbitMQHelper.getInstance(this).onDisConnect();
+        RabbitMQConfig.getInstance(this).closed();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        onClosed();
         if (mUpdateDialogUtils != null) {
             mUpdateDialogUtils.unregisterReceiver();
         }

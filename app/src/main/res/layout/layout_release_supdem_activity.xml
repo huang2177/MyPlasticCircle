@@ -11,11 +11,11 @@
         android:id="@+id/release_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         app:xTabDividerWidthWidthText="true"
         app:xTabIndicatorColor="@color/color_red"
-        app:xTabSelectedTextColor="@color/color_transparent"
+        app:xTabSelectedTextColor="@color/color_balank"
         app:xTabSelectedTextSize="16.0sp"
         app:xTabTextSelectedBold="true"
         app:xTabTextSize="16.0sp">
@@ -26,6 +26,7 @@
         android:id="@+id/release_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1">
 
     </android.support.v4.view.ViewPager>

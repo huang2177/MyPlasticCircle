@@ -30,7 +30,7 @@ public class CommonDialog {
     public CommonDialog() {
     }
 
-    public void showDialog(Context context, String content, int type, DialogShowInterface dialogShowInterface) {
+    public void showDialog(Context context, String content, int type, final DialogShowInterface dialogShowInterface) {
         this.type = type;
         this.dialogShowInterface = dialogShowInterface;
         View view = View.inflate(context, R.layout.dialog_layout_common, null);
@@ -65,7 +65,7 @@ public class CommonDialog {
         button_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CommonDialog.this.type != 3) {
+                if (dialogShowInterface != null) {
                     CommonDialog.this.dialogShowInterface.ok(CommonDialog.this.type);
                 }
                 normalDialog.dismiss();
@@ -92,7 +92,7 @@ public class CommonDialog {
     }
 
     //设置dialog属性
-    public void setDialogWindowAttr(Context context) {
+    private void setDialogWindowAttr(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);

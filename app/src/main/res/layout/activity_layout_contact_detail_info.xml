@@ -29,10 +29,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_bg">
 
-                <com.myplas.q.common.view.VImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
+                <include layout="@layout/vimageview_layout"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -48,6 +45,7 @@
                         android:id="@+id/contact_detail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:textColor="@color/color_title_main"
@@ -57,10 +55,10 @@
                         android:id="@+id/contact_detail_company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="1"
-                        android:textColor="@color/color_title_main"
-                        android:textSize="16.0sp"/>
+                        android:textSize="14.0sp"/>
 
                     <TextView
                         android:id="@+id/contact_detail_fans"

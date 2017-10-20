@@ -22,20 +22,12 @@
 
         <TextView
             android:id="@+id/gq_listview_gs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/color_title_main"
-            android:textSize="14.0sp"/>
-
-        <TextView
-            android:id="@+id/gq_listview_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:textColor="@color/color_title_main"
@@ -70,7 +62,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:textColor="@color/color_balank"
-            android:textSize="16.0sp"/>
+            android:textSize="15.0sp"/>
     </LinearLayout>
 
     <TextView

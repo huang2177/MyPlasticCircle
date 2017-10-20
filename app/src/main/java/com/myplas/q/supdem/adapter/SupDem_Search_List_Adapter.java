@@ -13,16 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
+import com.myplas.q.contact.activity.Contact_Detail_Activity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
+import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.supdem.beans.SearchResultBean;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;

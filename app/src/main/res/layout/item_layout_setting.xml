@@ -40,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
+            android:drawablePadding="3dp"
             android:drawableRight="@drawable/icon_more"/>
 
         <com.suke.widget.SwitchButton
@@ -57,6 +58,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"></View>
+        android:background="@color/color_gray_divider_out"/>
 
 </LinearLayout>

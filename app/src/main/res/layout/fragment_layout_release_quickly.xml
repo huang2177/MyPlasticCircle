@@ -4,14 +4,15 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <EditText
+    <com.myplas.q.common.view.MyEditText
         android:id="@+id/release_edit"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="15dp"
+        android:layout_height="160dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/shape_txl_edit"
         android:gravity="start"
-        android:hint="在次文本框中，可快速复制粘贴供求信息，限制100字内！"
         android:maxLength="100"
         android:padding="4dp"
         android:textCursorDrawable="@drawable/text_cursor_shape"
@@ -22,27 +23,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="45dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:gravity="center_vertical"
             android:text="供给/求购"
             android:textColor="@color/color_balank"
             android:textSize="16.0sp"/>
 
-        <TextView
+        <com.myplas.q.common.view.MyEditText
             android:id="@+id/release_ev_type_"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:background="@null"
+            android:focusable="false"
             android:gravity="center_vertical"
-            android:text="供给/求购"
+            android:hint="供给/求购"
             android:textSize="16.0sp"/>
 
         <ImageView
@@ -56,5 +58,5 @@
         android:layout_height="1px"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:background="@color/color_gray3"/>
+        android:background="@color/color_gray_divider_out"/>
 </LinearLayout>

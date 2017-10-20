@@ -30,8 +30,8 @@ import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.addresslist.activity.Contact_Detail_Activity;
-import com.myplas.q.myinfo.integral.activity.IntegralPayActivtity;
+import com.myplas.q.contact.activity.Contact_Detail_Activity;
+import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.beans.SupDemBean;
@@ -212,10 +212,11 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             String result = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 if (result.equals("0")) {
-                    mListView.setVisibility(View.VISIBLE);
+                    mScrollView.setVisibility(View.VISIBLE);
                     layoutPrompt.setVisibility(View.GONE);
                     mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
                     if (page == 1) {
+                        mRefreshLayout.setRefreshing(false);
                         mSupDemLVAdapter = new SupDem_LV_Adapter(ConfigData.what, getActivity(), mSupDemBean.getData());
                         mListView.setAdapter(mSupDemLVAdapter);
                         mDataBeanList.clear();
@@ -244,7 +245,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     refreshPopou.setCanShowPopou(false);
                     if (page == 1) {
                         mRefreshLayout.setRefreshing(false);
-                        mListView.setVisibility(View.GONE);
+                        mScrollView.setVisibility(View.GONE);
                         layoutPrompt.setVisibility(View.VISIBLE);
                         layoutPrompt.removeAllViews();
                         switch (result) {
@@ -336,7 +337,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         refreshPopou.setCanShowPopou(false);
         mRefreshLayout.setRefreshing(false);
         if (mDataBeanList.size() == 0) {
-            mListView.setVisibility(View.GONE);
+            mScrollView.setVisibility(View.GONE);
             layoutPrompt.setVisibility(View.VISIBLE);
             layoutPrompt.removeAllViews();
 
