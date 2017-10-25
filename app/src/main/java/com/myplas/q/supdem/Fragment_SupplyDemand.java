@@ -275,11 +275,13 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         }
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("MainScreen");
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");

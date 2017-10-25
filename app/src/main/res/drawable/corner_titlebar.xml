@@ -8,5 +8,5 @@
     <stroke
         android:width="2px"
         android:color="@color/color_gray_divider_out"/>
-    <solid android:color="#ffffff"></solid>
+    <solid android:color="@color/color_white"/>
 </shape>

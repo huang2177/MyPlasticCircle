@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.contact.Fragment_Contact;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
@@ -40,6 +40,7 @@ import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.myplas.q.sockethelper.RabbitMQHelper;
 import com.myplas.q.sockethelper.Result;
+import com.myplas.q.sockethelper._ConfigBean;
 import com.myplas.q.supdem.Fragment_SupplyDemand;
 import com.myplas.q.appupdate.VersionUpdateDialogUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -73,13 +74,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Fragment_HeadLines fragment_fx;
     private Fragment_SupplyDemand fragment_gq;
 
-    private ViewPager_Adapter viewPager_adapter;
+    private ViewPager_Adapter viewpagerAdapter;
     private TextView textView_gq, textView_wd, textView_fx, textView_txl;
     private ImageView imageView_gq, imageView_wd, imageView_fx, imageView_txl;
     private LinearLayout layout_gq, layout_txl, layout_jia, layout_fx, layout_wd;
 
     private VersionUpdateDialogUtils mUpdateDialogUtils;
     private DragView mMsgContact, mMsgSupDem, mMsgMySelf;
+    private ACache mACache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public void initView() {
         resources = getResources();
+        mACache = ACache.get(this);
         fragmentlist = new ArrayList<Fragment>();
         sharedUtils = SharedUtils.getSharedUtils();
 
@@ -134,8 +137,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragment_wd = new Fragment_MySelf();
         fragmentlist.add(fragment_wd);
 
-        viewPager_adapter = new ViewPager_Adapter(getSupportFragmentManager(), fragmentlist);
-        viewPager.setAdapter(viewPager_adapter);
+        viewpagerAdapter = new ViewPager_Adapter(getSupportFragmentManager(), fragmentlist);
+        viewPager.setAdapter(viewpagerAdapter);
         sharedUtils.setBooloean(this, "isshow", true);
 
         firstInto();
@@ -253,14 +256,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Map<String, String> map = new HashMap<String, String>();
         map.put("version", VersionUtils.getVersionName(this));
         map.put("platform", "android");
-        BaseActivity.postAsyn1(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 3, false);
+        BaseActivity.postAsyn1(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 1, false);
+    }
+
+    //登陆以后获取rabbitMQ的配置信息
+    public void getConfig() {
+        BaseActivity.postAsyn1(this, API.BASEURL + API.INIT, null, this, 3, false);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 3 && err.equals("1")) {
+            if (type == 1 && err.equals("1")) {
                 url = new JSONObject(object.toString()).getString("url");
                 promit = new JSONObject(object.toString()).getString("msg");
                 versionLocate = NumUtils.getNum(VersionUtils.getVersionName(this));
@@ -271,6 +279,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     mUpdateDialogUtils.setVersionUpdateInterface(this);
                     mUpdateDialogUtils.showDialog(true);
                 }
+            }
+            if (type == 3 && err.equals("0")) {
+                r_Callback(null);
+                mACache.put("config", object.toString());
             }
         } catch (Exception e) {
         }
@@ -289,7 +301,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     /*rabbitmq*/
     @Override
-    public void r_Callback(Result result) {
+    public void r_Callback(_ConfigBean.RedDotBean redDotBean) {
         mMsgSupDem.setVisibility(View.VISIBLE);
         mMsgMySelf.setVisibility(View.VISIBLE);
         mMsgContact.setVisibility(View.VISIBLE);
@@ -344,10 +356,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    /*获取rabbitMQ配置参数*/
-    private void getConfig() {
-        RabbitMQConfig.getInstance(this).getConfig();
-    }
 
     /*rabbitMQ链接*/
     public void onConnect() {

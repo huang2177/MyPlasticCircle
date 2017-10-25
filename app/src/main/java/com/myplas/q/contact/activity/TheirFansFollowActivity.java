@@ -43,7 +43,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     private TheirFansFollowAdapter mFansAdapter;
 
     private SharedUtils sharedUtils;
-    private String user_id, function;
+    private String user_id, userid, function;
     private int page = 1, visibleItemCount;
 
     private List<TheirFansBean.DataBean> mList;
@@ -70,7 +70,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //user_id = mList.get(position).getFocused_id().getUser_id();
+                userid = mList.get(position).getUser_id();
                 //判断是否消耗积分
                 getPersonInfoData(user_id, "1", 5);
 
@@ -148,14 +148,14 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
             }
             //已经消耗积分
             if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
-                intent.putExtra("userid", user_id);
+                Intent intent = new Intent(this, Contact_Detail_Their_Activity.class);
+                intent.putExtra("userid", userid);
                 startActivity(intent);
             }
             //减积分成功
             if (type == 3 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
-                intent.putExtra("userid", user_id);
+                Intent intent = new Intent(this, Contact_Detail_Their_Activity.class);
+                intent.putExtra("userid", userid);
                 startActivity(intent);
             }
             //积分不足
@@ -181,6 +181,8 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
                 break;
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));
+                break;
+            default:
                 break;
         }
     }

@@ -1,6 +1,8 @@
 package com.myplas.q.supdem.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.supdem.beans.DeliverPriceBean;
 
 import java.util.List;
@@ -73,13 +76,27 @@ public class SupDem_Detail_LV_CHJAdapter extends BaseAdapter {
                     .load(list.get(position).getThumb())
                     .placeholder(R.drawable.contact_image_defaul_male)
                     .into(viewHolder.mIVHead);
+
             viewHolder.mIVStart.setImageResource(list.get(position).getIs_pass().equals("0")
                     ? R.drawable.icon_identity
                     : R.drawable.icon_identity_hl);
+
+            viewHolder.mIVCall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    call(list.get(position).getMobile());
+                }
+            });
         } catch (Exception e) {
         }
 
         return convertView;
+    }
+
+    private void call(String tel) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     class viewHolder {

@@ -159,11 +159,11 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetUtils.isNetworkStateed(getActivity())) {
                     clickId = (po == 0 || po == -1)
-                            ? (list_subcirble.get(position - 2).getId())
-                            : (list_catelist.get(position - 1).getId());
+                            ? (list_subcirble.get(position - 1).getId())
+                            : (list_catelist.get(position).getId());
                     isFree = (po == 0 || po == -1)
-                            ? (list_subcirble.get(position - 2).getIs_free().equals("1"))
-                            : (list_catelist.get(position - 1).getIs_free().equals("1"));
+                            ? (list_subcirble.get(position - 1).getIs_free().equals("1"))
+                            : (list_catelist.get(position).getIs_free().equals("1"));
                     if (isFree) {
                         Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
                         intent.putExtra("id", clickId);
@@ -438,6 +438,8 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                 });
                 imageButton_backup.setVisibility(View.GONE);
                 break;
+            default:
+                break;
         }
     }
 
@@ -450,6 +452,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             get_CateList(page, cate_id, false);
         }
     }
+
 
     interface Myinterface {
         void callBack(String hotSearch, String content);

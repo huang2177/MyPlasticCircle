@@ -23,8 +23,7 @@
             android:id="@+id/contact_sign_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:visibility="gone"/>
+            android:layout_margin="8dp"/>
 
         <ImageView
             android:id="@+id/xq_rz"

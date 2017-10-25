@@ -284,13 +284,13 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             if (type == 2 && err.equals("0")) {
                 Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
                 intent.putExtra("userid", userId);
-                _startActivity(intent);
+                startActivity(intent);
             }
             //减积分成功
             if (type == 3 && err.equals("0")) {
                 Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
                 intent.putExtra("userid", userId);
-                _startActivity(intent);
+                startActivity(intent);
             }
             //积分不够
             if (type == 3 && !err.equals("0")) {
@@ -401,6 +401,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             case 4:
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
+            default:
+                break;
         }
     }
 
@@ -419,6 +421,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         checkPageNum();
         getNetData(page + "", false);
     }
+
 
     public void JumpToWhere() {
         checkIsLogin();
@@ -462,6 +465,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");

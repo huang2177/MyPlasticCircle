@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -66,7 +67,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     private XTabLayout mTabLayout;
     private AppBarLayout mBarLayout;
     private LinearLayout mLayout, mLayoutRoot;
-    private ImageView mIVStart, mIVFollow, mIVCall;
+    private ImageView mIVStart, mIVFollow, mIVCall, mSign;
     private TextView mTVCompany, mTVFans, mTVType, mTVTime, mTVGoodsposition, mTVMode, mTVStorehouse, mTVPirce, mTVNf, mTVProduction;
 
     private List<String> mStringList;
@@ -102,6 +103,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTabLayout = F(R.id.tabLayout);
         mViewPager = F(R.id.viewpager);
         mTVNf = F(R.id.supdem_detail_nf);
+        mSign = F(R.id.contact_sign_img);
         mBarLayout = F(R.id.appbar_layout);
         mIVCall = F(R.id.titlebar_img_right);
         mTVType = F(R.id.supdem_detail_type);
@@ -201,10 +203,12 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         if (position == 1) {
             mButton.setText("回复");
             mEditText.setHint("期待您的回复...");
+            mEditText.setInputType(InputType.TYPE_CLASS_TEXT);
             mLayout.setVisibility(View.VISIBLE);
         } else {
             mButton.setText("出价");
             mEditText.setHint("期待您的出价...");
+            mEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
         }
     }
@@ -292,10 +296,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     @SuppressLint("SetTextI18n")
     public void showInfo(SupDemDetailBean mDetailBean) {
-        Glide.with(this)
-                .load(mDetailBean.getData().getThumb())
-                .placeholder(R.drawable.contact_image_defaul_male)
-                .into(mIVHead);
         String companyName = mDetailBean.getData().getC_name()
                 + " "
                 + mDetailBean.getData().getName();
@@ -309,9 +309,20 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 ? R.drawable.icon_identity
                 : R.drawable.icon_identity_hl);
 
+        Glide.with(this)
+                .load(mDetailBean.getData().getThumb())
+                .placeholder(R.drawable.contact_image_defaul_male)
+                .into(mIVHead);
+
         mIVFollow.setImageResource(mDetailBean.getData().getStatus().equals("0")
                 ? R.drawable.img_supdem_detail_follow
                 : R.drawable.img_supdem_detail_followed);
+
+        mSign.setImageResource("1".equals(mDetailBean.getData().getStype())
+                ? R.drawable.icon_factory
+                : "2".equals(mDetailBean.getData().getStype())
+                ? R.drawable.icon_raw_material
+                : R.drawable.icon_logistics);
 
         mTVType.setText(mDetailBean.getData().getType().equals("1")
                 ? "求购"
@@ -337,18 +348,23 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
         isSelf = (mDetailBean.getData().getUser_id())
                 .equals(sharedUtils.getData(this, Constant.USERID));
+
         mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
         mIVFollow.setVisibility(isSelf ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public void onKeyboardHidden() {
-        id = "";
-        sign = "0";
-        pur_id = mDetailBean.getData().getId();
-        send_id = mDetailBean.getData().getUser_id();
+        if (currentItem == 1) {
+            id = "";
+            sign = "0";
+            pur_id = mDetailBean.getData().getId();
+            send_id = mDetailBean.getData().getUser_id();
 
-        mEditText.setHint("期待您的回复...");
+            mEditText.setHint("期待您的回复...");
+        } else {
+            mEditText.setHint("期待您的出价...");
+        }
     }
 
 }

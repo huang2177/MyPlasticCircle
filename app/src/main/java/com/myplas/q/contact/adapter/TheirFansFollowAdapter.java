@@ -37,9 +37,7 @@ public class TheirFansFollowAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list != null)
-            return list.size();
-        return 0;
+        return list != null ? list.size() : 0;
     }
 
     @Override
@@ -74,14 +72,15 @@ public class TheirFansFollowAdapter extends BaseAdapter {
             viewHolder.dh.setText(list.get(position).getMobile());
             viewHolder.mz.setText(list.get(position).getName());
             viewHolder.gj.setText(list.get(position).getC_name());
-            if (list.get(position).getIs_pass().equals("0")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity);
-            } else if (list.get(position).getIs_pass().equals("1")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
-            }
+
+            viewHolder.rz.setImageResource(list.get(position).getIs_pass().equals("0")
+                    ? R.drawable.icon_identity
+                    : R.drawable.icon_identity_hl);
+
             viewHolder.sign.setImageResource(list.get(position).getType().equals("1")
                     ? R.drawable.icon_factory
                     : (list.get(position).getType().equals("2")) ? R.drawable.icon_raw_material : R.drawable.icon_logistics);
+
             Glide.with(context)
                     .load(list.get(position).getThumb())
                     .placeholder(R.drawable.contact_image_defaul_male)

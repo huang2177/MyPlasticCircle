@@ -11,17 +11,17 @@ public class SupDemDetailBean {
 
     /**
      * err : 0
-     * data : {"id":"110855","p_id":"0","user_id":"53402","model":null,"unit_price":"0.00","store_house":"","cargo_type":"1","f_name":null,"type":"1","input_time":"08-29 14:15","status":"关注","name":"hh","fans":"8","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","c_name":"上海中晨电子商务股份有限公司","is_pass":"0","member_level":"列兵"}
+     * data : {"id":"439","p_id":"5023","from":"1","user_id":"3858","stype":"1","model":"5000S","unit_price":"10500.00","store_house":"上海","cargo_type":"2","f_name":"上海","type":"1","input_time":"10-25 15:12","top":"0","status":1,"name":"李一帆","fans":"29","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","is_pass":"","mobile":"1376499****","mobile1":"13764999601","member_level":"班长"}
      */
 
-    private int err;
+    private String err;
     private DataBean data;
 
-    public int getErr() {
+    public String getErr() {
         return err;
     }
 
-    public void setErr(int err) {
+    public void setErr(String err) {
         this.err = err;
     }
 
@@ -35,28 +35,35 @@ public class SupDemDetailBean {
 
     public static class DataBean {
         /**
-         * id : 110855
-         * p_id : 0
-         * user_id : 53402
-         * model : null
-         * unit_price : 0.00
-         * store_house : 
-         * cargo_type : 1
-         * f_name : null
+         * id : 439
+         * p_id : 5023
+         * from : 1
+         * user_id : 3858
+         * stype : 1
+         * model : 5000S
+         * unit_price : 10500.00
+         * store_house : 上海
+         * cargo_type : 2
+         * f_name : 上海
          * type : 1
-         * input_time : 08-29 14:15
-         * status : 关注
-         * name : hh
-         * fans : 8
-         * thumb : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
+         * input_time : 10-25 15:12
+         * top : 0
+         * status : 1
+         * name : 李一帆
+         * fans : 29
+         * thumb : http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG
          * c_name : 上海中晨电子商务股份有限公司
-         * is_pass : 0
-         * member_level : 列兵
+         * is_pass : 
+         * mobile : 1376499****
+         * mobile1 : 13764999601
+         * member_level : 班长
          */
 
         private String id;
         private String p_id;
+        private String from;
         private String user_id;
+        private String stype;
         private String model;
         private String unit_price;
         private String store_house;
@@ -64,12 +71,15 @@ public class SupDemDetailBean {
         private String f_name;
         private String type;
         private String input_time;
+        private String top;
         private String status;
         private String name;
         private String fans;
         private String thumb;
         private String c_name;
         private String is_pass;
+        private String mobile;
+        private String mobile1;
         private String member_level;
 
         public String getId() {
@@ -88,12 +98,28 @@ public class SupDemDetailBean {
             this.p_id = p_id;
         }
 
+        public String getFrom() {
+            return from;
+        }
+
+        public void setFrom(String from) {
+            this.from = from;
+        }
+
         public String getUser_id() {
             return user_id;
         }
 
         public void setUser_id(String user_id) {
             this.user_id = user_id;
+        }
+
+        public String getStype() {
+            return stype;
+        }
+
+        public void setStype(String stype) {
+            this.stype = stype;
         }
 
         public String getModel() {
@@ -152,6 +178,14 @@ public class SupDemDetailBean {
             this.input_time = input_time;
         }
 
+        public String getTop() {
+            return top;
+        }
+
+        public void setTop(String top) {
+            this.top = top;
+        }
+
         public String getStatus() {
             return status;
         }
@@ -198,6 +232,22 @@ public class SupDemDetailBean {
 
         public void setIs_pass(String is_pass) {
             this.is_pass = is_pass;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getMobile1() {
+            return mobile1;
+        }
+
+        public void setMobile1(String mobile1) {
+            this.mobile1 = mobile1;
         }
 
         public String getMember_level() {

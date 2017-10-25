@@ -10,19 +10,22 @@ import java.io.Serializable;
 
 public class _ConfigBean implements Serializable {
 
+
     /**
      * err : 0
      * config : {"host":"116.62.179.6","port":"5672","user_name":"admin","password":"admin","route_key":"","vhost":"client","exchange_type":"direct","flags":2,"queue_config":{"name":"queue.user_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true},"exchange_config":{"name":"exchange.user","type":"direct","passive":false,"durable":true,"auto_delete":false}}
+     * redDot : {"is_socket_connected":"1","unread_mymsg":"17","unread_supply_and_demand":"52","unread_customer":"700","unread_myorder":"0","unread_who_saw_me":"0","unread_recommend_update":"0"}
      */
 
-    private String err;
-    private ConfigBean config;
+    private int err;
+    public ConfigBean config;
+    public RedDotBean redDot;
 
-    public String getErr() {
+    public int getErr() {
         return err;
     }
 
-    public void setErr(String err) {
+    public void setErr(int err) {
         this.err = err;
     }
 
@@ -34,7 +37,15 @@ public class _ConfigBean implements Serializable {
         this.config = config;
     }
 
-    public class ConfigBean implements Serializable {
+    public RedDotBean getRedDot() {
+        return redDot;
+    }
+
+    public void setRedDot(RedDotBean redDot) {
+        this.redDot = redDot;
+    }
+
+    public static class ConfigBean {
         /**
          * host : 116.62.179.6
          * port : 5672
@@ -55,7 +66,7 @@ public class _ConfigBean implements Serializable {
         private String route_key;
         private String vhost;
         private String exchange_type;
-        private String flags;
+        private int flags;
         private QueueConfigBean queue_config;
         private ExchangeConfigBean exchange_config;
 
@@ -115,11 +126,11 @@ public class _ConfigBean implements Serializable {
             this.exchange_type = exchange_type;
         }
 
-        public String getFlags() {
+        public int getFlags() {
             return flags;
         }
 
-        public void setFlags(String flags) {
+        public void setFlags(int flags) {
             this.flags = flags;
         }
 
@@ -139,7 +150,7 @@ public class _ConfigBean implements Serializable {
             this.exchange_config = exchange_config;
         }
 
-        public class QueueConfigBean implements Serializable {
+        public static class QueueConfigBean {
             /**
              * name : queue.user_53402
              * passive : false
@@ -195,7 +206,7 @@ public class _ConfigBean implements Serializable {
             }
         }
 
-        public class ExchangeConfigBean {
+        public static class ExchangeConfigBean {
             /**
              * name : exchange.user
              * type : direct
@@ -249,6 +260,82 @@ public class _ConfigBean implements Serializable {
             public void setAuto_delete(boolean auto_delete) {
                 this.auto_delete = auto_delete;
             }
+        }
+    }
+
+    public static class RedDotBean {
+        /**
+         * is_socket_connected : 1
+         * unread_mymsg : 17
+         * unread_supply_and_demand : 52
+         * unread_customer : 700
+         * unread_myorder : 0
+         * unread_who_saw_me : 0
+         * unread_recommend_update : 0
+         */
+
+        private String is_socket_connected;
+        private String unread_mymsg;
+        private String unread_supply_and_demand;
+        private String unread_customer;
+        private String unread_myorder;
+        private String unread_who_saw_me;
+        private String unread_recommend_update;
+
+        public String getIs_socket_connected() {
+            return is_socket_connected;
+        }
+
+        public void setIs_socket_connected(String is_socket_connected) {
+            this.is_socket_connected = is_socket_connected;
+        }
+
+        public String getUnread_mymsg() {
+            return unread_mymsg;
+        }
+
+        public void setUnread_mymsg(String unread_mymsg) {
+            this.unread_mymsg = unread_mymsg;
+        }
+
+        public String getUnread_supply_and_demand() {
+            return unread_supply_and_demand;
+        }
+
+        public void setUnread_supply_and_demand(String unread_supply_and_demand) {
+            this.unread_supply_and_demand = unread_supply_and_demand;
+        }
+
+        public String getUnread_customer() {
+            return unread_customer;
+        }
+
+        public void setUnread_customer(String unread_customer) {
+            this.unread_customer = unread_customer;
+        }
+
+        public String getUnread_myorder() {
+            return unread_myorder;
+        }
+
+        public void setUnread_myorder(String unread_myorder) {
+            this.unread_myorder = unread_myorder;
+        }
+
+        public String getUnread_who_saw_me() {
+            return unread_who_saw_me;
+        }
+
+        public void setUnread_who_saw_me(String unread_who_saw_me) {
+            this.unread_who_saw_me = unread_who_saw_me;
+        }
+
+        public String getUnread_recommend_update() {
+            return unread_recommend_update;
+        }
+
+        public void setUnread_recommend_update(String unread_recommend_update) {
+            this.unread_recommend_update = unread_recommend_update;
         }
     }
 }

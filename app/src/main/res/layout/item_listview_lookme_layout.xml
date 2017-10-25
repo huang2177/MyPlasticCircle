@@ -7,31 +7,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp">
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginBottom="1dp">
-
-            <com.myplas.q.common.view.MyImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_margin="8dp"
-                android:id="@+id/xq_tx"
-                android:background="@drawable/corner_gz"
-                android:src="@drawable/contact_image_defaul_male"
-                android:scaleType="centerCrop"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/xq_rz"
-                android:src="@drawable/icon_identity"
-                android:layout_gravity="bottom|right"/>
-        </FrameLayout>
+        <include layout="@layout/vimageview_layout"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,8 +22,9 @@
                 android:id="@+id/lookme_listview_gs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/color_balank"
-                android:singleLine="true"
                 android:textSize="15.0sp"/>
 
             <TextView

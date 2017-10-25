@@ -2,15 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:background="@color/colorAccent">
+              android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/wd_linear_fans"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/color_white"
         android:orientation="vertical"
         android:paddingBottom="12dp"
         android:paddingTop="12dp">
@@ -43,7 +41,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/color_white"
         android:orientation="vertical"
         android:paddingBottom="12dp"
         android:paddingTop="12dp">
@@ -71,14 +68,13 @@
     <View
         android:layout_width="1px"
         android:layout_height="match_parent"
-        android:background="@color/color_gray_divider_in"></View>
+        android:background="@color/color_gray_divider_in"/>
 
     <LinearLayout
         android:id="@+id/wd_linear_introdus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/color_white"
         android:orientation="vertical"
         android:paddingBottom="12dp"
         android:paddingTop="12dp">

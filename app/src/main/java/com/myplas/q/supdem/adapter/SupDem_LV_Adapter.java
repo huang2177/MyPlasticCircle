@@ -185,6 +185,8 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
             case 2:
                 context.startActivity(new Intent(context, IntegralPayActivtity.class));
                 break;
+            default:
+                break;
         }
     }
 

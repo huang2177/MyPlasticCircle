@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,16 +59,16 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         , SwipeRefreshLayout.OnRefreshListener
         , MyNestedScrollView.onScrollIterface {
 
-    public int  page;
+    public int page;
     private SharedUtils sharedUtils;
 
     private SupDemBean mSupDemBean;
     private SupDemBean.TopBean topBean;
     private SupDem_LV_Adapter mSupDemLVAdapter;
 
-    private View view;
     private MyListview mListView;
-    private FrameLayout  layoutDown;
+    private FrameLayout layoutDown;
+    private View view, mViewDivider;
     public RefreshPopou refreshPopou;
     private MyNestedScrollView mScrollView;
     private TextView company, content, time;
@@ -95,11 +96,16 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         refreshPopou = new RefreshPopou(getActivity(), 3);
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_supdem_all_layout, null, false);
-        mListView = F(R.id.gq_listview);
-        mScrollView = F(R.id.mynested_sv);
-        mRefreshLayout = F(R.id.smartlayout);
-        layoutFirstitem = F(R.id.supdem_head_ll);
-        layoutPrompt = F(R.id.supply_demand_prompt_linear);
+        mListView = f(R.id.gq_listview);
+        mScrollView = f(R.id.mynested_sv);
+        mRefreshLayout = f(R.id.smartlayout);
+        layoutFirstitem = f(R.id.supdem_head_ll);
+        layoutPrompt = f(R.id.supply_demand_prompt_linear);
+
+        mViewDivider = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_supdem_head_divider, null, false);
+        mListView.setHeaderDividersEnabled(false);
+        mViewDivider.setVisibility(View.GONE);
+        mListView.addHeaderView(mViewDivider);
 
         mScrollView.setOnScrollIterface(this);
         layoutFirstitem.setOnClickListener(this);
@@ -112,8 +118,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetUtils.isNetworkStateed(getActivity())) {
                     goToDetail("0"
-                            , mDataBeanList.get(position).getId()
-                            , mDataBeanList.get(position).getUser_id());
+                            , mDataBeanList.get(position - 1).getId()
+                            , mDataBeanList.get(position - 1).getUser_id());
                 }
 
             }
@@ -124,13 +130,13 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
     //实例化置顶控件
     public void initFirstItem() {
-        company = F(R.id.gq_listview_gs);
-        time = F(R.id.supply_demand_time);
-        typeSupDem = F(R.id.supdem_img_type);
-        content = F(R.id.supply_demand_content);
-        layoutUp = F(R.id.supply_demand_company);
-        layoutDown = F(R.id.supply_demand_detail);
-        typeNowFutures = F(R.id.supply_demand_now_futures);
+        company = f(R.id.gq_listview_gs);
+        time = f(R.id.supply_demand_time);
+        typeSupDem = f(R.id.supdem_img_type);
+        content = f(R.id.supply_demand_content);
+        layoutUp = f(R.id.supply_demand_company);
+        layoutDown = f(R.id.supply_demand_detail);
+        typeNowFutures = f(R.id.supply_demand_now_futures);
 
         layoutUp.setOnClickListener(this);
         layoutDown.setOnClickListener(this);
@@ -143,7 +149,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     }
 
 
-    public <T extends View> T F(int id) {
+    public <T extends View> T f(int id) {
         return (T) view.findViewById(id);
     }
 
@@ -208,7 +214,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             if (object.toString().equals(mLastData)) {
                 mRefreshLayout.setRefreshing(false);
                 mPopouinterface.showRefreshPopou(hotSearch, "");
-                return;
+                //return;
             }
             mLastData = object.toString();
             Gson gson = new Gson();
@@ -236,11 +242,13 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     //展示头部
                     if (new JSONObject(object.toString()).getJSONObject("top").length() != 0) {
                         topBean = mSupDemBean.getTop();
+                        mViewDivider.setVisibility(View.VISIBLE);
                         layoutFirstitem.setVisibility(View.VISIBLE);
                         user_id = topBean.getUser_id();
                         showTopInfo(topBean);
                     } else {
                         topBean = null;
+                        mViewDivider.setVisibility(View.GONE);
                         layoutFirstitem.setVisibility(View.GONE);
                     }
 
@@ -395,6 +403,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             case 2:
                 startActivity(new Intent(getActivity(), IntegralPayActivtity.class));
                 break;
+            default:
+                break;
         }
     }
 
@@ -415,6 +425,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         page++;
         getNetData(page + "", false);
     }
+
 
     @Override
     public void onResume() {

@@ -48,6 +48,7 @@ import com.myplas.q.myself.setting.SettingActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.sockethelper.Result;
+import com.myplas.q.sockethelper._ConfigBean;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -155,6 +156,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         linear_title.setOnClickListener(this);
         mFrameLayout.setOnClickListener(this);
 
+        linear_fs.setBackgroundResource(R.color.color_white);
+        linear_gz.setBackgroundResource(R.color.color_white);
+        linear_yj.setBackgroundResource(R.color.color_white);
         image_tx.setBorderColor(getResources().getColor(R.color.color_white));
     }
 
@@ -236,6 +240,8 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                 case R.id.wd_linear_set:
                     Intent intent7 = new Intent(getActivity(), SettingActivity.class);
                     startActivity(intent7);
+                    break;
+                default:
                     break;
             }
         }
@@ -353,16 +359,18 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
     /*rabbitmq */
     @Override
-    public void r_Callback(Result result) {
+    public void r_Callback(_ConfigBean.RedDotBean redDotBean) {
         Log.e("5555555", "======");
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         getLoginInfo(false);
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");

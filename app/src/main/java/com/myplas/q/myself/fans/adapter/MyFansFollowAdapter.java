@@ -80,7 +80,9 @@ public class MyFansFollowAdapter extends BaseAdapter {
                     : R.drawable.icon_identity_hl);
             viewHolder.sign.setImageResource(list.get(position).getType().equals("1")
                     ? R.drawable.icon_factory
-                    : (list.get(position).getType().equals("2")) ? R.drawable.icon_raw_material : R.drawable.icon_logistics);
+                    : (list.get(position).getType().equals("2"))
+                    ? R.drawable.icon_raw_material
+                    : R.drawable.icon_logistics);
             Glide.with(context)
                     .load(list.get(position).getThumb())
                     .placeholder(R.drawable.contact_image_defaul_male)

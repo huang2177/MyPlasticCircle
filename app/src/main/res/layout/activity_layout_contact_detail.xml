@@ -10,47 +10,58 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:background="@color/color_red"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="-20dp">
+        android:layout_marginTop="-30dp">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_white"
+            android:background="@color/color_transparent_"
             app:elevation="0dp">
 
             <!--AppBarLayout里放入的都可以跟着向上滑动滑出布局的的 -->
             <include layout="@layout/activity_layout_contact_detail_info"/>
 
-            <com.androidkun.xtablayout.XTabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_gravity="center|bottom"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/color_white"
-                app:xTabDividerWidthWidthText="true"
-                app:xTabIndicatorColor="@color/color_red"
-                app:xTabIndicatorHeight="3dp"
-                app:xTabMode="scrollable"
-                app:xTabSelectedTextColor="@color/color_red"
-                app:xTabTextColor="@color/color_gray"
-                app:xTabTextSize="16.0sp">
-            </com.androidkun.xtablayout.XTabLayout>
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.androidkun.xtablayout.XTabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center|bottom"
+                    android:background="@color/color_white"
+                    app:xTabDividerWidthWidthText="true"
+                    app:xTabIndicatorColor="@color/color_red"
+                    app:xTabIndicatorHeight="3dp"
+                    app:xTabMode="scrollable"
+                    app:xTabSelectedTextColor="@color/color_red"
+                    app:xTabTextColor="@color/color_gray"
+                    app:xTabTextSize="16.0sp">
+                </com.androidkun.xtablayout.XTabLayout>
+
+                <View
+                    android:id="@+id/headline_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/shape_shande"/>
+            </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
             android:background="@color/color_white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

@@ -58,16 +58,14 @@ public class LookMeAdapter extends SectionedBaseAdapter {
 
     @Override
     public int getSectionCount() {
-        if (list != null)
-            return list.size();
-        return 0;
+        return list != null ? list.size() : 0;
     }
 
     @Override
     public int getCountForSection(int section) {
-        if (list.get(section).getPerson() != null)
-            return list.get(section).getPerson().size();
-        return 0;
+        return list.get(section).getPerson() != null
+                ? list.get(section).getPerson().size()
+                : 0;
     }
 
     @Override
@@ -79,6 +77,7 @@ public class LookMeAdapter extends SectionedBaseAdapter {
             viewHolder.tx = (ImageView) convertView.findViewById(R.id.xq_tx);
             viewHolder.rz = (ImageView) convertView.findViewById(R.id.xq_rz);
             viewHolder.gs = (TextView) convertView.findViewById(R.id.lookme_listview_gs);
+            viewHolder.mSign = (ImageView) convertView.findViewById(R.id.contact_sign_img);
             viewHolder.time_detail = (TextView) convertView.findViewById(R.id.lookme_listview_time);
             viewHolder.layout = (LinearLayout) convertView.findViewById(R.id.lookme_time_layout);
             convertView.setTag(viewHolder);
@@ -91,11 +90,17 @@ public class LookMeAdapter extends SectionedBaseAdapter {
                     placeholder(R.drawable.contact_image_defaul_male).into(viewHolder.tx);
             viewHolder.gs.setText(listPerson.get(position).getCompany() + "  " + listPerson.get(position).getName());
             viewHolder.time_detail.setText(listPerson.get(position).getDate());
-            if (listPerson.get(position).getIsvip().equals("0")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity);
-            } else if (listPerson.get(position).getIsvip().equals("1")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
-            }
+
+            viewHolder.rz.setImageResource(listPerson.get(position).getIsvip().equals("0")
+                    ? R.drawable.icon_identity
+                    : R.drawable.icon_identity_hl);
+
+            viewHolder.mSign.setImageResource("1".equals(listPerson.get(position).getType())
+                    ? R.drawable.icon_factory
+                    : "2".equals(listPerson.get(position).getType())
+                    ? R.drawable.icon_raw_material
+                    : R.drawable.icon_logistics);
+
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -131,8 +136,8 @@ public class LookMeAdapter extends SectionedBaseAdapter {
     }
 
     class viewHolder {
-        ImageView tx, rz;
         LinearLayout layout;
+        ImageView tx, rz, mSign;
         TextView gs, time_detail;
     }
 

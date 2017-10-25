@@ -32,7 +32,6 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
 
     private RabbitMQConfig(Context context) {
         this.context = context;
-        mACache = ACache.get(context);
     }
 
     public static RabbitMQConfig getInstance(Context context) {
@@ -41,11 +40,6 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
             return mRabbitMQConfig;
         }
         return mRabbitMQConfig;
-    }
-
-    /*登陆以后获取rabbitMQ的配置信息*/
-    public void getConfig() {
-        BaseActivity.postAsyn1(context, API.BASEURL + API.INIT, null, this, 1, false);
     }
 
     /*关闭链接*/
@@ -65,9 +59,6 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1 && err.equals("0")) {
-                mACache.put("config", object.toString());
-            }
         } catch (Exception e) {
 
         }

@@ -13,7 +13,7 @@ public class ContactInfoBean {
 
     /**
      * err : 0
-     * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","sex":"男","member_level":"列兵","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","thumbqq":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","c_name":"上海中晨电子商务股份有限公司","is_follow":"1","ranking":22,"is_vip":0,"followers":8,"fans":7,"recommendation":0,"supplies":[{"pur_id":"297","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月19日 10:21","bid":"32","reply":"1","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"},{"pur_id":"296","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 20:09","bid":"0","reply":"0","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"},{"pur_id":"295","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 20:08","bid":"0","reply":"0","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"},{"pur_id":"294","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 16:46","bid":"0","reply":"0","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"},{"pur_id":"293","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 16:45","bid":"0","reply":"0","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"}],"demand":[{"pur_id":"292","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 16:44","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402},{"pur_id":"220","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 16:21","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402},{"pur_id":"77","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 15:08","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402},{"pur_id":"75","model":"7000f","f_name":"上海","store_house":"上海","unit_price":"10000.00","cargo_type":1,"input_time":"10月18日 15:03","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402},{"pur_id":"74","model":"7000f","f_name":"上海","store_house":"上海","unit_price":"123456.00","cargo_type":1,"input_time":"10月18日 15:01","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402}]}
+     * data : {"user_id":"53441","name":"韩梅梅","c_id":"50377","mobile":"15921211765","sex":"女","member_level":"列兵","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":"","c_name":"中国能之光新材料科技股份有限公司（宁波分公司）","type":"1","is_follow":"1","ranking":36,"is_vip":0,"followers":8,"fans":5,"recommendation":0,"supplies":[{"pur_id":"436","model":"9001","f_name":"台湾塑胶                ","store_house":"上海","unit_price":"11000.00","cargo_type":0,"input_time":"10月25日 14:11","bid":"1","reply":"1","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"},{"pur_id":"435","model":"BL3","f_name":"伊朗石化","store_house":"宁波","unit_price":"10500.00","cargo_type":1,"input_time":"10月25日 14:11","bid":"0","reply":"0","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"},{"pur_id":"415","model":"7000F","f_name":"伊朗石化","store_house":"","unit_price":"0.00","cargo_type":0,"input_time":"10月24日 18:14","bid":"1","reply":"1","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"},{"pur_id":"405","model":"7000F","f_name":"伊朗石化","store_house":"","unit_price":"10500.00","cargo_type":0,"input_time":"10月24日 17:58","bid":"0","reply":"0","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"},{"pur_id":"386","model":"9001","f_name":"台湾塑胶                ","store_house":"上海","unit_price":"11000.00","cargo_type":1,"input_time":"10月24日 16:36","bid":"0","reply":"0","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"}],"demand":[{"pur_id":"387","model":"9001","f_name":"台湾塑胶","store_house":"广州","unit_price":"10800.00","cargo_type":1,"input_time":"10月24日 16:36","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441},{"pur_id":"352","model":"9001","f_name":"台湾塑胶                ","store_house":"广州","unit_price":"10900.00","cargo_type":1,"input_time":"10月24日 11:43","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441},{"pur_id":"351","model":"9001","f_name":"台湾塑胶                ","store_house":"上海","unit_price":"11000.00","cargo_type":1,"input_time":"10月24日 11:43","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441},{"pur_id":"350","model":"BL3","f_name":"伊朗石化","store_house":"宁波","unit_price":"10500.00","cargo_type":1,"input_time":"10月24日 11:43","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441},{"pur_id":"338","model":"9001","f_name":"台湾塑胶                ","store_house":"广州","unit_price":"10900.00","cargo_type":1,"input_time":"10月24日 11:33","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441}]}
      */
 
     private String err;
@@ -37,23 +37,24 @@ public class ContactInfoBean {
 
     public static class DataBean {
         /**
-         * user_id : 53402
-         * name : hh
-         * c_id : 5041
-         * mobile : 15378412400
-         * sex : 男
+         * user_id : 53441
+         * name : 韩梅梅
+         * c_id : 50377
+         * mobile : 15921211765
+         * sex : 女
          * member_level : 列兵
-         * thumb : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
-         * thumbqq : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
-         * c_name : 上海中晨电子商务股份有限公司
+         * thumb : http://pic.myplas.com/myapp/img/female.jpg
+         * thumbqq :
+         * c_name : 中国能之光新材料科技股份有限公司（宁波分公司）
+         * type : 1
          * is_follow : 1
-         * ranking : 22
+         * ranking : 36
          * is_vip : 0
          * followers : 8
-         * fans : 7
+         * fans : 5
          * recommendation : 0
-         * supplies : [{"pur_id":"297","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月19日 10:21","bid":"32","reply":"1","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"},{"pur_id":"296","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 20:09","bid":"0","reply":"0","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"},{"pur_id":"295","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 20:08","bid":"0","reply":"0","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"},{"pur_id":"294","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 16:46","bid":"0","reply":"0","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"},{"pur_id":"293","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 16:45","bid":"0","reply":"0","user_id":53402,"thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG"}]
-         * demand : [{"pur_id":"292","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 16:44","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402},{"pur_id":"220","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 16:21","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402},{"pur_id":"77","model":"1000","f_name":"伊朗石化","store_house":"上海","unit_price":"0.00","cargo_type":0,"input_time":"10月18日 15:08","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402},{"pur_id":"75","model":"7000f","f_name":"上海","store_house":"上海","unit_price":"10000.00","cargo_type":1,"input_time":"10月18日 15:03","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402},{"pur_id":"74","model":"7000f","f_name":"上海","store_house":"上海","unit_price":"123456.00","cargo_type":1,"input_time":"10月18日 15:01","bid":"0","reply":"0","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","user_id":53402}]
+         * supplies : [{"pur_id":"436","model":"9001","f_name":"台湾塑胶                ","store_house":"上海","unit_price":"11000.00","cargo_type":0,"input_time":"10月25日 14:11","bid":"1","reply":"1","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"},{"pur_id":"435","model":"BL3","f_name":"伊朗石化","store_house":"宁波","unit_price":"10500.00","cargo_type":1,"input_time":"10月25日 14:11","bid":"0","reply":"0","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"},{"pur_id":"415","model":"7000F","f_name":"伊朗石化","store_house":"","unit_price":"0.00","cargo_type":0,"input_time":"10月24日 18:14","bid":"1","reply":"1","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"},{"pur_id":"405","model":"7000F","f_name":"伊朗石化","store_house":"","unit_price":"10500.00","cargo_type":0,"input_time":"10月24日 17:58","bid":"0","reply":"0","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"},{"pur_id":"386","model":"9001","f_name":"台湾塑胶                ","store_house":"上海","unit_price":"11000.00","cargo_type":1,"input_time":"10月24日 16:36","bid":"0","reply":"0","user_id":53441,"thumb":"http://pic.myplas.com/myapp/img/female.jpg"}]
+         * demand : [{"pur_id":"387","model":"9001","f_name":"台湾塑胶","store_house":"广州","unit_price":"10800.00","cargo_type":1,"input_time":"10月24日 16:36","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441},{"pur_id":"352","model":"9001","f_name":"台湾塑胶                ","store_house":"广州","unit_price":"10900.00","cargo_type":1,"input_time":"10月24日 11:43","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441},{"pur_id":"351","model":"9001","f_name":"台湾塑胶                ","store_house":"上海","unit_price":"11000.00","cargo_type":1,"input_time":"10月24日 11:43","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441},{"pur_id":"350","model":"BL3","f_name":"伊朗石化","store_house":"宁波","unit_price":"10500.00","cargo_type":1,"input_time":"10月24日 11:43","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441},{"pur_id":"338","model":"9001","f_name":"台湾塑胶                ","store_house":"广州","unit_price":"10900.00","cargo_type":1,"input_time":"10月24日 11:33","bid":"0","reply":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","user_id":53441}]
          */
 
         private String user_id;
@@ -65,6 +66,7 @@ public class ContactInfoBean {
         private String thumb;
         private String thumbqq;
         private String c_name;
+        private String type;
         private String is_follow;
         private String ranking;
         private String is_vip;
@@ -146,6 +148,14 @@ public class ContactInfoBean {
             this.c_name = c_name;
         }
 
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
         public String getIs_follow() {
             return is_follow;
         }
@@ -212,17 +222,17 @@ public class ContactInfoBean {
 
         public static class SuppliesBean {
             /**
-             * pur_id : 297
-             * model : 1000
-             * f_name : 伊朗石化
+             * pur_id : 436
+             * model : 9001
+             * f_name : 台湾塑胶
              * store_house : 上海
-             * unit_price : 0.00
+             * unit_price : 11000.00
              * cargo_type : 0
-             * input_time : 10月19日 10:21
-             * bid : 32
+             * input_time : 10月25日 14:11
+             * bid : 1
              * reply : 1
-             * user_id : 53402
-             * thumb : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
+             * user_id : 53441
+             * thumb : http://pic.myplas.com/myapp/img/female.jpg
              */
 
             private String pur_id;
@@ -328,17 +338,17 @@ public class ContactInfoBean {
 
         public static class DemandBean {
             /**
-             * pur_id : 292
-             * model : 1000
-             * f_name : 伊朗石化
-             * store_house : 上海
-             * unit_price : 0.00
-             * cargo_type : 0
-             * input_time : 10月18日 16:44
+             * pur_id : 387
+             * model : 9001
+             * f_name : 台湾塑胶
+             * store_house : 广州
+             * unit_price : 10800.00
+             * cargo_type : 1
+             * input_time : 10月24日 16:36
              * bid : 0
              * reply : 0
-             * thumb : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
-             * user_id : 53402
+             * thumb : http://pic.myplas.com/myapp/img/female.jpg
+             * user_id : 53441
              */
 
             private String pur_id;

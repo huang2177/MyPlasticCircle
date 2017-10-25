@@ -80,7 +80,6 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
             convertView = LayoutInflater.from(context).inflate(R.layout.item_myself_supdem_layout, parent, false);
             viewMap.put(position, convertView);
             viewHolder.name = (TextView) convertView.findViewById(R.id.gq_listview_name);
-            viewHolder.company = (TextView) convertView.findViewById(R.id.gq_listview_gs);
             viewHolder.time = (TextView) convertView.findViewById(R.id.supply_demand_time);
             viewHolder.typeSupDem = (ImageView) convertView.findViewById(R.id.supdem_img_type);
             viewHolder.content = (TextView) convertView.findViewById(R.id.supply_demand_content);
@@ -90,8 +89,9 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
             viewHolder.mImageR = (ImageView) convertView.findViewById(R.id.myself_supdem_img_repeat);
             viewHolder.typeNowFutures = (ImageView) convertView.findViewById(R.id.supply_demand_now_futures);
             try {
-                viewHolder.name.setText(list.get(position).getName());
-                viewHolder.company.setText(list.get(position).getC_name());
+                viewHolder.name.setText(list.get(position).getC_name() + "  "
+                        + list.get(position).getName());
+
                 String reply = "回复:" + list.get(position).getHui_count()
                         + "  出价:" + list.get(position).getChu_count();
                 viewHolder.time.setText(reply);
@@ -151,7 +151,7 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
 
     class viewHolder {
         LinearLayout mLayout;
-        TextView company, name, content, time;
+        TextView name, content, time;
         ImageView typeSupDem, typeNowFutures, mImageR, mImageS, mImageD;
     }
 

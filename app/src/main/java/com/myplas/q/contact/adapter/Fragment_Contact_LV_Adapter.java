@@ -3,6 +3,7 @@ package com.myplas.q.contact.adapter;
 import android.content.Context;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,31 +99,23 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
                 viewHolder.mSup.setVisibility(View.VISIBLE);
                 viewHolder.mSign.setImageResource(R.drawable.icon_factory);
                 viewHolder.zhy.setText(replace(list.get(position).getNeed_product()));
-                viewHolder.zg.setText("产品:"
-                        + product
-                        + "  月用量:"
-                        + list.get(position).getMonth_consum());
+                viewHolder.zg.setText("产品:" + product
+                        + "  月用量:" + list.get(position).getMonth_consum());
 
-                viewHolder.mSup.setText("供给:"
-                        + list.get(position).getSale_count()
-                        + " 求购:"
-                        + list.get(position).getBuy_count()
-                        + " 需求:");
+                viewHolder.mSup.setText(" 需求:");
             } else if (type.equals("2")) {
                 viewHolder.zg.setVisibility(View.INVISIBLE);
                 viewHolder.mSup.setVisibility(View.VISIBLE);
                 viewHolder.mSign.setImageResource(R.drawable.icon_raw_material);
                 viewHolder.zhy.setText(replace(list.get(position).getNeed_product()));
-                viewHolder.mSup.setText("供给:"
-                        + list.get(position).getSale_count()
-                        + " 求购:"
-                        + list.get(position).getBuy_count()
-                        + " 主营:");
+                viewHolder.mSup.setText(" 主营:");
             } else {
                 viewHolder.zg.setVisibility(View.INVISIBLE);
                 viewHolder.mSup.setVisibility(View.VISIBLE);
-                viewHolder.mSign.setImageResource(R.drawable.icon_logistics);
                 viewHolder.mSup.setText("主营产品:" + replace(list.get(position).getNeed_product()));
+                if (type.equals("4")) {
+                    viewHolder.mSign.setImageResource(R.drawable.icon_logistics);
+                }
             }
             viewHolder.mStart.setImageResource(list.get(position).getIs_pass().equals("0")
                     ? R.drawable.icon_identity
@@ -154,31 +147,23 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
                     viewHolder.mSup.setVisibility(View.VISIBLE);
                     viewHolder.mSign.setImageResource(R.drawable.icon_factory);
                     viewHolder.zhy.setText(replace(topBean.getNeed_product()));
-                    viewHolder.zg.setText("产品:"
-                            + product
-                            + "  月用量:"
-                            + topBean.getMonth_consum());
+                    viewHolder.zg.setText("产品:" + product
+                            + "  月用量:" + topBean.getMonth_consum());
 
-                    viewHolder.mSup.setText("供给:"
-                            + topBean.getSale_count()
-                            + " 求购:"
-                            + topBean.getBuy_count()
-                            + " 需求:");
+                    viewHolder.mSup.setText(" 需求:");
                 } else if (type.equals("2")) {
                     viewHolder.zg.setVisibility(View.INVISIBLE);
                     viewHolder.mSup.setVisibility(View.VISIBLE);
                     viewHolder.mSign.setImageResource(R.drawable.icon_raw_material);
                     viewHolder.zhy.setText(replace(topBean.getNeed_product()));
-                    viewHolder.mSup.setText("供给:"
-                            + topBean.getSale_count()
-                            + " 求购:"
-                            + topBean.getBuy_count()
-                            + " 主营:");
+                    viewHolder.mSup.setText(" 主营:");
                 } else {
                     viewHolder.zg.setVisibility(View.INVISIBLE);
                     viewHolder.mSup.setVisibility(View.VISIBLE);
-                    viewHolder.mSign.setImageResource(R.drawable.icon_logistics);
                     viewHolder.mSup.setText("主营产品:" + replace(topBean.getNeed_product()));
+                    if (type.equals("4")) {
+                        viewHolder.mSign.setImageResource(R.drawable.icon_logistics);
+                    }
                 }
                 viewHolder.mStart.setImageResource(topBean.getIs_pass().equals("0")
                         ? R.drawable.icon_identity

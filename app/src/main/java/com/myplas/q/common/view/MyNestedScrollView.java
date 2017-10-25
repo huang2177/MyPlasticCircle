@@ -3,6 +3,7 @@ package com.myplas.q.common.view;
 import android.content.Context;
 import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -31,8 +32,10 @@ public class MyNestedScrollView extends NestedScrollView {
         d -= (getHeight() + getScrollY());
         if (d == 0 && onScrollIterface != null) {
             onScrollIterface.loadMore();
-        } else
+        } else {
             super.onScrollChanged(l, t, oldl, oldt);
+        }
+
     }
 
     public interface onScrollIterface {
