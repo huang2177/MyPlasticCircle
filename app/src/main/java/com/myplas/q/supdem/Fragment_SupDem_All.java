@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,23 +58,23 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         , SwipeRefreshLayout.OnRefreshListener
         , MyNestedScrollView.onScrollIterface {
 
+    public int  page;
     private SharedUtils sharedUtils;
-    public int visibleItemCount, page;
 
+    private SupDemBean mSupDemBean;
     private SupDemBean.TopBean topBean;
     private SupDem_LV_Adapter mSupDemLVAdapter;
-    private SupDemBean mSupDemBean;
 
     private View view;
     private MyListview mListView;
-    private LinearLayout mLayout;
+    private FrameLayout  layoutDown;
     public RefreshPopou refreshPopou;
     private MyNestedScrollView mScrollView;
     private TextView company, content, time;
     private SwipeRefreshLayout mRefreshLayout;
-    private ImageView typeSupDem, typeNowFutures, imgUp;
     private List<SupDemBean.DataBean> mDataBeanList;
-    private LinearLayout layoutPrompt, layoutFirstitem, layoutUp, layoutDown;
+    private ImageView typeSupDem, typeNowFutures, imgUp;
+    private LinearLayout layoutPrompt, layoutFirstitem, layoutUp;
 
     private String mLastData, hotSearch;
     public String follow_release, user_id, type;
@@ -162,6 +163,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                 } else if (follow_release.equals("release")) {
                     startActivity(new Intent(getActivity(), ReleaseActivity.class));
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -296,6 +299,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                                 view2.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
                                 view2.findViewById(R.id.img_supplydemad_down).setVisibility(View.GONE);
                                 break;
+                            default:
+                                break;
                         }
                     } else {
                         TextUtils.Toast(getContext(), "没有更多数据了！");
@@ -360,8 +365,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             try {
                 company.setText(topBean.getC_name() + "  " + topBean.getName());
 
-//                String s = topBean.getFrom().equals("1") ? "来自供求 " : "来自QQ群 " + topBean.getInput_time();
-//                time.setText(s);
+                String s = (topBean.getFrom().equals("1") ? "来自供求 " : "来自QQ群 ") + topBean.getInput_time();
+                time.setText(s);
 
                 String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + topBean.getStore_house()
                         + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + topBean.getModel()

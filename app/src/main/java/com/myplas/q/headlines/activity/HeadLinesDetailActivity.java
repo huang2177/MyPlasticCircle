@@ -275,14 +275,14 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
             case R.id.buttom_linear_gq:
                 finish();
                 clearColor();
-                imageView_gq.setImageResource(R.drawable.tabbar_tradehl);
+                imageView_gq.setImageResource(R.drawable.tabbar_trade_hl);
                 textView_gq.setTextColor(resources.getColor(R.color.color_red));
                 mMainActivity.goToSupDem();
                 break;
             case R.id.buttom_linear_txl:
                 finish();
                 clearColor();
-                imageView_txl.setImageResource(R.drawable.tabbar_contactshl);
+                imageView_txl.setImageResource(R.drawable.tabbar_contacts_hl);
                 textView_txl.setTextColor(resources.getColor(R.color.color_red));
                 mMainActivity.firstInto();
                 break;

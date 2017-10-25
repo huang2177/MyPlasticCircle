@@ -74,15 +74,15 @@ public class MsgHFBean {
         private String hui_time;
         private String fa_time;
         private String f_name;
-        private String pur_str;
+        private String pur_sisn;
         private String detail_url;
 
-        public String getPur_str() {
-            return pur_str;
+        public String getPur_sign() {
+            return pur_sisn;
         }
 
-        public void setPur_str(String pur_str) {
-            this.pur_str = pur_str;
+        public void setPur_sign(String pur_str) {
+            this.pur_sisn = pur_str;
         }
 
         public String getId() {

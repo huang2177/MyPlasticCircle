@@ -46,7 +46,8 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingeral_record_activity_layout);
-        goBack(findViewById(R.id.back));
+        initTileBar();
+        setTitle("兑换记录");
 
         list = new ArrayList<>();
         textView = F(R.id.integral_text);

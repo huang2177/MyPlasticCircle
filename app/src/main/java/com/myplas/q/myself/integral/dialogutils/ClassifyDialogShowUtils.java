@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -164,7 +165,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
                 mTextChoosed.setText(configBean.getCate_name() + childName);
                 fId = configBean.getCate_id();
                 fName = configBean.getCate_name();
-                childId = (childName.equals(""))
+                childId = ("".equals(childName))
                         ? ("")
                         : (configBean.getChildren().get(cPosition).getCate_id());
 
@@ -178,7 +179,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
     }
 
     public void showData() {
-        String type = (childName.equals("")) ? (fName) : (fName + childName);
+        String type = ("".equals(childName)) ? (fName) : (fName + childName);
         mTextChoosed.setText(type);
     }
 
@@ -216,7 +217,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
         int height = outMetrics.heightPixels;
 
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = lp.MATCH_PARENT;
+        lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
         lp.height = (int) (height / 2.2);
         dlg.getWindow().setAttributes(lp);
 

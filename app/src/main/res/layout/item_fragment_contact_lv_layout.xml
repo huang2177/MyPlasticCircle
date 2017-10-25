@@ -3,6 +3,7 @@
               android:id="@+id/contact_top_ll"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@drawable/ripple_bg"
               android:orientation="vertical">
 
     <LinearLayout
@@ -11,18 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <include layout="@layout/vimageview_layout"/>
-
-            <ImageView
-                android:id="@+id/contact_sign_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"/>
-        </FrameLayout>
+        <include layout="@layout/vimageview_layout"/>
 
         <FrameLayout
             android:layout_width="0dp"

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/color_gray_bg"
+              android:background="#eaeaea"
               android:orientation="vertical">
 
     <LinearLayout
@@ -18,21 +18,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <com.myplas.q.common.view.MyImageView
-                android:id="@+id/item_head"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="6dp"
-                android:layout_marginRight="6dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/contact_image_defaul_male"/>
-
             <ImageView
                 android:id="@+id/item_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:src="@drawable/icon_identity"/>
+                android:src="@drawable/icon_identity"
+                android:visibility="gone"/>
+
+            <com.myplas.q.common.view.MyImageView
+                android:id="@+id/item_head"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/contact_image_defaul_male"/>
         </FrameLayout>
 
         <TextView
@@ -62,18 +61,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="7dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="7dp">
 
         <TextView
             android:id="@+id/item_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="2"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/color_balank"
-            android:textSize="16.0sp"/>
+            android:textSize="15.0sp"/>
     </LinearLayout>
 
     <View

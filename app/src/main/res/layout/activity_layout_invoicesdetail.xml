@@ -6,32 +6,7 @@
               android:focusableInTouchMode="true"
               android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_red">
-
-        <LinearLayout
-            android:id="@+id/img_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/fx_ttxq_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="发票详情"
-            android:textColor="@color/color_white"
-            android:textSize="18.0sp"/>
-    </FrameLayout>
+    <include layout="@layout/common_layout_titlebar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,16 +15,8 @@
         <com.myplas.q.common.view.MyListview
             android:id="@+id/invoices_listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:divider="@color/color_gray_bg"
-            android:dividerHeight="20px"></com.myplas.q.common.view.MyListview>
+            android:dividerHeight="20px"/>
     </ScrollView>
-
-
-    <com.myplas.q.common.view.NoResultLayout
-        android:id="@+id/invoices_noresultlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-    </com.myplas.q.common.view.NoResultLayout>
 </LinearLayout>

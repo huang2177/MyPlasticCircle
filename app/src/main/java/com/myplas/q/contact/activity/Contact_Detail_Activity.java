@@ -57,7 +57,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private MyListview mListview_Sup, mListview_Dem;
-    private ImageView mStart, mFollow, mCall, mBack;
+    private ImageView mStart, mFollow, mCall, mBack, mSign;
     private TextView mCompany, mName, mLevel, mFans, mFollow_, mIntrudtion;
     private LinearLayout mLayoutInfo, mLayoutFans, mLayoutFollow, mLayoutIntrudtion;
 
@@ -92,6 +92,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         mFans = F(R.id.wd_text_fans);
         mViewPager = F(R.id.viewpager);
         mTabLayout = F(R.id.tabLayout);
+        mSign = F(R.id.contact_sign_img);
         mFollow_ = F(R.id.wd_text_follow);
         mCall = F(R.id.titlebar_img_right);
         mName = F(R.id.contact_detail_name);
@@ -104,6 +105,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         mCompany = F(R.id.contact_detail_company);
         mLayoutIntrudtion = F(R.id.wd_linear_introdus);
 
+        mSign.setVisibility(View.VISIBLE);
         mHead.setBorderColor(getResources().getColor(R.color.color_white));
 
         mCall.setOnClickListener(this);
@@ -179,6 +181,8 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
             case R.id.titlebar_img_back:
                 onBackPressed();
                 break;
+            default:
+                break;
         }
     }
 
@@ -206,15 +210,15 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1 && err.equals("0")) {
+            if (type == 1 && "0".equals(err)) {
                 contactBean = gson.fromJson(object.toString(), ContactInfoBean.class);
                 showInfo(contactBean);
             }
 
-            if (type == 2 && err.equals("0")) {
+            if (type == 2 && "0".equals(err)) {
                 String msg = new JSONObject(object.toString()).getString("msg");
                 TextUtils.Toast(this, msg);
-                mFollow.setImageResource(msg.equals("关注成功")
+                mFollow.setImageResource("关注成功".equals(msg)
                         ? R.drawable.img_supdem_detail_followed
                         : R.drawable.img_supdem_detail_follow);
             }
@@ -243,18 +247,20 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
 
             Glide.with(this)
                     .load(contactBean.getData().getThumb())
-                    .placeholder((contactBean.getData().getSex().equals("男"))
+                    .placeholder(("男".equals(contactBean.getData().getSex()))
                             ? (R.drawable.contact_image_defaul_male)
                             : (R.drawable.contact_image_defaul_female))
                     .into(mHead);
 
-            mStart.setImageResource((contactBean.getData().getIs_vip().equals("0"))
+            mStart.setImageResource(("0".equals(contactBean.getData().getIs_vip()))
                     ? (R.drawable.icon_identity)
                     : (R.drawable.icon_identity_hl));
 
-            mFollow.setImageResource(contactBean.getData().getIs_follow().equals("0")
+            mFollow.setImageResource("0".equals(contactBean.getData().getIs_follow())
                     ? R.drawable.img_supdem_detail_follow
                     : R.drawable.img_supdem_detail_followed);
+
+            //mSign.setImageResource("1".equals(contactBean.getData().));
 
             isSelf = (contactBean.getData().getUser_id())
                     .equals(sharedUtils.getData(this, Constant.USERID));

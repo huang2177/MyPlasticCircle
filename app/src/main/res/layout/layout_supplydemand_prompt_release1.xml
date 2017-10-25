@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical">
+
     <LinearLayout
+        android:id="@+id/supply_demand_prompt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/supply_demand_prompt">
+        android:orientation="vertical">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/icon_intelligent_recommendation1"/>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_gray"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
             android:id="@+id/supply_demand_text"
-            android:textSize="16.0sp"/>
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:id="@+id/supply_demand_follow"
-            android:src="@drawable/btn_release1"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:textColor="@color/color_gray"
+            android:textSize="16.0sp"/>
+
+        <Button
+            android:id="@+id/supply_demand_follow"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_gravity="center"
-            android:src="@drawable/explain1"
-            android:id="@+id/img_supplydemad_down"/>
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_shape_red_coners"
+            android:text="去发布"
+            android:textColor="@color/color_white"/>
+
+        <ImageView
+            android:id="@+id/img_supplydemad_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/explain1"/>
     </LinearLayout>
 </LinearLayout>

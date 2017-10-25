@@ -54,9 +54,7 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
 
     @Override
     public int getCount() {
-        if (list.size() != 0)
-            return list.size();
-        return 0;
+        return list.size() != 0 ? list.size() : 0;
     }
 
     @Override
@@ -89,9 +87,9 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
             viewHolder.company.setText(replace(list.get(position).getC_name()) + "  "
                     + list.get(position).getName());
 
-            String time = list.get(position).getFrom().equals("1")
+            String time = (list.get(position).getFrom().equals("1")
                     ? "来自供求 "
-                    : "来自QQ群 "
+                    : "来自QQ群 ")
                     + list.get(position).getInput_time();
             viewHolder.time.setText(time);
 

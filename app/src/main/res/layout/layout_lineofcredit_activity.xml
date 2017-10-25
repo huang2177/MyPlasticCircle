@@ -7,7 +7,7 @@
     android:focusableInTouchMode="true"
     android:focusable="true">
 
-    <include layout="@layout/layout_edu_titlebar"></include>
+    <include layout="@layout/layout_edu_titlebar"/>
 
     <ScrollView
         android:layout_width="match_parent"

@@ -81,7 +81,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private View view, shareView1, shareView2;
     private SwipeRefreshLayout mRefreshLayout;
     private TextView mTVClass, mTVRegion, mTVTitle;
-    private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch, mLayoutMore;
+    private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch;
 
     private int page;
     private boolean islogin;
@@ -118,7 +118,6 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         imageButton = (ImageButton) view.findViewById(R.id.img_reload);
         mIVBanner = (ImageView) view.findViewById(R.id.contact_banner_img);
         mLayoutTop = (LinearLayout) view.findViewById(R.id.contact_top_ll);
-        mLayoutMore = (LinearLayout) view.findViewById(R.id.contact_img_more);
         mLayoutCofig = (LinearLayout) view.findViewById(R.id.contact_config_ll);
         mLayoutSearch = (LinearLayout) view.findViewById(R.id.contact_search_ll);
         mScrollView = (MyNestedScrollView) view.findViewById(R.id.contact_scrollview);
@@ -128,7 +127,6 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         mTVRegion.setOnClickListener(this);
         mIVBanner.setOnClickListener(this);
         mLayoutTop.setOnClickListener(this);
-        mLayoutMore.setOnClickListener(this);
         mScrollView.setOnScrollIterface(this);
         mLayoutSearch.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
@@ -169,7 +167,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (v.getId() != R.id.contact_img_more && !checkIsLogin()) {
+        if (!checkIsLogin()) {
             return;
         }
         switch (v.getId()) {
@@ -187,9 +185,6 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 shareView2 = view.findViewById(R.id.xq_rz);
                 userId = mContactBean.getTop().getUser_id();
                 getPersonInfoData(userId, "1", 2);
-                break;
-            case R.id.contact_img_more:
-                startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
             case R.id.contact_search_ll:
                 startActivity(new Intent(getActivity(), Contact_Search_Activity.class));
@@ -228,7 +223,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 .ArrowRectage(0.1f)
                 .layoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false))
                 .dimEnabled(true)
-                .dimAmount(0.15f)
+                .dimAmount(0.2f)
                 .adapter(adapter)
                 .create();
         dialog.setCanceledOnTouchOutside(true);

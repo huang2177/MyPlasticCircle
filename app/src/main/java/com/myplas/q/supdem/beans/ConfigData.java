@@ -76,14 +76,14 @@ public class ConfigData {
     }
 
     public void setSortField1(String sortField1) {
-        this.sortField1 = sortField1;
+        ConfigData.sortField1 = sortField1;
     }
 
     public void setSortField2(String sortField2) {
-        this.sortField2 = sortField2;
+        ConfigData.sortField2 = sortField2;
     }
 
     public void setWhat(String what) {
-        this.what = what;
+        ConfigData.what = what;
     }
 }

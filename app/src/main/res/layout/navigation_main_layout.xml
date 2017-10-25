@@ -50,11 +50,13 @@
                 android:layout_gravity="center_horizontal"
                 android:translationX="16dp"
                 android:translationY="1dp"
+                android:visibility="gone"
                 app:bubbleColor="#ff0000"
                 app:bubbleRadius="5dp"
                 app:textColor="@color/color_white"
                 app:textSize="9.0sp"/>
         </FrameLayout>
+
         <LinearLayout
             android:id="@+id/buttom_linear_fx"
             android:layout_width="0dp"
@@ -128,11 +130,11 @@
                 android:layout_gravity="center_horizontal"
                 android:translationX="16dp"
                 android:translationY="1dp"
+                android:visibility="gone"
                 app:bubbleColor="#ff0000"
-                app:bubbleRadius="8dp"
-                app:text="112"
+                app:bubbleRadius="9dp"
                 app:textColor="@color/color_white"
-                app:textSize="9.0sp"/>
+                app:textSize="10.0sp"/>
         </FrameLayout>
 
         <FrameLayout
@@ -169,11 +171,11 @@
                 android:layout_gravity="center_horizontal"
                 android:translationX="15dp"
                 android:translationY="1dp"
+                android:visibility="gone"
                 app:bubbleColor="#ff0000"
-                app:bubbleRadius="8dp"
-                app:text="99+"
+                app:bubbleRadius="9dp"
                 app:textColor="@color/color_white"
-                app:textSize="9.0sp"/>
+                app:textSize="10.0sp"/>
         </FrameLayout>
 
     </LinearLayout>

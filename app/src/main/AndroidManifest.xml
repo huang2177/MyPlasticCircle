@@ -86,7 +86,8 @@
             android:name="com.myplas.q.contact.activity.Contact_Detail_Activity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/app_theme_transparent"/>
         <activity
             android:name=".contact.activity.TheirFansFollowActivity"
             android:screenOrientation="portrait"/>

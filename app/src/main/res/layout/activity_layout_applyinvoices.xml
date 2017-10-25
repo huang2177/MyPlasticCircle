@@ -7,43 +7,11 @@
               android:focusableInTouchMode="true"
               android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_red">
-
-        <LinearLayout
-            android:id="@+id/img_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/fx_ttxq_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="申请开票"
-            android:textColor="@color/color_white"
-            android:textSize="18.0sp"/>
-
-        <ImageView
-            android:id="@+id/img_contact"
-            android:layout_width="55dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:src="@drawable/btn_customer_service_help"/>
-    </FrameLayout>
+    <include layout="@layout/common_layout_titlebar"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
         <LinearLayout
@@ -64,7 +32,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray_divider_out"></View>
+                android:background="@color/color_gray_divider_out"/>
 
             <com.myplas.q.common.view.MyListview
                 android:id="@+id/applyinvoices_listview"
@@ -76,7 +44,7 @@
                 android:divider="@null"
                 android:listSelector="@android:color/transparent"
                 android:overScrollMode="never"
-                android:scrollbars="none"></com.myplas.q.common.view.MyListview>
+                android:scrollbars="none"/>
 
             <TextView
                 android:id="@+id/item_lv_invoice_allprice"
@@ -92,13 +60,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/color_gray_divider_out"></View>
+                android:background="@color/color_gray_divider_out"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginTop="20px"
-                android:background="@color/color_gray_divider_out"></View>
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -225,12 +193,12 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/color_gray_divider_out"></View>
+                    android:background="@color/color_gray_divider_out"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:background="@color/color_gray_bg"></View>
+                    android:background="@color/color_gray_bg"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

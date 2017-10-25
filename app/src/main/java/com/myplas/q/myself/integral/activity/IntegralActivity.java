@@ -44,11 +44,12 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_integral);
-        goBack(findViewById(R.id.back));
+        initTileBar();
+        setTitle("塑豆商城");
+        setRightTVText("如何赚塑豆");
 
         sharedUtils = SharedUtils.getSharedUtils();
         intergral_chz = F(R.id.jf_chz);
-        intergral_rule = F(R.id.jf_rule);
         integral_all = F(R.id.integral_all);
         mRecyclerView = F(R.id.jf_gridview);
         intergral_record = F(R.id.jf_record);
@@ -58,11 +59,11 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setNestedScrollingEnabled(false);
 
-        intergral_rule.setOnClickListener(this);
-        intergral_chz.setOnClickListener(this);
-        intergral_record.setOnClickListener(this);
+        mTVRight.setOnClickListener(this);
         integral_all.setOnClickListener(this);
         integral_all_.setOnClickListener(this);
+        intergral_chz.setOnClickListener(this);
+        intergral_record.setOnClickListener(this);
         type1 = getIntent().getStringExtra("type");
         //getProducts((type1 == null || "".equals(type1)) ? (3) : (3));
         getProducts(1);
@@ -113,34 +114,6 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         }
     }
 
-    public void MoveToPosition(final LinearLayoutManager manager, RecyclerView recyclerView, final int p) {
-        int fir = manager.findFirstVisibleItemPosition();
-        int end = manager.findLastVisibleItemPosition();
-        if (p <= fir) {
-            recyclerView.scrollToPosition(p);
-        } else if (p <= end) {
-            int top = recyclerView.getChildAt(p - fir).getTop();
-            recyclerView.scrollBy(0, top);
-        } else {
-            recyclerView.scrollToPosition(p);    //先让当前view滚动到列表内
-            move = true;
-        }
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (move) {
-                    move = false;
-                    int n = p - manager.findFirstVisibleItemPosition();
-                    if (n >= 0 && n < recyclerView.getChildCount()) {
-                        recyclerView.scrollBy(0, recyclerView.getChildAt(n).getTop()); //滚动到顶部
-                    }
-                }
-            }
-        });
-
-    }
-
     @Override
     public void failCallBack(int type) {
 
@@ -164,7 +137,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
             case R.id.jf_record://兑换记录
                 startActivity(new Intent(this, IntegralRecordActivtity.class));
                 break;
-            case R.id.jf_rule://规则
+            case R.id.titlebar_text_right://规则
                 startActivity(new Intent(this, IntegralRuleActivtity.class));
                 break;
         }

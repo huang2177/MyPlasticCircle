@@ -40,9 +40,13 @@ public class MySelfActivity extends BaseActivity implements ResultCallBack, View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_find_myself_activity);
-        goBack(findViewById(R.id.img_back));
+        initTileBar();
+
+        initView();
+    }
+
+    private void initView() {
         sharedUtils = SharedUtils.getSharedUtils();
-        textView_title = (TextView) findViewById(R.id.fx_zj_title);
         //share= (ImageView) findViewById(R.id.img_share);
         img_self = (ImageView) findViewById(R.id.img_myself);
         textView_cname = (TextView) findViewById(R.id.c_name);
@@ -55,16 +59,17 @@ public class MySelfActivity extends BaseActivity implements ResultCallBack, View
         share_btn.setOnClickListener(this);
         shuom_btn.setOnClickListener(this);
         if (getIntent().getStringExtra("data").equals("2")) {
-            textView_title.setText("企业信用信息");
+           setTitle("企业信用信息");
             share_btn.setVisibility(View.GONE);
             map.put("link_id",getIntent().getStringExtra("id"));
             getSelectCate();
         } else if (getIntent().getStringExtra("data").equals("1")) {
-            textView_title.setText("我的信用信息");
+            setTitle("我的信用信息");
             share_btn.setVisibility(View.VISIBLE);
             getSelectCate();
         }
     }
+
     public void getSelectCate() {
         map.put("token", sharedUtils.getData(this, "token"));
         postAsyn(this, API.BASEURL + API.CREDIT_CERTIFICATE, map, this, 1);

@@ -201,10 +201,9 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-------", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 2 && err.equals("0")) {
+            if (type == 2 && "0".equals(err)) {
                 myCateBean = gson.fromJson(object.toString(), MyCateBean.class);
                 for (int i = 0; i < list1.size(); i++) {
                     if (myCateBean.getData().getSubscribe().contains(list1.get(i))) {

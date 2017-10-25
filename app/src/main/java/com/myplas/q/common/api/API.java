@@ -186,7 +186,7 @@ public class API {
     //中间供求信息)获取供求发布(详情)的消息回复
     public final static String GET_RELEASE_MSG_DETAIL_REPLY = "releaseMsg/getReleaseMsgDetailReply";
     //二次发布
-    public final static String SECOND_PUB = "releaseMsg/secondPub";
+    public final static String SECOND_PUB = "releaseMsg/repeatRelease";
     //供求信息置顶之供求信息列表
     public final static String SUPPLYDEMAND_LIST = "releaseMsg/supplyDemandList";
     //供求消息中的出价
@@ -195,6 +195,9 @@ public class API {
     public final static String DELETE_MY_MSG = "releaseMsg/deleteMyMsg";
     //判断提交的发布报价(采购1、报价2)数据/user/mypurchase/pub
     public final static String PUB = "releaseMsg/releaseNewDemand";
+
+    //解析后重新发布
+    public final static String INSTANTRELEASE = "releaseMsg/instantRelease";
     //回复供求消息
     public final static String SAVE_MSG = "releaseMsg/saveMsg";
     //获取供求消息的出价

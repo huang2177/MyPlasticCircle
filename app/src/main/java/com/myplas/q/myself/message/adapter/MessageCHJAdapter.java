@@ -56,16 +56,24 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         viewHolder viewHolder = mHolderMap.get(position);
-        String supdem = mListChJ.get(position).getType().equals("2") ? "供给" : "求购";
+        String supdem = mListChJ.get(position).getType().equals("2")
+                ? "供给："
+                : "求购：";
         String title = "“<font color='#ff5000'>"
                 + mListChJ.get(position).getUser_name()
                 + "</font>”回复您的消息啦！";
         viewHolder.time.setText(mListChJ.get(position).getFa_time());
+
         viewHolder.title.setText(Html.fromHtml(title));
-        viewHolder.company.setText(mListChJ.get(position).getC_name() + "  " + mListChJ.get(position).getUser_name());
+
+        viewHolder.company.setText(mListChJ.get(position).getC_name()
+                + "  " + mListChJ.get(position).getUser_name());
+
         viewHolder.tel.setText("联系电话：" + mListChJ.get(position).getUser_mobile());
-        viewHolder.pro.setText("产品：" + mListChJ.get(position).getFa_content());
-        viewHolder.content.setText(Html.fromHtml("价格：<font color='#ff5000'>¥"
+
+        viewHolder.pro.setText(supdem + mListChJ.get(position).getFa_content());
+
+        viewHolder.content.setText(Html.fromHtml("出价价格：<font color='#ff5000'>¥"
                 + mListChJ.get(position).getPrice()
                 + "</font>"));
         viewHolder.ll_detail.setOnClickListener(new MyOnClickListener(position));
@@ -73,9 +81,7 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if (mListChJ != null)
-            return mListChJ.size();
-        return 0;
+        return mListChJ != null ? mListChJ.size() : 0;
     }
 
     public void setList(List<MsgChJBean.DataBean> list) {
@@ -91,13 +97,11 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
             time = (TextView) itemView.findViewById(R.id.msg_detail_time);
             title = (TextView) itemView.findViewById(R.id.msg_detail_title);
             company = (TextView) itemView.findViewById(R.id.msg_detail_company);
-            type = (TextView) itemView.findViewById(R.id.msg_detail_type);
             tel = (TextView) itemView.findViewById(R.id.msg_detail_tel);
             pro = (TextView) itemView.findViewById(R.id.msg_detail_pro);
             content = (TextView) itemView.findViewById(R.id.msg_detail_content);
             ll_detail = (LinearLayout) itemView.findViewById(R.id.msg_detail_detail);
 
-            type.setVisibility(View.GONE);
         }
     }
 
@@ -130,9 +134,9 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            if (!mListChJ.get(position).getPur_str().equals("")) {
+            if ("2".equals(mListChJ.get(position).getPur_sign())) {
                 Intent intent = new Intent(context, NoInfoActivity.class);
-                intent.putExtra("msg", mListChJ.get(position).getPur_str());
+                intent.putExtra("msg", mListChJ.get(position).getPur_sign());
                 context.startActivity(intent);
             } else {
                 Intent intent = new Intent(context, SupDem_Detail_Activity.class);

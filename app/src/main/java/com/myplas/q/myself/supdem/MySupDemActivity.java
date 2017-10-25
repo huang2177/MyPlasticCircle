@@ -1,20 +1,30 @@
 package com.myplas.q.myself.supdem;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.api.API;
+import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.MySupDemBean;
-import com.umeng.analytics.MobclickAgent;
+import com.myplas.q.release.ReleaseActivity;
+import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
 import org.json.JSONObject;
 
@@ -29,15 +39,18 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 16:22
  */
-public class MySupDemActivity extends BaseActivity implements ResultCallBack, SupDemAdapter.MyInterface {
+public class MySupDemActivity extends BaseActivity implements ResultCallBack
+        , SupDemAdapter.MyInterface
+        , View.OnClickListener {
 
     private String type;
     private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
 
-    private TextView textView;
     private ListView listView;
-    private List<MySupDemBean.DataBean> list_more;
+    private TextView emptyText;
+    private LinearLayout mLayout;
+    private List<MySupDemBean.DataBean> mList;
 
     private SupDemAdapter supplyDemandAdapter;
 
@@ -45,16 +58,29 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_myself_supdem);
+        ActivityManager.addActivity(this);
         initTileBar();
         setTitle(getIntent().getStringExtra("title"));
 
-        list_more = new ArrayList<>();
+        mList = new ArrayList<>();
         type = getIntent().getStringExtra("type");
         sharedUtils = SharedUtils.getSharedUtils();
 
+        mLayout = F(R.id.empty_ll);
+        emptyText = F(R.id.empty_text);
         listView = F(R.id.wd_gj_listview);
         supplyDemandAdapter = new SupDemAdapter(this, null, type, this);
         listView.setAdapter(supplyDemandAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MySupDemActivity.this, SupDem_Detail_Activity.class);
+                intent.putExtra("userid", mList.get(position).getUser_id());
+                intent.putExtra("id", mList.get(position).getId());
+                startActivity(intent);
+            }
+        });
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -94,22 +120,30 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
                 if (new JSONObject(object.toString()).getString("err").equals("0")) {
                     MySupDemBean supplyDemandBean = gson.fromJson(object.toString(), MySupDemBean.class);
                     if (page == 1) {
-                        list_more.clear();
-                        list_more.addAll(supplyDemandBean.getData());
-                        supplyDemandAdapter.setList(list_more);
+                        mLayout.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
+                        mList.clear();
+                        mList.addAll(supplyDemandBean.getData());
+                        supplyDemandAdapter.setList(mList);
                         supplyDemandAdapter.notifyDataSetChanged();
                     } else {
-                        list_more.addAll(supplyDemandBean.getData());
-                        supplyDemandAdapter.setList(list_more);
+                        mList.addAll(supplyDemandBean.getData());
+                        supplyDemandAdapter.setList(mList);
                         supplyDemandAdapter.notifyDataSetChanged();
                     }
                 } else {
                     if (page == 1) {
-                        EmptyView emptyView = new EmptyView(this);
-                        emptyView.mustCallInitWay(listView);
-                        emptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
-                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
-                        listView.setEmptyView(emptyView);
+                        listView.setVisibility(View.GONE);
+                        mLayout.setVisibility(View.VISIBLE);
+                        SpannableString spanableInfo = new SpannableString("您还未发布任何"
+                                + (this.type.equals("0")
+                                ? "供给"
+                                : "求购")
+                                + "信息，快去发布吧！");
+                        spanableInfo.setSpan(new Clickable(this), 14, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        emptyText.setText(spanableInfo);
+                        emptyText.setMovementMethod(LinkMovementMethod.getInstance());
+
                     } else {
                         TextUtils.Toast(this, "没有更多数据了！");
                     }
@@ -125,16 +159,40 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack, Su
     }
 
     @Override
+    public void onClick(View v) {
+        startActivity(new Intent(this, ReleaseActivity.class));
+    }
+
+    @Override
     public void reQuestNet() {
         page = 1;
         getSupplyDemandList(String.valueOf(page), false);
     }
 
-//    //刷新
-//    @Override
-//    public void onRefresh() {
-//        page = 1;
-//        getSupplyDemandList(String.valueOf(page));
-//    }
+    class Clickable extends ClickableSpan {
+        private final View.OnClickListener mListener;
+
+        public Clickable(View.OnClickListener l) {
+            mListener = l;
+        }
+
+        /**
+         * 重写父类点击事件
+         */
+        @Override
+        public void onClick(View v) {
+            mListener.onClick(v);
+        }
+
+        /**
+         * 重写父类updateDrawState方法  我们可以给TextView设置字体颜色,背景颜色等等...
+         */
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            //ds.setTextSize(45);
+            ds.setColor(getResources().getColor(R.color.color_white));
+            ds.bgColor = getResources().getColor(R.color.color_regions_dialog);
+        }
+    }
 
 }

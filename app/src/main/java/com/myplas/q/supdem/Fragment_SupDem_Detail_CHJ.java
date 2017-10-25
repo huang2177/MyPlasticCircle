@@ -35,7 +35,6 @@ import java.util.Map;
 
 public class Fragment_SupDem_Detail_CHJ extends Fragment implements ResultCallBack {
     private View mView;
-    private EmptyView mEmptyView;
     private ListView mMyListview;
     private NestedScrollView mScrollView;
 
@@ -53,7 +52,6 @@ public class Fragment_SupDem_Detail_CHJ extends Fragment implements ResultCallBa
         mCHJAdapter = new SupDem_Detail_LV_CHJAdapter(getActivity());
 
         mView = View.inflate(getActivity(), R.layout.fragment_layout_supdem_detail_chj, null);
-        mEmptyView = (EmptyView) mView.findViewById(R.id.fragment_supdem_detail_editview);
         mMyListview = (ListView) mView.findViewById(R.id.fragment_supdem_detail_lv);
         mScrollView = (NestedScrollView) mView.findViewById(R.id.scrollview);
 
@@ -90,15 +88,17 @@ public class Fragment_SupDem_Detail_CHJ extends Fragment implements ResultCallBa
             if (type == 1) {
                 if (err.equals("0")) {
                     setListener(false);
-                    mEmptyView.setVisibility(View.GONE);
                     DeliverPriceBean deliverPriceBean = gson.fromJson(object.toString(), DeliverPriceBean.class);
                     mBeanList = deliverPriceBean.getData();
                     mCHJAdapter.setList(mBeanList);
                     mCHJAdapter.notifyDataSetChanged();
                 } else {
                     setListener(true);
-                    mEmptyView.setMyManager(R.drawable.icon_intelligent_recommendation1);
-                    mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                    EmptyView emptyView = new EmptyView(getActivity());
+                    emptyView.mustCallInitWay(mMyListview);
+                    emptyView.setMyManager(R.drawable.icon_intelligent_recommendation1);
+                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                    mMyListview.setEmptyView(emptyView);
                 }
             }
         } catch (Exception e) {

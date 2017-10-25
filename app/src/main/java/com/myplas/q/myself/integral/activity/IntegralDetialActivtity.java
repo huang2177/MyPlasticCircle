@@ -11,7 +11,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
@@ -20,7 +19,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
-import com.myplas.q.common.view.NoResultLayout;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.PinnedHeaderListView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.Integraldetialbean;
@@ -49,7 +48,6 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
     private int page, positionItem, visibleItemCount;
 
     private GridView mGridView;
-    private TextView mTextView;
     private List<String> listString;
     private PinnedHeaderListView listView;
     private List<Integraldetialbean.DataBean.RecordsBean> list;
@@ -57,14 +55,16 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
     private Integral_Detial_GV_Adapter mGVAdapter;
 
     private View view;
+    private EmptyView mEmptyView;
     private CustomPopupWindow popupWindow;
-    private NoResultLayout mNoResultLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingeral_detial_activity_layout);
-        goBack(findViewById(R.id.titlebar_img_left));
+        initTileBar();
+        setTitle("塑豆明细");
+        setRightTVText("全部");
 
         page = 1;
         hasMoreData = true;
@@ -72,13 +72,12 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
         sharedUtils = SharedUtils.getSharedUtils();
 
 
-        mTextView = F(R.id.titlebar_text_right);
+        mEmptyView = F(R.id.integral_detial_nrll);
         listView = F(R.id.integral_detial_listview);
-        mNoResultLayout = F(R.id.integral_detial_nrll);
         view = View.inflate(this, R.layout.popou_layout_ingeral_detial, null);
         mGridView = (GridView) view.findViewById(R.id.integral_detial_gv);
 
-        mTextView.setOnClickListener(this);
+        mTVRight.setOnClickListener(this);
 
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -160,13 +159,12 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
     }
 
     public void showPopou() {
-        setBackgroundAlpha(0.5f);//设置屏幕透明度
+        setBackgroundAlpha(0.8f);//设置屏幕透明度
         popupWindow = new CustomPopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         ColorDrawable dw = new ColorDrawable(0000000000);
         popupWindow.setBackgroundDrawable(dw);
-        popupWindow.setAnimationStyle(R.style.my_anim_popou);
         if (Build.VERSION.SDK_INT >= 24) {
             int[] a = new int[2];
             mTextView.getLocationInWindow(a);
@@ -191,8 +189,8 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
             Integraldetialbean integraldetialbean = null;
             if (new JSONObject(object.toString()).getString("err").equals("0")) {
                 Gson gson = new Gson();
+                mEmptyView.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
-                mNoResultLayout.setVisibility(false);
                 integraldetialbean = gson.fromJson(object.toString(), Integraldetialbean.class);
                 if (page == 1) {
                     list.clear();
@@ -208,7 +206,9 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                 if (page == 1) {
                     hasMoreData = false;
                     listView.setVisibility(View.GONE);
-                    mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2, "没有更多数据！", true);
+                    mEmptyView.setVisibility(View.VISIBLE);
+                    mEmptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
+                    mEmptyView.setNoMessageText("没有更多数据！");
                 }
             }
         } catch (Exception e) {

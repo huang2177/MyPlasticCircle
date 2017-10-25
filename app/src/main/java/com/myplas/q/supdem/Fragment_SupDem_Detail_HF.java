@@ -57,21 +57,11 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
         mView = View.inflate(getActivity(), R.layout.fragment_layout_supdem_detail_hf, null);
         mEmptyView = (EmptyView) mView.findViewById(R.id.fragment_supdem_detail_editview);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.fragment_supdem_detail_rv);
-        //mScrollView = (NestedScrollView) mView.findViewById(R.id.scrollview);
 
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mHFAdapter);
         getReply();
         return mView;
-    }
-
-    private void setListener(final boolean scrollabled) {
-//        mScrollView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return scrollabled;
-//            }
-//        });
     }
 
     public void getReply() {
@@ -81,8 +71,8 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
         map.put("id", mIntent.getStringExtra("id"));
         map.put("user_id", mIntent.getStringExtra("userid"));
         map.put("token", mSharedUtils.getData(getActivity(), "token"));
-        String url3 = API.BASEURL + API.GET_RELEASE_MSG_DETAIL_REPLY;
-        BaseActivity.postAsyn(getActivity(), url3, map, this, 1);
+        String url = API.BASEURL + API.GET_RELEASE_MSG_DETAIL_REPLY;
+        BaseActivity.postAsyn(getActivity(), url, map, this, 1);
     }
 
     @Override
@@ -92,14 +82,15 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 if (err.equals("0")) {
-                    setListener(false);
                     mEmptyView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     ReplyBean replyBean = gson.fromJson(object.toString(), ReplyBean.class);
                     mBeanList = replyBean.getData();
                     mHFAdapter.setList(mBeanList);
                     mHFAdapter.notifyDataSetChanged();
                 } else {
-                    setListener(true);
+                    mEmptyView.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
                     mEmptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
                     mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
                 }

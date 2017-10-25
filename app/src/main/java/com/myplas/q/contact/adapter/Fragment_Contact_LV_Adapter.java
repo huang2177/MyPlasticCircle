@@ -46,9 +46,7 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list != null)
-            return list.size();
-        return 0;
+        return list != null ? list.size() : 0;
     }
 
     @Override
@@ -94,6 +92,7 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
 
             String type = list.get(position).getType();
             CharSequence product = replace(list.get(position).getMain_product());
+            viewHolder.mSign.setVisibility(View.VISIBLE);
             if (type.equals("1")) {
                 viewHolder.zg.setVisibility(View.VISIBLE);
                 viewHolder.mSup.setVisibility(View.VISIBLE);
@@ -149,6 +148,7 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
 
                 String type = topBean.getType();
                 CharSequence product = replace(topBean.getMain_product());
+                viewHolder.mSign.setVisibility(View.VISIBLE);
                 if (type.equals("1")) {
                     viewHolder.zg.setVisibility(View.VISIBLE);
                     viewHolder.mSup.setVisibility(View.VISIBLE);
@@ -223,7 +223,6 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
         ImageView mStart, mTop_Img, mSign;
         TextView mCompany, mName, mSex, mSup, zg, zhy, need_text;
     }
-
 }
 
 

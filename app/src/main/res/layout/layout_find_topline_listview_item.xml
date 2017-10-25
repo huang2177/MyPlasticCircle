@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="0.5dp"
-                android:src="@drawable/icon_see1"/>
+                android:src="@drawable/icon_see"/>
 
             <TextView
                 android:id="@+id/fx_tt_title_num"

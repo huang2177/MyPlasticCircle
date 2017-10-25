@@ -42,7 +42,6 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     private Button mButton;
     private EditText mEditText;
     private MyListview mListView;
-    private ImageView mImageView;
     private TextView mTextView_cm, mTextView_tprice, mTextView_notapplied, mTextView_apply, textView_allprice;
 
     private ApplyInvoiceBean bean;
@@ -55,7 +54,10 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_applyinvoices);
-        goBack(findViewById(R.id.img_back));
+        initTileBar();
+        setTitle("申请开票");
+        setRightIVVisibility(View.VISIBLE);
+
 
         initView();
         getInvioceList(getIntent().getStringExtra("order_sn"));
@@ -65,7 +67,6 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         ids = new StringBuffer();
         b_number = new StringBuffer();
 
-        mImageView = F(R.id.img_contact);
         mButton = F(R.id.applyinvoices_confirm);
         mEditText = F(R.id.applyinvoices_remark);
         mListView = F(R.id.applyinvoices_listview);
@@ -76,7 +77,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         mTextView_notapplied = F(R.id.applyinvoices_notapplied);
 
         mButton.setOnClickListener(this);
-        mImageView.setOnClickListener(this);
+        mIVConact.setOnClickListener(this);
     }
 
     public void getInvioceList(String keywords) {
@@ -102,7 +103,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_contact:
+            case R.id.titlebar_img_right:
                 information = new Information();
                 information.setAppkey(appkey);
                 SobotApi.startSobotChat(this, information);
@@ -123,7 +124,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     mListView.setVisibility(View.VISIBLE);
                     bean = gson.fromJson(object.toString(), ApplyInvoiceBean.class);
                     mAdapter = new ApplyInvoiceAdapter(this, bean.getData().getList());
@@ -134,7 +135,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                 }
             }
             if (type == 2) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     TextUtils.Toast(this, "提交成功！");
                     finish();
                 } else {

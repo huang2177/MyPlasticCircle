@@ -28,7 +28,6 @@
                     android:id="@+id/item_head"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_margin="6dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/contact_image_defaul_male"/>
 
@@ -37,7 +36,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
-                    android:src="@drawable/icon_identity"/>
+                    android:src="@drawable/icon_identity"
+                    android:visibility="gone"/>
             </FrameLayout>
 
             <LinearLayout

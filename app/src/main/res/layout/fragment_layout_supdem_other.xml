@@ -8,7 +8,7 @@
         android:id="@+id/fragment_other_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#dadae1"
+        android:divider="#e2e2e9"
         android:dividerHeight="5dp"/>
 
     <LinearLayout

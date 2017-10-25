@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
@@ -91,8 +92,8 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
         window.setWindowAnimations(R.style.my_anim_out_in); // 添加动画
 //        lp.width = (int) ((width *3) / 3.8);//宽高可设置具体大小
 //        lp.height = (int) ((height*6) / 7);
-        lp.width = lp.MATCH_PARENT;
-        lp.height = lp.MATCH_PARENT;
+        lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
         dlg.getWindow().setAttributes(lp);
     }
 

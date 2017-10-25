@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -104,7 +105,7 @@ public class CommonDialog {
         lp.gravity = Gravity.CENTER;
         lp.width = (int) ((width * 2) / 3.0);//宽高可设置具体大小
 //        lp.height = (int) (height / 4.88);
-        lp.height = lp.WRAP_CONTENT;
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         normalDialog.getWindow().setAttributes(lp);
     }
 

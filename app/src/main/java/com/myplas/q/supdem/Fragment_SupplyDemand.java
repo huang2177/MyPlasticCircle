@@ -161,7 +161,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                         .ArrowRectage(0.1f)
                         .layoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false))
                         .dimEnabled(true)
-                        .dimAmount(0.1f)
+                        .dimAmount(0.2f)
                         .adapter(new Supdem_Dialog_Adapter())
                         .create();
                 dialog.setCanceledOnTouchOutside(true);

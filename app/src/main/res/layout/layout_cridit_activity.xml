@@ -1,36 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_red">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="授信说明"
-            android:textColor="@color/color_white"
-            android:textSize="18.0sp"
-            android:id="@+id/fx_zj_title"
-            android:gravity="center"/>
-        <LinearLayout
-            android:id="@+id/img_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
-        </LinearLayout>
-    </FrameLayout>
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_layout_titlebar"/>
+
     <ImageView
+        android:id="@+id/credit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/credit_text"
-        android:src="@drawable/credit_description"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="5dp"
+        android:src="@drawable/credit_description"/>
 </LinearLayout>

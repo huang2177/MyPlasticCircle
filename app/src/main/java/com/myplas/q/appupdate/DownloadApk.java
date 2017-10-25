@@ -18,7 +18,7 @@ public class DownloadApk {
     private static InstallInterface installInterface;
 
     public DownloadApk(InstallInterface installInterface) {
-        this.installInterface = installInterface;
+        DownloadApk.installInterface = installInterface;
     }
 
     /**

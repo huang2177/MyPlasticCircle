@@ -30,7 +30,9 @@ public class IntegralRuleActivtity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingeral_rule_activity_layout);
-        goBack(findViewById(R.id.back));
+        initTileBar();
+        setTitle("积分规则");
+
         sharedUtils = SharedUtils.getSharedUtils();
         webView = (WebView) findViewById(R.id.integral_rule_text);
         clearWebViewCache();

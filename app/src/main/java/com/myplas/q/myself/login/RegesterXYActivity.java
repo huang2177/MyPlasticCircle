@@ -28,7 +28,9 @@ public class RegesterXYActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wd_layout_xy);
-        goBack(findViewById(R.id.back));
+        initTileBar();
+        setTitle("注册协议");
+
         webView = (WebView) findViewById(R.id.xy_web_re);
         WebSettings webSettings = webView.getSettings();
 

@@ -35,6 +35,7 @@ import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.contact.adapter.Fragment_Contact_LV_Adapter;
 import com.myplas.q.contact.adapter.Fragment_Dialog_Adapter;
 import com.myplas.q.contact.beans.ContactBean;
+import com.myplas.q.contact.beans.NoSearchInfoBean;
 import com.myplas.q.contact.beans.RecordBean;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
@@ -78,7 +79,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
 
     private RecordBean mRecordBean;
     private HIndicatorDialog dialog;
-    private SearchNoResultBean mNoResultBean;
+    private NoSearchInfoBean mInfoBean;
     private SupDem_Search_Grid_Adapter mGridAdapter;
 
     private int page, visibleItemCount;
@@ -140,7 +141,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                     mRefreshPopou.setCanShowPopou(true);
                     mLayoutDefault.setVisibility(View.GONE);
                     mLayoutResult.setVisibility(View.VISIBLE);
-                    keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+                    keywords = ("".equals(editText.getText().toString())) ? ("7000f") : (editText.getText().toString());
                     getNetData("1", true);
                     return true;
                 }
@@ -157,7 +158,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                     in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
-                        getNetData("1", false);
+                        getNetData("" + page, false);
                     }
                 }
             }
@@ -209,7 +210,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 mRefreshPopou.setCanShowPopou(true);
                 mLayoutDefault.setVisibility(View.GONE);
                 mLayoutResult.setVisibility(View.VISIBLE);
-                keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+                keywords = ("".equals(editText.getText().toString())) ? ("7000f") : (editText.getText().toString());
                 getNetData("1", true);
                 break;
             case R.id.img_search_delete:
@@ -220,6 +221,8 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 break;
             case R.id.contact_region:
                 openDialog(2, textView_region);
+                break;
+            default:
                 break;
         }
     }
@@ -236,7 +239,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 getData(keywords);
                 break;
             case R.id.mygrid_search_null://相关搜索
-                keywords = mNoResultBean.getCombine().get(position);
+                keywords = mInfoBean.getRecommendation().get(position);
                 getData(keywords);
                 break;
             case R.id.search_listview_result:
@@ -263,7 +266,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1 && err.equals("0")) {
+            if (type == 1 && "0".equals(err)) {
                 mRecordBean = gson.fromJson(object.toString(), RecordBean.class);
                 mGridAdapter = new SupDem_Search_Grid_Adapter(this, mRecordBean.getSearch_records());
                 mGV_History.setAdapter(mGridAdapter);
@@ -277,7 +280,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 ContactBean mContactBean = null;
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     mContactBean = gson.fromJson(object.toString(), ContactBean.class);
                     if (page == 1) {
                         listView.setVisibility(View.VISIBLE);
@@ -287,7 +290,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
 
                         mListBean.clear();
                         mListBean.addAll(mContactBean.getPersons());
-                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + 10 + "条信息");
+                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + mContactBean.getTotals() + "条信息");
                     } else {
                         mListBean.addAll(mContactBean.getPersons());
                         mLVAdapter.setList(mListBean);
@@ -298,8 +301,8 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                         listView.setVisibility(View.GONE);
                         mLayoutEmpty.setVisibility(View.VISIBLE);
                         textView_no.setText("抱歉，未能找到相关搜索！");
-                        mNoResultBean = gson.fromJson(object.toString(), SearchNoResultBean.class);
-                        mGridAdapter = new SupDem_Search_Grid_Adapter(this, mNoResultBean.getCombine());
+                        mInfoBean = gson.fromJson(object.toString(), NoSearchInfoBean.class);
+                        mGridAdapter = new SupDem_Search_Grid_Adapter(this, mInfoBean.getRecommendation());
                         mGV_Empty.setAdapter(mGridAdapter);
                     } else {
                         TextUtils.Toast(this, "没有更多数据了！");
@@ -307,13 +310,13 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 }
             }
 
-            if (type == 4 && err.equals("0")) {
+            if (type == 4 && "0".equals(err)) {
                 TextUtils.Toast(this, "删除成功！");
                 mGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
                 mGV_History.setAdapter(mGridAdapter);
             }
             //是否消耗积分
-            if (type == 5 && err.equals("99")) {
+            if (type == 5 && "99".equals(err)) {
                 String content = new JSONObject(object.toString()).getString("msg");
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(this, content, 1, this);

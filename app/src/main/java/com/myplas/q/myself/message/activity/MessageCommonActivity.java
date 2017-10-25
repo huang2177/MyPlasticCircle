@@ -8,7 +8,7 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.NoResultLayout;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.myself.beans.MsgChJBean;
@@ -40,10 +40,10 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
     private List<MsgChJBean.DataBean> mListChJ;
     private List<MsgSupDemBean.DataBean> mListSupDem;
 
+    private EmptyView mEmptyView;
     private RecyclerView mRecyclerView;
     private MessageHFAdapter mHFAdapter;
     private MessageCHJAdapter mCHJAdapter;
-    private NoResultLayout mNoResultLayout;
     private MessageSupDemAdapter mSupDemAdapter;
 
     @Override
@@ -64,7 +64,7 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
         mListChJ = new ArrayList<>();
         mListSupDem = new ArrayList<>();
         mRecyclerView = F(R.id.wd_gj_listview);
-        mNoResultLayout = F(R.id.mysupdem_noresultlayout);
+        mEmptyView = F(R.id.mysupdem_noresultlayout);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);//设置为一个1列的纵向网格布局
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -96,7 +96,7 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 if (err.equals("0")) {
-                    mNoResultLayout.setVisibility(false);
+                    mEmptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     MsgSupDemBean msgSupDemBean = gson.fromJson(object.toString(), MsgSupDemBean.class);
                     if (page == 1) {
@@ -114,9 +114,10 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);
-                        mNoResultLayout.setNoResultData(R.drawable.icon_follow1
-                                , new JSONObject(object.toString()).getString("msg")
-                                , true);
+                        mEmptyView.setVisibility(View.VISIBLE);
+                        mEmptyView.setMyManager(R.drawable.icon_follow1);
+                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+
                     } else {
                         TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
                     }
@@ -124,7 +125,7 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
             }
             if (type == 2) {
                 if (err.equals("0")) {
-                    mNoResultLayout.setVisibility(false);
+                    mEmptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     MsgChJBean msgChJBean = gson.fromJson(object.toString(), MsgChJBean.class);
                     if (page == 1) {
@@ -141,9 +142,9 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);
-                        mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation1
-                                , new JSONObject(object.toString()).getString("msg")
-                                , true);
+                        mEmptyView.setVisibility(View.VISIBLE);
+                        mEmptyView.setMyManager(R.drawable.icon_follow1);
+                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
                     } else {
                         TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
                     }
@@ -151,7 +152,7 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
             }
             if (type == 3) {
                 if (err.equals("0")) {
-                    mNoResultLayout.setVisibility(false);
+                    mEmptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     MsgHFBean msgHFBean = gson.fromJson(object.toString(), MsgHFBean.class);
                     if (page == 1) {
@@ -169,9 +170,9 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);
-                        mNoResultLayout.setNoResultData(R.drawable.icon_intelligent_recommendation2
-                                , new JSONObject(object.toString()).getString("msg")
-                                , true);
+                        mEmptyView.setVisibility(View.VISIBLE);
+                        mEmptyView.setMyManager(R.drawable.icon_follow1);
+                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
                     } else {
                         TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
                     }

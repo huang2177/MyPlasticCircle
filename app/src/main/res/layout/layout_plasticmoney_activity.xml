@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_edu_titlebar"></include>
+    <include layout="@layout/layout_edu_titlebar"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
-        android:id="@+id/plastic_listview"></ListView>
+        android:id="@+id/plastic_listview"/>
 </LinearLayout>

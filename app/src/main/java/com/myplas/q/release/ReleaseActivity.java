@@ -33,7 +33,7 @@ import java.util.Map;
  * 时间：2017/3/21 10:26
  */
 public class ReleaseActivity extends BaseActivity implements View.OnClickListener
-        , ResultCallBack
+        , CommonDialog.DialogShowInterface
         , MyOnPageChangeListener.OnPageChangeListener {
     private Button button;
     private ViewPager viewPager;
@@ -45,9 +45,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     private QuicklyFragment mQ_Fragment;
     private StandardFragment mS_Fragment;
 
-    private String type, id;
+    private int currentItem;
     private SharedUtils sharedUtils;
-    private int currentItem, position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         ActivityManager.addActivity(this);
 
         initView();
-        initViewPager(position);
+        initViewPager();
     }
 
     public void initView() {
@@ -66,10 +65,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         setLeftIVVisibility(View.GONE);
         listTitle = new ArrayList<>();
         fragmentList = new ArrayList<>();
-        id = getIntent().getStringExtra("id");
-        type = getIntent().getStringExtra("type");
         sharedUtils = SharedUtils.getSharedUtils();
-        position = id == null ? 0 : (type.equals("1") ? 0 : 1);
 
 
         button = F(R.id.release_btn);
@@ -80,13 +76,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         mTVRight.setOnClickListener(this);
         mLayoutBack.setOnClickListener(this);
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
-
-        if (id != null) {
-            secondPub();
-        }
     }
 
-    public void initViewPager(int position) {
+    public void initViewPager() {
         listTitle = Arrays.asList("标准发布", "快速发布");
         tabLayout.addTab(tabLayout.newTab().setText("标准发布"));
         tabLayout.addTab(tabLayout.newTab().setText("快速发布"));
@@ -97,18 +89,10 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
         ReleaseViewPagerAdapter adapter = new ReleaseViewPagerAdapter(getSupportFragmentManager(), fragmentList, listTitle);
         viewPager.setAdapter(adapter);
 
-        viewPager.setCurrentItem(position);
-        tabLayout.getTabAt(position).select();
         //将选项卡和viewpager关连起来
         tabLayout.setupWithViewPager(viewPager);
         //给TabLayout设置适配器
         tabLayout.setTabsFromPagerAdapter(adapter);
-    }
-
-    public void secondPub() {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("id", id);
-        postAsyn(this, API.BASEURL + API.SECOND_PUB, map, this, 1);
     }
 
     @Override
@@ -124,7 +108,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
                     onBackPressed();
                 } else {
                     mCommonDialog = new CommonDialog();
-                    mCommonDialog.showDialog(this, "确定放弃编辑?", 3, null);
+                    mCommonDialog.showDialog(this, "确定放弃编辑?", 1, this);
                 }
                 break;
             case R.id.titlebar_img_back:
@@ -141,32 +125,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void callBack(Object object, int type) {
-        try {
-            Gson gson = new Gson();
-            if (type == 1) {
-                SecondPurBean secondPurBean = gson.fromJson(object.toString(), SecondPurBean.class);
-//                f_type = secondPurBean.getData().getF_type();
-//                this.type = secondPurBean.getData().getType();
-//                editText_jz_jg.setText(secondPurBean.getData().getUnit_price());
-//                editText_jz_ph.setText(secondPurBean.getData().getModel());
-//                editText_jz_chj.setText(secondPurBean.getData().getF_name());
-//                editText_jz_jhd.setText(secondPurBean.getData().getStore_house());
-//                editText.setText(secondPurBean.getData().getContent());
-//                editText.setSelection(editText.getText().length());
-//                editText_jz_jg.setSelection(editText_jz_jg.getText().length());
-//                editText_jz_ph.setSelection(editText_jz_ph.getText().length());
-//                editText_jz_chj.setSelection(editText_jz_chj.getText().length());
-//                editText_jz_jhd.setSelection(editText_jz_jhd.getText().length());
-            }
-
-        } catch (Exception e) {
-        }
+    public void ok(int type) {
+        onBackPressed();
     }
-
-    @Override
-    public void failCallBack(int type) {
-
-    }
-
 }

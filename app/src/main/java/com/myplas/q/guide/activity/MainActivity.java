@@ -178,6 +178,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     startActivity(intent);
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -202,7 +204,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void firstInto() {
         clearColor();
         viewPager.setCurrentItem(0);
-        imageView_txl.setImageResource(R.drawable.tabbar_contactshl);
+        imageView_txl.setImageResource(R.drawable.tabbar_contacts_hl);
         textView_txl.setTextColor(resources.getColor(R.color.color_red));
     }
 
@@ -218,7 +220,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void goToSupDem() {
         clearColor();
         viewPager.setCurrentItem(2);
-        imageView_gq.setImageResource(R.drawable.tabbar_tradehl);
+        imageView_gq.setImageResource(R.drawable.tabbar_trade_hl);
         textView_gq.setTextColor(resources.getColor(R.color.color_red));
     }
 
@@ -288,9 +290,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     /*rabbitmq*/
     @Override
     public void r_Callback(Result result) {
-        Log.e("2222222", "====");
-//        mMsgMySelf.setText();
-//        mMsgSupDem.setText();
+        mMsgSupDem.setVisibility(View.VISIBLE);
+        mMsgMySelf.setVisibility(View.VISIBLE);
+        mMsgContact.setVisibility(View.VISIBLE);
+        mMsgMySelf.setText("1");
+        mMsgSupDem.setText("3");
     }
 
     @Override
@@ -366,11 +370,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

@@ -1,34 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_red">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="18.0sp"
-            android:id="@+id/fb_titlebar"
-            android:textColor="@color/color_white"
-            android:text="积分规则"/>
-        <LinearLayout
-            android:id="@+id/back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
-        </LinearLayout>
-    </FrameLayout>
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/integral_rule_text"/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
-</LinearLayout>
+    <WebView
+        android:id="@+id/integral_rule_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <include layout="@layout/common_layout_titlebar"/>
+
+</FrameLayout>

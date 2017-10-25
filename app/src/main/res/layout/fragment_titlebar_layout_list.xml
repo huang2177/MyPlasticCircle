@@ -32,6 +32,14 @@
             android:textColor="@color/color_title_main"
             android:textSize="16.0sp"/>
 
+        <com.myplas.q.common.view.DragView
+            android:id="@+id/order_dragview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="3dp"
+            android:visibility="visible"/>
+
         <TextView
             android:id="@+id/wd_text_dd"
             style="@style/wd_text2_style"
@@ -187,11 +195,18 @@
             android:textColor="@color/color_title_main"
             android:textSize="16.0sp"/>
 
+        <com.myplas.q.common.view.DragView
+            android:id="@+id/look_dragview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="3dp"
+            android:visibility="visible"/>
+
         <TextView
             android:id="@+id/wd_text_look"
             style="@style/wd_text2_style"
             android:layout_weight="0"
-            android:drawablePadding="3dp"
             android:drawableRight="@drawable/icon_more"/>
     </LinearLayout>
 

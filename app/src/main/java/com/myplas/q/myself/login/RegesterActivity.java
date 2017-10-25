@@ -56,7 +56,8 @@ public class RegesterActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_regester_activity);
-        goBack(findViewById(R.id.back));
+        initTileBar();
+        setTitle("注册");
         initView();
     }
 

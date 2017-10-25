@@ -9,7 +9,6 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.MyListview;
-import com.myplas.q.common.view.NoResultLayout;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.InvoiceDetailBean;
 
@@ -32,7 +31,6 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
     private EditText mEditText;
     private MyListview mListView;
     private ImageView mImageView;
-    private NoResultLayout mNoResultLayout;
 
     private InvoiceListviewAdapter mAdapter;
 
@@ -40,7 +38,8 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_invoicesdetail);
-        goBack(findViewById(R.id.img_back));
+        initTileBar();
+        setTitle("发票详情");
 
         initView();
         getBillingDetailList(getIntent().getStringExtra("order_sn"));
@@ -48,7 +47,6 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
 
     public void initView() {
         mListView = F(R.id.invoices_listview);
-        mNoResultLayout = F(R.id.invoices_noresultlayout);
     }
 
 
@@ -68,6 +66,8 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
                 InvoiceDetailBean bean = gson.fromJson(object.toString(), InvoiceDetailBean.class);
                 mAdapter = new InvoiceListviewAdapter(this, bean.getData());
                 mListView.setAdapter(mAdapter);
+            } else {
+
             }
         } catch (Exception e) {
         }

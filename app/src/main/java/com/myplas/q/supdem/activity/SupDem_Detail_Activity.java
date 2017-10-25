@@ -89,6 +89,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
         initView();
         initViewPager(position);
+        setDeliverReplyView(position);
 
         getNetData();
     }
@@ -208,10 +209,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         }
     }
 
-    public <T extends View> T F(int id) {
-        return (T) findViewById(id);
-    }
-
     @Override
     public void onPageSelected(int position) {
         currentItem = position;
@@ -236,6 +233,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                     return;
                 }
                 deliverOrReply(s);
+                break;
+            default:
                 break;
         }
     }
@@ -323,12 +322,12 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 : R.drawable.icon_supply_content, 0, 0, 0);
 
         mTVTime.setText(mDetailBean.getData().getInput_time());
-        mTVMode.setText("牌号:" + mDetailBean.getData().getModel());
-        mTVPirce.setText("价格:" + mDetailBean.getData().getUnit_price());
-        mTVStorehouse.setText("厂家:" + mDetailBean.getData().getF_name());
-        mTVGoodsposition.setText("货物位置:" + mDetailBean.getData().getStore_house());
+        mTVMode.setText("牌号：" + mDetailBean.getData().getModel());
+        mTVPirce.setText("价格：" + mDetailBean.getData().getUnit_price());
+        mTVStorehouse.setText("厂家：" + mDetailBean.getData().getF_name());
+        mTVGoodsposition.setText("货物位置：" + mDetailBean.getData().getStore_house());
 
-        mTVNf.setText("现货/期货:" + (mDetailBean.getData().getCargo_type().equals("1")
+        mTVNf.setText("现货/期货：" + (mDetailBean.getData().getCargo_type().equals("1")
                 ? "现货"
                 : "期货"));
         id = "";

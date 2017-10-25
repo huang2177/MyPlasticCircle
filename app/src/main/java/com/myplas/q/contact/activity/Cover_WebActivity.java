@@ -22,18 +22,17 @@ import java.io.File;
  */
 public class Cover_WebActivity extends BaseActivity {
     private WebView webView;
-    private TextView textView;
     private static final String APP_CACAHE_DIRNAME = "/webcache";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cover_activity);
-        goBack(findViewById(R.id.back));
+        initTileBar();
+        setTitle(getIntent().getStringExtra("title"));
         SharedUtils.getSharedUtils().setBooloean(this, "isshow", false);
 
         clearWebViewCache();
-        textView = (TextView) findViewById(R.id.fb_titlebar);
         webView = (WebView) findViewById(R.id.cover_webview);
         WebSettings webSettings = webView.getSettings();
 
@@ -47,7 +46,6 @@ public class Cover_WebActivity extends BaseActivity {
 
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(getIntent().getStringExtra("url"));
-        textView.setText(getIntent().getStringExtra("title"));
     }
 
     @Override

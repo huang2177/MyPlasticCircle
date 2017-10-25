@@ -7,32 +7,7 @@
               android:focusableInTouchMode="true"
               android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_red">
-
-        <TextView
-            android:id="@+id/title_rs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="充值中心"
-            android:textColor="@color/color_white"
-            android:textSize="18.0sp"/>
-
-        <LinearLayout
-            android:id="@+id/back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back"/>
-        </LinearLayout>
-    </FrameLayout>
+    <include layout="@layout/common_layout_titlebar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -61,7 +36,7 @@
                 android:horizontalSpacing="5dp"
                 android:listSelector="@color/color_red"
                 android:numColumns="3"
-                android:verticalSpacing="10dp"></com.myplas.q.common.view.MyGridview>
+                android:verticalSpacing="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,7 +93,7 @@
                 android:layout_height="4px"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/color_lightgray"></View>
+                android:background="@color/color_lightgray"/>
 
             <TextView
                 android:layout_width="wrap_content"

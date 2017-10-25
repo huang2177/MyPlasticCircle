@@ -42,7 +42,7 @@ public class RabbitMQHelper {
     private static List<RabbitMQCallBack> mList;
 
     private RabbitMQHelper(Context context) {
-        this.mContext = context;
+        mContext = context;
         mList = new ArrayList<>();
         mSharedUtils = SharedUtils.getSharedUtils();
     }
@@ -146,10 +146,10 @@ public class RabbitMQHelper {
                     //创建消费者
                     QueueingConsumer consumer = new QueueingConsumer(channel);
                     channel.basicConsume(queueName + userid
-                            , true
+                            , false
                             , consumer);
 
-                    while (!isInterrupt) {
+                    while (true) {
                         //wait for the next message delivery and return it.
                         QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                         String message = new String(delivery.getBody());

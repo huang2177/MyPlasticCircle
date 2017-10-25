@@ -23,7 +23,7 @@
                 android:id="@+id/gq_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="#dadae1"
+                android:divider="@color/color_gray_bg"
                 android:dividerHeight="5dp"
                 android:overScrollMode="never"
                 android:scrollbars="none"/>

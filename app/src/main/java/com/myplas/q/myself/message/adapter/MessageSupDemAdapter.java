@@ -60,31 +60,28 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
         viewHolder viewHolder = mHolderMap.get(position);
         viewHolder.time.setText(mListSupDem.get(position).getInput_time());
         String supdem = mListSupDem.get(position).getType().equals("2")
-                ? "供给"
-                : "求购";
-        int imgRes = mListSupDem.get(position).getType().equals("2")
-                ? R.drawable.icon_supply
-                : R.drawable.icon_purchase;
+                ? "供给："
+                : "求购：";
         String title = "您关注的“<font color='#ff5000'>"
                 + mListSupDem.get(position).getUser_name()
                 + "</font>”发布新的<font color='#ff5000'>"
                 + supdem
                 + "</font>消息啦！";
         viewHolder.title.setText(Html.fromHtml(title));
-        viewHolder.company.setText(mListSupDem.get(position).getC_name() + "  " + mListSupDem.get(position).getUser_name());
-        viewHolder.type.setText(supdem);
-        viewHolder.pro.setText("产品：" + mListSupDem.get(position).getContent());
+        viewHolder.company.setText(mListSupDem.get(position).getC_name()
+                + "  "
+                + mListSupDem.get(position).getUser_name());
+
+        viewHolder.pro.setText(supdem + mListSupDem.get(position).getContent());
+
         viewHolder.ll_detail.setOnClickListener(new MyOnClickListener(position));
 
-        viewHolder.type.setCompoundDrawablesWithIntrinsicBounds(imgRes, 0, 0, 0); //设置左图标
     }
 
 
     @Override
     public int getItemCount() {
-        if (mListSupDem != null)
-            return mListSupDem.size();
-        return 0;
+        return mListSupDem != null ? mListSupDem.size() : 0;
     }
 
     public void setList(List<MsgSupDemBean.DataBean> list) {
@@ -100,7 +97,6 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
             time = (TextView) itemView.findViewById(R.id.msg_detail_time);
             title = (TextView) itemView.findViewById(R.id.msg_detail_title);
             company = (TextView) itemView.findViewById(R.id.msg_detail_company);
-            type = (TextView) itemView.findViewById(R.id.msg_detail_type);
             tel = (TextView) itemView.findViewById(R.id.msg_detail_tel);
             pro = (TextView) itemView.findViewById(R.id.msg_detail_pro);
             content = (TextView) itemView.findViewById(R.id.msg_detail_content);

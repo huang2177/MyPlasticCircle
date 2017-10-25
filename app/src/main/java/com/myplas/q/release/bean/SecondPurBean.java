@@ -8,4 +8,93 @@ package com.myplas.q.release.bean;
  */
 public class SecondPurBean {
 
+    /**
+     * err : 0
+     * data : {"model":"1000","vendor":"伊朗石化","storehouse":"上海","price":"0.00","transaction_type":0,"type":"2"}
+     */
+
+    private String err;
+    private DataBean data;
+
+    public String getErr() {
+        return err;
+    }
+
+    public void setErr(String err) {
+        this.err = err;
+    }
+
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
+    public static class DataBean {
+        /**
+         * model : 1000
+         * vendor : 伊朗石化
+         * storehouse : 上海
+         * price : 0.00
+         * transaction_type : 0
+         * type : 2
+         */
+
+        private String model;
+        private String vendor;
+        private String storehouse;
+        private String price;
+        private String transaction_type;
+        private String type;
+
+        public String getModel() {
+            return model;
+        }
+
+        public void setModel(String model) {
+            this.model = model;
+        }
+
+        public String getVendor() {
+            return vendor;
+        }
+
+        public void setVendor(String vendor) {
+            this.vendor = vendor;
+        }
+
+        public String getStorehouse() {
+            return storehouse;
+        }
+
+        public void setStorehouse(String storehouse) {
+            this.storehouse = storehouse;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public String getTransaction_type() {
+            return transaction_type;
+        }
+
+        public void setTransaction_type(String transaction_type) {
+            this.transaction_type = transaction_type;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+    }
 }

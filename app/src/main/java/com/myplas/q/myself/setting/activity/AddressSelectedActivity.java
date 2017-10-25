@@ -88,7 +88,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
 
     private void showInfo() {
         //showInPutKeybord();
-        isFormatAdd = addressId.equals("|");
+        isFormatAdd = "|".equals(addressId);
         if (address.contains("|") && !isFormatAdd) {
             tx = address.substring(0, address.indexOf("|"));
             mTextField1.setText(tx);
@@ -188,7 +188,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
         try {
             Gson gson = new Gson();
             String s = new JSONObject(object.toString()).getString("err");
-            if (s.equals("0")) {
+            if ("0".equals(s)) {
                 mBean = gson.fromJson(object.toString(), RegionsBean.class);
                 mPList.addAll(mBean.getData());
                 for (int i = 0; i < mBean.getData().size(); ++i) {
@@ -214,7 +214,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
                     mDList.add(mcList);
                 }
             }
-            if (type == 2 && s.equals("0")) {
+            if (type == 2 && "0".equals(s)) {
                 selectAddress();
             }
         } catch (Exception e) {

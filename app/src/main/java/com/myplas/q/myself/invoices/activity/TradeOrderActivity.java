@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -18,7 +17,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.NoResultLayout;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.invoices.adapter.TradeOrderListviewAdapter;
 import com.myplas.q.myself.beans.OrderListsBean;
@@ -44,10 +43,9 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
     private EditText mEditText;
-    private ImageView mImageView;
+    private EmptyView mEmptyView;
     private RecyclerView mListView;
     private AppBarLayout mBarLayout;
-    private NoResultLayout mNoResultLayout;
 
     private TradeOrderListviewAdapter mAdapter;
     private List<OrderListsBean.DataBean.ListBean> mList;
@@ -56,7 +54,9 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_tradeorder);
-        goBack(findViewById(R.id.img_back));
+        initTileBar();
+        setTitle("我的订单");
+        setRightIVVisibility(View.VISIBLE);
 
         initView();
         getorderLists("", 1);
@@ -64,16 +64,14 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
     public void initView() {
         mBarLayout = F(R.id.appbar);
-        mImageView = F(R.id.img_contact);
         mListView = F(R.id.trade_order_listview);
-        mNoResultLayout = F(R.id.trade_order_noresultlayout);
-        //mViewHeader = View.inflate(this, R.layout.header_layout_tradeorder, null);
         mEditText = F(R.id.trade_order_edittext);
+        mEmptyView = F(R.id.trade_order_noresultlayout);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);//设置为一个1列的纵向网格布局
         mListView.setLayoutManager(mLayoutManager);
 
-        mImageView.setOnClickListener(this);
+        mIVConact.setOnClickListener(this);
         //edittext 回车监听
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -103,13 +101,9 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_contact:
-                information = new Information();
-                information.setAppkey(appkey);
-                SobotApi.startSobotChat(TradeOrderActivity.this, information);
-                break;
-        }
+        information = new Information();
+        information.setAppkey(appkey);
+        SobotApi.startSobotChat(TradeOrderActivity.this, information);
     }
 
     //申请开票
@@ -142,7 +136,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 if (err.equals("0")) {
-                    mNoResultLayout.setVisibility(false);
+                    mEmptyView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
                     mBarLayout.setVisibility(View.VISIBLE);
                     OrderListsBean bean = gson.fromJson(object.toString(), OrderListsBean.class);
@@ -154,7 +148,8 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                     mListView.setVisibility(View.GONE);
                     mBarLayout.setVisibility(View.GONE);
                     String msg = new JSONObject(object.toString()).getString("msg");
-                    mNoResultLayout.setNoResultData(R.drawable.icon_invoices_null, "", true);
+                    //mEmptyView.setNoMessageText(msg);
+                    mEmptyView.setMyManager(R.drawable.icon_invoices_null);
                 }
             }
             if (type == 2) {

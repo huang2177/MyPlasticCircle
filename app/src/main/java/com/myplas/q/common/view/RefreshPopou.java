@@ -45,24 +45,22 @@ public class RefreshPopou {
     public void show(View locationView, String content) {
         if (canShowPopou) {
             canShowPopou = false;
-            if (dialog == null) {
-                dialog = new HIndicatorBuilder(mContext)
-                        .width(ScreenUtils.getScreenWidth(mContext))
-                        .height(-1)
-                        .ArrowDirection(HIndicatorBuilder.TOP)
-                        .bgColor(Color.parseColor("#00000000"))
-                        .gravity(HIndicatorBuilder.GRAVITY_LEFT)
-                        .radius(0)
-                        .animator(R.style.my_anim_popou)
-                        .arrowWidth(1)
-                        .ArrowRectage(0.1f)
-                        .layoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false))
-                        .dimEnabled(true)
-                        .dimAmount(0f)
-                        .adapter(new MyAdapter(content))
-                        .create();
-                dialog.setCanceledOnTouchOutside(true);
-            }
+            dialog = new HIndicatorBuilder(mContext)
+                    .width(ScreenUtils.getScreenWidth(mContext))
+                    .height(-1)
+                    .ArrowDirection(HIndicatorBuilder.TOP)
+                    .bgColor(Color.parseColor("#00000000"))
+                    .gravity(HIndicatorBuilder.GRAVITY_LEFT)
+                    .radius(0)
+                    .animator(R.style.my_anim_popou)
+                    .arrowWidth(1)
+                    .ArrowRectage(0.1f)
+                    .layoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false))
+                    .dimEnabled(true)
+                    .dimAmount(0f)
+                    .adapter(new MyAdapter(content))
+                    .create();
+            dialog.setCanceledOnTouchOutside(true);
             dialog.show(locationView);
             mHandler.postDelayed(new Runnable() {
                 @Override

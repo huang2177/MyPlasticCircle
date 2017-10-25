@@ -10,28 +10,32 @@ import java.util.List;
  */
 public class ContactBean {
 
+
     /**
      * err : 0
-     * persons : [{"user_id":"53453","name":"娟娟","c_id":"50383","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/06/02/59311fdc9437f.jpg","thumbqq":"http://pic.myplas.com/upload/17/06/02/59311fdc9437f.jpg","c_name":"上海晨达物流有限公司","need_product":"7000F","month_consum":"963","main_product":"2119","type":"1","fans":"8","gender":"1","buy_count":"16","sale_count":"10"},{"user_id":"53452","name":"小李23456","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"7000F","month_consum":"129","main_product":"2119","type":"1","fans":"4","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53451","name":"小李234","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"7000F","month_consum":"129","main_product":"2119","type":"1","fans":"2","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53446","name":"小李","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"7000F","month_consum":"129","main_product":"2119","type":"1","fans":"1","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53441","name":"韩梅梅","c_id":"50377","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":"","c_name":"中国能之光新材料科技股份有限公司（宁波分公司）","need_product":"7000F","month_consum":"120吨","main_product":"2769","type":"1","fans":"4","gender":"1","buy_count":"20","sale_count":"10"},{"user_id":"53398","name":"刘欣","c_id":"50310","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":null,"c_name":"上海塑料制品企业","need_product":"X M2 T24","month_consum":"0.00","main_product":"de","type":"1","fans":"6","gender":"1","buy_count":"6","sale_count":"0"},{"user_id":"53395","name":"张飞","c_id":"50307","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":null,"c_name":"成都商业塑料加工厂","need_product":"TG-1000S OPE792","month_consum":"140吨","main_product":"???","type":"1","fans":"7","gender":"1","buy_count":"4","sale_count":"5"},{"user_id":"41013","name":"黄维","c_id":"38505","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/05/26/5927d9a957fcd.jpg","thumbqq":"http://pic.myplas.com/upload/17/05/26/5927d9a957fcd.jpg","c_name":"余姚市万信塑染有限公司","need_product":"生产/销售：色母粒、填充料厂家","month_consum":"1231","main_product":"pp","type":"1","fans":"2","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"28922","name":"王云霞","c_id":"50395","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/06/08/5938c9fdae099.jpg","thumbqq":"http://pic.myplas.com/upload/17/06/08/5938c9fdae099.jpg","c_name":"石家庄塑料编织有限司","need_product":"","month_consum":"0.00","main_product":"7000F","type":"1","fans":"20","gender":"1","buy_count":"16","sale_count":"44"},{"user_id":"53459","name":"阿离","c_id":"50389","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海自晨电子商务有限公司","need_product":"","month_consum":"0.00","main_product":"","type":"1","fans":"2","gender":"0","buy_count":"1","sale_count":"2"},{"user_id":"53397","name":"郑茜","c_id":"50309","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":null,"c_name":"阿尔法信息有限公司","need_product":"DG-1300 DG-700","month_consum":"130T","main_product":"7000F","type":"2","fans":"7","gender":"1","buy_count":"19","sale_count":"15"}]
-     * member : 3319
+     * persons : [{"user_id":"53621","name":"江秀丽","c_id":"53437","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG","c_name":"上海诚信木业有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>|2119","month_consum":"30","main_product":"保鲜膜","type":"1","fans":"4","gender":"1","buy_count":"0","sale_count":"0"},{"user_id":"53580","name":"哈嘿","c_id":"53426","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海城市建设银行","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"0.00","main_product":"","type":"1","fans":"3","gender":"0","buy_count":"28","sale_count":"0"},{"user_id":"53537","name":"王华","c_id":"53416","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海华力微电子有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"13","main_product":"7000f","type":"1","fans":"1","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53497","name":"李洁","c_id":"50417","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海承德载物有限责任公司","need_product":"74GP <strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"56","main_product":"飞机大炮的","type":"1","fans":0,"gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53496","name":"张婷","c_id":"50417","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海承德载物有限责任公司","need_product":"74GP <strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"56","main_product":"飞机大炮的","type":"1","fans":"1","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53475","name":"欧阳震华","c_id":"50402","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"香港TVB塑料塑料","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>|2089","month_consum":"10吨","main_product":"2119，5000S","type":"1","fans":"6","gender":"0","buy_count":"4","sale_count":"1"},{"user_id":"53452","name":"小李23456","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"4","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53451","name":"小李234","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"2","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53446","name":"小李","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"2","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53441","name":"韩梅梅","c_id":"50377","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":"","c_name":"中国能之光新材料科技股份有限公司（宁波分公司）","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"120吨","main_product":"2769","type":"1","fans":"6","gender":"1","buy_count":"0","sale_count":"0"}]
+     * hot_search : 7000F
+     * member : 3357
      * is_show_banner : 1
      * is_show_focus : 0
      * is_show_cover : 0
-     * banner_url : http://statics.myplas.com/myapp/img/toShop.jpg
-     * banner_jump_url :
-     * banner_jump_url_title :
-     * is_banner_jump_native : 1
-     * banner_jump_native_address : myInfo:myPlasticBean
+     * banner_url : http://statics.myplas.com/activity/619/img/619_banner01.png
+     * banner_jump_url : http://test.myplas.com/activity/a619/vote?a_token=NwTdMs0lMwD1J283fDE1MDg4MTA2NzY%5B%7B%7C%5D%7D&platform=weixin
+     * banner_jump_url_title : 6月父亲节暖心晒家庭合照
+     * is_banner_jump_native : 0
+     * banner_jump_native_address :
      * cover_url :
      * cover_jump_url :
      * cover_jump_url_title :
-     * data : 1497346304
+     * data : 1508810676
      * show_ctype : 0
      * show_msg :
-     * top : {"member_level":"列兵","user_id":"53434","name":"佳佳","c_id":"50371","is_pass":"0","mobile":"15921211761","sex":"女","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":"","thumbcard":"http://pic.myplas.com/upload/17/06/13/593fa957e4bc6.png","c_name":"的股份个","need_product":"","address":"哈哈","main_product":"","month_consum":"0","type":"1","buy_count":"12","sale_count":"7","fans":"2"}
+     * top : {"member_level":"列兵","user_id":"53402","name":"hh","c_id":"5041","is_pass":"0","mobile":"15378412400","sex":"男","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","thumbqq":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","thumbcard":"http://pic.myplas.com/upload/17/09/04/59ad181e30a20.jpg","c_name":"上海中晨电子商务股份有限公司","need_product":"GHJ","address":"上海上海虹口区|欧阳路","main_product":"5005","month_consum":"36","type":"1","buy_count":"2","sale_count":0,"fans":"9"}
+     * totals : 12
      */
 
     private String err;
+    private String hot_search;
     private String member;
     private String is_show_banner;
     private String is_show_focus;
@@ -48,7 +52,7 @@ public class ContactBean {
     private String show_ctype;
     private String show_msg;
     private TopBean top;
-    private String hot_search;
+    private String totals;
     private List<PersonsBean> persons;
 
     public String getErr() {
@@ -57,6 +61,14 @@ public class ContactBean {
 
     public void setErr(String err) {
         this.err = err;
+    }
+
+    public String getHot_search() {
+        return hot_search;
+    }
+
+    public void setHot_search(String hot_search) {
+        this.hot_search = hot_search;
     }
 
     public String getMember() {
@@ -187,6 +199,14 @@ public class ContactBean {
         this.top = top;
     }
 
+    public String getTotals() {
+        return totals;
+    }
+
+    public void setTotals(String totals) {
+        this.totals = totals;
+    }
+
     public List<PersonsBean> getPersons() {
         return persons;
     }
@@ -195,35 +215,27 @@ public class ContactBean {
         this.persons = persons;
     }
 
-    public String getHot_search() {
-        return hot_search;
-    }
-
-    public void setHot_search(String hot_search) {
-        this.hot_search = hot_search;
-    }
-
     public static class TopBean {
         /**
          * member_level : 列兵
-         * user_id : 53434
-         * name : 佳佳
-         * c_id : 50371
+         * user_id : 53402
+         * name : hh
+         * c_id : 5041
          * is_pass : 0
-         * mobile : 15921211761
-         * sex : 女
-         * thumb : http://pic.myplas.com/myapp/img/female.jpg
-         * thumbqq :
-         * thumbcard : http://pic.myplas.com/upload/17/06/13/593fa957e4bc6.png
-         * c_name : 的股份个
-         * need_product :
-         * address : 哈哈
-         * main_product :
-         * month_consum : 0
+         * mobile : 15378412400
+         * sex : 男
+         * thumb : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
+         * thumbqq : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
+         * thumbcard : http://pic.myplas.com/upload/17/09/04/59ad181e30a20.jpg
+         * c_name : 上海中晨电子商务股份有限公司
+         * need_product : GHJ
+         * address : 上海上海虹口区|欧阳路
+         * main_product : 5005
+         * month_consum : 36
          * type : 1
-         * buy_count : 12
-         * sale_count : 7
-         * fans : 2
+         * buy_count : 2
+         * sale_count : 0
+         * fans : 9
          */
 
         private String member_level;
@@ -401,23 +413,23 @@ public class ContactBean {
 
     public static class PersonsBean {
         /**
-         * user_id : 53453
-         * name : 娟娟
-         * c_id : 50383
+         * user_id : 53621
+         * name : 江秀丽
+         * c_id : 53437
          * sex : 女
          * member_level : 列兵
          * is_pass : 0
-         * thumb : http://pic.myplas.com/upload/17/06/02/59311fdc9437f.jpg
-         * thumbqq : http://pic.myplas.com/upload/17/06/02/59311fdc9437f.jpg
-         * c_name : 上海晨达物流有限公司
-         * need_product : 7000F
-         * month_consum : 963
-         * main_product : 2119
+         * thumb : http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG
+         * thumbqq : http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG
+         * c_name : 上海诚信木业有限公司
+         * need_product : <strong style='color: #ff5000;'>7000F</strong>|2119
+         * month_consum : 30
+         * main_product : 保鲜膜
          * type : 1
-         * fans : 8
+         * fans : 4
          * gender : 1
-         * buy_count : 16
-         * sale_count : 10
+         * buy_count : 0
+         * sale_count : 0
          */
 
         private String user_id;

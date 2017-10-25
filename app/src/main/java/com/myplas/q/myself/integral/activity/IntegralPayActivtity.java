@@ -62,8 +62,9 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingeral_pay_activity_layout);
+        initTileBar();
+        setTitle("充值中心");
 
-        goBack(findViewById(R.id.back));
         getSelectableMoney();
 
         button = (Button) findViewById(R.id.chz_zhf);

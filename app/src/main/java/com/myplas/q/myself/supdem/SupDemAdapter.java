@@ -59,9 +59,7 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
 
     @Override
     public int getCount() {
-        if (list != null)
-            return list.size();
-        return 0;
+        return list != null ? list.size() : 0;
     }
 
     @Override
@@ -113,7 +111,6 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ReleaseActivity.class);
                         intent.putExtra("id", (list.get(position).getId()));
-                        intent.putExtra("type", list.get(position).getType());
                         context.startActivity(intent);
                     }
                 });
@@ -163,6 +160,15 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
             TextUtils.Toast(context, jsonObject.getString("msg"));
+            if (jsonObject.getString("err").equals("0")) {
+                if (myInterface != null) {
+                    myInterface.reQuestNet();
+                }
+                if (list.size() == 1) {
+                    list.remove(0);
+                    notifyDataSetChanged();
+                }
+            }
         } catch (Exception e) {
         }
     }

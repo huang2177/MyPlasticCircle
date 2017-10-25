@@ -69,7 +69,7 @@ public class MyImageView extends ImageView {
     private void init(Context context, AttributeSet attrs) {
         //初始化默认值
         borderWidth = 3;
-        borderColor = context.getResources().getColor(R.color.color_red);
+        borderColor = context.getResources().getColor(R.color.color_white);
         radius = 16;
         shapeType = 2;
         // 按下的画笔设置

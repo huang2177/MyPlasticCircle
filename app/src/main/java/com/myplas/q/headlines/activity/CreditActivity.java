@@ -17,14 +17,8 @@ public class CreditActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cridit_activity);
-        goBack(findViewById(R.id.img_back));
+        initTileBar();
+        setTitle("授信说明");
     }
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
+
 }

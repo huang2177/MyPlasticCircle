@@ -67,27 +67,20 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
                 + mListHF.get(position).getName());
 
         String supdem = mListHF.get(position).getType().equals("2")
-                ? "供给"
-                : "求购";
-        viewHolder.type.setText(supdem);
+                ? "供给："
+                : "求购：";
 
         viewHolder.tel.setText("联系电话：" + mListHF.get(position).getMobile());
-        viewHolder.pro.setText("产品：" + mListHF.get(position).getFa_content());
+        viewHolder.pro.setText(supdem + mListHF.get(position).getFa_content());
         viewHolder.content.setText("回复内容：" + mListHF.get(position).getHui_content());
         viewHolder.ll_detail.setOnClickListener(new MyOnClickListener(position));
 
-        int imgRes = mListHF.get(position).getType().equals("2")
-                ? R.drawable.icon_supply
-                : R.drawable.icon_purchase;
-        viewHolder.type.setCompoundDrawablesWithIntrinsicBounds(imgRes, 0, 0, 0); //设置左图标
     }
 
 
     @Override
     public int getItemCount() {
-        if (mListHF != null)
-            return mListHF.size();
-        return 0;
+        return mListHF != null ? mListHF.size() : 0;
     }
 
     public void setList(List<MsgHFBean.DataBean> list) {
@@ -103,7 +96,6 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
             time = (TextView) itemView.findViewById(R.id.msg_detail_time);
             title = (TextView) itemView.findViewById(R.id.msg_detail_title);
             company = (TextView) itemView.findViewById(R.id.msg_detail_company);
-            type = (TextView) itemView.findViewById(R.id.msg_detail_type);
             tel = (TextView) itemView.findViewById(R.id.msg_detail_tel);
             pro = (TextView) itemView.findViewById(R.id.msg_detail_pro);
             content = (TextView) itemView.findViewById(R.id.msg_detail_content);
@@ -140,9 +132,9 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            if (!mListHF.get(position).getPur_str().equals("")) {
+            if ("2".equals(mListHF.get(position).getPur_sign())) {
                 Intent intent = new Intent(context, NoInfoActivity.class);
-                intent.putExtra("msg", mListHF.get(position).getPur_str());
+                intent.putExtra("msg", mListHF.get(position).getPur_sign());
                 context.startActivity(intent);
             } else {
                 Intent intent = new Intent(context, SupDem_Detail_Activity.class);

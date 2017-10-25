@@ -68,11 +68,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     private MyZone myZone;
 
     private ImageView image_rz;
-    private DragView mDragView;
     private MyImageView image_tx;
     private SharedUtils sharedUtils;
     private ImageButton imageButton;
     private ImageView mImage_news, mImage_more;
+    private DragView mDragView, mDragViewLook, mDragViewOrder;
     private TextView text_title, text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
     private LinearLayout linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_jf, linear_look, linear_edu, linear_pz, linear_set;
 
@@ -126,8 +126,10 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         mImage_more = f(R.id.wd_title_more);
         linear_gz = f(R.id.wd_linear_follow);
         linear_look = f(R.id.wd_linear_look);
+        mDragViewLook = f(R.id.look_dragview);
         linear_title = f(R.id.wd_linear_title);
         linear_yj = f(R.id.wd_linear_introdus);
+        mDragViewOrder = f(R.id.order_dragview);
         mDragView = f(R.id.wd_logined_news_text);
         mFrameLayout = f(R.id.wd_logined_news_fl);
         mImage_news = f(R.id.wd_logined_news_img);
@@ -301,12 +303,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
             text_gj.setText(String.valueOf(myZone.getS_out_count()));
             text_qg.setText(String.valueOf(myZone.getS_in_count()));
-            text_look.setText(String.valueOf(myZone.getMyviewhistory()));
+            //text_look.setText(String.valueOf(myZone.getMyviewhistory()));
 
             mDragView.setText(myZone.getMessage());
-//            mDragView.setVisibility(myZone.getMessage().equals("0")
-//                    ? View.GONE
-//                    : View.VISIBLE);
         } catch (Exception e) {
         }
     }
@@ -349,7 +348,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     //设置闭合时各控件的透明度
     public void setToolbar2Alpha(int alpha) {
         text_title.setTextColor(Color.argb(alpha, 255, 255, 255));
-        mCollapsingToolbarLayout.setContentScrimColor(Color.argb(alpha, 255, 80, 0));
+        mCollapsingToolbarLayout.setContentScrimColor(Color.argb(alpha, 255, 130, 0));
     }
 
     /*rabbitmq */

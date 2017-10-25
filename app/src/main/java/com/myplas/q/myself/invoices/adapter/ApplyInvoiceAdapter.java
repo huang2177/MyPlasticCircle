@@ -64,9 +64,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list != null)
-            return list.size();
-        return 0;
+        return list != null ? list.size() : 0;
     }
 
     @Override

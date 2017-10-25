@@ -63,7 +63,7 @@
         android:id="@+id/search_listview_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#dadae1"
+        android:divider="#e2e2e9"
         android:dividerHeight="5dp"/>
 
     <LinearLayout

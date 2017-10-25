@@ -1,5 +1,6 @@
 package com.myplas.q.guide.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -16,7 +17,7 @@ import com.umeng.analytics.MobclickAgent;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 11:52
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends Activity {
     boolean isGuided = false;
     private MyThread mMyThread = new MyThread();
 

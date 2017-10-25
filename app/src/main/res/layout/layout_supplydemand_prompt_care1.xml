@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
     <LinearLayout
+        android:id="@+id/supply_demand_prompt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/supply_demand_prompt">
+        android:orientation="vertical">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/icon_follow1"/>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_gray"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
             android:id="@+id/supply_demand_text"
-            android:text="您尚未在系统中关注任何用户，暂无推荐！赶紧点击“通讯录-查看个人信息”页面【关注】按钮去关注吧！"
-            android:textSize="16.0sp"/>
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="您尚未在系统中关注任何用户，暂无推荐！赶紧点击“通讯录-查看个人信息”页面【关注】按钮去关注吧！"
+            android:textColor="@color/color_gray"
+            android:textSize="16.0sp"/>
+
+        <Button
             android:id="@+id/supply_demand_follow"
-            android:src="@drawable/btn_follow1"/>
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_shape_red_coners"
+            android:text="去关注"
+            android:textColor="@color/color_white"/>
     </LinearLayout>
 </LinearLayout>

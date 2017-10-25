@@ -5,7 +5,7 @@
               android:background="@color/color_gray_bg"
               android:orientation="vertical">
 
-    <include layout="@layout/common_layout_titlebar"></include>
+    <include layout="@layout/common_layout_titlebar"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/wd_gj_listview"
@@ -14,9 +14,10 @@
         android:divider="@null">
     </android.support.v7.widget.RecyclerView>
 
-    <com.myplas.q.common.view.NoResultLayout
+    <com.myplas.q.common.view.EmptyView
         android:id="@+id/mysupdem_noresultlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"></com.myplas.q.common.view.NoResultLayout>
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"/>
 </LinearLayout>

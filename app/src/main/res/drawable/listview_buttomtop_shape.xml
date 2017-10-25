@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:bottomRightRadius="3dp"
-        android:bottomLeftRadius="3dp"
-        android:topLeftRadius="0dp"
-        android:topRightRadius="0dp" /><!--设置圆角-->
-    <stroke android:width="2px" android:color="#b9b8b8"/>
-    <solid  android:color="#f9f9f9"></solid>
-</shape>

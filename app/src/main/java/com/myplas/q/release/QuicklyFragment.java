@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,13 +25,13 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.HLog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.CommonDialog;
+import com.myplas.q.common.view.MyBottomSheetDialog;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.release.adapter.Release_Pre_Dialog_LV_Adapter;
 import com.myplas.q.release.bean.PreViewBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
@@ -43,10 +41,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.myplas.q.R.id.mlistview_time;
-import static com.myplas.q.R.id.textView_title;
-import static com.myplas.q.R.id.year;
 
 /**
  * 作者:huangshuang
@@ -65,11 +59,11 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
     private TextView dialogTitle, dialogContent, dialogOK, dialogCancle;
 
     private Dialog preDialog, mDialog;
-    private BottomSheetDialog mButtomDialog;
+    private MyBottomSheetDialog mButtomDialog;
 
     private int _width, _height;
     private SharedUtils mSharedUtils;
-    private String content, type, isPreView;
+    private String content, type, isPreView, id, data;
 
     private List<PreViewBean.DataBean> mList;
 
@@ -77,6 +71,8 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSharedUtils = SharedUtils.getSharedUtils();
+        id = getActivity().getIntent().getStringExtra("id");
+
         view = View.inflate(getActivity(), R.layout.fragment_layout_release_quickly, null);
         mEditText = (MyEditText) view.findViewById(R.id.release_edit);
         mTV_Type = (MyEditText) view.findViewById(R.id.release_ev_type_);
@@ -92,20 +88,6 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         return view;
     }
 
-    public void pub(int _type) {
-        Map<String, String> map = new HashMap<>();
-        map.put("mode", "1");
-        map.put("model", "");
-        map.put("price", "");
-        map.put("vendor", "");
-        map.put("type", type);
-        map.put("channel", "1");
-        map.put("storehouse", "");
-        map.put("content", content);
-        map.put("transaction_type", "");
-        map.put("is_preview", isPreView);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.PUB, map, this, _type);
-    }
 
     @Override
     public void onClick(View v) {
@@ -123,25 +105,57 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                 type = "1";
                 mTV_Type.setText("求购");
                 break;
+
+            //获取解析内容
             case R.id.btn_cancle:
                 mDialog.dismiss();
                 isPreView = "0";
                 pub(1);
                 break;
+
+            //不解析直接发布
             case R.id.btn_ok:
                 mDialog.dismiss();
                 isPreView = "1";
                 pub(2);
                 break;
+
+            //预览dialog的立即发布
             case R.id.pre_dialog_btn:
                 preDialog.dismiss();
-                isPreView = "1";
-                pub(2);
+                instantRelease();
                 break;
             case R.id.pre_dialog_img:
                 preDialog.dismiss();
                 break;
+            default:
+                break;
         }
+    }
+
+    //不解析直接发布
+    public void pub(int _type) {
+        Map<String, String> map = new HashMap<>();
+        map.put("mode", "1");
+        map.put("model", "");
+        map.put("price", "");
+        map.put("vendor", "");
+        map.put("type", type);
+        map.put("channel", "1");
+        map.put("storehouse", "");
+        map.put("content", content);
+        map.put("transaction_type", "");
+        map.put("is_preview", isPreView);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.PUB, map, this, _type);
+    }
+
+    //解析后发布
+    public void instantRelease() {
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type);
+        map.put("channel", "1");
+        map.put("data", data);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.INSTANTRELEASE, map, this, 2);
     }
 
     @Override
@@ -160,12 +174,13 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
             if (type == 1) {
                 if (err.equals("0")) {
                     PreViewBean preViewBean = gson.fromJson(object.toString(), PreViewBean.class);
+                    data = gson.toJson(preViewBean.getData());
                     mList = preViewBean.getData();
                     openPreViewDialog();
                 }
             }
             if (type == 2) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     //关闭activity
                     MainActivity mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
                     mainActivity.goToSupDem();
@@ -177,6 +192,9 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                     startActivity(intent1);
 
                     ActivityManager.finishActivity(ReleaseActivity.class);
+                    if (id != null) {
+                        ActivityManager.finishActivity(MySupDemActivity.class);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -201,6 +219,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
 
         preDialog = new Dialog(getActivity(), R.style.commondialog_style);
         preDialog.setContentView(view);
+        preDialog.setCanceledOnTouchOutside(false);
         setDialogWindowAttr(preDialog, 0.9f, 0.5f);
         preDialog.show();
     }
@@ -248,7 +267,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         textView1.setText("供给");
         textView2.setText("求购");
 
-        mButtomDialog = new BottomSheetDialog(getActivity());
+        mButtomDialog = new MyBottomSheetDialog(getActivity());
         mButtomDialog.setContentView(view);
         mButtomDialog.show();
     }
@@ -265,7 +284,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.CENTER;
         lp.width = (int) (width * _width);//宽高可设置具体大小
-        lp.height = _height == -1 ? lp.WRAP_CONTENT : (int) (_height * height);
+        lp.height = _height == -1 ? ViewGroup.LayoutParams.WRAP_CONTENT : (int) (_height * height);
         dialog.getWindow().setAttributes(lp);
     }
 

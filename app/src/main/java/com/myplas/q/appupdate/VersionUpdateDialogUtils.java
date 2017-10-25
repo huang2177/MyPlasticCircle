@@ -87,7 +87,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
                 button_ok.setBackgroundResource(R.drawable.btn_download);
 
                 downloadApk = new DownloadApk(VersionUpdateDialogUtils.this);
-                downloadId = downloadApk.downloadApk(mContext, url, "塑料圈通讯录更新", "塑料圈通讯录");
+                downloadId = DownloadApk.downloadApk(mContext, url, "塑料圈通讯录更新", "塑料圈通讯录");
                 downloadObserver = new DownloadChangeObserver(null);
                 mContext.getContentResolver()
                         .registerContentObserver(CONTENT_URI, true, downloadObserver);
@@ -111,7 +111,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
             button_ok.setClickable(true);
             button_ok.setBackgroundResource(R.drawable.btn_refresh);
         }
-        DownLoadUtils.getInstance(mContext).installApk(mContext);
+        DownLoadUtils.installApk(mContext);
     }
 
     public interface VersionUpdateInterface {
@@ -214,7 +214,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
 
                     mNumberProgressBar.setVisibility(View.GONE);
                 }
-                DownLoadUtils.getInstance(mContext).installApk(mContext);
+                DownLoadUtils.installApk(mContext);
             }
         }
     }

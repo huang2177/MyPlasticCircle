@@ -4,32 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_red">
-
-        <TextView
-            android:id="@+id/title_rs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="兑换记录"
-            android:textColor="@color/color_white"
-            android:textSize="18.0sp"/>
-
-        <LinearLayout
-            android:id="@+id/back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back"/>
-        </LinearLayout>
-    </FrameLayout>
+    <include layout="@layout/common_layout_titlebar"/>
 
     <ListView
         android:id="@+id/integral_record_listview"

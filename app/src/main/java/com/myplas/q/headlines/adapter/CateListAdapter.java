@@ -80,7 +80,7 @@ public class CateListAdapter extends BaseAdapter {
         viewHolder.author.setText(list.get(position).getType());
         viewHolder.time.setText(list.get(position).getInput_time());
         viewHolder.title2.setText(replace(list.get(position).getTitle()));
-        viewHolder.mImgFree.setVisibility(list.get(position).getIs_free().equals("1")
+        viewHolder.mImgFree.setVisibility("1".equals(list.get(position).getIs_free())
                 ? View.VISIBLE
                 : View.GONE);
         return convertView;

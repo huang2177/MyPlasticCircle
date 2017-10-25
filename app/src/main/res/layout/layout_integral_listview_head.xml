@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_scrollFlags="scroll|enterAlways">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/banner1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +51,7 @@
                 android:layout_width="2px"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
-                android:background="@color/color_gray_divider_out"></View>
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -85,7 +81,7 @@
                 android:layout_width="2px"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
-                android:background="@color/color_gray_divider_out"></View>
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -115,15 +111,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_out"></View>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="商品信息"
-            android:textColor="@color/color_balank"
-            android:textSize="16.0sp"/>
+            android:background="@color/color_gray_divider_out"/>
     </LinearLayout>
 </LinearLayout>

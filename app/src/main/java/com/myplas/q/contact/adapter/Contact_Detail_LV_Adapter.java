@@ -64,10 +64,10 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-            String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + list.get(position).getStore_house()
-                    + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + list.get(position).getModel()
-                    + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + list.get(position).getF_name()
-                    + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + list.get(position).getUnit_price();
+            String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + list.get(position).getStore_house()
+                    + "   <font color='#9c9c9c'>" + "  牌号:" + "</font>" + list.get(position).getModel()
+                    + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + list.get(position).getF_name()
+                    + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + list.get(position).getUnit_price();
             viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
             String time = "回复:"
@@ -80,10 +80,10 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
                     .placeholder(R.drawable.contact_image_defaul_male)
                     .into(viewHolder.mIVHead);
 
-            viewHolder.mIVStart.setImageResource(list.get(position).getIs_pass().equals("0")
+            viewHolder.mIVStart.setImageResource("0".equals(list.get(position).getIs_pass())
                     ? R.drawable.icon_identity
                     : R.drawable.icon_identity_hl);
-            viewHolder.mIVType.setImageResource(list.get(position).getType().equals("1")
+            viewHolder.mIVType.setImageResource("1".equals(list.get(position).getType())
                     ? R.drawable.icon_now
                     : R.drawable.icon_futures);
             viewHolder.mIVHead.setBorderColor(context.getResources().getColor(R.color.color_white));

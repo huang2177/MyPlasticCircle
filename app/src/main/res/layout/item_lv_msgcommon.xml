@@ -15,15 +15,11 @@
         android:padding="5dp"
         android:textColor="@color/color_white"/>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardElevation="8dp">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/corner_titlebar"
             android:orientation="vertical">
 
             <TextView
@@ -54,15 +50,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"/>
-
-                <TextView
-                    android:id="@+id/msg_detail_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:drawableLeft="@drawable/icon_supply"
-                    android:drawablePadding="3dp"
-                    android:textColor="@color/color_red"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -116,8 +103,5 @@
                     android:src="@drawable/btn_more_small"/>
             </LinearLayout>
         </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>
 
 </LinearLayout>

@@ -51,6 +51,7 @@ public class BaseActivity extends FragmentActivity {
     private String type;
     private Observer observer;
 
+
     public void initTileBar() {
         mTVLeft = F(R.id.titlebar_text_left);
         mIVConact = F(R.id.titlebar_img_right);
@@ -225,11 +226,13 @@ public class BaseActivity extends FragmentActivity {
         }, 100);
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

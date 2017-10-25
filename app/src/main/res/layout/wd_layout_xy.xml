@@ -1,34 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_white"
-    android:orientation="vertical">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color_red">
-            <TextView
-                android:id="@+id/title_rs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="注册协议"
-                android:textColor="@color/color_white"
-                android:textSize="18.0sp" />
-            <LinearLayout
-                android:id="@+id/back"
-                android:layout_width="40dp"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/btn_back" />
-            </LinearLayout>
-        </FrameLayout>
-        <WebView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/xy_web_re"/>
-</LinearLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/color_white"
+             android:orientation="vertical">
+
+    <WebView
+        android:id="@+id/xy_web_re"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <include layout="@layout/common_layout_titlebar"/>
+</FrameLayout>
