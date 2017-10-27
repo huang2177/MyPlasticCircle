@@ -23,7 +23,7 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate( R.layout.layout_guide,null,false);
         imageView= (ImageView) view.findViewById(R.id.guide_img);
-        imageView.setImageResource(R.drawable.conact);
+        imageView.setImageResource(R.drawable.launchimage_contact);
         return view;
     }
 }

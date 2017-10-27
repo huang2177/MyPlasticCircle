@@ -44,14 +44,14 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
     private List<ReplyBean.DataBean> mBeanList;
     private SupDem_Detail_LV_HFAdapter mHFAdapter;
 
-    public BaseInterFace mBaseInterFace;
+    public MyOnItemClickListener mMyOnItemClickListener;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mIntent = getActivity().getIntent();
         mSharedUtils = SharedUtils.getSharedUtils();
-        mHFAdapter = new SupDem_Detail_LV_HFAdapter(getActivity(), mBaseInterFace);
+        mHFAdapter = new SupDem_Detail_LV_HFAdapter(getActivity(), mMyOnItemClickListener);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
 
         mView = View.inflate(getActivity(), R.layout.fragment_layout_supdem_detail_hf, null);

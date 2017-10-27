@@ -23,6 +23,7 @@ import com.myplas.q.myself.fans.adapter.LookMeAdapter;
 import com.myplas.q.myself.fans.adapter.LookViewPagerAdapter;
 import com.myplas.q.myself.beans.LookMeBean;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
+import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -195,6 +196,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
             if (type == position) {
                 LookMeBean lookMeBean = null;
                 if (err.equals("0")) {
+                    RabbitMQConfig.getInstance(this).readMsg("unread_who_saw_me", 14);
                     lookMeBean = gson.fromJson(object.toString(), LookMeBean.class);
                     if (page == 1) {
                         adapter = new LookMeAdapter(this, lookMeBean.getData().getHistory());
@@ -279,14 +281,18 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));
                 break;
+            default:
+                break;
         }
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

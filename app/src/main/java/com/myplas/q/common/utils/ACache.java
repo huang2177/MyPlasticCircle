@@ -148,7 +148,7 @@ public class ACache {
     public String getAsString(String key) {
         File file = mCache.get(key);
         if (!file.exists())
-            return null;
+            return "0";
         boolean removeFile = false;
         BufferedReader in = null;
         try {
@@ -159,24 +159,25 @@ public class ACache {
                 readString += currentLine;
             }
             if (!Utils.isDue(readString)) {
-                return Utils.clearDateInfo(readString);
+                return Utils.clearDateInfo(readString) == null || "null".equals(Utils.clearDateInfo(readString))
+                        ? "0"
+                        : Utils.clearDateInfo(readString);
             } else {
                 removeFile = true;
-                return null;
+                return "0";
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        } catch (Exception e) {
+            return "0";
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
                 }
             }
-            if (removeFile)
+            if (removeFile) {
                 remove(key);
+            }
         }
     }
 

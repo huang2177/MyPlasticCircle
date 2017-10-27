@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -87,12 +88,13 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         setContentView(R.layout.activity_layout_setting);
         initTileBar();
         setTitle("设置");
-        init();
+        initView();
         initSetting();
         requestNetData();
+        getRecommendVersion();
     }
 
-    public void init() {
+    public void initView() {
         sharedUtils = SharedUtils.getSharedUtils();
 
         logout = F(R.id.wd_linear_tc);
@@ -178,7 +180,13 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                         commonDialog.showDialog(SettingActivity.this, content, 10, SettingActivity.this);
                         break;
                     case 7:
-                        getVersion();
+                        //比较版本号
+                        if (versionService > versionLocate) {
+                            mUpdateDialogUtils = new VersionUpdateDialogUtils(SettingActivity.this, promit, url);
+                            mUpdateDialogUtils.showDialog(false);
+                        } else {
+                            TextUtils.Toast(SettingActivity.this, "当前已是最新版本！");
+                        }
                         break;
                     case 8:
                         try {
@@ -192,6 +200,8 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                     case 9:
                         Intent intent8 = new Intent(SettingActivity.this, AboutPlasticActivity.class);
                         startActivity(intent8);
+                        break;
+                    default:
                         break;
                 }
             }
@@ -210,11 +220,8 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         postAsyn1(this, url, map, this, type, isShowDialog);
     }
 
-    public void getVersion() {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("version", VersionUtils.getVersionName(this));
-        map.put("platform", "android");
-        postAsyn(this, API.BASEURL + API.CHECK_VERSION, map, this, 4);
+    public void getRecommendVersion() {
+        postAsyn1(this, API.BASEURL + API.CHECKAPPVERSION, null, this, 4, false);
     }
 
     @Override
@@ -225,19 +232,17 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
             Gson gson = new Gson();
             if (type == 1) {
                 if (("0").equals(err) || "1".equals(err) || "998".equals(err)) {
-                    finish();
                     mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
                     mainActivity.firstInto();
                     mainActivity.onClosed();
+                    mainActivity.rCallback(false);
 
                     sharedUtils.setBooloean(this, Constant.LOGINED, false);
                     sharedUtils.setData(this, Constant.TOKEN, "");
                     sharedUtils.setData(this, Constant.USERID, "");
+
+                    finish();
                 }
-            }
-            if (type == 2) {
-                String msg = jsonObject.getString("msg");
-                //TextUtils.Toast(this, msg);
             }
             if (type == 3) {
                 if (err.equals("0")) {
@@ -247,20 +252,15 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                 }
             }
             if (type == 4 && err.equals("1")) {
-                url = new JSONObject(object.toString()).getString("url");
-                promit = new JSONObject(object.toString()).getString("msg");
+                mAdapter.setVersionImg(R.drawable.tag_new);
+                mAdapter.notifyDataSetChanged();
+
+                url = jsonObject.getString("url");
+                promit = jsonObject.getString("msg");
                 versionLocate = NumUtils.getNum(VersionUtils.getVersionName(this));
-                versionService = NumUtils.getNum(new JSONObject(object.toString()).getString("new_version"));
-                //比较版本号
-                if (versionService > versionLocate) {
-                    mUpdateDialogUtils = new VersionUpdateDialogUtils(this, promit, url);
-                    mUpdateDialogUtils.showDialog(false);
-                }
-            } else if (type == 4 && !err.equals("1")) {
-                TextUtils.Toast(this, "当前已是最新版本！");
+                versionService = NumUtils.getNum(jsonObject.getString("new_version"));
             }
         } catch (Exception e) {
-
         }
     }
 
@@ -284,14 +284,12 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         if (type == 4) {//退出登陆；
             Map<String, String> map = new HashMap<String, String>();
             map.put("token", sharedUtils.getData(this, "token"));
-            String url = API.BASEURL + API.MY_ZONE;
+            String url = API.BASEURL + API.LOGOUT;
             postAsyn(this, url, map, this, 1);
         }
         if (type == 10) {//清除缓存；
-//            showDialog();
             ACache.get(this).clear();
             FileUtils.clearAllCache(this);
-            //normalDialog.dismiss();
             mAdapter.notifyDataSetChanged();
         }
     }

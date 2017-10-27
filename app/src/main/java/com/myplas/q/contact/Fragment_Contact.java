@@ -47,6 +47,7 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myself.login.LoginActivity;
+import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -84,12 +85,12 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch;
 
     private int page;
-    private boolean islogin;
     public StringBuffer content;
     private StringBuffer region;
     private StringBuffer c_type;
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
+    private boolean islogin, isRefreshing;
     private String userId, jumpUrl, jumpToWhere, jumpTitle;
 
 
@@ -190,6 +191,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 startActivity(new Intent(getActivity(), Contact_Search_Activity.class));
                 getActivity().overridePendingTransition(R.anim.fade, R.anim.hold);
                 break;
+            default:
+                break;
         }
 
     }
@@ -269,6 +272,11 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 if (err.equals("0")) {
                     sharedUtils.setData(getActivity(), "txlBean", object.toString());
                     loadCacheData(gson, object.toString(), true);
+
+                    if (page == 1 && isRefreshing) {
+                        isRefreshing = false;
+                        RabbitMQConfig.getInstance(getActivity()).readMsg("unread_customer", 10);
+                    }
                 }
                 if (err.equals("2") || err.equals("3")) {
                     TextUtils.Toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
@@ -298,8 +306,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(getActivity(), content, (err.equals("100")) ? (2) : (3), this);
             }
-            if ((type == 1 && err.equals("1") || err.equals("998"))
-                    || (type == 10 && !err.equals("0"))) {
+            boolean isLoginout = (type == 1 && err.equals("1") || err.equals("998"))
+                    || (type == 10 && !err.equals("0"));
+            if (isLoginout) {
                 sharedUtils.setData(getActivity(), "token", "");
                 sharedUtils.setData(getActivity(), "userid", "");
                 sharedUtils.setBooloean(getActivity(), "logined", false);
@@ -319,6 +328,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             startActivity(intent);
         }
     }
+
 
     private void loadCacheData(Gson gson, String json, boolean isShowCover) {
         try {
@@ -341,6 +351,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         mTVTitle.setText("塑料圈通讯录(" + bean.getMember() + "人)");
         //editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
         //显示list数据
+
         mLVAdapter = new Fragment_Contact_LV_Adapter(getActivity(), bean.getPersons(), topBean);
         listView.setAdapter(mLVAdapter);
         mListBean.clear();
@@ -410,6 +421,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     @Override
     public void onRefresh() {
         page = 1;
+        isRefreshing = true;
         mRefreshPopou.setCanShowPopou(true);
         getNetData("1", false);
     }
@@ -423,6 +435,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     }
 
 
+    /**
+     * Jump to where.
+     */
     public void JumpToWhere() {
         checkIsLogin();
         if ("1".equals(jumpToWhere)) {  //原生

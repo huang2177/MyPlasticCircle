@@ -78,16 +78,24 @@ public class MyFansFollowAdapter extends BaseAdapter {
             viewHolder.rz.setImageResource(list.get(position).getIs_pass().equals("0")
                     ? R.drawable.icon_identity
                     : R.drawable.icon_identity_hl);
-            viewHolder.sign.setImageResource(list.get(position).getType().equals("1")
-                    ? R.drawable.icon_factory
-                    : (list.get(position).getType().equals("2"))
-                    ? R.drawable.icon_raw_material
-                    : R.drawable.icon_logistics);
+
             Glide.with(context)
                     .load(list.get(position).getThumb())
                     .placeholder(R.drawable.contact_image_defaul_male)
                     .into(viewHolder.tx);
+
             viewHolder.tx.setBorderColor(context.getResources().getColor(R.color.color_white));
+
+            if ("1".equals(list.get(position).getType())) {
+                viewHolder.sign.setImageResource(R.drawable.icon_factory);
+            }
+            if ("2".equals(list.get(position).getType())) {
+                viewHolder.sign.setImageResource(R.drawable.icon_raw_material);
+            }
+            if ("4".equals(list.get(position).getType())) {
+                viewHolder.sign.setImageResource(R.drawable.icon_logistics);
+            }
+
         } catch (Exception e) {
         }
 

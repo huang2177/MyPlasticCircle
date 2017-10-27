@@ -14,13 +14,14 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.contact.adapter.Contact_Detail_LV_Adapter;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
+import com.myplas.q.common.view.MyNestedScrollView;
+import com.myplas.q.contact.adapter.Contact_Detail_LV_Adapter;
 import com.myplas.q.contact.beans.ContactSupDemBean;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.supdem.beans.DeliverPriceBean;
 
 import org.json.JSONObject;
 
@@ -34,31 +35,35 @@ import java.util.Map;
  * 邮箱： 15378412400@163.com
  */
 
-public class Fragment_Contact_Detail extends Fragment implements ResultCallBack {
+public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
+        , MyNestedScrollView.onScrollIterface {
 
     private View mView;
     private ListView mMyListview;
-    private NestedScrollView mScrollView;
+    private MyNestedScrollView mScrollView;
 
     private Intent mIntent;
     private SharedUtils mSharedUtils;
     private Contact_Detail_LV_Adapter mAdapter;
     private List<ContactSupDemBean.DataBean> mBeanList;
 
-    public int type;
+    public int type, page;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        page = 1;
         type = type == 0 ? 2 : 1;
         mIntent = getActivity().getIntent();
         mSharedUtils = SharedUtils.getSharedUtils();
 
         mView = View.inflate(getActivity(), R.layout.fragment_layout_supdem_detail_chj, null);
         mMyListview = (ListView) mView.findViewById(R.id.fragment_supdem_detail_lv);
-        mScrollView = (NestedScrollView) mView.findViewById(R.id.scrollview);
+        mScrollView = (MyNestedScrollView) mView.findViewById(R.id.scrollview);
 
-        getTaPur(type, type);
+        mScrollView.setOnScrollIterface(this);
+
+        getTaPur(type, type, page);
 
     }
 
@@ -68,12 +73,12 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack 
         return mView;
     }
 
-    public void getTaPur(int type, int _type) {
+    public void getTaPur(int type, int _type, int page) {
         Map<String, String> map = new HashMap<>();
-        map.put("page", "1");
         map.put("size", "15");
+        map.put("page", page + "");
         map.put("type", type + "");
-        map.put("user_id", mIntent.getStringExtra("userid"));
+        map.put("userid", mIntent.getStringExtra("userid"));
         String url = API.BASEURL + API.GET_TA_PUR;
         BaseActivity.postAsyn1(getActivity(), url, map, this, _type, false);
     }
@@ -88,26 +93,44 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack 
     }
 
     @Override
+    public void loadMore() {
+        page++;
+        getTaPur(type, type, page);
+    }
+
+    @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-
+            ContactSupDemBean supDemBean = null;
             if (err.equals("0")) {
-                setListener(false);
-                ContactSupDemBean supDemBean = gson.fromJson(object.toString(), ContactSupDemBean.class);
-                mBeanList = supDemBean.getData();
-                mAdapter = new Contact_Detail_LV_Adapter(getActivity(), mBeanList);
-                mMyListview.setAdapter(mAdapter);
+                supDemBean = gson.fromJson(object.toString(), ContactSupDemBean.class);
+                if (page == 1) {
+                    setListener(false);
+                    mAdapter = new Contact_Detail_LV_Adapter(getActivity(), supDemBean.getData());
+                    mMyListview.setAdapter(mAdapter);
+
+                    mBeanList.clear();
+                    mBeanList.addAll(supDemBean.getData());
+                } else {
+                    mBeanList.addAll(supDemBean.getData());
+                    mAdapter.setList(mBeanList);
+                    mAdapter.notifyDataSetChanged();
+                }
             } else {
-                setListener(true);
-                EmptyView emptyView = new EmptyView(getActivity());
-                emptyView.mustCallInitWay(mMyListview);
-                emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
-                emptyView.setMyManager(type == 2
-                        ? R.drawable.icon_intelligent_recommendation1
-                        : R.drawable.icon_intelligent_recommendation2);
-                mMyListview.setEmptyView(emptyView);
+                if (page == 1) {
+                    setListener(true);
+                    EmptyView emptyView = new EmptyView(getActivity());
+                    emptyView.mustCallInitWay(mMyListview);
+                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                    emptyView.setMyManager(type == 2
+                            ? R.drawable.icon_intelligent_recommendation1
+                            : R.drawable.icon_intelligent_recommendation2);
+                    mMyListview.setEmptyView(emptyView);
+                } else {
+                    TextUtils.Toast(getActivity(), "没有更多数据了！");
+                }
             }
 
         } catch (Exception e) {

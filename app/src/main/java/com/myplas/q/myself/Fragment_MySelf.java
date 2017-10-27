@@ -1,8 +1,6 @@
 package com.myplas.q.myself;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +10,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +23,9 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.DragView;
@@ -47,8 +46,7 @@ import com.myplas.q.sockethelper.RabbitMQHelper;
 import com.myplas.q.myself.setting.SettingActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
-import com.myplas.q.sockethelper.Result;
-import com.myplas.q.sockethelper._ConfigBean;
+import com.myplas.q.sockethelper.DefConfigBean;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -73,7 +71,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     private SharedUtils sharedUtils;
     private ImageButton imageButton;
     private ImageView mImage_news, mImage_more;
-    private DragView mDragView, mDragViewLook, mDragViewOrder;
+    private DragView mDragViewMsg, mDragViewLook, mDragViewOrder;
     private TextView text_title, text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
     private LinearLayout linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_jf, linear_look, linear_edu, linear_pz, linear_set;
 
@@ -83,7 +81,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     private NestedScrollView mNestedScrollView;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
+    private ACache mACache;
     private Handler mHandler;
+    private DefConfigBean.RedDotBean mDotBean;
 
 
     @Override
@@ -95,8 +95,13 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         RabbitMQHelper.getInstance(getActivity()).setResultCallBack(this);
     }
 
+
+    /**
+     * Init view.
+     */
     public void initView() {
         mHandler = new Handler();
+        mACache = ACache.get(getActivity());
         sharedUtils = SharedUtils.getSharedUtils();
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_myself, null, false);
         //获取登陆后相关数据
@@ -131,9 +136,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         linear_title = f(R.id.wd_linear_title);
         linear_yj = f(R.id.wd_linear_introdus);
         mDragViewOrder = f(R.id.order_dragview);
-        mDragView = f(R.id.wd_logined_news_text);
         mFrameLayout = f(R.id.wd_logined_news_fl);
         mImage_news = f(R.id.wd_logined_news_img);
+        mDragViewMsg = f(R.id.wd_logined_news_text);
         mNestedScrollView = f(R.id.scrollView_myself);
 
         mToolbar = f(R.id.toolbar);
@@ -148,11 +153,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         linear_gz.setOnClickListener(this);
         linear_jf.setOnClickListener(this);
         linear_pz.setOnClickListener(this);
-        mDragView.setOnClickListener(this);
         linear_set.setOnClickListener(this);
         linear_edu.setOnClickListener(this);
         linear_look.setOnClickListener(this);
         imageButton.setOnClickListener(this);
+        mDragViewMsg.setOnClickListener(this);
         linear_title.setOnClickListener(this);
         mFrameLayout.setOnClickListener(this);
 
@@ -162,12 +167,20 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         image_tx.setBorderColor(getResources().getColor(R.color.color_white));
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return view;
     }
 
+    /**
+     * F t.
+     *
+     * @param <T> the type parameter
+     * @param id  the id
+     * @return the t
+     */
     public <T extends View> T f(int id) {
         return (T) view.findViewById(id);
     }
@@ -247,6 +260,12 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         }
     }
 
+
+    /**
+     * Gets logininfo.
+     *
+     * @param isShow the is show
+     */
     public void getLoginInfo(boolean isShow) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", sharedUtils.getData(getActivity(), "token"));
@@ -284,6 +303,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * Show info.
+     *
+     * @param myZone the my zone
+     */
     public void showInfo(MyZone myZone) {
         try {
             String ispass = myZone.getData().getIs_pass();
@@ -309,9 +333,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
             text_gj.setText(String.valueOf(myZone.getS_out_count()));
             text_qg.setText(String.valueOf(myZone.getS_in_count()));
-            //text_look.setText(String.valueOf(myZone.getMyviewhistory()));
 
-            mDragView.setText(myZone.getMessage());
         } catch (Exception e) {
         }
     }
@@ -337,7 +359,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                 });
     }
 
-    //设置展开时各控件的透明度
+    /**
+     * Sets toolbar 1 alpha.
+     *
+     * @param alpha the alpha
+     */
     public void setToolbar1Alpha(int alpha) {
         text_title.setTextColor(Color.TRANSPARENT);
         image_rz.getDrawable().setAlpha(alpha);
@@ -346,12 +372,16 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         image_tx.getDrawable().mutate().setAlpha(alpha);
         text_pm.setTextColor(Color.argb(alpha, 255, 255, 255));
         text_gs.setTextColor(Color.argb(alpha, 255, 255, 255));
-        mDragView.setTextColor(Color.argb(alpha, 255, 255, 255));
         text_name.setTextColor(Color.argb(alpha, 255, 255, 255));
         image_tx.setBorderColor(Color.argb(alpha, 255, 255, 255));
+        mDragViewMsg.setTextColor(Color.argb(alpha, 255, 255, 255));
     }
 
-    //设置闭合时各控件的透明度
+    /**
+     * Sets toolbar 2 alpha.
+     *
+     * @param alpha the alpha
+     */
     public void setToolbar2Alpha(int alpha) {
         text_title.setTextColor(Color.argb(alpha, 255, 255, 255));
         mCollapsingToolbarLayout.setContentScrimColor(Color.argb(alpha, 255, 130, 0));
@@ -359,13 +389,32 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
     /*rabbitmq */
     @Override
-    public void r_Callback(_ConfigBean.RedDotBean redDotBean) {
-        Log.e("5555555", "======");
+    public void rCallback(boolean showRedDot) {
+        int numSeeMe = Integer.parseInt(mACache.getAsString(Constant.R_SEEME));
+        int numMyMsg = Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
+        int numMyOrder = Integer.parseInt(mACache.getAsString(Constant.R_MYORDER));
+
+        mDragViewMsg.setVisibility(!showRedDot || 0 == numMyMsg
+                ? View.GONE
+                : View.VISIBLE);
+        mDragViewLook.setVisibility(!showRedDot || 0 == numSeeMe
+                ? View.GONE
+                : View.VISIBLE);
+        mDragViewOrder.setVisibility(!showRedDot || 0 == numMyOrder
+                ? View.GONE
+                : View.VISIBLE);
+
+        if (showRedDot) {
+            mDragViewMsg.setText(numMyMsg > 99 ? "..." : numMyMsg + "");
+            mDragViewLook.setText(numSeeMe > 99 ? "..." : numSeeMe + "");
+            mDragViewOrder.setText(numMyOrder > 99 ? "..." : numMyOrder + "");
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        rCallback(true);
         getLoginInfo(false);
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
@@ -380,12 +429,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     public void onStop() {
         super.onStop();
         mBarLayout.setExpanded(true, true);
-//        mHandler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                mNestedScrollView.fullScroll(ScrollView.FOCUS_UP);
-//            }
-//        });
     }
 
     @Override

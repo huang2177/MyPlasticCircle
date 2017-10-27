@@ -82,6 +82,10 @@ public class RefreshPopou {
         this.canShowPopou = canShowPopou;
     }
 
+    public boolean isCanShowPopou() {
+        return canShowPopou;
+    }
+
     public class MyAdapter extends HIndicatorAdapter {
         String content;
 

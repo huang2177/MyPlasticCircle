@@ -13,6 +13,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.MyMessageBean;
 import com.myplas.q.myself.message.adapter.MessageListsAdapter;
+import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -75,6 +76,8 @@ public class MessageListsActivity extends BaseActivity implements ResultCallBack
                 list = myMessageBean.getData();
                 mAdapter = new MessageListsAdapter(this, list);
                 listView.setAdapter(mAdapter);
+
+                RabbitMQConfig.getInstance(this).readMsg("unread_mymsg", 12);
             } else {
             }
         } catch (Exception e) {
@@ -86,14 +89,10 @@ public class MessageListsActivity extends BaseActivity implements ResultCallBack
 
     }
 
+    @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
         getMyMsg();
     }
 
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

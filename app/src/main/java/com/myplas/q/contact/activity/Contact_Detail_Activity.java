@@ -186,6 +186,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
                 break;
         }
     }
+
     //关注
     public void follow() {
         Map<String, String> map = new HashMap<>();
@@ -260,11 +261,16 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
                     ? R.drawable.img_supdem_detail_follow
                     : R.drawable.img_supdem_detail_followed);
 
-            mSign.setImageResource("1".equals(contactBean.getData().getType())
-                    ? R.drawable.icon_factory
-                    : "2".equals(contactBean.getData().getType())
-                    ? R.drawable.icon_raw_material
-                    : R.drawable.icon_logistics);
+
+            if ("1".equals(contactBean.getData().getType())) {
+                mSign.setImageResource(R.drawable.icon_factory);
+            }
+            if ("2".equals(contactBean.getData().getType())) {
+                mSign.setImageResource(R.drawable.icon_raw_material);
+            }
+            if ("4".equals(contactBean.getData().getType())) {
+                mSign.setImageResource(R.drawable.icon_logistics);
+            }
 
             isSelf = (contactBean.getData().getUser_id())
                     .equals(sharedUtils.getData(this, Constant.USERID));

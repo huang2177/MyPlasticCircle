@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.supdem.BaseInterFace;
+import com.myplas.q.supdem.MyOnItemClickListener;
 import com.myplas.q.supdem.beans.ReplyBean;
 
 import java.util.List;
@@ -25,15 +25,15 @@ import java.util.List;
  */
 public class SupDem_Detail_LV_HF_Child_Adapter extends BaseAdapter {
     Context context;
-    BaseInterFace mBaseInterFace;
+    MyOnItemClickListener mMyOnItemClickListener;
     List<ReplyBean.DataBean.ReplayBean> list;
 
     public void setList(List<ReplyBean.DataBean.ReplayBean> list) {
         this.list = list;
     }
 
-    public SupDem_Detail_LV_HF_Child_Adapter(Context context, BaseInterFace baseInterFace) {
-        this.mBaseInterFace = baseInterFace;
+    public SupDem_Detail_LV_HF_Child_Adapter(Context context, MyOnItemClickListener myOnItemClickListener) {
+        this.mMyOnItemClickListener = myOnItemClickListener;
         this.context = context;
     }
 
@@ -96,8 +96,8 @@ public class SupDem_Detail_LV_HF_Child_Adapter extends BaseAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mBaseInterFace != null) {
-                        mBaseInterFace.onItemClick("2"
+                    if (mMyOnItemClickListener != null) {
+                        mMyOnItemClickListener.onItemClick("2"
                                 , list.get(position).getName()
                                 , list.get(position).getReply_id()
                                 , list.get(position).getPur_id()

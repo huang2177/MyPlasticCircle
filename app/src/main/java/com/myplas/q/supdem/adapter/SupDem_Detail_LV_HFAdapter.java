@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.common.view.MyListview;
-import com.myplas.q.supdem.BaseInterFace;
+import com.myplas.q.supdem.MyOnItemClickListener;
 import com.myplas.q.supdem.beans.ReplyBean;
 
 import java.util.HashMap;
@@ -29,15 +29,15 @@ import java.util.Map;
  */
 public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
     Context context;
-    BaseInterFace mBaseInterFace;
+    MyOnItemClickListener mMyOnItemClickListener;
     List<ReplyBean.DataBean> list;
     Map<Integer, viewHolder> mHolderMap;
     SupDem_Detail_LV_HF_Child_Adapter mChildAdapter;
 
-    public SupDem_Detail_LV_HFAdapter(Context context, BaseInterFace baseInterFace) {
+    public SupDem_Detail_LV_HFAdapter(Context context, MyOnItemClickListener myOnItemClickListener) {
         this.context = context;
         mHolderMap = new HashMap<>();
-        this.mBaseInterFace = baseInterFace;
+        this.mMyOnItemClickListener = myOnItemClickListener;
     }
 
     public void setList(List<ReplyBean.DataBean> list) {
@@ -88,8 +88,8 @@ public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mBaseInterFace != null) {
-                        mBaseInterFace.onItemClick("2"
+                    if (mMyOnItemClickListener != null) {
+                        mMyOnItemClickListener.onItemClick("2"
                                 , list.get(position).getName()
                                 , list.get(position).getId()
                                 , list.get(position).getPur_id()
@@ -139,7 +139,7 @@ public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
             mTVCompany = (TextView) convertView.findViewById(R.id.item_cmpany);
             mRecyclerView = (MyListview) convertView.findViewById(R.id.item_rv);
 
-            mChildAdapter = new SupDem_Detail_LV_HF_Child_Adapter(context, mBaseInterFace);
+            mChildAdapter = new SupDem_Detail_LV_HF_Child_Adapter(context, mMyOnItemClickListener);
             List<ReplyBean.DataBean.ReplayBean> childList = list.get(position).getReplay();
 //            LinearLayoutManager manager = new LinearLayoutManager(context);
 //            mRecyclerView.setLayoutManager(manager);

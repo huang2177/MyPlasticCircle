@@ -35,6 +35,7 @@ import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.contact.activity.Contact_Detail_Activity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.release.ReleaseActivity;
+import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.beans.SupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
@@ -60,6 +61,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         , MyNestedScrollView.onScrollIterface {
 
     public int page;
+    private boolean isRefreshing;
     private SharedUtils sharedUtils;
 
     private SupDemBean mSupDemBean;
@@ -233,6 +235,11 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
                         hotSearch = mSupDemBean.getHot_search();
                         mPopouinterface.showRefreshPopou(hotSearch, mSupDemBean.getShow_msg());
+
+                        if (isRefreshing) {
+                            isRefreshing = false;
+                            RabbitMQConfig.getInstance(getActivity()).readMsg("unread_supply_and_demand", 11);
+                        }
                     } else { //加载更多
                         refreshPopou.setCanShowPopou(false);
                         mDataBeanList.addAll(mSupDemBean.getData());
@@ -416,6 +423,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     @Override
     public void onRefresh() {
         page = 1;
+        isRefreshing = true;
         getNetData(page + "", false);
         refreshPopou.setCanShowPopou(true);
     }

@@ -24,6 +24,7 @@ import java.util.Map;
  * 时间：2017/3/29 10:57
  */
 public class SettingAdapter extends RecyclerView.Adapter {
+    int versionImg;
     Context context;
     List<String> list;
     List<Integer> mList;
@@ -80,13 +81,17 @@ public class SettingAdapter extends RecyclerView.Adapter {
             }
         }
         if (position == 7) {
-            viewHolder.mTextView1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tag_new
+            viewHolder.mTextView1.setCompoundDrawablesWithIntrinsicBounds(versionImg
                     , 0
                     , R.drawable.icon_more
                     , 0);
         }
         viewHolder.mTextView.setText(list.get(position));
         viewHolder.mImageView.setImageResource(mList.get(position));
+    }
+
+    public void setVersionImg(int versionImg) {
+        this.versionImg = versionImg;
     }
 
     @Override
@@ -96,9 +101,7 @@ public class SettingAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if (list != null)
-            return list.size();
-        return 0;
+        return list != null ? list.size() : 0;
     }
 
 

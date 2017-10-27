@@ -20,4 +20,16 @@ public class Constant {
     public static final String UUID = "uuid";
 
     public static final String ISFIRSTINTOHEADCATE = "isFirstIntoHeadCate";
+
+    public static final String R_CONFIG = "config";
+
+    public static final String R_CONTACT = "unread_customer";
+
+    public static final String R_SUPDEM = "unread_supply_and_demand";
+
+    public static final String R_MYMSG = "unread_mymsg";
+
+    public static final String R_MYORDER = "unread_myorder";
+
+    public static final String R_SEEME = "unread_who_saw_me";
 }

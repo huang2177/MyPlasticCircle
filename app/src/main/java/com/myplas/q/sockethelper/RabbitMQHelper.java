@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -27,12 +26,12 @@ import java.util.List;
  * 事件 2017/8/15 0015.
  * 邮箱： 15378412400@163.com
  */
-
 public class RabbitMQHelper {
+    private ACache mACache;
     private static Context mContext;
     private Thread subscribeThread;
     private Connection mConnection;
-    private _ConfigBean mConfigBean;
+    private DefConfigBean mConfigBean;
     private ConnectionFactory mFactory;
     private static RabbitMQHelper mRabbitMQHelper;
 
@@ -47,6 +46,12 @@ public class RabbitMQHelper {
         mSharedUtils = SharedUtils.getSharedUtils();
     }
 
+    /**
+     * Gets instance.
+     *
+     * @param context the context
+     * @return the instance
+     */
     public static RabbitMQHelper getInstance(Context context) {
         if (mRabbitMQHelper == null) {
             mRabbitMQHelper = new RabbitMQHelper(context.getApplicationContext());
@@ -55,6 +60,11 @@ public class RabbitMQHelper {
         return mRabbitMQHelper;
     }
 
+    /**
+     * Sets result callback.
+     *
+     * @param mMQCallBack 设置监听
+     */
     public void setResultCallBack(RabbitMQCallBack mMQCallBack) {
         if (!mList.contains(mMQCallBack)) {
             mList.add(mMQCallBack);
@@ -62,16 +72,22 @@ public class RabbitMQHelper {
     }
 
 
+    /**
+     * On connect.
+     */
     public void onConnect() {
-        isLogined = mSharedUtils.getBoolean(mContext, Constant.LOGINED);
-        mConfigBean = new Gson().fromJson(ACache
-                .get(mContext)
-                .getAsString("config"), _ConfigBean.class);
-        userid = isLogined
-                ? mSharedUtils.getData(mContext, Constant.USERID)
-                : "";
-        if (mConfigBean == null || !isLogined) {
-            return;
+        try {
+            mACache = ACache.get(mContext);
+            isLogined = mSharedUtils.getBoolean(mContext, Constant.LOGINED);
+            mConfigBean = new Gson().fromJson(mACache.getAsString("config"), DefConfigBean.class);
+            userid = isLogined
+                    ? mSharedUtils.getData(mContext, Constant.USERID)
+                    : "";
+            if (mConfigBean == null || !isLogined) {
+                return;
+            }
+        } catch (Exception e) {
+
         }
         //连接设置
         setupConnectionmmFactory();
@@ -79,21 +95,50 @@ public class RabbitMQHelper {
         final Handler incomingMessageHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                try {
-                    String message = msg.getData().getString("msg");
-                    //Result result = new Gson().fromJson(message, Result.class);
-                    for (int i = 0; i < mList.size(); i++) {
-                        RabbitMQCallBack callback = mList.get(i);
-                        if (callback != null) {
-                            callback.r_Callback(null);
-                        }
-                    }
-                } catch (Exception e) {
-                }
+                parseData(msg);
             }
         };
         //开启消费者线程
         subscribe(incomingMessageHandler);
+    }
+
+    private void parseData(Message msg) {
+        try {
+            Gson gson = new Gson();
+            String message = msg.getData().getString("msg");
+            DotBean dotBean = gson.fromJson(message, DotBean.class);
+
+            if (userid.equals(dotBean.getData().getTo())) {
+                DefConfigBean.RedDotBean bean = new DefConfigBean.RedDotBean();
+                switch (dotBean.getData().getKey()) {
+                    case "unread_customer": //通讯录
+                        mACache.put(Constant.R_CONTACT, dotBean.getData().getValue());
+                        break;
+                    case "unread_supply_and_demand":
+                        mACache.put(Constant.R_SUPDEM, dotBean.getData().getValue());
+                        break;
+                    case "unread_mymsg":
+                        mACache.put(Constant.R_MYMSG, dotBean.getData().getValue());
+                        break;
+                    case "unread_myorder":
+                        mACache.put(Constant.R_MYORDER, dotBean.getData().getValue());
+                        break;
+                    case "unread_who_saw_me":
+                        mACache.put(Constant.R_SEEME, dotBean.getData().getValue());
+                        break;
+                    default:
+                        break;
+                }
+                for (int i = 0; i < mList.size(); i++) {
+                    RabbitMQCallBack callback = mList.get(i);
+                    if (callback != null) {
+                        callback.rCallback(true);
+                    }
+                }
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     /**
@@ -106,7 +151,8 @@ public class RabbitMQHelper {
         mFactory.setUsername(mConfigBean.getConfig().getUser_name());
         mFactory.setPassword(mConfigBean.getConfig().getPassword());
         mFactory.setVirtualHost(mConfigBean.getConfig().getVhost());
-        mFactory.setAutomaticRecoveryEnabled(false);
+        mFactory.setAutomaticRecoveryEnabled(true);
+
     }
 
     /**
@@ -146,14 +192,13 @@ public class RabbitMQHelper {
                     //创建消费者
                     QueueingConsumer consumer = new QueueingConsumer(channel);
                     channel.basicConsume(queueName + userid
-                            , false
+                            , true
                             , consumer);
 
                     while (true) {
                         //wait for the next message delivery and return it.
                         QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                         String message = new String(delivery.getBody());
-
                         //从message池中获取msg对象更高效
                         Message msg = handler.obtainMessage();
                         Bundle bundle = new Bundle();
@@ -172,6 +217,9 @@ public class RabbitMQHelper {
         subscribeThread.start();
     }
 
+    /**
+     * On dis connect.
+     */
     public void onDisConnect() {
         subscribeThread.interrupt();
         if (mConnection != null && mConnection.isOpen()) {

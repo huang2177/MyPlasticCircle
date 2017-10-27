@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.contact.Fragment_Contact;
@@ -39,8 +40,7 @@ import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.myplas.q.sockethelper.RabbitMQHelper;
-import com.myplas.q.sockethelper.Result;
-import com.myplas.q.sockethelper._ConfigBean;
+import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.supdem.Fragment_SupplyDemand;
 import com.myplas.q.appupdate.VersionUpdateDialogUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -52,6 +52,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Main activity.
+ *
+ * @author Administrator
+ */
 public class MainActivity extends FragmentActivity implements View.OnClickListener
         , ResultCallBack
         , RabbitMQCallBack
@@ -69,10 +74,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ImageView mIVRelease;
     private MyViewPager viewPager;
     private List<Fragment> fragmentlist;
-    private Fragment_MySelf fragment_wd;
-    private Fragment_Contact fragment_txl;
-    private Fragment_HeadLines fragment_fx;
-    private Fragment_SupplyDemand fragment_gq;
+    private Fragment_MySelf fragmentWd;
+    private Fragment_Contact fragmentContact;
+    private Fragment_HeadLines fragmentHeadLine;
+    private Fragment_SupplyDemand fragmentSupDem;
 
     private ViewPager_Adapter viewpagerAdapter;
     private TextView textView_gq, textView_wd, textView_fx, textView_txl;
@@ -100,27 +105,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentlist = new ArrayList<Fragment>();
         sharedUtils = SharedUtils.getSharedUtils();
 
-        viewPager = F(R.id.viewpager_main);
-        layout_gq = F(R.id.buttom_linear_gq);
-        layout_wd = F(R.id.buttom_linear_wd);
-        layout_fx = F(R.id.buttom_linear_fx);
-        layout_txl = F(R.id.buttom_linear_txl);
-        layout_jia = F(R.id.buttom_linear_jia);
+        viewPager = f(R.id.viewpager_main);
+        layout_gq = f(R.id.buttom_linear_gq);
+        layout_wd = f(R.id.buttom_linear_wd);
+        layout_fx = f(R.id.buttom_linear_fx);
+        layout_txl = f(R.id.buttom_linear_txl);
+        layout_jia = f(R.id.buttom_linear_jia);
 
-        mIVRelease = F(R.id.buttom_img_jia);
-        imageView_fx = F(R.id.buttom_img_fx);
-        imageView_gq = F(R.id.buttom_img_gq);
-        imageView_wd = F(R.id.buttom_img_wd);
-        imageView_txl = F(R.id.buttom_img_txl);
+        mIVRelease = f(R.id.buttom_img_jia);
+        imageView_fx = f(R.id.buttom_img_fx);
+        imageView_gq = f(R.id.buttom_img_gq);
+        imageView_wd = f(R.id.buttom_img_wd);
+        imageView_txl = f(R.id.buttom_img_txl);
 
-        textView_fx = F(R.id.buttom_text_fx);
-        textView_gq = F(R.id.buttom_text_gq);
-        textView_wd = F(R.id.buttom_text_wd);
-        textView_txl = F(R.id.buttom_text_txl);
+        textView_fx = f(R.id.buttom_text_fx);
+        textView_gq = f(R.id.buttom_text_gq);
+        textView_wd = f(R.id.buttom_text_wd);
+        textView_txl = f(R.id.buttom_text_txl);
 
-        mMsgSupDem = F(R.id.dragview_supdem);
-        mMsgMySelf = F(R.id.dragview_myself);
-        mMsgContact = F(R.id.dragview_contact);
+        mMsgSupDem = f(R.id.dragview_supdem);
+        mMsgMySelf = f(R.id.dragview_myself);
+        mMsgContact = f(R.id.dragview_contact);
 
         layout_fx.setOnClickListener(this);
         layout_wd.setOnClickListener(this);
@@ -128,14 +133,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         layout_txl.setOnClickListener(this);
         layout_gq.setOnClickListener(this);
 
-        fragment_txl = new Fragment_Contact();
-        fragmentlist.add(fragment_txl);
-        fragment_fx = new Fragment_HeadLines();
-        fragmentlist.add(fragment_fx);
-        fragment_gq = new Fragment_SupplyDemand();
-        fragmentlist.add(fragment_gq);
-        fragment_wd = new Fragment_MySelf();
-        fragmentlist.add(fragment_wd);
+        fragmentContact = new Fragment_Contact();
+        fragmentlist.add(fragmentContact);
+        fragmentHeadLine = new Fragment_HeadLines();
+        fragmentlist.add(fragmentHeadLine);
+        fragmentSupDem = new Fragment_SupplyDemand();
+        fragmentlist.add(fragmentSupDem);
+        fragmentWd = new Fragment_MySelf();
+        fragmentlist.add(fragmentWd);
 
         viewpagerAdapter = new ViewPager_Adapter(getSupportFragmentManager(), fragmentlist);
         viewPager.setAdapter(viewpagerAdapter);
@@ -144,7 +149,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         firstInto();
         getVersion();
         getConfig();
-        onConnect();
         RabbitMQHelper.getInstance(this).setResultCallBack(this);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         if (!sharedUtils.getBoolean(this, "isrequest")) {
@@ -186,10 +190,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    public <T extends View> T F(int id) {
+    /**
+     * F t.
+     *
+     * @param <T> the type parameter
+     * @param id  the id
+     * @return the t
+     */
+    public <T extends View> T f(int id) {
         return (T) findViewById(id);
     }
 
+    /**
+     * Clear color.
+     */
     public void clearColor() {
         imageView_wd.setImageResource(R.drawable.tabbar_me);
         imageView_gq.setImageResource(R.drawable.tabbar_trade);
@@ -203,7 +217,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    //通讯录
+    /**
+     * First into.
+     */
     public void firstInto() {
         clearColor();
         viewPager.setCurrentItem(0);
@@ -211,7 +227,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         textView_txl.setTextColor(resources.getColor(R.color.color_red));
     }
 
-    //头条
+    /**
+     * Go to headline.
+     */
     public void goToHeadLine() {
         clearColor();
         viewPager.setCurrentItem(1);
@@ -219,7 +237,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         textView_fx.setTextColor(resources.getColor(R.color.color_red));
     }
 
-    //供求
+    /**
+     * Go to supdem.
+     */
     public void goToSupDem() {
         clearColor();
         viewPager.setCurrentItem(2);
@@ -227,7 +247,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         textView_gq.setTextColor(resources.getColor(R.color.color_red));
     }
 
-    //我的
+    /**
+     * Go to myself.
+     */
     public void goToMySelf() {
         clearColor();
         viewPager.setCurrentItem(3);
@@ -235,12 +257,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         textView_wd.setTextColor(resources.getColor(R.color.color_red));
     }
 
-    /*检查是否登录*/
+
     private boolean checkIsLogin() {
         boolean logined = sharedUtils.getBoolean(this, Constant.LOGINED);
         if (!logined) {
             CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(this, fragment_txl.content.toString(), 4, this);
+            commonDialog.showDialog(this, fragmentContact.content.toString(), 4, this);
         }
         return logined;
     }
@@ -252,6 +274,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
+    /**
+     * Gets version.
+     */
     public void getVersion() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("version", VersionUtils.getVersionName(this));
@@ -259,7 +284,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         BaseActivity.postAsyn1(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 1, false);
     }
 
-    //登陆以后获取rabbitMQ的配置信息
+    /**
+     * rabbitMQ Gets config.
+     */
     public void getConfig() {
         BaseActivity.postAsyn1(this, API.BASEURL + API.INIT, null, this, 3, false);
     }
@@ -267,12 +294,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void callBack(Object object, int type) {
         try {
-            String err = new JSONObject(object.toString()).getString("err");
+            Gson gson = new Gson();
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String err = jsonObject.getString("err");
             if (type == 1 && err.equals("1")) {
-                url = new JSONObject(object.toString()).getString("url");
-                promit = new JSONObject(object.toString()).getString("msg");
+                url = jsonObject.getString("url");
+                promit = jsonObject.getString("msg");
                 versionLocate = NumUtils.getNum(VersionUtils.getVersionName(this));
-                versionService = NumUtils.getNum(new JSONObject(object.toString()).getString("new_version"));
+                versionService = NumUtils.getNum(jsonObject.getString("new_version"));
                 //比较版本号
                 if (versionService > versionLocate) {
                     mUpdateDialogUtils = new VersionUpdateDialogUtils(this, promit, url);
@@ -281,8 +310,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
             }
             if (type == 3 && err.equals("0")) {
-                r_Callback(null);
-                mACache.put("config", object.toString());
+                DefConfigBean bean = gson.fromJson(object.toString(), DefConfigBean.class);
+                mACache.put(Constant.R_CONFIG, object.toString());
+
+                mACache.put(Constant.R_MYMSG, bean.getRedDot().getUnread_mymsg());
+                mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
+                mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
+                mACache.put(Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
+                mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
+                rCallback(true);
+                onConnect();
             }
         } catch (Exception e) {
         }
@@ -301,12 +338,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     /*rabbitmq*/
     @Override
-    public void r_Callback(_ConfigBean.RedDotBean redDotBean) {
-        mMsgSupDem.setVisibility(View.VISIBLE);
-        mMsgMySelf.setVisibility(View.VISIBLE);
-        mMsgContact.setVisibility(View.VISIBLE);
-        mMsgMySelf.setText("1");
-        mMsgSupDem.setText("3");
+    public void rCallback(boolean showRedDot) {
+        int numContact = Integer.parseInt(mACache.getAsString(Constant.R_CONTACT));
+        int numSupDem = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM));
+        int numMySelf = Integer.parseInt(mACache.getAsString(Constant.R_SEEME))
+                + Integer.parseInt(mACache.getAsString(Constant.R_MYORDER))
+                + Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
+
+        mMsgSupDem.setVisibility(!showRedDot || 0 == numSupDem
+                ? View.GONE
+                : View.VISIBLE);
+        mMsgMySelf.setVisibility(!showRedDot || 0 == numMySelf
+                ? View.GONE
+                : View.VISIBLE);
+        mMsgContact.setVisibility(!showRedDot || 0 == numContact
+                ? View.GONE
+                : View.VISIBLE);
+
+        if (showRedDot) {
+            mMsgMySelf.setText(numMySelf > 99 ? "..." : numMySelf + "");
+            mMsgSupDem.setText(numSupDem > 99 ? "..." : numSupDem + "");
+        }
     }
 
     @Override
@@ -328,6 +380,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
+    /**
+     * Exit.
+     */
     public void exit() {
         if ((System.currentTimeMillis() - exitTime) > 2500) {
             TextUtils.Toast(getApplicationContext(), "再按一次塑料圈通讯录!");
@@ -341,6 +396,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
+    /**
+     * Check permission.
+     */
     public void checkPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
             String[] mPermissionList = new String[]{Manifest.permission.READ_LOGS
@@ -357,13 +415,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    /*rabbitMQ链接*/
+    /**
+     * rabbitMQ On connect.
+     */
     public void onConnect() {
         RabbitMQHelper.getInstance(this).onConnect();
         RabbitMQConfig.getInstance(this).connected();
     }
 
-    /*rabbitMQ断开链接*/
+    /**
+     * rabbitMQ On closed.
+     */
     public void onClosed() {
         RabbitMQHelper.getInstance(this).onDisConnect();
         RabbitMQConfig.getInstance(this).closed();

@@ -26,14 +26,13 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.release.MyOnPageChangeListener;
-import com.myplas.q.supdem.BaseInterFace;
+import com.myplas.q.supdem.MyOnItemClickListener;
 import com.myplas.q.supdem.beans.SupDemDetailBean;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_CHJ;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_HF;
 import com.myplas.q.supdem.OnKeyboardChangeListener;
 import com.myplas.q.supdem.adapter.SupDem_Detail_ViewPager_Adapter;
 import com.myplas.q.common.api.API;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -52,7 +51,7 @@ import java.util.Map;
 
 public class SupDem_Detail_Activity extends BaseActivity implements View.OnClickListener
         , ResultCallBack
-        , BaseInterFace
+        , MyOnItemClickListener
         , MyOnPageChangeListener.OnPageChangeListener
         , OnKeyboardChangeListener.OnChangeListener {
 
@@ -140,7 +139,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTabLayout.addTab(mTabLayout.newTab().setText("出价消息"));
         mTabLayout.addTab(mTabLayout.newTab().setText("回复消息"));
         detail_hf = new Fragment_SupDem_Detail_HF();
-        detail_hf.mBaseInterFace = this;
+        detail_hf.mMyOnItemClickListener = this;
 
         detail_chj = new Fragment_SupDem_Detail_CHJ();
         mFragmentList.add(detail_chj);
@@ -305,7 +304,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 + "   等级："
                 + mDetailBean.getData().getMember_level());
 
-        mIVStart.setImageResource(mDetailBean.getData().getStatus().equals("0")
+        mIVStart.setImageResource("0".equals(mDetailBean.getData().getStatus())
                 ? R.drawable.icon_identity
                 : R.drawable.icon_identity_hl);
 
@@ -314,15 +313,19 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 .placeholder(R.drawable.contact_image_defaul_male)
                 .into(mIVHead);
 
-        mIVFollow.setImageResource(mDetailBean.getData().getStatus().equals("0")
+        mIVFollow.setImageResource("0".equals(mDetailBean.getData().getStatus())
                 ? R.drawable.img_supdem_detail_follow
                 : R.drawable.img_supdem_detail_followed);
 
-        mSign.setImageResource("1".equals(mDetailBean.getData().getStype())
-                ? R.drawable.icon_factory
-                : "2".equals(mDetailBean.getData().getStype())
-                ? R.drawable.icon_raw_material
-                : R.drawable.icon_logistics);
+        if ("1".equals(mDetailBean.getData().getStype())) {
+            mSign.setImageResource(R.drawable.icon_factory);
+        }
+        if ("2".equals(mDetailBean.getData().getStype())) {
+            mSign.setImageResource(R.drawable.icon_raw_material);
+        }
+        if ("4".equals(mDetailBean.getData().getStype())) {
+            mSign.setImageResource(R.drawable.icon_logistics);
+        }
 
         mTVType.setText(mDetailBean.getData().getType().equals("1")
                 ? "求购"

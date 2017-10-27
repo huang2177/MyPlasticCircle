@@ -29,7 +29,7 @@ public class ThirdFragment extends Fragment {
         View view=inflater.inflate( R.layout.layout_guide,null,false);
         button= (Button) view.findViewById(R.id.guide_button);
         imageView= (ImageView) view.findViewById(R.id.guide_img);
-        imageView.setImageResource(R.drawable.topline);
+        imageView.setImageResource(R.drawable.launchimage_headline);
         //跳转到首页-通讯录
         button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -21,6 +21,8 @@ public class API {
     public final static String CHECK_UA = "common/checkUA";
     //APP更新
     public final static String CHECK_VERSION = "common/checkVersion";
+    //APP推荐更新
+    public final static String CHECKAPPVERSION = "common/checkAppVersion";
     //微信分享缩略图
     public final static String LOG_IMG_URL = "http://statics.myplas.com/myapp/img/shareLogo.png";
     //测试——微信appid
@@ -96,7 +98,7 @@ public class API {
     //获取好友资料
     public final static String GET_ZONE_FRIEND = "friend/getZoneFriend";
     //获取ta的求购或供给
-    public final static String GET_TA_PUR = "friend/getTaPur";
+    public final static String GET_TA_PUR = "/friend/getTaPurNew";
     //获取通讯录首页数据
     public final static String GET_PLASTIC_PERSON = "friend/getPlasticPerson";
     //获得通讯录搜索记录和推荐

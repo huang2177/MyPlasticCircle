@@ -7,5 +7,5 @@ package com.myplas.q.sockethelper;
  */
 
 public interface RabbitMQCallBack {
-    void r_Callback(_ConfigBean.RedDotBean redDotBean);
+    public void rCallback(boolean showRedDot);
 }

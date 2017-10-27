@@ -15,11 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
@@ -28,8 +30,7 @@ import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
-import com.myplas.q.sockethelper.RabbitMQHelper;
-import com.umeng.analytics.MobclickAgent;
+import com.myplas.q.sockethelper.DefConfigBean;
 
 import org.json.JSONObject;
 
@@ -57,7 +58,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone, mLayoutRoot;
     private MyEditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
 
-    private View decorView;
+    private ACache mACache;
     private MainActivity mainActivity;
 
     @Override
@@ -73,6 +74,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     public void initView() {
         count = 60;
         clicked = true;
+        mACache = ACache.get(this);
         sharedUtils = SharedUtils.getSharedUtils();
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
@@ -98,7 +100,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         textView_title = F(R.id.title_rs);
 
         mLayoutRoot = F(R.id.login_rootview);
-        decorView = getWindow().getDecorView();
         linearLayout_nomal = F(R.id.linearlayout_login_nomal);
         linearLayout_phone = F(R.id.linearlayout_login_phone);
 
@@ -220,6 +221,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mButtonNomal.getWindowToken(), 0);
                 break;
+            default:
+                break;
         }
     }
 
@@ -256,7 +259,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
-            String s = new JSONObject(object.toString()).getString("err");
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String s = jsonObject.getString("err");
             if (type == 1) {
                 mButtonNomal.setClickable(true);
                 mButtonPhone.setClickable(true);
@@ -269,17 +273,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
                 TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
                 if (s.equals("0")) {
-                    setData(new JSONObject(object.toString()));
-
+                    setData(jsonObject);
+                    Gson gson = new Gson();
+                    DefConfigBean.RedDotBean bean = gson.fromJson(jsonObject.getString("redDot")
+                            , DefConfigBean.RedDotBean.class);
+                    mACache.put(Constant.R_MYMSG, bean.getUnread_mymsg());
+                    mACache.put(Constant.R_MYORDER, bean.getUnread_myorder());
+                    mACache.put(Constant.R_CONTACT, bean.getUnread_customer());
+                    mACache.put(Constant.R_SEEME, bean.getUnread_who_saw_me());
+                    mACache.put(Constant.R_SUPDEM, bean.getUnread_supply_and_demand());
                     //回到主界面
-                    finish();
                     mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
                     mainActivity.firstInto();
                     mainActivity.onConnect();
+                    mainActivity.rCallback(true);
+
+                    finish();
                 }
             }
             if (type == 2 && s.equals("0")) {
-                JSONObject jsonObject = new JSONObject(object.toString());
                 String url = jsonObject.getString("img");
                 key = jsonObject.getString("key");
                 Glide.with(this).load(url).placeholder(R.drawable.bg_verification_code).into(imageView_verification);

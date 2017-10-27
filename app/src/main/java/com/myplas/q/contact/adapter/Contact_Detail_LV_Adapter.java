@@ -71,8 +71,8 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
             viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
             String time = "回复:"
-                    + "出价:"
-                    + list.get(position).getInput_time();
+                    + "  出价:"
+                    + "  " + list.get(position).getInput_time();
             viewHolder.mTVTime.setText(time);
 
             Glide.with(context)

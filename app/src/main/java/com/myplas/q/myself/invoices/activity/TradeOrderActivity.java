@@ -21,6 +21,7 @@ import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.invoices.adapter.TradeOrderListviewAdapter;
 import com.myplas.q.myself.beans.OrderListsBean;
+import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.umeng.analytics.MobclickAgent;
@@ -99,6 +100,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         postAsyn(this, API.BASEURL + API.BILLINGLIST, map, this, type);
     }
 
+
     @Override
     public void onClick(View v) {
         information = new Information();
@@ -144,6 +146,8 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                     mAdapter = new TradeOrderListviewAdapter(this, mList);
                     mAdapter.setMyOnClickListener(this);
                     mListView.setAdapter(mAdapter);
+
+                    RabbitMQConfig.getInstance(this).readMsg("unread_myorder", 13);
                 } else {
                     mListView.setVisibility(View.GONE);
                     mBarLayout.setVisibility(View.GONE);
@@ -169,14 +173,4 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-        getorderLists("", 2);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

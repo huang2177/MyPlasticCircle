@@ -201,6 +201,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             case R.id.img_search_delete:
                 delSearch_Record();
                 break;
+            default:
+                break;
         }
     }
 
@@ -223,6 +225,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             case R.id.search_listview_result1:
                 HeadLineSearchActivity.this.position = position;
                 isPaidSubscription(list.get(position).getId());
+                break;
+            default:
                 break;
         }
     }

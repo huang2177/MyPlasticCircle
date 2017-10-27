@@ -72,7 +72,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 userid = mList.get(position).getUser_id();
                 //判断是否消耗积分
-                getPersonInfoData(user_id, "1", 5);
+                getPersonInfoData(userid, "1", 5);
 
             }
         });
@@ -177,7 +177,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     public void ok(int type) {
         switch (type) {
             case 1:
-                getPersonInfoData(user_id, "5", 3);
+                getPersonInfoData(userid, "5", 3);
                 break;
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));

@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:translationX="16dp"
-                android:translationY="1dp"
+                android:translationY="2dp"
                 android:visibility="gone"
                 app:bubbleColor="#ff0000"
                 app:bubbleRadius="5dp"
@@ -129,12 +129,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:translationX="16dp"
-                android:translationY="1dp"
-                android:visibility="gone"
-                app:bubbleColor="#ff0000"
-                app:bubbleRadius="9dp"
-                app:textColor="@color/color_white"
-                app:textSize="10.0sp"/>
+                android:translationY="2dp"
+                android:visibility="gone"/>
         </FrameLayout>
 
         <FrameLayout
@@ -169,13 +165,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:translationX="15dp"
-                android:translationY="1dp"
-                android:visibility="gone"
-                app:bubbleColor="#ff0000"
-                app:bubbleRadius="9dp"
-                app:textColor="@color/color_white"
-                app:textSize="10.0sp"/>
+                android:translationX="16dp"
+                android:translationY="2dp"
+                android:visibility="gone"/>
         </FrameLayout>
 
     </LinearLayout>

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 邮箱： 15378412400@163.com
  */
 
-public class _ConfigBean implements Serializable {
+public class DefConfigBean implements Serializable {
 
 
     /**
@@ -18,8 +18,8 @@ public class _ConfigBean implements Serializable {
      */
 
     private int err;
-    public ConfigBean config;
-    public RedDotBean redDot;
+    private ConfigBean config;
+    private RedDotBean redDot;
 
     public int getErr() {
         return err;
@@ -280,7 +280,7 @@ public class _ConfigBean implements Serializable {
         private String unread_customer;
         private String unread_myorder;
         private String unread_who_saw_me;
-        private String unread_recommend_update;
+        private int unread_recommend_update;
 
         public String getIs_socket_connected() {
             return is_socket_connected;
@@ -330,11 +330,11 @@ public class _ConfigBean implements Serializable {
             this.unread_who_saw_me = unread_who_saw_me;
         }
 
-        public String getUnread_recommend_update() {
+        public int getUnread_recommend_update() {
             return unread_recommend_update;
         }
 
-        public void setUnread_recommend_update(String unread_recommend_update) {
+        public void setUnread_recommend_update(int unread_recommend_update) {
             this.unread_recommend_update = unread_recommend_update;
         }
     }

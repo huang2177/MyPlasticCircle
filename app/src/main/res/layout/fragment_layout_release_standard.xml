@@ -84,38 +84,6 @@
                 android:layout_height="1px"
                 android:background="@color/color_gray_divider_out"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.6"
-                    android:gravity="center_vertical"
-                    android:text="交货地"
-                    android:textColor="@color/color_balank"
-                    android:textSize="16.0sp"/>
-
-                <EditText
-                    android:id="@+id/release_ev_jh"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:background="@null"
-                    android:hint="上海"
-                    android:textCursorDrawable="@drawable/text_cursor_shape"
-                    android:textSelectHandle="@drawable/textselecthandle"
-                    android:textSelectHandleLeft="@drawable/textselecthandle"
-                    android:textSelectHandleRight="@drawable/textselecthandle"
-                    android:textSize="14.0sp"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,7 +117,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/color_gray_divider_out"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:gravity="center_vertical"
+                    android:text="货物位置"
+                    android:textColor="@color/color_balank"
+                    android:textSize="16.0sp"/>
+
+                <EditText
+                    android:id="@+id/release_ev_jh"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@null"
+                    android:hint="上海"
+                    android:textCursorDrawable="@drawable/text_cursor_shape"
+                    android:textSelectHandle="@drawable/textselecthandle"
+                    android:textSelectHandleLeft="@drawable/textselecthandle"
+                    android:textSelectHandleRight="@drawable/textselecthandle"
+                    android:textSize="14.0sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_gray_divider_out"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
