@@ -107,7 +107,7 @@ public class RabbitMQHelper {
             Gson gson = new Gson();
             String message = msg.getData().getString("msg");
             DotBean dotBean = gson.fromJson(message, DotBean.class);
-
+            Log.e("------->>>>", message);
             if (userid.equals(dotBean.getData().getTo())) {
                 DefConfigBean.RedDotBean bean = new DefConfigBean.RedDotBean();
                 switch (dotBean.getData().getKey()) {

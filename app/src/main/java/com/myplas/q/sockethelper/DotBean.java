@@ -12,22 +12,24 @@ public class DotBean {
     /**
      * from : -1
      * type : system
-     * data : {"to":"53402","key":"unread_supply_and_demand","value":3}
-     * timestamp : 1509003998
+     * data : {"to":"53402","value":2,"key":"unread_supply_and_demand"}
+     * timestamp : 1509087802
      * err : 0
+     * user_id : 53402
      */
 
-    private int from;
+    private String from;
     private String type;
     private DataBean data;
-    private int timestamp;
-    private int err;
+    private String timestamp;
+    private String err;
+    private String user_id;
 
-    public int getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(int from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
@@ -47,32 +49,40 @@ public class DotBean {
         this.data = data;
     }
 
-    public int getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
-    public int getErr() {
+    public String getErr() {
         return err;
     }
 
-    public void setErr(int err) {
+    public void setErr(String err) {
         this.err = err;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public static class DataBean {
         /**
          * to : 53402
+         * value : 2
          * key : unread_supply_and_demand
-         * value : 3
          */
 
         private String to;
-        private String key;
         private String value;
+        private String key;
 
         public String getTo() {
             return to;
@@ -82,20 +92,20 @@ public class DotBean {
             this.to = to;
         }
 
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
         public String getValue() {
             return value;
         }
 
         public void setValue(String value) {
             this.value = value;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
         }
     }
 }
