@@ -12,7 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by 黄双 on 2017/10/15.
+ * 作者:huangshuang
+ * 事件 2017/10/15.
+ * 邮箱： 15378412400@163.com
  */
 
 public abstract class Fragment_Dialog_Adapter extends HIndicatorAdapter {
