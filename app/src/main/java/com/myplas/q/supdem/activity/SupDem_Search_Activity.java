@@ -305,6 +305,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                         startActivity(intent);
                     } catch (Exception e) {
                     }
+
                 }
                 break;
             default:
