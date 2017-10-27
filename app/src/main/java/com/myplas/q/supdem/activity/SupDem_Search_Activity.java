@@ -257,6 +257,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     }
                 });
                 break;
+            default:
+                break;
         }
     }
 
@@ -304,6 +306,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     } catch (Exception e) {
                     }
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -423,11 +427,13 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         getPhysical_Search(1, keywords, time, is_buy, area, true);
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

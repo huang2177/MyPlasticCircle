@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
@@ -32,6 +33,7 @@ import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -275,13 +277,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 if (s.equals("0")) {
                     setData(jsonObject);
                     Gson gson = new Gson();
-                    DefConfigBean.RedDotBean bean = gson.fromJson(jsonObject.getString("redDot")
-                            , DefConfigBean.RedDotBean.class);
-                    mACache.put(Constant.R_MYMSG, bean.getUnread_mymsg());
-                    mACache.put(Constant.R_MYORDER, bean.getUnread_myorder());
-                    mACache.put(Constant.R_CONTACT, bean.getUnread_customer());
-                    mACache.put(Constant.R_SEEME, bean.getUnread_who_saw_me());
-                    mACache.put(Constant.R_SUPDEM, bean.getUnread_supply_and_demand());
+                    if (jsonObject.getString("redDot").length() != 0) {
+                        DefConfigBean.RedDotBean bean = gson.fromJson(jsonObject.getString("redDot"), DefConfigBean.RedDotBean.class);
+                        mACache.put(Constant.R_MYMSG, bean.getUnread_mymsg());
+                        mACache.put(Constant.R_MYORDER, bean.getUnread_myorder());
+                        mACache.put(Constant.R_CONTACT, bean.getUnread_customer());
+                        mACache.put(Constant.R_SEEME, bean.getUnread_who_saw_me());
+                        mACache.put(Constant.R_SUPDEM, bean.getUnread_supply_and_demand());
+                    }
                     //回到主界面
                     mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
                     mainActivity.firstInto();

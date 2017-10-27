@@ -18,6 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1">
 
             <LinearLayout
@@ -26,69 +27,30 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/txl_listview_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txl_listview_gs"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="7"
-                        android:ellipsize="end"
-                        android:fontFamily="sans-serif-medium"
-                        android:maxLines="1"
-                        android:textColor="@color/color_title_main"
-                        android:textSize="15.0sp"/>
-
-                    <TextView
-                        android:id="@+id/txl_listview_mz"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3.0"
-                        android:fontFamily="sans-serif-medium"
-                        android:maxLines="1"
-                        android:paddingLeft="4dp"
-                        android:textColor="@color/color_title_main"
-                        android:textSize="15.0sp"/>
-
-                    <TextView
-                        android:id="@+id/txl_listview_sex"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.9"
-                        android:fontFamily="sans-serif-medium"
-                        android:maxLines="1"
-                        android:textColor="@color/color_title_main"
-                        android:textSize="15.0sp"/>
-                </LinearLayout>
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:textColor="@color/color_title_main"
+                    android:textSize="15.0sp"/>
 
                 <TextView
-                    android:id="@+id/txl_listview_pro_month"
+                    android:id="@+id/txl_listview_need"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:textSize="14.0sp"/>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/txl_listview_product"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textSize="14.0sp"/>
 
-                    <TextView
-                        android:id="@+id/txl_listview_gj"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:textSize="14.0sp"/>
-
-                    <TextView
-                        android:id="@+id/txl_listview_zhy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:textSize="14.0sp"/>
-                </LinearLayout>
             </LinearLayout>
 
             <ImageView

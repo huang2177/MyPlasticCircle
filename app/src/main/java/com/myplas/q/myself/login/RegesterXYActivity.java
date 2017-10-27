@@ -45,7 +45,7 @@ public class RegesterXYActivity extends BaseActivity {
         webSettings.setLoadWithOverviewMode(true);
 
         webView.addJavascriptInterface(new AndroidtoJs(), "test");//AndroidtoJS类对象映射到js的test对象
-        String url = "http://q.myplas.com/#/protocol2";
+        String url = "http://q.myplas.com/#/protocol";
 //        webView.loadUrl("file:///android_asset/demo.html");
         webView.loadUrl(url);
     }
@@ -62,16 +62,6 @@ public class RegesterXYActivity extends BaseActivity {
             super.onPageFinished(view, url);
             webView.loadUrl("javascript:" + "");
         }
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     // 继承自Object类

@@ -245,7 +245,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                 }
             }
             if (type == 3) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     mySelfInfo = gson.fromJson(object.toString(), MySelfInfo.class);
                     MySelfInfo.DataBean.AllowSendBean ab = mySelfInfo.getData().getAllow_send();
                     mAdapter.setSwitchChecked(ab.getShow().equals("1") ? false : true);

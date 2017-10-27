@@ -390,24 +390,27 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     /*rabbitmq */
     @Override
     public void rCallback(boolean showRedDot) {
-        int numSeeMe = Integer.parseInt(mACache.getAsString(Constant.R_SEEME));
-        int numMyMsg = Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
-        int numMyOrder = Integer.parseInt(mACache.getAsString(Constant.R_MYORDER));
+        try {
+            int numSeeMe = Integer.parseInt(mACache.getAsString(Constant.R_SEEME));
+            int numMyMsg = Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
+            int numMyOrder = Integer.parseInt(mACache.getAsString(Constant.R_MYORDER));
 
-        mDragViewMsg.setVisibility(!showRedDot || 0 == numMyMsg
-                ? View.GONE
-                : View.VISIBLE);
-        mDragViewLook.setVisibility(!showRedDot || 0 == numSeeMe
-                ? View.GONE
-                : View.VISIBLE);
-        mDragViewOrder.setVisibility(!showRedDot || 0 == numMyOrder
-                ? View.GONE
-                : View.VISIBLE);
+            mDragViewMsg.setVisibility(!showRedDot || 0 == numMyMsg
+                    ? View.GONE
+                    : View.VISIBLE);
+            mDragViewLook.setVisibility(!showRedDot || 0 == numSeeMe
+                    ? View.GONE
+                    : View.VISIBLE);
+            mDragViewOrder.setVisibility(!showRedDot || 0 == numMyOrder
+                    ? View.GONE
+                    : View.VISIBLE);
 
-        if (showRedDot) {
-            mDragViewMsg.setText(numMyMsg > 99 ? "..." : numMyMsg + "");
-            mDragViewLook.setText(numSeeMe > 99 ? "..." : numSeeMe + "");
-            mDragViewOrder.setText(numMyOrder > 99 ? "..." : numMyOrder + "");
+            if (showRedDot) {
+                mDragViewMsg.setText(numMyMsg > 99 ? "..." : numMyMsg + "");
+                mDragViewLook.setText(numSeeMe > 99 ? "..." : numSeeMe + "");
+                mDragViewOrder.setText(numMyOrder > 99 ? "..." : numMyOrder + "");
+            }
+        } catch (Exception e) {
         }
     }
 

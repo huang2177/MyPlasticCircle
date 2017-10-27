@@ -362,13 +362,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         mRefreshPopou.show(mLayoutCofig, bean.getShow_msg());
 
         /*展示置顶信息*/
-        if (topBean != null) {
-            mLVAdapter.initView(mLVAdapter.getviewHolder(), mLayoutTop);
-            mLVAdapter.showInfo(mLVAdapter.getviewHolder());
-            mLayoutTop.setVisibility(View.VISIBLE);
-        } else {
-            mLayoutTop.setVisibility(View.GONE);
-        }
+        showTop(topBean);
 
         //判断是否显示banner ；
         if (bean.getIs_show_banner().equals("1")) {
@@ -387,6 +381,27 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             intent.putExtra("url", bean.getCover_jump_url());
             intent.putExtra("title", bean.getCover_jump_url_title());
             startActivity(intent);
+        }
+    }
+
+    private void showTop(ContactBean.TopBean topBean) {
+        if (topBean != null) {
+            ContactBean.PersonsBean personsBean = new ContactBean.PersonsBean();
+            personsBean.setSex(topBean.getSex());
+            personsBean.setType(topBean.getType());
+            personsBean.setName(topBean.getName());
+            personsBean.setThumb(topBean.getThumb());
+            personsBean.setC_name(topBean.getC_name());
+            personsBean.setIs_pass(topBean.getIs_pass());
+            personsBean.setMain_product(topBean.getMain_product());
+            personsBean.setNeed_product(topBean.getNeed_product());
+            personsBean.setMonth_consum(topBean.getMonth_consum());
+
+            mLVAdapter.initView(mLVAdapter.getviewHolder(), mLayoutTop);
+            mLVAdapter.showInfo(mLVAdapter.getviewHolder(), personsBean);
+            mLayoutTop.setVisibility(View.VISIBLE);
+        } else {
+            mLayoutTop.setVisibility(View.GONE);
         }
     }
 

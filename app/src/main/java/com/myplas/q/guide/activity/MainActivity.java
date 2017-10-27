@@ -104,6 +104,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mACache = ACache.get(this);
         fragmentlist = new ArrayList<Fragment>();
         sharedUtils = SharedUtils.getSharedUtils();
+        logined = sharedUtils.getBoolean(this, Constant.LOGINED);
 
         viewPager = f(R.id.viewpager_main);
         layout_gq = f(R.id.buttom_linear_gq);
@@ -310,8 +311,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
             }
             if (type == 3 && err.equals("0")) {
-                DefConfigBean bean = gson.fromJson(object.toString(), DefConfigBean.class);
                 mACache.put(Constant.R_CONFIG, object.toString());
+                DefConfigBean bean = gson.fromJson(object.toString(), DefConfigBean.class);
 
                 mACache.put(Constant.R_MYMSG, bean.getRedDot().getUnread_mymsg());
                 mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
@@ -339,25 +340,28 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     /*rabbitmq*/
     @Override
     public void rCallback(boolean showRedDot) {
-        int numContact = Integer.parseInt(mACache.getAsString(Constant.R_CONTACT));
-        int numSupDem = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM));
-        int numMySelf = Integer.parseInt(mACache.getAsString(Constant.R_SEEME))
-                + Integer.parseInt(mACache.getAsString(Constant.R_MYORDER))
-                + Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
+        try {
+            int numContact = Integer.parseInt(mACache.getAsString(Constant.R_CONTACT));
+            int numSupDem = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM));
+            int numMySelf = Integer.parseInt(mACache.getAsString(Constant.R_SEEME))
+                    + Integer.parseInt(mACache.getAsString(Constant.R_MYORDER))
+                    + Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
 
-        mMsgSupDem.setVisibility(!showRedDot || 0 == numSupDem
-                ? View.GONE
-                : View.VISIBLE);
-        mMsgMySelf.setVisibility(!showRedDot || 0 == numMySelf
-                ? View.GONE
-                : View.VISIBLE);
-        mMsgContact.setVisibility(!showRedDot || 0 == numContact
-                ? View.GONE
-                : View.VISIBLE);
+            mMsgSupDem.setVisibility(!showRedDot || 0 == numSupDem
+                    ? View.GONE
+                    : View.VISIBLE);
+            mMsgMySelf.setVisibility(!showRedDot || 0 == numMySelf
+                    ? View.GONE
+                    : View.VISIBLE);
+            mMsgContact.setVisibility(!showRedDot || 0 == numContact
+                    ? View.GONE
+                    : View.VISIBLE);
 
-        if (showRedDot) {
-            mMsgMySelf.setText(numMySelf > 99 ? "..." : numMySelf + "");
-            mMsgSupDem.setText(numSupDem > 99 ? "..." : numSupDem + "");
+            if (showRedDot) {
+                mMsgMySelf.setText(numMySelf > 99 ? "..." : numMySelf + "");
+                mMsgSupDem.setText(numSupDem > 99 ? "..." : numSupDem + "");
+            }
+        } catch (Exception e) {
         }
     }
 

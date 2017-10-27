@@ -14,17 +14,17 @@ public class ContactSupDemBean implements Serializable {
 
     /**
      * err : 0
-     * data : [{"id":"114118","p_id":"9481","user_id":"53453","model":"7000F","unit_price":"10000.00","store_house":"上海","f_name":"神华","input_time":"10-13 14:42","type":"2","content":"","name":"娟娟","is_pass":"0","c_name":"上海晨达物流有限公司","thumb":"http://pic.myplas.com/upload/17/09/01/59a93aba83fc0.PNG","contents":"价格10000.00元左右/7000F/神华/上海","says":[]},{"id":"114120","p_id":"9481","user_id":"53453","model":"7000F","unit_price":"10000.00","store_house":"上海","f_name":"神华","input_time":"10-13 14:42","type":"2","content":"伊朗石化7000F 上海提 12000","name":"娟娟","is_pass":"0","c_name":"上海晨达物流有限公司","thumb":"http://pic.myplas.com/upload/17/09/01/59a93aba83fc0.PNG","contents":"价格10000.00元左右/7000F/神华/上海/伊朗石化7000F 上海提 12000","says":[]},{"id":"114117","p_id":"0","user_id":"53402","model":null,"unit_price":"0.00","store_house":"","f_name":"","input_time":"10-12 18:16","type":"2","content":"7000f 上海","name":"hh","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","contents":"7000f 上海","says":[]},{"id":"114116","p_id":"0","user_id":"53402","model":null,"unit_price":"0.00","store_house":"","f_name":"","input_time":"10-12 18:10","type":"2","content":"什么鬼","name":"hh","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","contents":"什么鬼","says":[]},{"id":"114115","p_id":"0","user_id":"3858","model":null,"unit_price":"0.00","store_house":"","f_name":"","input_time":"10-11 16:12","type":"2","content":"测试记录","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"测试记录","says":[]},{"id":"114114","p_id":"0","user_id":"53405","model":null,"unit_price":"0.00","store_house":"","f_name":"","input_time":"10-10 09:27","type":"2","content":"呃呃呃擦擦擦v","name":"小胖","is_pass":"0","c_name":"上海中信有限公司","thumb":"http://pic.myplas.com/upload/17/09/05/59ae0cd00dd3e.PNG","contents":"呃呃呃擦擦擦v","says":[]},{"id":"114112","p_id":"0","user_id":"53402","model":null,"unit_price":"0.00","store_house":"","f_name":"","input_time":"09-29 15:28","type":"2","content":"pp","name":"hh","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","contents":"pp","says":[]},{"id":"114080","p_id":"2596","user_id":"3858","model":"7000F","unit_price":"1200.00","store_house":"杭州","f_name":"日本三井化学","input_time":"09-29 14:34","type":"2","content":"dfdf","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"价格1200.00元左右/7000F/日本三井化学/杭州/dfdf","says":[]},{"id":"114095","p_id":"2596","user_id":"3858","model":"7000F","unit_price":"1200.00","store_house":"杭州","f_name":"日本三井化学","input_time":"09-29 14:34","type":"1","content":"求 7000f","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"价格1200.00元左右/7000F/日本三井化学/杭州/求 7000f","says":[]},{"id":"114100","p_id":"2596","user_id":"3858","model":"7000F","unit_price":"1200.00","store_house":"杭州","f_name":"日本三井化学","input_time":"09-29 14:34","type":"2","content":"dfdf","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"价格1200.00元左右/7000F/日本三井化学/杭州/dfdf","says":[]},{"id":"114106","p_id":"2596","user_id":"3858","model":"7000F","unit_price":"1300.00","store_house":"杭州","f_name":"日本三井化学","input_time":"09-29 14:34","type":"2","content":"求 7000f","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"价格1300.00元左右/7000F/日本三井化学/杭州/求 7000f","says":[{"id":"1700","rev_id":"3858","user_id":"53402","is_read":"1","content":"123","input_time":"10-10 07:45","rev_name":"李一帆","user_name":"hh"},{"id":"1770","rev_id":"53402","user_id":"53405","is_read":"1","content":"我就问问价格","input_time":"10-12 09:36","rev_name":"hh","user_name":"小胖"}]},{"id":"114111","p_id":"2596","user_id":"3858","model":"7000F","unit_price":"1300.00","store_house":"杭州","f_name":"日本三井化学","input_time":"09-29 14:34","type":"2","content":"dfdf","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"价格1300.00元左右/7000F/日本三井化学/杭州/dfdf","says":[{"id":"2411","rev_id":"3858","user_id":"3858","is_read":"1","content":"一个人","input_time":"10-12 13:48","rev_name":"李一帆","user_name":"李一帆"},{"id":"2414","rev_id":"3858","user_id":"3858","is_read":"1","content":"一凡你好吗","input_time":"10-12 13:51","rev_name":"李一帆","user_name":"李一帆"},{"id":"2416","rev_id":"3858","user_id":"3858","is_read":"1","content":"三级回复","input_time":"10-12 13:51","rev_name":"李一帆","user_name":"李一帆"},{"id":"2443","rev_id":"3858","user_id":"3858","is_read":"1","content":"hello","input_time":"10-12 14:34","rev_name":"李一帆","user_name":"李一帆"},{"id":"2444","rev_id":"3858","user_id":"3858","is_read":"1","content":"二级","input_time":"10-12 14:35","rev_name":"李一帆","user_name":"李一帆"},{"id":"2445","rev_id":"3858","user_id":"3858","is_read":"1","content":"三级","input_time":"10-12 14:35","rev_name":"李一帆","user_name":"李一帆"},{"id":"2446","rev_id":"3858","user_id":"3858","is_read":"1","content":"四级","input_time":"10-12 14:35","rev_name":"李一帆","user_name":"李一帆"},{"id":"2447","rev_id":"3858","user_id":"3858","is_read":"1","content":"五级","input_time":"10-12 14:35","rev_name":"李一帆","user_name":"李一帆"},{"id":"2477","rev_id":"3858","user_id":"53453","is_read":"1","content":"hello too","input_time":"10-12 17:25","rev_name":"李一帆","user_name":"娟娟"}]},{"id":"114094","p_id":"2596","user_id":"3858","model":"7000F","unit_price":"1200.00","store_house":"杭州","f_name":"日本三井化学","input_time":"09-29 14:22","type":"1","content":"dfdf","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"价格1200.00元左右/7000F/日本三井化学/杭州/dfdf","says":[]},{"id":"114099","p_id":"2596","user_id":"3858","model":"7000F","unit_price":"1200.00","store_house":"上海","f_name":"日本三井化学","input_time":"09-29 14:22","type":"1","content":"求 5000S","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"价格1200.00元左右/7000F/日本三井化学/上海/求 5000S","says":[]},{"id":"114105","p_id":"2596","user_id":"3858","model":"7000F","unit_price":"1300.00","store_house":"杭州","f_name":"日本三井化学","input_time":"09-29 14:22","type":"2","content":"dfdf","name":"李一帆","is_pass":"0","c_name":"上海中晨电子商务股份有限公司","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","contents":"价格1300.00元左右/7000F/日本三井化学/杭州/dfdf","says":[]}]
+     * data : [{"id":15510,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":8045,"user_id":2062,"model":"2119 ","unit_price":89000,"store_house":"上海","cargo_type":1,"f_name":"上海","type":2,"input_time":"10-27 15:28","hui_count":0,"chu_count":0},{"id":15509,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3444,"user_id":2062,"model":"7000F","unit_price":0,"store_house":"","cargo_type":1,"f_name":"伊朗石化","type":2,"input_time":"10-27 15:27","hui_count":0,"chu_count":1},{"id":15508,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3444,"user_id":2062,"model":"7000F","unit_price":8900,"store_house":"上海","cargo_type":1,"f_name":"伊朗石化","type":2,"input_time":"10-27 15:26","hui_count":0,"chu_count":0},{"id":15507,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3444,"user_id":2062,"model":"7000F","unit_price":0,"store_house":"","cargo_type":1,"f_name":"伊朗石化","type":2,"input_time":"10-27 15:23","hui_count":0,"chu_count":0},{"id":15435,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":5180,"user_id":2062,"model":"5000S","unit_price":10500,"store_house":"成都","cargo_type":2,"f_name":"大庆石化","type":2,"input_time":"10-27 11:44","hui_count":2,"chu_count":3},{"id":429,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3327,"user_id":2062,"model":"7000F","unit_price":8900,"store_house":"宝山","cargo_type":2,"f_name":"伊朗","type":2,"input_time":"10-25 11:26","hui_count":3,"chu_count":2},{"id":428,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3461,"user_id":2062,"model":9001,"unit_price":10900,"store_house":"广州","cargo_type":2,"f_name":"台湾塑胶","type":2,"input_time":"10-25 10:48","hui_count":0,"chu_count":0},{"id":427,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3461,"user_id":2062,"model":9001,"unit_price":11000,"store_house":"上海","cargo_type":2,"f_name":"台湾塑胶","type":2,"input_time":"10-25 10:48","hui_count":0,"chu_count":0},{"id":426,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3595,"user_id":2062,"model":"BL3 ","unit_price":10500,"store_house":"宁波","cargo_type":2,"f_name":"伊朗石化","type":2,"input_time":"10-25 10:48","hui_count":0,"chu_count":0},{"id":423,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3595,"user_id":2062,"model":"BL3 ","unit_price":10500,"store_house":"宁波","cargo_type":2,"f_name":"伊朗石化","type":2,"input_time":"10-25 10:47","hui_count":0,"chu_count":0},{"id":425,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3461,"user_id":2062,"model":9001,"unit_price":10900,"store_house":"广州","cargo_type":2,"f_name":"台湾塑胶","type":2,"input_time":"10-25 10:47","hui_count":0,"chu_count":0},{"id":424,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3461,"user_id":2062,"model":9001,"unit_price":11000,"store_house":"上海","cargo_type":2,"f_name":"台湾塑胶","type":2,"input_time":"10-25 10:47","hui_count":0,"chu_count":0},{"id":373,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3461,"user_id":2062,"model":9001,"unit_price":10900,"store_house":"广州","cargo_type":2,"f_name":"台湾塑胶","type":2,"input_time":"10-24 14:51","hui_count":13,"chu_count":1},{"id":372,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3461,"user_id":2062,"model":9001,"unit_price":10900,"store_house":"广州","cargo_type":2,"f_name":"台湾塑胶","type":2,"input_time":"10-24 14:50","hui_count":0,"chu_count":0},{"id":366,"thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","p_id":3461,"user_id":2062,"model":9001,"unit_price":11000,"store_house":"上海","cargo_type":2,"f_name":"台湾塑胶","type":2,"input_time":"10-24 14:48","hui_count":0,"chu_count":0}]
      */
 
-    private int err;
+    private String err;
     private List<DataBean> data;
 
-    public int getErr() {
+    public String getErr() {
         return err;
     }
 
-    public void setErr(int err) {
+    public void setErr(String err) {
         this.err = err;
     }
 
@@ -38,40 +38,36 @@ public class ContactSupDemBean implements Serializable {
 
     public static class DataBean {
         /**
-         * id : 114118
-         * p_id : 9481
-         * user_id : 53453
-         * model : 7000F
-         * unit_price : 10000.00
+         * id : 15510
+         * thumb : http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg
+         * thumbqq : http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg
+         * p_id : 8045
+         * user_id : 2062
+         * model : 2119 
+         * unit_price : 89000
          * store_house : 上海
-         * f_name : 神华
-         * input_time : 10-13 14:42
+         * cargo_type : 1
+         * f_name : 上海
          * type : 2
-         * content :
-         * name : 娟娟
-         * is_pass : 0
-         * c_name : 上海晨达物流有限公司
-         * thumb : http://pic.myplas.com/upload/17/09/01/59a93aba83fc0.PNG
-         * contents : 价格10000.00元左右/7000F/神华/上海
-         * says : []
+         * input_time : 10-27 15:28
+         * hui_count : 0
+         * chu_count : 0
          */
 
         private String id;
+        private String thumb;
+        private String thumbqq;
         private String p_id;
         private String user_id;
         private String model;
         private String unit_price;
         private String store_house;
+        private String cargo_type;
         private String f_name;
-        private String input_time;
         private String type;
-        private String content;
-        private String name;
-        private String is_pass;
-        private String c_name;
-        private String thumb;
-        private String contents;
-        private List<?> says;
+        private String input_time;
+        private String hui_count;
+        private String chu_count;
 
         public String getId() {
             return id;
@@ -79,6 +75,22 @@ public class ContactSupDemBean implements Serializable {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getThumb() {
+            return thumb;
+        }
+
+        public void setThumb(String thumb) {
+            this.thumb = thumb;
+        }
+
+        public String getThumbqq() {
+            return thumbqq;
+        }
+
+        public void setThumbqq(String thumbqq) {
+            this.thumbqq = thumbqq;
         }
 
         public String getP_id() {
@@ -121,20 +133,20 @@ public class ContactSupDemBean implements Serializable {
             this.store_house = store_house;
         }
 
+        public String getCargo_type() {
+            return cargo_type;
+        }
+
+        public void setCargo_type(String cargo_type) {
+            this.cargo_type = cargo_type;
+        }
+
         public String getF_name() {
             return f_name;
         }
 
         public void setF_name(String f_name) {
             this.f_name = f_name;
-        }
-
-        public String getInput_time() {
-            return input_time;
-        }
-
-        public void setInput_time(String input_time) {
-            this.input_time = input_time;
         }
 
         public String getType() {
@@ -145,60 +157,28 @@ public class ContactSupDemBean implements Serializable {
             this.type = type;
         }
 
-        public String getContent() {
-            return content;
+        public String getInput_time() {
+            return input_time;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setInput_time(String input_time) {
+            this.input_time = input_time;
         }
 
-        public String getName() {
-            return name;
+        public String getHui_count() {
+            return hui_count;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setHui_count(String hui_count) {
+            this.hui_count = hui_count;
         }
 
-        public String getIs_pass() {
-            return is_pass;
+        public String getChu_count() {
+            return chu_count;
         }
 
-        public void setIs_pass(String is_pass) {
-            this.is_pass = is_pass;
-        }
-
-        public String getC_name() {
-            return c_name;
-        }
-
-        public void setC_name(String c_name) {
-            this.c_name = c_name;
-        }
-
-        public String getThumb() {
-            return thumb;
-        }
-
-        public void setThumb(String thumb) {
-            this.thumb = thumb;
-        }
-
-        public String getContents() {
-            return contents;
-        }
-
-        public void setContents(String contents) {
-            this.contents = contents;
-        }
-
-        public List<?> getSays() {
-            return says;
-        }
-
-        public void setSays(List<?> says) {
-            this.says = says;
+        public void setChu_count(String chu_count) {
+            this.chu_count = chu_count;
         }
     }
 }

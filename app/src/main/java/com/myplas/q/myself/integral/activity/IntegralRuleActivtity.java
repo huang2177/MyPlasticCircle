@@ -48,7 +48,7 @@ public class IntegralRuleActivtity extends BaseActivity {
 
         //webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
-        webView.loadUrl("http://q.myplas.com/#/pointsrule2");
+        webView.loadUrl("http://q.myplas.com/#/pointsrule");
 
         webView.setWebChromeClient(new WebChromeClient());
     }

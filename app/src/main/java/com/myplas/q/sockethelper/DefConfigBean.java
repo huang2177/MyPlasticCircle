@@ -66,7 +66,7 @@ public class DefConfigBean implements Serializable {
         private String route_key;
         private String vhost;
         private String exchange_type;
-        private int flags;
+        private String flags;
         private QueueConfigBean queue_config;
         private ExchangeConfigBean exchange_config;
 
@@ -126,11 +126,11 @@ public class DefConfigBean implements Serializable {
             this.exchange_type = exchange_type;
         }
 
-        public int getFlags() {
+        public String getFlags() {
             return flags;
         }
 
-        public void setFlags(int flags) {
+        public void setFlags(String flags) {
             this.flags = flags;
         }
 

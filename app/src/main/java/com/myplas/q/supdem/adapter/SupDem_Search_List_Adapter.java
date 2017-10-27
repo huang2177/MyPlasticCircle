@@ -54,9 +54,7 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
 
     @Override
     public int getCount() {
-        if (list != null)
-            return list.size();
-        return list.size();
+        return list.size() != 0 ? list.size() : 0;
     }
 
     @Override
@@ -185,6 +183,8 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
                 break;
             case 2:
                 context.startActivity(new Intent(context, IntegralPayActivtity.class));
+                break;
+            default:
                 break;
         }
     }

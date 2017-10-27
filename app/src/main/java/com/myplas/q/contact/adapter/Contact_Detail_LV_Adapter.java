@@ -35,7 +35,7 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return (list == null) ? (0) : (list.size());
+        return (list.size() == 0) ? (0) : (list.size());
     }
 
     @Override
@@ -70,8 +70,8 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
                     + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + list.get(position).getUnit_price();
             viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
-            String time = "回复:"
-                    + "  出价:"
+            String time = "回复:" + list.get(position).getHui_count()
+                    + "  出价:" + list.get(position).getHui_count()
                     + "  " + list.get(position).getInput_time();
             viewHolder.mTVTime.setText(time);
 
@@ -80,9 +80,10 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
                     .placeholder(R.drawable.contact_image_defaul_male)
                     .into(viewHolder.mIVHead);
 
-            viewHolder.mIVStart.setImageResource("0".equals(list.get(position).getIs_pass())
-                    ? R.drawable.icon_identity
-                    : R.drawable.icon_identity_hl);
+//            viewHolder.mIVStart.setImageResource("0".equals(list.get(position).get)
+//                    ? R.drawable.icon_identity
+//                    : R.drawable.icon_identity_hl);
+
             viewHolder.mIVType.setImageResource("1".equals(list.get(position).getType())
                     ? R.drawable.icon_now
                     : R.drawable.icon_futures);

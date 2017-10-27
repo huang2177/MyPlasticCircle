@@ -79,7 +79,8 @@ public class RabbitMQHelper {
         try {
             mACache = ACache.get(mContext);
             isLogined = mSharedUtils.getBoolean(mContext, Constant.LOGINED);
-            mConfigBean = new Gson().fromJson(mACache.getAsString("config"), DefConfigBean.class);
+            mConfigBean = new Gson().fromJson(mACache.getAsString(Constant.R_CONFIG)
+                    , DefConfigBean.class);
             userid = isLogined
                     ? mSharedUtils.getData(mContext, Constant.USERID)
                     : "";
@@ -87,7 +88,6 @@ public class RabbitMQHelper {
                 return;
             }
         } catch (Exception e) {
-
         }
         //连接设置
         setupConnectionmmFactory();
@@ -107,7 +107,6 @@ public class RabbitMQHelper {
             Gson gson = new Gson();
             String message = msg.getData().getString("msg");
             DotBean dotBean = gson.fromJson(message, DotBean.class);
-            Log.e("------->>>>", message);
             if (userid.equals(dotBean.getData().getTo())) {
                 DefConfigBean.RedDotBean bean = new DefConfigBean.RedDotBean();
                 switch (dotBean.getData().getKey()) {
