@@ -13,8 +13,8 @@ public class DefConfigBean implements Serializable {
 
     /**
      * err : 0
-     * config : {"host":"116.62.179.6","port":"5672","user_name":"admin","password":"admin","route_key":"","vhost":"client","exchange_type":"direct","flags":2,"queue_config":{"name":"queue.user_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true},"exchange_config":{"name":"exchange.user","type":"direct","passive":false,"durable":true,"auto_delete":false}}
-     * redDot : {"is_socket_connected":"1","unread_mymsg":"17","unread_supply_and_demand":"52","unread_customer":"700","unread_myorder":"0","unread_who_saw_me":"0","unread_recommend_update":"0"}
+     * config : {"host":"116.62.179.6","port":5672,"user_name":"admin","password":"admin","route_key":"","vhost":"client","flags":"","single":{"queue_config":{"name":"queue.single_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true},"exchange_config":{"name":"exchange.single","type":"direct","passive":false,"durable":true,"auto_delete":false}},"all":{"queue_config":{"name":"queue.all_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true},"exchange_config":{"name":"exchange.all","type":"fanout","passive":false,"durable":true,"auto_delete":false}}}
+     * redDot : {"is_socket_connected":1,"unread_mymsg":1,"unread_supply_and_demand":12,"unread_customer":0,"unread_myorder":5,"unread_who_saw_me":0,"unread_recommend_update":0}
      */
 
     private int err;
@@ -53,10 +53,9 @@ public class DefConfigBean implements Serializable {
          * password : admin
          * route_key :
          * vhost : client
-         * exchange_type : direct
-         * flags : 2
-         * queue_config : {"name":"queue.user_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true}
-         * exchange_config : {"name":"exchange.user","type":"direct","passive":false,"durable":true,"auto_delete":false}
+         * flags :
+         * single : {"queue_config":{"name":"queue.single_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true},"exchange_config":{"name":"exchange.single","type":"direct","passive":false,"durable":true,"auto_delete":false}}
+         * all : {"queue_config":{"name":"queue.all_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true},"exchange_config":{"name":"exchange.all","type":"fanout","passive":false,"durable":true,"auto_delete":false}}
          */
 
         private String host;
@@ -65,10 +64,9 @@ public class DefConfigBean implements Serializable {
         private String password;
         private String route_key;
         private String vhost;
-        private String exchange_type;
         private String flags;
-        private QueueConfigBean queue_config;
-        private ExchangeConfigBean exchange_config;
+        private SingleBean single;
+        private AllBean all;
 
         public String getHost() {
             return host;
@@ -118,14 +116,6 @@ public class DefConfigBean implements Serializable {
             this.vhost = vhost;
         }
 
-        public String getExchange_type() {
-            return exchange_type;
-        }
-
-        public void setExchange_type(String exchange_type) {
-            this.exchange_type = exchange_type;
-        }
-
         public String getFlags() {
             return flags;
         }
@@ -134,131 +124,295 @@ public class DefConfigBean implements Serializable {
             this.flags = flags;
         }
 
-        public QueueConfigBean getQueue_config() {
-            return queue_config;
+        public SingleBean getSingle() {
+            return single;
         }
 
-        public void setQueue_config(QueueConfigBean queue_config) {
-            this.queue_config = queue_config;
+        public void setSingle(SingleBean single) {
+            this.single = single;
         }
 
-        public ExchangeConfigBean getExchange_config() {
-            return exchange_config;
+        public AllBean getAll() {
+            return all;
         }
 
-        public void setExchange_config(ExchangeConfigBean exchange_config) {
-            this.exchange_config = exchange_config;
+        public void setAll(AllBean all) {
+            this.all = all;
         }
 
-        public static class QueueConfigBean {
+        public static class SingleBean {
             /**
-             * name : queue.user_53402
-             * passive : false
-             * durable : false
-             * exclusive : false
-             * auto_delete : true
+             * queue_config : {"name":"queue.single_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true}
+             * exchange_config : {"name":"exchange.single","type":"direct","passive":false,"durable":true,"auto_delete":false}
              */
 
-            private String name;
-            private boolean passive;
-            private boolean durable;
-            private boolean exclusive;
-            private boolean auto_delete;
+            private QueueConfigBean queue_config;
+            private ExchangeConfigBean exchange_config;
 
-            public String getName() {
-                return name;
+            public QueueConfigBean getQueue_config() {
+                return queue_config;
             }
 
-            public void setName(String name) {
-                this.name = name;
+            public void setQueue_config(QueueConfigBean queue_config) {
+                this.queue_config = queue_config;
             }
 
-            public boolean isPassive() {
-                return passive;
+            public ExchangeConfigBean getExchange_config() {
+                return exchange_config;
             }
 
-            public void setPassive(boolean passive) {
-                this.passive = passive;
+            public void setExchange_config(ExchangeConfigBean exchange_config) {
+                this.exchange_config = exchange_config;
             }
 
-            public boolean isDurable() {
-                return durable;
+            public static class QueueConfigBean {
+                /**
+                 * name : queue.single_53402
+                 * passive : false
+                 * durable : false
+                 * exclusive : false
+                 * auto_delete : true
+                 */
+
+                private String name;
+                private boolean passive;
+                private boolean durable;
+                private boolean exclusive;
+                private boolean auto_delete;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public boolean isPassive() {
+                    return passive;
+                }
+
+                public void setPassive(boolean passive) {
+                    this.passive = passive;
+                }
+
+                public boolean isDurable() {
+                    return durable;
+                }
+
+                public void setDurable(boolean durable) {
+                    this.durable = durable;
+                }
+
+                public boolean isExclusive() {
+                    return exclusive;
+                }
+
+                public void setExclusive(boolean exclusive) {
+                    this.exclusive = exclusive;
+                }
+
+                public boolean isAuto_delete() {
+                    return auto_delete;
+                }
+
+                public void setAuto_delete(boolean auto_delete) {
+                    this.auto_delete = auto_delete;
+                }
             }
 
-            public void setDurable(boolean durable) {
-                this.durable = durable;
-            }
+            public static class ExchangeConfigBean {
+                /**
+                 * name : exchange.single
+                 * type : direct
+                 * passive : false
+                 * durable : true
+                 * auto_delete : false
+                 */
 
-            public boolean isExclusive() {
-                return exclusive;
-            }
+                private String name;
+                private String type;
+                private boolean passive;
+                private boolean durable;
+                private boolean auto_delete;
 
-            public void setExclusive(boolean exclusive) {
-                this.exclusive = exclusive;
-            }
+                public String getName() {
+                    return name;
+                }
 
-            public boolean isAuto_delete() {
-                return auto_delete;
-            }
+                public void setName(String name) {
+                    this.name = name;
+                }
 
-            public void setAuto_delete(boolean auto_delete) {
-                this.auto_delete = auto_delete;
+                public String getType() {
+                    return type;
+                }
+
+                public void setType(String type) {
+                    this.type = type;
+                }
+
+                public boolean isPassive() {
+                    return passive;
+                }
+
+                public void setPassive(boolean passive) {
+                    this.passive = passive;
+                }
+
+                public boolean isDurable() {
+                    return durable;
+                }
+
+                public void setDurable(boolean durable) {
+                    this.durable = durable;
+                }
+
+                public boolean isAuto_delete() {
+                    return auto_delete;
+                }
+
+                public void setAuto_delete(boolean auto_delete) {
+                    this.auto_delete = auto_delete;
+                }
             }
         }
 
-        public static class ExchangeConfigBean {
+        public static class AllBean {
             /**
-             * name : exchange.user
-             * type : direct
-             * passive : false
-             * durable : true
-             * auto_delete : false
+             * queue_config : {"name":"queue.all_53402","passive":false,"durable":false,"exclusive":false,"auto_delete":true}
+             * exchange_config : {"name":"exchange.all","type":"fanout","passive":false,"durable":true,"auto_delete":false}
              */
 
-            private String name;
-            private String type;
-            private boolean passive;
-            private boolean durable;
-            private boolean auto_delete;
+            private QueueConfigBeanX queue_config;
+            private ExchangeConfigBeanX exchange_config;
 
-            public String getName() {
-                return name;
+            public QueueConfigBeanX getQueue_config() {
+                return queue_config;
             }
 
-            public void setName(String name) {
-                this.name = name;
+            public void setQueue_config(QueueConfigBeanX queue_config) {
+                this.queue_config = queue_config;
             }
 
-            public String getType() {
-                return type;
+            public ExchangeConfigBeanX getExchange_config() {
+                return exchange_config;
             }
 
-            public void setType(String type) {
-                this.type = type;
+            public void setExchange_config(ExchangeConfigBeanX exchange_config) {
+                this.exchange_config = exchange_config;
             }
 
-            public boolean isPassive() {
-                return passive;
+            public static class QueueConfigBeanX {
+                /**
+                 * name : queue.all_53402
+                 * passive : false
+                 * durable : false
+                 * exclusive : false
+                 * auto_delete : true
+                 */
+
+                private String name;
+                private boolean passive;
+                private boolean durable;
+                private boolean exclusive;
+                private boolean auto_delete;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public boolean isPassive() {
+                    return passive;
+                }
+
+                public void setPassive(boolean passive) {
+                    this.passive = passive;
+                }
+
+                public boolean isDurable() {
+                    return durable;
+                }
+
+                public void setDurable(boolean durable) {
+                    this.durable = durable;
+                }
+
+                public boolean isExclusive() {
+                    return exclusive;
+                }
+
+                public void setExclusive(boolean exclusive) {
+                    this.exclusive = exclusive;
+                }
+
+                public boolean isAuto_delete() {
+                    return auto_delete;
+                }
+
+                public void setAuto_delete(boolean auto_delete) {
+                    this.auto_delete = auto_delete;
+                }
             }
 
-            public void setPassive(boolean passive) {
-                this.passive = passive;
-            }
+            public static class ExchangeConfigBeanX {
+                /**
+                 * name : exchange.all
+                 * type : fanout
+                 * passive : false
+                 * durable : true
+                 * auto_delete : false
+                 */
 
-            public boolean isDurable() {
-                return durable;
-            }
+                private String name;
+                private String type;
+                private boolean passive;
+                private boolean durable;
+                private boolean auto_delete;
 
-            public void setDurable(boolean durable) {
-                this.durable = durable;
-            }
+                public String getName() {
+                    return name;
+                }
 
-            public boolean isAuto_delete() {
-                return auto_delete;
-            }
+                public void setName(String name) {
+                    this.name = name;
+                }
 
-            public void setAuto_delete(boolean auto_delete) {
-                this.auto_delete = auto_delete;
+                public String getType() {
+                    return type;
+                }
+
+                public void setType(String type) {
+                    this.type = type;
+                }
+
+                public boolean isPassive() {
+                    return passive;
+                }
+
+                public void setPassive(boolean passive) {
+                    this.passive = passive;
+                }
+
+                public boolean isDurable() {
+                    return durable;
+                }
+
+                public void setDurable(boolean durable) {
+                    this.durable = durable;
+                }
+
+                public boolean isAuto_delete() {
+                    return auto_delete;
+                }
+
+                public void setAuto_delete(boolean auto_delete) {
+                    this.auto_delete = auto_delete;
+                }
             }
         }
     }
@@ -266,10 +420,10 @@ public class DefConfigBean implements Serializable {
     public static class RedDotBean {
         /**
          * is_socket_connected : 1
-         * unread_mymsg : 17
-         * unread_supply_and_demand : 52
-         * unread_customer : 700
-         * unread_myorder : 0
+         * unread_mymsg : 1
+         * unread_supply_and_demand : 12
+         * unread_customer : 0
+         * unread_myorder : 5
          * unread_who_saw_me : 0
          * unread_recommend_update : 0
          */
@@ -280,7 +434,7 @@ public class DefConfigBean implements Serializable {
         private String unread_customer;
         private String unread_myorder;
         private String unread_who_saw_me;
-        private int unread_recommend_update;
+        private String unread_recommend_update;
 
         public String getIs_socket_connected() {
             return is_socket_connected;
@@ -330,11 +484,11 @@ public class DefConfigBean implements Serializable {
             this.unread_who_saw_me = unread_who_saw_me;
         }
 
-        public int getUnread_recommend_update() {
+        public String getUnread_recommend_update() {
             return unread_recommend_update;
         }
 
-        public void setUnread_recommend_update(int unread_recommend_update) {
+        public void setUnread_recommend_update(String unread_recommend_update) {
             this.unread_recommend_update = unread_recommend_update;
         }
     }

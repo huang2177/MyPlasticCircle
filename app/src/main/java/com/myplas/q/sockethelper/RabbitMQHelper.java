@@ -8,7 +8,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.SharedUtils;
@@ -38,11 +37,13 @@ public class RabbitMQHelper {
     private String userid;
     private SharedUtils mSharedUtils;
     private boolean isLogined, isInterrupt;
-    private static List<RabbitMQCallBack> mList;
+    private static List<Thread> mThreadList;
+    private static List<Connection> mConnectionList;
 
     private RabbitMQHelper(Context context) {
         mContext = context;
-        mList = new ArrayList<>();
+        mThreadList = new ArrayList<>();
+        mConnectionList = new ArrayList<>();
         mSharedUtils = SharedUtils.getSharedUtils();
     }
 
@@ -60,16 +61,6 @@ public class RabbitMQHelper {
         return mRabbitMQHelper;
     }
 
-    /**
-     * Sets result callback.
-     *
-     * @param mMQCallBack 设置监听
-     */
-    public void setResultCallBack(RabbitMQCallBack mMQCallBack) {
-        if (!mList.contains(mMQCallBack)) {
-            mList.add(mMQCallBack);
-        }
-    }
 
 
     /**
@@ -89,61 +80,26 @@ public class RabbitMQHelper {
             }
         } catch (Exception e) {
         }
-        //连接设置
-        setupConnectionmmFactory();
         //用于从线程中获取数据，更新ui
         final Handler incomingMessageHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                parseData(msg);
+                RabbitMQConfig.getInstance(mContext).getRedDotInfo();
             }
         };
-        //开启消费者线程
-        subscribe(incomingMessageHandler);
-    }
-
-    private void parseData(Message msg) {
-        try {
-            Gson gson = new Gson();
-            String message = msg.getData().getString("msg");
-            DotBean dotBean = gson.fromJson(message, DotBean.class);
-            if (userid.equals(dotBean.getData().getTo())) {
-                DefConfigBean.RedDotBean bean = new DefConfigBean.RedDotBean();
-                switch (dotBean.getData().getKey()) {
-                    case "unread_customer": //通讯录
-                        mACache.put(Constant.R_CONTACT, dotBean.getData().getValue());
-                        break;
-                    case "unread_supply_and_demand":
-                        mACache.put(Constant.R_SUPDEM, dotBean.getData().getValue());
-                        break;
-                    case "unread_mymsg":
-                        mACache.put(Constant.R_MYMSG, dotBean.getData().getValue());
-                        break;
-                    case "unread_myorder":
-                        mACache.put(Constant.R_MYORDER, dotBean.getData().getValue());
-                        break;
-                    case "unread_who_saw_me":
-                        mACache.put(Constant.R_SEEME, dotBean.getData().getValue());
-                        break;
-                    default:
-                        break;
-                }
-                for (int i = 0; i < mList.size(); i++) {
-                    RabbitMQCallBack callback = mList.get(i);
-                    if (callback != null) {
-                        callback.rCallback(true);
-                    }
-                }
-            }
-        } catch (Exception e) {
-
+        //创建两个链接
+        for (int i = 0; i < 2; i++) {
+            //连接设置
+            setupConnectionmmFactory(i);
+            //开启消费者线程
+            subscribe(i, incomingMessageHandler);
         }
     }
 
     /**
      * 连接设置
      */
-    private void setupConnectionmmFactory() {
+    private void setupConnectionmmFactory(int i) {
         mFactory = new ConnectionFactory();
         mFactory.setPort(mConfigBean.getConfig().getPort());
         mFactory.setHost(mConfigBean.getConfig().getHost());
@@ -151,41 +107,71 @@ public class RabbitMQHelper {
         mFactory.setPassword(mConfigBean.getConfig().getPassword());
         mFactory.setVirtualHost(mConfigBean.getConfig().getVhost());
         mFactory.setAutomaticRecoveryEnabled(true);
-
     }
 
     /**
      * 消费者线程
      */
-    private void subscribe(final Handler handler) {
+    private void subscribe(final int i, final Handler handler) {
         subscribeThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     //使用之前的设置，建立连接
                     mConnection = mFactory.newConnection();
+                    mConnectionList.add(mConnection);
                     //创建一个通道
                     Channel channel = mConnection.createChannel();
                     //一次只发送一个，处理完成一个再获取下一个
                     channel.basicQos(1);
-                    String queueName = mConfigBean.getConfig().getQueue_config().getName().substring(0
-                            , mConfigBean.getConfig().getQueue_config().getName().lastIndexOf("_") + 1);
+                    String queueName = (i == 0)
+                            ? mConfigBean.getConfig().getSingle().getQueue_config().getName().substring(0
+                            , mConfigBean.getConfig().getSingle().getQueue_config().getName().lastIndexOf("_") + 1)
+                            : mConfigBean.getConfig().getAll().getQueue_config().getName().substring(0
+                            , mConfigBean.getConfig().getAll().getQueue_config().getName().lastIndexOf("_") + 1);
+                    boolean isQDurable = i == 0
+                            ? mConfigBean.getConfig().getSingle().getQueue_config().isDurable()
+                            : mConfigBean.getConfig().getAll().getQueue_config().isDurable();
+
+                    boolean isQExclusive = i == 0
+                            ? mConfigBean.getConfig().getSingle().getQueue_config().isExclusive()
+                            : mConfigBean.getConfig().getAll().getQueue_config().isExclusive();
+
+                    boolean isQAuto_delete = i == 0
+                            ? mConfigBean.getConfig().getSingle().getQueue_config().isAuto_delete()
+                            : mConfigBean.getConfig().getAll().getQueue_config().isAuto_delete();
+
                     AMQP.Queue.DeclareOk q = channel.queueDeclare(queueName + userid
-                            , mConfigBean.getConfig().getQueue_config().isDurable()
-                            , mConfigBean.getConfig().getQueue_config().isExclusive()
-                            , mConfigBean.getConfig().getQueue_config().isAuto_delete()
+                            , isQDurable
+                            , isQExclusive
+                            , isQAuto_delete
                             , null);
 
-                    channel.exchangeDeclare(mConfigBean.getConfig().getExchange_config().getName()
-                            , mConfigBean.getConfig().getExchange_config().getType()
-                            , mConfigBean.getConfig().getExchange_config().isDurable()
-                            , mConfigBean.getConfig().getExchange_config().isAuto_delete()
+                    boolean isEDurable = i == 0
+                            ? mConfigBean.getConfig().getSingle().getExchange_config().isDurable()
+                            : mConfigBean.getConfig().getAll().getExchange_config().isDurable();
+
+                    String type = i == 0
+                            ? mConfigBean.getConfig().getSingle().getExchange_config().getType()
+                            : mConfigBean.getConfig().getAll().getExchange_config().getType();
+                    String name = i == 0
+                            ? mConfigBean.getConfig().getSingle().getExchange_config().getName()
+                            : mConfigBean.getConfig().getAll().getExchange_config().getName();
+
+                    boolean isEAuto_delete = i == 0
+                            ? mConfigBean.getConfig().getSingle().getExchange_config().isAuto_delete()
+                            : mConfigBean.getConfig().getAll().getExchange_config().isAuto_delete();
+
+                    channel.exchangeDeclare(name
+                            , type
+                            , isEDurable
+                            , isEAuto_delete
                             , false
                             , null);
                     //将队列绑定到消息交换机exchange上
                     //                  queue         exchange              routingKey路由关键字，exchange根据这个关键字进行消息投递。
                     channel.queueBind(queueName + userid
-                            , mConfigBean.getConfig().getExchange_config().getName()
+                            , name
                             , mConfigBean.getConfig().getRoute_key());
 
                     //创建消费者
@@ -214,18 +200,24 @@ public class RabbitMQHelper {
             }
         });
         subscribeThread.start();
+        mThreadList.add(subscribeThread);
     }
 
     /**
-     * On dis connect.
+     * On disconnect.
      */
     public void onDisConnect() {
-        subscribeThread.interrupt();
-        if (mConnection != null && mConnection.isOpen()) {
-            try {
-                mConnection.close();
-                mConnection = null;
-            } catch (Exception e) {
+        for (int i = 0; i < 2; i++) {
+            if (mThreadList.get(i) != null) {
+                mThreadList.get(i).interrupt();
+            }
+            Connection connection = mConnectionList.get(i);
+            if (connection != null && connection.isOpen()) {
+                try {
+                    connection.close();
+                    connection = null;
+                } catch (Exception e) {
+                }
             }
         }
     }

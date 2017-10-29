@@ -10,7 +10,7 @@ import com.myplas.q.BuildConfig;
  */
 public class API {
     /*base url*/
-    public final static String BASEURL = (!BuildConfig.API_ENV)
+    public final static String BASEURL = (BuildConfig.API_ENV)
             ? ("https://api.myplas.com/qapi_4/")
             : ("https://ssl.myplas.com/qapi_4/");
     //正式_快速登陆
@@ -50,6 +50,8 @@ public class API {
     public final static String CONNECTED = "socket/connected";
     //更新已读的红点推送
     public final static String READ = "socket/read";
+    //推送后获取数据
+    public final static String GETREDDOTINFO = "socket/getRedDotInfo";
 
     /*Credit*/
     //企查查

@@ -150,7 +150,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         firstInto();
         getVersion();
         getConfig();
-        RabbitMQHelper.getInstance(this).setResultCallBack(this);
+        RabbitMQConfig.getInstance(this).setResultCallBack(this);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         if (!sharedUtils.getBoolean(this, "isrequest")) {
             checkPermission();

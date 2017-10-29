@@ -82,6 +82,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     private NoSearchInfoBean mInfoBean;
     private SupDem_Search_Grid_Adapter mGridAdapter;
 
+    private Map<Integer, Integer> map;
     private int page, visibleItemCount;
     private StringBuffer c_type, region;
     private String keywords, is_buy, userId;
@@ -101,6 +102,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         page = 1;
         is_buy = "1";
         keywords = "7000f";
+        map = new HashMap<>();
         mListBean = new ArrayList<>();
         region = new StringBuffer("0");
         c_type = new StringBuffer("0");
@@ -350,7 +352,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     }
 
     private void openDialog(final int type, final TextView textView) {
-        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type) {
+        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, map) {
             @Override
             public void onItemSelected(String show, String value) {
                 dialog.dismiss();
@@ -368,21 +370,21 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
             }
         };
         dialog = new HIndicatorBuilder(this)
-                .width(ScreenUtils.getScreenWidth(this))
+                .width(400)
                 .height(-1)
                 .ArrowDirection(HIndicatorBuilder.TOP)
                 .bgColor(Color.parseColor("#ffffff"))
                 .gravity(HIndicatorBuilder.GRAVITY_LEFT)
-                .radius(0)
-                .arrowWidth(1)
-                .ArrowRectage(0.1f)
+                .radius(10)
+                .arrowWidth(20)
+                .ArrowRectage(0.5f)
                 .layoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
                 .dimEnabled(true)
-                .dimAmount(0.15f)
+                .dimAmount(0.2f)
                 .adapter(adapter)
                 .create();
         dialog.setCanceledOnTouchOutside(true);
-        dialog.show(mLayoutConfig);
+        dialog.show(textView);
         textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up, 0);
         dialog.setOnDismissListener(new OnDismissListener() {
             @Override

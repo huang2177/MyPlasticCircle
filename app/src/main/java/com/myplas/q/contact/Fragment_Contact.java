@@ -9,17 +9,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.ListPopupWindow;
+import android.support.v7.widget.PopupMenu;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -70,6 +75,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         , SwipeRefreshLayout.OnRefreshListener {
 
     private List<String> mList;
+    private Map<Integer, Integer> map;
     private List<ContactBean.PersonsBean> mListBean;
     private Fragment_Contact_LV_Adapter mLVAdapter;
 
@@ -103,6 +109,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
     private void initView() {
         page = 1;
+        map = new HashMap<>();
         region = new StringBuffer("0");
         c_type = new StringBuffer("0");
         content = new StringBuffer("您还未登录,请先登录塑料圈!");
@@ -128,6 +135,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         mTVRegion.setOnClickListener(this);
         mIVBanner.setOnClickListener(this);
         mLayoutTop.setOnClickListener(this);
+        imageButton.setOnClickListener(this);
         mScrollView.setOnScrollIterface(this);
         mLayoutSearch.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
@@ -156,19 +164,12 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getNetData("1", true);
-            }
-        });
         return view;
     }
 
-
     @Override
     public void onClick(View v) {
-        if (!checkIsLogin()) {
+        if (!checkIsLogin() && v.getId() != R.id.img_reload) {
             return;
         }
         switch (v.getId()) {
@@ -191,6 +192,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 startActivity(new Intent(getActivity(), Contact_Search_Activity.class));
                 getActivity().overridePendingTransition(R.anim.fade, R.anim.hold);
                 break;
+            case R.id.img_reload:
+                page = 1;
+                getNetData("1", true);
+                break;
             default:
                 break;
         }
@@ -198,7 +203,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     }
 
     private void openDialog(final int type, final TextView textView) {
-        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type) {
+        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, map) {
             @Override
             public void onItemSelected(String show, String value) {
                 dialog.dismiss();
@@ -216,21 +221,21 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             }
         };
         dialog = new HIndicatorBuilder(getActivity())
-                .width(ScreenUtils.getScreenWidth(getActivity()))
+                .width(400)
                 .height(-1)
                 .ArrowDirection(HIndicatorBuilder.TOP)
                 .bgColor(Color.parseColor("#ffffff"))
                 .gravity(HIndicatorBuilder.GRAVITY_LEFT)
-                .radius(0)
-                .arrowWidth(1)
-                .ArrowRectage(0.1f)
+                .radius(10)
+                .arrowWidth(20)
+                .ArrowRectage(0.5f)
                 .layoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false))
                 .dimEnabled(true)
                 .dimAmount(0.2f)
                 .adapter(adapter)
                 .create();
         dialog.setCanceledOnTouchOutside(true);
-        dialog.show(mLayoutCofig);
+        dialog.show(textView);
         textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up, 0);
         dialog.setOnDismissListener(new OnDismissListener() {
             @Override

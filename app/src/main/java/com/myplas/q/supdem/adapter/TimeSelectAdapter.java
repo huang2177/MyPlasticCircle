@@ -80,7 +80,7 @@ public class TimeSelectAdapter extends BaseAdapter {
             map_text.put(position, viewHolder.name);
             map_img.put(position, viewHolder.imageView);
             if (list.get(position).isSelected()) {
-                viewHolder.imageView.setImageResource(R.drawable.icon_checked);
+                viewHolder.imageView.setImageResource(R.drawable.icon_check);
                 viewHolder.name.setTextColor(context.getResources().getColor(R.color.color_red));
             }
             convertView.setTag(viewHolder);
@@ -97,7 +97,7 @@ public class TimeSelectAdapter extends BaseAdapter {
     public void setPosition(int position) {
         for (int i = 0; i < map_img.size(); i++) {
             map_text.get(position).setTextColor((position == i) ? (redColor) : (blackColor));
-            map_img.get(position).setImageResource((position == i) ? (R.drawable.icon_checked) : (-1));
+            map_img.get(position).setImageResource((position == i) ? (R.drawable.icon_check) : (-1));
         }
     }
 

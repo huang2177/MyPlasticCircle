@@ -28,11 +28,9 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
 
     private ACache mACache;
     private Context context;
-    private MainActivity mActivity;
     private static RabbitMQConfig mRabbitMQConfig;
 
-    private int CONTACT = 11, SUPDEM = 12, SEEME = 13, MYMSG = 14, MYORDER = 15;
-
+    private RabbitMQCallBack mMQCallBack;
 
     private RabbitMQConfig(Context context) {
         this.context = context;
@@ -75,6 +73,15 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
      *
      * @param type the type
      */
+    public void getRedDotInfo() {
+        BaseActivity.postAsyn1(context, API.BASEURL + API.GETREDDOTINFO, null, this, 4, false);
+    }
+
+    /**
+     * Read msg.
+     *
+     * @param type the type
+     */
     public void readMsg(String type, int _type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("type", type);
@@ -84,8 +91,10 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     @Override
     public void callBack(Object object, int type) {
         try {
+            if (type == 2 || type == 3) {
+                return;
+            }
             mACache = ACache.get(context);
-            mActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
             switch (type) {
                 case 10:
                     mACache.put(Constant.R_CONTACT, "0");
@@ -102,10 +111,24 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
                 case 14:
                     mACache.put(Constant.R_SEEME, "0");
                     break;
+                case 4:
+                    Log.e("----", object.toString());
+                    if ("0".equals(new JSONObject(object.toString()).get("err"))) {
+                        Gson gson = new Gson();
+                        DotBean dotBean = gson.fromJson(object.toString(), DotBean.class);
+                        mACache.put(Constant.R_MYMSG, dotBean.getData().getUnread_mymsg());
+                        mACache.put(Constant.R_MYORDER, dotBean.getData().getUnread_myorder());
+                        mACache.put(Constant.R_SEEME, dotBean.getData().getUnread_who_saw_me());
+                        mACache.put(Constant.R_CONTACT, dotBean.getData().getUnread_customer());
+                        mACache.put(Constant.R_SUPDEM, dotBean.getData().getUnread_supply_and_demand());
+                    }
+                    break;
                 default:
                     break;
             }
-            mActivity.rCallback(true);
+            if (mMQCallBack != null) {
+                mMQCallBack.rCallback(true);
+            }
         } catch (Exception e) {
         }
     }
@@ -113,5 +136,14 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     @Override
     public void failCallBack(int type) {
 
+    }
+
+    /**
+     * Sets result callback.
+     *
+     * @param mMQCallBack 设置监听
+     */
+    public void setResultCallBack(RabbitMQCallBack mMQCallBack) {
+        this.mMQCallBack = mMQCallBack;
     }
 }

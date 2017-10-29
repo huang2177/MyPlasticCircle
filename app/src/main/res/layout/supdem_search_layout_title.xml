@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="50dp"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/fragment_gq_titlebar"
@@ -22,7 +22,7 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back"/>
+                android:src="@drawable/btn_back" />
         </LinearLayout>
 
         <LinearLayout
@@ -45,7 +45,7 @@
                 android:paddingLeft="8dp"
                 android:text="供给"
                 android:textColor="@color/color_balank"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <com.optimus.edittextfield.EditTextField
                 android:id="@+id/supplydemand_search_edit"
@@ -53,8 +53,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
+                android:ellipsize="end"
                 android:hint="7000F"
                 android:imeOptions="actionSearch"
+                android:maxLines="1"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:textColor="@color/color_balank"
@@ -64,7 +66,7 @@
                 android:textSelectHandleLeft="@drawable/textselecthandle"
                 android:textSelectHandleRight="@drawable/textselecthandle"
                 android:textSize="@dimen/x65"
-                app:clearButtonMode="whileEditing"/>
+                app:clearButtonMode="whileEditing" />
         </LinearLayout>
 
         <TextView
@@ -78,6 +80,6 @@
             android:gravity="center"
             android:text="搜索"
             android:textColor="@color/color_white"
-            android:textSize="@dimen/x66"/>
+            android:textSize="@dimen/x66" />
     </LinearLayout>
 </LinearLayout>

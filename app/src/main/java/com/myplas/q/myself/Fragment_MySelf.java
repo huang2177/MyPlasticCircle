@@ -41,8 +41,6 @@ import com.myplas.q.myself.fans.activity.MyIntroductionActivity;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
 import com.myplas.q.myself.message.activity.MessageListsActivity;
-import com.myplas.q.sockethelper.RabbitMQCallBack;
-import com.myplas.q.sockethelper.RabbitMQHelper;
 import com.myplas.q.myself.setting.SettingActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
@@ -61,8 +59,7 @@ import java.util.Map;
  * 时间：2017/3/17 14:45
  */
 public class Fragment_MySelf extends Fragment implements View.OnClickListener
-        , ResultCallBack
-        , RabbitMQCallBack {
+        , ResultCallBack {
     private View view;
     private MyZone myZone;
 
@@ -92,7 +89,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         initView();
         setAppBarListener();
         getLoginInfo(false);
-        RabbitMQHelper.getInstance(getActivity()).setResultCallBack(this);
     }
 
 
@@ -388,8 +384,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     }
 
     /*rabbitmq */
-    @Override
-    public void rCallback(boolean showRedDot) {
+    public void showRedDot(boolean showRedDot) {
         try {
             int numSeeMe = Integer.parseInt(mACache.getAsString(Constant.R_SEEME));
             int numMyMsg = Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
@@ -417,7 +412,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        rCallback(true);
+        showRedDot(true);
         getLoginInfo(false);
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
