@@ -32,4 +32,6 @@ public class Constant {
     public static final String R_MYORDER = "unread_myorder";
 
     public static final String R_SEEME = "unread_who_saw_me";
+
+    public static final String POINTSINFO = "pointsInfo";
 }

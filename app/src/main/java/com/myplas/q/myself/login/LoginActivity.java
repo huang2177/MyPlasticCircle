@@ -291,7 +291,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     mainActivity.onConnect();
                     mainActivity.rCallback(true);
 
-                    finish();
+                    onBackPressed();
                 }
             }
             if (type == 2 && s.equals("0")) {

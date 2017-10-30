@@ -20,6 +20,8 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.contact.adapter.Contact_Detail_LV_Adapter;
+import com.myplas.q.contact.beans.ContactBean;
+import com.myplas.q.contact.beans.ContactInfoBean;
 import com.myplas.q.contact.beans.ContactSupDemBean;
 import com.myplas.q.guide.activity.BaseActivity;
 
@@ -63,7 +65,7 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
 
         mScrollView.setOnScrollIterface(this);
 
-        getTaPur(type, type, page);
+        //getTaPur(type, type, page);
 
     }
 
@@ -94,44 +96,70 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
 
     @Override
     public void loadMore() {
-        page++;
-        getTaPur(type, type, page);
+//        page++;
+//        getTaPur(type, type, page);
+    }
+
+    public void showDemand(List<ContactInfoBean.DataBean.DemandBean> demandList) {
+        if (demandList.size() != 0) {
+            mAdapter = new Contact_Detail_LV_Adapter(getActivity(), demandList, 0);
+            mMyListview.setAdapter(mAdapter);
+        } else {
+            EmptyView emptyView = new EmptyView(getActivity());
+            emptyView.mustCallInitWay(mMyListview);
+            emptyView.setNoMessageText("没有相关数据");
+            emptyView.setMyManager(R.drawable.icon_null);
+            mMyListview.setEmptyView(emptyView);
+        }
+    }
+
+    public void showSupplies(List<ContactInfoBean.DataBean.SuppliesBean> suppliesList) {
+        if (suppliesList.size() != 0) {
+            mAdapter = new Contact_Detail_LV_Adapter(getActivity(), suppliesList);
+            mMyListview.setAdapter(mAdapter);
+        } else {
+            EmptyView emptyView = new EmptyView(getActivity());
+            emptyView.mustCallInitWay(mMyListview);
+            emptyView.setNoMessageText("没有相关数据");
+            emptyView.setMyManager(R.drawable.icon_null);
+            mMyListview.setEmptyView(emptyView);
+        }
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
-            ContactSupDemBean supDemBean = null;
-            if (err.equals("0")) {
-                supDemBean = gson.fromJson(object.toString(), ContactSupDemBean.class);
-                if (page == 1) {
-                    setListener(false);
-                    mAdapter = new Contact_Detail_LV_Adapter(getActivity(), supDemBean.getData());
-                    mMyListview.setAdapter(mAdapter);
-
-                    mBeanList.clear();
-                    mBeanList.addAll(supDemBean.getData());
-                } else {
-                    mBeanList.addAll(supDemBean.getData());
-                    mAdapter.setList(mBeanList);
-                    mAdapter.notifyDataSetChanged();
-                }
-            } else {
-                if (page == 1) {
-                    setListener(true);
-                    EmptyView emptyView = new EmptyView(getActivity());
-                    emptyView.mustCallInitWay(mMyListview);
-                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
-                    emptyView.setMyManager(type == 2
-                            ? R.drawable.icon_intelligent_recommendation1
-                            : R.drawable.icon_intelligent_recommendation2);
-                    mMyListview.setEmptyView(emptyView);
-                } else {
-                    TextUtils.Toast(getActivity(), "没有更多数据了！");
-                }
-            }
+//            Gson gson = new Gson();
+//            String err = new JSONObject(object.toString()).getString("err");
+//            ContactSupDemBean supDemBean = null;
+//            if (err.equals("0")) {
+//                supDemBean = gson.fromJson(object.toString(), ContactSupDemBean.class);
+//                if (page == 1) {
+//                    setListener(false);
+//                    mAdapter = new Contact_Detail_LV_Adapter(getActivity(), supDemBean.getData());
+//                    mMyListview.setAdapter(mAdapter);
+//
+//                    mBeanList.clear();
+//                    mBeanList.addAll(supDemBean.getData());
+//                } else {
+//                    mBeanList.addAll(supDemBean.getData());
+//                    mAdapter.setList(mBeanList);
+//                    mAdapter.notifyDataSetChanged();
+//                }
+//            } else {
+//                if (page == 1) {
+//                    setListener(true);
+//                    EmptyView emptyView = new EmptyView(getActivity());
+//                    emptyView.mustCallInitWay(mMyListview);
+//                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+//                    emptyView.setMyManager(type == 2
+//                            ? R.drawable.icon_intelligent_recommendation1
+//                            : R.drawable.icon_intelligent_recommendation2);
+//                    mMyListview.setEmptyView(emptyView);
+//                } else {
+//                    TextUtils.Toast(getActivity(), "没有更多数据了！");
+//                }
+//            }
 
         } catch (Exception e) {
         }

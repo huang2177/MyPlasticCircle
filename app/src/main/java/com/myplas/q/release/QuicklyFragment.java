@@ -170,13 +170,20 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String err = jsonObject.getString("err");
             if (type == 1) {
                 if (err.equals("0")) {
                     PreViewBean preViewBean = gson.fromJson(object.toString(), PreViewBean.class);
                     data = gson.toJson(preViewBean.getData());
                     mList = preViewBean.getData();
-                    openPreViewDialog();
+                    if (mList.size() != 0) {
+                        openPreViewDialog();
+                    } else {
+                        TextUtils.Toast(getActivity(), "请按照示例填写完整的参数！");
+                    }
+                } else {
+                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
                 }
             }
             if (type == 2) {
@@ -187,7 +194,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
 
                     //跳转到供求详情
                     Intent intent1 = new Intent(getActivity(), SupDem_Detail_Activity.class);
-                    intent1.putExtra("id", new JSONObject(object.toString()).getString("id"));
+                    intent1.putExtra("id", jsonObject.getString("id"));
                     intent1.putExtra("userid", mSharedUtils.getData(getActivity(), Constant.USERID));
                     startActivity(intent1);
 
@@ -195,6 +202,8 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                     if (id != null) {
                         ActivityManager.finishActivity(MySupDemActivity.class);
                     }
+                } else {
+                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
                 }
             }
         } catch (Exception e) {

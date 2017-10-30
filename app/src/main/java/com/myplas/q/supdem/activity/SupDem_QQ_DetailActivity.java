@@ -209,6 +209,8 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     i.putExtra("data", getIntent().getStringExtra("plastic_number"));
                     startActivity(i);
                     break;
+                default:
+                    break;
             }
         } catch (Exception e) {
         }
@@ -219,17 +221,15 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         try {
             switch (parent.getId()) {
                 case R.id.supdem_qq_listview_zx:
-//                    boolean isFree = detailBean.getShow_information().get(position).getIs_free().equals("1");
                     clickId = detailBean.getShow_information().get(position).getId();
-//                        Intent intent = new Intent(this, HeadLinesDetailActivity.class);
-//                        intent.putExtra("id", clickId);
-//                        startActivity(intent);
                     isPaidSubscription(clickId);
                     break;
                 case R.id.supdem_qq_listview_find:
                     break;
                 case R.id.supdem_qq_listview_tell:
                     call(detailBean.getMobile_list().get(position).getMobile());
+                    break;
+                default:
                     break;
             }
         } catch (Exception e) {
@@ -289,6 +289,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                 .placeholder(R.drawable.contact_image_defaul_male)
                 .into(roundImagView);
     }
+
     @Override
     public void failCallBack(int type) {
 

@@ -71,5 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="8dp"
-        android:background="@color/color_gray3"/>
+        android:layout_marginRight="8dp"
+        android:background="@color/color_gray_divider_out"/>
 </LinearLayout>

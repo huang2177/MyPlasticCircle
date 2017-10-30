@@ -32,6 +32,7 @@ import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
+import com.myplas.q.release.MyOnPageChangeListener;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -49,7 +50,8 @@ import java.util.Map;
  * 时间：2017/3/23 13:39
  */
 public class Contact_Detail_Activity extends BaseActivity implements View.OnClickListener
-        , ResultCallBack {
+        , ResultCallBack
+        , MyOnPageChangeListener.OnPageChangeListener {
 
     private boolean isSelf;
     private SharedUtils sharedUtils;
@@ -57,7 +59,6 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
     private MyImageView mHead;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
-    private MyListview mListview_Sup, mListview_Dem;
     private ImageView mStart, mFollow, mCall, mBack, mSign;
     private TextView mCompany, mName, mLevel, mFans, mFollow_, mIntrudtion;
     private LinearLayout mLayoutInfo, mLayoutFans, mLayoutFollow, mLayoutIntrudtion;
@@ -142,6 +143,11 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
     }
 
     @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() != R.id.titlebar_img_back && contactBean == null) {
             return;
@@ -187,6 +193,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         }
     }
 
+
     //关注
     public void follow() {
         Map<String, String> map = new HashMap<>();
@@ -195,7 +202,6 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         String url = API.BASEURL + API.FOCUS_OR_CANCEL;
         postAsyn(this, url, map, this, 2);
     }
-
 
     public void getPersonInfoData() {
         Map<String, String> map = new HashMap<>();
@@ -271,6 +277,11 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
             if ("4".equals(contactBean.getData().getType())) {
                 mSign.setImageResource(R.drawable.icon_logistics);
             }
+            Fragment_Contact_Detail fragment1 = (Fragment_Contact_Detail) mFragmentList.get(0);
+            fragment1.showSupplies(contactBean.getData().getSupplies());
+
+            Fragment_Contact_Detail fragment2 = (Fragment_Contact_Detail) mFragmentList.get(1);
+            fragment2.showDemand(contactBean.getData().getDemand());
 
             isSelf = (contactBean.getData().getUser_id())
                     .equals(sharedUtils.getData(this, Constant.USERID));

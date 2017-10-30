@@ -36,6 +36,8 @@ import com.myplas.q.contact.activity.Contact_Detail_Activity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.sockethelper.RabbitMQConfig;
+import com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity;
+import com.myplas.q.supdem.activity.SupDem_Search_Activity;
 import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.beans.SupDemBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
@@ -119,9 +121,11 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetUtils.isNetworkStateed(getActivity())) {
-                    goToDetail("0"
+                    goToDetail(mDataBeanList.get(position - 1).getC_name()
+                            , mDataBeanList.get(position - 1).getModel()
                             , mDataBeanList.get(position - 1).getId()
-                            , mDataBeanList.get(position - 1).getUser_id());
+                            , mDataBeanList.get(position - 1).getUser_id()
+                            , "1".equals(mDataBeanList.get(position - 1).getFrom()));
                 }
 
             }
@@ -159,10 +163,16 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.supply_demand_company://判断是否消耗积分
-                getPersonInfoData(user_id, "1", 2);
+                if ("1".equals(topBean.getFrom())) {
+                    getPersonInfoData(user_id, "1", 2);
+                }
                 break;
             case R.id.supply_demand_detail://跳转到详情
-                goToDetail("0", topBean.getId(), topBean.getUser_id());
+                goToDetail(topBean.getC_name()
+                        , topBean.getModel()
+                        , topBean.getId()
+                        , topBean.getUser_id()
+                        , "1".equals(topBean.getFrom()));
                 break;
             case R.id.supply_demand_follow:
                 if (follow_release.equals("follow")) {
@@ -200,14 +210,17 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     }
 
     //跳转至详情
-    public void goToDetail(String type, String id_, String userid) {
-        String userId = sharedUtils.getData(getActivity(), "userid");
-        Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
-        intent.putExtra("id", id_);
-        intent.putExtra("type", "0");
-        intent.putExtra("userid", userid);
-        intent.putExtra("what", (userId.equals(userid)) ? ("5") : "1");
-        startActivity(intent);
+    public void goToDetail(String company, String model, String id_, String userid, boolean isFromSupdem) {
+        if (isFromSupdem) {
+            Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
+            intent.putExtra("id", id_);
+            intent.putExtra("userid", userid);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), SupDem_QQ_DetailActivity.class);
+            intent.putExtra("company", company);
+            intent.putExtra("plastic_number", model);
+        }
     }
 
     @Override
@@ -269,9 +282,9 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                         switch (result) {
                             case "1":
                             case "998":
-                                sharedUtils.setData(getActivity(), "token", "");
-                                sharedUtils.setData(getActivity(), "userid", "");
-                                sharedUtils.setBooloean(getActivity(), "logined", false);
+                                sharedUtils.setData(getActivity(), Constant.TOKEN, "");
+                                sharedUtils.setData(getActivity(), Constant.USERID, "");
+                                sharedUtils.setBooloean(getActivity(), Constant.LOGINED, false);
                                 break;
                             //没有更多数据
                             case "2":

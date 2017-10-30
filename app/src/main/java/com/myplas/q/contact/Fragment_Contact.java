@@ -91,7 +91,6 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch;
 
     private int page;
-    public StringBuffer content;
     private StringBuffer region;
     private StringBuffer c_type;
     private SharedUtils sharedUtils;
@@ -112,11 +111,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         map = new HashMap<>();
         region = new StringBuffer("0");
         c_type = new StringBuffer("0");
-        content = new StringBuffer("您还未登录,请先登录塑料圈!");
-
         mListBean = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
         mRefreshPopou = new RefreshPopou(getActivity(), 2);
+        sharedUtils.setData(getActivity(), Constant.POINTSINFO, "您还未登录,请先登录塑料圈!");
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_contact, null, false);
 
         listView = (ListView) view.findViewById(R.id.contact_lv);
@@ -227,11 +225,11 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 .bgColor(Color.parseColor("#ffffff"))
                 .gravity(HIndicatorBuilder.GRAVITY_LEFT)
                 .radius(10)
-                .arrowWidth(20)
+                .arrowWidth(30)
                 .ArrowRectage(0.5f)
                 .layoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false))
                 .dimEnabled(true)
-                .dimAmount(0.2f)
+                .dimAmount(0.4f)
                 .adapter(adapter)
                 .create();
         dialog.setCanceledOnTouchOutside(true);
@@ -269,10 +267,11 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
+            Gson gson = new Gson();
             listView.setVisibility(View.VISIBLE);
             imageButton.setVisibility(View.GONE);
-            Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String err = jsonObject.getString("err");
             if (type == 1) {
                 if (err.equals("0")) {
                     sharedUtils.setData(getActivity(), "txlBean", object.toString());
@@ -284,7 +283,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                     }
                 }
                 if (err.equals("2") || err.equals("3")) {
-                    TextUtils.Toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
+                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
                 }
             }
             //是否消耗积分
@@ -307,17 +306,17 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             }
             //积分不够
             if (type == 3 && !err.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("msg");
+                String content = jsonObject.getString("msg");
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(getActivity(), content, (err.equals("100")) ? (2) : (3), this);
             }
             boolean isLoginout = (type == 1 && err.equals("1") || err.equals("998"))
                     || (type == 10 && !err.equals("0"));
             if (isLoginout) {
-                sharedUtils.setData(getActivity(), "token", "");
-                sharedUtils.setData(getActivity(), "userid", "");
-                sharedUtils.setBooloean(getActivity(), "logined", false);
-                content = new StringBuffer(new JSONObject(object.toString()).getString("msg"));
+                sharedUtils.setData(getActivity(), Constant.TOKEN, "");
+                sharedUtils.setData(getActivity(), Constant.USERID, "");
+                sharedUtils.setBooloean(getActivity(), Constant.LOGINED, false);
+                sharedUtils.setData(getActivity(), Constant.POINTSINFO, jsonObject.getString("msg"));
             }
         } catch (Exception e) {
         }
@@ -371,12 +370,15 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
         //判断是否显示banner ；
         if (bean.getIs_show_banner().equals("1")) {
+            mIVBanner.setVisibility(View.VISIBLE);
             jumpUrl = bean.getBanner_jump_url();
             jumpTitle = bean.getBanner_jump_url_title();
             jumpToWhere = bean.getIs_banner_jump_native();
             Glide.with(getActivity())
                     .load(bean.getBanner_url())
                     .into(mIVBanner);
+        } else {
+            mIVBanner.setVisibility(View.GONE);
         }
         //判断图层是否显示
         boolean isshow = sharedUtils.getBoolean(getActivity(), "isshow");
@@ -476,7 +478,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         boolean logined = sharedUtils.getBoolean(getActivity(), Constant.LOGINED);
         if (!logined) {
             CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(getActivity(), content.toString(), 4, this);
+            commonDialog.showDialog(getActivity()
+                    , sharedUtils.getData(getActivity(), Constant.POINTSINFO)
+                    , 4
+                    , this);
         }
         return logined;
     }
@@ -486,7 +491,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         boolean logined = sharedUtils.getBoolean(getActivity(), "logined");
         if (!logined && page > 4) {
             CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(getActivity(), content.toString(), 4, this);
+            commonDialog.showDialog(getActivity()
+                    , sharedUtils.getData(getActivity(), Constant.POINTSINFO)
+                    , 4
+                    , this);
             return;
         }
     }

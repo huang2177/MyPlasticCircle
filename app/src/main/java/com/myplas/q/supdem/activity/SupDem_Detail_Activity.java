@@ -223,7 +223,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.titlebar_img_right:
                 if (mDetailBean != null) {
-                    call(mDetailBean.getData().getModel());
+                    call(mDetailBean.getData().getMobile());
                 }
                 break;
             case R.id.supdem_detail_follow:

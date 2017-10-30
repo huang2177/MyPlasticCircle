@@ -29,8 +29,6 @@ public class API {
 //     public final static String WXAPI="wxf17d8dabcebe5b1b";
     // 正式——微信appid
     public final static String WXAPI = "wxc0eb2ef58d5df955";
-    //分享通讯录
-    public final static String PLASTIC_URL = "http://q.myplas.com/plasticzone/plastic#/index";
     //分享文章
     public final static String PLASTIC_SUCRIBLE = "http://q.myplas.com/plasticzone/plastic#/headlinedetail/";
     //分享授信

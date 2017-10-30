@@ -232,6 +232,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
             Gson gson = new Gson();
             if (type == 1) {
                 if (("0").equals(err) || "1".equals(err) || "998".equals(err)) {
+
                     mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
                     mainActivity.firstInto();
                     mainActivity.onClosed();
@@ -241,7 +242,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                     sharedUtils.setData(this, Constant.TOKEN, "");
                     sharedUtils.setData(this, Constant.USERID, "");
 
-                    finish();
+                    onBackPressed();
                 }
             }
             if (type == 3) {

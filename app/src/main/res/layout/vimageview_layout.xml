@@ -8,13 +8,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="1dp">
+        android:layout_marginBottom="3dp">
 
         <com.myplas.q.common.view.MyImageView
             android:id="@+id/xq_tx"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
             android:scaleType="fitCenter"
             android:src="@drawable/contact_image_defaul_male"
             android:transitionName="shareView1"/>
@@ -23,7 +26,10 @@
             android:id="@+id/contact_sign_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"/>
 
         <ImageView
             android:id="@+id/xq_rz"

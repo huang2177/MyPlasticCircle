@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     //使用h5的签名，项目运行的时候可以直接改变签名
-//    signingConfigs {
-//        sign {
-//            keyAlias 'hbuilder'
-//            keyPassword '123456'
-//            storeFile file('C:/Users/Administrator/Desktop/H5签名/HBuilder.jks')
-//            storePassword '123456'
-//        }
-//    }
+    signingConfigs {
+        sign {
+            keyAlias 'hbuilder'
+            keyPassword '123456'
+            storeFile file('C:/Users/Administrator/Desktop/H5签名/HBuilder.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion '25.0.3'
     defaultConfig {
@@ -23,14 +23,14 @@ android {
 
     buildTypes {
         debug {
-//            signingConfig signingConfigs.sign
+            signingConfig signingConfigs.sign
             buildConfigField("boolean", "API_ENV", "false")
             buildConfigField("boolean", "LOGABLE", "true")
             buildConfigField("boolean", "USE_STETHO", "true")
         }
         release {
             minifyEnabled false
-//            signingConfig signingConfigs.sign
+            signingConfig signingConfigs.sign
             buildConfigField("boolean", "API_ENV", "true")
             buildConfigField("boolean", "LOGABLE", "false")
             buildConfigField("boolean", "USE_STETHO", "false")
@@ -97,5 +97,5 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
     compile 'com.github.huangbryant210707:MyBanner:2.6.1'
-    compile 'com.github.huangbryant210707:HIndicatorDialog:2.2.1'
+    compile 'com.github.huangbryant210707:HIndicatorDialog:2.2.0'
 }

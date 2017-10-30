@@ -65,31 +65,42 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
                 flag = (v.getId() == R.id.share_py) ? (0) : (1);
                 switch (type) {
                     case "2"://文章
-                        String id = getIntent().getStringExtra("id");
-                        isShareed = shareToWX(API.PLASTIC_SUCRIBLE + id,  "", getIntent().getStringExtra("title"));
-                        shareLog("3", id);//加积分
+                        isShareed = shareToWX(API.PLASTIC_SUCRIBLE + getIntent().getStringExtra("id")
+                                , ""
+                                , getIntent().getStringExtra("title"));
+                        shareLog("3"
+                                , getIntent().getStringExtra("id"));//加积分
                         break;
                     case "3"://授信
                         String userid = getIntent().getStringExtra("id");
-                        shareToWX(API.PLASTIC_CREDIT + userid,  "", getIntent().getStringExtra("title"));
+                        shareToWX(API.PLASTIC_CREDIT + userid
+                                , ""
+                                , getIntent().getStringExtra("title"));
                         break;
                     case "4"://供求
-                        String p_id = getIntent().getStringExtra("id");
-                        String ty = getIntent().getStringExtra("t");
-                        isShareed = shareToWX(API.PLASTIC_SUPPLY_DEMAND + p_id,  "", getIntent().getStringExtra("title"));
-                        shareLog(ty, p_id);//加积分
+                        isShareed = shareToWX(API.PLASTIC_SUPPLY_DEMAND
+                                        + getIntent().getStringExtra("id")
+                                        + "/"
+                                        + getIntent().getStringExtra("userid")
+                                , ""
+                                , getIntent().getStringExtra("title"));
+
+                        shareLog(getIntent().getStringExtra("t")
+                                , getIntent().getStringExtra("id"));//加积分
                         break;
-                    case "5"://通讯录
-                        shareToWX(API.PLASTIC_URL,  "", "塑料圈通讯录");
+                    default:
                         break;
                 }
                 break;
             case R.id.share_view:
                 finish();
                 break;
+            default:
+                break;
         }
     }
-    public boolean shareToWX(String url, String text,  String title) {
+
+    public boolean shareToWX(String url, String text, String title) {
         if (isWebchatAvaliable()) {
             String APP_ID = API.WXAPI;
 
@@ -111,7 +122,9 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
             req.transaction = String.valueOf(System.currentTimeMillis());//transaction字段用于唯一标识一个请求，这个必须有，否则会出错
             req.message = msg;
             //表示发送给朋友圈  WXSceneTimeline  表示发送给朋友  WXSceneSession
-            req.scene = flag == 1 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+            req.scene = flag == 1
+                    ? SendMessageToWX.Req.WXSceneSession
+                    : SendMessageToWX.Req.WXSceneTimeline;
             return api.sendReq(req);
         } else {
             TextUtils.Toast(this, "你的手机没有安装微信！");
@@ -141,6 +154,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
             postAsyn(this, API.BASEURL + API.SAVE_SHARE_LOG, map, this, 1);
         }
     }
+
     @Override
     public void callBack(Object object, int type) {
     }
@@ -158,28 +172,4 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
             return false;
         }
     }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
-
-    //    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        unregisterReceiver(myBroadcastReceiver);
-//    }
-
-//    public class MyBroadcastReceiver extends BroadcastReceiver {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            if (intent.getAction().equals("isShareed")) {
-//                // Log.e("----->","---------->");
-//            }
-//        }
-//    }
 }

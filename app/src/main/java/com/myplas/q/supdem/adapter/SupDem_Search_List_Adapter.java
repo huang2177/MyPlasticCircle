@@ -87,9 +87,9 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
             viewHolder.company.setText(replace(list.get(position).getC_name()) + "  "
                     + list.get(position).getName());
 
-            String time = list.get(position).getFrom().equals("1")
+            String time = ("1".equals(list.get(position).getFrom())
                     ? "来自供求 "
-                    : "来自QQ群 "
+                    : "来自QQ群 ")
                     + list.get(position).getInput_time();
             viewHolder.time.setText(time);
 
@@ -110,8 +110,10 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    user_id = list.get(position).getUser_id();
-                    getPersonInfoData(user_id, "1", 1);
+                    if ("1".equals(list.get(position).getFrom())) {
+                        user_id = list.get(position).getUser_id();
+                        getPersonInfoData(user_id, "1", 1);
+                    }
                 }
             });
         } catch (Exception e) {

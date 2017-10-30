@@ -9,9 +9,10 @@ import java.util.List;
  * 时间：2017/3/29 17:31
  */
 public class MySupDemBean {
+
     /**
      * err : 0
-     * data : [{"id":"110885","p_id":"0","user_id":"53402","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"1","c_name":"上海中晨电子商务股份有限公司","hui_count":"1","chu_count":"3","name":"hh","img":"http://pic.myplas.com/myapp/img/icon_purchase.png"},{"id":"110855","p_id":"0","user_id":"53402","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"1","c_name":"上海中晨电子商务股份有限公司","hui_count":"1","chu_count":"0","name":"hh","img":"http://pic.myplas.com/myapp/img/icon_purchase.png"},{"id":"110848","p_id":"0","user_id":"53402","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"1","c_name":"上海中晨电子商务股份有限公司","hui_count":"1","chu_count":"0","name":"hh","img":"http://pic.myplas.com/myapp/img/icon_purchase.png"}]
+     * data : [{"id":"16058","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"07-17 15:10","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"10243","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"06-15 14:19","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"7413","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"06-01 11:10","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"7412","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"06-01 11:09","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"846","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"05-03 18:38","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"845","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"05-03 18:38","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"}]
      */
 
     private int err;
@@ -35,20 +36,21 @@ public class MySupDemBean {
 
     public static class DataBean {
         /**
-         * id : 110885
+         * id : 16058
          * p_id : 0
-         * user_id : 53402
+         * user_id : 3858
          * model :
          * unit_price : 0.00
          * store_house :
          * cargo_type : 1
          * f_name :
-         * type : 1
+         * type : 2
+         * input_time : 07-17 15:10
          * c_name : 上海中晨电子商务股份有限公司
-         * hui_count : 1
-         * chu_count : 3
-         * name : hh
-         * img : http://pic.myplas.com/myapp/img/icon_purchase.png
+         * hui_count : 0
+         * chu_count : 0
+         * name : 李一帆
+         * img : http://statics.myplas.com/myapp/img/icon_supply.png
          */
 
         private String id;
@@ -60,6 +62,7 @@ public class MySupDemBean {
         private String cargo_type;
         private String f_name;
         private String type;
+        private String input_time;
         private String c_name;
         private String hui_count;
         private String chu_count;
@@ -136,6 +139,14 @@ public class MySupDemBean {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public String getInput_time() {
+            return input_time;
+        }
+
+        public void setInput_time(String input_time) {
+            this.input_time = input_time;
         }
 
         public String getC_name() {

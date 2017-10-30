@@ -93,7 +93,8 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
                         + list.get(position).getName());
 
                 String reply = "回复:" + list.get(position).getHui_count()
-                        + "  出价:" + list.get(position).getChu_count();
+                        + "  出价:" + list.get(position).getChu_count()
+                        + "  " + list.get(position).getInput_time();
                 viewHolder.time.setText(reply);
 
                 viewHolder.content.setText(Html.fromHtml(getContent(position)));
@@ -131,8 +132,9 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
                         Intent in = new Intent(context, ShareActivity.class);
                         in.putExtra("type", "4");
                         in.putExtra("id", list.get(position).getId());
-                        in.putExtra("title", s + getContent(position));
+                        in.putExtra("title", s);
                         in.putExtra("t", list.get(position).getType());
+                        in.putExtra("userid", list.get(position).getUser_id());
                         context.startActivity(in);
                     }
                 });

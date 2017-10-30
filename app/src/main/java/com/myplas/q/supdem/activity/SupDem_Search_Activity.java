@@ -33,7 +33,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.beans.HistoryBean;
 import com.myplas.q.supdem.beans.SearchNoResultBean;
 import com.myplas.q.supdem.beans.SearchResultBean;
@@ -66,10 +65,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private ImageView imageView;
     private EditTextField editText;
     private RefreshPopou mRefreshPopou;
-    private RelativeLayout layout_time, layout_add;
+    private RelativeLayout layoutTime, layoutAdd;
     private LinearLayout mLayoutDefault, mLayoutResult, mLayoutEmpty;
-    private MyGridview gridview_history, gridview_subcribe, gridview_subcribe_no;
-    private TextView textView, textView_time, textView_add, textView_no, mTextViewType;
+    private MyGridview gridviewHistory, gridviewSubcribe, gridviewSubcribeNo;
+    private TextView textView, textviewTime, textviewAdd, textviewNo, mTextViewType;
 
     private Handler handler;
     private SearchNoResultBean bean;
@@ -77,12 +76,12 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private HistoryBean historyBean;
     private TabCofigBean tabCofigBean;
     private List<SearchResultBean.ListBean> list;
-    private SupDem_Search_Grid_Adapter adapter_grid;
-    private SupDem_Search_List_Adapter adapter_list;
-    private List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> list_area;
-    private List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> list_time;
+    private SupDem_Search_Grid_Adapter adapterGrid;
+    private SupDem_Search_List_Adapter adapterList;
+    private List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> listArea;
+    private List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> listTime;
 
-    private String keywords, is_buy, area, time;
+    private String keywords, isBuy, area, time;
     private int page, visibleItemCount;
     private boolean hasMoerData = true;
     private List<String> mList;
@@ -93,44 +92,44 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_supdem_search_layout);
         goBack(findViewById(R.id.back));
         initView();
-        getSearch_Record();
-        getTab_Config();
+        getsearchRecord();
+        getTabConfig();
     }
 
     public void initView() {
         page = 1;
-        is_buy = "1";
+        isBuy = "0";
         keywords = "7000F";
         handler = new Handler();
         list = new ArrayList<>();
         mRefreshPopou = new RefreshPopou(this, 3);
 
         imageView = F(R.id.img_search_delete);
-        textView_add = F(R.id.text_result_add);
+        textviewAdd = F(R.id.text_result_add);
         mTextViewType = F(R.id.spinner_content);
-        textView_time = F(R.id.text_result_time);
+        textviewTime = F(R.id.text_result_time);
         listView = F(R.id.search_listview_result);
-        layout_add = F(R.id.relative_result_add);
-        layout_time = F(R.id.relative_result_time);
+        layoutAdd = F(R.id.relative_result_add);
+        layoutTime = F(R.id.relative_result_time);
         textView = F(R.id.supplydemand_btn_search);
         editText = F(R.id.supplydemand_search_edit);
         mLayoutResult = F(R.id.search_result_linear);
-        textView_no = F(R.id.search_result_text_null);
+        textviewNo = F(R.id.search_result_text_null);
         mLayoutDefault = F(R.id.search_default_linear);
-        gridview_subcribe_no = F(R.id.mygrid_search_null);
-        gridview_history = F(R.id.mygrid_search_history);
-        gridview_subcribe = F(R.id.mygrid_search_subcribe);
+        gridviewSubcribeNo = F(R.id.mygrid_search_null);
+        gridviewHistory = F(R.id.mygrid_search_history);
+        gridviewSubcribe = F(R.id.mygrid_search_subcribe);
         mLayoutEmpty = F(R.id.search_result_linear_null);
 
         textView.setOnClickListener(this);
         imageView.setOnClickListener(this);
-        layout_add.setOnClickListener(this);
-        layout_time.setOnClickListener(this);
+        layoutAdd.setOnClickListener(this);
+        layoutTime.setOnClickListener(this);
         listView.setOnItemClickListener(this);
         mTextViewType.setOnClickListener(this);
-        gridview_history.setOnItemClickListener(this);
-        gridview_subcribe.setOnItemClickListener(this);
-        gridview_subcribe_no.setOnItemClickListener(this);
+        gridviewHistory.setOnItemClickListener(this);
+        gridviewSubcribe.setOnItemClickListener(this);
+        gridviewSubcribeNo.setOnItemClickListener(this);
 
         mTextViewType.setVisibility(View.VISIBLE);
         editText.setHintTextColor(getResources().getColor(R.color.color_gray));
@@ -147,8 +146,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     mRefreshPopou.setCanShowPopou(true);
                     mLayoutDefault.setVisibility(View.GONE);
                     mLayoutResult.setVisibility(View.VISIBLE);
-                    keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-                    getPhysical_Search(1, keywords, time, is_buy, area, true);
+                    keywords = ("".equals(editText.getText().toString())) ? ("7000f") : (editText.getText().toString());
+                    getphysicalSearch(1, keywords, time, isBuy, area, true);
                     return true;
                 }
                 return false;
@@ -165,7 +164,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
                         if (hasMoerData) {
-                            getPhysical_Search(page, keywords, time, is_buy, area, false);
+                            getphysicalSearch(page, keywords, time, isBuy, area, false);
                         } else {
                             TextUtils.Toast(SupDem_Search_Activity.this, "没有更多数据了！");
                         }
@@ -181,14 +180,14 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     }
 
     //获取历史搜索
-    public void getSearch_Record() {
+    public void getsearchRecord() {
         Map map = new HashMap();
         map.put("keywords", "");
         postAsyn(this, API.BASEURL + API.SEARCH_RECORD, map, this, 1);
     }
 
     //查询
-    public void getPhysical_Search(int page, String keyWords, String time, String is_buy, String area, boolean isShowLoading) {
+    public void getphysicalSearch(int page, String keyWords, String time, String is_buy, String area, boolean isShowLoading) {
         Map map = new HashMap();
         map.put("keywords", keyWords);
         map.put("page", page + "");
@@ -201,13 +200,13 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     }
 
     //获取时间和地区
-    public void getTab_Config() {
+    public void getTabConfig() {
         Map map = new HashMap();
         postAsyn(this, API.BASEURL + API.GET_TAB_CONFIG, map, this, 3);
     }
 
     //删除搜索历史记录
-    public void delSearch_Record() {
+    public void delsearchRecord() {
         Map map = new HashMap();
         map.put("keywords", "");
         postAsyn(this, API.BASEURL + API.DEL_SEARCH_RECORD, map, this, 4);
@@ -223,10 +222,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 mLayoutDefault.setVisibility(View.GONE);
                 mLayoutResult.setVisibility(View.VISIBLE);
                 keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-                getPhysical_Search(1, keywords, time, is_buy, area, true);
+                getphysicalSearch(1, keywords, time, isBuy, area, true);
                 break;
             case R.id.img_search_delete:
-                delSearch_Record();
+                delsearchRecord();
                 break;
             case R.id.relative_result_time:
                 showPopou(0, R.layout.supdem_result_time_popou);
@@ -263,7 +262,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     }
 
     public void showPopou(int type, int resId) {
-        PopouShowUtils popouShowUtils1 = new PopouShowUtils(this, resId, type, list_area, list_time);
+        PopouShowUtils popouShowUtils1 = new PopouShowUtils(this, resId, type, listArea, listTime);
         popouShowUtils1.showAsDropDown(findViewById(R.id.divider_result));
         popouShowUtils1.setPoPouCallBackInterface(this);
     }
@@ -285,27 +284,16 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 getData(keywords);
                 break;
             case R.id.search_listview_result:
-                if (list.get(position).getType().equals("9")) {//来自QQ群
+                if (list.get(position).getFrom().equals("1")) {//来自供求
+                    Intent intent = new Intent(this, SupDem_Detail_Activity.class);
+                    intent.putExtra("id", list.get(position).getId());
+                    intent.putExtra("userid", list.get(position).getUser_id());
+                    startActivity(intent);
+                } else {//来自qq
                     Intent intent = new Intent(SupDem_Search_Activity.this, SupDem_QQ_DetailActivity.class);
                     intent.putExtra("company", list.get(position).getC_name());
-                    intent.putExtra("plastic_number", list.get(position).getModel());
+                    intent.putExtra("plastic_number", list.get(position).getData_model());
                     startActivity(intent);
-                } else {//来自供求
-                    try {
-                        Intent intent = new Intent(this, SupDem_Detail_Activity.class);
-                        String id_ = list.get(position).getId();
-                        String userid = list.get(position).getUser_id();
-                        String user_id = SharedUtils.getSharedUtils().getData(this, "userid");
-
-                        intent.putExtra("id", id_);
-                        intent.putExtra("type", "0");
-                        intent.putExtra("userid", userid);
-                        intent.putExtra("what", (user_id.equals(userid)) ? ("5") : (ConfigData.what));
-
-                        startActivity(intent);
-                    } catch (Exception e) {
-                    }
-
                 }
                 break;
             default:
@@ -322,7 +310,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         mRefreshPopou.setCanShowPopou(true);
         mLayoutDefault.setVisibility(View.GONE);
         mLayoutResult.setVisibility(View.VISIBLE);
-        getPhysical_Search(1, keywords, time, is_buy, area, true);
+        getphysicalSearch(1, keywords, time, isBuy, area, true);
     }
 
     @Override
@@ -332,10 +320,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             boolean err = new JSONObject(object.toString()).getString("err").equals("0");
             if (type == 1 && err) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
-                adapter_grid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
-                gridview_history.setAdapter(adapter_grid);
+                adapterGrid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
+                gridviewHistory.setAdapter(adapterGrid);
                 SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
-                gridview_subcribe.setAdapter(adapter_grid1);
+                gridviewSubcribe.setAdapter(adapter_grid1);
 
 //                keywords = historyBean.getHot_search().getContent();
 //                editText.setHint(keywords);
@@ -347,28 +335,30 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 SearchResultBean resultBean = null;
                 if (err) {
+                    listView.setVisibility(View.VISIBLE);
+                    mLayoutEmpty.setVisibility(View.GONE);
                     resultBean = gson.fromJson(object.toString(), SearchResultBean.class);
                     if (page == 1) {
-                        adapter_list = new SupDem_Search_List_Adapter(this, resultBean.getList());
-                        listView.setAdapter(adapter_list);
+                        adapterList = new SupDem_Search_List_Adapter(this, resultBean.getList());
+                        listView.setAdapter(adapterList);
 
                         list.clear();
                         list.addAll(resultBean.getList());
                         mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + resultBean.getTotal() + "条信息");
                     } else {
                         list.addAll(resultBean.getList());
-                        adapter_list.setList(list);
-                        adapter_list.notifyDataSetChanged();
+                        adapterList.setList(list);
+                        adapterList.notifyDataSetChanged();
                     }
                 } else {
                     hasMoerData = false;
                     if (page == 1) {
                         listView.setVisibility(View.GONE);
                         mLayoutEmpty.setVisibility(View.VISIBLE);
-                        textView_no.setText("抱歉，未能找到相关搜索！");
+                        textviewNo.setText("抱歉，未能找到相关搜索！");
                         bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
-                        adapter_grid = new SupDem_Search_Grid_Adapter(this, bean.getCombine());
-                        gridview_subcribe_no.setAdapter(adapter_grid);
+                        adapterGrid = new SupDem_Search_Grid_Adapter(this, bean.getCombine());
+                        gridviewSubcribeNo.setAdapter(adapterGrid);
                     } else {
                         TextUtils.Toast(this, "没有更多数据！");
                     }
@@ -376,24 +366,24 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
             }
             if (type == 3 && err) {
                 tabCofigBean = gson.fromJson(object.toString(), TabCofigBean.class);
-                list_area = tabCofigBean.getData().getArea().getData();
-                list_time = tabCofigBean.getData().getTime().getData();
+                listArea = tabCofigBean.getData().getArea().getData();
+                listTime = tabCofigBean.getData().getTime().getData();
                 //设置默认的时间
                 time = tabCofigBean.getData().getTime().getCurrentValue();
-                int currentitem_time = Integer.parseInt(tabCofigBean.getData().getTime().getCurrentItem());
-                SharedUtils.getSharedUtils().setData(this, "position", currentitem_time + "");
-                textView_time.setText(list_time.get(currentitem_time).getShow());
+                int currentitemTime = Integer.parseInt(tabCofigBean.getData().getTime().getCurrentItem());
+                SharedUtils.getSharedUtils().setData(this, "position", currentitemTime + "");
+                textviewTime.setText(listTime.get(currentitemTime).getShow());
                 //设置默认的地区
                 area = tabCofigBean.getData().getArea().getCurrentValue();
                 int currentItem = Integer.parseInt(tabCofigBean.getData().getArea().getCurrentItem());
-                textView_add.setText(tabCofigBean.getData().getArea().getData().get(currentItem).getShow());
+                textviewAdd.setText(tabCofigBean.getData().getArea().getData().get(currentItem).getShow());
                 SharedUtils.getSharedUtils().setData(this, "position_pro", currentItem + "");
                 SharedUtils.getSharedUtils().setData(this, "position_city", 0 + "");
             }
             if (type == 4 && err) {
                 TextUtils.Toast(this, "删除成功！");
-                adapter_grid = new SupDem_Search_Grid_Adapter(this, null);
-                gridview_history.setAdapter(adapter_grid);
+                adapterGrid = new SupDem_Search_Grid_Adapter(this, null);
+                gridviewHistory.setAdapter(adapterGrid);
             }
         } catch (Exception e) {
             HLog.e(this, e.toString());
@@ -410,10 +400,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         page = 1;
         mRefreshPopou.setCanShowPopou(true);
         hasMoerData = true;
-        textView_add.setText(list_area.get(po_pro).getData().get(position).getShow());
-        textView_add.setTextColor(getResources().getColor(R.color.color_red));
-        area = list_area.get(po_pro).getData().get(position).getValue();
-        getPhysical_Search(1, keywords, time, is_buy, area, true);
+        textviewAdd.setText(listArea.get(po_pro).getData().get(position).getShow());
+        textviewAdd.setTextColor(getResources().getColor(R.color.color_red));
+        area = listArea.get(po_pro).getData().get(position).getValue();
+        getphysicalSearch(1, keywords, time, isBuy, area, true);
     }
 
     //时间回调
@@ -422,10 +412,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         page = 1;
         mRefreshPopou.setCanShowPopou(true);
         hasMoerData = true;
-        textView_time.setText(list_time.get(po).getShow());
-        textView_time.setTextColor(getResources().getColor(R.color.color_red));
-        time = list_time.get(po).getValue();
-        getPhysical_Search(1, keywords, time, is_buy, area, true);
+        textviewTime.setText(listTime.get(po).getShow());
+        textviewTime.setTextColor(getResources().getColor(R.color.color_red));
+        time = listTime.get(po).getValue();
+        getphysicalSearch(1, keywords, time, isBuy, area, true);
     }
 
     @Override
@@ -451,11 +441,12 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         public void onBindView(BaseViewHolder holder, int position) {
             TextView tv = holder.getView(R.id.item_tv);
             tv.setText(mList.get(position));
-            if (position == mList.size() - 1) {
-                holder.setVisibility(R.id.item_line, BaseViewHolder.GONE);
-            } else {
-                holder.setVisibility(R.id.item_line, BaseViewHolder.VISIBLE);
-            }
+
+            holder.getView(R.id.item_iv).setVisibility(View.GONE);
+
+            holder.setVisibility(R.id.item_line, position == mList.size() - 1
+                    ? BaseViewHolder.GONE
+                    : BaseViewHolder.VISIBLE);
         }
 
         @Override
@@ -476,9 +467,9 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 
             page = 1;
             hasMoerData = true;
-            is_buy = position == 0 ? "1" : "0";
+            isBuy = position == 0 ? "0" : "1";
             keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-            getPhysical_Search(1, keywords, time, is_buy, area, true);
+            getphysicalSearch(1, keywords, time, isBuy, area, true);
         }
 
         @Override

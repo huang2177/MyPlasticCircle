@@ -110,9 +110,11 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    user_id = list.get(position).getUser_id();
-                    id_ = list.get(position).getId();
-                    getPersonInfoData(user_id, "1", 1);
+                    if (list.get(position).getFrom().equals("1")) {
+                        user_id = list.get(position).getUser_id();
+                        id_ = list.get(position).getId();
+                        getPersonInfoData(user_id, "1", 1);
+                    }
                 }
             });
         } catch (Exception e) {

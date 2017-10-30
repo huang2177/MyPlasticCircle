@@ -91,6 +91,15 @@ public class SearchResultBean {
         private String qq_name;
         private String from;
         private String name;
+        private String data_model;
+
+        public void setData_model(String data_model) {
+            this.data_model = data_model;
+        }
+
+        public String getData_model() {
+            return data_model;
+        }
 
         public String getId() {
             return id;

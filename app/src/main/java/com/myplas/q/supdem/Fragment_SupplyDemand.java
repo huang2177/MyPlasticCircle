@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -38,7 +39,9 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 编写： 黄双
@@ -49,22 +52,20 @@ import java.util.List;
 public class Fragment_SupplyDemand extends Fragment implements View.OnClickListener
         , Fragment_SupDem_All.RefreshPopouInterface
         , MyOnPageChangeListener.OnPageChangeListener {
-    private Handler handler;
-    private Resources resources;
 
+    private View view;
+    private TextView tvType;
     private EditText editText;
     private LinearLayout mLayout;
-    private View view, imageView_sd;
-    private RadioGroup radioGroup_sd;
-    private TextView tvType, tvRefresh;
 
     private boolean logined;
+    public int currentItem;
     private List<String> mList;
     public String user_id, sType;
     private List<String> mListTitle;
     private SharedUtils mSharedUtils;
     private List<Fragment> mFragments;
-    public int visibleItemCount, currentItem;
+    private Map<String, Integer> mMap;
 
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
@@ -82,8 +83,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 
     private void initView() {
         sType = "0";
-        handler = new Handler();
-        resources = getActivity().getResources();
+        mMap = new HashMap<>();
         mSharedUtils = SharedUtils.getSharedUtils();
         mList = Arrays.asList("全部", "供给", "求购");
         logined = mSharedUtils.getBoolean(getActivity(), Constant.LOGINED);
@@ -150,22 +150,21 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                 break;
             case R.id.supplydemand_btn:
                 dialog = new HIndicatorBuilder(getActivity())
-                        .width(ScreenUtils.getScreenWidth(getActivity()))
+                        .width(300)
                         .height(-1)
                         .ArrowDirection(HIndicatorBuilder.TOP)
                         .bgColor(Color.parseColor("#ffffff"))
                         .gravity(HIndicatorBuilder.GRAVITY_LEFT)
-                        .radius(0)
-                        //.animator(R.style.my_anim_popou)
-                        .arrowWidth(1)
-                        .ArrowRectage(0.1f)
+                        .radius(10)
+                        .arrowWidth(30)
+                        .ArrowRectage(0.2f)
                         .layoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false))
                         .dimEnabled(true)
-                        .dimAmount(0.2f)
+                        .dimAmount(0.4f)
                         .adapter(new Supdem_Dialog_Adapter())
                         .create();
                 dialog.setCanceledOnTouchOutside(true);
-                dialog.show(mLayout);
+                dialog.show(tvType);
                 tvType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_supdem_xiala_up, 0);
                 dialog.setOnDismissListener(new OnDismissListener() {
                     @Override
@@ -173,6 +172,8 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                         tvType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_supdemxiala, 0);
                     }
                 });
+                break;
+            default:
                 break;
         }
     }
@@ -238,15 +239,21 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         @Override
         public void onBindView(BaseViewHolder holder, int position) {
             TextView tv = holder.getView(R.id.item_tv);
+            ImageView iv = holder.getView(R.id.item_iv);
+
             tv.setText(mList.get(position));
             tv.setGravity(Gravity.LEFT);
             tv.setTextColor(Color.BLACK);
-            //tv.setCompoundDrawablesWithIntrinsicBounds(mICons.get(position), 0, 0, 0);
-            if (position == mList.size() - 1) {
-                holder.setVisibility(R.id.item_line, BaseViewHolder.GONE);
-            } else {
-                holder.setVisibility(R.id.item_line, BaseViewHolder.VISIBLE);
+
+            boolean checked = mMap.get("sd") != null && position == mMap.get("sd")
+                    || mMap.get("sd") == null && position == 0;
+            if (checked) {
+                iv.setImageResource(R.drawable.icon_check);
             }
+
+            holder.setVisibility(R.id.item_line, position == mList.size() - 1
+                    ? BaseViewHolder.GONE
+                    : BaseViewHolder.VISIBLE);
         }
 
         @Override
@@ -261,6 +268,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 
         @Override
         public void onItemClick(View v, int position) {
+            mMap.put("sd", position);
             sType = ConfigData.getType(position);
             getChirldData(currentItem, true);
 
@@ -290,12 +298,5 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-        }
-    }
 }
 

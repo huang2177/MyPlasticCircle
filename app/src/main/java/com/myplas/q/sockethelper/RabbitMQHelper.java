@@ -16,6 +16,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.QueueingConsumer;
+import com.rabbitmq.client.ShutdownSignalException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class RabbitMQHelper {
     private boolean isLogined, isInterrupt;
     private static List<Thread> mThreadList;
     private static List<Connection> mConnectionList;
+    private Handler incomingMessageHandler;
 
     private RabbitMQHelper(Context context) {
         mContext = context;
@@ -62,7 +64,6 @@ public class RabbitMQHelper {
     }
 
 
-
     /**
      * On connect.
      */
@@ -81,17 +82,21 @@ public class RabbitMQHelper {
         } catch (Exception e) {
         }
         //用于从线程中获取数据，更新ui
-        final Handler incomingMessageHandler = new Handler() {
+        incomingMessageHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 RabbitMQConfig.getInstance(mContext).getRedDotInfo();
             }
         };
+        //连接设置
+        setupConnectionmmFactory();
+
         //创建两个链接
+        createConnect();
+    }
+
+    private void createConnect() {
         for (int i = 0; i < 2; i++) {
-            //连接设置
-            setupConnectionmmFactory(i);
-            //开启消费者线程
             subscribe(i, incomingMessageHandler);
         }
     }
@@ -99,7 +104,7 @@ public class RabbitMQHelper {
     /**
      * 连接设置
      */
-    private void setupConnectionmmFactory(int i) {
+    private void setupConnectionmmFactory() {
         mFactory = new ConnectionFactory();
         mFactory.setPort(mConfigBean.getConfig().getPort());
         mFactory.setHost(mConfigBean.getConfig().getHost());
@@ -108,6 +113,7 @@ public class RabbitMQHelper {
         mFactory.setVirtualHost(mConfigBean.getConfig().getVhost());
         mFactory.setAutomaticRecoveryEnabled(true);
     }
+
 
     /**
      * 消费者线程
@@ -191,8 +197,10 @@ public class RabbitMQHelper {
                         msg.setData(bundle);
                         handler.sendMessage(msg);
                     }
+                } catch (ShutdownSignalException se) {
+                    createConnect();
                 } catch (InterruptedException ie) {
-                    isInterrupt = true;
+
                 } catch (Exception e) {
                     Log.e("------>RabbitMQ", e.toString());
                 }
@@ -207,18 +215,21 @@ public class RabbitMQHelper {
      * On disconnect.
      */
     public void onDisConnect() {
-        for (int i = 0; i < 2; i++) {
-            if (mThreadList.get(i) != null) {
-                mThreadList.get(i).interrupt();
-            }
-            Connection connection = mConnectionList.get(i);
-            if (connection != null && connection.isOpen()) {
-                try {
+        try {
+            for (int i = 0; i < mThreadList.size(); i++) {
+                if (mThreadList.get(i) != null) {
+                    mThreadList.get(i).interrupt();
+                }
+                Connection connection = mConnectionList.get(i);
+                if (connection != null && connection.isOpen()) {
                     connection.close();
                     connection = null;
-                } catch (Exception e) {
                 }
             }
+            mThreadList.clear();
+            mConnectionList.clear();
+        } catch (Exception e) {
+            Log.e("-----", e.toString());
         }
     }
 }

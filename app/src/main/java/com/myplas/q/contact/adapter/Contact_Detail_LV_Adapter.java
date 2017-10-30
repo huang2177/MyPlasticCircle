@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
+import com.myplas.q.contact.beans.ContactInfoBean;
 import com.myplas.q.contact.beans.ContactSupDemBean;
 import com.myplas.q.common.view.MyImageView;
 import com.myplas.q.supdem.beans.DeliverPriceBean;
@@ -25,17 +26,26 @@ import java.util.List;
  */
 public class Contact_Detail_LV_Adapter extends BaseAdapter {
     Context context;
-    List<ContactSupDemBean.DataBean> list;
-    private List<ContactSupDemBean.DataBean> mList;
+    List<ContactInfoBean.DataBean.DemandBean> list;
+    private List<ContactInfoBean.DataBean.SuppliesBean> mList;
 
-    public Contact_Detail_LV_Adapter(Context context, List<ContactSupDemBean.DataBean> list) {
+    public Contact_Detail_LV_Adapter(Context context, List<ContactInfoBean.DataBean.DemandBean> list, int type) {
         this.list = list;
+        this.context = context;
+    }
+
+    public Contact_Detail_LV_Adapter(Context context, List<ContactInfoBean.DataBean.SuppliesBean> list) {
+        this.mList = list;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return (list.size() == 0) ? (0) : (list.size());
+        if (list != null) {
+            return (list.size() == 0) ? (0) : (list.size());
+        } else {
+            return (mList.size() == 0) ? (0) : (mList.size());
+        }
     }
 
     @Override
@@ -64,29 +74,52 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-            String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + list.get(position).getStore_house()
-                    + "   <font color='#9c9c9c'>" + "  牌号:" + "</font>" + list.get(position).getModel()
-                    + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + list.get(position).getF_name()
-                    + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + list.get(position).getUnit_price();
-            viewHolder.mTVContent.setText(Html.fromHtml(html1));
+            if (list != null) {
+                String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + list.get(position).getStore_house()
+                        + "   <font color='#9c9c9c'>" + "  牌号:" + "</font>" + list.get(position).getModel()
+                        + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + list.get(position).getF_name()
+                        + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + list.get(position).getUnit_price();
+                viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
-            String time = "回复:" + list.get(position).getHui_count()
-                    + "  出价:" + list.get(position).getHui_count()
-                    + "  " + list.get(position).getInput_time();
-            viewHolder.mTVTime.setText(time);
+                String time = "回复:" + list.get(position).getReply()
+                        + "  出价:" + list.get(position).getBid()
+                        + "  " + list.get(position).getInput_time();
+                viewHolder.mTVTime.setText(time);
 
-            Glide.with(context)
-                    .load(list.get(position).getThumb())
-                    .placeholder(R.drawable.contact_image_defaul_male)
-                    .into(viewHolder.mIVHead);
+                Glide.with(context)
+                        .load(list.get(position).getThumb())
+                        .placeholder(R.drawable.contact_image_defaul_male)
+                        .into(viewHolder.mIVHead);
 
 //            viewHolder.mIVStart.setImageResource("0".equals(list.get(position).get)
 //                    ? R.drawable.icon_identity
 //                    : R.drawable.icon_identity_hl);
 
-            viewHolder.mIVType.setImageResource("1".equals(list.get(position).getType())
-                    ? R.drawable.icon_now
-                    : R.drawable.icon_futures);
+                viewHolder.mIVType.setImageResource("1".equals(list.get(position).getCargo_type())
+                        ? R.drawable.icon_now
+                        : R.drawable.icon_futures);
+            } else {
+                String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + mList.get(position).getStore_house()
+                        + "   <font color='#9c9c9c'>" + "  牌号:" + "</font>" + mList.get(position).getModel()
+                        + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + mList.get(position).getF_name()
+                        + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + mList.get(position).getUnit_price();
+                viewHolder.mTVContent.setText(Html.fromHtml(html1));
+
+                String time = "回复:" + mList.get(position).getReply()
+                        + "  出价:" + mList.get(position).getBid()
+                        + "  " + mList.get(position).getInput_time();
+                viewHolder.mTVTime.setText(time);
+
+                Glide.with(context)
+                        .load(mList.get(position).getThumb())
+                        .placeholder(R.drawable.contact_image_defaul_male)
+                        .into(viewHolder.mIVHead);
+
+
+                viewHolder.mIVType.setImageResource("1".equals(mList.get(position).getCargo_type())
+                        ? R.drawable.icon_now
+                        : R.drawable.icon_futures);
+            }
             viewHolder.mIVHead.setBorderColor(context.getResources().getColor(R.color.color_white));
         } catch (Exception e) {
         }
@@ -94,9 +127,9 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setList(List<ContactSupDemBean.DataBean> list) {
-        mList = list;
-    }
+    //public void setList(List<ContactSupDemBean.DataBean> list) {
+//        mList = list;
+//    }
 
     class viewHolder {
         MyImageView mIVHead;

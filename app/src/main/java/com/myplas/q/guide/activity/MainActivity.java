@@ -260,12 +260,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     private boolean checkIsLogin() {
-        boolean logined = sharedUtils.getBoolean(this, Constant.LOGINED);
-        if (!logined) {
-            CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(this, fragmentContact.content.toString(), 4, this);
+        try {
+            boolean logined = sharedUtils.getBoolean(this, Constant.LOGINED);
+            if (!logined) {
+                CommonDialog commonDialog = new CommonDialog();
+                commonDialog.showDialog(this
+                        , sharedUtils.getData(this, Constant.POINTSINFO)
+                        , 4
+                        , this);
+            }
+            return logined;
+        } catch (Exception e) {
+            return false;
         }
-        return logined;
     }
 
     @Override

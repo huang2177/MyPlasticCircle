@@ -3,14 +3,12 @@ package com.myplas.q.headlines.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,7 +30,6 @@ import com.myplas.q.supdem.beans.HistoryBean;
 import com.myplas.q.headlines.bean.SearchNoResultBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
 import com.optimus.edittextfield.EditTextField;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -40,8 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -50,7 +45,6 @@ import java.util.TimerTask;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/19 15:44
  */
-
 public class HeadLineSearchActivity extends BaseActivity implements View.OnClickListener
         , ResultCallBack
         , AdapterView.OnItemClickListener
@@ -60,8 +54,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     private ImageView imageView;
     private EditTextField editText;
     private RefreshPopou mRefreshPopou;
-    private TextView textView, textView_no;
-    private MyGridview mGV_History, mGV_Empty, mGV_Subcribe;
+    private TextView textView, textviewNo;
+    private MyGridview mgvHistory, mgvEmpty, mgvSubcribe;
     private LinearLayout mLayoutDefault, mLayoutResult, mLayoutEmpty;
 
     private HistoryBean historyBean;
@@ -79,16 +73,21 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_layout_headline_search);
         goBack(findViewById(R.id.back));
         initView();
+        decideFrom();
+    }
+
+    private void decideFrom() {
         String data = getIntent().getStringExtra("data");
         if (TextUtils.isNullOrEmpty(data)) {//从供求qq页面跳转过来
-            editText.setText(data);
-            get_Subscribe(1, data, true);
-            editText.setSelection(data.length());
+            getData(data);
         } else {                            //从头条跳转过来
             getSearch_Record();
         }
     }
 
+    /**
+     * Initview.
+     */
     public void initView() {
         page = 1;
         keywords = "7000F";
@@ -96,23 +95,23 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         mRefreshPopou = new RefreshPopou(this, 1);
 
         imageView = F(R.id.img_search_delete);
-        mGV_Empty = F(R.id.mygrid_search_null);
+        mgvEmpty = F(R.id.mygrid_search_null);
         listView = F(R.id.search_listview_result1);
         textView = F(R.id.supplydemand_btn_search);
         editText = F(R.id.supplydemand_search_edit);
-        mGV_History = F(R.id.mygrid_search_history);
+        mgvHistory = F(R.id.mygrid_search_history);
         mLayoutResult = F(R.id.search_result_linear);
-        mGV_Subcribe = F(R.id.mygrid_search_subcribe);
-        textView_no = F(R.id.search_result_text_null);
+        mgvSubcribe = F(R.id.mygrid_search_subcribe);
+        textviewNo = F(R.id.search_result_text_null);
         mLayoutDefault = F(R.id.search_default_linear);
         mLayoutEmpty = F(R.id.search_result_linear_null);
 
         textView.setOnClickListener(this);
         imageView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
-        mGV_Empty.setOnItemClickListener(this);
-        mGV_History.setOnItemClickListener(this);
-        mGV_Subcribe.setOnItemClickListener(this);
+        mgvEmpty.setOnItemClickListener(this);
+        mgvHistory.setOnItemClickListener(this);
+        mgvSubcribe.setOnItemClickListener(this);
 
         editText.setHintTextColor(getResources().getColor(R.color.color_gray));
         editText.setPadding(20, 0, 0, 0);
@@ -127,8 +126,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     mRefreshPopou.setCanShowPopou(true);
                     mLayoutDefault.setVisibility(View.GONE);
                     mLayoutResult.setVisibility(View.VISIBLE);
-                    keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
-                    get_Subscribe(page, keywords, true);
+                    keywords = ("".equals(editText.getText().toString())) ? ("7000f") : (editText.getText().toString());
+                    getSubscribe(page, keywords, true);
                     return true;
                 }
                 return false;
@@ -143,7 +142,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
-                        get_Subscribe(page, keywords, false);
+                        getSubscribe(page, keywords, false);
                     }
                 }
             }
@@ -155,15 +154,24 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         });
     }
 
-    //获取历史搜索
+    /**
+     * 获取历史搜索
+     */
     public void getSearch_Record() {
         Map map = new HashMap();
         map.put("keywords", "");
         postAsyn(this, API.BASEURL + API.TOUTIAO_SEARCH_LOG, map, this, 1);
     }
 
-    //查询
-    public void get_Subscribe(int page, String keywords, boolean isShowLoading) {
+    /**
+     * 查询
+     *
+     * @param page          the page
+     * @param keywords      the keywords
+     * @param isShowLoading the is show loading
+     */
+
+    public void getSubscribe(int page, String keywords, boolean isShowLoading) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page + "");
         map.put("size", "15");
@@ -173,12 +181,18 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     }
 
 
-    //删除搜索历史记录
-    public void delSearch_Record() {
+    /**
+     * 删除搜索历史记录
+     */
+    public void delsearchRecord() {
         postAsyn(this, API.BASEURL + API.DEL_TOUTIAO_SEARCH_LOG, null, this, 3);
     }
 
-    //检查权限
+    /**
+     * 检查权限
+     *
+     * @param cate_id the cate id
+     */
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", cate_id);
@@ -196,10 +210,10 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 keywords = (editText.getText().toString().equals(""))
                         ? ("7000f")
                         : (editText.getText().toString());
-                get_Subscribe(page, keywords, true);
+                getSubscribe(page, keywords, true);
                 break;
             case R.id.img_search_delete:
-                delSearch_Record();
+                delsearchRecord();
                 break;
             default:
                 break;
@@ -239,23 +253,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
         editText.setText(keywords);
         editText.setSelection(keywords.length());
-        get_Subscribe(page, keywords, true);
-    }
-
-    private void showInPutKeybord() {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-            }
-
-        }, 200);
+        getSubscribe(page, keywords, true);
     }
 
     @Override
@@ -266,9 +264,9 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             if (type == 1 && err.equals("0")) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
-                mGV_History.setAdapter(mSearchGridAdapter);
+                mgvHistory.setAdapter(mSearchGridAdapter);
                 SupDem_Search_Grid_Adapter adapter_grid1 = new SupDem_Search_Grid_Adapter(this, historyBean.getRecommend());
-                mGV_Subcribe.setAdapter(adapter_grid1);
+                mgvSubcribe.setAdapter(adapter_grid1);
 
 //                keywords = historyBean.getHot_search().getContent();
 //                editText.setHint(keywords);
@@ -296,10 +294,10 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     if (page == 1) {
                         listView.setVisibility(View.GONE);
                         mLayoutEmpty.setVisibility(View.VISIBLE);
-                        textView_no.setText("抱歉，未能找到相关搜索！");
+                        textviewNo.setText("抱歉，未能找到相关搜索！");
                         bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
                         mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
-                        mGV_Empty.setAdapter(mSearchGridAdapter);
+                        mgvEmpty.setAdapter(mSearchGridAdapter);
                     } else {
                         TextUtils.Toast(this, "没有更多数据了！");
                     }
@@ -308,7 +306,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             if (type == 3 && err.equals("0")) {
                 TextUtils.Toast(this, "删除成功！");
                 mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
-                mGV_History.setAdapter(mSearchGridAdapter);
+                mgvHistory.setAdapter(mSearchGridAdapter);
             }
             if (type == 4) {
                 if (err.equals("0")) {

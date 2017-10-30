@@ -11,6 +11,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -21,16 +22,16 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.common.view.XListView;
+import com.myplas.q.contact.activity.Contact_Detail_Activity;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.contact.activity.Contact_Detail_Activity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.release.ReleaseActivity;
+import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
+import com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity;
+import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
 import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.beans.SupDemBean;
-import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
-import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
 
 import org.json.JSONObject;
 
@@ -56,7 +57,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
     private SupDem_LV_Adapter mSupDemLVAdapter;
 
     private View view;
-    private XListView mListView;
+    private ListView mListView;
     private MainActivity mainActivity;
     private LinearLayout linearLayout_prompt;
     private List<SupDemBean.DataBean> mDataBeanList;
@@ -77,26 +78,16 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
         mListView = F(R.id.fragment_other_listview);
         linearLayout_prompt = F(R.id.supply_demand_prompt_linear);
 
-        mListView.setPullRefreshEnable(false);
         mListView.setHeaderDividersEnabled(false);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
-                    String p_id = mDataBeanList.get(position).getId();
-                    String userid = mDataBeanList.get(position).getUser_id();
-                    String user_id = sharedUtils.getData(getActivity(), "userid");
-
-                    intent.putExtra("id", p_id);
-                    intent.putExtra("type", "0");
-                    intent.putExtra("userid", userid);
-                    intent.putExtra("what", (user_id.equals(userid)) ? ("5") : (ConfigData.what));
-
-                    startActivity(intent);
-                } catch (Exception e) {
-                }
+                goToDetail(mDataBeanList.get(position).getC_name()
+                        , mDataBeanList.get(position).getModel()
+                        , mDataBeanList.get(position).getId()
+                        , mDataBeanList.get(position).getUser_id()
+                        , "1".equals(mDataBeanList.get(position).getFrom()));
             }
         });
 
@@ -149,6 +140,19 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
         BaseActivity.postAsyn(getActivity(), url, map, this, type);
     }
 
+    //跳转至详情
+    public void goToDetail(String company, String model, String id_, String userid, boolean isFromSupdem) {
+        if (isFromSupdem) {
+            Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
+            intent.putExtra("id", id_);
+            intent.putExtra("userid", userid);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), SupDem_QQ_DetailActivity.class);
+            intent.putExtra("company", company);
+            intent.putExtra("plastic_number", model);
+        }
+    }
 
     public <T extends View> T F(int id) {
         return (T) view.findViewById(id);
@@ -164,6 +168,8 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
                 } else {
                     startActivity(new Intent(getActivity(), ReleaseActivity.class));
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -247,6 +253,8 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
                                 textView.setText(new JSONObject(object.toString()).getString("msg"));
                                 view2.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
                                 view2.findViewById(R.id.img_supplydemad_down).setVisibility(View.GONE);
+                                break;
+                            default:
                                 break;
                         }
                     } else {
