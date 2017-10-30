@@ -103,6 +103,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+
         getNetData("1", true);
     }
 
