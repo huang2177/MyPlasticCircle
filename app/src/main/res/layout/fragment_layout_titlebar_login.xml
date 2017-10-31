@@ -15,7 +15,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginBottom="1dp">
 
-            <com.myplas.q.common.view.MyImageView
+            <com.myplas.q.common.view.RoundCornerImageView
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_margin="8dp"

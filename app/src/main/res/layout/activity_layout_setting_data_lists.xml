@@ -30,7 +30,7 @@
                     android:textColor="#171717"
                     android:textSize="16.0sp"/>
 
-                <com.myplas.q.common.view.MyImageView
+                <com.myplas.q.common.view.RoundCornerImageView
                     android:id="@+id/wd_zl_text_headimg"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -71,7 +71,7 @@
                     android:id="@+id/wd_zl_gs"
                     style="@style/wd_zl_text_style"
                     android:layout_width="match_parent"
-                    android:drawableRight="@drawable/btn_more_big1"
+                    android:drawableRight="@drawable/btn_more"
                     android:gravity="right"
                     android:maxLines="1"/>
             </LinearLayout>
@@ -99,7 +99,7 @@
                 <TextView
                     android:id="@+id/wd_zl_tel"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/btn_more_big1"/>
+                    android:drawableRight="@drawable/btn_more" />
             </LinearLayout>
 
             <View
@@ -154,7 +154,7 @@
                 <TextView
                     android:id="@+id/wd_zl_text_xb"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/btn_more_big1"/>
+                    android:drawableRight="@drawable/btn_more" />
             </LinearLayout>
 
             <View
@@ -181,7 +181,7 @@
                 <TextView
                     android:id="@+id/wd_zl_text_address"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/btn_more_big1"/>
+                    android:drawableRight="@drawable/btn_more" />
             </LinearLayout>
 
             <View
@@ -207,7 +207,7 @@
                 <TextView
                     android:id="@+id/wd_zl_text_company"
                     style="@style/wd_zl_text_style"
-                    android:drawableRight="@drawable/btn_more_big1"/>
+                    android:drawableRight="@drawable/btn_more" />
             </LinearLayout>
 
             <View
@@ -241,7 +241,7 @@
                     <TextView
                         android:id="@+id/wd_zl_text_products"
                         style="@style/wd_zl_text_style"
-                        android:drawableRight="@drawable/btn_more_big1"/>
+                        android:drawableRight="@drawable/btn_more" />
                 </LinearLayout>
 
                 <View
@@ -268,7 +268,7 @@
                     <TextView
                         android:id="@+id/wd_zl_text_num"
                         style="@style/wd_zl_text_style"
-                        android:drawableRight="@drawable/btn_more_big1"/>
+                        android:drawableRight="@drawable/btn_more" />
                 </LinearLayout>
 
                 <View
@@ -297,7 +297,7 @@
                     android:id="@+id/wd_zl_text_zhy"
                     style="@style/wd_zl_text_style"
                     android:layout_width="match_parent"
-                    android:drawableRight="@drawable/btn_more_big1"
+                    android:drawableRight="@drawable/btn_more"
                     android:gravity="right"
                     android:maxLines="1"/>
             </LinearLayout>
@@ -332,7 +332,7 @@
                         android:id="@+id/wd_zl_text_ph"
                         style="@style/wd_zl_text_style"
                         android:layout_width="match_parent"
-                        android:drawableRight="@drawable/btn_more_big1"
+                        android:drawableRight="@drawable/btn_more"
                         android:gravity="right"
                         android:maxLines="1"/>
                 </LinearLayout>

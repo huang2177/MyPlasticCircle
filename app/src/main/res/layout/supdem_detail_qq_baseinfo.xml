@@ -100,7 +100,7 @@
                 android:layout_marginLeft="13dp"
                 android:layout_marginTop="13dp"
                 android:layout_weight="1"
-                android:text="厂家"
+                android:text="产地"
                 android:textColor="#171717"
                 android:textSize="16.0sp"/>
 

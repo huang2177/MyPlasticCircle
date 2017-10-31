@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.common.view.DragView;
-import com.myplas.q.common.view.MyImageView;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.myself.beans.MyMessageBean;
 
 import java.util.HashMap;
@@ -66,7 +66,7 @@ public class MessageListsAdapter extends BaseAdapter {
             viewHolder.mDragView = (DragView) convertView.findViewById(R.id.msglist_text_num);
             viewHolder.type = (TextView) convertView.findViewById(R.id.msglist_text_type);
             viewHolder.time = (TextView) convertView.findViewById(R.id.msglist_text_time);
-            viewHolder.mImageView = (MyImageView) convertView.findViewById(R.id.msglist_img);
+            viewHolder.mImageView = (RoundCornerImageView) convertView.findViewById(R.id.msglist_img);
             mViewMap.put(position, convertView);
             convertView.setTag(viewHolder);
         } else {
@@ -106,7 +106,7 @@ public class MessageListsAdapter extends BaseAdapter {
     class viewHolder {
         View mView;
         DragView mDragView;
-        MyImageView mImageView;
+        RoundCornerImageView mImageView;
         TextView type, time, dis;
     }
 }

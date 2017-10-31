@@ -18,7 +18,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.MyImageView;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.contact.Fragment_Contact_Detail;
 import com.myplas.q.contact.adapter.Contact_Detail_ViewPager_Adapter;
@@ -47,7 +47,7 @@ public class Contact_Detail_Their_Activity extends BaseActivity implements View.
     private boolean isSelf;
     private SharedUtils sharedUtils;
 
-    private MyImageView mHead;
+    private RoundCornerImageView mHead;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private MyListview mListview_Sup, mListview_Dem;

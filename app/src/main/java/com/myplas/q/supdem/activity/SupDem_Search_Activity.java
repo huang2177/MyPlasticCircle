@@ -291,6 +291,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     startActivity(intent);
                 } else {//来自qq
                     Intent intent = new Intent(SupDem_Search_Activity.this, SupDem_QQ_DetailActivity.class);
+                    intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("company", list.get(position).getC_name());
                     intent.putExtra("plastic_number", list.get(position).getData_model());
                     startActivity(intent);

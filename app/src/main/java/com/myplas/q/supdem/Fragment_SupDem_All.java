@@ -220,6 +220,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             Intent intent = new Intent(getActivity(), SupDem_QQ_DetailActivity.class);
             intent.putExtra("company", company);
             intent.putExtra("plastic_number", model);
+            intent.putExtra("id", id_);
+            startActivity(intent);
         }
     }
 

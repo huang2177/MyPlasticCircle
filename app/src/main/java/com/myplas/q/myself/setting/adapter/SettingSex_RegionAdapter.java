@@ -72,7 +72,7 @@ public class SettingSex_RegionAdapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         map.get(position).setImageResource((this.position == position) ?
-                (R.drawable.btn_radio_checked) :
+                (R.drawable.btn_radiohl) :
                 (R.drawable.btn_radio));
         viewHolder.content.setText(list.get(position));
         return convertView;
@@ -91,7 +91,7 @@ public class SettingSex_RegionAdapter extends BaseAdapter {
         for (int i = 0; i < map.size(); i++) {
             map.get(i).setImageResource(R.drawable.btn_radio);
         }
-        map.get(position).setImageResource(R.drawable.btn_radio_checked);
+        map.get(position).setImageResource(R.drawable.btn_radiohl);
         //myinterface.select(position);
     }
 }

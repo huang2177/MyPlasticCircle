@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     //使用h5的签名，项目运行的时候可以直接改变签名
     signingConfigs {
@@ -11,7 +10,7 @@ android {
         }
     }
     compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    buildToolsVersion '26.0.0'
     defaultConfig {
         applicationId "com.myplas.q"
         minSdkVersion 15
@@ -52,7 +51,6 @@ android {
             }
         }
     }
-
 }
 
 
@@ -66,10 +64,10 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     /*okhttp*/
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
-    compile 'com.squareup.okio:okio:1.5.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.squareup.okio:okio:1.13.0'
     /*umeng和智齿*/
-    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.umeng.analytics:analytics:6.1.2'
     compile('com.sobot.chat:sobotsdk:2.1.0') {
         exclude group: 'com.android.support'
     }
@@ -77,12 +75,12 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     /*rxjava rxandroid*/
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.2.1'
+    compile 'io.reactivex:rxandroid:1.2.1'
     /*rabbitmq*/
     compile 'com.rabbitmq:amqp-client:4.2.1'
     /*wechat*/
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.3.4'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.3.5'
     /*glide与gson*/
     compile files('libs/glide-3.6.1.jar')
     compile 'io.github.openfeign:feign-gson:9.4.0'

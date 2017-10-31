@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.view.MyImageView;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -61,13 +61,13 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     private Button mButton;
     private EditText mEditText;
-    private MyImageView mIVHead;
+    private RoundCornerImageView mIVHead;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private AppBarLayout mBarLayout;
     private LinearLayout mLayout, mLayoutRoot;
     private ImageView mIVStart, mIVFollow, mIVCall, mSign;
-    private TextView mTVCompany, mTVFans, mTVType, mTVTime, mTVGoodsposition, mTVMode, mTVStorehouse, mTVPirce, mTVNf, mTVProduction;
+    private TextView mTVCompany, mTVFans, mTVType, mTVTime, mTVMode, mTVStorehouse, mTVPirce, mTVNf, mTVProduction;
 
     private List<String> mStringList;
     private List<Fragment> mFragmentList;
@@ -118,7 +118,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mEditText = F(R.id.fragment_supdem_detail_ev);
         mTVStorehouse = F(R.id.supdem_detail_storehouse);
         mTVProduction = F(R.id.supdem_detail_production);
-        mTVGoodsposition = F(R.id.supdem_detail_goodsposition);
 
 
         mIVCall.setOnClickListener(this);
@@ -336,14 +335,14 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 : R.drawable.icon_supply_content, 0, 0, 0);
 
         mTVTime.setText(mDetailBean.getData().getInput_time());
-        mTVMode.setText("牌号：" + mDetailBean.getData().getModel());
-        mTVPirce.setText("价格：" + mDetailBean.getData().getUnit_price());
-        mTVStorehouse.setText("厂家：" + mDetailBean.getData().getF_name());
-        mTVGoodsposition.setText("货物位置：" + mDetailBean.getData().getStore_house());
+        mTVMode.setText(mDetailBean.getData().getModel());
+        mTVPirce.setText(mDetailBean.getData().getUnit_price());
+        mTVProduction.setText(mDetailBean.getData().getF_name());
+        mTVStorehouse.setText(mDetailBean.getData().getStore_house());
 
-        mTVNf.setText("现货/期货：" + (mDetailBean.getData().getCargo_type().equals("1")
+        mTVNf.setText(mDetailBean.getData().getCargo_type().equals("1")
                 ? "现货"
-                : "期货"));
+                : "期货");
         id = "";
         sign = "0";
         pur_id = mDetailBean.getData().getId();

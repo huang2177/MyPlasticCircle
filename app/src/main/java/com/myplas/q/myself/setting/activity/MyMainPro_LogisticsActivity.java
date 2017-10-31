@@ -111,7 +111,7 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
     private void showInfo() {
         if (hint.equals("全国路线")) {
             isClicked = true;
-            mImageView.setImageResource(R.drawable.btn_radio_checked);
+            mImageView.setImageResource(R.drawable.btn_radiohl);
         }
         if (hint.contains("-")) {
             isClicked = false;
@@ -162,7 +162,7 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
                 logisticsStartData = "";
                 mTextField_end.setText("");
                 mTextField_start.setText("");
-                mImageView.setImageResource(R.drawable.btn_radio_checked);
+                mImageView.setImageResource(R.drawable.btn_radiohl);
             }
 
         }

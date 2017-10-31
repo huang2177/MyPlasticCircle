@@ -80,10 +80,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private Fragment_Contact_LV_Adapter mLVAdapter;
 
     private ListView listView;
-    private ImageView mIVBanner;
     private ImageButton imageButton;
     private HIndicatorDialog dialog;
     private RefreshPopou mRefreshPopou;
+    private ImageView mIVBanner, mIVTop;
     private MyNestedScrollView mScrollView;
     private View view, shareView1, shareView2;
     private SwipeRefreshLayout mRefreshLayout;
@@ -117,6 +117,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         sharedUtils.setData(getActivity(), Constant.POINTSINFO, "您还未登录,请先登录塑料圈!");
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_contact, null, false);
 
+        mIVTop = (ImageView) view.findViewById(R.id.top_img);
         listView = (ListView) view.findViewById(R.id.contact_lv);
         mTVTitle = (TextView) view.findViewById(R.id.contanct_title);
         mTVRegion = (TextView) view.findViewById(R.id.contact_region);
@@ -406,6 +407,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
             mLVAdapter.initView(mLVAdapter.getviewHolder(), mLayoutTop);
             mLVAdapter.showInfo(mLVAdapter.getviewHolder(), personsBean);
+            mIVTop.setVisibility(View.VISIBLE);
             mLayoutTop.setVisibility(View.VISIBLE);
         } else {
             mLayoutTop.setVisibility(View.GONE);

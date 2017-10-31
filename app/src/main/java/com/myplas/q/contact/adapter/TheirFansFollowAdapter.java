@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.common.view.MyImageView;
-import com.myplas.q.contact.beans.MyFansBean;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.contact.beans.TheirFansBean;
 
 import java.util.List;
@@ -57,7 +56,7 @@ public class TheirFansFollowAdapter extends BaseAdapter {
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_layout_lv_myself_fansfollow, parent, false);
             viewHolder.rz = (ImageView) convertView.findViewById(R.id.xq_rz);
-            viewHolder.tx = (MyImageView) convertView.findViewById(R.id.xq_tx);
+            viewHolder.tx = (RoundCornerImageView) convertView.findViewById(R.id.xq_tx);
             viewHolder.gs = (TextView) convertView.findViewById(R.id.txl_listview_gs);
             viewHolder.mz = (TextView) convertView.findViewById(R.id.txl_listview_mz);
             viewHolder.gj = (TextView) convertView.findViewById(R.id.txl_listview_gj);
@@ -98,7 +97,7 @@ public class TheirFansFollowAdapter extends BaseAdapter {
     }
 
     class viewHolder {
-        MyImageView tx;
+        RoundCornerImageView tx;
         ImageView rz, sign;
         TextView gs, mz, dh, gj, qg;
     }

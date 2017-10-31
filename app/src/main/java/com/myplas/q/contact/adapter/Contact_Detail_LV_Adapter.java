@@ -12,9 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.contact.beans.ContactInfoBean;
-import com.myplas.q.contact.beans.ContactSupDemBean;
-import com.myplas.q.common.view.MyImageView;
-import com.myplas.q.supdem.beans.DeliverPriceBean;
+import com.myplas.q.common.view.RoundCornerImageView;
 
 import java.util.List;
 
@@ -66,7 +64,7 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_contact_lv_layout, parent, false);
             viewHolder.mIVType = (ImageView) convertView.findViewById(R.id.item_nf);
             viewHolder.mTVTime = (TextView) convertView.findViewById(R.id.item_time);
-            viewHolder.mIVHead = (MyImageView) convertView.findViewById(R.id.item_head);
+            viewHolder.mIVHead = (RoundCornerImageView) convertView.findViewById(R.id.item_head);
             viewHolder.mIVStart = (ImageView) convertView.findViewById(R.id.item_start);
             viewHolder.mTVContent = (TextView) convertView.findViewById(R.id.item_content);
             convertView.setTag(viewHolder);
@@ -132,7 +130,7 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
 //    }
 
     class viewHolder {
-        MyImageView mIVHead;
+        RoundCornerImageView mIVHead;
         ImageView mIVStart, mIVType;
         TextView mTVCompany, mTVContent, mTVTime;
     }

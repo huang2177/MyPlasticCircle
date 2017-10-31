@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <com.myplas.q.common.view.MyImageView
+            <com.myplas.q.common.view.RoundCornerImageView
                 android:id="@+id/msglist_img"
                 android:layout_width="60dp"
                 android:layout_height="60dp"

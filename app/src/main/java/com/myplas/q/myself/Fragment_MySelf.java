@@ -29,9 +29,8 @@ import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.DragView;
-import com.myplas.q.common.view.MyImageView;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.myself.beans.MyZone;
 import com.myplas.q.myself.credit.activity.LineOfCreditActivity;
 import com.myplas.q.myself.credit.activity.PlasticMoneyActivity;
@@ -64,7 +63,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     private MyZone myZone;
 
     private ImageView image_rz;
-    private MyImageView image_tx;
+    private RoundCornerImageView image_tx;
     private SharedUtils sharedUtils;
     private ImageButton imageButton;
     private ImageView mImage_news, mImage_more;
@@ -196,11 +195,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                 case R.id.img_reload:
                     getLoginInfo(true);
                     break;
-                case R.id.wd_linear_share:
-                    Intent in = new Intent(getActivity(), ShareActivity.class);
-                    in.putExtra("type", "5");
-                    startActivity(in);
-                    break;
+
                 case R.id.wd_linear_gj:
                     Intent intent = new Intent(getActivity(), MySupDemActivity.class);
                     intent.putExtra("title", "我的供给");

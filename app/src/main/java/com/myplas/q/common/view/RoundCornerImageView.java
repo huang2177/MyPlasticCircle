@@ -28,7 +28,7 @@ import com.myplas.q.R;
  * Created by lzan13 on 2015/4/30.
  * 自定义 ImageView 控件，实现了圆角和边框，以及按下变色
  */
-public class MyImageView extends ImageView {
+public class RoundCornerImageView extends ImageView {
     // 图片按下的画笔
     private Paint pressPaint;
     // 图片的宽高
@@ -51,17 +51,17 @@ public class MyImageView extends ImageView {
     // 图片类型（矩形，圆形）
     private int shapeType;
 
-    public MyImageView(Context context) {
+    public RoundCornerImageView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public MyImageView(Context context, AttributeSet attrs) {
+    public RoundCornerImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public MyImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RoundCornerImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -132,10 +132,10 @@ public class MyImageView extends ImageView {
         canvas.saveLayer(0, 0, width, height, null, saveFlags);
 
         if (shapeType == 1) {
-            // 画遮罩，画出来就是一个和空间大小相匹配的圆（这里在半径上 -date_selected 是为了不让图片超出边框）
+            // 画遮罩，画出来就是一个和空间大小相匹配的圆（这里在半径上 -1 是为了不让图片超出边框）
             canvas.drawCircle(width / 2, height / 2, width / 2 - 1, paint);
         } else if (shapeType == 2) {
-            // 当ShapeType == 2 时 图片为圆角矩形 （这里在宽高上 -date_selected 是为了不让图片超出边框）
+            // 当ShapeType == 2 时 图片为圆角矩形 （这里在宽高上 -1 是为了不让图片超出边框）
             RectF rectf = new RectF(1, 1, getWidth() - 1, getHeight() - 1);
             canvas.drawRoundRect(rectf, radius + 1, radius + 1, paint);
         }
@@ -173,7 +173,7 @@ public class MyImageView extends ImageView {
             if (shapeType == 1) {
                 canvas.drawCircle(width / 2, height / 2, (width - borderWidth) / 2, paint);
             } else if (shapeType == 2) {
-                // 当ShapeType = date_selected 时 图片为圆角矩形
+                // 当ShapeType = 1 时 图片为圆角矩形
                 RectF rectf = new RectF(borderWidth / 2, borderWidth / 2, getWidth() - borderWidth / 2,
                         getHeight() - borderWidth / 2);
                 canvas.drawRoundRect(rectf, radius, radius, paint);

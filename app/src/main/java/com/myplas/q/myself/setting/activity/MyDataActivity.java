@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.view.MyImageView;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -45,7 +45,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private String sexInPut, regionInPut;
     private String type, address, addressId, sex, region, product, monthUse, mainPro, model;
 
-    private MyImageView image_tx;
+    private RoundCornerImageView image_tx;
     private ImageView image_shch, cardMore, headMore;
     private RadioGroup radioGroup_sex, radioGroup_address;
     private LinearLayout ll_pro_month, ll_add, ll_sex, ll_region, ll_pro, ll_mothonuse, ll_mainsell, ll_mode;

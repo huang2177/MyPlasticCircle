@@ -16,7 +16,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
-import com.myplas.q.common.view.RoundImageView;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
@@ -43,7 +43,8 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         , ResultCallBack
         , AdapterView.OnItemClickListener
         , CommonDialog.DialogShowInterface {
-    private RoundImageView roundImagView;
+
+    private RoundCornerImageView roundImagView;
     private ImageView img_tell, img_zx, img_find;
     private MyListview listview_tell, listView_zx, listView_find;
     private LinearLayout layout_zx, layout_find, layout_wx, layout_tell, layout_zx_more;
@@ -96,9 +97,11 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         layout_tell = F(R.id.supdem_qq_layout_tell);
         layout_zx_more = F(R.id.supdem_qq_layout_zx_more);
 
+        roundImagView.setShapeType(1);
+
         layout_zx.setOnClickListener(this);
-        layout_find.setOnClickListener(this);
         layout_wx.setOnClickListener(this);
+        layout_find.setOnClickListener(this);
         layout_tell.setOnClickListener(this);
         layout_zx_more.setOnClickListener(this);
         listView_zx.setOnItemClickListener(this);
@@ -108,8 +111,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     //获取数据
     public void getSearch_Detail() {
         Map map = new HashMap();
-        map.put("c_name", getIntent().getStringExtra("company"));
-        map.put("model", getIntent().getStringExtra("plastic_number"));
+        map.put("id", getIntent().getStringExtra("id"));
         postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH_DETAIL, map, this, 1);
     }
 

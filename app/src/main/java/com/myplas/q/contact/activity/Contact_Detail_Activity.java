@@ -2,11 +2,8 @@ package com.myplas.q.contact.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,24 +13,19 @@ import com.androidkun.xtablayout.XTabLayout;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.view.LoadingDialog;
 import com.myplas.q.contact.Fragment_Contact_Detail;
-import com.myplas.q.contact.adapter.Contact_Detail_LV_Adapter;
 import com.myplas.q.contact.adapter.Contact_Detail_ViewPager_Adapter;
 import com.myplas.q.contact.beans.ContactInfoBean;
 import com.myplas.q.contact.beans.ContactSupDemBean;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.HLog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.MyImageView;
-import com.myplas.q.common.view.MyListview;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
 import com.myplas.q.release.MyOnPageChangeListener;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -56,7 +48,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
     private boolean isSelf;
     private SharedUtils sharedUtils;
 
-    private MyImageView mHead;
+    private RoundCornerImageView mHead;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private ImageView mStart, mFollow, mCall, mBack, mSign;

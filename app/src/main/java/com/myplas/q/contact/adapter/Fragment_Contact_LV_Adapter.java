@@ -3,7 +3,6 @@ package com.myplas.q.contact.adapter;
 import android.content.Context;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.contact.beans.ContactBean;
-import com.myplas.q.common.view.MyImageView;
+import com.myplas.q.common.view.RoundCornerImageView;
 
 import java.util.List;
 
@@ -126,7 +125,7 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
 
     public void initView(viewHolder viewHolder, View layout) {
         viewHolder.mStart = (ImageView) layout.findViewById(R.id.xq_rz);
-        viewHolder.mHead = (MyImageView) layout.findViewById(R.id.xq_tx);
+        viewHolder.mHead = (RoundCornerImageView) layout.findViewById(R.id.xq_tx);
         viewHolder.mTop_Img = (ImageView) layout.findViewById(R.id.top_img);
         viewHolder.mSign = (ImageView) layout.findViewById(R.id.contact_sign_img);
         viewHolder.mNeed = (TextView) layout.findViewById(R.id.txl_listview_need);
@@ -150,7 +149,7 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
     }
 
     class viewHolder {
-        MyImageView mHead;
+        RoundCornerImageView mHead;
         ImageView mStart, mTop_Img, mSign;
         TextView mInfo, mNeed, mPro, need_text;
     }

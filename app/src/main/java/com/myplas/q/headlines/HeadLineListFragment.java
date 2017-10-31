@@ -268,7 +268,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("err");
-            if (type == 4 && err.equals("0")) {//推荐
+            if (type == 4) {//推荐
                 loadCacheSubcrible(object.toString());
                 mACache.put("subcrible_cache", object.toString());//加入缓存
             }

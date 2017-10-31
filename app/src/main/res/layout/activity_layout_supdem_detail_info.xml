@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              app:layout_scrollFlags="scroll|snap">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_scrollFlags="scroll|snap">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         <com.myplas.q.common.view.VImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/color_title_main"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,14 +50,14 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:textColor="@color/color_title_main"
-                    android:textSize="14.0sp"/>
+                    android:textSize="14.0sp" />
 
                 <ImageView
                     android:id="@+id/supdem_detail_follow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -91,7 +91,7 @@
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:textColor="@color/color_balank"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
 
             <TextView
                 android:id="@+id/supdem_detail_time"
@@ -99,102 +99,165 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="2dp"
-                android:textSize="14.0sp"/>
+                android:textSize="14.0sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"/>
 
             <TextView
-                android:id="@+id/supdem_detail_goodsposition"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
+                android:text="牌号"
                 android:textColor="@color/color_title_main"
-                android:textSize="14.0sp"/>
+                android:textSize="14.0sp" />
 
             <TextView
                 android:id="@+id/supdem_detail_mode"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:maxLines="1"
-                android:textColor="@color/color_title_main"
-                android:textSize="14.0sp"/>
+                android:textSize="14.0sp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/color_gray_divider_in" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
+
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"/>
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="货物位置"
+                android:textColor="@color/color_title_main"
+                android:textSize="14.0sp" />
 
             <TextView
                 android:id="@+id/supdem_detail_storehouse"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:maxLines="1"
-                android:textColor="@color/color_title_main"
-                android:textSize="14.0sp"/>
-
-            <TextView
-                android:id="@+id/supdem_detail_pirce"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:maxLines="1"
-                android:textColor="@color/color_title_main"
-                android:textSize="14.0sp"/>
+                android:textSize="14.0sp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/color_gray_divider_in" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"/>
 
             <TextView
-                android:id="@+id/supdem_detail_nf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
+                android:text="厂家"
                 android:textColor="@color/color_title_main"
-                android:textSize="14.0sp"/>
+                android:textSize="14.0sp" />
 
             <TextView
                 android:id="@+id/supdem_detail_production"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="14.0sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/color_gray_divider_in" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
+                android:text="价格"
                 android:textColor="@color/color_title_main"
-                android:textSize="14.0sp"/>
+                android:textSize="14.0sp" />
+
+            <TextView
+                android:id="@+id/supdem_detail_pirce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="14.0sp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/color_gray_divider_in" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="现货/期货"
+                android:textColor="@color/color_title_main"
+                android:textSize="14.0sp" />
+
+            <TextView
+                android:id="@+id/supdem_detail_nf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="14.0sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

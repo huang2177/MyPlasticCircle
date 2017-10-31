@@ -26,7 +26,7 @@
                 android:src="@drawable/icon_identity"
                 android:visibility="gone"/>
 
-            <com.myplas.q.common.view.MyImageView
+            <com.myplas.q.common.view.RoundCornerImageView
                 android:id="@+id/item_head"
                 android:layout_width="35dp"
                 android:layout_height="35dp"

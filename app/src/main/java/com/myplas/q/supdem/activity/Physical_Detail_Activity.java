@@ -1,16 +1,13 @@
 package com.myplas.q.supdem.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -18,7 +15,6 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.supdem.beans.PhysicalDetailBean;
 import com.umeng.analytics.MobclickAgent;
 
@@ -37,7 +33,6 @@ import java.util.Map;
 public class Physical_Detail_Activity extends BaseActivity implements ResultCallBack {
     private WebView webView;
     private WebSettings webSettings;
-    private LinearLayout layout_share;
     private static final String APP_CACAHE_DIRNAME = "/webcache";
     private TextView physical_variety, physical_remark, physical_maker, physical_content, physical_comment, physical_color, physical_use;
 
@@ -51,7 +46,6 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
     }
 
     private void initViews() {
-        layout_share = F(R.id.share_physical);
         webView = F(R.id.physical_detail_webview);
         physical_use = F(R.id.physical_detail_use);
         physical_content = F(R.id.physical_content);
@@ -83,13 +77,6 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
         clearWebViewCache();
         webView.setWebViewClient(new WebViewClient());
 
-        layout_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Physical_Detail_Activity.this, ShareActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     //获取数据
