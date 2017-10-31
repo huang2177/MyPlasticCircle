@@ -129,6 +129,7 @@ public class RoundCornerImageView extends ImageView {
                 | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG
                 | Canvas.FULL_COLOR_LAYER_SAVE_FLAG
                 | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
+
         canvas.saveLayer(0, 0, width, height, null, saveFlags);
 
         if (shapeType == 1) {
