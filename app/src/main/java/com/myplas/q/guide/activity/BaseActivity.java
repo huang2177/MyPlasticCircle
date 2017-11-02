@@ -1,21 +1,14 @@
 package com.myplas.q.guide.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +17,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.netresquset.NetRequest;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
-import com.myplas.q.common.view.CustomPopupWindow;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -45,7 +38,8 @@ import rx.Subscriber;
 public class BaseActivity extends FragmentActivity {
     private View mView;
     public LinearLayout mLayoutBack;
-    public ImageView mIVConact;
+    private FrameLayout mFrameLayout;
+    public ImageView mIVConact, mIVLeft;
     public TextView mTextView, mTVLeft, mTVRight;
 
     private String type;
@@ -53,6 +47,8 @@ public class BaseActivity extends FragmentActivity {
 
 
     public void initTileBar() {
+        mFrameLayout = F(R.id.title_bar);
+        mIVLeft = F(R.id.titlebar_img_left);
         mTVLeft = F(R.id.titlebar_text_left);
         mIVConact = F(R.id.titlebar_img_right);
         mTVRight = F(R.id.titlebar_text_right);
@@ -69,6 +65,14 @@ public class BaseActivity extends FragmentActivity {
         mIVConact.setVisibility(isShow);
     }
 
+    public void setTitleBarBackground(int resId) {
+        mFrameLayout.setBackgroundResource(resId);
+    }
+
+    public void setTitleBarTextColor(int resId) {
+        mTextView.setTextColor(getResources().getColor(resId));
+    }
+
     //右边确定按钮
     public void setRightTVVisibility(int isShow) {
         mTVRight.setVisibility(isShow);
@@ -77,7 +81,9 @@ public class BaseActivity extends FragmentActivity {
     //右边设置文字（默认为确定）
     public void setRightTVText(String text) {
         mTVRight.setText(text);
-        mTVRight.setVisibility(View.VISIBLE);
+        mTVRight.setVisibility(TextUtils.isNullOrEmpty(text)
+                ? View.VISIBLE
+                : View.GONE);
     }
 
     //设置右边图片
@@ -101,6 +107,11 @@ public class BaseActivity extends FragmentActivity {
     //左边返回按钮
     public void setLeftIVVisibility(int isShow) {
         mLayoutBack.setVisibility(isShow);
+    }
+
+    //左边返回按钮
+    public void setLeftIVResId(int resId) {
+        mIVLeft.setImageResource(resId);
     }
 
     //绑定订阅者

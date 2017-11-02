@@ -1,5 +1,6 @@
 package com.myplas.q.myself.login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
@@ -33,7 +33,6 @@ import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -54,9 +53,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private ScrollView mScrollView;
     private SharedUtils sharedUtils;
     private Button mButtonNomal, mButtonPhone;
+    private TextView textView_zhc, textView_wj, mTextView_send;
     private boolean clicked, isRemember, isNomalNull, isPhoneNull;
     private ImageView imageView1, imageView2, imageView_verification;
-    private TextView textView_zhc, textView_wj, textView_title, mTextView_send;
     private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone, mLayoutRoot;
     private MyEditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
 
@@ -69,10 +68,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         StatusUtils.setStatusBar(this, false, false);
         StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_login_activity);
-        goBack(findViewById(R.id.back));
+
+        initTileBar();
+        setTitle("普通登录");
+        setLeftIVResId(R.drawable.btn_login_back);
+        setTitleBarBackground(R.color.color_white);
+        setTitleBarTextColor(R.color.color_transparent);
         initView();
     }
 
+    @SuppressLint("HandlerLeak")
     public void initView() {
         count = 60;
         clicked = true;
@@ -99,7 +104,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
         textView_wj = F(R.id.dl_wjmm);
         textView_zhc = F(R.id.dl_zhc);
-        textView_title = F(R.id.title_rs);
 
         mLayoutRoot = F(R.id.login_rootview);
         linearLayout_nomal = F(R.id.linearlayout_login_nomal);
@@ -154,7 +158,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.dl_zhc:
-                Intent intent = new Intent(this, RegesterActivity.class);
+                Intent intent = new Intent(this, RegisterActivity.class);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.dl_wjmm:
@@ -196,7 +200,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
 
             case R.id.ll_login_nomal:
-                textView_title.setText("普通登录");
+                mTextView.setText("普通登录");
                 imageView2.setVisibility(View.GONE);
                 imageView1.setVisibility(View.VISIBLE);
                 textView_wj.setVisibility(View.VISIBLE);
@@ -204,7 +208,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 linearLayout_nomal.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_login_phone:
-                textView_title.setText("手机动态码登录");
+                mTextView.setText("手机动态码登录");
                 imageView1.setVisibility(View.GONE);
                 textView_wj.setVisibility(View.GONE);
                 imageView2.setVisibility(View.VISIBLE);

@@ -19,26 +19,38 @@ public class API {
     /*common*/
     //检查UA
     public final static String CHECK_UA = "common/checkUA";
+
     //APP更新
     public final static String CHECK_VERSION = "common/checkVersion";
+
     //APP推荐更新
     public final static String CHECKAPPVERSION = "common/checkAppVersion";
+
     //微信分享缩略图
     public final static String LOG_HL_URL = "http://pic.myplas.com/myapp/img/toutiaoLogo.png";
 
+
     public final static String LOG_SD_URL = "http://pic.myplas.com/myapp/img/gongqiuLogo.png";
+
     //测试——微信appid
 //     public final static String WXAPI="wxf17d8dabcebe5b1b";
+
     // 正式——微信appid
     public final static String WXAPI = "wxc0eb2ef58d5df955";
+
     //分享文章
     public final static String PLASTIC_SUCRIBLE = "http://q.myplas.com/plasticzone/plastic#/headlinedetail/";
+
     //分享授信
     public final static String PLASTIC_CREDIT = "http://q.myplas.com/plasticzone/plastic#/credit2/";
-    //分享供求
-    public final static String PLASTIC_SUPPLY_DEMAND = "http://q.myplas.com/plasticzone/plastic#/supplybuydetail/";
+
     //分享成功日志
     public final static String SAVE_SHARE_LOG = "wechat/saveShareLog";
+
+    //分享供求
+    public final static String PLASTIC_SUPPLY_DEMAND = (BuildConfig.API_ENV)
+            ? "http://q.myplas.com/plasticzone/plastic#/supplybuydetail/"
+            : "http://test.myplas.com/plasticzone/plastic#/supplybuydetail/";
 
 
     /*socket*/
@@ -151,6 +163,8 @@ public class API {
     public final static String CHUJIAMSG = "myInfo/chuJiaMsg";
     //获取我的消息--回复消息
     public final static String HUIFUMSG = "myInfo/huiFuMsg";
+    //获取我的消息--互动消息
+    public final static String INTERMSG = "myInfo/interMsg";
 
 
     /*product*/

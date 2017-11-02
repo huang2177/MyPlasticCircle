@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -85,7 +86,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     private List<String> mListImg;
     private List<Boolean> mListTag;
     private List<String> mListTitle;
-    public Myinterface mMyinterface;
+    public Myinterface mMyInterface;
 
     private ACache mACache;
     private Handler mHandler;
@@ -274,6 +275,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             }
             if (type == 5) {//其他
                 if (err.equals("0")) {
+                    setListener(false);
                     CateListBean cateListBean = gson.fromJson(object.toString(), CateListBean.class);
                     if (page == 1) {
                         imageButton.setVisibility(View.GONE);
@@ -286,7 +288,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                         lastvisibleItemCount = cateListBean.getInfo().size();
 
                         //展示刷新后的popou
-                        mMyinterface.callBack(cateListBean.getHot_search()
+                        mMyInterface.callBack(cateListBean.getHot_search()
                                 , cateListBean.getShow_msg());
 
                     } else {
@@ -295,13 +297,8 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                         cateListAdapter.setList(list_catelist);
                         cateListAdapter.notifyDataSetChanged();
                     }
-                } else if (err.equals("1") || "998".equals(err)) {
-                    mRefreshPopou.setCanShowPopou(false);
-                    mRefreshLayout.setRefreshing(false);
-                    sharedUtils.setData(getActivity(), "token", "");
-                    sharedUtils.setData(getActivity(), "userid", "");
-                    sharedUtils.setBooloean(getActivity(), "logined", false);
                 } else {
+                    setListener(true);
                     mRefreshPopou.setCanShowPopou(false);
                     if (page == 1) {
                         mRefreshLayout.setRefreshing(false);
@@ -336,6 +333,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             Gson gson = new Gson();
             String err = new JSONObject(data.toString()).getString("err");
             if (err.equals("0")) {
+                setListener(false);
                 SubcribleBean subcribleBean = gson.fromJson(data.toString(), SubcribleBean.class);
                 if (page == 1) {
                     imageButton.setVisibility(View.GONE);
@@ -349,7 +347,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                     lastvisibleItemCount = subcribleBean.getData().size();
 
                     //展示刷新后的popou
-                    mMyinterface.callBack(subcribleBean.getHot_search()
+                    mMyInterface.callBack(subcribleBean.getHot_search()
                             , subcribleBean.getShow_msg());
 
                     //显示banner
@@ -361,13 +359,8 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                     mSubcribleAdapter.setList(list_subcirble);
                     mSubcribleAdapter.notifyDataSetChanged();
                 }
-            } else if (err.equals("1") || "998".equals(err)) {
-                mRefreshLayout.setRefreshing(false);
-                mRefreshPopou.setCanShowPopou(false);
-                sharedUtils.setData(getActivity(), "token", "");
-                sharedUtils.setData(getActivity(), "userid", "");
-                sharedUtils.setBooloean(getActivity(), "logined", false);
             } else {
+                setListener(true);
                 mRefreshPopou.setCanShowPopou(false);
                 if (page == 1) {
                     mRefreshLayout.setRefreshing(false);
@@ -418,6 +411,16 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
 
 
     @Override
+    public void loadMore() {
+        page++;
+        if (po == 0) {
+            get_CateList(page, "999", false);
+        } else {
+            get_CateList(page, cate_id, false);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_reload:
@@ -443,23 +446,21 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         }
     }
 
-    @Override
-    public void loadMore() {
-        page++;
-        if (po == 0) {
-            get_CateList(page, "999", false);
-        } else {
-            get_CateList(page, cate_id, false);
-        }
+    private void setListener(final boolean scrollabled) {
+        mScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return scrollabled;
+            }
+        });
     }
-
 
     interface Myinterface {
         void callBack(String hotSearch, String content);
     }
 
-    public void setMyinterface(Myinterface mMyinterface) {
-        this.mMyinterface = mMyinterface;
+    public void setMyinterface(Myinterface mMyInterface) {
+        this.mMyInterface = mMyInterface;
     }
 
     public class GlideImageLoader extends ImageLoader {

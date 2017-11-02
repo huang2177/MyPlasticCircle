@@ -1,277 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#d8d8d9"
-              android:orientation="vertical">
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:clickable="true"
+    android:orientation="vertical">
 
-    <include layout="@layout/common_layout_titlebar"/>
-
-    <ScrollView
-        android:id="@+id/scrollView__"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="23dp"
+        android:background="@color/color_white" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+    <include layout="@layout/common_layout_titlebar" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_mark"
-                android:padding="15dp"
-                android:text="  帐号信息"
-                android:textColor="@color/color_balank"
-                android:textSize="14.0sp"/>
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="@color/color_lightgray"/>
+    <com.myplas.q.common.view.HorizontalStepView
+        android:id="@+id/stepview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        style="@style/wd_zhc_text_style"
-                        android:text="手机号码："/>
-
-                    <EditText
-                        android:id="@+id/zhc_tel"
-                        style="@style/wd_zhc_edit_style"
-                        android:hint="请输入手机号码"
-                        android:inputType="number"
-                        android:maxLength="11"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/color_lightgray"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        style="@style/wd_zhc_text_style"
-                        android:text="设置密码："/>
-
-                    <EditText
-                        android:id="@+id/zhc_pass"
-                        style="@style/wd_zhc_edit_style"
-                        android:hint="请设定密码"
-                        android:inputType="textPassword"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/color_lightgray"/>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            style="@style/wd_zhc_text_style"
-                            android:text="验证码："/>
-
-                        <EditText
-                            android:id="@+id/zhc_yzm"
-                            style="@style/wd_zhc_edit_style"
-                            android:hint="请输入验证码"/>
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/zhc_hq_yzm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/btn_login_yzm"
-                        android:text="获取验证码"
-                        android:textColor="@color/color_white"/>
-                </FrameLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="@color/color_lightgray"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_mark"
-                android:padding="15dp"
-                android:text="  更多信息"
-                android:textColor="@color/color_balank"
-                android:textSize="14.0sp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="@color/color_lightgray"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        style="@style/wd_zhc_text_style"
-                        android:text="姓名："/>
-
-                    <EditText
-                        android:id="@+id/zhc_name"
-                        style="@style/wd_zhc_edit_style"
-                        android:hint="请输入您的姓名"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/color_lightgray"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        style="@style/wd_zhc_text_style"
-                        android:text="公司名称："/>
-
-                    <EditText
-                        android:id="@+id/zhc_company"
-                        style="@style/wd_zhc_edit_style"
-                        android:hint="请输入您的公司全称"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/color_lightgray"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:text="企业类型："
-                        android:textColor="#171717"/>
-
-                    <RadioGroup
-                        android:id="@+id/radio_company"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="-5dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <RadioButton
-                                android:id="@+id/radio_company_fatory"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:buttonTintMode="multiply"
-                                android:checked="true"
-                                android:text="塑料制品厂 "/>
-
-                            <RadioButton
-                                android:id="@+id/radio_address_trade"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:buttonTintMode="multiply"
-                                android:text="原料供应商"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <RadioButton
-                                android:id="@+id/radio_address_c_t"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:buttonTintMode="multiply"
-                                android:text="物流服务商"/>
-                        </LinearLayout>
-                    </RadioGroup>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="@color/color_lightgray"/>
-
-            <LinearLayout
-                android:id="@+id/linear_xy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/img_jzh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/btn_checkbox_hl"/>
-
-                <TextView
-                    android:id="@+id/xy_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="已阅读《塑料圈用户服务协议》"/>
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/zhc_next"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_margin="15dp"
-                android:background="@drawable/btn_shape_red_coners"
-                android:text="提交注册信息"
-                android:textColor="@color/color_white"
-                android:textSize="18.0sp"/>
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

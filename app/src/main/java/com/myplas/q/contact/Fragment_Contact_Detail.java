@@ -85,14 +85,6 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
         BaseActivity.postAsyn1(getActivity(), url, map, this, _type, false);
     }
 
-    private void setListener(final boolean scrollabled) {
-        mScrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return scrollabled;
-            }
-        });
-    }
 
     @Override
     public void loadMore() {
@@ -163,6 +155,15 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
 
         } catch (Exception e) {
         }
+    }
+
+    private void setListener(final boolean scrollabled) {
+        mScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return scrollabled;
+            }
+        });
     }
 
     @Override

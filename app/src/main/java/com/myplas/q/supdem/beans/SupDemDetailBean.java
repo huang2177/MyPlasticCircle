@@ -1,5 +1,7 @@
 package com.myplas.q.supdem.beans;
 
+import java.util.List;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
@@ -11,17 +13,19 @@ public class SupDemDetailBean {
 
     /**
      * err : 0
-     * data : {"id":"439","p_id":"5023","from":"1","user_id":"3858","stype":"1","model":"5000S","unit_price":"10500.00","store_house":"上海","cargo_type":"2","f_name":"上海","type":"1","input_time":"10-25 15:12","top":"0","status":1,"name":"李一帆","fans":"29","thumb":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","is_pass":"","mobile":"1376499****","mobile1":"13764999601","member_level":"班长"}
+     * data : {"id":"195864","p_id":"3595","from":"1","user_id":"53453","stype":"4","model":"BL3","unit_price":"10500.00","store_house":"宁波","cargo_type":"2","f_name":"伊朗石化","type":"2","input_time":"11-01 10:11","top":"0","status":0,"name":"娟娟","fans":"9","thumb":"http://pic.myplas.com/upload/17/09/01/59a93aba83fc0.PNG","c_name":"上海晨达物流有限公司","is_pass":"","mobile":"18817392633","mobile1":"18817392633","member_level":"列兵"}
+     * qapp_status : ["common_user"]
      */
 
-    private String err;
+    private int err;
     private DataBean data;
+    private List<String> qapp_status;
 
-    public String getErr() {
+    public int getErr() {
         return err;
     }
 
-    public void setErr(String err) {
+    public void setErr(int err) {
         this.err = err;
     }
 
@@ -33,30 +37,38 @@ public class SupDemDetailBean {
         this.data = data;
     }
 
+    public List<String> getQapp_status() {
+        return qapp_status;
+    }
+
+    public void setQapp_status(List<String> qapp_status) {
+        this.qapp_status = qapp_status;
+    }
+
     public static class DataBean {
         /**
-         * id : 439
-         * p_id : 5023
+         * id : 195864
+         * p_id : 3595
          * from : 1
-         * user_id : 3858
-         * stype : 1
-         * model : 5000S
+         * user_id : 53453
+         * stype : 4
+         * model : BL3
          * unit_price : 10500.00
-         * store_house : 上海
+         * store_house : 宁波
          * cargo_type : 2
-         * f_name : 上海
-         * type : 1
-         * input_time : 10-25 15:12
+         * f_name : 伊朗石化
+         * type : 2
+         * input_time : 11-01 10:11
          * top : 0
-         * status : 1
-         * name : 李一帆
-         * fans : 29
-         * thumb : http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG
-         * c_name : 上海中晨电子商务股份有限公司
-         * is_pass : 
-         * mobile : 1376499****
-         * mobile1 : 13764999601
-         * member_level : 班长
+         * status : 0
+         * name : 娟娟
+         * fans : 9
+         * thumb : http://pic.myplas.com/upload/17/09/01/59a93aba83fc0.PNG
+         * c_name : 上海晨达物流有限公司
+         * is_pass :
+         * mobile : 18817392633
+         * mobile1 : 18817392633
+         * member_level : 列兵
          */
 
         private String id;

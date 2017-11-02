@@ -65,8 +65,9 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-        if (logined)
+        if (logined) {
             initViewPager();
+        }
     }
 
     private void initView() {
@@ -150,6 +151,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
                 startActivity(in);
                 getActivity().overridePendingTransition(R.anim.fade, R.anim.fade);
                 break;
+            default:
+                break;
         }
     }
 
@@ -180,6 +183,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
+    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("MainScreen");
@@ -191,6 +195,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         }
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");

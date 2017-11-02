@@ -84,7 +84,6 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     private String mLastData, hotSearch;
     public String follow_release, user_id, type;
     private RefreshPopouInterface mPopouinterface;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

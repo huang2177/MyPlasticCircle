@@ -33,7 +33,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 16:22
  */
-public class MessageCommonActivity extends BaseActivity implements ResultCallBack {
+public class MessageDetailActivity extends BaseActivity implements ResultCallBack {
     private int page, count;
     private String method, title;
     private List<MsgHFBean.DataBean> mListHF;
@@ -79,9 +79,12 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
         } else if (title.equals("出价消息")) {
             type = 2;
             method = API.CHUJIAMSG;
-        } else {
+        } else if (title.equals("回复消息")) {
             type = 3;
             method = API.HUIFUMSG;
+        } else {
+            type = 3;
+            method = API.INTERMSG;
         }
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page);
@@ -187,13 +190,4 @@ public class MessageCommonActivity extends BaseActivity implements ResultCallBac
 
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

@@ -39,7 +39,7 @@ import com.myplas.q.myself.fans.activity.MyFansFollowActivity;
 import com.myplas.q.myself.fans.activity.MyIntroductionActivity;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
-import com.myplas.q.myself.message.activity.MessageListsActivity;
+import com.myplas.q.myself.message.activity.MessageActivity;
 import com.myplas.q.myself.setting.SettingActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
@@ -185,7 +185,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         if (NetUtils.isNetworkStateed(getActivity())) {
             switch (v.getId()) {
                 case R.id.wd_logined_news_fl:
-                    Intent i0 = new Intent(getActivity(), MessageListsActivity.class);
+                    Intent i0 = new Intent(getActivity(), MessageActivity.class);
                     startActivity(i0);
                     break;
                 case R.id.wd_linear_dd:

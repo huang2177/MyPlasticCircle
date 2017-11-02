@@ -102,4 +102,5 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
     @Override
     public void failCallBack(int type) {
     }
+
 }

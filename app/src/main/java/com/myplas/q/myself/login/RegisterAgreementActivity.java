@@ -18,7 +18,7 @@ import com.umeng.analytics.MobclickAgent;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/24 11:41
  */
-public class RegesterXYActivity extends BaseActivity {
+public class RegisterAgreementActivity extends BaseActivity {
     private WebView webView;
     private String mimeType = "textselecthandle/html";
     private String encoding = "utf-8";

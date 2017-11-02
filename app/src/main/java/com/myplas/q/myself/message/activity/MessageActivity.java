@@ -14,7 +14,6 @@ import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.MyMessageBean;
 import com.myplas.q.myself.message.adapter.MessageListsAdapter;
 import com.myplas.q.sockethelper.RabbitMQConfig;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -28,7 +27,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/29 14:35
  */
-public class MessageListsActivity extends BaseActivity implements ResultCallBack {
+public class MessageActivity extends BaseActivity implements ResultCallBack {
     private ListView listView;
     private MessageListsAdapter mAdapter;
     private List<MyMessageBean.DataBean> list;
@@ -50,10 +49,12 @@ public class MessageListsActivity extends BaseActivity implements ResultCallBack
                     stringBuffer = new StringBuffer("供求消息");
                 } else if (list.get(position).getType().equals("2")) {
                     stringBuffer = new StringBuffer("出价消息");
-                } else {
+                } else if (list.get(position).getType().equals("3")) {
                     stringBuffer = new StringBuffer("回复消息");
+                } else {
+                    stringBuffer = new StringBuffer("互动消息");
                 }
-                Intent intent = new Intent(MessageListsActivity.this, MessageCommonActivity.class);
+                Intent intent = new Intent(MessageActivity.this, MessageDetailActivity.class);
                 intent.putExtra("title", stringBuffer.toString());
                 startActivity(intent);
             }

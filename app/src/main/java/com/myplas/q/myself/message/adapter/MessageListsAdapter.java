@@ -40,8 +40,9 @@ public class MessageListsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list != null)
+        if (list != null) {
             return list.size();
+        }
         return 0;
     }
 
@@ -83,9 +84,12 @@ public class MessageListsAdapter extends BaseAdapter {
         } else if (list.get(position).getType().equals("2")) {
             title = "出价消息";
             imgRes = R.drawable.icon_bid_message;
-        } else {
+        } else if (list.get(position).getType().equals("3")) {
             title = "回复消息";
             imgRes = R.drawable.icon_reply_message;
+        } else {
+            title = "互动消息";
+            imgRes = R.drawable.icon_interaction_message;
         }
         viewHolder.type.setText(title);
         viewHolder.mImageView.setImageResource(imgRes);
