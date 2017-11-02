@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.myself.login.LoginActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;

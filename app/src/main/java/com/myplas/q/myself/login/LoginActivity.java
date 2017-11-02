@@ -1,6 +1,5 @@
 package com.myplas.q.myself.login;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
@@ -31,7 +27,7 @@ import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
-import com.myplas.q.sockethelper.DefConfigBean;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -44,23 +40,20 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/24 11:41
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener
-        , ResultCallBack
-        , MyEditText.OnTextWatcher {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, ResultCallBack, MyEditText.OnTextWatcher {
     private int count;
     private String key;
     private Handler mHandler;
     private ScrollView mScrollView;
     private SharedUtils sharedUtils;
     private Button mButtonNomal, mButtonPhone;
-    private TextView textView_zhc, textView_wj, mTextView_send;
     private boolean clicked, isRemember, isNomalNull, isPhoneNull;
     private ImageView imageView1, imageView2, imageView_verification;
+    private TextView textView_zhc, textView_wj, textView_title, mTextView_send;
     private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone, mLayoutRoot;
     private MyEditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
 
-    private ACache mACache;
-    private MainActivity mainActivity;
+    private View decorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +61,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         StatusUtils.setStatusBar(this, false, false);
         StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_login_activity);
-
-        initTileBar();
-        setTitle("普通登录");
-        setLeftIVResId(R.drawable.btn_login_back);
-        setTitleBarBackground(R.color.color_white);
-        setTitleBarTextColor(R.color.color_transparent);
+        goBack(findViewById(R.id.back));
         initView();
     }
 
-    @SuppressLint("HandlerLeak")
     public void initView() {
         count = 60;
         clicked = true;
-        mACache = ACache.get(this);
         sharedUtils = SharedUtils.getSharedUtils();
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
@@ -104,8 +90,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
         textView_wj = F(R.id.dl_wjmm);
         textView_zhc = F(R.id.dl_zhc);
+        textView_title = F(R.id.title_rs);
 
         mLayoutRoot = F(R.id.login_rootview);
+        decorView = getWindow().getDecorView();
         linearLayout_nomal = F(R.id.linearlayout_login_nomal);
         linearLayout_phone = F(R.id.linearlayout_login_phone);
 
@@ -135,7 +123,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             editText_pass.setSelection(editText_pass.getText().length());
             editText_tel.setSelection(editText_tel.getText().length());
         }
-
+        //解决设置透明状态栏以后 页面不能滑动的问题
+//        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                Rect rect = new Rect();
+//                decorView.getWindowVisibleDisplayFrame(rect);
+//                int screenHeight = decorView.getRootView().getHeight();
+//                int navigationBarHeight = StatusUtils.checkDeviceHasNavigationBar(LoginActivity.this)
+//                        ? StatusUtils.getNavigationBarHeight(LoginActivity.this)
+//                        : 0;
+////                Log.e("-------", navigationBarHeight + "");
+//                int heightDifference = screenHeight - rect.bottom;//计算软键盘占有的高度  = 屏幕高度 - 视图可见高度
+//                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mScrollView.getLayoutParams();
+//                layoutParams.setMargins(0, 0, 0, heightDifference - navigationBarHeight);//设置ScrollView的marginBottom的值为软键盘占有的高度即可
+//                mScrollView.requestLayout();
+//            }
+//        });
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -200,7 +204,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
 
             case R.id.ll_login_nomal:
-                mTextView.setText("普通登录");
+                textView_title.setText("普通登录");
                 imageView2.setVisibility(View.GONE);
                 imageView1.setVisibility(View.VISIBLE);
                 textView_wj.setVisibility(View.VISIBLE);
@@ -208,7 +212,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 linearLayout_nomal.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_login_phone:
-                mTextView.setText("手机动态码登录");
+                textView_title.setText("手机动态码登录");
                 imageView1.setVisibility(View.GONE);
                 textView_wj.setVisibility(View.GONE);
                 imageView2.setVisibility(View.VISIBLE);
@@ -226,8 +230,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             case R.id.login_rootview:
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mButtonNomal.getWindowToken(), 0);
-                break;
-            default:
                 break;
         }
     }
@@ -261,44 +263,36 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-
     @Override
     public void callBack(Object object, int type) {
         try {
-            JSONObject jsonObject = new JSONObject(object.toString());
-            String s = jsonObject.getString("err");
+            String s = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 mButtonNomal.setClickable(true);
                 mButtonPhone.setClickable(true);
-                mButtonNomal.setBackgroundResource(isNomalNull
-                        ? R.drawable.login_btn_shape_hl
-                        : R.drawable.login_btn_shape);
-                mButtonPhone.setBackgroundResource(isPhoneNull
-                        ? R.drawable.login_btn_shape_hl
-                        : R.drawable.login_btn_shape);
+                mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
+                mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
 
-                TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                String msg = new JSONObject(object.toString()).getString("msg");
+                TextUtils.Toast(this, msg);
                 if (s.equals("0")) {
-                    setData(jsonObject);
-                    Gson gson = new Gson();
-                    if (jsonObject.getString("redDot").length() != 0) {
-                        DefConfigBean.RedDotBean bean = gson.fromJson(jsonObject.getString("redDot"), DefConfigBean.RedDotBean.class);
-                        mACache.put(Constant.R_MYMSG, bean.getUnread_mymsg());
-                        mACache.put(Constant.R_MYORDER, bean.getUnread_myorder());
-                        mACache.put(Constant.R_CONTACT, bean.getUnread_customer());
-                        mACache.put(Constant.R_SEEME, bean.getUnread_who_saw_me());
-                        mACache.put(Constant.R_SUPDEM, bean.getUnread_supply_and_demand());
+                    setData(new JSONObject(object.toString()));
+                    if (clicked) {//记住密码：
+                        sharedUtils.setBooloean(this, "remember_password", true);
+                        sharedUtils.setData(this, "tel", editText_tel.getText().toString());
+                        sharedUtils.setData(this, "password", editText_pass.getText().toString());
+                    } else {
+                        sharedUtils.setBooloean(this, "remember_password", false);
+                        sharedUtils.setData(this, "tel", "");
+                        sharedUtils.setData(this, "password", "");
                     }
                     //回到主界面
-                    mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
-                    mainActivity.firstInto();
-                    mainActivity.onConnect();
-                    mainActivity.rCallback(true);
-
-                    onBackPressed();
+                    finish();
+                    MainActivity.firstInto();
                 }
             }
             if (type == 2 && s.equals("0")) {
+                JSONObject jsonObject = new JSONObject(object.toString());
                 String url = jsonObject.getString("img");
                 key = jsonObject.getString("key");
                 Glide.with(this).load(url).placeholder(R.drawable.bg_verification_code).into(imageView_verification);
@@ -337,16 +331,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
             isNomalNull = TextUtils.isNullOrEmpty(editText_tel.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_pass.getText().toString());
-            mButtonNomal.setBackgroundResource(isNomalNull
-                    ? R.drawable.login_btn_shape_hl
-                    : R.drawable.login_btn_shape);
+            mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
         } else {
             isPhoneNull = TextUtils.isNullOrEmpty(editText_tel1.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_verification1.getText().toString())
                     && TextUtils.isNullOrEmpty(editText_verification1.getText().toString());
-            mButtonPhone.setBackgroundResource(isPhoneNull
-                    ? R.drawable.login_btn_shape_hl
-                    : R.drawable.login_btn_shape);
+            mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
 
         }
 
@@ -383,6 +373,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         }.start();
     }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onDestroy() {
@@ -394,10 +393,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         try {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mButtonNomal.getWindowToken(), 0);
-            //记住密码：
-            sharedUtils.setBooloean(this, "remember_password", true);
-            sharedUtils.setData(this, "tel", editText_tel.getText().toString());
-            sharedUtils.setData(this, "password", editText_pass.getText().toString());
 
             sharedUtils.setData(this, Constant.TOKEN, jsonObject.getString("dataToken"));
             sharedUtils.setData(this, Constant.USERID, jsonObject.getString("user_id"));

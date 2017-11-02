@@ -35,7 +35,6 @@ import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.Fragment_HeadLines;
 import com.myplas.q.myself.Fragment_MySelf;
-import com.myplas.q.myself.login.LoginActivity;
 import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;

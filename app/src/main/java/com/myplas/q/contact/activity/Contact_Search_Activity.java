@@ -12,11 +12,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -26,8 +24,6 @@ import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.ScreenUtils;
-import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyGridview;
@@ -39,15 +35,7 @@ import com.myplas.q.contact.beans.NoSearchInfoBean;
 import com.myplas.q.contact.beans.RecordBean;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
-import com.myplas.q.myself.login.LoginActivity;
-import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
-import com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
-import com.myplas.q.supdem.adapter.SupDem_Search_List_Adapter;
-import com.myplas.q.supdem.beans.ConfigData;
-import com.myplas.q.supdem.beans.SearchNoResultBean;
-import com.myplas.q.supdem.beans.SearchResultBean;
-import com.myplas.q.supdem.beans.TabCofigBean;
 import com.optimus.edittextfield.EditTextField;
 
 import org.json.JSONObject;
@@ -402,7 +390,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 getPersonInfoData(userId, "5", 6);
                 break;
             case 4:
-                startActivity(new Intent(this, LoginActivity.class));
+                startActivity(new Intent(this,. class));
                 break;
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));
