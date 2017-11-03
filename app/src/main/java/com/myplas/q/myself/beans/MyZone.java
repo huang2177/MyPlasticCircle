@@ -29,7 +29,7 @@ public class MyZone implements Serializable{
 
     private int err;
     private String s_in_count;
-    private int s_out_count;
+    private String s_out_count;
     private String points;
     private String leaveword;
     private String myviewhistory;
@@ -56,11 +56,11 @@ public class MyZone implements Serializable{
         this.s_in_count = s_in_count;
     }
 
-    public int getS_out_count() {
+    public String getS_out_count() {
         return s_out_count;
     }
 
-    public void setS_out_count(int s_out_count) {
+    public void setS_out_count(String s_out_count) {
         this.s_out_count = s_out_count;
     }
 

@@ -44,6 +44,7 @@ import com.myplas.q.contact.beans.ContactBean;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
+import com.myplas.q.myself.login.LoginActivity;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.umeng.analytics.MobclickAgent;
 
@@ -68,8 +69,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
     private List<String> mList;
     private Map<Integer, Integer> map;
-    private List<ContactBean.PersonsBean> mListBean;
     private Fragment_Contact_LV_Adapter mLVAdapter;
+    private List<ContactBean.PersonsBean> mListBean;
 
     private ListView listView;
     private ImageButton imageButton;

@@ -35,6 +35,7 @@ import com.myplas.q.contact.beans.NoSearchInfoBean;
 import com.myplas.q.contact.beans.RecordBean;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
+import com.myplas.q.myself.login.LoginActivity;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
 import com.optimus.edittextfield.EditTextField;
 
@@ -390,7 +391,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 getPersonInfoData(userId, "5", 6);
                 break;
             case 4:
-                startActivity(new Intent(this,. class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));

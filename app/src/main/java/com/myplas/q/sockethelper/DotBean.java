@@ -12,7 +12,7 @@ public class DotBean {
     /**
      * err : 0
      * msg : 更新成功
-     * data : {"is_socket_connected":"1","unread_mymsg":"1","unread_supply_and_demand":"12","unread_customer":"0","unread_myorder":"5","unread_who_saw_me":"0","unread_recommend_update":"0"}
+     * data : {"is_socket_connected":"1","unread_supply_and_demand":"6","unread_customer":"2","unread_myorder":"0","unread_who_saw_me":"0","unread_recommend_update":"0","unread_reply_user_msg":"0","unread_reply_purchase_msg":"0","unread_plastic_msg":"0","unread_purchase_msg":"0"}
      */
 
     private int err;
@@ -46,21 +46,27 @@ public class DotBean {
     public static class DataBean {
         /**
          * is_socket_connected : 1
-         * unread_mymsg : 1
-         * unread_supply_and_demand : 12
-         * unread_customer : 0
-         * unread_myorder : 5
+         * unread_supply_and_demand : 6
+         * unread_customer : 2
+         * unread_myorder : 0
          * unread_who_saw_me : 0
          * unread_recommend_update : 0
+         * unread_reply_user_msg : 0
+         * unread_reply_purchase_msg : 0
+         * unread_plastic_msg : 0
+         * unread_purchase_msg : 0
          */
 
         private String is_socket_connected;
-        private String unread_mymsg;
         private String unread_supply_and_demand;
         private String unread_customer;
         private String unread_myorder;
         private String unread_who_saw_me;
         private String unread_recommend_update;
+        private String unread_reply_user_msg;
+        private String unread_reply_purchase_msg;
+        private String unread_plastic_msg;
+        private String unread_purchase_msg;
 
         public String getIs_socket_connected() {
             return is_socket_connected;
@@ -68,14 +74,6 @@ public class DotBean {
 
         public void setIs_socket_connected(String is_socket_connected) {
             this.is_socket_connected = is_socket_connected;
-        }
-
-        public String getUnread_mymsg() {
-            return unread_mymsg;
-        }
-
-        public void setUnread_mymsg(String unread_mymsg) {
-            this.unread_mymsg = unread_mymsg;
         }
 
         public String getUnread_supply_and_demand() {
@@ -116,6 +114,38 @@ public class DotBean {
 
         public void setUnread_recommend_update(String unread_recommend_update) {
             this.unread_recommend_update = unread_recommend_update;
+        }
+
+        public String getUnread_reply_user_msg() {
+            return unread_reply_user_msg;
+        }
+
+        public void setUnread_reply_user_msg(String unread_reply_user_msg) {
+            this.unread_reply_user_msg = unread_reply_user_msg;
+        }
+
+        public String getUnread_reply_purchase_msg() {
+            return unread_reply_purchase_msg;
+        }
+
+        public void setUnread_reply_purchase_msg(String unread_reply_purchase_msg) {
+            this.unread_reply_purchase_msg = unread_reply_purchase_msg;
+        }
+
+        public String getUnread_plastic_msg() {
+            return unread_plastic_msg;
+        }
+
+        public void setUnread_plastic_msg(String unread_plastic_msg) {
+            this.unread_plastic_msg = unread_plastic_msg;
+        }
+
+        public String getUnread_purchase_msg() {
+            return unread_purchase_msg;
+        }
+
+        public void setUnread_purchase_msg(String unread_purchase_msg) {
+            this.unread_purchase_msg = unread_purchase_msg;
         }
     }
 }

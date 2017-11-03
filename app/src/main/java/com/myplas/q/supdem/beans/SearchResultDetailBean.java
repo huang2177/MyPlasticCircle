@@ -10,9 +10,10 @@ import java.util.List;
 
 public class SearchResultDetailBean {
 
+
     /**
      * err : 0
-     * data : {"c_name":"明年我的时候","produce_place":"","cargo_type":"现货","unit_price":"0","model":"7000F","qq_name":"灿灿1943","qq":"183097697","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=183097697&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","is_buy":"1","store_house":"上海","show_information":[{"id":"40426","title":"中沙天津石化HDPE装置开车动态","cate_name":"装置动态"},{"id":"43110","title":"上游早报：原油及PVC单体7月12日收盘价格","cate_name":"上游动态"},{"id":"43250","title":"新闻早提示","cate_name":"早提示"}],"find_relevant":[{"c_name":"上海天业国际贸易有限公司","mobile":"15618650630","model":"7000F","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1516657714&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"上海田塑化工有限公司","mobile":"13388572729","model":"7000F","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=4972776&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"mobile_list":[{"mobile":"13806260431","name":"刘招"}],"physical":""}
+     * data : {"id":153727,"store_house":"天津","model":"BL3","f_name":"","unit_price":0,"c_name":"中化塑料有限公司","cargo_type":"现货","qq_name":"老富","thumb_qq":"","qq":1057533814,"type":1,"show_information":[],"find_relevant":[{"c_name":"上海华浩彤贸易有限公司","mobile":15896851245,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=3227657064&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"辽宁岩峰塑料有限公司","mobile":18804176777,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2835499925&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"上海仕进国际贸易有限公司","mobile":13654569856,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=23527625&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"苍南县同瑞塑料工艺礼品厂","mobile":13587833361,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=32078306&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"mobile_list":[{"mobile":13052397612,"name":"曹亚梅"},{"mobile":13472575470,"name":"赵礼明"},{"mobile":13600146698,"name":"罗启美"},{"mobile":13709410353,"name":"张燕"},{"mobile":13801006858,"name":"李琳"}],"physical":"","operate":0}
      */
 
     private int err;
@@ -36,116 +37,47 @@ public class SearchResultDetailBean {
 
     public static class DataBean {
         /**
-         * c_name : 明年我的时候
-         * produce_place :
-         * cargo_type : 现货
+         * id : 153727
+         * store_house : 天津
+         * model : BL3
+         * f_name :
          * unit_price : 0
-         * model : 7000F
-         * qq_name : 灿灿1943
-         * qq : 183097697
-         * thumbqq : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=183097697&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
-         * is_buy : 1
-         * store_house : 上海
-         * show_information : [{"id":"40426","title":"中沙天津石化HDPE装置开车动态","cate_name":"装置动态"},{"id":"43110","title":"上游早报：原油及PVC单体7月12日收盘价格","cate_name":"上游动态"},{"id":"43250","title":"新闻早提示","cate_name":"早提示"}]
-         * find_relevant : [{"c_name":"上海天业国际贸易有限公司","mobile":"15618650630","model":"7000F","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1516657714&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"上海田塑化工有限公司","mobile":"13388572729","model":"7000F","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=4972776&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}]
-         * mobile_list : [{"mobile":"13806260431","name":"刘招"}]
+         * c_name : 中化塑料有限公司
+         * cargo_type : 现货
+         * qq_name : 老富
+         * thumb_qq :
+         * qq : 1057533814
+         * type : 1
+         * show_information : []
+         * find_relevant : [{"c_name":"上海华浩彤贸易有限公司","mobile":15896851245,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=3227657064&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"辽宁岩峰塑料有限公司","mobile":18804176777,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2835499925&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"上海仕进国际贸易有限公司","mobile":13654569856,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=23527625&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"苍南县同瑞塑料工艺礼品厂","mobile":13587833361,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=32078306&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}]
+         * mobile_list : [{"mobile":13052397612,"name":"曹亚梅"},{"mobile":13472575470,"name":"赵礼明"},{"mobile":13600146698,"name":"罗启美"},{"mobile":13709410353,"name":"张燕"},{"mobile":13801006858,"name":"李琳"}]
          * physical :
+         * operate : 0
          */
 
-        private String is_free;
-        private String c_name;
-        private String produce_place;
-        private String cargo_type;
-        private String unit_price;
-        private String model;
-        private String qq_name;
-        private String qq;
-        private String thumbqq;
-        private String is_buy;
+        private String id;
         private String store_house;
+        private String model;
+        private String f_name;
+        private String unit_price;
+        private String c_name;
+        private String cargo_type;
+        private String qq_name;
+        private String thumb_qq;
+        private String qq;
+        private String type;
         private String physical;
+        private String operate;
         private List<ShowInformationBean> show_information;
         private List<FindRelevantBean> find_relevant;
         private List<MobileListBean> mobile_list;
 
-        public String getIs_free() {
-            return is_free;
+        public String getId() {
+            return id;
         }
 
-        public void setIs_free(String is_free) {
-            this.is_free = is_free;
-        }
-
-        public String getC_name() {
-            return c_name;
-        }
-
-        public void setC_name(String c_name) {
-            this.c_name = c_name;
-        }
-
-        public String getProduce_place() {
-            return produce_place;
-        }
-
-        public void setProduce_place(String produce_place) {
-            this.produce_place = produce_place;
-        }
-
-        public String getCargo_type() {
-            return cargo_type;
-        }
-
-        public void setCargo_type(String cargo_type) {
-            this.cargo_type = cargo_type;
-        }
-
-        public String getUnit_price() {
-            return unit_price;
-        }
-
-        public void setUnit_price(String unit_price) {
-            this.unit_price = unit_price;
-        }
-
-        public String getModel() {
-            return model;
-        }
-
-        public void setModel(String model) {
-            this.model = model;
-        }
-
-        public String getQq_name() {
-            return qq_name;
-        }
-
-        public void setQq_name(String qq_name) {
-            this.qq_name = qq_name;
-        }
-
-        public String getQq() {
-            return qq;
-        }
-
-        public void setQq(String qq) {
-            this.qq = qq;
-        }
-
-        public String getThumbqq() {
-            return thumbqq;
-        }
-
-        public void setThumbqq(String thumbqq) {
-            this.thumbqq = thumbqq;
-        }
-
-        public String getIs_buy() {
-            return is_buy;
-        }
-
-        public void setIs_buy(String is_buy) {
-            this.is_buy = is_buy;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getStore_house() {
@@ -156,12 +88,92 @@ public class SearchResultDetailBean {
             this.store_house = store_house;
         }
 
+        public String getModel() {
+            return model;
+        }
+
+        public void setModel(String model) {
+            this.model = model;
+        }
+
+        public String getF_name() {
+            return f_name;
+        }
+
+        public void setF_name(String f_name) {
+            this.f_name = f_name;
+        }
+
+        public String getUnit_price() {
+            return unit_price;
+        }
+
+        public void setUnit_price(String unit_price) {
+            this.unit_price = unit_price;
+        }
+
+        public String getC_name() {
+            return c_name;
+        }
+
+        public void setC_name(String c_name) {
+            this.c_name = c_name;
+        }
+
+        public String getCargo_type() {
+            return cargo_type;
+        }
+
+        public void setCargo_type(String cargo_type) {
+            this.cargo_type = cargo_type;
+        }
+
+        public String getQq_name() {
+            return qq_name;
+        }
+
+        public void setQq_name(String qq_name) {
+            this.qq_name = qq_name;
+        }
+
+        public String getThumb_qq() {
+            return thumb_qq;
+        }
+
+        public void setThumb_qq(String thumb_qq) {
+            this.thumb_qq = thumb_qq;
+        }
+
+        public String getQq() {
+            return qq;
+        }
+
+        public void setQq(String qq) {
+            this.qq = qq;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
         public String getPhysical() {
             return physical;
         }
 
         public void setPhysical(String physical) {
             this.physical = physical;
+        }
+
+        public String getOperate() {
+            return operate;
+        }
+
+        public void setOperate(String operate) {
+            this.operate = operate;
         }
 
         public List<ShowInformationBean> getShow_information() {
@@ -187,7 +199,6 @@ public class SearchResultDetailBean {
         public void setMobile_list(List<MobileListBean> mobile_list) {
             this.mobile_list = mobile_list;
         }
-
         public static class ShowInformationBean {
             /**
              * id : 40426
@@ -223,13 +234,12 @@ public class SearchResultDetailBean {
                 this.cate_name = cate_name;
             }
         }
-
         public static class FindRelevantBean {
             /**
-             * c_name : 上海天业国际贸易有限公司
-             * mobile : 15618650630
-             * model : 7000F
-             * thumbqq : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1516657714&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
+             * c_name : 上海华浩彤贸易有限公司
+             * mobile : 15896851245
+             * model : BL3
+             * thumbqq : http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=3227657064&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC
              */
 
             private String c_name;
@@ -272,8 +282,8 @@ public class SearchResultDetailBean {
 
         public static class MobileListBean {
             /**
-             * mobile : 13806260431
-             * name : 刘招
+             * mobile : 13052397612
+             * name : 曹亚梅
              */
 
             private String mobile;

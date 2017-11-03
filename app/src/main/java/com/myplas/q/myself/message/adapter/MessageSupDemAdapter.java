@@ -60,8 +60,8 @@ public class MessageSupDemAdapter extends RecyclerView.Adapter {
         viewHolder viewHolder = mHolderMap.get(position);
         viewHolder.time.setText(mListSupDem.get(position).getInput_time());
         String supdem = mListSupDem.get(position).getType().equals("2")
-                ? "供给："
-                : "求购：";
+                ? "供给"
+                : "求购";
         String title = "您关注的“<font color='#ff5000'>"
                 + mListSupDem.get(position).getUser_name()
                 + "</font>”发布新的<font color='#ff5000'>"

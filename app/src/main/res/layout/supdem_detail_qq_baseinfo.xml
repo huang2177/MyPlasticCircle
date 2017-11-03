@@ -27,7 +27,7 @@
 
             <TextView
                 android:id="@+id/supdem_qq_text_gs"
-                style="@style/wd_zl_text_style"
+                style="@style/setting_text_style"
                 android:layout_margin="13dp"
                 android:gravity="right"/>
         </LinearLayout>
@@ -53,7 +53,7 @@
 
             <TextView
                 android:id="@+id/supdem_qq_text_wz"
-                style="@style/wd_zl_text_style"
+                style="@style/setting_text_style"
                 android:layout_margin="13dp"
                 android:gravity="right"/>
         </LinearLayout>
@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/supdem_qq_text_ph"
-                style="@style/wd_zl_text_style"
+                style="@style/setting_text_style"
                 android:layout_margin="13dp"
                 android:gravity="right"></TextView>
         </LinearLayout>
@@ -106,7 +106,7 @@
 
             <TextView
                 android:id="@+id/supdem_qq_text_chd"
-                style="@style/wd_zl_text_style"
+                style="@style/setting_text_style"
                 android:layout_margin="13dp"
                 android:gravity="right"/>
         </LinearLayout>
@@ -139,7 +139,7 @@
 
                 <TextView
                     android:id="@+id/supdem_qq_text_jg"
-                    style="@style/wd_zl_text_style"
+                    style="@style/setting_text_style"
                     android:layout_margin="13dp"
                     android:gravity="right"/>
             </LinearLayout>
@@ -165,7 +165,7 @@
 
                 <TextView
                     android:id="@+id/supdem_qq_text_xq"
-                    style="@style/wd_zl_text_style"
+                    style="@style/setting_text_style"
                     android:layout_margin="13dp"
                     android:gravity="right"/>
 
@@ -192,7 +192,7 @@
 
                 <TextView
                     android:id="@+id/supdem_qq_text_qq"
-                    style="@style/wd_zl_text_style"
+                    style="@style/setting_text_style"
                     android:layout_margin="13dp"
                     android:gravity="right"/>
             </LinearLayout>

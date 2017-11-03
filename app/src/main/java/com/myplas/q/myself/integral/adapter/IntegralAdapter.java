@@ -210,8 +210,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
 
     @Override
     public int getItemCount() {
-        if (list != null)
+        if (list != null) {
             return list.size();
+        }
         return 0;
     }
 
@@ -251,8 +252,11 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 context.startActivity(new Intent(context, IntegralPayActivtity.class));
                 break;
             case 2:
-                if (utils != null)
+                if (utils != null) {
                     utils.dismiss();
+                }
+                break;
+            default:
                 break;
         }
     }
@@ -414,8 +418,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
 
     @Override
     public void failCallBack(int type) {
-        if (type == 3)
+        if (type == 3) {
             setIsPay();
+        }
     }
 
     //设置支付按钮可点击
@@ -424,7 +429,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             utils.setIsPay(false);
         }
         mHolderMap.get(payPosition).button.setClickable(true);
-        //mHolderMap.get(payPosition).button.setBackgroundResource(R.drawable.btn_xq_chujian);
     }
 
 
@@ -455,6 +459,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
                     mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
                 }
+                break;
+            default:
                 break;
         }
     }

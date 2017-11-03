@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -30,18 +29,15 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.contact.activity.Contact_Detail_Activity;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
-import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.sockethelper.RabbitMQConfig;
+import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 import com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity;
-import com.myplas.q.supdem.activity.SupDem_Search_Activity;
+import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
 import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.beans.SupDemBean;
-import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
-import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
 
 import org.json.JSONObject;
 
@@ -63,6 +59,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         , MyNestedScrollView.onScrollIterface {
 
     public int page;
+    private ACache mAcache;
     private boolean isRefreshing;
     private SharedUtils sharedUtils;
 
@@ -75,19 +72,21 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     private View view, mViewDivider;
     public RefreshPopou refreshPopou;
     private MyNestedScrollView mScrollView;
-    private TextView company, content, time;
     private SwipeRefreshLayout mRefreshLayout;
     private List<SupDemBean.DataBean> mDataBeanList;
+    private TextView company, content, time, mTVPromit;
     private ImageView typeSupDem, typeNowFutures, imgUp;
     private LinearLayout layoutPrompt, layoutFirstitem, layoutUp;
 
-    private String mLastData, hotSearch;
     public String follow_release, user_id, type;
+    private String mLastData, hotSearch, jsonStr;
     private RefreshPopouInterface mPopouinterface;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+
         getNetData("1", false);
     }
 
@@ -95,17 +94,21 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         page = 1;
         type = "0";
         mDataBeanList = new ArrayList<>();
+        mAcache = ACache.get(getActivity());
         sharedUtils = SharedUtils.getSharedUtils();
+        jsonStr = mAcache.getAsString(Constant.SUPDEMCACHE);
         refreshPopou = new RefreshPopou(getActivity(), 3);
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_supdem_all_layout, null, false);
+        mViewDivider = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_supdem_head_divider, null, false);
+
         mListView = f(R.id.gq_listview);
         mScrollView = f(R.id.mynested_sv);
         mRefreshLayout = f(R.id.smartlayout);
+        mTVPromit = f(R.id.supply_demand_text);
         layoutFirstitem = f(R.id.supdem_head_ll);
         layoutPrompt = f(R.id.supply_demand_prompt_linear);
 
-        mViewDivider = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_supdem_head_divider, null, false);
         mListView.setHeaderDividersEnabled(false);
         mViewDivider.setVisibility(View.GONE);
         mListView.addHeaderView(mViewDivider);
@@ -131,6 +134,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         });
 
         initFirstItem();
+        loadCacheData(jsonStr, new Gson());
     }
 
     //实例化置顶控件
@@ -172,14 +176,6 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                         , topBean.getId()
                         , topBean.getUser_id()
                         , "1".equals(topBean.getFrom()));
-                break;
-            case R.id.supply_demand_follow:
-                if (follow_release.equals("follow")) {
-                    MainActivity mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
-                    mainActivity.firstInto();
-                } else if (follow_release.equals("release")) {
-                    startActivity(new Intent(getActivity(), ReleaseActivity.class));
-                }
                 break;
             default:
                 break;
@@ -227,115 +223,13 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     @Override
     public void callBack(Object object, int type) {
         try {
-            if (object.toString().equals(mLastData)) {
-                mRefreshLayout.setRefreshing(false);
-                mPopouinterface.showRefreshPopou(hotSearch, "");
-                //return;
-            }
-            mLastData = object.toString();
             Gson gson = new Gson();
             String result = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
-                if (result.equals("0")) {
-                    mScrollView.setVisibility(View.VISIBLE);
-                    layoutPrompt.setVisibility(View.GONE);
-                    mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
-                    if (page == 1) {
-                        mRefreshLayout.setRefreshing(false);
-                        mSupDemLVAdapter = new SupDem_LV_Adapter(ConfigData.what, getActivity(), mSupDemBean.getData());
-                        mListView.setAdapter(mSupDemLVAdapter);
-                        mDataBeanList.clear();
-                        mDataBeanList.addAll(mSupDemBean.getData());
-
-                        hotSearch = mSupDemBean.getHot_search();
-                        mPopouinterface.showRefreshPopou(hotSearch, mSupDemBean.getShow_msg());
-
-                        if (isRefreshing) {
-                            isRefreshing = false;
-                            RabbitMQConfig.getInstance(getActivity()).readMsg("unread_supply_and_demand", 11);
-                        }
-                    } else { //加载更多
-                        refreshPopou.setCanShowPopou(false);
-                        mDataBeanList.addAll(mSupDemBean.getData());
-                        mSupDemLVAdapter.setList(mDataBeanList);
-                        mSupDemLVAdapter.notifyDataSetChanged();
-                    }
-                    //展示头部
-                    if (new JSONObject(object.toString()).getJSONObject("top").length() != 0) {
-                        topBean = mSupDemBean.getTop();
-                        mViewDivider.setVisibility(View.VISIBLE);
-                        layoutFirstitem.setVisibility(View.VISIBLE);
-                        user_id = topBean.getUser_id();
-                        showTopInfo(topBean);
-                    } else {
-                        topBean = null;
-                        mViewDivider.setVisibility(View.GONE);
-                        layoutFirstitem.setVisibility(View.GONE);
-                    }
-
-                } else {//显示提示信息：
-                    refreshPopou.setCanShowPopou(false);
-                    if (page == 1) {
-                        mRefreshLayout.setRefreshing(false);
-                        mScrollView.setVisibility(View.GONE);
-                        layoutPrompt.setVisibility(View.VISIBLE);
-                        layoutPrompt.removeAllViews();
-                        switch (result) {
-                            case "1":
-                            case "998":
-                                sharedUtils.setData(getActivity(), Constant.TOKEN, "");
-                                sharedUtils.setData(getActivity(), Constant.USERID, "");
-                                sharedUtils.setBooloean(getActivity(), Constant.LOGINED, false);
-                                break;
-                            //没有更多数据
-                            case "2":
-                                View v = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null);
-                                layoutPrompt.addView(v);
-                                TextView text = (TextView) v.findViewById(R.id.supply_demand_text);
-                                text.setText(new JSONObject(object.toString()).getString("msg"));
-                                break;
-                            //未匹配
-                            case "4":
-                                layoutPrompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null));
-                                break;
-                            case "9"://去关注
-                                follow_release = "follow";
-                                View view = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care1, null);
-                                layoutPrompt.addView(view);
-                                view.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
-                                break;
-                            //关注 ——未发布
-                            case "6":
-                                layoutPrompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care2, null));
-                                break;
-                            //职能推荐——区发布
-                            case "7":
-                                follow_release = "release";
-                                View view3 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
-                                layoutPrompt.addView(view3);
-                                TextView t = (TextView) view3.findViewById(R.id.supply_demand_text);
-                                t.setText(new JSONObject(object.toString()).getString("msg"));
-                                view3.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
-                                view3.findViewById(R.id.img_supplydemad_down).setVisibility(View.VISIBLE);
-                                break;
-                            //我的供求——去发布
-                            case "8":
-                                follow_release = "release";
-                                View view2 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
-                                layoutPrompt.addView(view2);
-                                TextView textView = (TextView) view2.findViewById(R.id.supply_demand_text);
-                                textView.setText(new JSONObject(object.toString()).getString("msg"));
-                                view2.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
-                                view2.findViewById(R.id.img_supplydemad_down).setVisibility(View.GONE);
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        TextUtils.Toast(getContext(), "没有更多数据了！");
-                    }
-                }
+                loadCacheData(object, gson);
+                mAcache.put(Constant.SUPDEMCACHE, object.toString());
             }
+
             //是否消耗积分
             if (type == 2 && result.equals("99")) {
                 String content = new JSONObject(object.toString()).getString("msg");
@@ -366,6 +260,61 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         }
     }
 
+    private void loadCacheData(Object object, Gson gson) {
+        try {
+            String result = new JSONObject(object.toString()).getString("err");
+            if (result.equals("0")) {
+                mScrollView.setVisibility(View.VISIBLE);
+                layoutPrompt.setVisibility(View.GONE);
+                mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
+                if (page == 1) {
+                    mRefreshLayout.setRefreshing(false);
+                    mSupDemLVAdapter = new SupDem_LV_Adapter(ConfigData.what, getActivity(), mSupDemBean.getData());
+                    mListView.setAdapter(mSupDemLVAdapter);
+                    mDataBeanList.clear();
+                    mDataBeanList.addAll(mSupDemBean.getData());
+
+                    hotSearch = mSupDemBean.getHot_search();
+                    mPopouinterface.showRefreshPopou(hotSearch, mSupDemBean.getShow_msg());
+
+                    if (isRefreshing) {
+                        isRefreshing = false;
+                        RabbitMQConfig.getInstance(getActivity()).readMsg("unread_supply_and_demand", 11);
+                    }
+                } else { //加载更多
+                    refreshPopou.setCanShowPopou(false);
+                    mDataBeanList.addAll(mSupDemBean.getData());
+                    mSupDemLVAdapter.setList(mDataBeanList);
+                    mSupDemLVAdapter.notifyDataSetChanged();
+                }
+                //展示头部
+                if (new JSONObject(object.toString()).getJSONObject("top").length() != 0) {
+                    topBean = mSupDemBean.getTop();
+                    mViewDivider.setVisibility(View.VISIBLE);
+                    layoutFirstitem.setVisibility(View.VISIBLE);
+                    user_id = topBean.getUser_id();
+                    showTopInfo(topBean);
+                } else {
+                    topBean = null;
+                    mViewDivider.setVisibility(View.GONE);
+                    layoutFirstitem.setVisibility(View.GONE);
+                }
+
+            } else {//显示提示信息：
+                refreshPopou.setCanShowPopou(false);
+                if (page == 1) {
+                    mRefreshLayout.setRefreshing(false);
+                    mScrollView.setVisibility(View.GONE);
+                    layoutPrompt.setVisibility(View.VISIBLE);
+                    mTVPromit.setText(new JSONObject(object.toString()).getString("msg"));
+                } else {
+                    TextUtils.Toast(getContext(), "没有更多数据了！");
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
     @Override
     public void failCallBack(int type) {
         refreshPopou.setCanShowPopou(false);
@@ -373,7 +322,6 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         if (mDataBeanList.size() == 0) {
             mScrollView.setVisibility(View.GONE);
             layoutPrompt.setVisibility(View.VISIBLE);
-            layoutPrompt.removeAllViews();
 
             ImageButton imageButton = new ImageButton(getActivity());
             imageButton.setImageResource(R.drawable.img_reload);
@@ -394,7 +342,9 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             try {
                 company.setText(topBean.getC_name() + "  " + topBean.getName());
 
-                String s = (topBean.getFrom().equals("1") ? "来自供求 " : "来自QQ群 ") + topBean.getInput_time();
+                String s = ("1".equals(topBean.getFrom())
+                        ? "来自供求  "
+                        : "来自QQ群  ") + topBean.getInput_time();
                 time.setText(s);
 
                 String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + topBean.getStore_house()
@@ -403,10 +353,10 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                         + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + topBean.getUnit_price();
                 content.setText(Html.fromHtml(html1));
 
-                typeSupDem.setImageResource(topBean.getType().equals("1")
+                typeSupDem.setImageResource("1".equals(topBean.getType())
                         ? R.drawable.icon_supdem_purchase
                         : R.drawable.icon_supdem_supply);
-                typeNowFutures.setImageResource(topBean.getCargo_type().equals("1")
+                typeNowFutures.setImageResource("1".equals(topBean.getCargo_type())
                         ? R.drawable.icon_now
                         : R.drawable.icon_futures);
             } catch (Exception e) {

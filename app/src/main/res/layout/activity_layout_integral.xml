@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_gray_bg"
     android:orientation="vertical">
 
-    <include layout="@layout/common_layout_titlebar"/>
+    <include layout="@layout/common_layout_titlebar" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -23,12 +22,13 @@
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:src="@drawable/banner1"
-                app:layout_scrollFlags="scroll"/>
+                app:layout_scrollFlags="scroll" />
 
-            <include layout="@layout/layout_integral_listview_head"/>
+            <include layout="@layout/layout_integral_listview_head" />
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -45,14 +45,14 @@
                     android:paddingLeft="10dp"
                     android:text="商品信息"
                     android:textColor="@color/color_balank"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/jf_gridview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scrollbars="none"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

@@ -1,5 +1,6 @@
 package com.myplas.q.myself.login;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -61,6 +62,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         initView();
     }
 
+    @SuppressLint("HandlerLeak")
     @TargetApi(Build.VERSION_CODES.M)
     public void initView() {
         sharedUtils = SharedUtils.getSharedUtils();
@@ -195,11 +197,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     img.setImageResource(R.drawable.btn_checkbox_hl);
                 } else {
                     clicked = false;
-                    img.setImageResource(R.drawable.btn_checkbox);
+                    img.setImageResource(R.drawable.btn_checkbox1);
                 }
                 break;
             case R.id.xy_text:
-                startActivity(new Intent(this, RegesterXYActivity.class));
+                startActivity(new Intent(this, RegisterAgreementActivity.class));
+                break;
+            default:
                 break;
         }
     }
@@ -276,13 +280,4 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }.start();
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

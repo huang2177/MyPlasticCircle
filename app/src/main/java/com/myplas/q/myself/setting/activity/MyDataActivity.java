@@ -14,11 +14,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.api.API;
+import com.myplas.q.common.view.RoundCornerImageView;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.MySelfInfo;
 
 import org.json.JSONObject;
@@ -46,11 +46,11 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private String type, address, addressId, sex, region, product, monthUse, mainPro, model;
 
     private RoundCornerImageView image_tx;
-    private ImageView image_shch, cardMore, headMore;
-    private RadioGroup radioGroup_sex, radioGroup_address;
-    private LinearLayout ll_pro_month, ll_add, ll_sex, ll_region, ll_pro, ll_mothonuse, ll_mainsell, ll_mode;
-    private TextView text_xb, textView_dzh, text_gs, text_dh, textView_zhy, textView_ph, textView_num, textView_product,
-            textView_address, textView_company, my_main_prod, my_main_prod_save;
+    private ImageView imageShch, cardMore, headMore;
+    private RadioGroup radiogroupSex, radiogroupAddress;
+    private LinearLayout llProMonth, llAdd, llSex, llRegion, llPro, llMothonuse, llMainsell, llMode;
+    private TextView textXb, textviewDzh, textGs, textDh, textviewZhy, textviewPh, textviewNum, textviewProduct,
+            textviewAddress, textviewCompany, myMainProd, myMainProdSave;
 
     private boolean isFromContact;
     private final String ACTION = "com.broadcast.databack";
@@ -68,31 +68,31 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         sharedUtils = SharedUtils.getSharedUtils();
         isFromContact = getIntent().getStringExtra("userid") == null ? false : true;
 
-        text_gs = F(R.id.wd_zl_gs);
-        text_dh = F(R.id.wd_zl_tel);
+        textGs = F(R.id.wd_zl_gs);
+        textDh = F(R.id.wd_zl_tel);
         cardMore = F(R.id.data_img_card);
         headMore = F(R.id.data_head_card);
         image_tx = F(R.id.wd_zl_text_headimg);
-        image_shch = F(R.id.wd_zl_text_upload);
+        imageShch = F(R.id.wd_zl_text_upload);
 
-        my_main_prod = F(R.id.textView8);
-        text_xb = F(R.id.wd_zl_text_xb);
-        textView_ph = F(R.id.wd_zl_text_ph);
-        textView_num = F(R.id.wd_zl_text_num);
-        textView_dzh = F(R.id.wd_zl_text_dzh);
-        textView_zhy = F(R.id.wd_zl_text_zhy);
-        textView_address = F(R.id.wd_zl_text_address);
-        textView_company = F(R.id.wd_zl_text_company);
-        textView_product = F(R.id.wd_zl_text_products);
+        myMainProd = F(R.id.textView8);
+        textXb = F(R.id.wd_zl_text_xb);
+        textviewPh = F(R.id.wd_zl_text_ph);
+        textviewNum = F(R.id.wd_zl_text_num);
+        textviewDzh = F(R.id.wd_zl_text_dzh);
+        textviewZhy = F(R.id.wd_zl_text_zhy);
+        textviewAddress = F(R.id.wd_zl_text_address);
+        textviewCompany = F(R.id.wd_zl_text_company);
+        textviewProduct = F(R.id.wd_zl_text_products);
 
-        ll_sex = F(R.id.setting_data_sex);
-        ll_mode = F(R.id.wd_zl_linear_ph);
-        ll_pro = F(R.id.setting_data_product);
-        ll_add = F(R.id.setting_data_address);
-        ll_region = F(R.id.setting_data_region);
-        ll_pro_month = F(R.id.linear_show_close);
-        ll_mainsell = F(R.id.setting_data_mainsell);
-        ll_mothonuse = F(R.id.setting_data_monthlyuse);
+        llSex = F(R.id.setting_data_sex);
+        llMode = F(R.id.wd_zl_linear_ph);
+        llPro = F(R.id.setting_data_product);
+        llAdd = F(R.id.setting_data_address);
+        llRegion = F(R.id.setting_data_region);
+        llProMonth = F(R.id.linear_show_close);
+        llMainsell = F(R.id.setting_data_mainsell);
+        llMothonuse = F(R.id.setting_data_monthlyuse);
 
         if (isFromContact) {  //从通讯录跳转
             setTitle("个人资料");
@@ -106,26 +106,26 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             mFilter = new IntentFilter(ACTION);
             registerReceiver(myReceiver, mFilter);
 
-            ll_sex.setOnClickListener(this);
-            ll_add.setOnClickListener(this);
-            ll_pro.setOnClickListener(this);
-            ll_mode.setOnClickListener(this);
+            llSex.setOnClickListener(this);
+            llAdd.setOnClickListener(this);
+            llPro.setOnClickListener(this);
+            llMode.setOnClickListener(this);
             image_tx.setOnClickListener(this);
-            ll_region.setOnClickListener(this);
-            image_shch.setOnClickListener(this);
-            ll_mainsell.setOnClickListener(this);
-            ll_pro_month.setOnClickListener(this);
-            ll_mothonuse.setOnClickListener(this);
+            llRegion.setOnClickListener(this);
+            imageShch.setOnClickListener(this);
+            llMainsell.setOnClickListener(this);
+            llProMonth.setOnClickListener(this);
+            llMothonuse.setOnClickListener(this);
 
             cardMore.setVisibility(View.VISIBLE);
             headMore.setVisibility(View.VISIBLE);
-            text_xb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            textView_ph.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            textView_num.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            textView_zhy.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            textView_dzh.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            textView_address.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            textView_product.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            textXb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            textviewPh.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            textviewNum.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            textviewZhy.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            textviewDzh.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            textviewAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            textviewProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
         }
     }
 
@@ -181,7 +181,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 startActivityForResult(intent7, 7);
                 break;
             case R.id.setting_data_mainsell:
-                Intent intent8 = new Intent(this, (type.equals("4"))
+                Intent intent8 = new Intent(this, ("4".equals(type))
                         ? (MyMainPro_LogisticsActivity.class)
                         : (DataCommonActivity.class));
                 intent8.putExtra("title", (type.equals("1"))
@@ -197,6 +197,8 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 intent9.putExtra("title", "关注的牌号");
                 intent9.putExtra("hint", model);
                 startActivityForResult(intent9, 9);
+                break;
+            default:
                 break;
         }
     }
@@ -292,72 +294,80 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     public void showInfo(MySelfInfo mySelfInfo) {
         try {
-            sex = mySelfInfo.getData().getSex();
             type = mySelfInfo.getData().getType();
-            address = mySelfInfo.getData().getAddress();
-            addressId = mySelfInfo.getData().getOrigin();
+            sex = mySelfInfo.getData().getSex() + "  ";
             region = mySelfInfo.getData().getAdistinct();
-            model = mySelfInfo.getData().getConcern_model();
-            product = mySelfInfo.getData().getMain_product();
-            mainPro = mySelfInfo.getData().getNeed_product();
-            monthUse = mySelfInfo.getData().getMonth_consum();
+            address = mySelfInfo.getData().getAddress() + "  ";
+            addressId = mySelfInfo.getData().getOrigin() + "  ";
+            model = mySelfInfo.getData().getConcern_model() + "  ";
+            product = mySelfInfo.getData().getMain_product() + "  ";
+            mainPro = mySelfInfo.getData().getNeed_product() + "  ";
+            monthUse = mySelfInfo.getData().getMonth_consum() + "  ";
 
-            sexInPut = (sex.equals("男")) ? ("0") : ("1");
+            sexInPut = ("男".equals(sex)) ? ("0") : ("1");
 
-            text_xb.setText(sex + "  ");
-            textView_ph.setText(model + "  ");
-            textView_dzh.setText(address + "  ");
-            textView_zhy.setText(mainPro + "  ");
-            textView_address.setText(region + "  ");
-            text_gs.setText(mySelfInfo.getData().getC_name() + "  ");
-            text_dh.setText(mySelfInfo.getData().getMobile() + "  ");
-            Glide.with(this).load(mySelfInfo.getData().getThumbcard()).placeholder(R.drawable.card).into(image_shch);
-            Glide.with(this).load(mySelfInfo.getData().getThumb()).placeholder(R.drawable.contact_image_defaul_male).into(image_tx);
+            textXb.setText(sex);
+            textviewPh.setText(model);
+            textviewDzh.setText(address);
+            textviewZhy.setText(mainPro);
+            textviewAddress.setText(region);
+            textGs.setText(mySelfInfo.getData().getC_name() + "  ");
+            textDh.setText(mySelfInfo.getData().getMobile() + "  ");
+            Glide.with(this)
+                    .load(mySelfInfo.getData().getThumbcard())
+                    .placeholder(R.drawable.card)
+                    .into(imageShch);
+            Glide.with(this)
+                    .load(mySelfInfo.getData().getThumb())
+                    .placeholder(R.drawable.contact_image_defaul_male)
+                    .into(image_tx);
 
             switch (type) {
                 case "1":
-                    ll_mode.setVisibility(View.VISIBLE);       //"‘关注的牌号’是否显示"
-                    ll_pro_month.setVisibility(View.VISIBLE); //"‘月用量与生产产品’是否显示"
-                    textView_company.setText("塑料制品厂  ");
-                    my_main_prod.setText("我的需求：");
-                    textView_product.setText(product + "  ");
-                    textView_num.setText(monthUse + "  ");
+                    llMode.setVisibility(View.VISIBLE);       //"‘关注的牌号’是否显示"
+                    llProMonth.setVisibility(View.VISIBLE); //"‘月用量与生产产品’是否显示"
+                    textviewCompany.setText("塑料制品厂  ");
+                    myMainProd.setText("我的需求：");
+                    textviewProduct.setText(product);
+                    textviewNum.setText(monthUse);
                     break;
                 case "2":
-                    ll_mode.setVisibility(View.VISIBLE);
-                    textView_company.setText("原料供应商  ");
-                    ll_pro_month.setVisibility(View.GONE);
+                    llMode.setVisibility(View.VISIBLE);
+                    textviewCompany.setText("原料供应商  ");
+                    llProMonth.setVisibility(View.GONE);
                     break;
                 case "4":
-                    ll_mode.setVisibility(View.GONE);
-                    ll_pro_month.setVisibility(View.GONE);
-                    my_main_prod.setText("我的主营：");
-                    textView_company.setText("物流商  ");
+                    llMode.setVisibility(View.GONE);
+                    llProMonth.setVisibility(View.GONE);
+                    myMainProd.setText("我的主营：");
+                    textviewCompany.setText("物流商  ");
                     break;
                 case "5":
-                    ll_mode.setVisibility(View.GONE);
-                    ll_pro_month.setVisibility(View.GONE);
-                    textView_company.setText("金融公司  ");
+                    llMode.setVisibility(View.GONE);
+                    llProMonth.setVisibility(View.GONE);
+                    textviewCompany.setText("金融公司  ");
                     break;
                 case "6":
-                    ll_mode.setVisibility(View.GONE);
-                    ll_pro_month.setVisibility(View.GONE);
-                    textView_company.setText("塑化电商  ");
+                    llMode.setVisibility(View.GONE);
+                    llProMonth.setVisibility(View.GONE);
+                    textviewCompany.setText("塑化电商  ");
                     break;
                 case "7":
-                    ll_mode.setVisibility(View.GONE);
-                    ll_pro_month.setVisibility(View.GONE);
-                    textView_company.setText("回料(含新材料)  ");
+                    llMode.setVisibility(View.GONE);
+                    llProMonth.setVisibility(View.GONE);
+                    textviewCompany.setText("回料(含新材料)  ");
                     break;
                 case "8":
-                    ll_mode.setVisibility(View.GONE);
-                    ll_pro_month.setVisibility(View.GONE);
-                    textView_company.setText("期货  ");
+                    llMode.setVisibility(View.GONE);
+                    llProMonth.setVisibility(View.GONE);
+                    textviewCompany.setText("期货  ");
                     break;
                 case "9":
-                    textView_company.setText("塑机  ");
-                    ll_mode.setVisibility(View.GONE);
-                    ll_pro_month.setVisibility(View.GONE);
+                    textviewCompany.setText("塑机  ");
+                    llMode.setVisibility(View.GONE);
+                    llProMonth.setVisibility(View.GONE);
+                    break;
+                default:
                     break;
             }
             //设置地区
@@ -378,6 +388,8 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                     regionPosition = 3;
                     regionInPut = "OT";
                     break;
+                default:
+                    break;
             }
         } catch (Exception e) {
         }
@@ -395,7 +407,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         }
         if (requestCode == 200 && resultCode == 2) {
             String imagePath = data.getStringExtra("img_url");
-            Glide.with(this).load(imagePath).into(image_shch);
+            Glide.with(this).load(imagePath).into(imageShch);
             upLoadImg(API.SAVE_CARD_IMG, imagePath, 6);
         }
         if (requestCode == 6 && data != null) {

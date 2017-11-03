@@ -35,6 +35,7 @@ import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.Fragment_HeadLines;
 import com.myplas.q.myself.Fragment_MySelf;
+import com.myplas.q.myself.login.LoginActivity;
 import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
@@ -320,11 +321,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mACache.put(Constant.R_CONFIG, object.toString());
                 DefConfigBean bean = gson.fromJson(object.toString(), DefConfigBean.class);
 
-                mACache.put(Constant.R_MYMSG, bean.getRedDot().getUnread_mymsg());
                 mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
-                mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
                 mACache.put(Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
+                mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
+                mACache.put(Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
+                mACache.put(Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
+                mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
                 mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
+                mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
                 rCallback(true);
                 onConnect();
             }
@@ -351,7 +355,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             int numSupDem = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM));
             int numMySelf = Integer.parseInt(mACache.getAsString(Constant.R_SEEME))
                     + Integer.parseInt(mACache.getAsString(Constant.R_MYORDER))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
+                    + Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM_MSG))
+                    + Integer.parseInt(mACache.getAsString(Constant.R_PUR_MSG))
+                    + Integer.parseInt(mACache.getAsString(Constant.R_REPLY_MSG))
+                    + Integer.parseInt(mACache.getAsString(Constant.R_INTER_MSG));
 
             mMsgSupDem.setVisibility(!showRedDot || 0 == numSupDem
                     ? View.GONE

@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/btn_more"
+                    android:src="@drawable/btn_more_small"
                     android:visibility="invisible"/>
             </LinearLayout>
 
@@ -61,18 +61,17 @@
                 android:paddingTop="12dp">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="公司名称："
                     android:textColor="#171717"
                     android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/wd_zl_gs"
-                    style="@style/wd_zl_text_style"
-                    android:layout_width="match_parent"
+                    style="@style/setting_text_style"
                     android:drawableRight="@drawable/btn_more"
-                    android:gravity="right"
                     android:maxLines="1"/>
             </LinearLayout>
 
@@ -98,7 +97,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_tel"
-                    style="@style/wd_zl_text_style"
+                    style="@style/setting_text_style"
                     android:drawableRight="@drawable/btn_more" />
             </LinearLayout>
 
@@ -126,7 +125,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_text_dzh"
-                    style="@style/wd_zl_text_style"/>
+                    style="@style/setting_text_style" />
 
             </LinearLayout>
 
@@ -153,7 +152,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_text_xb"
-                    style="@style/wd_zl_text_style"
+                    style="@style/setting_text_style"
                     android:drawableRight="@drawable/btn_more" />
             </LinearLayout>
 
@@ -180,7 +179,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_text_address"
-                    style="@style/wd_zl_text_style"
+                    style="@style/setting_text_style"
                     android:drawableRight="@drawable/btn_more" />
             </LinearLayout>
 
@@ -206,7 +205,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_text_company"
-                    style="@style/wd_zl_text_style"
+                    style="@style/setting_text_style"
                     android:drawableRight="@drawable/btn_more" />
             </LinearLayout>
 
@@ -240,7 +239,7 @@
 
                     <TextView
                         android:id="@+id/wd_zl_text_products"
-                        style="@style/wd_zl_text_style"
+                        style="@style/setting_text_style"
                         android:drawableRight="@drawable/btn_more" />
                 </LinearLayout>
 
@@ -267,7 +266,7 @@
 
                     <TextView
                         android:id="@+id/wd_zl_text_num"
-                        style="@style/wd_zl_text_style"
+                        style="@style/setting_text_style"
                         android:drawableRight="@drawable/btn_more" />
                 </LinearLayout>
 
@@ -295,7 +294,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_text_zhy"
-                    style="@style/wd_zl_text_style"
+                    style="@style/setting_text_style"
                     android:layout_width="match_parent"
                     android:drawableRight="@drawable/btn_more"
                     android:gravity="right"
@@ -330,7 +329,7 @@
 
                     <TextView
                         android:id="@+id/wd_zl_text_ph"
-                        style="@style/wd_zl_text_style"
+                        style="@style/setting_text_style"
                         android:layout_width="match_parent"
                         android:drawableRight="@drawable/btn_more"
                         android:gravity="right"
@@ -349,9 +348,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    style="@style/setting_text_style"
                     android:layout_weight="1"
                     android:text="我的名片："
                     android:textColor="#171717"
@@ -372,14 +369,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/btn_more"
+                    android:src="@drawable/btn_more_small"
                     android:visibility="invisible"/>
             </LinearLayout>
 
-            <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="2px"-->
-            <!--android:background="@color/color_gray_divider_in"></View>-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

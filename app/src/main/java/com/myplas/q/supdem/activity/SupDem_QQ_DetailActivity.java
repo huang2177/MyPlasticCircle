@@ -18,6 +18,7 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.guide.activity.ShareActivity;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
@@ -48,7 +49,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     private ImageView img_tell, img_zx, img_find;
     private MyListview listview_tell, listView_zx, listView_find;
     private LinearLayout layout_zx, layout_find, layout_wx, layout_tell, layout_zx_more;
-    private TextView text_gs, text_qq_num, text_hw, text_ph, text_chd, text_jg, text_xq, text_qq, title_rs;
+    private TextView text_gs, text_qq_num, text_hw, text_ph, text_chd, text_jg, text_xq, text_qq;
 
     private PhysicalBean bean;
     private SupDem_Search_QQ_Detail_Adapter adapter;
@@ -61,7 +62,8 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.supdem_detail_qq_activity);
-        goBack(findViewById(R.id.back));
+
+        initTileBar();
         initView();
         getSearch_Detail();
         getPhysical_Search();
@@ -72,7 +74,6 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         isClicked2 = false;
         isClicked3 = false;
 
-        title_rs = F(R.id.title_rs);
         text_qq_num = F(R.id.qq_number);
         text_gs = F(R.id.supdem_qq_text_gs);
         text_hw = F(R.id.supdem_qq_text_wz);
@@ -99,6 +100,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
 
         roundImagView.setShapeType(1);
 
+        mIVConact.setOnClickListener(this);
         layout_zx.setOnClickListener(this);
         layout_wx.setOnClickListener(this);
         layout_find.setOnClickListener(this);
@@ -112,6 +114,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     public void getSearch_Detail() {
         Map map = new HashMap();
         map.put("id", getIntent().getStringExtra("id"));
+        map.put("status", "1");
         postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH_DETAIL, map, this, 1);
     }
 
@@ -211,11 +214,34 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     i.putExtra("data", getIntent().getStringExtra("plastic_number"));
                     startActivity(i);
                     break;
+                case R.id.titlebar_img_right:
+                    share();
+                    break;
                 default:
                     break;
             }
         } catch (Exception e) {
         }
+    }
+
+    private void share() {
+        if (detailBean == null) {
+            return;
+        }
+        String s = (detailBean.getType().equals("1")
+                ? "求:"
+                : "供：")
+                + detailBean.getF_name()
+                + detailBean.getModel()
+                + "价格" + detailBean.getUnit_price()
+                + detailBean.getStore_house()
+                + (detailBean.getCargo_type());
+        Intent in = new Intent(this, ShareActivity.class);
+        in.putExtra("title", s);
+        in.putExtra("type", "5");
+        in.putExtra("id", detailBean.getId());
+        in.putExtra("supdemType", detailBean.getType());
+        startActivity(in);
     }
 
     @Override
@@ -277,19 +303,24 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     }
 
     public void showInfo(SearchResultDetailBean.DataBean detailBean) {
+        setTitle(detailBean.getC_name());
         text_ph.setText(detailBean.getModel());
         text_gs.setText(detailBean.getC_name());
         text_qq_num.setText(detailBean.getQq());
-        title_rs.setText(detailBean.getC_name());
         text_qq.setText(detailBean.getQq_name());
+        text_chd.setText(detailBean.getF_name());
         text_xq.setText(detailBean.getCargo_type());
         text_jg.setText(detailBean.getUnit_price());
         text_hw.setText(detailBean.getStore_house());
-        text_chd.setText(detailBean.getProduce_place());
+
         Glide.with(this)
-                .load(detailBean.getThumbqq())
+                .load(detailBean.getThumb_qq())
                 .placeholder(R.drawable.contact_image_defaul_male)
                 .into(roundImagView);
+
+        if (detailBean.getOperate().equals("1")) {
+            setRightIVResId(R.drawable.btn_share);
+        }
     }
 
     @Override

@@ -31,18 +31,20 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
     private ListView listView;
     private List<PhysicalBean.DataBean> list;
     private Physical_Property_Adapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.physical_property_activity_layout);
-        goBack(findViewById(R.id.back_img));
+        initTileBar();
+        setTitle("物性表查询");
 
-        listView= (ListView) findViewById(R.id.physical_listview);
+        listView = (ListView) findViewById(R.id.physical_listview);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(Physical_Property_Activity.this,Physical_Detail_Activity.class);
-                intent.putExtra("lid",list.get(position).getLid());
+                Intent intent = new Intent(Physical_Property_Activity.this, Physical_Detail_Activity.class);
+                intent.putExtra("lid", list.get(position).getLid());
                 startActivity(intent);
             }
         });
@@ -76,6 +78,7 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
         } catch (Exception e) {
         }
     }
+
     @Override
     public void failCallBack(int type) {
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,12 +23,7 @@ import com.myplas.q.common.view.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.Map;
-import java.util.Timer;
 import java.util.TimerTask;
-
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
 
 /**
  * 编写： 黄双
@@ -43,7 +39,6 @@ public class BaseActivity extends FragmentActivity {
     public TextView mTextView, mTVLeft, mTVRight;
 
     private String type;
-    private Observer observer;
 
 
     public void initTileBar() {
@@ -112,25 +107,6 @@ public class BaseActivity extends FragmentActivity {
     //左边返回按钮
     public void setLeftIVResId(int resId) {
         mIVLeft.setImageResource(resId);
-    }
-
-    //绑定订阅者
-    public void setObserver(Observer observer, String type) {
-        this.type = type;
-        this.observer = observer;
-        mTVRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Observable observable = Observable.create(new Observable.OnSubscribe<String>() {
-                    @Override
-                    public void call(Subscriber<? super String> subscriber) {
-                        subscriber.onNext(BaseActivity.this.type);
-                        subscriber.onCompleted();
-                    }
-                });
-                observable.subscribe(BaseActivity.this.observer);
-            }
-        });
     }
 
     public <T extends View> T F(int id) {
@@ -221,11 +197,11 @@ public class BaseActivity extends FragmentActivity {
         startActivity(intent);
     }
 
+
     public void showInPutKeybord(final EditText editText) {
         editText.requestFocus();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -233,7 +209,6 @@ public class BaseActivity extends FragmentActivity {
                     imm.showSoftInput(editText, 0);
                 }
             }
-
         }, 100);
     }
 

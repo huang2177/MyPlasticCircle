@@ -42,7 +42,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
     private int flag;
     private String type;
     private boolean isShareed;
-    private String description = "我的塑料网-塑料圈通讯录";
+    private String description = "塑料圈通讯录-塑料人都在用";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,8 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
         type = getIntent().getStringExtra("type");
 
         view.setOnClickListener(this);
-        sharetofriends.setOnClickListener(this);
         shareTocircle.setOnClickListener(this);
+        sharetofriends.setOnClickListener(this);
 
     }
 
@@ -86,6 +86,15 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
                                         + getIntent().getStringExtra("id")
                                         + "/"
                                         + getIntent().getStringExtra("userid")
+                                , getIntent().getStringExtra("title")
+                                , R.drawable.gongqiulogo);
+
+                        shareLog(getIntent().getStringExtra("supdemType")
+                                , getIntent().getStringExtra("id"));//加积分
+                        break;
+                    case "5"://供求-QQ
+                        isShareed = shareToWX(API.PLASTIC_SUPPLY_DEMAND_QQ
+                                        + getIntent().getStringExtra("id")
                                 , getIntent().getStringExtra("title")
                                 , R.drawable.gongqiulogo);
 

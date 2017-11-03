@@ -38,8 +38,7 @@
 
                 <TextView
                     android:id="@+id/buttom_text_txl"
-                    style="@style/layout_buttoom_text"
-                    android:layout_gravity="center"
+                    style="@style/navigationBar_text_style"
                     android:text="通讯录"/>
             </LinearLayout>
 
@@ -74,8 +73,7 @@
 
             <TextView
                 android:id="@+id/buttom_text_fx"
-                style="@style/layout_buttoom_text"
-                android:layout_gravity="center"
+                style="@style/navigationBar_text_style"
                 android:text="头条"/>
         </LinearLayout>
 
@@ -118,8 +116,7 @@
 
                 <TextView
                     android:id="@+id/buttom_text_gq"
-                    style="@style/layout_buttoom_text"
-                    android:layout_gravity="center"
+                    style="@style/navigationBar_text_style"
                     android:text="供求"/>
             </LinearLayout>
 
@@ -155,8 +152,7 @@
 
                 <TextView
                     android:id="@+id/buttom_text_wd"
-                    style="@style/layout_buttoom_text"
-                    android:layout_gravity="center"
+                    style="@style/navigationBar_text_style"
                     android:text="我的"/>
             </LinearLayout>
 

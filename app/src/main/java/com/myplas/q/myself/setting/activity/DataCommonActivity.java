@@ -13,12 +13,10 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.setting.adapter.SettingSex_RegionAdapter;
 import com.optimus.edittextfield.EditTextField;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.Arrays;
 import java.util.List;
 
-import rx.Subscriber;
 
 /**
  * 编写： 黄双
@@ -26,11 +24,10 @@ import rx.Subscriber;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 10:25
  */
-public class DataCommonActivity extends BaseActivity {
+public class DataCommonActivity extends BaseActivity implements View.OnClickListener {
 
     private int position;
     private List<String> mList;
-    private Subscriber mSubscriber;
     private String type, hint, dataBack;
     private SettingSex_RegionAdapter mAdapter;
 
@@ -57,6 +54,8 @@ public class DataCommonActivity extends BaseActivity {
         mImageView = F(R.id.datacommon_img_logistics);
         mTextField_other = F(R.id.datacommon_input_edit);
 
+        mTVRight.setOnClickListener(this);
+
         if (type.equals("2")) {
             showInPutKeybord(mTextField_other);
             setLeftTVVisibility(View.VISIBLE);
@@ -78,31 +77,6 @@ public class DataCommonActivity extends BaseActivity {
             mListView.setAdapter(mAdapter);
         }
 
-        //确定按钮事件的订阅
-        mSubscriber = new Subscriber() {
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onNext(Object o) {
-                dataBack = mTextField_other.getText().toString();
-                if (NetUtils.isNetworkStateed(DataCommonActivity.this)) {
-                    if (TextUtils.isNullOrEmpty(dataBack)) {
-                        Intent intent = new Intent();
-                        intent.putExtra("updateData", dataBack);
-                        setResult(1, intent);
-                        DataCommonActivity.this.finish();
-                    }
-                }
-            }
-        };
-        setObserver(mSubscriber, "");
-
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -116,6 +90,8 @@ public class DataCommonActivity extends BaseActivity {
                             break;
                         case 1:
                             dataBack = "1";
+                            break;
+                        default:
                             break;
                     }
 
@@ -135,6 +111,8 @@ public class DataCommonActivity extends BaseActivity {
                         case 3:
                             dataBack = "OT";
                             break;
+                        default:
+                            break;
                     }
                 }
                 intent.putExtra("updateData", dataBack);
@@ -144,4 +122,16 @@ public class DataCommonActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        dataBack = mTextField_other.getText().toString();
+        if (NetUtils.isNetworkStateed(DataCommonActivity.this)) {
+            if (TextUtils.isNullOrEmpty(dataBack)) {
+                Intent intent = new Intent();
+                intent.putExtra("updateData", dataBack);
+                setResult(1, intent);
+                DataCommonActivity.this.finish();
+            }
+        }
+    }
 }

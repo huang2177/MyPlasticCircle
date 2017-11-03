@@ -303,9 +303,12 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     }
 
     private void share() {
-        String s = (mDetailBean.getData().getType().equals("1"))
-                ? ("求购信息:")
-                : ("供给信息：");
+        String s = (mDetailBean.getData().getType().equals("1") ? "求:" : "供：")
+                + mDetailBean.getData().getModel()
+                + mDetailBean.getData().getF_name()
+                + "价格" + mDetailBean.getData().getUnit_price()
+                + mDetailBean.getData().getStore_house()
+                + (mDetailBean.getData().getCargo_type().equals("1") ? "现货" : "期货");
         Intent in = new Intent(this, ShareActivity.class);
         in.putExtra("title", s);
         in.putExtra("type", "4");
@@ -373,7 +376,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
         isSelf = (mDetailBean.getData().getUser_id())
                 .equals(sharedUtils.getData(this, Constant.USERID));
-        isWeChatOperation = mDetailBean.getData().getStatus().equals("operator");
+        isWeChatOperation = mDetailBean.getQapp_status().contains("operator");
 
         setRightTVText("");
         mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);

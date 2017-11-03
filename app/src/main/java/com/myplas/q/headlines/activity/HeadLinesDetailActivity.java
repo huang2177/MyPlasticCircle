@@ -53,15 +53,13 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     private Resources resources;
     private WebSettings webSettings;
     private SharedUtils sharedUtils;
+    private LinearLayout mlayoutWebView;
     private LinearLayout linearLayout_share;
     private SucribleDetailBean sucribleDetailBean;
     private MyListview mListviewHot, mListviewAbout;
     private TextView textView_tt_title, textView_shj;
     private TextView textView_title, textView_content;
     private TextView imageView_btn_next, imageView_btn_last;
-    private TextView textView_gq, textView_wd, textView_fx, textView_txl;
-    private ImageView imageView_gq, imageView_wd, imageView_fx, imageView_txl;
-    private LinearLayout layout_gq, layout_txl, layout_jia, layout_fx, layout_wd, mlayoutWebView;
 
     private Handler mHandler;
     private ScrollView mScrollView;
@@ -94,27 +92,6 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         linearLayout_share = F(R.id.wd_linear_share);
         mListviewAbout = F(R.id.find_detail_about_mlv);
 
-        layout_gq = F(R.id.buttom_linear_gq);
-        layout_txl = F(R.id.buttom_linear_txl);
-        layout_jia = F(R.id.buttom_linear_jia);
-        layout_wd = F(R.id.buttom_linear_wd);
-        layout_fx = F(R.id.buttom_linear_fx);
-
-        imageView_fx = F(R.id.buttom_img_fx);
-        imageView_gq = F(R.id.buttom_img_gq);
-        imageView_txl = F(R.id.buttom_img_txl);
-        imageView_wd = F(R.id.buttom_img_wd);
-
-        textView_fx = F(R.id.buttom_text_fx);
-        textView_gq = F(R.id.buttom_text_gq);
-        textView_txl = F(R.id.buttom_text_txl);
-        textView_wd = F(R.id.buttom_text_wd);
-
-        layout_fx.setOnClickListener(this);
-        layout_wd.setOnClickListener(this);
-        layout_jia.setOnClickListener(this);
-        layout_txl.setOnClickListener(this);
-        layout_gq.setOnClickListener(this);
         imageView_btn_last.setOnClickListener(this);
         imageView_btn_next.setOnClickListener(this);
         linearLayout_share.setOnClickListener(this);
@@ -158,7 +135,6 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 }
             }
         });
-        firstInto();
         getNetData(getIntent().getStringExtra("id"), 1);
     }
 
@@ -213,13 +189,12 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         textView_tt_title.setText("[" + sucribleDetailBean.getInfo().getType() + "]"
                 + sucribleDetailBean.getInfo().getTitle());
         textView_shj.setText(Html.fromHtml(sucribleDetailBean.getInfo().getAuthor()
-                + "     " + sucribleDetailBean.getInfo().getInput_time()
-                + "     " + sucribleDetailBean.getInfo().getPv()));
+                + "   " + sucribleDetailBean.getInfo().getInput_time()
+                + "   " + sucribleDetailBean.getInfo().getPv()));
 
         String html = sucribleDetailBean.getInfo().getContent();
         String s = "<style>img,div{ width:100%;}table{width:100%;}</style>" + html;
         webView.loadData(s, "text/html;charset=UTF-8", null);
-        //webView.loadDataWithBaseURL(null, html, "textselecthandle/html", "UTF-8", null);
 
         List<SucribleDetailBean.InfoBean.SubscribeBean> subscribeBeanList = sucribleDetailBean.getInfo().getSubscribe();
         List<SucribleDetailBean.InfoBean.HotBean> hotBeanList = sucribleDetailBean.getInfo().getHot();
@@ -239,7 +214,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     @Override
     public void ok(int type) {
         Intent intent = new Intent(this, IntegralActivity.class);
-        intent.putExtra("type", "1");
+        intent.putExtra("type", "5");
         startActivity(intent);
     }
 
@@ -272,78 +247,13 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 } catch (Exception e) {
                 }
                 break;
-            case R.id.buttom_linear_gq:
-                finish();
-                clearColor();
-                imageView_gq.setImageResource(R.drawable.tabbar_trade_hl);
-                textView_gq.setTextColor(resources.getColor(R.color.color_red));
-                mMainActivity.goToSupDem();
-                break;
-            case R.id.buttom_linear_txl:
-                finish();
-                clearColor();
-                imageView_txl.setImageResource(R.drawable.tabbar_contacts_hl);
-                textView_txl.setTextColor(resources.getColor(R.color.color_red));
-                mMainActivity.firstInto();
-                break;
-            case R.id.buttom_linear_fx:
-                finish();
-                mMainActivity.goToHeadLine();
-                break;
-            case R.id.buttom_linear_wd:
-                finish();
-                clearColor();
-                imageView_wd.setImageResource(R.drawable.tabbar_mehl);
-                textView_wd.setTextColor(resources.getColor(R.color.color_red));
-                mMainActivity.goToMySelf();
-                break;
-            case R.id.buttom_linear_jia:
-                finish();
-                Intent intent = new Intent(this, ReleaseActivity.class);
-                startActivity(intent);
+            default:
                 break;
         }
     }
 
-    public void firstInto() {
-        clearColor();
-        imageView_fx.setImageResource(R.drawable.tabbar_headlines_hl);
-        textView_fx.setTextColor(resources.getColor(R.color.color_red));
-    }
-
-    public void clearColor() {
-        imageView_wd.setImageResource(R.drawable.tabbar_me);
-        imageView_gq.setImageResource(R.drawable.tabbar_trade);
-        imageView_fx.setImageResource(R.drawable.tabbar_headlines);
-        imageView_txl.setImageResource(R.drawable.tabbar_contacts);
-
-        textView_fx.setTextColor(resources.getColor(R.color.color_gray));
-        textView_wd.setTextColor(resources.getColor(R.color.color_gray));
-        textView_txl.setTextColor(resources.getColor(R.color.color_gray));
-        textView_gq.setTextColor(resources.getColor(R.color.color_gray));
-    }
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-//            webView.goBack();// 返回前一个页面
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
-
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         if (webView != null) {

@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/wd_text_fans"
-            style="@style/wd_text2_style"
+            style="@style/myself_text_style"
             android:layout_gravity="center"
             android:layout_weight="0"
             android:gravity="center"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/wd_text_follow"
-            style="@style/wd_text2_style"
+            style="@style/myself_text_style"
             android:layout_gravity="center"
             android:layout_weight="0"
             android:gravity="center"
@@ -81,7 +81,7 @@
 
         <TextView
             android:id="@+id/wd_text_introdus"
-            style="@style/wd_text2_style"
+            style="@style/myself_text_style"
             android:layout_gravity="center"
             android:layout_weight="0"
             android:gravity="center"

@@ -13,7 +13,7 @@ public class SupDemDetailBean {
 
     /**
      * err : 0
-     * data : {"id":"195864","p_id":"3595","from":"1","user_id":"53453","stype":"4","model":"BL3","unit_price":"10500.00","store_house":"宁波","cargo_type":"2","f_name":"伊朗石化","type":"2","input_time":"11-01 10:11","top":"0","status":0,"name":"娟娟","fans":"9","thumb":"http://pic.myplas.com/upload/17/09/01/59a93aba83fc0.PNG","c_name":"上海晨达物流有限公司","is_pass":"","mobile":"18817392633","mobile1":"18817392633","member_level":"列兵"}
+     * data : {"id":"195914","p_id":"3595","mobile":"18817392631","from":"1","user_id":"2062","stype":"1","model":"BL3","unit_price":"10500.00","store_house":"宁波","cargo_type":"2","f_name":"伊朗石化","type":"2","input_time":"11-03 13:58","top":"0","status":0,"name":"胖墩","fans":"218","thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","c_name":"上海中信有限公司","is_pass":"","mobile1":"18817392631","member_level":"列兵"}
      * qapp_status : ["common_user"]
      */
 
@@ -47,32 +47,33 @@ public class SupDemDetailBean {
 
     public static class DataBean {
         /**
-         * id : 195864
+         * id : 195914
          * p_id : 3595
+         * mobile : 18817392631
          * from : 1
-         * user_id : 53453
-         * stype : 4
+         * user_id : 2062
+         * stype : 1
          * model : BL3
          * unit_price : 10500.00
          * store_house : 宁波
          * cargo_type : 2
          * f_name : 伊朗石化
          * type : 2
-         * input_time : 11-01 10:11
+         * input_time : 11-03 13:58
          * top : 0
          * status : 0
-         * name : 娟娟
-         * fans : 9
-         * thumb : http://pic.myplas.com/upload/17/09/01/59a93aba83fc0.PNG
-         * c_name : 上海晨达物流有限公司
+         * name : 胖墩
+         * fans : 218
+         * thumb : http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg
+         * c_name : 上海中信有限公司
          * is_pass :
-         * mobile : 18817392633
-         * mobile1 : 18817392633
+         * mobile1 : 18817392631
          * member_level : 列兵
          */
 
         private String id;
         private String p_id;
+        private String mobile;
         private String from;
         private String user_id;
         private String stype;
@@ -90,7 +91,6 @@ public class SupDemDetailBean {
         private String thumb;
         private String c_name;
         private String is_pass;
-        private String mobile;
         private String mobile1;
         private String member_level;
 
@@ -108,6 +108,14 @@ public class SupDemDetailBean {
 
         public void setP_id(String p_id) {
             this.p_id = p_id;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
         }
 
         public String getFrom() {
@@ -244,14 +252,6 @@ public class SupDemDetailBean {
 
         public void setIs_pass(String is_pass) {
             this.is_pass = is_pass;
-        }
-
-        public String getMobile() {
-            return mobile;
-        }
-
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
         }
 
         public String getMobile1() {

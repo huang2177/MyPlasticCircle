@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/supply_demand_prompt_linear"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
+        android:id="@+id/supply_demand_prompt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/supply_demand_prompt">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView"
@@ -17,24 +19,25 @@
             android:src="@drawable/icon_intelligent_recommendation2" />
 
         <TextView
+            android:id="@+id/supply_demand_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_gray"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:id="@+id/supply_demand_text"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
             android:text="系统暂未为您匹配到相应的牌号，暂无推荐！"
-            android:textSize="16.0sp"/>
+            android:textColor="@color/color_gray"
+            android:textSize="16.0sp" />
+
         <ImageView
             android:id="@+id/supply_demand_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/explain1"/>
+            android:layout_marginTop="20dp"
+            android:src="@drawable/explain1" />
     </LinearLayout>
 </LinearLayout>

@@ -44,6 +44,9 @@ import com.myplas.q.myself.setting.SettingActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
+import com.myplas.q.sockethelper.RabbitMQCallBack;
+import com.myplas.q.sockethelper.RabbitMQConfig;
+import com.myplas.q.sockethelper.RabbitMQHelper;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -56,20 +59,24 @@ import java.util.Map;
  * 电话：15378412400
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
+ *
+ * @author Administrator
  */
 public class Fragment_MySelf extends Fragment implements View.OnClickListener
-        , ResultCallBack {
+        , ResultCallBack
+        , RabbitMQCallBack {
     private View view;
     private MyZone myZone;
 
-    private ImageView image_rz;
-    private RoundCornerImageView image_tx;
+    private ImageView imageStart;
     private SharedUtils sharedUtils;
     private ImageButton imageButton;
-    private ImageView mImage_news, mImage_more;
+    private RoundCornerImageView imageTx;
+    private ImageView mimageNews, mimageMore;
+    private TextView textTitle, textName, textCompany, textRank;
     private DragView mDragViewMsg, mDragViewLook, mDragViewOrder;
-    private TextView text_title, text_dd, text_gj, text_qg, text_yj, text_fs, text_gz, text_look, text_name, text_gs, text_pm;
-    private LinearLayout linear_title, linear_dd, linear_qg, linear_gj, linear_yj, linear_fs, linear_gz, linear_jf, linear_look, linear_edu, linear_pz, linear_set;
+    private LinearLayout linearTitle, linearYj, linearFs, linearGz, linearJf, linearQg, linearGj;
+    private TextView textDd, textYj, textFs, textGz, textLook, textSet, textPz, textEdu, textQg, textGj;
 
     private Toolbar mToolbar;
     private AppBarLayout mBarLayout;
@@ -86,8 +93,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+        rCallback(true);
+
         setAppBarListener();
         getLoginInfo(false);
+        RabbitMQConfig.getInstance(getActivity()).setResultCallBack(this);
     }
 
 
@@ -99,40 +109,37 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         mACache = ACache.get(getActivity());
         sharedUtils = SharedUtils.getSharedUtils();
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_myself, null, false);
-        //获取登陆后相关数据
-        image_tx = f(R.id.xq_tx);
-        image_rz = f(R.id.xq_rz);
-        text_gs = f(R.id.wd_title_gs);
 
-        text_pm = f(R.id.wd_title_pm);
-        text_dd = f(R.id.wd_text_dd);
-        text_gj = f(R.id.wd_text_gj);
-        text_qg = f(R.id.wd_text_qg);
-        text_fs = f(R.id.wd_text_fans);
-        text_name = f(R.id.wd_title_name);
-        text_gz = f(R.id.wd_text_follow);
-        text_look = f(R.id.wd_text_look);
-        text_yj = f(R.id.wd_text_introdus);
-        text_title = f(R.id.toolbar_title);
+        imageTx = f(R.id.xq_tx);
+        imageStart = f(R.id.xq_rz);
+        textQg = f(R.id.wd_text_qg);
+        textGj = f(R.id.wd_text_gj);
+        textPz = f(R.id.wd_text_pz);
+        textDd = f(R.id.wd_text_dd);
+        textSet = f(R.id.wd_text_set);
+        textEdu = f(R.id.wd_text_edu);
+        textFs = f(R.id.wd_text_fans);
+        textRank = f(R.id.wd_title_pm);
+        linearGj = f(R.id.wd_linear_gj);
+        linearQg = f(R.id.wd_linear_qg);
+        linearJf = f(R.id.wd_linear_jf);
+        textGz = f(R.id.wd_text_follow);
+        textLook = f(R.id.wd_text_look);
+        textName = f(R.id.wd_title_name);
+        textCompany = f(R.id.wd_title_gs);
+        textYj = f(R.id.wd_text_introdus);
+        textTitle = f(R.id.toolbar_title);
 
-        linear_jf = f(R.id.wd_linear_jf);
-        linear_dd = f(R.id.wd_linear_dd);
-        linear_gj = f(R.id.wd_linear_gj);
-        linear_qg = f(R.id.wd_linear_qg);
-        linear_pz = f(R.id.wd_linear_pz);
         imageButton = f(R.id.img_reload);
-        linear_fs = f(R.id.wd_linear_fans);
-        linear_set = f(R.id.wd_linear_set);
-        linear_edu = f(R.id.wd_linear_edu);
-        mImage_more = f(R.id.wd_title_more);
-        linear_gz = f(R.id.wd_linear_follow);
-        linear_look = f(R.id.wd_linear_look);
+        linearFs = f(R.id.wd_linear_fans);
+        mimageMore = f(R.id.wd_title_more);
+        linearGz = f(R.id.wd_linear_follow);
         mDragViewLook = f(R.id.look_dragview);
-        linear_title = f(R.id.wd_linear_title);
-        linear_yj = f(R.id.wd_linear_introdus);
+        linearTitle = f(R.id.wd_linear_title);
+        linearYj = f(R.id.wd_linear_introdus);
         mDragViewOrder = f(R.id.order_dragview);
         mFrameLayout = f(R.id.wd_logined_news_fl);
-        mImage_news = f(R.id.wd_logined_news_img);
+        mimageNews = f(R.id.wd_logined_news_img);
         mDragViewMsg = f(R.id.wd_logined_news_text);
         mNestedScrollView = f(R.id.scrollView_myself);
 
@@ -140,26 +147,26 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         mBarLayout = f(R.id.app_bar_layout);
         mCollapsingToolbarLayout = f(R.id.collapsing_toolbar);
 
-        linear_dd.setOnClickListener(this);
-        linear_gj.setOnClickListener(this);
-        linear_qg.setOnClickListener(this);
-        linear_yj.setOnClickListener(this);
-        linear_fs.setOnClickListener(this);
-        linear_gz.setOnClickListener(this);
-        linear_jf.setOnClickListener(this);
-        linear_pz.setOnClickListener(this);
-        linear_set.setOnClickListener(this);
-        linear_edu.setOnClickListener(this);
-        linear_look.setOnClickListener(this);
+        textDd.setOnClickListener(this);
+        textPz.setOnClickListener(this);
+        textSet.setOnClickListener(this);
+        textEdu.setOnClickListener(this);
+        linearGj.setOnClickListener(this);
+        linearQg.setOnClickListener(this);
+        linearJf.setOnClickListener(this);
+        textLook.setOnClickListener(this);
+        linearYj.setOnClickListener(this);
+        linearFs.setOnClickListener(this);
+        linearGz.setOnClickListener(this);
         imageButton.setOnClickListener(this);
         mDragViewMsg.setOnClickListener(this);
-        linear_title.setOnClickListener(this);
+        linearTitle.setOnClickListener(this);
         mFrameLayout.setOnClickListener(this);
 
-        linear_fs.setBackgroundResource(R.color.color_white);
-        linear_gz.setBackgroundResource(R.color.color_white);
-        linear_yj.setBackgroundResource(R.color.color_white);
-        image_tx.setBorderColor(getResources().getColor(R.color.color_white));
+        linearFs.setBackgroundResource(R.color.color_white);
+        linearGz.setBackgroundResource(R.color.color_white);
+        linearYj.setBackgroundResource(R.color.color_white);
+        imageTx.setBorderColor(getResources().getColor(R.color.color_white));
     }
 
 
@@ -188,7 +195,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                     Intent i0 = new Intent(getActivity(), MessageActivity.class);
                     startActivity(i0);
                     break;
-                case R.id.wd_linear_dd:
+                case R.id.wd_text_dd:
                     Intent i1 = new Intent(getActivity(), TradeOrderActivity.class);
                     startActivity(i1);
                     break;
@@ -224,24 +231,24 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                     intent4.putExtra("type", "2");
                     startActivity(intent4);
                     break;
-                case R.id.wd_linear_look:
+                case R.id.wd_text_look:
                     Intent intent0 = new Intent(getActivity(), LookMeActivity.class);
                     startActivity(intent0);
                     break;
                 case R.id.wd_linear_jf:
                     startActivity(new Intent(getActivity(), IntegralActivity.class));
                     break;
-                case R.id.wd_linear_edu:
+                case R.id.wd_text_edu:
                     startActivity(new Intent(getActivity(), LineOfCreditActivity.class));
                     break;
-                case R.id.wd_linear_pz:
+                case R.id.wd_text_pz:
                     startActivity(new Intent(getActivity(), PlasticMoneyActivity.class));
                     break;
                 case R.id.wd_linear_title:
                     Intent intent6 = new Intent(getActivity(), MyDataActivity.class);
                     startActivity(intent6);
                     break;
-                case R.id.wd_linear_set:
+                case R.id.wd_text_set:
                     Intent intent7 = new Intent(getActivity(), SettingActivity.class);
                     startActivity(intent7);
                     break;
@@ -301,30 +308,32 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
      */
     public void showInfo(MyZone myZone) {
         try {
-            String ispass = myZone.getData().getIs_pass();
+            textCompany.setText(myZone.getData().getC_name());
+
+            String sex = myZone.getData().getName() + "  "
+                    + myZone.getData().getMobile() + "  " +
+                    ("0".equals(myZone.getData().getSex()) ? ("男") : ("女"));
+            textName.setText(sex);
+
+            String rank = "等级：" + myZone.getData().getMemberlevel()
+                    + "  排名：" + myZone.getData().getRank() + "位";
+            textRank.setText(rank);
+
+            textFs.setText(myZone.getMyfans());
+            textGz.setText(myZone.getMyconcerns());
+            textYj.setText(myZone.getIntroduction());
+
+            textQg.setText(myZone.getS_in_count());
+            textGj.setText(myZone.getS_out_count());
+
             Glide.with(getActivity())
                     .load(myZone.getData().getThumb())
                     .placeholder(R.drawable.contact_image_defaul_male)
-                    .into(image_tx);
-            image_rz.setImageResource((ispass.equals("0"))
+                    .into(imageTx);
+
+            imageStart.setImageResource(("0".equals(myZone.getData().getIs_pass()))
                     ? (R.drawable.icon_identity)
                     : (R.drawable.icon_identity_hl));
-            text_name.setText(myZone.getData().getName() + "  "
-                    + myZone.getData().getMobile() + "  " +
-                    (!myZone.getData().getSex().equals("0")
-                            ? ("女")
-                            : ("男")));
-            text_gs.setText(myZone.getData().getC_name());
-            text_pm.setText("等级：" + myZone.getData().getMemberlevel()
-                    + "  排名：" + myZone.getData().getRank() + "位");
-
-            text_yj.setText(myZone.getIntroduction());
-            text_fs.setText(myZone.getMyfans());
-            text_gz.setText(myZone.getMyconcerns());
-
-            text_gj.setText(String.valueOf(myZone.getS_out_count()));
-            text_qg.setText(String.valueOf(myZone.getS_in_count()));
-
         } catch (Exception e) {
         }
     }
@@ -356,15 +365,15 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
      * @param alpha the alpha
      */
     public void setToolbar1Alpha(int alpha) {
-        text_title.setTextColor(Color.TRANSPARENT);
-        image_rz.getDrawable().setAlpha(alpha);
-        mImage_more.getDrawable().setAlpha(alpha);
-        mImage_news.getDrawable().setAlpha(alpha);
-        image_tx.getDrawable().mutate().setAlpha(alpha);
-        text_pm.setTextColor(Color.argb(alpha, 255, 255, 255));
-        text_gs.setTextColor(Color.argb(alpha, 255, 255, 255));
-        text_name.setTextColor(Color.argb(alpha, 255, 255, 255));
-        image_tx.setBorderColor(Color.argb(alpha, 255, 255, 255));
+        textTitle.setTextColor(Color.TRANSPARENT);
+        imageStart.getDrawable().setAlpha(alpha);
+        mimageMore.getDrawable().setAlpha(alpha);
+        mimageNews.getDrawable().setAlpha(alpha);
+        imageTx.getDrawable().mutate().setAlpha(alpha);
+        textRank.setTextColor(Color.argb(alpha, 255, 255, 255));
+        textCompany.setTextColor(Color.argb(alpha, 255, 255, 255));
+        textName.setTextColor(Color.argb(alpha, 255, 255, 255));
+        imageTx.setBorderColor(Color.argb(alpha, 255, 255, 255));
         mDragViewMsg.setTextColor(Color.argb(alpha, 255, 255, 255));
     }
 
@@ -374,16 +383,20 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
      * @param alpha the alpha
      */
     public void setToolbar2Alpha(int alpha) {
-        text_title.setTextColor(Color.argb(alpha, 255, 255, 255));
+        textTitle.setTextColor(Color.argb(alpha, 255, 255, 255));
         mCollapsingToolbarLayout.setContentScrimColor(Color.argb(alpha, 255, 130, 0));
     }
 
     /*rabbitmq */
-    public void showRedDot(boolean showRedDot) {
+    @Override
+    public void rCallback(boolean showRedDot) {
         try {
             int numSeeMe = Integer.parseInt(mACache.getAsString(Constant.R_SEEME));
-            int numMyMsg = Integer.parseInt(mACache.getAsString(Constant.R_MYMSG));
             int numMyOrder = Integer.parseInt(mACache.getAsString(Constant.R_MYORDER));
+            int numMyMsg = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM_MSG))
+                    + Integer.parseInt(mACache.getAsString(Constant.R_PUR_MSG))
+                    + Integer.parseInt(mACache.getAsString(Constant.R_REPLY_MSG))
+                    + Integer.parseInt(mACache.getAsString(Constant.R_INTER_MSG));
 
             mDragViewMsg.setVisibility(!showRedDot || 0 == numMyMsg
                     ? View.GONE
@@ -407,7 +420,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        showRedDot(true);
         getLoginInfo(false);
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
@@ -416,12 +428,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mBarLayout.setExpanded(true, true);
     }
 
     @Override

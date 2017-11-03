@@ -97,10 +97,10 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
                 viewHolder.mNeed.setVisibility(View.VISIBLE);
                 viewHolder.mPro.setVisibility(View.VISIBLE);
                 viewHolder.mSign.setImageResource(R.drawable.icon_factory);
-                viewHolder.mNeed.setText("产品:" + product
-                        + "  月用量:" + personsBean.getMonth_consum());
+                viewHolder.mNeed.setText("产品:" + product);
 
-                viewHolder.mPro.setText(replace("需求:" + personsBean.getNeed_product()));
+                viewHolder.mPro.setText(replace("需求:" + personsBean.getNeed_product()
+                        + "  月用量:" + personsBean.getMonth_consum()));
 
             } else if (type.equals("2")) {
                 viewHolder.mNeed.setVisibility(View.INVISIBLE);

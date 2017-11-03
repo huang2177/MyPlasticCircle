@@ -128,9 +128,16 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
                 viewHolder.mImageS.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String s = (list.get(position).getType().equals("1"))
-                                ? ("求购信息:")
-                                : ("供给信息：");
+                        String s = (list.get(position).getType().equals("1")
+                                ? "求:"
+                                : "供:")
+                                + list.get(position).getModel()
+                                + list.get(position).getF_name()
+                                + "价格" + list.get(position).getUnit_price()
+                                + list.get(position).getStore_house()
+                                + (list.get(position).getCargo_type().equals("1")
+                                ? "现货"
+                                : "期货");
 
                         Intent in = new Intent(context, ShareActivity.class);
                         in.putExtra("title", s);
@@ -188,7 +195,7 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", sharedUtils.getData(context, "token"));
         map.put("id", list.get(position).getId());
-        BaseActivity.postAsyn(context, API.BASEURL + API.DELETE_MY_MSG, map, SupDemAdapter.this, 1);
+        BaseActivity.postAsyn(context, API.BASEURL + API.DELETE_MY_MSG, map, this, 1);
     }
 
     public interface MyInterface {

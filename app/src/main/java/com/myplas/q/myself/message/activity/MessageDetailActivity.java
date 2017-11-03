@@ -18,6 +18,7 @@ import com.myplas.q.myself.message.adapter.MessageCHJAdapter;
 import com.myplas.q.myself.message.adapter.MessageHFAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myself.message.adapter.MessageSupDemAdapter;
+import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -83,7 +84,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
             type = 3;
             method = API.HUIFUMSG;
         } else {
-            type = 3;
+            type = 4;
             method = API.INTERMSG;
         }
         Map<String, String> map = new HashMap<String, String>();
@@ -114,6 +115,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mSupDemAdapter.notifyDataSetChanged();
                     }
                     count = mListSupDem.size() - 1;
+                    RabbitMQConfig.getInstance(this).readMsg("unread_reply_user_msg", 15);
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);
@@ -142,6 +144,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mCHJAdapter.setList(mListChJ);
                         mCHJAdapter.notifyDataSetChanged();
                     }
+                    RabbitMQConfig.getInstance(this).readMsg("unread_reply_user_msg", 16);
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);
@@ -152,8 +155,9 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
                     }
                 }
+
             }
-            if (type == 3) {
+            if (type == 3 || type == 4) {
                 if (err.equals("0")) {
                     mEmptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
@@ -170,6 +174,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mHFAdapter.notifyDataSetChanged();
                     }
                     count = mListHF.size() - 1;
+                    RabbitMQConfig.getInstance(this).readMsg("unread_reply_user_msg", (type == 3 ? 17 : 18));
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);

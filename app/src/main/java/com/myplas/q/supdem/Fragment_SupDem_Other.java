@@ -177,10 +177,6 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
     @Override
     public void callBack(Object object, int type) {
         try {
-            if (object.toString().equals(mLastData)) {
-                //return;
-            }
-            mLastData = object.toString();
             Gson gson = new Gson();
             String result = new JSONObject(object.toString()).getString("err");
             if (type == 1) {

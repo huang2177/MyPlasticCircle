@@ -27,11 +27,20 @@ public class Constant {
 
     public static final String R_SUPDEM = "unread_supply_and_demand";
 
-    public static final String R_MYMSG = "unread_mymsg";
+    public static final String R_SUPDEM_MSG = "unread_purchase_msg";
+
+    public static final String R_INTER_MSG = "unread_reply_user_msg";
+
+    public static final String R_REPLY_MSG = "unread_reply_purchase_msg";
+
+    public static final String R_PUR_MSG = "unread_plastic_msg";
 
     public static final String R_MYORDER = "unread_myorder";
 
     public static final String R_SEEME = "unread_who_saw_me";
 
+
     public static final String POINTSINFO = "pointsInfo";
+
+    public static final String SUPDEMCACHE = "supdemCache";
 }

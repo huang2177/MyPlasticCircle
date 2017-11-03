@@ -40,7 +40,8 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.physical_property_detail_activity_layout);
-        goBack(findViewById(R.id.back_img));
+        initTileBar();
+        setTitle("物性表详情");
         initViews();
         getPhysical_Detail();
     }
@@ -125,6 +126,7 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
 
 
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {

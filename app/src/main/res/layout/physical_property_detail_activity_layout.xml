@@ -4,34 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_red">
-
-        <TextView
-            android:id="@+id/title_rs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="物性表详情"
-            android:textColor="@color/color_white"
-            android:textSize="18.0sp" />
-
-        <LinearLayout
-            android:id="@+id/back_img"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
-        </LinearLayout>
-
-
-    </FrameLayout>
+    <include layout="@layout/common_layout_titlebar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -97,8 +70,8 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/color_balank" />
 
             <View
@@ -152,8 +125,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:maxLines="2"
                         android:ellipsize="end"
+                        android:maxLines="2"
                         android:textColor="@color/color_balank" />
                 </LinearLayout>
             </LinearLayout>

@@ -87,10 +87,9 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
             viewHolder.company.setText(replace(list.get(position).getC_name()) + "  "
                     + list.get(position).getName());
 
-            String time = (list.get(position).getFrom().equals("1")
-                    ? "来自供求 "
-                    : "来自QQ群 ")
-                    + list.get(position).getInput_time();
+            String time = ("1".equals(list.get(position).getFrom())
+                    ? "来自供求  "
+                    : "来自QQ群  ") + list.get(position).getInput_time();
             viewHolder.time.setText(time);
 
             String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + list.get(position).getStore_house()

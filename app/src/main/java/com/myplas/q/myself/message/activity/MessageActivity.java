@@ -78,7 +78,6 @@ public class MessageActivity extends BaseActivity implements ResultCallBack {
                 mAdapter = new MessageListsAdapter(this, list);
                 listView.setAdapter(mAdapter);
 
-                RabbitMQConfig.getInstance(this).readMsg("unread_mymsg", 12);
             } else {
             }
         } catch (Exception e) {

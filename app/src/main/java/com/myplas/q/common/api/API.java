@@ -13,6 +13,7 @@ public class API {
     public final static String BASEURL = (BuildConfig.API_ENV)
             ? ("https://api.myplas.com/qapi_4/")
             : ("https://ssl.myplas.com/qapi_4/");
+
     //正式_快速登陆
     public final static String BASEURL_API = "https://api.myplas.com/";
 
@@ -38,19 +39,25 @@ public class API {
     // 正式——微信appid
     public final static String WXAPI = "wxc0eb2ef58d5df955";
 
-    //分享文章
-    public final static String PLASTIC_SUCRIBLE = "http://q.myplas.com/plasticzone/plastic#/headlinedetail/";
-
     //分享授信
     public final static String PLASTIC_CREDIT = "http://q.myplas.com/plasticzone/plastic#/credit2/";
 
     //分享成功日志
     public final static String SAVE_SHARE_LOG = "wechat/saveShareLog";
 
+    //分享文章
+    public final static String PLASTIC_SUCRIBLE = (BuildConfig.API_ENV)
+            ? "http://q.myplas.com/plasticzone/plastic#/headlinedetail/"
+            : "http://test.myplas.com/plasticzone/plastic#/headlinedetail/";
+
     //分享供求
     public final static String PLASTIC_SUPPLY_DEMAND = (BuildConfig.API_ENV)
             ? "http://q.myplas.com/plasticzone/plastic#/supplybuydetail/"
             : "http://test.myplas.com/plasticzone/plastic#/supplybuydetail/";
+    //分享供求
+    public final static String PLASTIC_SUPPLY_DEMAND_QQ = (BuildConfig.API_ENV)
+            ? "http://q.myplas.com/plasticzone/plastic#/qqinfo?id="
+            : "http://test.myplas.com/plasticzone/plastic#/qqinfo?id=";
 
 
     /*socket*/

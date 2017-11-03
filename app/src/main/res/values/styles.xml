@@ -16,10 +16,6 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 
-    <style name="Theme.FloatActivity" parent="android:style/Theme.Dialog">
-        <!-- float_box为我们定义的窗口背景 ，这个不是必须的-->
-        <item name="android:windowBackground">@drawable/float_box</item>
-    </style>
 
     <style name="AppBlankTheme">
         <item name="android:windowIsTranslucent">false</item>
@@ -28,49 +24,31 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="layout_buttoom_text">
+    <style name="navigationBar_text_style">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/x70</item>
         <item name="android:textColor">@color/color_gray</item>
         <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
-    <style name="mycheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/radiobutton_selector</item>
-        <item name="android:paddingLeft">25.0dip</item>
-        <item name="android:maxHeight">10.0dip</item>
-    </style>
 
-    <style name="wd_text_style">
+    <style name="setting_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/x66</item>
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
-    <style name="wd_text2_style">
+    <style name="myself_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">15.0sp</item>
+        <item name="android:textSize">16.0sp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="wd_linear_style">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-    </style>
-
-    <style name="wd_zl_text_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_vertical</item>
-
-    </style>
 
     <style name="wd_zhc_text_style">
         <item name="android:layout_width">100dp</item>

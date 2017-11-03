@@ -28,7 +28,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscriber;
 
 /**
  * 编写： 黄双
@@ -43,7 +42,6 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
     private String address, addressId, dataBack, logisticsStartData, logisticsEndData;
 
     private RegionsBean mBean;
-    private Subscriber mSubscriber;
     private List<RegionsBean.DataBean> mPList;
     private List<List<RegionsBean.DataBean.ChildrenBeanX>> mCList;
     private List<List<List<RegionsBean.DataBean.ChildrenBeanX.ChildrenBean>>> mDList;
@@ -235,16 +233,6 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
         } else {
             return "";
         }
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     @Override

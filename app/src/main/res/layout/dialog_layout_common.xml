@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/corner_titlebar"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/corner_titlebar"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/dialog_title"
@@ -13,7 +13,7 @@
         android:gravity="center_horizontal"
         android:textColor="@color/color_transparent"
         android:textSize="18.0sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/dialog_message"
@@ -27,12 +27,12 @@
         android:gravity="center_horizontal"
         android:maxLines="3"
         android:textColor="@color/color_transparent"
-        android:textSize="16.0sp"/>
+        android:textSize="16.0sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_lightgray"/>
+        android:background="@color/color_lightgray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,12 +47,12 @@
             android:background="@null"
             android:text="取消"
             android:textColor="#03be54"
-            android:textSize="18.0sp"/>
+            android:textSize="18.0sp" />
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/color_lightgray"/>
+            android:background="@color/color_lightgray" />
 
         <Button
             android:id="@+id/btn_ok"
@@ -62,6 +62,6 @@
             android:background="@null"
             android:text="确定"
             android:textColor="#03be54"
-            android:textSize="18.0sp"/>
+            android:textSize="18.0sp" />
     </LinearLayout>
 </LinearLayout>

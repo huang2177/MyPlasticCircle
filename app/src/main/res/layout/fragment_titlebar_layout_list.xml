@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <LinearLayout
-        android:id="@+id/wd_linear_dd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:padding="10dp">
+        android:background="@color/colorAccent">
 
         <TextView
-            android:id="@+id/textView5"
-            style="@style/wd_text2_style"
+            android:id="@+id/wd_text_dd"
+            style="@style/myself_text_style"
             android:layout_marginLeft="8dp"
             android:drawableLeft="@drawable/icon_trade"
-            android:gravity="center_vertical"
+            android:padding="10dp"
             android:text="  交易订单"
-            android:textColor="@color/color_title_main"
-            android:textSize="16.0sp"/>
+            android:textColor="@color/color_title_main" />
 
         <com.myplas.q.common.view.DragView
             android:id="@+id/order_dragview"
@@ -38,25 +35,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="3dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/wd_text_dd"
-            style="@style/wd_text2_style"
+            style="@style/myself_text_style"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
-            android:drawableRight="@drawable/icon_more"/>
+            android:drawableRight="@drawable/icon_more" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,73 +64,71 @@
         <LinearLayout
             android:id="@+id/wd_linear_gj"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_height="wrap_content">
 
             <TextView
-                style="@style/wd_text2_style"
+                style="@style/myself_text_style"
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/icon_my_supply"
-                android:gravity="center_vertical"
+                android:padding="10dp"
                 android:text="  我的供给"
-                android:textColor="@color/color_title_main"
-                android:textSize="16.0sp"/>
+                android:textColor="@color/color_title_main" />
 
             <TextView
                 android:id="@+id/wd_text_gj"
-                style="@style/wd_text2_style"
+                style="@style/myself_text_style"
+                android:layout_marginRight="10dp"
                 android:layout_weight="0"
                 android:drawablePadding="3dp"
-                android:drawableRight="@drawable/icon_more"/>
+                android:drawableRight="@drawable/icon_more" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_in"/>
+            android:background="@color/color_gray_divider_in" />
 
         <LinearLayout
             android:id="@+id/wd_linear_qg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:background="@color/colorAccent">
 
             <TextView
-                style="@style/wd_text2_style"
+                style="@style/myself_text_style"
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/icon_my_purchase"
-                android:gravity="center_vertical"
+                android:padding="10dp"
                 android:text="  我的求购"
-                android:textColor="@color/color_title_main"
-                android:textSize="16.0sp"/>
+                android:textColor="@color/color_title_main" />
 
             <TextView
                 android:id="@+id/wd_text_qg"
-                style="@style/wd_text2_style"
+                style="@style/myself_text_style"
+                android:layout_marginRight="10dp"
                 android:layout_weight="0"
                 android:drawablePadding="3dp"
-                android:drawableRight="@drawable/icon_more"/>
+                android:drawableRight="@drawable/icon_more" />
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
 
     <LinearLayout
         android:id="@+id/wd_linear_jf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:padding="10dp">
+        android:background="@color/colorAccent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -141,9 +136,10 @@
             android:layout_marginLeft="8dp"
             android:drawableLeft="@drawable/icon_integral"
             android:gravity="center_vertical"
+            android:padding="10dp"
             android:text="  我的塑豆"
             android:textColor="@color/color_title_main"
-            android:textSize="16.0sp"/>
+            android:textSize="16.0sp" />
 
         <TextView
             android:id="@+id/textView"
@@ -154,46 +150,43 @@
             android:text=" hot!"
             android:textColor="#f4410a"
             android:textSize="16.0sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
 
         <TextView
-            android:id="@+id/wd_text_jf"
-            style="@style/wd_text2_style"
+            style="@style/myself_text_style"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
             android:drawableRight="@drawable/icon_more"
-            android:text="  "/>
+            android:text="  " />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
 
     <LinearLayout
         android:id="@+id/wd_linear_look"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:padding="10dp">
+        android:background="@color/colorAccent">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/myself_text_style"
+            android:id="@+id/wd_text_look"
             android:layout_marginLeft="8dp"
-            android:layout_weight="1"
             android:drawableLeft="@drawable/icon_who_see_me"
-            android:gravity="center_vertical"
+            android:padding="10dp"
             android:text="  谁看过我"
-            android:textColor="@color/color_title_main"
-            android:textSize="16.0sp"/>
+            android:textColor="@color/color_title_main" />
 
         <com.myplas.q.common.view.DragView
             android:id="@+id/look_dragview"
@@ -201,25 +194,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="3dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/wd_text_look"
-            style="@style/wd_text2_style"
+            style="@style/myself_text_style"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
-            android:drawableRight="@drawable/icon_more"/>
+            android:drawableRight="@drawable/icon_more" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -228,95 +221,90 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/wd_linear_edu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_height="wrap_content">
 
             <TextView
-                style="@style/wd_text2_style"
+                android:id="@+id/wd_text_edu"
+                style="@style/myself_text_style"
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/icon_card"
-                android:gravity="center_vertical"
+                android:padding="10dp"
                 android:text="  企业信用额度"
-                android:textColor="@color/color_title_main"
-                android:textSize="16.0sp"/>
+                android:textColor="@color/color_title_main" />
 
             <TextView
-                style="@style/wd_text2_style"
+                style="@style/myself_text_style"
+                android:layout_marginRight="10dp"
                 android:layout_weight="0"
                 android:drawableRight="@drawable/icon_more"
-                android:text="  "/>
+                android:text="  " />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_in"/>
+            android:background="@color/color_gray_divider_in" />
 
         <LinearLayout
-            android:id="@+id/wd_linear_pz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:background="@color/colorAccent">
 
             <TextView
-                style="@style/wd_text2_style"
+                android:id="@+id/wd_text_pz"
+                style="@style/myself_text_style"
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/icon_with_capital"
-                android:gravity="center_vertical"
+                android:padding="10dp"
                 android:text="  塑料配资"
-                android:textColor="@color/color_title_main"
-                android:textSize="16.0sp"/>
+                android:textColor="@color/color_title_main" />
 
             <TextView
-                style="@style/wd_text2_style"
+                style="@style/myself_text_style"
+                android:layout_marginRight="10dp"
                 android:layout_weight="0"
-                android:drawableRight="@drawable/icon_more"/>
+                android:drawableRight="@drawable/icon_more" />
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
     <LinearLayout
-        android:id="@+id/wd_linear_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/icon_setup"
-            android:gravity="center_vertical"
-            android:text="  设置"
-            android:textColor="@color/color_title_main"
-            android:textSize="16.0sp"/>
+        android:background="@color/colorAccent">
 
         <TextView
             android:id="@+id/wd_text_set"
-            style="@style/wd_text2_style"
+            style="@style/myself_text_style"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icon_setup"
+            android:padding="10dp"
+            android:text="  设置"
+            android:textColor="@color/color_title_main" />
+
+        <TextView
+            style="@style/myself_text_style"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
-            android:drawableRight="@drawable/icon_more"/>
+            android:drawableRight="@drawable/icon_more" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginBottom="20dp"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 
 </LinearLayout>

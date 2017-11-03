@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -24,6 +25,8 @@ import com.myplas.q.contact.beans.ContactBean;
 import com.myplas.q.contact.beans.ContactInfoBean;
 import com.myplas.q.contact.beans.ContactSupDemBean;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
+import com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity;
 
 import org.json.JSONObject;
 
@@ -50,6 +53,8 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
     private List<ContactSupDemBean.DataBean> mBeanList;
 
     public int type, page;
+    private List<ContactInfoBean.DataBean.DemandBean> demandList;
+    private List<ContactInfoBean.DataBean.SuppliesBean> suppliesList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +71,12 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
         mScrollView.setOnScrollIterface(this);
 
         //getTaPur(type, type, page);
+        mMyListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                goToDetail(null, null, position);
+            }
+        });
 
     }
 
@@ -92,8 +103,24 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
 //        getTaPur(type, type, page);
     }
 
+    //跳转至详情
+    public void goToDetail(String id_, String userid, int position) {
+        if (type == 2) {
+            id_ = suppliesList.get(position).getPur_id();
+            userid = suppliesList.get(position).getUser_id();
+        } else {
+            id_ = demandList.get(position).getPur_id();
+            userid = demandList.get(position).getUser_id();
+        }
+        Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
+        intent.putExtra("id", id_);
+        intent.putExtra("userid", userid);
+        startActivity(intent);
+    }
+
     public void showDemand(List<ContactInfoBean.DataBean.DemandBean> demandList) {
         if (demandList.size() != 0) {
+            this.demandList = demandList;
             mAdapter = new Contact_Detail_LV_Adapter(getActivity(), demandList, 0);
             mMyListview.setAdapter(mAdapter);
         } else {
@@ -107,6 +134,7 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
 
     public void showSupplies(List<ContactInfoBean.DataBean.SuppliesBean> suppliesList) {
         if (suppliesList.size() != 0) {
+            this.suppliesList = suppliesList;
             mAdapter = new Contact_Detail_LV_Adapter(getActivity(), suppliesList);
             mMyListview.setAdapter(mAdapter);
         } else {

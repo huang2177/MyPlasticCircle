@@ -3,6 +3,7 @@ package com.myplas.q.myself.message.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.myself.beans.MyMessageBean;
@@ -31,11 +34,14 @@ public class MessageListsAdapter extends BaseAdapter {
     Map<Integer, View> mViewMap;
     List<MyMessageBean.DataBean> list;
 
+    private ACache mAcache;
+
     @SuppressLint("UseSparseArrays")
     public MessageListsAdapter(Context context, List<MyMessageBean.DataBean> list) {
         this.list = list;
         this.context = context;
         mViewMap = new HashMap<>();
+        mAcache = ACache.get(context);
     }
 
     @Override
@@ -59,7 +65,7 @@ public class MessageListsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         viewHolder viewHolder = null;
-        if (mViewMap.get(position) == null) {
+        if (convertView == null) {
             viewHolder = new viewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_messagelist_lv, parent, false);
             viewHolder.mView = convertView.findViewById(R.id.msglist_view_divider);
@@ -70,37 +76,51 @@ public class MessageListsAdapter extends BaseAdapter {
             viewHolder.mImageView = (RoundCornerImageView) convertView.findViewById(R.id.msglist_img);
             mViewMap.put(position, convertView);
             convertView.setTag(viewHolder);
-        } else {
-            convertView = mViewMap.get(position);
-            viewHolder = (viewHolder) convertView.getTag();
-        }
-        viewHolder.mImageView.setBorderColor(Color.WHITE);
-        if (position == list.size() - 1) {
-            viewHolder.mView.setVisibility(View.GONE);
-        }
-        if (list.get(position).getType().equals("1")) {
-            title = "供求消息";
-            imgRes = R.drawable.icon_supply_and_demand_news;
-        } else if (list.get(position).getType().equals("2")) {
-            title = "出价消息";
-            imgRes = R.drawable.icon_bid_message;
-        } else if (list.get(position).getType().equals("3")) {
-            title = "回复消息";
-            imgRes = R.drawable.icon_reply_message;
-        } else {
-            title = "互动消息";
-            imgRes = R.drawable.icon_interaction_message;
-        }
-        viewHolder.type.setText(title);
-        viewHolder.mImageView.setImageResource(imgRes);
-        viewHolder.dis.setText(list.get(position).getMsg());
-        viewHolder.time.setText(list.get(position).getInput_time());
-        viewHolder.mDragView.setText(list.get(position).getCount());
 
-        viewHolder.mDragView.setVisibility(list.get(position).getCount().equals("0")
-                ? View.GONE
-                : View.VISIBLE);
+            viewHolder.mImageView.setBorderColor(Color.WHITE);
+            if (position == list.size() - 1) {
+                viewHolder.mView.setVisibility(View.GONE);
+            }
+            if (list.get(position).getType().equals("1")) {
+                title = "供求消息";
+                imgRes = R.drawable.icon_supply_and_demand_news;
+                viewHolder.mDragView.setText(mAcache.getAsString(Constant.R_SUPDEM_MSG));
+
+                viewHolder.mDragView.setVisibility(mAcache.getAsString(Constant.R_SUPDEM_MSG).equals("0")
+                        ? View.GONE
+                        : View.VISIBLE);
+            } else if (list.get(position).getType().equals("2")) {
+                title = "出价消息";
+                imgRes = R.drawable.icon_bid_message;
+                viewHolder.mDragView.setText(mAcache.getAsString(Constant.R_PUR_MSG));
+                viewHolder.mDragView.setVisibility(mAcache.getAsString(Constant.R_PUR_MSG).equals("0")
+                        ? View.GONE
+                        : View.VISIBLE);
+            } else if (list.get(position).getType().equals("3")) {
+                title = "回复消息";
+                imgRes = R.drawable.icon_reply_message;
+                viewHolder.mDragView.setText(mAcache.getAsString(Constant.R_REPLY_MSG));
+
+                viewHolder.mDragView.setVisibility(mAcache.getAsString(Constant.R_REPLY_MSG).equals("0")
+                        ? View.GONE
+                        : View.VISIBLE);
+            } else {
+                title = "互动消息";
+                imgRes = R.drawable.icon_interaction_message;
+                viewHolder.mDragView.setText(mAcache.getAsString(Constant.R_INTER_MSG));
+
+                viewHolder.mDragView.setVisibility(mAcache.getAsString(Constant.R_INTER_MSG).equals("0")
+                        ? View.GONE
+                        : View.VISIBLE);
+            }
+            viewHolder.type.setText(title);
+            viewHolder.mImageView.setImageResource(imgRes);
+            viewHolder.dis.setText(list.get(position).getMsg());
+            viewHolder.time.setText(list.get(position).getInput_time());
+
+        }
         return convertView;
+
     }
 
     public void setList(List<MyMessageBean.DataBean> list) {

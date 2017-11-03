@@ -16,7 +16,9 @@ import com.myplas.q.guide.activity.MainActivity;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,7 +32,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     private Context context;
     private static RabbitMQConfig mRabbitMQConfig;
 
-    private RabbitMQCallBack mMQCallBack;
+    private static List<RabbitMQCallBack> mqCallBackList;
 
     private RabbitMQConfig(Context context) {
         this.context = context;
@@ -44,6 +46,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
      */
     public static RabbitMQConfig getInstance(Context context) {
         if (mRabbitMQConfig == null) {
+            mqCallBackList = new ArrayList<>();
             mRabbitMQConfig = new RabbitMQConfig(context.getApplicationContext());
             return mRabbitMQConfig;
         }
@@ -102,32 +105,47 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
                 case 11:
                     mACache.put(Constant.R_SUPDEM, "0");
                     break;
-                case 12:
-                    mACache.put(Constant.R_MYMSG, "0");
-                    break;
                 case 13:
                     mACache.put(Constant.R_MYORDER, "0");
                     break;
                 case 14:
                     mACache.put(Constant.R_SEEME, "0");
                     break;
+                case 15:
+                    mACache.put(Constant.R_SUPDEM_MSG, "0");
+                    break;
+                case 16:
+                    mACache.put(Constant.R_PUR_MSG, "0");
+                    break;
+                case 17:
+                    mACache.put(Constant.R_REPLY_MSG, "0");
+                    break;
+                case 18:
+                    mACache.put(Constant.R_INTER_MSG, "0");
+                    break;
                 case 4:
                     Log.e("----", object.toString());
-                    if ("0".equals(new JSONObject(object.toString()).get("err"))) {
+                    if ("0".equals(new JSONObject(object.toString()).getString("err"))) {
                         Gson gson = new Gson();
                         DotBean dotBean = gson.fromJson(object.toString(), DotBean.class);
-                        mACache.put(Constant.R_MYMSG, dotBean.getData().getUnread_mymsg());
                         mACache.put(Constant.R_MYORDER, dotBean.getData().getUnread_myorder());
                         mACache.put(Constant.R_SEEME, dotBean.getData().getUnread_who_saw_me());
                         mACache.put(Constant.R_CONTACT, dotBean.getData().getUnread_customer());
+                        mACache.put(Constant.R_PUR_MSG, dotBean.getData().getUnread_plastic_msg());
+                        mACache.put(Constant.R_SUPDEM_MSG, dotBean.getData().getUnread_purchase_msg());
+                        mACache.put(Constant.R_INTER_MSG, dotBean.getData().getUnread_reply_user_msg());
                         mACache.put(Constant.R_SUPDEM, dotBean.getData().getUnread_supply_and_demand());
+                        mACache.put(Constant.R_REPLY_MSG, dotBean.getData().getUnread_reply_purchase_msg());
                     }
                     break;
                 default:
                     break;
             }
-            if (mMQCallBack != null) {
-                mMQCallBack.rCallback(true);
+            for (int i = 0; i < mqCallBackList.size(); i++) {
+                RabbitMQCallBack mMQCallBack = mqCallBackList.get(i);
+                if (mMQCallBack != null) {
+                    mMQCallBack.rCallback(true);
+                }
             }
         } catch (Exception e) {
         }
@@ -144,6 +162,8 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
      * @param mMQCallBack 设置监听
      */
     public void setResultCallBack(RabbitMQCallBack mMQCallBack) {
-        this.mMQCallBack = mMQCallBack;
+        if (!mqCallBackList.contains(mMQCallBack)) {
+            mqCallBackList.add(mMQCallBack);
+        }
     }
 }

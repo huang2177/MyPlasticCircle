@@ -85,7 +85,6 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
             public void onClick(View view) {
                 num = -1;
                 mButton.setClickable(false);
-                //mButton.setBackgroundColor(context.getResources().getColor(R.color.color_gray3));
                 myInterface.classifySelected(-1, fName, childName, fId, childId, mAddSubUtils.getNumber());
             }
         });
@@ -184,8 +183,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
     }
 
     public void setIsPay(boolean isPay) {
-        mButton.setClickable(true);
-        //mButton.setBackgroundColor(mContext.getResources().getColor(R.color.color_dl_integral_confirm));
+        //mButton.setClickable(true);
     }
 
     public String getChildrenName(List<IntegralBean.InfoBean.ExtraConfigBean> list, int fPosition, int cPsition) {
