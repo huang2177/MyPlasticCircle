@@ -283,11 +283,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     Gson gson = new Gson();
                     if (jsonObject.getString("redDot").length() != 0) {
                         DefConfigBean.RedDotBean bean = gson.fromJson(jsonObject.getString("redDot"), DefConfigBean.RedDotBean.class);
-                        mACache.put(Constant.R_MYMSG, bean.getUnread_mymsg());
                         mACache.put(Constant.R_MYORDER, bean.getUnread_myorder());
-                        mACache.put(Constant.R_CONTACT, bean.getUnread_customer());
                         mACache.put(Constant.R_SEEME, bean.getUnread_who_saw_me());
+                        mACache.put(Constant.R_CONTACT, bean.getUnread_customer());
+                        mACache.put(Constant.R_PUR_MSG, bean.getUnread_plastic_msg());
+                        mACache.put(Constant.R_SUPDEM_MSG, bean.getUnread_purchase_msg());
+                        mACache.put(Constant.R_INTER_MSG, bean.getUnread_reply_user_msg());
                         mACache.put(Constant.R_SUPDEM, bean.getUnread_supply_and_demand());
+                        mACache.put(Constant.R_REPLY_MSG, bean.getUnread_reply_purchase_msg());
                     }
                     //回到主界面
                     mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
