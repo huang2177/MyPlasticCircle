@@ -68,7 +68,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         initTileBar();
         setTitle("注册塑料圈");
-        setLeftIVResId(R.drawable.btn_login_back);
+        setLeftIVResId(R.drawable.btn_back_black);
         setTitleBarBackground(R.color.color_white);
         setTitleBarTextColor(R.color.color_transparent);
         initView();

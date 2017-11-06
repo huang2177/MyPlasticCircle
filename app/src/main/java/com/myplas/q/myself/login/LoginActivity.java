@@ -71,7 +71,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
         initTileBar();
         setTitle("普通登录");
-        setLeftIVResId(R.drawable.btn_login_back);
+        setLeftIVResId(R.drawable.btn_back_black);
         setTitleBarBackground(R.color.color_white);
         setTitleBarTextColor(R.color.color_transparent);
         initView();
