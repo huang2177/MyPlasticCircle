@@ -10,20 +10,25 @@ import android.view.MotionEvent;
  */
 public class MyViewPager extends ViewPager {
     private boolean noScroll = true;
+
     public MyViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
     public MyViewPager(Context context) {
         super(context);
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent arg0) {
-            return true;
+        return true;
     }
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent arg0) {
-        if (noScroll)
+        if (noScroll) {
             return false;
-            return super.onInterceptTouchEvent(arg0);
+        }
+        return super.onInterceptTouchEvent(arg0);
     }
 }

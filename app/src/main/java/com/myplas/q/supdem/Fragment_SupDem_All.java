@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +61,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
     public int page;
     private ACache mAcache;
-    private boolean isRefreshing;
     private SharedUtils sharedUtils;
+    private boolean isRefreshing, isLoading;
 
     private SupDemBean mSupDemBean;
     private SupDemBean.TopBean topBean;
@@ -282,6 +283,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                         RabbitMQConfig.getInstance(getActivity()).readMsg("unread_supply_and_demand", 11);
                     }
                 } else { //加载更多
+                    isLoading = false;
                     refreshPopou.setCanShowPopou(false);
                     mDataBeanList.addAll(mSupDemBean.getData());
                     mSupDemLVAdapter.setList(mDataBeanList);
@@ -334,6 +336,9 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     getNetData("1", true);
                 }
             });
+        }
+        if (type == 1) {
+            isLoading = false;
         }
     }
 
@@ -394,8 +399,11 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
     @Override
     public void loadMore() {
-        page++;
-        getNetData(page + "", false);
+        if (!isLoading) {
+            page++;
+            isLoading = true;
+            getNetData(page + "", false);
+        }
     }
 
 

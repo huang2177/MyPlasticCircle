@@ -16,10 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
@@ -31,7 +29,6 @@ import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
-import com.myplas.q.sockethelper.DefConfigBean;
 
 import org.json.JSONObject;
 
@@ -279,26 +276,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
                 TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
                 if (s.equals("0")) {
-                    setData(jsonObject);
-                    Gson gson = new Gson();
-                    if (jsonObject.getString("redDot").length() != 0) {
-                        DefConfigBean.RedDotBean bean = gson.fromJson(jsonObject.getString("redDot"), DefConfigBean.RedDotBean.class);
-                        mACache.put(Constant.R_MYORDER, bean.getUnread_myorder());
-                        mACache.put(Constant.R_SEEME, bean.getUnread_who_saw_me());
-                        mACache.put(Constant.R_CONTACT, bean.getUnread_customer());
-                        mACache.put(Constant.R_PUR_MSG, bean.getUnread_plastic_msg());
-                        mACache.put(Constant.R_SUPDEM_MSG, bean.getUnread_purchase_msg());
-                        mACache.put(Constant.R_INTER_MSG, bean.getUnread_reply_user_msg());
-                        mACache.put(Constant.R_SUPDEM, bean.getUnread_supply_and_demand());
-                        mACache.put(Constant.R_REPLY_MSG, bean.getUnread_reply_purchase_msg());
-                    }
-                    //回到主界面
-                    mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
-                    mainActivity.firstInto();
-                    mainActivity.onConnect();
-                    mainActivity.rCallback(true);
 
-                    onBackPressed();
+                    setData(jsonObject);
+
+                    //回到主界面
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("type", Constant.LOGINED);
+                    startActivity(intent);
                 }
             }
             if (type == 2 && s.equals("0")) {
@@ -350,9 +334,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             mButtonPhone.setBackgroundResource(isPhoneNull
                     ? R.drawable.login_btn_shape_hl
                     : R.drawable.login_btn_shape);
-
         }
-
     }
 
     @Override
@@ -408,6 +390,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             sharedUtils.setBooloean(this, Constant.IS_LOGINED_H, true);
             sharedUtils.setBooloean(this, Constant.IS_LOGINED_SD, true);
             sharedUtils.setData(this, Constant.UUID, SystemUtils.getMyUUID(this));
+
         } catch (Exception e) {
         }
     }

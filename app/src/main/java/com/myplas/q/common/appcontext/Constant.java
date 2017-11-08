@@ -9,6 +9,8 @@ package com.myplas.q.common.appcontext;
 public class Constant {
     public static final String LOGINED = "logined";
 
+    public static final String LOGINOUT = "loginout";
+
     public static final String IS_LOGINED_H = "isLoginedH";
 
     public static final String IS_LOGINED_SD = "isLoginedS";
@@ -43,4 +45,6 @@ public class Constant {
     public static final String POINTSINFO = "pointsInfo";
 
     public static final String SUPDEMCACHE = "supdemCache";
+
+
 }

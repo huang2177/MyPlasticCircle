@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,13 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.myplas.q.BuildConfig;
 import com.myplas.q.R;
-import com.myplas.q.common.utils.ACache;
-import com.myplas.q.contact.Fragment_Contact;
+import com.myplas.q.appupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
@@ -32,17 +34,17 @@ import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.MyViewPager;
+import com.myplas.q.contact.Fragment_Contact;
 import com.myplas.q.guide.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.Fragment_HeadLines;
 import com.myplas.q.myself.Fragment_MySelf;
 import com.myplas.q.myself.login.LoginActivity;
 import com.myplas.q.release.ReleaseActivity;
+import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.myplas.q.sockethelper.RabbitMQHelper;
-import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.supdem.Fragment_SupplyDemand;
-import com.myplas.q.appupdate.VersionUpdateDialogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -51,6 +53,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * The type Main activity.
@@ -73,20 +77,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private ImageView mIVRelease;
     private MyViewPager viewPager;
-    private List<Fragment> fragmentlist;
     private Fragment_MySelf fragmentWd;
+    private List<Fragment> fragmentlist;
     private Fragment_Contact fragmentContact;
     private Fragment_HeadLines fragmentHeadLine;
     private Fragment_SupplyDemand fragmentSupDem;
 
     private ViewPager_Adapter viewpagerAdapter;
-    private TextView textView_gq, textView_wd, textView_fx, textView_txl;
-    private ImageView imageView_gq, imageView_wd, imageView_fx, imageView_txl;
-    private LinearLayout layout_gq, layout_txl, layout_jia, layout_fx, layout_wd;
+    private TextView textviewGq, textviewWd, textviewFx, textviewTxl;
+    private ImageView imageviewGq, imageviewWd, imageviewFx, imageviewTxl;
+    private LinearLayout layoutGq, layoutTxl, layoutJia, layoutFx, layoutWd;
 
     private VersionUpdateDialogUtils mUpdateDialogUtils;
     private DragView mMsgContact, mMsgSupDem, mMsgMySelf;
     private ACache mACache;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +104,24 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         initView();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        firstInto();
+        if (fragmentContact != null) {
+            fragmentContact.getNetData("1", false);
+        }
+        String type = intent.getStringExtra("type");
+        if (Constant.LOGINED.equals(type)) {
+            getConfig();
+            String userId = sharedUtils.getData(this, Constant.USERID);
+            JPushInterface.setAlias(this, 10, userId);
+        } else {
+            onClosed();
+            rCallback(false);
+        }
+    }
+
     public void initView() {
         resources = getResources();
         mACache = ACache.get(this);
@@ -107,32 +130,32 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         logined = sharedUtils.getBoolean(this, Constant.LOGINED);
 
         viewPager = f(R.id.viewpager_main);
-        layout_gq = f(R.id.buttom_linear_gq);
-        layout_wd = f(R.id.buttom_linear_wd);
-        layout_fx = f(R.id.buttom_linear_fx);
-        layout_txl = f(R.id.buttom_linear_txl);
-        layout_jia = f(R.id.buttom_linear_jia);
+        layoutGq = f(R.id.buttom_linear_gq);
+        layoutWd = f(R.id.buttom_linear_wd);
+        layoutFx = f(R.id.buttom_linear_fx);
+        layoutTxl = f(R.id.buttom_linear_txl);
+        layoutJia = f(R.id.buttom_linear_jia);
 
         mIVRelease = f(R.id.buttom_img_jia);
-        imageView_fx = f(R.id.buttom_img_fx);
-        imageView_gq = f(R.id.buttom_img_gq);
-        imageView_wd = f(R.id.buttom_img_wd);
-        imageView_txl = f(R.id.buttom_img_txl);
+        imageviewFx = f(R.id.buttom_img_fx);
+        imageviewGq = f(R.id.buttom_img_gq);
+        imageviewWd = f(R.id.buttom_img_wd);
+        imageviewTxl = f(R.id.buttom_img_txl);
 
-        textView_fx = f(R.id.buttom_text_fx);
-        textView_gq = f(R.id.buttom_text_gq);
-        textView_wd = f(R.id.buttom_text_wd);
-        textView_txl = f(R.id.buttom_text_txl);
+        textviewFx = f(R.id.buttom_text_fx);
+        textviewGq = f(R.id.buttom_text_gq);
+        textviewWd = f(R.id.buttom_text_wd);
+        textviewTxl = f(R.id.buttom_text_txl);
 
         mMsgSupDem = f(R.id.dragview_supdem);
         mMsgMySelf = f(R.id.dragview_myself);
         mMsgContact = f(R.id.dragview_contact);
 
-        layout_fx.setOnClickListener(this);
-        layout_wd.setOnClickListener(this);
-        layout_jia.setOnClickListener(this);
-        layout_txl.setOnClickListener(this);
-        layout_gq.setOnClickListener(this);
+        layoutFx.setOnClickListener(this);
+        layoutWd.setOnClickListener(this);
+        layoutJia.setOnClickListener(this);
+        layoutTxl.setOnClickListener(this);
+        layoutGq.setOnClickListener(this);
 
         fragmentContact = new Fragment_Contact();
         fragmentlist.add(fragmentContact);
@@ -206,15 +229,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      * Clear color.
      */
     public void clearColor() {
-        imageView_wd.setImageResource(R.drawable.tabbar_me);
-        imageView_gq.setImageResource(R.drawable.tabbar_trade);
-        imageView_fx.setImageResource(R.drawable.tabbar_headlines);
-        imageView_txl.setImageResource(R.drawable.tabbar_contacts);
+        imageviewWd.setImageResource(R.drawable.tabbar_me);
+        imageviewGq.setImageResource(R.drawable.tabbar_trade);
+        imageviewFx.setImageResource(R.drawable.tabbar_headlines);
+        imageviewTxl.setImageResource(R.drawable.tabbar_contacts);
 
-        textView_fx.setTextColor(resources.getColor(R.color.color_gray));
-        textView_wd.setTextColor(resources.getColor(R.color.color_gray));
-        textView_txl.setTextColor(resources.getColor(R.color.color_gray));
-        textView_gq.setTextColor(resources.getColor(R.color.color_gray));
+        textviewFx.setTextColor(resources.getColor(R.color.color_gray));
+        textviewWd.setTextColor(resources.getColor(R.color.color_gray));
+        textviewTxl.setTextColor(resources.getColor(R.color.color_gray));
+        textviewGq.setTextColor(resources.getColor(R.color.color_gray));
     }
 
 
@@ -224,8 +247,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void firstInto() {
         clearColor();
         viewPager.setCurrentItem(0);
-        imageView_txl.setImageResource(R.drawable.tabbar_contacts_hl);
-        textView_txl.setTextColor(resources.getColor(R.color.color_red));
+        imageviewTxl.setImageResource(R.drawable.tabbar_contacts_hl);
+        textviewTxl.setTextColor(resources.getColor(R.color.color_red));
     }
 
     /**
@@ -234,8 +257,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void goToHeadLine() {
         clearColor();
         viewPager.setCurrentItem(1);
-        imageView_fx.setImageResource(R.drawable.tabbar_headlines_hl);
-        textView_fx.setTextColor(resources.getColor(R.color.color_red));
+        imageviewFx.setImageResource(R.drawable.tabbar_headlines_hl);
+        textviewFx.setTextColor(resources.getColor(R.color.color_red));
     }
 
     /**
@@ -244,8 +267,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void goToSupDem() {
         clearColor();
         viewPager.setCurrentItem(2);
-        imageView_gq.setImageResource(R.drawable.tabbar_trade_hl);
-        textView_gq.setTextColor(resources.getColor(R.color.color_red));
+        imageviewGq.setImageResource(R.drawable.tabbar_trade_hl);
+        textviewGq.setTextColor(resources.getColor(R.color.color_red));
     }
 
     /**
@@ -254,8 +277,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void goToMySelf() {
         clearColor();
         viewPager.setCurrentItem(3);
-        imageView_wd.setImageResource(R.drawable.tabbar_mehl);
-        textView_wd.setTextColor(resources.getColor(R.color.color_red));
+        imageviewWd.setImageResource(R.drawable.tabbar_mehl);
+        textviewWd.setTextColor(resources.getColor(R.color.color_red));
     }
 
 
@@ -329,6 +352,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
                 mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
                 mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
+
                 rCallback(true);
                 onConnect();
             }
@@ -351,6 +375,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void rCallback(boolean showRedDot) {
         try {
+            logined = sharedUtils.getBoolean(this, Constant.LOGINED);
             int numContact = Integer.parseInt(mACache.getAsString(Constant.R_CONTACT));
             int numSupDem = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM));
             int numMySelf = Integer.parseInt(mACache.getAsString(Constant.R_SEEME))
@@ -360,13 +385,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     + Integer.parseInt(mACache.getAsString(Constant.R_REPLY_MSG))
                     + Integer.parseInt(mACache.getAsString(Constant.R_INTER_MSG));
 
-            mMsgSupDem.setVisibility(!showRedDot || 0 == numSupDem
+            mMsgSupDem.setVisibility(!showRedDot || 0 == numSupDem || !logined
                     ? View.GONE
                     : View.VISIBLE);
-            mMsgMySelf.setVisibility(!showRedDot || 0 == numMySelf
+            mMsgMySelf.setVisibility(!showRedDot || 0 == numMySelf || !logined
                     ? View.GONE
                     : View.VISIBLE);
-            mMsgContact.setVisibility(!showRedDot || 0 == numContact
+            mMsgContact.setVisibility(!showRedDot || 0 == numContact || !logined
                     ? View.GONE
                     : View.VISIBLE);
 

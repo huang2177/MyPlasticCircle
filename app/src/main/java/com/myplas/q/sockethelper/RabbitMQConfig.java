@@ -124,7 +124,6 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
                     mACache.put(Constant.R_INTER_MSG, "0");
                     break;
                 case 4:
-                    Log.e("----", object.toString());
                     if ("0".equals(new JSONObject(object.toString()).getString("err"))) {
                         Gson gson = new Gson();
                         DotBean dotBean = gson.fromJson(object.toString(), DotBean.class);

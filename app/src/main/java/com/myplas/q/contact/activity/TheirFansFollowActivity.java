@@ -17,7 +17,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.contact.adapter.TheirFansFollowAdapter;
-import com.myplas.q.contact.beans.MyFansBean;
 import com.myplas.q.contact.beans.TheirFansBean;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
@@ -148,13 +147,13 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
             }
             //已经消耗积分
             if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Their_Activity.class);
+                Intent intent = new Intent(this, Contact_Detail_Activity.class);
                 intent.putExtra("userid", userid);
                 startActivity(intent);
             }
             //减积分成功
             if (type == 3 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Their_Activity.class);
+                Intent intent = new Intent(this, Contact_Detail_Activity.class);
                 intent.putExtra("userid", userid);
                 startActivity(intent);
             }

@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +94,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-        rCallback(true);
 
         setAppBarListener();
         getLoginInfo(false);
@@ -420,6 +420,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
+        rCallback(true);
         getLoginInfo(false);
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }

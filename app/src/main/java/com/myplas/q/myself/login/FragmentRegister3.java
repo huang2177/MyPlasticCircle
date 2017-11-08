@@ -60,10 +60,15 @@ public class FragmentRegister3 extends Fragment implements View.OnClickListener,
         mTVSuccess = (TextView) mView.findViewById(R.id.register_tv_success);
         mImgSuccess = (ImageView) mView.findViewById(R.id.register_img_success);
 
-        Glide.with(this)
-                .load(R.drawable.register_success)
-                .into(new GlideDrawableImageViewTarget(mImgSuccess, 1));
         return mView;
+    }
+
+    public void showImg() {
+        if (mImgSuccess != null) {
+            Glide.with(this)
+                    .load(R.drawable.register_success)
+                    .into(new GlideDrawableImageViewTarget(mImgSuccess, 1));
+        }
     }
 
     @Override

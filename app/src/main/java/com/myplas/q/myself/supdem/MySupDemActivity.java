@@ -69,8 +69,7 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
         mLayout = F(R.id.empty_ll);
         emptyText = F(R.id.empty_text);
         listView = F(R.id.wd_gj_listview);
-        supplyDemandAdapter = new SupDemAdapter(this, null, type, this);
-        listView.setAdapter(supplyDemandAdapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -124,8 +123,8 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
                         listView.setVisibility(View.VISIBLE);
                         mList.clear();
                         mList.addAll(supplyDemandBean.getData());
-                        supplyDemandAdapter.setList(mList);
-                        supplyDemandAdapter.notifyDataSetChanged();
+                        supplyDemandAdapter = new SupDemAdapter(this, supplyDemandBean.getData(), this);
+                        listView.setAdapter(supplyDemandAdapter);
                     } else {
                         mList.addAll(supplyDemandBean.getData());
                         supplyDemandAdapter.setList(mList);

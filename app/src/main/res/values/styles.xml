@@ -6,7 +6,19 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/color_red</item>
         <item name="toolbarStyle">@style/ClubToolbar</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!--<item name="android:colorControlNormal">@color/colorAccent</item>-->
+    </style>
+
+    <style name="AppBlankTheme">
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@drawable/launch_image</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="app_theme_transparent" parent="AppTheme">
@@ -16,13 +28,6 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 
-
-    <style name="AppBlankTheme">
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowBackground">@drawable/launch_image</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
 
     <style name="navigationBar_text_style">
         <item name="android:layout_height">wrap_content</item>

@@ -229,7 +229,6 @@ public class RabbitMQHelper {
             mThreadList.clear();
             mConnectionList.clear();
         } catch (Exception e) {
-            Log.e("-----", e.toString());
         }
     }
 }

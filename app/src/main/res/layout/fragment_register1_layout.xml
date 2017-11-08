@@ -98,7 +98,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:background="@drawable/login_btn_shape"
-        android:text="登 录"
+        android:text="下一步"
         android:textColor="@color/color_white"
         android:textSize="16.0sp" />
 

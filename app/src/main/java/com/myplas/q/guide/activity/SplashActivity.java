@@ -50,17 +50,18 @@ public class SplashActivity extends Activity {
             startActivity(new Intent(SplashActivity.this, GuideActivity.class));
         } else {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            //overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
         }
         finish();
     }
 
 
+    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

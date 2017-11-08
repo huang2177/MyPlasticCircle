@@ -84,8 +84,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
                     case "4"://供求
                         isShareed = shareToWX(API.PLASTIC_SUPPLY_DEMAND
                                         + getIntent().getStringExtra("id")
-                                        + "/"
-                                        + getIntent().getStringExtra("userid")
+                                        + "/" + getIntent().getStringExtra("userid")
                                 , getIntent().getStringExtra("title")
                                 , R.drawable.gongqiulogo);
 
@@ -115,7 +114,6 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
 
     public boolean shareToWX(String url, String title, int resId) {
         if (isWebchatAvaliable()) {
-
             api = WXAPIFactory.createWXAPI(this, API.WXAPI);
             api.registerApp(API.WXAPI);
             WXWebpageObject webpage = new WXWebpageObject();

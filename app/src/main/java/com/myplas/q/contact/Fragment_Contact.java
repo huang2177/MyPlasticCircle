@@ -86,9 +86,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private int page;
     private StringBuffer region;
     private StringBuffer c_type;
+    private boolean isRefreshing;
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
-    private boolean islogin, isRefreshing;
     private String userId, jumpUrl, jumpToWhere, jumpTitle;
 
 
@@ -237,7 +237,13 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         });
     }
 
-    private void getNetData(String page, boolean isShowDialog) {
+    /**
+     * 获取数据
+     *
+     * @param page         the page
+     * @param isShowDialog 是否显示dialog
+     */
+    public void getNetData(String page, boolean isShowDialog) {
         sharedUtils = SharedUtils.getSharedUtils();
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page);
@@ -248,6 +254,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         String url = API.BASEURL + API.GET_PLASTIC_PERSON;
         BaseActivity.postAsyn1(getActivity(), url, map, this, 1, isShowDialog);
     }
+
 
     private void getPersonInfoData(String userId, String showtype, int type) {
         Map<String, String> map = new HashMap<String, String>();
@@ -345,11 +352,12 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
     }
 
+
     private void showInfo(ContactBean bean, ContactBean.TopBean topBean) {
         mTVTitle.setText("塑料圈通讯录(" + bean.getMember() + "人)");
         //editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
-        //显示list数据
 
+//        显示list数据
         mLVAdapter = new Fragment_Contact_LV_Adapter(getActivity(), bean.getPersons(), topBean);
         listView.setAdapter(mLVAdapter);
         mListBean.clear();

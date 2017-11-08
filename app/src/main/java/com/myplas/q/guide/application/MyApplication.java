@@ -11,7 +11,12 @@ import android.view.inputmethod.InputMethodManager;
 import com.facebook.stetho.Stetho;
 import com.myplas.q.BuildConfig;
 import com.myplas.q.common.appcontext.ActivityManager;
+import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.LoadingDialog;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 作者：  黄双
@@ -20,10 +25,19 @@ import com.myplas.q.common.view.LoadingDialog;
  */
 
 public class MyApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        initJPush();
+        initStetho();
+        registerActivity();
+
+
+    }
+
+    private void initStetho() {
         if (BuildConfig.USE_STETHO) {
             Stetho.initialize(
                     Stetho.newInitializerBuilder(this)
@@ -31,8 +45,26 @@ public class MyApplication extends Application {
                             .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                             .build());
         }
+    }
 
-        /*注册activity生命周期的监听*/
+    private void initJPush() {
+        String userId = SharedUtils
+                .getSharedUtils()
+                .getData(this, Constant.USERID);
+
+        JPushInterface.init(this);// 初始化 JPush
+
+        JPushInterface.setDebugMode(BuildConfig.USE_STETHO
+                ? true
+                : false);    // 设置开启日志,发布时请关闭日志
+
+        if (TextUtils.isNullOrEmpty(userId)) {
+            JPushInterface.setAlias(this, 10, userId);
+        }
+    }
+
+    /*注册activity生命周期的监听*/
+    private void registerActivity() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

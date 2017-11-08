@@ -183,7 +183,7 @@ public class ClassifyDialogShowUtils implements View.OnClickListener {
     }
 
     public void setIsPay(boolean isPay) {
-        //mButton.setClickable(true);
+        mButton.setClickable(true);
     }
 
     public String getChildrenName(List<IntegralBean.InfoBean.ExtraConfigBean> list, int fPosition, int cPsition) {

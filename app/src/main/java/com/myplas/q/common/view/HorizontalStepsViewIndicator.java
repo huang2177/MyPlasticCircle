@@ -121,9 +121,9 @@ public class HorizontalStepsViewIndicator extends View {
         //线与线之间的间距    set mLinePadding
         mLinePadding = 1f * defaultStepIndicatorNum;
 
-        mCompleteIcon = ContextCompat.getDrawable(getContext(), R.drawable.btn_checkbox);//已经完成的icon
-        mAttentionIcon = ContextCompat.getDrawable(getContext(), R.drawable.btn_checkbox);//正在进行的icon
-        mDefaultIcon = ContextCompat.getDrawable(getContext(), R.drawable.btn_checkbox);//未完成的icon
+        mCompleteIcon = ContextCompat.getDrawable(getContext(), R.drawable.complted);//已经完成的icon
+        mAttentionIcon = ContextCompat.getDrawable(getContext(), R.drawable.attention);//正在进行的icon
+        mDefaultIcon = ContextCompat.getDrawable(getContext(), R.drawable.default_icon);//未完成的icon
     }
 
     @Override

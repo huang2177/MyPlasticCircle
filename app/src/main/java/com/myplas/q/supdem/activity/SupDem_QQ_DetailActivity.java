@@ -228,7 +228,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         if (detailBean == null) {
             return;
         }
-        String s = (detailBean.getType().equals("1")
+        String s = ("1".equals(detailBean.getType())
                 ? "求:"
                 : "供：")
                 + detailBean.getF_name()

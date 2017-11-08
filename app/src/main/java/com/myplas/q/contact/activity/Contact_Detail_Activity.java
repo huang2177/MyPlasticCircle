@@ -42,8 +42,7 @@ import java.util.Map;
  * 时间：2017/3/23 13:39
  */
 public class Contact_Detail_Activity extends BaseActivity implements View.OnClickListener
-        , ResultCallBack
-        , MyOnPageChangeListener.OnPageChangeListener {
+        , ResultCallBack {
 
     private boolean isSelf;
     private SharedUtils sharedUtils;
@@ -134,10 +133,13 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         mTabLayout.setTabsFromPagerAdapter(mPagerAdapter);
     }
 
-    @Override
-    public void onPageSelected(int position) {
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getPersonInfoData();
     }
+
 
     @Override
     public void onClick(View v) {

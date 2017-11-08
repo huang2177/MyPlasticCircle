@@ -244,23 +244,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         BaseActivity.postAsyn(context, API.BASEURL + API.GET_VALID_DATE, map, this, 2);
     }
 
-    //提示dialog接口回掉；
-    @Override
-    public void ok(int type) {
-        switch (type) {
-            case 1:
-                context.startActivity(new Intent(context, IntegralPayActivtity.class));
-                break;
-            case 2:
-                if (utils != null) {
-                    utils.dismiss();
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
     //根据选择的日期改变显示
     public void changeTextShow(List<Date> list) {
         int num = list.size();
@@ -296,6 +279,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
+
         boolean isPay;
         Button button;
         GridView gridView;
@@ -323,13 +307,13 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             linear_supdem_isselected = (LinearLayout) convertView.findViewById(R.id.integral_isselected_linearlayout);
             linear_date_isselected = (LinearLayout) convertView.findViewById(R.id.integral_isselected_linearlayout_date);
         }
+
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             if (type == 0) {//通讯录
-                setIsPay();
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     list_date_conact.clear();
@@ -353,7 +337,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 }
             }
             if (type == 1) {//供求
-                setIsPay();
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     list_date_supdem.clear();
@@ -379,7 +362,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 }
             }
             if (type == 3) {//分类
-                setIsPay();
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     myInterface.refresgData();
@@ -413,6 +395,24 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 }
             }
         } catch (Exception e) {
+        }
+    }
+
+    //提示dialog接口回掉；
+    @Override
+    public void ok(int type) {
+        setIsPay();
+        switch (type) {
+            case 1:
+                context.startActivity(new Intent(context, IntegralPayActivtity.class));
+                break;
+            case 2:
+                if (utils != null) {
+                    utils.dismiss();
+                }
+                break;
+            default:
+                break;
         }
     }
 

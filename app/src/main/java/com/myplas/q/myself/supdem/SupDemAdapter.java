@@ -35,7 +35,6 @@ import java.util.Map;
  * 时间：2017/3/23 16:29
  */
 public class SupDemAdapter extends BaseAdapter implements ResultCallBack, CommonDialog.DialogShowInterface {
-    String type;
     int position;
     Context context;
     MyInterface myInterface;
@@ -48,10 +47,9 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
         this.list = list;
     }
 
-    public SupDemAdapter(Context context, List<MySupDemBean.DataBean> list, String type, MyInterface myInterface) {
+    public SupDemAdapter(Context context, List<MySupDemBean.DataBean> list, MyInterface myInterface) {
         this.context = context;
         this.list = list;
-        this.type = type;
         this.myInterface = myInterface;
         viewMap = new HashMap<>();
         sharedUtils = SharedUtils.getSharedUtils();

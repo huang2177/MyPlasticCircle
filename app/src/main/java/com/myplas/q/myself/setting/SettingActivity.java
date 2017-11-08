@@ -233,16 +233,14 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
             if (type == 1) {
                 if (("0").equals(err) || "1".equals(err) || "998".equals(err)) {
 
-                    mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
-                    mainActivity.firstInto();
-                    mainActivity.onClosed();
-                    mainActivity.rCallback(false);
-
                     sharedUtils.setBooloean(this, Constant.LOGINED, false);
                     sharedUtils.setData(this, Constant.TOKEN, "");
                     sharedUtils.setData(this, Constant.USERID, "");
 
-                    onBackPressed();
+                    //回到主界面
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("type", Constant.LOGINOUT);
+                    startActivity(intent);
                 }
             }
             if (type == 3) {

@@ -23,6 +23,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.myself.supdem.MySupDemActivity;
 
 import org.json.JSONObject;
 
@@ -35,7 +36,9 @@ import java.util.Map;
  * @date 2017/11/1 0001
  */
 
-public class FragmentRegister1 extends Fragment implements View.OnClickListener, ResultCallBack {
+public class FragmentRegister1 extends Fragment implements View.OnClickListener
+        , ResultCallBack
+        , MyEditText.OnTextWatcher {
     private View mView;
     private Button buttonNext;
     private ImageView mImgRead;
@@ -47,6 +50,11 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener,
     private boolean checked;
     private Handler mHandler;
     private WeakReference<Activity> wr;
+    private BaseInterface mBaseInterface;
+
+    public FragmentRegister1(BaseInterface mBaseInterface) {
+        this.mBaseInterface = mBaseInterface;
+    }
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -89,6 +97,10 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener,
         buttonNext.setOnClickListener(this);
         mLayoutRead.setOnClickListener(this);
         mTVIndentify.setOnClickListener(this);
+
+        mPhone.addOnTextWatcher(this);
+        mPassWord.addOnTextWatcher(this);
+        mIndentify.addOnTextWatcher(this);
         return mView;
     }
 
@@ -99,7 +111,10 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener,
                 getIndentify();
                 break;
             case R.id.register_ok:
-                getNetData();
+//                getNetData();
+                if (mBaseInterface != null) {
+                    mBaseInterface.complete(1);
+                }
                 break;
             case R.id.register_read:
                 mImgRead.setImageResource(checked
@@ -161,6 +176,16 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener,
 //        }
 //        String url = API.BASEURL + method;
 //        BaseActivity.postAsyn(getActivity(), url, map, this, 2);
+    }
+
+    @Override
+    public void onTextChanged(View v, String s) {
+        boolean isNomalNull = TextUtils.isNullOrEmpty(mPhone.getText().toString())
+                && TextUtils.isNullOrEmpty(mIndentify.getText().toString())
+                && TextUtils.isNullOrEmpty(mPassWord.getText().toString());
+        buttonNext.setBackgroundResource(isNomalNull
+                ? R.drawable.login_btn_shape_hl
+                : R.drawable.login_btn_shape);
     }
 
     public void initThread() {

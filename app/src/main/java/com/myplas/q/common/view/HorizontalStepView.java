@@ -30,7 +30,7 @@ public class HorizontalStepView extends LinearLayout implements HorizontalStepsV
     private int mComplectingPosition;
     private int mUnComplectedTextColor = ContextCompat.getColor(getContext(), R.color.color_gray);//定义默认未完成文字的颜色;
     private int mComplectedTextColor = ContextCompat.getColor(getContext(), R.color.color_red);//定义默认完成文字的颜色;
-    private int mTextSize = 14;//default textSize
+    private int mTextSize = 12;//default textSize
     private TextView mTextView;
 
     public HorizontalStepView(Context context) {
@@ -171,7 +171,7 @@ public class HorizontalStepView extends LinearLayout implements HorizontalStepsV
                     mTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     if (i <= mComplectingPosition) {
-                        mTextView.setTypeface(null, Typeface.BOLD);
+                        //mTextView.setTypeface(null, Typeface.BOLD);
                         mTextView.setTextColor(mComplectedTextColor);
                     } else {
                         mTextView.setTextColor(mUnComplectedTextColor);

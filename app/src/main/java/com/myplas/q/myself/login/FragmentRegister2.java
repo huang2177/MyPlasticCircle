@@ -35,11 +35,18 @@ import java.util.Map;
  * @date 2017/11/1 0001
  */
 
-public class FragmentRegister2 extends Fragment implements View.OnClickListener, ResultCallBack {
+public class FragmentRegister2 extends Fragment implements View.OnClickListener
+        , ResultCallBack
+        , MyEditText.OnTextWatcher {
     private View mView;
     private Button buttonNext;
     private MyEditText mName, mCompany, mCompanyType;
 
+    private BaseInterface mBaseInterface;
+
+    public FragmentRegister2(BaseInterface mBaseInterface) {
+        this.mBaseInterface = mBaseInterface;
+    }
 
     @Nullable
     @Override
@@ -52,6 +59,10 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener,
 
         buttonNext.setOnClickListener(this);
         mCompanyType.setOnClickListener(this);
+
+        mName.addOnTextWatcher(this);
+        mCompany.addOnTextWatcher(this);
+        mCompanyType.addOnTextWatcher(this);
         return mView;
     }
 
@@ -59,17 +70,29 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register_ok:
-                getNetData();
+//                getNetData();
+                if (mBaseInterface != null) {
+                    mBaseInterface.complete(2);
+                }
                 break;
             case R.id.register_type:
-                getNetData();
+//                getNetData();
+
                 break;
             default:
                 break;
         }
     }
 
-
+    @Override
+    public void onTextChanged(View v, String s) {
+        boolean isNomalNull = TextUtils.isNullOrEmpty(mName.getText().toString())
+                && TextUtils.isNullOrEmpty(mCompany.getText().toString())
+                && TextUtils.isNullOrEmpty(mCompanyType.getText().toString());
+        buttonNext.setBackgroundResource(isNomalNull
+                ? R.drawable.login_btn_shape_hl
+                : R.drawable.login_btn_shape);
+    }
     //点击下一步
     public void getNetData() {
 //        String phone = editText_tel.getText().toString();
