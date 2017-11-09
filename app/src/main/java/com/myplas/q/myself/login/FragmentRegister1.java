@@ -2,6 +2,7 @@ package com.myplas.q.myself.login;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,6 +53,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     private Handler mHandler;
     private WeakReference<Activity> wr;
     private BaseInterface mBaseInterface;
+    private String phone, pass, indentify;
 
     public FragmentRegister1(BaseInterface mBaseInterface) {
         this.mBaseInterface = mBaseInterface;
@@ -108,13 +111,10 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register_tv_indentify:
-                getIndentify();
+                validUserMobile();
                 break;
             case R.id.register_ok:
-//                getNetData();
-                if (mBaseInterface != null) {
-                    mBaseInterface.complete(1);
-                }
+                validIndentify();
                 break;
             case R.id.register_read:
                 mImgRead.setImageResource(checked
@@ -130,53 +130,47 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         }
     }
 
+    //获取验证码之前先验证手机号
+    public void validUserMobile() {
+        phone = mPhone.getText().toString();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("mobile", phone);
+        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERMOBILE, map, this, 1, false);
+    }
+
     //获取验证码
     private void getIndentify() {
-        String tel = mPhone.getText().toString();
-        if (!TextUtils.isPhoneNum(tel)) {
+        if (!TextUtils.isPhoneNum(phone)) {
             TextUtils.Toast(getActivity(), "手机号输入有误！");
             return;
         }
-        Map<String, String> map1 = new HashMap<String, String>();
-        map1.put("mobile", tel);
+        Map<String, String> map1 = new HashMap<String, String>(4);
         map1.put("type", "0");
+        map1.put("mobile", phone);
         String url = API.BASEURL + API.SEND_MSG;
-        BaseActivity.postAsyn(getActivity(), url, map1, this, 1);
+        BaseActivity.postAsyn(getActivity(), url, map1, this, 2);
     }
 
-    //点击下一步
-    public void getNetData() {
-//        String phone = editText_tel.getText().toString();
-//        String pass = editText_pass.getText().toString();
-//        String yzm = editText_yzm.getText().toString();
-//        String name = editText_name.getText().toString();
-//        String company = editText_company.getText().toString();
-//
-//        if (TextUtils.isNullOrEmpty(phone) && TextUtils.isNullOrEmpty(pass) && TextUtils.isNullOrEmpty(yzm)
-//                && TextUtils.isNullOrEmpty(name) && TextUtils.isNullOrEmpty(company)) {
-//            if (clicked) {
-//                Map<String, String> map = new HashMap<String, String>();
-//                map.put("mobile", phone);
-//                map.put("password", pass);
-//                map.put("code", yzm);
-//                map.put("qq", "");
-//                map.put("parent_mobile", "");
-//                map.put("name", name);
-//                map.put("c_name", company);
-//                map.put("chanel", "6");
-//                map.put("quan_type", "1");
-//                map.put("c_type", "1");
-//                //注册：
-//                getNetData(API.REGISTER, map, 2);
-//            } else {
-//                TextUtils.Toast(getActivity(), "请您先阅读《塑料圈通讯录》相关协议！");
-//            }
-//        } else {
-//            TextUtils.Toast(getActivity(), "请输入完整信息！");
-//        }
-//        String url = API.BASEURL + method;
-//        BaseActivity.postAsyn(getActivity(), url, map, this, 2);
+    //验证验证码
+    private void validIndentify() {
+        pass = mPassWord.getText().toString();
+        indentify = mIndentify.getText().toString();
+        if (!TextUtils.isNullOrEmpty(pass) || !TextUtils.isNullOrEmpty(indentify)) {
+            TextUtils.Toast(getActivity(), "请输入完整信息！");
+            return;
+        }
+        if (checked) {
+            TextUtils.Toast(getActivity(), "请您先阅读《塑料圈通讯录》相关协议！");
+            return;
+        }
+        Map<String, String> map1 = new HashMap<String, String>();
+        map1.put("mobile", phone);
+        map1.put("password", pass);
+        map1.put("verification", indentify);
+        String url = API.BASEURL + API.VALIDVERIFICATIONCODE;
+        BaseActivity.postAsyn(getActivity(), url, map1, this, 3);
     }
+
 
     @Override
     public void onTextChanged(View v, String s) {
@@ -211,25 +205,29 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1) {
-                String s = jsonObject.getString("msg");
-                TextUtils.Toast(getActivity(), s);
-                initThread();
+                if (!jsonObject.getString("err").equals("0")) {
+                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                } else {
+                    getIndentify();
+                }
             }
             if (type == 2) {
-                String s = jsonObject.getString("err");
                 TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
-                if (s.equals("0")) {
-//                    InputMethodManager imm = (InputMethodManager)getActivity(). getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(mPhone.getWindowToken(), 0);
-//                    //跳转到登陆界面
-//                    Intent intent = new Intent(this, LoginActivity.class);
-//                    String phone = editText_tel.getText().toString();
-//                    String pass = editText_pass.getText().toString();
-//                    intent.putExtra("phone", phone);
-//                    intent.putExtra("pass", pass);
-//                    intent.putExtra("isRegerter", "0");
-//                    setResult(1, intent);
-//                    finish();
+                if ("0".equals(jsonObject.getString("err"))) {
+                    initThread();
+                }
+            }
+            if (type == 3) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mPhone.getWindowToken(), 0);
+                if (!jsonObject.getString("err").equals("0")) {
+                    buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
+                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                } else {
+                    if (mBaseInterface != null) {
+                        mBaseInterface.complete(1);
+                        mBaseInterface.dataBack(phone, pass, indentify);
+                    }
                 }
             }
         } catch (Exception e) {

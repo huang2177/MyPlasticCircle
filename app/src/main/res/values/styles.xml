@@ -170,7 +170,7 @@
         <item name="android:drawablePadding">5dp</item>
         <item name="android:textColor">@color/color_balank</item>
         <item name="android:textColorHint">@color/color_content</item>
-        <item name="android:textSize">14.0sp</item>
+        <item name="android:textSize">16.0sp</item>
         <item name="android:textCursorDrawable">@drawable/text_cursor_shape</item>
         <item name="android:textSelectHandle">@drawable/textselecthandle</item>
         <item name="android:textSelectHandleLeft">@drawable/textselecthandle</item>

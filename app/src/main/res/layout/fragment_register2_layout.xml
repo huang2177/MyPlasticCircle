@@ -4,15 +4,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.myplas.q.common.view.MyEditText
-        android:id="@+id/register_name"
-        style="@style/login_edittext"
-        android:layout_marginTop="15dp"
-        android:background="@null"
-        android:drawableLeft="@drawable/icon_username"
-        android:hint="请填姓名"
-        android:inputType="number"
-        android:maxLength="11" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <LinearLayout
+            android:layout_width="80px"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_username" />
+        </LinearLayout>
+
+        <com.myplas.q.common.view.MyEditText
+            android:id="@+id/register_name"
+            style="@style/login_edittext"
+            android:layout_marginLeft="5dp"
+            android:background="@null"
+            android:hint="@string/hint_name"
+            android:maxLength="11" />
+    </LinearLayout>
 
 
     <View
@@ -21,14 +37,31 @@
         android:layout_marginTop="4dp"
         android:background="@color/color_red" />
 
-    <com.myplas.q.common.view.MyEditText
-        android:id="@+id/register_company"
-        style="@style/login_edittext"
-        android:layout_marginTop="31dp"
-        android:background="@null"
-        android:drawableLeft="@drawable/icon_companyname"
-        android:hint="请填写公司名称"
-        android:inputType="textPassword" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp">
+
+        <LinearLayout
+            android:layout_width="80px"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_companyname" />
+        </LinearLayout>
+
+        <com.myplas.q.common.view.MyEditText
+            android:id="@+id/register_company"
+            style="@style/login_edittext"
+            android:layout_marginLeft="5dp"
+            android:background="@null"
+            android:hint="@string/hint_company" />
+    </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"
@@ -42,15 +75,26 @@
         android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="80px"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_companytype" />
+        </LinearLayout>
+
         <com.myplas.q.common.view.MyEditText
             android:id="@+id/register_type"
             style="@style/login_edittext"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@null"
-            android:drawableLeft="@drawable/icon_companytype"
             android:focusable="false"
-            android:hint="请选择企业类型"
-            android:inputType="textPassword" />
+            android:hint="@string/hint_company_type" />
 
         <ImageView
             android:id="@+id/register_tv_indentify"
@@ -75,7 +119,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="70dp"
         android:background="@drawable/login_btn_shape"
-        android:text="登 录"
+        android:text="确 定"
         android:textColor="@color/color_white"
         android:textSize="16.0sp" />
 </LinearLayout>

@@ -1,6 +1,6 @@
 // Copyright 2013 Square, Inc.
 
-package com.myplas.q.myself.integral.datehelper;
+package com.myplas.q.common.view.datehelper;
 
 import android.content.Context;
 import android.util.AttributeSet;

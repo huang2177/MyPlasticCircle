@@ -391,7 +391,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     tookDateBean = gson.fromJson(object.toString(), TookDateBean.class);
                     List<Date> list1 = (list.get(datePosition).getType().equals("1")) ? (list_date_supdem) : (list_date_conact);
                     DateDialogShowUtils dialogShowUtils = new DateDialogShowUtils(list1, this);
-                    dialogShowUtils.showDialog(context, tookDateBean.getTook_date(), parseDate(tookDateBean.getStart_date()), parseDate(tookDateBean.getEnd_date()));
+                    dialogShowUtils.showDialog(context
+                            , tookDateBean.getTook_date()
+                            , parseDate(tookDateBean.getStart_date())
+                            , parseDate(tookDateBean.getEnd_date()));
                 }
             }
         } catch (Exception e) {

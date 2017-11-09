@@ -7,7 +7,8 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+
+import com.myplas.q.common.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,13 +124,13 @@ public final class LocalBroadcastManager {
             Set categories = intent.getCategories();
             boolean debug = (intent.getFlags() & 8) != 0;
             if (debug) {
-                Log.e("LocalBroadcastManager", "Resolving type " + type + " scheme " + scheme + " of intent " + intent);
+                Logger.e("LocalBroadcastManager", "Resolving type " + type + " scheme " + scheme + " of intent " + intent);
             }
 
             ArrayList entries = (ArrayList) this.mActions.get(intent.getAction());
             if (entries != null) {
                 if (debug) {
-                    Log.e("LocalBroadcastManager", "Action list: " + entries);
+                    Logger.e("LocalBroadcastManager", "Action list: " + entries);
                 }
 
                 ArrayList receivers = null;
@@ -138,18 +139,18 @@ public final class LocalBroadcastManager {
                 for (i = 0; i < entries.size(); ++i) {
                     ReceiverRecord receiver = (ReceiverRecord) entries.get(i);
                     if (debug) {
-                        Log.e("LocalBroadcastManager", "Matching against filter " + receiver.filter);
+                        Logger.e("LocalBroadcastManager", "Matching against filter " + receiver.filter);
                     }
 
                     if (receiver.broadcasting) {
                         if (debug) {
-                            Log.e("LocalBroadcastManager", "  Filter\'s target already added");
+                            Logger.e("LocalBroadcastManager", "  Filter\'s target already added");
                         }
                     } else {
                         int match = receiver.filter.match(action, type, scheme, data, categories, "LocalBroadcastManager");
                         if (match >= 0) {
                             if (debug) {
-                                Log.e("LocalBroadcastManager", "  Filter matched!  match=0x" + Integer.toHexString(match));
+                                Logger.e("LocalBroadcastManager", "  Filter matched!  match=0x" + Integer.toHexString(match));
                             }
 
                             if (receivers == null) {
@@ -177,7 +178,7 @@ public final class LocalBroadcastManager {
                                     reason = "unknown reason";
                             }
 
-                            Log.e("LocalBroadcastManager", "  Filter did not match: " + reason);
+                            Logger.e("LocalBroadcastManager", "  Filter did not match: " + reason);
                         }
                     }
                 }

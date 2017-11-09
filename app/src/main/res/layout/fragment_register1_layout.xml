@@ -11,7 +11,7 @@
         android:layout_marginTop="15dp"
         android:background="@null"
         android:drawableLeft="@drawable/icon_username"
-        android:hint="请填写手机号"
+        android:hint="@string/hint_phone"
         android:inputType="number"
         android:maxLength="11" />
 
@@ -34,8 +34,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:drawableLeft="@drawable/icon_number_code"
-            android:hint="请填写验证码"
-            android:inputType="textPassword" />
+            android:hint="@string/hint_indentify"
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/register_tv_indentify"
@@ -60,7 +60,7 @@
         android:layout_marginTop="30dp"
         android:background="@null"
         android:drawableLeft="@drawable/icon_passworld"
-        android:hint="请填写密码"
+        android:hint="@string/hint_pass"
         android:inputType="textPassword" />
 
 

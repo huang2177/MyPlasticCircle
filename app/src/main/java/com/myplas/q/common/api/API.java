@@ -100,6 +100,10 @@ public class API {
     public final static String LOGOUT = "user/logout";
     //检查登录状态
     public final static String VALIDUSERTOKEN = "user/validUserToken";
+    //验证用户注册手机号
+    public final static String VALIDUSERMOBILE = "user/validUserMobile";
+    //验证验证码
+    public final static String VALIDVERIFICATIONCODE = "user/validVerificationCode";
 
 
     /*Api*/

@@ -37,7 +37,7 @@ public class SupDemDialogShowUtils implements View.OnClickListener {
 
     public void showDialog(Context context, final List<IntegralBean.InfoBean.MyMsgBean> list_msg, final Integral_Diaolog_SupDem_Adapter integral_supplyDemandAdapter) {
         View view1 = LayoutInflater.from(context).inflate(R.layout.dialog_layout_intergral_supdem, null, false);
-        theDialog = new Dialog(context, R.style.FullHeightDialog);
+        theDialog = new Dialog(context, R.style.commondialog_style);
 
         listView = (ListView) view1.findViewById(R.id.integral_supplydemand_listview);
         textView = (TextView) view1.findViewById(R.id.radio_);

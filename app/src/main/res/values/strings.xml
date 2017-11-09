@@ -12,4 +12,13 @@
     <string name="invalid_date">Date must be between %1$s and %2$s.</string>
     <string name="month_name_format">MMMM yyyy</string>
 
+    <string name="hint_phone"><font size="14">请填写手机号码</font></string>
+    <string name="hint_pass"><font size="14">请填写密码</font></string>
+    <string name="hint_indentify"><font size="14">请填写验证码</font></string>
+    <string name="hint_indentify_"><font size="14">请填写动态码</font></string>
+    <string name="hint_pass_new"><font size="14">请填写新密码</font></string>
+    <string name="hint_company"><font size="14">请填写公司名称</font></string>
+    <string name="hint_company_type"><font size="14">请选择企业类型</font></string>
+    <string name="hint_name"><font size="14">请填写姓名</font></string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.myplas.q.myself.setting.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,10 +51,17 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
         StatusUtils.setStatusBar(this, false, false);
         StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.layout_resetpass_activity);
-        goBack(findViewById(R.id.back));
+
+        initTileBar();
+        setLeftIVResId(R.drawable.btn_back_black);
+        setTitleBarTextColor(R.color.color_transparent);
+        setTitleBarBackground(R.color.color_white);
+        setTitle(getIntent().getStringExtra("title"));
+
         initView();
     }
 
+    @SuppressLint("HandlerLeak")
     public void initView() {
         mTextView = F(R.id.title_rs);
         editText_tel = F(R.id.zhh_tel);
@@ -84,7 +92,6 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         };
-        mTextView.setText(getIntent().getStringExtra("title"));
     }
 
     @Override
@@ -116,6 +123,8 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     TextUtils.Toast(this, "请输入完整信息！");
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -172,16 +181,6 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void failCallBack(int type) {
 
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     @Override

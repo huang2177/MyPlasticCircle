@@ -107,7 +107,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 popupWindow.dismiss();
                 mGVAdapter.changeImg(position);
-                mTextView.setText(listString.get(position));
+                mTVRight.setText(listString.get(position));
 
                 page = 1;
                 hasMoreData = true;
@@ -136,6 +136,8 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                         break;
                     case 7:
                         type = "5";
+                        break;
+                    default:
                         break;
                 }
                 getData("1", type);

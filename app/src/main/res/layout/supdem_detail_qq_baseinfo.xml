@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginTop="10dp"
-              android:background="@color/color_white"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:background="@color/color_white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,19 +23,19 @@
                 android:layout_weight="1"
                 android:text="公司名"
                 android:textColor="#171717"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
 
             <TextView
                 android:id="@+id/supdem_qq_text_gs"
                 style="@style/setting_text_style"
                 android:layout_margin="13dp"
-                android:gravity="right"/>
+                android:gravity="right" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:background="@color/color_lightgray"/>
+            android:background="@color/color_lightgray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,19 +49,19 @@
                 android:layout_weight="1"
                 android:text="货物位置"
                 android:textColor="#171717"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
 
             <TextView
                 android:id="@+id/supdem_qq_text_wz"
                 style="@style/setting_text_style"
                 android:layout_margin="13dp"
-                android:gravity="right"/>
+                android:gravity="right" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:background="@color/color_lightgray"/>
+            android:background="@color/color_lightgray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:text="牌号"
                 android:textColor="#171717"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
 
             <TextView
                 android:id="@+id/supdem_qq_text_ph"
@@ -87,7 +87,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:background="@color/color_lightgray"/>
+            android:background="@color/color_lightgray" />
 
 
         <LinearLayout
@@ -100,21 +100,21 @@
                 android:layout_marginLeft="13dp"
                 android:layout_marginTop="13dp"
                 android:layout_weight="1"
-                android:text="产地"
+                android:text="厂家"
                 android:textColor="#171717"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
 
             <TextView
                 android:id="@+id/supdem_qq_text_chd"
                 style="@style/setting_text_style"
                 android:layout_margin="13dp"
-                android:gravity="right"/>
+                android:gravity="right" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:background="@color/color_lightgray"/>
+            android:background="@color/color_lightgray" />
 
         <LinearLayout
             android:id="@+id/linear_show_close"
@@ -135,19 +135,19 @@
                     android:layout_weight="1"
                     android:text="价格"
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/supdem_qq_text_jg"
                     style="@style/setting_text_style"
                     android:layout_margin="13dp"
-                    android:gravity="right"/>
+                    android:gravity="right" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_lightgray"/>
+                android:background="@color/color_lightgray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,20 +161,20 @@
                     android:layout_weight="1"
                     android:text="现货/期货"
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/supdem_qq_text_xq"
                     style="@style/setting_text_style"
                     android:layout_margin="13dp"
-                    android:gravity="right"/>
+                    android:gravity="right" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_lightgray"/>
+                android:background="@color/color_lightgray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -188,13 +188,13 @@
                     android:layout_weight="1"
                     android:text="QQ名称"
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/supdem_qq_text_qq"
                     style="@style/setting_text_style"
                     android:layout_margin="13dp"
-                    android:gravity="right"/>
+                    android:gravity="right" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

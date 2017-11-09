@@ -134,34 +134,46 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void complete(int position) {
         try {
-            mViewPager.setCurrentItem(position);
-            setLeftIVVisibility(position == 2 ? View.GONE : View.VISIBLE);
-            switch (currentItem) {
-                case 0:
-                    stepsBeanList.get(0).setState(0);
-                    stepsBeanList.get(1).setState(-1);
-                    stepsBeanList.get(2).setState(-1);
-                    initStepView(stepsBeanList);
-                    break;
-                case 1:
-                    stepsBeanList.get(0).setState(1);
-                    stepsBeanList.get(1).setState(0);
-                    stepsBeanList.get(2).setState(-1);
-                    initStepView(stepsBeanList);
-                    break;
-                case 2:
-                    stepsBeanList.get(0).setState(1);
-                    stepsBeanList.get(1).setState(1);
-                    stepsBeanList.get(2).setState(0);
-                    initStepView(stepsBeanList);
-                    mFmRegister3.showImg();
-                    break;
-                default:
-                    break;
+            if (position != -1) {
+                mViewPager.setCurrentItem(position);
+                setLeftIVVisibility(position == 2 ? View.GONE : View.VISIBLE);
+                switch (currentItem) {
+                    case 0:
+                        stepsBeanList.get(0).setState(0);
+                        stepsBeanList.get(1).setState(-1);
+                        stepsBeanList.get(2).setState(-1);
+                        initStepView(stepsBeanList);
+                        break;
+                    case 1:
+                        stepsBeanList.get(0).setState(1);
+                        stepsBeanList.get(1).setState(0);
+                        stepsBeanList.get(2).setState(-1);
+                        initStepView(stepsBeanList);
+                        break;
+                    case 2:
+                        stepsBeanList.get(0).setState(1);
+                        stepsBeanList.get(1).setState(1);
+                        stepsBeanList.get(2).setState(0);
+                        initStepView(stepsBeanList);
+                        mFmRegister3.showImg();
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                stepsBeanList.get(0).setState(1);
+                stepsBeanList.get(1).setState(1);
+                stepsBeanList.get(2).setState(1);
+                initStepView(stepsBeanList);
             }
         } catch (Exception e) {
 
         }
+    }
+
+    @Override
+    public void dataBack(String agrs0, String agrs1, String agrs2) {
+        mFmRegister2.setData(agrs0, agrs1, agrs2);
     }
 
     @Override

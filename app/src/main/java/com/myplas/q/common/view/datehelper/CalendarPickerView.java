@@ -1,5 +1,5 @@
 // Copyright 2012 Square, Inc.
-package com.myplas.q.myself.integral.datehelper;
+package com.myplas.q.common.view.datehelper;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -295,16 +295,6 @@ public class CalendarPickerView extends ListView {
         requestLayout();
     }
 
-    @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //该自定义控件只是重写了GridView的onMeasure方法，使其不会出现滚动条，ScrollView嵌套ListView也是同样的道理，不再赘述。
-        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-        if (months.isEmpty()) {
-            throw new IllegalStateException(
-                    "Must have at least one month to display.  Did you forget to call init()?");
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
 
     public Date getSelectedDate() {
         return (selectedCals.size() > 0 ? selectedCals.get(0).getTime() : null);

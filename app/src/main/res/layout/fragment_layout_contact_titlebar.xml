@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="45dp"
     android:background="@color/color_red">
 
     <LinearLayout
         android:id="@+id/contact_search_ll"
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/btn_search"/>
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/btn_search" />
     </LinearLayout>
 
     <TextView
@@ -26,7 +26,16 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="@color/color_white"
-        android:textSize="18.0sp"/>
+        android:textSize="18.0sp" />
+
+    <ImageView
+        android:id="@+id/contact_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:src="@drawable/btn_sign_data" />
 
 </FrameLayout>
 

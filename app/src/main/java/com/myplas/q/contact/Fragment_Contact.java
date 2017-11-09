@@ -35,6 +35,7 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.contact.activity.AD_DialogActivtiy;
+import com.myplas.q.contact.activity.ContactDaliySignActivity;
 import com.myplas.q.contact.activity.Contact_Detail_Activity;
 import com.myplas.q.contact.activity.Contact_Search_Activity;
 import com.myplas.q.contact.activity.Cover_WebActivity;
@@ -76,8 +77,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private ImageButton imageButton;
     private HIndicatorDialog dialog;
     private RefreshPopou mRefreshPopou;
-    private ImageView mIVBanner, mIVTop;
     private MyNestedScrollView mScrollView;
+    private ImageView mIVBanner, mIVTop, mSign;
     private View view, shareView1, shareView2;
     private SwipeRefreshLayout mRefreshLayout;
     private TextView mTVClass, mTVRegion, mTVTitle;
@@ -111,6 +112,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_contact, null, false);
 
         mIVTop = (ImageView) view.findViewById(R.id.top_img);
+        mSign = (ImageView) view.findViewById(R.id.contact_sign);
         listView = (ListView) view.findViewById(R.id.contact_lv);
         mTVTitle = (TextView) view.findViewById(R.id.contanct_title);
         mTVRegion = (TextView) view.findViewById(R.id.contact_region);
@@ -123,6 +125,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         mScrollView = (MyNestedScrollView) view.findViewById(R.id.contact_scrollview);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.contact_swipelayout);
 
+        mSign.setOnClickListener(this);
         mTVClass.setOnClickListener(this);
         mTVRegion.setOnClickListener(this);
         mIVBanner.setOnClickListener(this);
@@ -174,6 +177,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             case R.id.contact_region:
                 openDialog(2, mTVRegion);
                 break;
+            case R.id.img_reload:
+                page = 1;
+                getNetData("1", true);
+                break;
             case R.id.contact_top_ll:
                 shareView1 = view.findViewById(R.id.xq_tx);
                 shareView2 = view.findViewById(R.id.xq_rz);
@@ -184,9 +191,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 startActivity(new Intent(getActivity(), Contact_Search_Activity.class));
                 getActivity().overridePendingTransition(R.anim.fade, R.anim.hold);
                 break;
-            case R.id.img_reload:
-                page = 1;
-                getNetData("1", true);
+            case R.id.contact_sign:
+                startActivity(new Intent(getActivity(), ContactDaliySignActivity.class));
                 break;
             default:
                 break;

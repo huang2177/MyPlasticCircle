@@ -52,11 +52,13 @@ public class MyApplication extends Application {
                 .getSharedUtils()
                 .getData(this, Constant.USERID);
 
-        JPushInterface.init(this);// 初始化 JPush
+        JPushInterface.init(this);
+
+        JPushInterface.setPowerSaveMode(this, true);
 
         JPushInterface.setDebugMode(BuildConfig.USE_STETHO
                 ? true
-                : false);    // 设置开启日志,发布时请关闭日志
+                : false);
 
         if (TextUtils.isNullOrEmpty(userId)) {
             JPushInterface.setAlias(this, 10, userId);

@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import com.myplas.q.R;
 import com.myplas.q.myself.integral.adapter.Integral_Date_Grid_Adapter;
 import com.myplas.q.myself.integral.adapter.IntegralAdapter;
-import com.myplas.q.myself.integral.datehelper.CalendarPickerView;
+import com.myplas.q.common.view.datehelper.CalendarPickerView;
 
 import java.util.Date;
 import java.util.List;
@@ -61,7 +61,7 @@ public class DateDialogShowUtils implements CalendarPickerView.OnDateSelectedLis
             // linearLayout.setVisibility((list.size() != 0) ? (View.VISIBLE) : (View.GONE));
             imageView.setOnClickListener(this);
 
-            dialogView.init(date_start, getDate(date_end), list_unclickable)//
+            dialogView.init(date_start, getDate(date_end), list_unclickable)
                     .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
                     .withSelectedDates(list);
             theDialog = new Dialog(context, R.style.FullHeightDialog);

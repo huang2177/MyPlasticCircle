@@ -110,7 +110,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/app_theme_transparent" />
         <activity
-            android:name=".contact.activity.TheirFansFollowActivity"
+            android:name="com.myplas.q.contact.activity.TheirFansFollowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.myplas.q.contact.activity.ContactDaliySignActivity"
             android:screenOrientation="portrait" />
 
         <!--headline-->

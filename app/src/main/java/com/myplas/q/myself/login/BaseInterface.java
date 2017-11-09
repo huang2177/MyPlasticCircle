@@ -8,4 +8,6 @@ import android.support.v4.app.Fragment;
 
 public interface BaseInterface {
     void complete(int position);
+
+    void dataBack(String agrs0, String agrs1, String agrs2);
 }

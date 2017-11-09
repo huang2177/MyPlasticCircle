@@ -7,7 +7,7 @@
 
     <include layout="@layout/dialog_datepicker_selected_date"/>
 
-    <com.myplas.q.myself.integral.datehelper.CalendarPickerView
+    <com.myplas.q.common.view.datehelper.CalendarPickerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:numColumns="4"></GridView>
+            android:numColumns="4" />
     </LinearLayout>
 
 

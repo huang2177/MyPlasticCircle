@@ -15,12 +15,12 @@
     <LinearLayout
         android:id="@+id/headline_ll_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:background="@color/color_red"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp">
 
         <EditText
             android:id="@+id/find_edit"
