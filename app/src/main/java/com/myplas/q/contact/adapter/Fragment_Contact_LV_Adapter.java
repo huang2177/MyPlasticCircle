@@ -84,6 +84,9 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
 
             Glide.with(context)
                     .load(personsBean.getThumb())
+                    .placeholder(personsBean.getSex().equals("男")
+                            ? R.drawable.img_defaul_male
+                            : R.drawable.img_defaul_female)
                     .into(viewHolder.mHead);
 
             viewHolder.mInfo.setText(replace(personsBean.getC_name()

@@ -107,18 +107,24 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        firstInto();
-        if (fragmentContact != null) {
-            fragmentContact.getNetData("1", false);
-        }
+
+        fragmentContact.getNetData("1", false);
+
         String type = intent.getStringExtra("type");
         if (Constant.LOGINED.equals(type)) {
             getConfig();
+            firstInto();
+            fragmentSupDem.onLogined();
+            fragmentHeadLine.initViewPager();
             String userId = sharedUtils.getData(this, Constant.USERID);
             JPushInterface.setAlias(this, 10, userId);
-        } else {
+        } else if (Constant.LOGINOUT.equals(type)) {
+            firstInto();
             onClosed();
             rCallback(false);
+        } else {
+            goToMySelf();
+
         }
     }
 

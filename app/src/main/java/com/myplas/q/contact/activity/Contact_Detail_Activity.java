@@ -25,7 +25,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
-import com.myplas.q.release.MyOnPageChangeListener;
 
 import org.json.JSONObject;
 
@@ -156,6 +155,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
             case R.id.contact_info_ll:
                 Intent intent = new Intent(this, MyDataActivity.class);
                 intent.putExtra("userid", contactBean.getData().getUser_id());
+                intent.putExtra("from", "1");
                 startActivity(intent);
                 break;
             case R.id.wd_linear_fans:
@@ -249,8 +249,8 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
             Glide.with(this)
                     .load(contactBean.getData().getThumb())
                     .placeholder(("男".equals(contactBean.getData().getSex()))
-                            ? (R.drawable.contact_image_defaul_male)
-                            : (R.drawable.contact_image_defaul_female))
+                            ? (R.drawable.img_defaul_male)
+                            : (R.drawable.img_defaul_female))
                     .into(mHead);
 
             mStart.setImageResource(("0".equals(contactBean.getData().getIs_vip()))

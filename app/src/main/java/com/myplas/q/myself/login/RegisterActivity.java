@@ -38,6 +38,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private FragmentRegister3 mFmRegister3;
 
     private int currentItem;
+    private List<Fragment> FragmentList;
     private List<StepBean> stepsBeanList;
 
     @Override
@@ -69,17 +70,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initViewPager() {
-        List<Fragment> list = new ArrayList<>();
+        FragmentList = new ArrayList<>();
 
         mFmRegister1 = new FragmentRegister1(this);
         mFmRegister2 = new FragmentRegister2(this);
         mFmRegister3 = new FragmentRegister3();
 
-        list.add(mFmRegister1);
-        list.add(mFmRegister2);
-        list.add(mFmRegister3);
+        FragmentList.add(mFmRegister1);
+        FragmentList.add(mFmRegister2);
+        FragmentList.add(mFmRegister3);
 
-        ViewPager_Adapter adapter = new ViewPager_Adapter(getSupportFragmentManager(), list);
+        ViewPager_Adapter adapter = new ViewPager_Adapter(getSupportFragmentManager(), FragmentList);
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(0);
     }
@@ -134,37 +135,29 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void complete(int position) {
         try {
-            if (position != -1) {
-                mViewPager.setCurrentItem(position);
-                setLeftIVVisibility(position == 2 ? View.GONE : View.VISIBLE);
-                switch (currentItem) {
-                    case 0:
-                        stepsBeanList.get(0).setState(0);
-                        stepsBeanList.get(1).setState(-1);
-                        stepsBeanList.get(2).setState(-1);
-                        initStepView(stepsBeanList);
-                        break;
-                    case 1:
-                        stepsBeanList.get(0).setState(1);
-                        stepsBeanList.get(1).setState(0);
-                        stepsBeanList.get(2).setState(-1);
-                        initStepView(stepsBeanList);
-                        break;
-                    case 2:
-                        stepsBeanList.get(0).setState(1);
-                        stepsBeanList.get(1).setState(1);
-                        stepsBeanList.get(2).setState(0);
-                        initStepView(stepsBeanList);
-                        mFmRegister3.showImg();
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                stepsBeanList.get(0).setState(1);
-                stepsBeanList.get(1).setState(1);
-                stepsBeanList.get(2).setState(1);
-                initStepView(stepsBeanList);
+            mViewPager.setCurrentItem(position);
+            setLeftIVVisibility(position == 2 ? View.GONE : View.VISIBLE);
+            switch (currentItem) {
+                case 0:
+                    stepsBeanList.get(0).setState(0);
+                    stepsBeanList.get(1).setState(-1);
+                    stepsBeanList.get(2).setState(-1);
+                    initStepView(stepsBeanList);
+                    break;
+                case 1:
+                    stepsBeanList.get(0).setState(1);
+                    stepsBeanList.get(1).setState(0);
+                    stepsBeanList.get(2).setState(-1);
+                    initStepView(stepsBeanList);
+                    break;
+                case 2:
+                    stepsBeanList.get(0).setState(1);
+                    stepsBeanList.get(1).setState(1);
+                    stepsBeanList.get(2).setState(1);
+                    initStepView(stepsBeanList);
+                    break;
+                default:
+                    break;
             }
         } catch (Exception e) {
 
@@ -172,8 +165,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void dataBack(String agrs0, String agrs1, String agrs2) {
-        mFmRegister2.setData(agrs0, agrs1, agrs2);
+    public void dataBack(Fragment fragment, List agrs) {
+        if (fragment instanceof FragmentRegister1) {
+            mFmRegister2.setData(agrs);
+        } else {
+            mFmRegister3.showImg();
+            mFmRegister3.setData(agrs);
+        }
     }
 
     @Override

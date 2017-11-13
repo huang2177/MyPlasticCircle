@@ -10,12 +10,10 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,7 +45,6 @@ import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
-import com.myplas.q.sockethelper.RabbitMQHelper;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -71,7 +68,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
     private ImageView imageStart;
     private SharedUtils sharedUtils;
-    private ImageButton imageButton;
     private RoundCornerImageView imageTx;
     private ImageView mimageNews, mimageMore;
     private TextView textTitle, textName, textCompany, textRank;
@@ -96,7 +92,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         initView();
 
         setAppBarListener();
-        getLoginInfo(false);
         RabbitMQConfig.getInstance(getActivity()).setResultCallBack(this);
     }
 
@@ -130,7 +125,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         textYj = f(R.id.wd_text_introdus);
         textTitle = f(R.id.toolbar_title);
 
-        imageButton = f(R.id.img_reload);
         linearFs = f(R.id.wd_linear_fans);
         mimageMore = f(R.id.wd_title_more);
         linearGz = f(R.id.wd_linear_follow);
@@ -158,7 +152,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         linearYj.setOnClickListener(this);
         linearFs.setOnClickListener(this);
         linearGz.setOnClickListener(this);
-        imageButton.setOnClickListener(this);
         mDragViewMsg.setOnClickListener(this);
         linearTitle.setOnClickListener(this);
         mFrameLayout.setOnClickListener(this);
@@ -189,72 +182,71 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (NetUtils.isNetworkStateed(getActivity())) {
-            switch (v.getId()) {
-                case R.id.wd_logined_news_fl:
-                    Intent i0 = new Intent(getActivity(), MessageActivity.class);
-                    startActivity(i0);
-                    break;
-                case R.id.wd_text_dd:
-                    Intent i1 = new Intent(getActivity(), TradeOrderActivity.class);
-                    startActivity(i1);
-                    break;
-                case R.id.img_reload:
-                    getLoginInfo(true);
-                    break;
+        if (!NetUtils.isNetworkStateed(getActivity()) || myZone == null) {
+            return;
+        }
+        switch (v.getId()) {
+            case R.id.wd_logined_news_fl:
+                Intent i0 = new Intent(getActivity(), MessageActivity.class);
+                startActivity(i0);
+                break;
+            case R.id.wd_text_dd:
+                Intent i1 = new Intent(getActivity(), TradeOrderActivity.class);
+                startActivity(i1);
+                break;
 
-                case R.id.wd_linear_gj:
-                    Intent intent = new Intent(getActivity(), MySupDemActivity.class);
-                    intent.putExtra("title", "我的供给");
-                    intent.putExtra("type", "2");
-                    startActivity(intent);
-                    break;
-                case R.id.wd_linear_qg:
-                    Intent intent1 = new Intent(getActivity(), MySupDemActivity.class);
-                    intent1.putExtra("title", "我的求购");
-                    intent1.putExtra("type", "1");
-                    startActivity(intent1);
-                    break;
-                case R.id.wd_linear_introdus:
-                    Intent intent2 = new Intent(getActivity(), MyIntroductionActivity.class);
-                    startActivity(intent2);
-                    break;
-                case R.id.wd_linear_fans:
-                    Intent intent3 = new Intent(getActivity(), MyFansFollowActivity.class);
-                    intent3.putExtra("titlename", "我的粉丝");
-                    intent3.putExtra("type", "1");
-                    startActivity(intent3);
-                    break;
-                case R.id.wd_linear_follow:
-                    Intent intent4 = new Intent(getActivity(), MyFansFollowActivity.class);
-                    intent4.putExtra("titlename", "我的关注");
-                    intent4.putExtra("type", "2");
-                    startActivity(intent4);
-                    break;
-                case R.id.wd_text_look:
-                    Intent intent0 = new Intent(getActivity(), LookMeActivity.class);
-                    startActivity(intent0);
-                    break;
-                case R.id.wd_linear_jf:
-                    startActivity(new Intent(getActivity(), IntegralActivity.class));
-                    break;
-                case R.id.wd_text_edu:
-                    startActivity(new Intent(getActivity(), LineOfCreditActivity.class));
-                    break;
-                case R.id.wd_text_pz:
-                    startActivity(new Intent(getActivity(), PlasticMoneyActivity.class));
-                    break;
-                case R.id.wd_linear_title:
-                    Intent intent6 = new Intent(getActivity(), MyDataActivity.class);
-                    startActivity(intent6);
-                    break;
-                case R.id.wd_text_set:
-                    Intent intent7 = new Intent(getActivity(), SettingActivity.class);
-                    startActivity(intent7);
-                    break;
-                default:
-                    break;
-            }
+            case R.id.wd_linear_gj:
+                Intent intent = new Intent(getActivity(), MySupDemActivity.class);
+                intent.putExtra("title", "我的供给");
+                intent.putExtra("type", "2");
+                startActivity(intent);
+                break;
+            case R.id.wd_linear_qg:
+                Intent intent1 = new Intent(getActivity(), MySupDemActivity.class);
+                intent1.putExtra("title", "我的求购");
+                intent1.putExtra("type", "1");
+                startActivity(intent1);
+                break;
+            case R.id.wd_linear_introdus:
+                Intent intent2 = new Intent(getActivity(), MyIntroductionActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.wd_linear_fans:
+                Intent intent3 = new Intent(getActivity(), MyFansFollowActivity.class);
+                intent3.putExtra("titlename", "我的粉丝");
+                intent3.putExtra("type", "1");
+                startActivity(intent3);
+                break;
+            case R.id.wd_linear_follow:
+                Intent intent4 = new Intent(getActivity(), MyFansFollowActivity.class);
+                intent4.putExtra("titlename", "我的关注");
+                intent4.putExtra("type", "2");
+                startActivity(intent4);
+                break;
+            case R.id.wd_text_look:
+                Intent intent0 = new Intent(getActivity(), LookMeActivity.class);
+                startActivity(intent0);
+                break;
+            case R.id.wd_linear_jf:
+                startActivity(new Intent(getActivity(), IntegralActivity.class));
+                break;
+            case R.id.wd_text_edu:
+                startActivity(new Intent(getActivity(), LineOfCreditActivity.class));
+                break;
+            case R.id.wd_text_pz:
+                startActivity(new Intent(getActivity(), PlasticMoneyActivity.class));
+                break;
+            case R.id.wd_linear_title:
+                Intent intent6 = new Intent(getActivity(), MyDataActivity.class);
+                intent6.putExtra("from", "2");
+                startActivity(intent6);
+                break;
+            case R.id.wd_text_set:
+                Intent intent7 = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent7);
+                break;
+            default:
+                break;
         }
     }
 
@@ -273,8 +265,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
-            imageButton.setVisibility(View.GONE);
-            mNestedScrollView.setVisibility(View.VISIBLE);
             JSONObject jsonObject = new JSONObject(object.toString());
             Gson gson = new Gson();
             if (type == 2) {
@@ -294,11 +284,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
     @Override
     public void failCallBack(int type) {
-        if (myZone == null) {
-            mBarLayout.setExpanded(false);
-            mNestedScrollView.setVisibility(View.GONE);
-            imageButton.setVisibility(View.VISIBLE);
-        }
+
     }
 
     /**
@@ -328,7 +314,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
             Glide.with(getActivity())
                     .load(myZone.getData().getThumb())
-                    .placeholder(R.drawable.contact_image_defaul_male)
+                    .placeholder(R.drawable.img_defaul_male)
                     .into(imageTx);
 
             imageStart.setImageResource(("0".equals(myZone.getData().getIs_pass()))

@@ -82,7 +82,7 @@ public class MyIntroductionAdapter extends BaseAdapter {
             }
             Glide.with(context)
                     .load(list.get(position).getThumb())
-                    .placeholder(R.drawable.contact_image_defaul_male)
+                    .placeholder(R.drawable.img_defaul_male)
                     .into(viewHolder.tx);
 
             viewHolder.tx.setBorderColor(context.getResources().getColor(R.color.color_white));

@@ -81,10 +81,10 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     private List<TabCofigBean.DataBeanXXX.AreaBean.DataBeanXX> listArea;
     private List<TabCofigBean.DataBeanXXX.TimeBean.DataBean> listTime;
 
-    private String keywords, isBuy, area, time;
-    private int page, visibleItemCount;
-    private boolean hasMoerData = true;
     private List<String> mList;
+    private int page, visibleItemCount;
+    private String keywords, isBuy, area, time;
+    private boolean hasMoerData = true, isLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,11 +162,14 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        page++;
-                        if (hasMoerData) {
-                            getphysicalSearch(page, keywords, time, isBuy, area, false);
-                        } else {
-                            TextUtils.Toast(SupDem_Search_Activity.this, "没有更多数据了！");
+                        if (!isLoading) {
+                            page++;
+                            isLoading = true;
+                            if (hasMoerData) {
+                                getphysicalSearch(page, keywords, time, isBuy, area, false);
+                            } else {
+                                TextUtils.Toast(SupDem_Search_Activity.this, "没有更多数据了！");
+                            }
                         }
                     }
                 }
@@ -330,6 +333,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 //                editText.setHint(keywords);
             }
             if (type == 2) {
+                isLoading = false;
                 mLayoutDefault.setVisibility(View.GONE);
                 mLayoutResult.setVisibility(View.VISIBLE);
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -393,6 +397,9 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 
     @Override
     public void failCallBack(int type) {
+        if (type == 2) {
+            isLoading = false;
+        }
     }
 
     //地区回调

@@ -11,9 +11,7 @@ public class Constant {
 
     public static final String LOGINOUT = "loginout";
 
-    public static final String IS_LOGINED_H = "isLoginedH";
-
-    public static final String IS_LOGINED_SD = "isLoginedS";
+    public static final String REGISTER = "register";
 
     public static final String USERID = "userid";
 

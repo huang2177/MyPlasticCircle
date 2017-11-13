@@ -87,7 +87,7 @@ public class LookMeAdapter extends SectionedBaseAdapter {
         try {
             listPerson = list.get(section).getPerson();
             Glide.with(context).load(listPerson.get(position).getThumb()).
-                    placeholder(R.drawable.contact_image_defaul_male).into(viewHolder.tx);
+                    placeholder(R.drawable.img_defaul_male).into(viewHolder.tx);
             viewHolder.gs.setText(listPerson.get(position).getCompany() + "  " + listPerson.get(position).getName());
             viewHolder.time_detail.setText(listPerson.get(position).getDate());
 

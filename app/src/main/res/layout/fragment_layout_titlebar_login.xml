@@ -21,7 +21,7 @@
                 android:layout_margin="8dp"
                 android:id="@+id/xq_tx"
                 android:background="@drawable/corner_gz"
-                android:src="@drawable/contact_image_defaul_male"
+                android:src="@drawable/img_defaul_male"
                 android:scaleType="centerCrop" />
 
             <ImageView

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,9 +12,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,30 +26,30 @@
                     android:layout_weight="1"
                     android:text="头像："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <com.myplas.q.common.view.RoundCornerImageView
                     android:id="@+id/wd_zl_text_headimg"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="3dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/contact_image_defaul_male"/>
+                    android:src="@drawable/img_defaul_male" />
 
                 <ImageView
                     android:id="@+id/data_head_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="2dp"
                     android:src="@drawable/btn_more_small"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"/>
+                android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,19 +64,19 @@
                     android:layout_weight="1"
                     android:text="公司名称："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/wd_zl_gs"
                     style="@style/setting_text_style"
                     android:drawableRight="@drawable/btn_more"
-                    android:maxLines="1"/>
+                    android:maxLines="1" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"/>
+                android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,7 +91,7 @@
                     android:layout_weight="1"
                     android:text="联系方式："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/wd_zl_tel"
@@ -104,7 +102,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"/>
+                android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
                 android:id="@+id/setting_data_address"
@@ -115,24 +113,26 @@
                 android:paddingTop="12dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="地址："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
 
                 <TextView
                     android:id="@+id/wd_zl_text_dzh"
-                    style="@style/setting_text_style" />
+                    style="@style/setting_text_style"
+                    android:layout_width="match_parent"
+                    android:drawableRight="@drawable/btn_more"
+                    android:maxLines="2" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"/>
+                android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
                 android:id="@+id/setting_data_sex"
@@ -148,7 +148,7 @@
                     android:layout_weight="1"
                     android:text="性别："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/wd_zl_text_xb"
@@ -159,7 +159,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"/>
+                android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
                 android:id="@+id/setting_data_region"
@@ -175,7 +175,7 @@
                     android:layout_weight="1"
                     android:text="所属地区："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/wd_zl_text_address"
@@ -186,7 +186,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"/>
+                android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,7 +201,7 @@
                     android:layout_weight="1"
                     android:text="企业类型："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/wd_zl_text_company"
@@ -212,7 +212,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"/>
+                android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
                 android:id="@+id/linear_show_close"
@@ -235,7 +235,7 @@
                         android:layout_weight="1"
                         android:text="生产产品："
                         android:textColor="#171717"
-                        android:textSize="16.0sp"/>
+                        android:textSize="16.0sp" />
 
                     <TextView
                         android:id="@+id/wd_zl_text_products"
@@ -246,7 +246,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/color_gray_divider_in"/>
+                    android:background="@color/color_gray_divider_in" />
 
                 <LinearLayout
                     android:id="@+id/setting_data_monthlyuse"
@@ -262,7 +262,7 @@
                         android:layout_weight="1"
                         android:text="月用量："
                         android:textColor="#171717"
-                        android:textSize="16.0sp"/>
+                        android:textSize="16.0sp" />
 
                     <TextView
                         android:id="@+id/wd_zl_text_num"
@@ -273,7 +273,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/color_gray_divider_in"/>
+                    android:background="@color/color_gray_divider_in" />
             </LinearLayout>
 
             <LinearLayout
@@ -290,21 +290,20 @@
                     android:layout_height="wrap_content"
                     android:text="我的主营："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/wd_zl_text_zhy"
                     style="@style/setting_text_style"
                     android:layout_width="match_parent"
                     android:drawableRight="@drawable/btn_more"
-                    android:gravity="right"
-                    android:maxLines="1"/>
+                    android:maxLines="2" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/color_gray_divider_in"/>
+                android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
                 android:id="@+id/wd_zl_linear_ph"
@@ -325,21 +324,20 @@
                         android:layout_height="wrap_content"
                         android:text="关注的牌号："
                         android:textColor="#171717"
-                        android:textSize="16.0sp"/>
+                        android:textSize="16.0sp" />
 
                     <TextView
                         android:id="@+id/wd_zl_text_ph"
                         style="@style/setting_text_style"
                         android:layout_width="match_parent"
                         android:drawableRight="@drawable/btn_more"
-                        android:gravity="right"
-                        android:maxLines="1"/>
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/color_gray_divider_in"/>
+                    android:background="@color/color_gray_divider_in" />
             </LinearLayout>
 
             <LinearLayout
@@ -348,11 +346,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/setting_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="我的名片："
                     android:textColor="#171717"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <ImageView
                     android:id="@+id/wd_zl_text_upload"
@@ -361,16 +361,16 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/card"/>
+                    android:src="@drawable/card" />
 
                 <ImageView
                     android:id="@+id/data_img_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="2dp"
                     android:src="@drawable/btn_more_small"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
             </LinearLayout>
 
         </LinearLayout>

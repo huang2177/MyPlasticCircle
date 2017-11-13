@@ -387,8 +387,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             sharedUtils.setData(this, Constant.TOKEN, jsonObject.getString("dataToken"));
             sharedUtils.setData(this, Constant.USERID, jsonObject.getString("user_id"));
             sharedUtils.setBooloean(this, Constant.LOGINED, true);
-            sharedUtils.setBooloean(this, Constant.IS_LOGINED_H, true);
-            sharedUtils.setBooloean(this, Constant.IS_LOGINED_SD, true);
             sharedUtils.setData(this, Constant.UUID, SystemUtils.getMyUUID(this));
 
         } catch (Exception e) {

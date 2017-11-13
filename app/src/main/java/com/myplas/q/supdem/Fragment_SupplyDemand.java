@@ -71,7 +71,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private XTabLayout mTabLayout;
     private HIndicatorDialog dialog;
 
-    private Fragment_SupDem_All mFragmentAll;
+    public Fragment_SupDem_All mFragmentAll;
     private SupDem_ViewPager_Adapter mViewPagerAdapter;
 
     @Override
@@ -207,7 +207,11 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         }
     }
 
-    //从其他页面跳转回调的刷新。。。
+    /**
+     * 从其他页面跳转回调的刷新
+     *
+     * @param type
+     */
     public void refreshData(int type) {
         try {
             if (type == 1 && mFragments != null) {
@@ -295,6 +299,12 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         MobclickAgent.onPageEnd("MainScreen");
         if (mFragmentAll.refreshPopou != null) {
             mFragmentAll.refreshPopou.dismiss();
+        }
+    }
+
+    public void onLogined() {
+        if (mFragmentAll != null) {
+            mFragmentAll.getNetData("1", false);
         }
     }
 

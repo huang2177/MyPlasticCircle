@@ -25,7 +25,10 @@ import com.bigkoo.pickerview.lib.WheelView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ACache;
+import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
@@ -35,6 +38,7 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -56,8 +60,20 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
     private OptionsPickerView pvOptions;
     private String phone, passWord, indentify, companyType;
 
+    private ACache mACache;
+    private SharedUtils mShareUtils;
+
     public FragmentRegister2(BaseInterface mBaseInterface) {
         this.mBaseInterface = mBaseInterface;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mACache = ACache.get(getActivity());
+        mShareUtils = SharedUtils.getSharedUtils();
+        mList = Arrays.asList("塑料制品厂", "原料供应商", "物流服务商");
     }
 
     @Nullable
@@ -77,7 +93,6 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
         mCompany.addOnTextWatcher(this);
         mCompanyType.addOnTextWatcher(this);
 
-        mList = Arrays.asList("塑料制品厂", "原料供应商", "物流服务商");
         return mView;
     }
 
@@ -185,16 +200,40 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
                     TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
                 } else {
+                    Gson gson = new Gson();
+                    RegisterBean bean = gson.fromJson(object.toString(), RegisterBean.class);
+
+                    setRedDots(bean);
+
                     if (mBaseInterface != null) {
                         mBaseInterface.complete(2);
+                        mBaseInterface.dataBack(this, Arrays.asList(bean.getRegister_ranking()));
                     }
-                    Gson gson = new Gson();
-                    RegisterBean registerBean = gson.fromJson(object.toString(), RegisterBean.class);
-
                 }
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * 保存默认小红点数据和token userId
+     *
+     * @param object
+     */
+    private void setRedDots(RegisterBean bean) {
+
+        mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
+        mACache.put(Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
+        mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
+        mACache.put(Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
+        mACache.put(Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
+        mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
+        mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
+        mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
+
+        mShareUtils.setData(getActivity(), Constant.TOKEN, bean.getToken());
+        mShareUtils.setBooloean(getActivity(), Constant.LOGINED, true);
+        mShareUtils.setData(getActivity(), Constant.USERID, bean.getUser_id());
     }
 
     @Override
@@ -202,9 +241,16 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
 
     }
 
-    public void setData(String agrs0, String agrs1, String agrs2) {
-        phone = agrs0;
-        passWord = agrs1;
-        indentify = agrs2;
+    /**
+     * 从前一个页面传过来的数据
+     *
+     * @param agrs0
+     */
+    public void setData(List agrs) {
+        if (agrs != null && agrs.size() != 0) {
+            phone = agrs.get(0).toString();
+            passWord = agrs.get(1).toString();
+            indentify = agrs.get(2).toString();
+        }
     }
 }

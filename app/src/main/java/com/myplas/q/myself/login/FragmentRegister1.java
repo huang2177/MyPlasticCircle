@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import com.myplas.q.myself.supdem.MySupDemActivity;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,6 +106,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         mPhone.addOnTextWatcher(this);
         mPassWord.addOnTextWatcher(this);
         mIndentify.addOnTextWatcher(this);
+
         return mView;
     }
 
@@ -130,7 +133,9 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         }
     }
 
-    //获取验证码之前先验证手机号
+    /**
+     * 获取验证码之前先验证手机号
+     */
     public void validUserMobile() {
         phone = mPhone.getText().toString();
         Map<String, String> map = new HashMap<String, String>();
@@ -138,7 +143,9 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERMOBILE, map, this, 1, false);
     }
 
-    //获取验证码
+    /**
+     * 获取验证码
+     */
     private void getIndentify() {
         if (!TextUtils.isPhoneNum(phone)) {
             TextUtils.Toast(getActivity(), "手机号输入有误！");
@@ -151,7 +158,9 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         BaseActivity.postAsyn(getActivity(), url, map1, this, 2);
     }
 
-    //验证验证码
+    /**
+     * 验证验证码
+     */
     private void validIndentify() {
         pass = mPassWord.getText().toString();
         indentify = mIndentify.getText().toString();
@@ -226,7 +235,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
                 } else {
                     if (mBaseInterface != null) {
                         mBaseInterface.complete(1);
-                        mBaseInterface.dataBack(phone, pass, indentify);
+                        mBaseInterface.dataBack(this, Arrays.asList(phone, pass, indentify));
                     }
                 }
             }

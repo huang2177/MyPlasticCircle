@@ -42,7 +42,8 @@
     <style name="setting_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:drawablePadding">5dp</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
@@ -69,6 +70,7 @@
         <item name="android:windowExitAnimation">@anim/myanim_out</item>
     </style>
 
+
     <style name="my_anim_popou" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/myanim_popou_in</item>
         <item name="android:windowExitAnimation">@anim/myanim_popou_out</item>
@@ -82,7 +84,15 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
-    <!--更新dialog-->
+
+    <style name="themeTopAnimation" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="loadind_dialog_style" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -91,7 +101,7 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:backgroundDimAmount">0.4</item>
     </style>
 
     <style name="commondialog_style" parent="@android:style/Theme.Dialog">

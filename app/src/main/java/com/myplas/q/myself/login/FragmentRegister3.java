@@ -21,15 +21,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.myself.setting.activity.MyDataActivity;
 
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,7 +41,7 @@ import java.util.Map;
  * @date 2017/11/1 0001
  */
 
-public class FragmentRegister3 extends Fragment implements View.OnClickListener, ResultCallBack {
+public class FragmentRegister3 extends Fragment implements View.OnClickListener {
     private View mView;
     private ImageView mImgSuccess;
     private TextView mTVSuccess, mTVLevel, mTVInfo, mTVLook;
@@ -60,7 +64,34 @@ public class FragmentRegister3 extends Fragment implements View.OnClickListener,
         mTVSuccess = (TextView) mView.findViewById(R.id.register_tv_success);
         mImgSuccess = (ImageView) mView.findViewById(R.id.register_img_success);
 
+        mTVLook.setOnClickListener(this);
+        mTVInfo.setOnClickListener(this);
+
         return mView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.register_info:
+                Intent intent = new Intent(getActivity(), MyDataActivity.class);
+                intent.putExtra("from", "0");
+                startActivity(intent);
+                break;
+            case R.id.register_look:
+                Intent intent1 = new Intent(getActivity(), MainActivity.class);
+                intent1.putExtra("type", Constant.LOGINED);
+                startActivity(intent1);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void setData(List agrs) {
+        if (agrs != null && agrs.size() != 0) {
+            mTVLevel.setText("终于等到您，您是我们第" + agrs.get(0) + "名用户！");
+        }
     }
 
     public void showImg() {
@@ -69,45 +100,5 @@ public class FragmentRegister3 extends Fragment implements View.OnClickListener,
                     .load(R.drawable.register_success)
                     .into(new GlideDrawableImageViewTarget(mImgSuccess, 1));
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.register_info:
-                break;
-            case R.id.register_look:
-                break;
-            default:
-                break;
-        }
-    }
-
-    //获取验证码
-    private void getIndentify() {
-//        Map<String, String> map1 = new HashMap<String, String>();
-//        map1.put("mobile", tel);
-//        map1.put("type", "0");
-//        String url = API.BASEURL + API.SEND_MSG;
-//        BaseActivity.postAsyn(getActivity(), url, map1, this, 1);
-    }
-
-
-    @Override
-    public void callBack(Object object, int type) {
-        try {
-            JSONObject jsonObject = new JSONObject(object.toString());
-            if (type == 1) {
-                String s = jsonObject.getString("msg");
-                TextUtils.Toast(getActivity(), s);
-                mTVLevel.setText(Html.fromHtml("已阅读<font color='#0099cc'>" + "《塑料圈通讯录协议</font>"));
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void failCallBack(int type) {
-
     }
 }

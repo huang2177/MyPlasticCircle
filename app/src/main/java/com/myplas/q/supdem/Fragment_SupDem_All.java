@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,12 +133,11 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             }
         });
 
-        initFirstItem();
+        initTopItem();
         loadCacheData(jsonStr, new Gson());
     }
 
-    //实例化置顶控件
-    public void initFirstItem() {
+    public void initTopItem() {
         company = f(R.id.gq_listview_gs);
         time = f(R.id.supply_demand_time);
         typeSupDem = f(R.id.supdem_img_type);
@@ -403,17 +401,6 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             page++;
             isLoading = true;
             getNetData(page + "", false);
-        }
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        boolean isLogined = sharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_SD);
-        if (isLogined) {//防止第一次登陆以后没有数据
-            getNetData("1", false);
-            sharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_SD, false);
         }
     }
 

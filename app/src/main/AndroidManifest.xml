@@ -115,6 +115,11 @@
         <activity
             android:name="com.myplas.q.contact.activity.ContactDaliySignActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.myplas.q.contact.activity.DaliySignDialogActivtiy"
+            android:screenOrientation="portrait"
+            android:theme="@style/themeTopAnimation" />
+
 
         <!--headline-->
         <activity
@@ -163,6 +168,10 @@
         <!--release-->
         <activity
             android:name="com.myplas.q.release.ReleaseActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.myplas.q.release.InstantReleaseActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 

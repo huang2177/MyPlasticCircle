@@ -121,6 +121,8 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
                     mQ_Fragment.showDialog();
                 }
                 break;
+            default:
+                break;
         }
     }
 

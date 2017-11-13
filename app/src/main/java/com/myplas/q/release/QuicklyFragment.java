@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -32,7 +31,7 @@ import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
-import com.myplas.q.release.adapter.Release_Pre_Dialog_LV_Adapter;
+import com.myplas.q.release.adapter.InstantReleaseLVAdapter;
 import com.myplas.q.release.bean.PreViewBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
@@ -65,7 +64,6 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
     private SharedUtils mSharedUtils;
     private String content, type, isPreView, id, data;
 
-    private List<PreViewBean.DataBean> mList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,21 +117,15 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                 isPreView = "1";
                 pub(2);
                 break;
-
-            //预览dialog的立即发布
-            case R.id.pre_dialog_btn:
-                preDialog.dismiss();
-                instantRelease();
-                break;
-            case R.id.pre_dialog_img:
-                preDialog.dismiss();
-                break;
             default:
                 break;
         }
     }
 
-    //不解析直接发布
+    /**
+     * 不解析直接发布
+     */
+
     public void pub(int _type) {
         Map<String, String> map = new HashMap<>();
         map.put("mode", "1");
@@ -149,14 +141,6 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         BaseActivity.postAsyn(getActivity(), API.BASEURL + API.PUB, map, this, _type);
     }
 
-    //解析后发布
-    public void instantRelease() {
-        Map<String, String> map = new HashMap<>();
-        map.put("type", type);
-        map.put("channel", "1");
-        map.put("data", data);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.INSTANTRELEASE, map, this, 2);
-    }
 
     @Override
     public void onTextChanged(View v, String s) {
@@ -176,9 +160,11 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                 if (err.equals("0")) {
                     PreViewBean preViewBean = gson.fromJson(object.toString(), PreViewBean.class);
                     data = gson.toJson(preViewBean.getData());
-                    mList = preViewBean.getData();
-                    if (mList.size() != 0) {
-                        openPreViewDialog();
+                    if (preViewBean.getData().size() != 0) {
+                        Intent intent = new Intent(getActivity(), InstantReleaseActivity.class);
+                        intent.putExtra("preViewBean", preViewBean);
+                        intent.putExtra("type", type);
+                        startActivity(intent);
                     } else {
                         TextUtils.Toast(getActivity(), "请按照示例填写完整的参数！");
                     }
@@ -215,25 +201,10 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
 
     }
 
-    /*预览dialog*/
-    private void openPreViewDialog() {
-        View view = View.inflate(getActivity(), R.layout.release_pre_dialog_layout, null);
-        preButton = (Button) view.findViewById(R.id.pre_dialog_btn);
-        preListView = (ListView) view.findViewById(R.id.pre_dialog_lv);
-        preImgClose = (ImageView) view.findViewById(R.id.pre_dialog_img);
-        Release_Pre_Dialog_LV_Adapter adapter = new Release_Pre_Dialog_LV_Adapter(getActivity(), mList);
-        preListView.setAdapter(adapter);
-        preButton.setOnClickListener(this);
-        preImgClose.setOnClickListener(this);
 
-        preDialog = new Dialog(getActivity(), R.style.commondialog_style);
-        preDialog.setContentView(view);
-        preDialog.setCanceledOnTouchOutside(false);
-        setDialogWindowAttr(preDialog, 0.9f, 0.5f);
-        preDialog.show();
-    }
-
-    /*提示dialog*/
+    /**
+     * 提示dialog
+     */
     public void showDialog() {
         if (!isInPutContent(2)) {
             return;
@@ -264,7 +235,9 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         dialogCancle.setOnClickListener(this);
     }
 
-    /*底部弹窗dialog*/
+    /**
+     * 底部弹窗dialog
+     */
     private void openBottom() {
         TextView textView1, textView2;
         View view = View.inflate(getActivity(), R.layout.release_buttom_dialog_layout, null);
@@ -281,7 +254,9 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         mButtomDialog.show();
     }
 
-    //设置dialog属性
+    /**
+     * 设置dialog属性
+     */
     public void setDialogWindowAttr(Dialog dialog, float _width, float _height) {
         WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();

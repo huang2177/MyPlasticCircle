@@ -106,7 +106,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         });
     }
 
-    private void initViewPager() {
+    public void initViewPager() {
         if (mFragments == null) {
             mFragments = new ArrayList<>();
             list1 = Arrays.asList("推荐", "塑料上游", "早盘预报", "企业动态", "中晨塑说", "美金市场", "期货资讯", "装置动态", "期刊报告", "独家解读");
@@ -187,12 +187,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("MainScreen");
-        boolean isLogined = sharedUtils.getBoolean(getActivity(), Constant.IS_LOGINED_H);
-
-        if (isLogined) {//防止第一次登陆以后没有数据
-            initViewPager();
-            sharedUtils.setBooloean(getActivity(), Constant.IS_LOGINED_H, false);
-        }
     }
 
     @Override

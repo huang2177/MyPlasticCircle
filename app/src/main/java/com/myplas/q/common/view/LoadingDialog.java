@@ -28,13 +28,16 @@ public class LoadingDialog {
             mHashMap.put(context, dialog);
             View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_dialog, null);
             dialog.setView(view);
+            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(true);
         }
-        return mHashMap.get(context);
+        return dialog;
     }
 
     public static void clear(Context context) {
         if (mHashMap != null) {
             mHashMap.remove(context);
+            context = null;
         }
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gray_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_layout_titlebar" />
+
+    <ListView
+        android:id="@+id/instant_lv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null" />
+
+    <Button
+        android:id="@+id/release_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_release_shape"
+        android:text="立即发布"
+        android:textColor="@color/color_white"
+        android:textSize="18.0sp"
+        android:transitionName="sharedView_Release" />
+</LinearLayout>

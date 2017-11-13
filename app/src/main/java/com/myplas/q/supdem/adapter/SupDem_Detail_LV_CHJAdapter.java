@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.supdem.beans.DeliverPriceBean;
 
 import java.util.List;
@@ -74,7 +73,7 @@ public class SupDem_Detail_LV_CHJAdapter extends BaseAdapter {
 
             Glide.with(context)
                     .load(list.get(position).getThumb())
-                    .placeholder(R.drawable.contact_image_defaul_male)
+                    .placeholder(R.drawable.img_defaul_male)
                     .into(viewHolder.mIVHead);
 
             viewHolder.mIVStart.setImageResource(list.get(position).getIs_pass().equals("0")

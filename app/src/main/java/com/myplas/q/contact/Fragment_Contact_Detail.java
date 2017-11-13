@@ -120,10 +120,12 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
 
     public void showDemand(List<ContactInfoBean.DataBean.DemandBean> demandList) {
         if (demandList.size() != 0) {
+            setListener(false);
             this.demandList = demandList;
             mAdapter = new Contact_Detail_LV_Adapter(getActivity(), demandList, 0);
             mMyListview.setAdapter(mAdapter);
         } else {
+            setListener(true);
             EmptyView emptyView = new EmptyView(getActivity());
             emptyView.mustCallInitWay(mMyListview);
             emptyView.setNoMessageText("没有相关数据");
@@ -134,10 +136,12 @@ public class Fragment_Contact_Detail extends Fragment implements ResultCallBack
 
     public void showSupplies(List<ContactInfoBean.DataBean.SuppliesBean> suppliesList) {
         if (suppliesList.size() != 0) {
+            setListener(false);
             this.suppliesList = suppliesList;
             mAdapter = new Contact_Detail_LV_Adapter(getActivity(), suppliesList);
             mMyListview.setAdapter(mAdapter);
         } else {
+            setListener(true);
             EmptyView emptyView = new EmptyView(getActivity());
             emptyView.mustCallInitWay(mMyListview);
             emptyView.setNoMessageText("没有相关数据");

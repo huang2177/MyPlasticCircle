@@ -1,5 +1,6 @@
 package com.myplas.q.release.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * 邮箱： 15378412400@163.com
  */
 
-public class PreViewBean {
+public class PreViewBean implements Serializable {
 
     /**
      * err : 0
@@ -34,7 +35,7 @@ public class PreViewBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * model : 7000F
          * vendor : 伊朗石化

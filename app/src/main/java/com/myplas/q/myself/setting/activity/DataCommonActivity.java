@@ -2,6 +2,7 @@ package com.myplas.q.myself.setting.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -73,6 +74,7 @@ public class DataCommonActivity extends BaseActivity implements View.OnClickList
             mTextField_other.setVisibility(View.GONE);
             mListView.setVisibility(View.VISIBLE);
             position = Integer.parseInt(hint);
+
             mAdapter = new SettingSex_RegionAdapter(this, mList, position);
             mListView.setAdapter(mAdapter);
         }
@@ -84,20 +86,10 @@ public class DataCommonActivity extends BaseActivity implements View.OnClickList
                 Intent intent = new Intent("com.broadcast.databack");
                 if (type.equals("0")) {
                     intent.putExtra("type", "0");
-                    switch (position) {
-                        case 0:
-                            dataBack = "0";
-                            break;
-                        case 1:
-                            dataBack = "1";
-                            break;
-                        default:
-                            break;
-                    }
+                    dataBack = position + "";
 
                 } else {
                     intent.putExtra("type", "1");
-
                     switch (position) {
                         case 0:
                             dataBack = "EC";

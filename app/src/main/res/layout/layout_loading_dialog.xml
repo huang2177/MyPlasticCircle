@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
             android:layout_height="85dp"
             android:layout_gravity="center"
             android:alpha="0.85"
-            android:background="@drawable/dialog_loading_backgroud_shape"/>
+            android:background="@drawable/dialog_loading_backgroud_shape" />
 
         <LinearLayout
             android:layout_width="110dp"
@@ -25,7 +26,7 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:indeterminateDrawable="@drawable/layout_loading_dialog_rotate"/>
+                android:indeterminateDrawable="@drawable/layout_loading_dialog_rotate" />
 
             <TextView
                 android:id="@+id/loading_text"
@@ -34,9 +35,14 @@
                 android:layout_marginTop="5dp"
                 android:text="正在获取数据"
                 android:textColor="@color/colorAccent"
-                android:textSize="14.0sp"/>
+                android:textSize="14.0sp" />
         </LinearLayout>
     </FrameLayout>
+
+    <!--<com.myplas.q.common.view.BaiduProgressBar-->
+    <!--android:layout_width="500px"-->
+    <!--android:layout_height="100px"-->
+    <!--android:layout_gravity="center" />-->
 
 </LinearLayout>
 

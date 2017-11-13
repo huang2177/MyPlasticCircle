@@ -2,20 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ImageView
+        android:id="@+id/cover_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_centerInParent="true"
-        android:id="@+id/cover_img"/>
-    <!--android:src="@drawable/event_announcement"-->
+        android:layout_marginRight="10dp" />
     <ImageView
+        android:id="@+id/cover_img_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cover_img_close"
-        android:layout_centerInParent="true"
         android:layout_below="@+id/cover_img"
-        android:layout_marginTop="5dp"/>
-    <!--android:src="@drawable/btn_skip1"-->
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp" />
 </RelativeLayout>

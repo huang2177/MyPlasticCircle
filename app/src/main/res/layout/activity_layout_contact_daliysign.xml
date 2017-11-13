@@ -1,19 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:calendarview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-        <com.myplas.q.common.view.datehelper.CalendarPickerView
-            android:id="@+id/calendar_view"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_banner_sign"
+        android:orientation="vertical"
+        android:paddingTop="25dp">
+
+        <include layout="@layout/common_layout_titlebar" />
+
+        <TextView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="我的塑豆：123"
+            android:textColor="@color/color_white"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_cumulative_sign"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="已连续签到"
+            android:textColor="@color/color_blue"
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:padding="7dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:overScrollMode="never"
-            android:scrollbars="none" />
-    </HorizontalScrollView>
+            android:layout_weight="1"
+            android:background="@drawable/common_ripple_bg"
+            android:onClick="lastMonth"
+            android:src="@drawable/ic_navigate_before_black" />
+
+        <TextView
+            android:id="@+id/contact_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_balank"
+            android:textSize="16.0sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:padding="7dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:background="@drawable/common_ripple_bg"
+            android:onClick="nextMonth"
+            android:src="@drawable/ic_navigate_next_black" />
+
+    </LinearLayout>
+
+    <com.huangbryant.calendarview.weiget.WeekView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        calendarview:week_size="14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/color_gray_divider_out" />
+
+    <com.huangbryant.calendarview.weiget.HCalendarView
+        android:id="@+id/contact_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        calendarview:choose_type="single"
+        calendarview:day_bg="@drawable/date_unselected"
+        calendarview:onlyShow="true"
+        calendarview:show_holiday="false"
+        calendarview:show_lunar="false"
+        calendarview:show_term="false"
+        calendarview:switch_choose="false"
+        calendarview:today_bg="@drawable/date_selected" />
+
+    <Button
+        android:id="@+id/sign"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_shape_red_coners"
+        android:text="签 到"
+        android:textColor="@color/color_white"
+        android:textSize="16.0sp" />
+
 
 </LinearLayout>

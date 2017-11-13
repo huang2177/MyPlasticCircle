@@ -31,6 +31,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.BaiduProgressBar;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
@@ -448,7 +449,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
     }
 
-    /*下拉刷新*/
+    /**
+     * 下拉刷新
+     */
     @Override
     public void onRefresh() {
         page = 1;
@@ -457,7 +460,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         getNetData("1", false);
     }
 
-    /*加载更多*/
+    /**
+     * 加载更多
+     */
     @Override
     public void loadMore() {
         page++;
@@ -482,7 +487,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
     }
 
-    /*检查是否登录*/
+    /**
+     * 检查是否登录
+     */
     private boolean checkIsLogin() {
         boolean logined = sharedUtils.getBoolean(getActivity(), Constant.LOGINED);
         if (!logined) {
@@ -495,7 +502,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         return logined;
     }
 
-    /*未登录情况下检查上拉加载的page是否大于4*/
+    /**
+     * 未登录情况下检查上拉加载的page是否大于4
+     */
     private void checkPageNum() {
         boolean logined = sharedUtils.getBoolean(getActivity(), "logined");
         if (!logined && page > 4) {

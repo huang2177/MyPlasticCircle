@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,10 +16,12 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myself.beans.MySelfInfo;
 
 import org.json.JSONObject;
@@ -52,7 +55,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private TextView textXb, textviewDzh, textGs, textDh, textviewZhy, textviewPh, textviewNum, textviewProduct,
             textviewAddress, textviewCompany, myMainProd, myMainProdSave;
 
-    private boolean isFromContact;
+    private String from;
     private final String ACTION = "com.broadcast.databack";
 
     @Override
@@ -66,7 +69,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     public void initView() {
         map = new HashMap<String, String>();
         sharedUtils = SharedUtils.getSharedUtils();
-        isFromContact = getIntent().getStringExtra("userid") == null ? false : true;
+        from = getIntent().getStringExtra("from");
 
         textGs = F(R.id.wd_zl_gs);
         textDh = F(R.id.wd_zl_tel);
@@ -94,7 +97,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         llMainsell = F(R.id.setting_data_mainsell);
         llMothonuse = F(R.id.setting_data_monthlyuse);
 
-        if (isFromContact) {  //从通讯录跳转
+        if ("1".equals(from)) {  //从通讯录跳转
             setTitle("个人资料");
             getPersonInfo();
         } else {
@@ -110,6 +113,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             llAdd.setOnClickListener(this);
             llPro.setOnClickListener(this);
             llMode.setOnClickListener(this);
+            mIVLeft.setOnClickListener(this);
             image_tx.setOnClickListener(this);
             llRegion.setOnClickListener(this);
             imageShch.setOnClickListener(this);
@@ -132,6 +136,10 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
+        if (mySelfInfo == null && v.getId() != R.id.titlebar_img_left) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.wd_zl_text_headimg:
                 Intent intent1 = new Intent(this, TakePhotoDialogActivity.class);
@@ -198,48 +206,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 intent9.putExtra("hint", model);
                 startActivityForResult(intent9, 9);
                 break;
+
+            case R.id.titlebar_img_left:
+                eixt();
+                break;
             default:
                 break;
-        }
-    }
-
-    //保存资料。。。
-    public void saveData() {
-        try {
-            Map map = new HashMap();
-            String sMainPro = mainPro
-                    .replace("  ", ",")
-                    .replace(" ", ",")
-                    .replace("，", ",")
-                    .replace("|", ",")
-                    .replace("、", ",")
-                    .replace("/", ",")
-                    .replace("。", ",")
-                    .replace(".", ",");
-            String sModel = model
-                    .replace("  ", ",")
-                    .replace(" ", ",")
-                    .replace("，", ",")
-                    .replace("|", ",")
-                    .replace("、", ",")
-                    .replace("/", ",")
-                    .replace("。", ",")
-                    .replace(".", ",");
-
-            if (type.equals("1")) {
-                map.put("month_consum", monthUse);
-                map.put("main_product", product);
-            }
-            map.put("type", type);
-            map.put("sex", sexInPut);
-            map.put("concern", sModel);
-            map.put("major", sMainPro);
-            map.put("address", address);
-            map.put("address_id", addressId);
-            map.put("dist", regionInPut);
-            map.put("token", sharedUtils.getData(this, "token"));
-            saveSelfInfo(API.SAVE_SELFINFO, map, 3);
-        } catch (Exception e) {
         }
     }
 
@@ -250,6 +222,10 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         postAsyn(this, url, map, this, 1);
     }
 
+
+    /**
+     * 从通讯录跳转过来 -- 请求数据
+     */
     public void getPersonInfo() {
         Map<String, String> map = new HashMap<>();
         map.put("user_id", getIntent().getStringExtra("userid"));
@@ -257,11 +233,39 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         postAsyn(this, url, map, this, 1);
     }
 
-    public void saveSelfInfo(String method, Map map, int type) {
-        String url = API.BASEURL + method;
-        postAsyn1(this, url, map, this, type, false);
+    /**
+     * 保存资料
+     */
+    public void saveData() {
+        try {
+            Map map = new HashMap();
+            if (type.equals("1")) {
+                map.put("month_consum", monthUse);
+                map.put("main_product", product);
+            }
+            map.put("type", type);
+            map.put("sex", sexInPut);
+            map.put("address", address);
+            map.put("dist", regionInPut);
+            map.put("address_id", addressId);
+            map.put("concern", getString(model));
+            map.put("major", getString(mainPro));
+            map.put("token", sharedUtils.getData(this, "token"));
+
+            String url = API.BASEURL + API.SAVE_SELFINFO;
+            postAsyn1(this, url, map, this, 3, false);
+        } catch (Exception e) {
+        }
+
     }
 
+    /**
+     * 上传图片
+     *
+     * @param method
+     * @param imgpath
+     * @param type
+     */
     public void upLoadImg(String method, String imgpath, int type) {
         Map<String, String> map = new HashMap<>();
         String token = sharedUtils.getData(this, "token");
@@ -275,7 +279,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             String err = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 mySelfInfo = null;
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     Gson gson = new Gson();
                     mySelfInfo = gson.fromJson(object.toString(), MySelfInfo.class);
                     showInfo(mySelfInfo);
@@ -288,6 +292,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+
     @Override
     public void failCallBack(int type) {
     }
@@ -295,14 +300,14 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     public void showInfo(MySelfInfo mySelfInfo) {
         try {
             type = mySelfInfo.getData().getType();
-            sex = mySelfInfo.getData().getSex() + "  ";
+            sex = mySelfInfo.getData().getSex();
             region = mySelfInfo.getData().getAdistinct();
-            address = mySelfInfo.getData().getAddress() + "  ";
-            addressId = mySelfInfo.getData().getOrigin() + "  ";
-            model = mySelfInfo.getData().getConcern_model() + "  ";
-            product = mySelfInfo.getData().getMain_product() + "  ";
-            mainPro = mySelfInfo.getData().getNeed_product() + "  ";
-            monthUse = mySelfInfo.getData().getMonth_consum() + "  ";
+            address = mySelfInfo.getData().getAddress();
+            addressId = mySelfInfo.getData().getOrigin();
+            model = mySelfInfo.getData().getConcern_model();
+            product = mySelfInfo.getData().getMain_product();
+            mainPro = mySelfInfo.getData().getNeed_product();
+            monthUse = mySelfInfo.getData().getMonth_consum();
 
             sexInPut = ("男".equals(sex)) ? ("0") : ("1");
 
@@ -311,59 +316,59 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             textviewDzh.setText(address);
             textviewZhy.setText(mainPro);
             textviewAddress.setText(region);
-            textGs.setText(mySelfInfo.getData().getC_name() + "  ");
-            textDh.setText(mySelfInfo.getData().getMobile() + "  ");
+            textGs.setText(mySelfInfo.getData().getC_name());
+            textDh.setText(mySelfInfo.getData().getMobile());
             Glide.with(this)
                     .load(mySelfInfo.getData().getThumbcard())
                     .placeholder(R.drawable.card)
                     .into(imageShch);
             Glide.with(this)
                     .load(mySelfInfo.getData().getThumb())
-                    .placeholder(R.drawable.contact_image_defaul_male)
+                    .placeholder(R.drawable.img_defaul_male)
                     .into(image_tx);
 
             switch (type) {
                 case "1":
                     llMode.setVisibility(View.VISIBLE);       //"‘关注的牌号’是否显示"
                     llProMonth.setVisibility(View.VISIBLE); //"‘月用量与生产产品’是否显示"
-                    textviewCompany.setText("塑料制品厂  ");
+                    textviewCompany.setText("塑料制品厂");
                     myMainProd.setText("我的需求：");
                     textviewProduct.setText(product);
                     textviewNum.setText(monthUse);
                     break;
                 case "2":
                     llMode.setVisibility(View.VISIBLE);
-                    textviewCompany.setText("原料供应商  ");
+                    textviewCompany.setText("原料供应商");
                     llProMonth.setVisibility(View.GONE);
                     break;
                 case "4":
                     llMode.setVisibility(View.GONE);
                     llProMonth.setVisibility(View.GONE);
                     myMainProd.setText("我的主营：");
-                    textviewCompany.setText("物流商  ");
+                    textviewCompany.setText("物流商");
                     break;
                 case "5":
                     llMode.setVisibility(View.GONE);
                     llProMonth.setVisibility(View.GONE);
-                    textviewCompany.setText("金融公司  ");
+                    textviewCompany.setText("金融公司");
                     break;
                 case "6":
                     llMode.setVisibility(View.GONE);
                     llProMonth.setVisibility(View.GONE);
-                    textviewCompany.setText("塑化电商  ");
+                    textviewCompany.setText("塑化电商");
                     break;
                 case "7":
                     llMode.setVisibility(View.GONE);
                     llProMonth.setVisibility(View.GONE);
-                    textviewCompany.setText("回料(含新材料)  ");
+                    textviewCompany.setText("回料(含新材料)");
                     break;
                 case "8":
                     llMode.setVisibility(View.GONE);
                     llProMonth.setVisibility(View.GONE);
-                    textviewCompany.setText("期货  ");
+                    textviewCompany.setText("期货");
                     break;
                 case "9":
-                    textviewCompany.setText("塑机  ");
+                    textviewCompany.setText("塑机");
                     llMode.setVisibility(View.GONE);
                     llProMonth.setVisibility(View.GONE);
                     break;
@@ -393,6 +398,17 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             }
         } catch (Exception e) {
         }
+    }
+
+    private String getString(String str) {
+        return str.replace("  ", ",")
+                .replace(" ", ",")
+                .replace("，", ",")
+                .replace("|", ",")
+                .replace("、", ",")
+                .replace("/", ",")
+                .replace("。", ",")
+                .replace(".", ",");
     }
 
     //选择照片返回结果
@@ -437,21 +453,18 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     }
 
     public class MyReceiver extends BroadcastReceiver {
+
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION)) {
                 String type = intent.getStringExtra("type");
                 String data = intent.getStringExtra("updateData");
-                if (type.equals("0")) {
-                    if (!sexInPut.equals(data)) {
-                        sexInPut = data;
-                        saveData();
-                    }
-                } else if (type.equals("1")) {
-                    if (!regionInPut.equals(data)) {
-                        regionInPut = data;
-                        saveData();
-                    }
+                if ("0".equals(type)) {
+                    sexInPut = data;
+                    saveData();
+                } else if ("1".equals(type)) {
+                    regionInPut = data;
+                    saveData();
                 } else {
                     address = data;
                     addressId = intent.getStringExtra("addressId");
@@ -466,6 +479,25 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         super.onDestroy();
         if (myReceiver != null) {
             unregisterReceiver(myReceiver);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            eixt();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void eixt() {
+        if ("0".equals(from)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("type", Constant.REGISTER);
+            startActivity(intent);
+        } else {
+            finish();
         }
     }
 }

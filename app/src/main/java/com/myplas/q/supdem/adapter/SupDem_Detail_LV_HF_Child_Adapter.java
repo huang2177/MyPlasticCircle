@@ -80,7 +80,7 @@ public class SupDem_Detail_LV_HF_Child_Adapter extends BaseAdapter {
 
             Glide.with(context)
                     .load(list.get(position).getThumb())
-                    .placeholder(R.drawable.contact_image_defaul_male)
+                    .placeholder(R.drawable.img_defaul_male)
                     .into(viewHolder.mIVHead);
             viewHolder.mIVStart.setImageResource(list.get(position).getIs_pass().equals("0")
                     ? R.drawable.icon_identity

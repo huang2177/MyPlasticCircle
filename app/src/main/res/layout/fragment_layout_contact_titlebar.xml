@@ -35,7 +35,8 @@
         android:layout_gravity="right|center_vertical"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:src="@drawable/btn_sign_data" />
+        android:src="@drawable/btn_sign_data"
+        android:visibility="gone" />
 
 </FrameLayout>
 
