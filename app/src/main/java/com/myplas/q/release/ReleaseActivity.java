@@ -27,10 +27,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 编写： 黄双
  * 电话：15378412400
  * 邮箱：15378412400@163.com
  * 时间：2017/3/21 10:26
+ * @author 黄双
  */
 public class ReleaseActivity extends BaseActivity implements View.OnClickListener
         , CommonDialog.DialogShowInterface

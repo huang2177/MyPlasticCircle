@@ -1,13 +1,21 @@
 package com.myplas.q.jpush;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.myplas.q.common.appcontext.ActivityManager;
+import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.myself.fans.activity.MyFansFollowActivity;
+import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
+import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
 import org.json.JSONException;
@@ -23,6 +31,8 @@ import cn.jpush.android.api.JPushInterface;
  * 如果不定义这个 Receiver，则：
  * 1) 默认用户会打开主界面
  * 2) 接收不到自定义消息
+ *
+ * @author 黄双
  */
 public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "JIGUANG-Example";
@@ -31,40 +41,16 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             Bundle bundle = intent.getExtras();
-            Log.d(TAG, "[MyReceiver] onReceive - - -extras: " + getExtra(bundle));
+            Log.d(TAG, "MyReceiver- - -extras: - - -" + getExtra(bundle, JPushInterface.EXTRA_EXTRA));
+            Log.d(TAG, "MyReceiver- - -message: - - -" + getExtra(bundle, JPushInterface.EXTRA_MESSAGE));
 
-            if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
-                String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-                Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
-                //send the Registration Id to your server...
-
-            } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-                Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
-//				processCustomMessage(context, bundle);
-
-            } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-                Log.e(TAG, "[MyReceiver] 接收到推送下来的通知");
-                int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-                Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
-
-            } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-
-                openNotifycation(context);
-
-            } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
-                Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
-                //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
-
-            } else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
-                boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
-                Log.w(TAG, "[MyReceiver]" + intent.getAction() + " connected state change to " + connected);
-            } else {
-                Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
+            if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
+                openNotifycation(context
+                        , getExtra(bundle, JPushInterface.EXTRA_EXTRA)
+                        , getExtra(bundle, JPushInterface.EXTRA_MESSAGE));
             }
         } catch (Exception e) {
-
         }
-
     }
 
     /**
@@ -72,29 +58,90 @@ public class MyReceiver extends BroadcastReceiver {
      *
      * @param context
      */
-    private void openNotifycation(Context context) {
-        Intent i = new Intent(context, SupDem_Detail_Activity.class);
-//				//i.putExtras(bundle);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(i);
+    private void openNotifycation(Context context, JSONObject extras, JSONObject message) {
+        if (extras == null) {
+            return;
+        }
+        try {
+            switch (extras.getString("jump_target")) {
+                case "reply"://回复
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("position", 1);
+                    Intent i = new Intent(context, SupDem_Detail_Activity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtra("id", extras.getString("id"));
+                    i.putExtra("userid", extras.getString("rev_id"));
+                    i.putExtra("bundle", bundle);
+                    context.startActivity(i);
+                    break;
+                case "price"://出价
+                    Intent i1 = new Intent(context, SupDem_Detail_Activity.class);
+                    i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i1.putExtra("id", extras.getString("pur_id"));
+                    i1.putExtra("userid", extras.getString("rev_id"));
+                    context.startActivity(i1);
+                    break;
+
+                case "purchase"://发布供求
+                    Intent i2 = new Intent(context, SupDem_Detail_Activity.class);
+                    i2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i2.putExtra("id", extras.getString("pur_id"));
+                    i2.putExtra("userid", extras.getString("rev_id"));
+                    context.startActivity(i2);
+                    break;
+                case "focuse"://关注
+                    Intent i3 = new Intent(context, MyFansFollowActivity.class);
+                    i3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i3.putExtra("type", "1");
+                    context.startActivity(i3);
+                    break;
+                case ""://开票、签收
+                    Intent i4 = new Intent(context, TradeOrderActivity.class);
+                    i4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(i4);
+                    break;
+                default:
+                    break;
+            }
+            if (message != null) {
+                Gson gson = new Gson();
+                ACache mACache = ACache.get(context);
+                DefConfigBean bean = gson.fromJson(message.toString(), DefConfigBean.class);
+                mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
+                mACache.put(Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
+                mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
+                mACache.put(Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
+                mACache.put(Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
+                mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
+                mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
+                mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
+
+                Activity activity = ActivityManager.currentActivity();
+                if (activity != null && activity instanceof MainActivity) {
+                    MainActivity mainActivity = (MainActivity) activity;
+                    mainActivity.rCallback(true);
+                }
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     /**
-     * 获取extra字段
+     * 获取extra/message字段
      *
      * @param bundle
      * @return
      */
-    private static JSONObject getExtra(Bundle bundle) {
+    private static JSONObject getExtra(Bundle bundle, String key) {
         JSONObject jsonObject = null;
 
-        if (TextUtils.isEmpty(bundle.getString(JPushInterface.EXTRA_EXTRA))) {
-            Log.i(TAG, "This message has no Extra data");
+        if (TextUtils.isEmpty(bundle.getString(key))) {
+            Log.e(TAG, "This message has no Extra data");
             return jsonObject;
         }
-
         try {
-            jsonObject = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
+            jsonObject = new JSONObject(bundle.getString(key));
 
         } catch (Exception e) {
             Log.e(TAG, "Get message extra JSON error!");
@@ -102,26 +149,4 @@ public class MyReceiver extends BroadcastReceiver {
 
         return jsonObject;
     }
-
-    //send msg to MainActivity
-//	private void processCustomMessage(Context context, Bundle bundle) {
-//		if (MainActivity.isForeground) {
-//			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-//			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-//			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
-//			msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
-//			if (!ExampleUtil.isEmpty(extras)) {
-//				try {
-//					JSONObject extraJson = new JSONObject(extras);
-//					if (extraJson.length() > 0) {
-//						msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
-//					}
-//				} catch (JSONException e) {
-//
-//				}
-//
-//			}
-//			LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
-//		}
-//	}
 }

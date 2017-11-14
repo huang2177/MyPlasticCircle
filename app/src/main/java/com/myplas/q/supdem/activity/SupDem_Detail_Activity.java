@@ -133,7 +133,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
         Bundle bundle = getIntent().getBundleExtra("bundle");
         position = (bundle == null) ? 0 : bundle.getInt("position");
-
     }
 
     private void initViewPager(int position) {
@@ -161,7 +160,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTabLayout.setTabsFromPagerAdapter(mPagerAdapter);
     }
 
-    //获取首页数据
+    /**
+     * 获取首页数据
+     */
+
     public void getNetData() {
         Map<String, String> map = new HashMap<>();
         map.put("id", getIntent().getStringExtra("id"));
@@ -170,7 +172,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         postAsyn(this, API.BASEURL + API.GET_RELEASE_MSG_DETAIL, map, this, 1);
     }
 
-    //关注
+    /**
+     * 关注
+     */
+
     public void follow() {
         Map<String, String> map = new HashMap<>();
         map.put("token", sharedUtils.getData(this, "token"));
@@ -179,7 +184,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         postAsyn(this, url, map, this, 2);
     }
 
-    //出价或者回复
+    /**
+     * 出价或者回复
+     */
+
     public void deliverOrReply() {
         String s = mEditText.getText().toString();
         if (!TextUtils.isNullOrEmpty(s)) {
@@ -207,7 +215,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         }
     }
 
-    //设置回复 出价的输入框
+    /**
+     * 设置回复 出价的输入框
+     */
+
     public void setDeliverReplyView(int position) {
         if (position == 1) {
             mButton.setText("回复");

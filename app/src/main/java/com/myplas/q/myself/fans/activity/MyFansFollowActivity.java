@@ -53,9 +53,9 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_myself_fansfollow);
         initTileBar();
-        setTitle(getIntent().getStringExtra("titlename"));
 
         type = getIntent().getStringExtra("type");
+        setTitle("1".equals(type) ? "我的粉丝" : "我的关注");
         sharedUtils = SharedUtils.getSharedUtils();
         listView = F(R.id.wdgz_listview);
 

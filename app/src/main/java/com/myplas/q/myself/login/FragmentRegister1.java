@@ -57,15 +57,22 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     private BaseInterface mBaseInterface;
     private String phone, pass, indentify;
 
-    public FragmentRegister1(BaseInterface mBaseInterface) {
-        this.mBaseInterface = mBaseInterface;
+
+    public static FragmentRegister1 newInstance(BaseInterface mBaseInterface) {
+        FragmentRegister1 fragment = new FragmentRegister1();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("interface", mBaseInterface);
+        fragment.setArguments(bundle);
+        return fragment;
     }
+
 
     @SuppressLint("HandlerLeak")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         count = 60;
+        mBaseInterface = (BaseInterface) getArguments().getSerializable("interface");
         wr = new WeakReference<Activity>(getActivity());
         mHandler = new Handler() {
             @Override

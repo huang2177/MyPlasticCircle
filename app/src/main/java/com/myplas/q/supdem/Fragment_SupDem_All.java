@@ -193,7 +193,10 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
-    //判断是否消耗积分
+    /**
+     * 判断是否消耗积分
+     */
+
     public void getPersonInfoData(String userid, String showtype, int type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", sharedUtils.getData(getActivity(), "token"));
@@ -203,7 +206,10 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         BaseActivity.postAsyn(getActivity(), url, map, this, type);
     }
 
-    //跳转至详情
+    /**
+     * 跳转至详情
+     */
+
     public void goToDetail(String company, String model, String id_, String userid, boolean isFromSupdem) {
         if (isFromSupdem) {
             Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);

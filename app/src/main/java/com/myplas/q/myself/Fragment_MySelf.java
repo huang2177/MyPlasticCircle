@@ -213,13 +213,11 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                 break;
             case R.id.wd_linear_fans:
                 Intent intent3 = new Intent(getActivity(), MyFansFollowActivity.class);
-                intent3.putExtra("titlename", "我的粉丝");
                 intent3.putExtra("type", "1");
                 startActivity(intent3);
                 break;
             case R.id.wd_linear_follow:
                 Intent intent4 = new Intent(getActivity(), MyFansFollowActivity.class);
-                intent4.putExtra("titlename", "我的关注");
                 intent4.putExtra("type", "2");
                 startActivity(intent4);
                 break;

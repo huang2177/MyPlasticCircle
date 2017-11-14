@@ -2,16 +2,14 @@ package com.myplas.q.supdem;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
@@ -29,12 +26,11 @@ import com.huangbryant.hindicator.HIndicatorDialog;
 import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.release.MyOnPageChangeListener;
-import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.activity.SupDem_Search_Activity;
 import com.myplas.q.supdem.adapter.SupDem_ViewPager_Adapter;
+import com.myplas.q.supdem.beans.ConfigData;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -54,9 +50,9 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         , MyOnPageChangeListener.OnPageChangeListener {
 
     private View view;
-    private TextView tvType;
     private EditText editText;
     private LinearLayout mLayout;
+    private TextView tvType, mTVTab;
 
     private boolean logined;
     public int currentItem;
@@ -68,8 +64,8 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private Map<String, Integer> mMap;
 
     private ViewPager mViewPager;
-    private XTabLayout mTabLayout;
     private HIndicatorDialog dialog;
+    private XTabLayout mTabLayout;
 
     public Fragment_SupDem_All mFragmentAll;
     private SupDem_ViewPager_Adapter mViewPagerAdapter;
@@ -126,15 +122,40 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             mViewPager.setAdapter(mViewPagerAdapter);
 
             mViewPager.setCurrentItem(0);
-            //将选项卡和viewpager关连起来
+//            将选项卡和viewpager关连起来
             mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
             mTabLayout.setxTabDisplayNum(4);
             mTabLayout.setupWithViewPager(mViewPager);
             //给TabLayout设置适配器
             mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
+            //setUpTabBadge(0);
         }
     }
 
+    /**
+     * 给tab设置消息小红点
+     *
+     * @param position
+     */
+    private void setUpTabBadge(int position) {
+        XTabLayout.Tab tab = mTabLayout.getTabAt(position);
+        if (tab != null && tab.getCustomView() == null && position == 0) {
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.tab_title_layout, null);
+            mTVTab = ((TextView) view.findViewById(R.id.tv_title));
+            mTVTab.setText(mListTitle.get(position));
+            tab.setCustomView(view);
+        }
+        if (position == 0) {
+            mTVTab.setTextColor(getResources().getColor(R.color.color_red));
+            mTVTab.setTypeface(Typeface.DEFAULT_BOLD);
+            mTVTab.setTextSize(17);
+        } else {
+            mTVTab.setTextColor(getResources().getColor(R.color.color_title_main));
+            mTVTab.setTypeface(Typeface.DEFAULT);
+            mTVTab.setTextSize(16);
+        }
+
+    }
 
     public <T extends View> T F(int id) {
         return (T) view.findViewById(id);
@@ -183,6 +204,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         currentItem = position;
         ConfigData.setCurrentItem(position);
         getChirldData(position, false);
+        //setUpTabBadge(position);
     }
 
     private void getChirldData(int position, boolean isShowLoading) {

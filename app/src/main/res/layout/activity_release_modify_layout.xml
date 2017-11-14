@@ -182,4 +182,14 @@
                 android:src="@drawable/icon_more" />
         </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/release_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_release_shape"
+        android:text="确 定"
+        android:textColor="@color/color_white"
+        android:textSize="18.0sp" />
 </LinearLayout>

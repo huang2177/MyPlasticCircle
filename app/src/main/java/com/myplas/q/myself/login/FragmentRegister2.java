@@ -63,10 +63,14 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
     private ACache mACache;
     private SharedUtils mShareUtils;
 
-    public FragmentRegister2(BaseInterface mBaseInterface) {
-        this.mBaseInterface = mBaseInterface;
-    }
+    public static FragmentRegister2 newInstance(BaseInterface mBaseInterface) {
+        FragmentRegister2 fragment = new FragmentRegister2();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("interface", mBaseInterface);
+        fragment.setArguments(bundle);
+        return fragment;
 
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
         mACache = ACache.get(getActivity());
         mShareUtils = SharedUtils.getSharedUtils();
         mList = Arrays.asList("塑料制品厂", "原料供应商", "物流服务商");
+        mBaseInterface = (BaseInterface) getArguments().getSerializable("interface");
     }
 
     @Nullable

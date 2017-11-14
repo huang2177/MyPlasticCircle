@@ -72,8 +72,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void initViewPager() {
         FragmentList = new ArrayList<>();
 
-        mFmRegister1 = new FragmentRegister1(this);
-        mFmRegister2 = new FragmentRegister2(this);
+        mFmRegister1 = FragmentRegister1.newInstance(this);
+        mFmRegister2 = FragmentRegister2.newInstance(this);
         mFmRegister3 = new FragmentRegister3();
 
         FragmentList.add(mFmRegister1);

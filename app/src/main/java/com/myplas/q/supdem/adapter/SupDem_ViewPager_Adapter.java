@@ -2,7 +2,9 @@ package com.myplas.q.supdem.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:52
  */
-public class SupDem_ViewPager_Adapter extends FragmentStatePagerAdapter {
+public class SupDem_ViewPager_Adapter extends FragmentPagerAdapter {
     private List<String> mTitles;
     private List<Fragment> mFragments;
 
@@ -27,6 +29,7 @@ public class SupDem_ViewPager_Adapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         return mFragments.get(position);
     }
+
 
     @Override
     public int getCount() {

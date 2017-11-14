@@ -262,7 +262,13 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         BaseActivity.postAsyn1(getActivity(), url, map, this, 1, isShowDialog);
     }
 
-
+    /**
+     * 检查是否消耗过积分
+     *
+     * @param userId
+     * @param showtype
+     * @param type
+     */
     private void getPersonInfoData(String userId, String showtype, int type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("user_id", userId);
@@ -341,13 +347,17 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
     }
 
-
+    /**
+     * 默认先加载缓存里面数据
+     *
+     * @param gson
+     * @param json
+     * @param isShowCover
+     */
     private void loadCacheData(Gson gson, String json, boolean isShowCover) {
         try {
             mContactBean = gson.fromJson(json, ContactBean.class);
-            ContactBean.TopBean topBean = (mContactBean.getTop().getC_name() != null)
-                    ? mContactBean.getTop()
-                    : (null);
+            ContactBean.TopBean topBean = (mContactBean.getTop().getC_name() != null) ? mContactBean.getTop() : (null);
             if (page == 1) {
                 showInfo(mContactBean, topBean);
             } else {
