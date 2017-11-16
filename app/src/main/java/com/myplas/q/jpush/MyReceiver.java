@@ -74,6 +74,7 @@ public class MyReceiver extends BroadcastReceiver {
                     i.putExtra("bundle", bundle);
                     context.startActivity(i);
                     break;
+
                 case "price"://出价
                     Intent i1 = new Intent(context, SupDem_Detail_Activity.class);
                     i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -89,17 +90,20 @@ public class MyReceiver extends BroadcastReceiver {
                     i2.putExtra("userid", extras.getString("rev_id"));
                     context.startActivity(i2);
                     break;
+
                 case "focuse"://关注
                     Intent i3 = new Intent(context, MyFansFollowActivity.class);
                     i3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i3.putExtra("type", "1");
                     context.startActivity(i3);
                     break;
-                case ""://开票、签收
-                    Intent i4 = new Intent(context, TradeOrderActivity.class);
-                    i4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    context.startActivity(i4);
-                    break;
+
+//                case ""://开票、签收
+//                    Intent i4 = new Intent(context, TradeOrderActivity.class);
+//                    i4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    context.startActivity(i4);
+//                    break;
+
                 default:
                     break;
             }

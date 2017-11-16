@@ -78,7 +78,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     private ImageView typeSupDem, typeNowFutures, imgUp;
     private LinearLayout layoutPrompt, layoutFirstitem, layoutUp;
 
-    public String follow_release, user_id, type;
+    public String followRelease, user_id, type;
     private String mLastData, hotSearch, jsonStr;
     private RefreshPopouInterface mPopouinterface;
 

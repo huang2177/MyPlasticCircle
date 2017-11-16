@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:huang="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    <com.myplas.q.common.view.MyEditText
-        android:id="@+id/release_edit"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_ll"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/shape_txl_edit"
-        android:gravity="start"
-        android:maxLength="100"
-        android:padding="4dp"
-        android:textCursorDrawable="@drawable/text_cursor_shape"
-        android:textSelectHandle="@drawable/textselecthandle"
-        android:textSelectHandleLeft="@drawable/textselecthandle"
-        android:textSelectHandleRight="@drawable/textselecthandle"
-        android:textSize="15.0sp"/>
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/color_content"
+        huang:counterOverflowTextAppearance="@style/counterOverflowTextColor"
+        huang:hintEnabled="true">
+
+        <com.myplas.q.common.view.MyEditText
+            android:id="@+id/release_edit"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/shape_txl_edit"
+            android:gravity="start"
+            android:maxLength="100"
+            android:padding="4dp"
+            android:textCursorDrawable="@drawable/text_cursor_shape"
+            android:textSelectHandle="@drawable/textselecthandle"
+            android:textSelectHandleLeft="@drawable/textselecthandle"
+            android:textSelectHandleRight="@drawable/textselecthandle"
+            android:textSize="15.0sp" />
+    </android.support.design.widget.TextInputLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +45,7 @@
             android:gravity="center_vertical"
             android:text="供给/求购"
             android:textColor="@color/color_balank"
-            android:textSize="16.0sp"/>
+            android:textSize="16.0sp" />
 
         <com.myplas.q.common.view.MyEditText
             android:id="@+id/release_ev_type_"
@@ -45,12 +56,12 @@
             android:focusable="false"
             android:gravity="center_vertical"
             android:hint="供给/求购"
-            android:textSize="16.0sp"/>
+            android:textSize="16.0sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_more"/>
+            android:src="@drawable/icon_more" />
     </LinearLayout>
 
     <View
@@ -59,5 +70,5 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="1dp"
-        android:background="@color/color_gray_divider_out"/>
+        android:background="@color/color_gray_divider_out" />
 </LinearLayout>

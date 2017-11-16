@@ -101,12 +101,12 @@ dependencies {
     compile 'com.mengfei:AddSubUtils:1.5.0'
     compile 'com.optimus:editTextField:0.2.0'
     compile 'com.androidkun:XTabLayout:1.1.3'
+    compile 'com.github.lzyzsd:JsBridge:1.0.4'
     compile 'com.androidadvance:topsnackbar:1.1.1'
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
     compile 'com.github.huangbryant210707:MyBanner:2.6.1'
     compile 'com.github.huangbryant210707:HCalendarView:1.2.0'
-    //compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     compile 'com.github.huangbryant210707:HIndicatorDialog:2.2.0'
 
 }

@@ -2,15 +2,14 @@ package com.myplas.q.myself.login;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.myplas.q.R;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * 编写： 黄双
@@ -31,7 +30,7 @@ public class RegisterAgreementActivity extends BaseActivity {
         initTileBar();
         setTitle("注册协议");
 
-        webView = (WebView) findViewById(R.id.xy_web_re);
+        webView = F(R.id.xy_web_re);
         WebSettings webSettings = webView.getSettings();
 
         webSettings.setSupportZoom(true);
@@ -44,35 +43,8 @@ public class RegisterAgreementActivity extends BaseActivity {
         webSettings.setBuiltInZoomControls(true);
         webSettings.setLoadWithOverviewMode(true);
 
-        webView.addJavascriptInterface(new AndroidtoJs(), "test");//AndroidtoJS类对象映射到js的test对象
         String url = "http://q.myplas.com/#/protocol";
-//        webView.loadUrl("file:///android_asset/demo.html");
         webView.loadUrl(url);
-    }
-
-    class MyWebClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            webView.loadUrl("javascript:" + "");
-        }
-    }
-
-    // 继承自Object类
-    public class AndroidtoJs extends Object {
-
-        // 定义JS需要调用的方法
-        // 被JS调用的方法必须加入@JavascriptInterface注解
-        @JavascriptInterface
-        public void hello(String msg) {
-            Log.e("-------", msg + "-----");
-        }
     }
 
 }

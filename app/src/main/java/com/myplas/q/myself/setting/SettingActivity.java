@@ -1,29 +1,19 @@
 package com.myplas.q.myself.setting;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.appupdate.VersionUpdateDialogUtils;
+import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
@@ -41,11 +31,8 @@ import com.myplas.q.myself.setting.activity.FindPSWActivity;
 import com.myplas.q.myself.setting.activity.HelpActivity;
 import com.myplas.q.myself.setting.activity.MessageActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
-import com.myplas.q.sockethelper.RabbitMQConfig;
-import com.myplas.q.sockethelper.RabbitMQHelper;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 

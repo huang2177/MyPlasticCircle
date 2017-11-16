@@ -3,28 +3,21 @@ package com.myplas.q.release;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.androidkun.xtablayout.XTabLayout;
-import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.view.CommonDialog;
+import com.myplas.q.common.view.MyOnPageChangeListener;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.release.adapter.ReleaseViewPagerAdapter;
-import com.myplas.q.release.bean.SecondPurBean;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 电话：15378412400

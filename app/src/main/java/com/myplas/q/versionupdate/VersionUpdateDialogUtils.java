@@ -1,4 +1,4 @@
-package com.myplas.q.appupdate;
+package com.myplas.q.versionupdate;
 
 import android.app.Dialog;
 import android.app.DownloadManager;
@@ -58,7 +58,10 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         context.registerReceiver(myReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
-    //弹出dialog 点击安装
+    /**
+     * 弹出dialog 点击安装
+     */
+
     public void showDialog(final boolean isForce) {
         View view = View.inflate(mContext, R.layout.dialog_layout_appupdate, null);
         button_ok = (Button) view.findViewById(R.id.btn_ok);
@@ -104,7 +107,10 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         });
     }
 
-    //如果存在安装包就直接安装
+    /**
+     * 如果存在安装包就直接安装
+     */
+
     @Override
     public void install() {
         if (button_ok != null) {
@@ -195,11 +201,16 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
                     Log.v("tag", "STATUS_FAILED");
                     DownLoadUtils.getInstance(mContext).getDownloadManager().remove(downloadId);
                     break;
+                default:
+                    break;
             }
         }
     }
 
-    //下载完成后点安装
+    /**
+     * 下载完成后点安装
+     */
+
     public class MyReceiver_DownLoad extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

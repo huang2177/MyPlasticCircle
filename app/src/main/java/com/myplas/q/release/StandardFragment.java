@@ -89,7 +89,7 @@ public class StandardFragment extends Fragment implements View.OnClickListener
         if (!isInputContent(2)) {
             return;
         }
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(20);
         if (id != null) {
             map.put("id", id);
         }
@@ -130,7 +130,6 @@ public class StandardFragment extends Fragment implements View.OnClickListener
                 } else {
                     mTV_Type.setText("供给");
                 }
-
                 break;
             case R.id.buttom_dialog_tv2:
                 dialog.dismiss();

@@ -4,7 +4,7 @@
               android:id="@+id/contact_config_ll"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/color_white"
+    android:background="@color/color_gray0"
               android:orientation="vertical"
               app:layout_scrollFlags="scroll|enterAlways">
 

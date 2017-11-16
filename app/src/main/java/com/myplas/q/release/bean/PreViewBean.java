@@ -11,19 +11,20 @@ import java.util.List;
 
 public class PreViewBean implements Serializable {
 
+
     /**
      * err : 0
-     * data : [{"model":"7000F","vendor":"伊朗石化","storehouse":"上海","transaction_type":0,"price":0},{"model":"1000","vendor":"伊朗石化","storehouse":"上海","transaction_type":0,"price":0}]
+     * data : [{"model":2119,"vendor":"伊朗石化","storehouse":"上海","transaction_type":0,"price":7000,"type":2,"company":"上海中晨电子商务股份有限公司","username":"黄双"}]
      */
 
-    private String err;
+    private int err;
     private List<DataBean> data;
 
-    public String getErr() {
+    public int getErr() {
         return err;
     }
 
-    public void setErr(String err) {
+    public void setErr(int err) {
         this.err = err;
     }
 
@@ -37,11 +38,14 @@ public class PreViewBean implements Serializable {
 
     public static class DataBean implements Serializable {
         /**
-         * model : 7000F
+         * model : 2119
          * vendor : 伊朗石化
          * storehouse : 上海
          * transaction_type : 0
-         * price : 0
+         * price : 7000
+         * type : 2
+         * company : 上海中晨电子商务股份有限公司
+         * username : 黄双
          */
 
         private String model;
@@ -49,6 +53,9 @@ public class PreViewBean implements Serializable {
         private String storehouse;
         private String transaction_type;
         private String price;
+        private String type;
+        private String company;
+        private String username;
 
         public String getModel() {
             return model;
@@ -88,6 +95,30 @@ public class PreViewBean implements Serializable {
 
         public void setPrice(String price) {
             this.price = price;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getCompany() {
+            return company;
+        }
+
+        public void setCompany(String company) {
+            this.company = company;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
         }
     }
 }

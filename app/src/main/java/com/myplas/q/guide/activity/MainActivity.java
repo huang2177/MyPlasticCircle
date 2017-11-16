@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,9 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.myplas.q.BuildConfig;
 import com.myplas.q.R;
-import com.myplas.q.appupdate.VersionUpdateDialogUtils;
+import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
@@ -108,15 +106,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
+        fragmentContact.page = 1;
         fragmentContact.getNetData("1", false);
 
         String type = intent.getStringExtra("type");
+        String userId = sharedUtils.getData(this, Constant.USERID);
+
         if (Constant.LOGINED.equals(type)) {
-            getConfig();
             firstInto();
+            getConfig();
             fragmentSupDem.onLogined();
-            fragmentHeadLine.initViewPager();
-            String userId = sharedUtils.getData(this, Constant.USERID);
+            fragmentHeadLine.onLogined();
             JPushInterface.setAlias(this, 10, userId);
         } else if (Constant.LOGINOUT.equals(type)) {
             firstInto();
@@ -124,7 +124,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             rCallback(false);
         } else {
             goToMySelf();
-
         }
     }
 

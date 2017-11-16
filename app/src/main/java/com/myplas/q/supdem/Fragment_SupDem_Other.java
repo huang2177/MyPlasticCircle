@@ -79,6 +79,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
         linearLayout_prompt = F(R.id.supply_demand_prompt_linear);
 
         mListView.setHeaderDividersEnabled(false);
+        mListView.setFooterDividersEnabled(false);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -319,6 +320,8 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
                 break;
             case 2:
                 startActivity(new Intent(getActivity(), IntegralPayActivtity.class));
+                break;
+            default:
                 break;
         }
     }

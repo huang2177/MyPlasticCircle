@@ -1,11 +1,11 @@
-package com.myplas.q.release;
+package com.myplas.q.common.view;
 
 import android.support.v4.view.ViewPager;
 
 /**
- * 作者:huangshuang
  * 事件 2017/10/12 0012.
  * 邮箱： 15378412400@163.com
+ * @author huangshuang
  */
 
 public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {

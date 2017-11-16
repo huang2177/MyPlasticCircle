@@ -14,7 +14,7 @@ import com.myplas.q.common.view.HorizontalStepView;
 import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.common.view.StepBean;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.release.MyOnPageChangeListener;
+import com.myplas.q.common.view.MyOnPageChangeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +72,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void initViewPager() {
         FragmentList = new ArrayList<>();
 
-        mFmRegister1 = FragmentRegister1.newInstance(this);
-        mFmRegister2 = FragmentRegister2.newInstance(this);
+        mFmRegister1 = FragmentRegister1.newInstance();
+        mFmRegister2 = FragmentRegister2.newInstance();
         mFmRegister3 = new FragmentRegister3();
+        mFmRegister1.mBaseInterface = this;
+        mFmRegister2.mBaseInterface = this;
 
         FragmentList.add(mFmRegister1);
         FragmentList.add(mFmRegister2);

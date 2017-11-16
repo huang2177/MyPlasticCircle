@@ -38,10 +38,8 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:33
  */
-public class InstantReleaseLVAdapter extends BaseAdapter implements CommonDialog.DialogShowInterface
-        , ResultCallBack {
+public class InstantReleaseLVAdapter extends BaseAdapter {
 
-    String type;
     int position;
     Context context;
     MyInterface myInterface;
@@ -54,9 +52,8 @@ public class InstantReleaseLVAdapter extends BaseAdapter implements CommonDialog
         this.list = list;
     }
 
-    public InstantReleaseLVAdapter(Context context, List<PreViewBean.DataBean> list, MyInterface myInterface, String type) {
+    public InstantReleaseLVAdapter(Context context, List<PreViewBean.DataBean> list, MyInterface myInterface) {
         this.list = list;
-        this.type = type;
         this.context = context;
         viewMap = new HashMap<>();
         this.myInterface = myInterface;
@@ -94,11 +91,12 @@ public class InstantReleaseLVAdapter extends BaseAdapter implements CommonDialog
             viewHolder.typeNowFutures = (ImageView) convertView.findViewById(R.id.supply_demand_now_futures);
             try {
                 viewHolder.content.setText(Html.fromHtml(getContent(position)));
+                viewHolder.name.setText(list.get(position).getCompany() + "  " + list.get(position).getUsername());
 
-                viewHolder.typeSupDem.setImageResource(type.equals("1")
+                viewHolder.typeSupDem.setImageResource("1".equals(list.get(position).getType())
                         ? R.drawable.icon_supdem_purchase
                         : R.drawable.icon_supdem_supply);
-                viewHolder.typeNowFutures.setImageResource(list.get(position).getTransaction_type().equals("1")
+                viewHolder.typeNowFutures.setImageResource(list.get(position).getTransaction_type().equals("0")
                         ? R.drawable.icon_now
                         : R.drawable.icon_futures);
 
@@ -106,9 +104,9 @@ public class InstantReleaseLVAdapter extends BaseAdapter implements CommonDialog
                 viewHolder.mImageD.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        InstantReleaseLVAdapter.this.position = position;
-                        CommonDialog commonDialog = new CommonDialog();
-                        commonDialog.showDialog(context, "确定删除?", 1, InstantReleaseLVAdapter.this);
+                        if (myInterface != null) {
+                            myInterface.delete(position);
+                        }
                     }
                 });
 
@@ -116,7 +114,9 @@ public class InstantReleaseLVAdapter extends BaseAdapter implements CommonDialog
                 viewHolder.mImageS.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        if (myInterface != null) {
+                            myInterface.modify(position);
+                        }
                     }
                 });
             } catch (Exception e) {
@@ -138,38 +138,10 @@ public class InstantReleaseLVAdapter extends BaseAdapter implements CommonDialog
         ImageView typeSupDem, typeNowFutures, mImageS, mImageD;
     }
 
-    @Override
-    public void callBack(Object object, int type) {
-        try {
-            JSONObject jsonObject = new JSONObject(object.toString());
-            TextUtils.Toast(context, jsonObject.getString("msg"));
-            if (jsonObject.getString("err").equals("0")) {
-                if (myInterface != null) {
-                    myInterface.reQuestNet();
-                }
-                if (list.size() == 1) {
-                    list.remove(0);
-                    notifyDataSetChanged();
-                }
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void failCallBack(int type) {
-
-    }
-
-    @Override
-    public void ok(int type) {
-//        Map<String, String> map = new HashMap<String, String>();
-//        map.put("token", sharedUtils.getData(context, "token"));
-//        map.put("id", list.get(position).getId());
-//        BaseActivity.postAsyn(context, API.BASEURL + API.DELETE_MY_MSG, map, this, 1);
-    }
 
     public interface MyInterface {
-        void reQuestNet();
+        void delete(int position);
+
+        void modify(int position);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -31,14 +32,12 @@ import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
-import com.myplas.q.release.adapter.InstantReleaseLVAdapter;
 import com.myplas.q.release.bean.PreViewBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,15 +53,15 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
     private Button preButton;
     private ListView preListView;
     private ImageView preImgClose;
-    private MyEditText mEditText, mTV_Type;
+    private MyEditText mEditText, mtvType;
+    private TextInputLayout textInputLayout;
     private TextView dialogTitle, dialogContent, dialogOK, dialogCancle;
 
     private Dialog preDialog, mDialog;
     private MyBottomSheetDialog mButtomDialog;
 
-    private int _width, _height;
     private SharedUtils mSharedUtils;
-    private String content, type, isPreView, id, data;
+    private String content, type, isPreView, id;
 
 
     @Override
@@ -73,10 +72,12 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
 
         view = View.inflate(getActivity(), R.layout.fragment_layout_release_quickly, null);
         mEditText = (MyEditText) view.findViewById(R.id.release_edit);
-        mTV_Type = (MyEditText) view.findViewById(R.id.release_ev_type_);
+        mtvType = (MyEditText) view.findViewById(R.id.release_ev_type_);
+        textInputLayout = (TextInputLayout) view.findViewById(R.id.text_input_ll);
 
         mEditText.addOnTextWatcher(this);
-        mTV_Type.setOnClickListener(this);
+        mtvType.setOnClickListener(this);
+        //textInputLayout.setHint("在次文本框中，可快速复制粘贴供求信息，限制100字内！例如：伊朗石化 7000F 10000 上海浦东 现货");
         mEditText.setHint("在次文本框中，可快速复制粘贴供求信息，限制100字内！例如：伊朗石化 7000F 10000 上海浦东 现货");
     }
 
@@ -96,12 +97,12 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
             case R.id.buttom_dialog_tv1:
                 mButtomDialog.dismiss();
                 type = "2";
-                mTV_Type.setText("供给");
+                mtvType.setText("供给");
                 break;
             case R.id.buttom_dialog_tv2:
                 mButtomDialog.dismiss();
                 type = "1";
-                mTV_Type.setText("求购");
+                mtvType.setText("求购");
                 break;
 
             //获取解析内容
@@ -159,11 +160,11 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
             if (type == 1) {
                 if (err.equals("0")) {
                     PreViewBean preViewBean = gson.fromJson(object.toString(), PreViewBean.class);
-                    data = gson.toJson(preViewBean.getData());
                     if (preViewBean.getData().size() != 0) {
                         Intent intent = new Intent(getActivity(), InstantReleaseActivity.class);
                         intent.putExtra("preViewBean", preViewBean);
-                        intent.putExtra("type", type);
+                        intent.putExtra("type", QuicklyFragment.this.type);
+                        intent.putExtra("id", id);
                         startActivity(intent);
                     } else {
                         TextUtils.Toast(getActivity(), "请按照示例填写完整的参数！");
@@ -273,7 +274,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
     }
 
     public boolean isInPutContent(int _type) {
-        String t = mTV_Type.getText().toString();
+        String t = mtvType.getText().toString();
         content = mEditText.getText().toString();
         if (_type == 1) {
             return !TextUtils.isNullOrEmpty(content)

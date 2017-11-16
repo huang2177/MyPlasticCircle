@@ -97,10 +97,10 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
 
                 viewHolder.content.setText(Html.fromHtml(getContent(position)));
 
-                viewHolder.typeSupDem.setImageResource(list.get(position).getType().equals("1")
+                viewHolder.typeSupDem.setImageResource("1".equals(list.get(position).getType())
                         ? R.drawable.icon_supdem_purchase
                         : R.drawable.icon_supdem_supply);
-                viewHolder.typeNowFutures.setImageResource(list.get(position).getCargo_type().equals("1")
+                viewHolder.typeNowFutures.setImageResource("1".equals(list.get(position).getCargo_type())
                         ? R.drawable.icon_now
                         : R.drawable.icon_futures);
 

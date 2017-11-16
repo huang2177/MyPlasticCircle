@@ -28,7 +28,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.ShareActivity;
-import com.myplas.q.release.MyOnPageChangeListener;
+import com.myplas.q.common.view.MyOnPageChangeListener;
 import com.myplas.q.supdem.MyOnItemClickListener;
 import com.myplas.q.supdem.beans.SupDemDetailBean;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_CHJ;

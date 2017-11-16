@@ -54,15 +54,15 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     private boolean checked;
     private Handler mHandler;
     private WeakReference<Activity> wr;
-    private BaseInterface mBaseInterface;
+    public BaseInterface mBaseInterface;
     private String phone, pass, indentify;
 
 
-    public static FragmentRegister1 newInstance(BaseInterface mBaseInterface) {
+    public static FragmentRegister1 newInstance() {
         FragmentRegister1 fragment = new FragmentRegister1();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("interface", mBaseInterface);
-        fragment.setArguments(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("interface", mBaseInterface);
+//        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -72,7 +72,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         count = 60;
-        mBaseInterface = (BaseInterface) getArguments().getSerializable("interface");
+//        mBaseInterface = (BaseInterface) getArguments().getSerializable("interface");
         wr = new WeakReference<Activity>(getActivity());
         mHandler = new Handler() {
             @Override

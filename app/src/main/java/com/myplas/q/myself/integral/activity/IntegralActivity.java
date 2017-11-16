@@ -6,13 +6,9 @@ import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -24,7 +20,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.IntegralBean;
 import com.myplas.q.myself.integral.adapter.IntegralAdapter;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -39,18 +34,21 @@ import java.util.Map;
  * 时间：2017/3/28 14:10
  */
 public class IntegralActivity extends BaseActivity implements ResultCallBack, View.OnClickListener, IntegralAdapter.MyInterface {
-    private int position;
-    private boolean move;
-    private SharedUtils sharedUtils;
+
+    private AppBarLayout appBarLayout;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager manager;
-    private NestedScrollView mScrollView;
-    private IntegralAdapter integralAdapter;
-    private List<IntegralBean.InfoBean> list;
     private CoordinatorLayout mCoordinatorLayout;
-    private TextView integral_all, integral_all_, intergral_chz, intergral_record, intergral_rule;
+    private TextView integralAll, integral_all_, intergralChz, intergralRecord, intergralRule;
 
     private Handler mHandler;
+
+    private int position;
+    private int mIndex = 0;
+    private boolean move = false;
+    private SharedUtils sharedUtils;
+    private IntegralAdapter integralAdapter;
+    private List<IntegralBean.InfoBean> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,28 +62,28 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         mHandler = new Handler();
         sharedUtils = SharedUtils.getSharedUtils();
 
-        intergral_chz = F(R.id.jf_chz);
-        mScrollView = F(R.id.scrollview);
-        integral_all = F(R.id.integral_all);
+        appBarLayout = F(R.id.appbar);
+        intergralChz = F(R.id.jf_chz);
+        integralAll = F(R.id.integral_all);
         mRecyclerView = F(R.id.jf_gridview);
-        intergral_record = F(R.id.jf_record);
+        intergralRecord = F(R.id.jf_record);
         integral_all_ = F(R.id.integral_all_);
         mCoordinatorLayout = F(R.id.coordinatorlayout);
 
         manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.addOnScrollListener(new RecyclerViewListener());
 
         mTVRight.setOnClickListener(this);
-        integral_all.setOnClickListener(this);
+        integralAll.setOnClickListener(this);
         integral_all_.setOnClickListener(this);
-        intergral_chz.setOnClickListener(this);
-        intergral_record.setOnClickListener(this);
+        intergralChz.setOnClickListener(this);
+        intergralRecord.setOnClickListener(this);
 
-        String type = getIntent().getStringExtra("type");
-        if (type != null) {
-            position = Integer.parseInt(type);
-        }
+//        String type = getIntent().getStringExtra("type");
+//        if (type != null) {
+//            position = Integer.parseInt(type);
+//        }
         getProducts(1);
     }
 
@@ -106,36 +104,23 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
             if (type == 1 && err.equals("0")) {
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
                 list = integralBean.getInfo();
-                integral_all.setText(" " + integralBean.getPointsAll().toString());
+                integralAll.setText(" " + integralBean.getPointsAll().toString());
                 integralAdapter = new IntegralAdapter(this, this, list, this);
                 mRecyclerView.setAdapter(integralAdapter);
 
-                if (position != -1) {
-                    //  moveToPosition();
+                if (position == -1) {
+                    // moveToPosition(5);
                 }
             }
             if (type == 2 && err.equals("0")) {
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
-                integral_all.setText(" " + integralBean.getPointsAll().toString());
+                integralAll.setText(" " + integralBean.getPointsAll().toString());
             }
         } catch (Exception e) {
             TextUtils.Toast(this, "数据解析错啦！");
         }
     }
 
-    private void moveToPosition() {
-        Log.e("-----", mRecyclerView.getChildCount() + "---");
-        int firstVisibleItems = manager.findFirstVisibleItemPosition();
-        // 真实Position就是position - firstVisibleItems[0]
-        View childAt = mRecyclerView.getChildAt(5 - firstVisibleItems);
-        final int top = childAt.getTop();
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mScrollView.smoothScrollBy(0, top);
-            }
-        });
-    }
 
     @Override
     public void failCallBack(int type) {
@@ -165,6 +150,52 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * recycleView滚动到指定位置
+     *
+     * @param n
+     */
+    private void moveToPosition(int n) {
+        if (n < 0 || n >= integralAdapter.getItemCount()) {
+            return;
+        }
+        mIndex = n;
+        mRecyclerView.stopScroll();
+        appBarLayout.setExpanded(false);
+
+        int firstItem = manager.findFirstVisibleItemPosition();
+        int lastItem = manager.findLastVisibleItemPosition();
+        if (n <= firstItem) {
+            mRecyclerView.scrollToPosition(n);
+        } else if (n <= lastItem) {
+            int top = mRecyclerView.getChildAt(n - firstItem).getTop();
+            mRecyclerView.scrollBy(0, top);
+        } else {
+            mRecyclerView.scrollToPosition(n);
+            move = true;
+        }
+    }
+
+    class RecyclerViewListener extends RecyclerView.OnScrollListener {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if (move) {
+                move = false;
+                int n = mIndex - manager.findFirstVisibleItemPosition();
+                if (0 <= n && n < mRecyclerView.getChildCount()) {
+                    int top = mRecyclerView.getChildAt(n).getTop();
+                    mRecyclerView.scrollBy(0, top);
+                }
+            }
         }
     }
 

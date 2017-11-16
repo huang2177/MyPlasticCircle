@@ -1,4 +1,4 @@
-package com.myplas.q.appupdate;
+package com.myplas.q.versionupdate;
 
 import android.content.Context;
 import android.net.Uri;

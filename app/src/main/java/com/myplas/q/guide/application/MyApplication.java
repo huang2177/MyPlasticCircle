@@ -34,9 +34,11 @@ public class MyApplication extends Application {
         initStetho();
         registerActivity();
 
-
     }
 
+    /**
+     * 初始化Stetho相关
+     */
     private void initStetho() {
         if (BuildConfig.USE_STETHO) {
             Stetho.initialize(
@@ -47,6 +49,9 @@ public class MyApplication extends Application {
         }
     }
 
+    /**
+     * 初始化极光推送相关
+     */
     private void initJPush() {
         String userId = SharedUtils
                 .getSharedUtils()
@@ -65,7 +70,9 @@ public class MyApplication extends Application {
         }
     }
 
-    /*注册activity生命周期的监听*/
+    /**
+     * 注册activity生命周期的监听
+     */
     private void registerActivity() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override

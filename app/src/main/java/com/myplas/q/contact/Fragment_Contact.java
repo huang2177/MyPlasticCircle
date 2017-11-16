@@ -85,7 +85,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private TextView mTVClass, mTVRegion, mTVTitle;
     private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch;
 
-    private int page;
+    public int page;
     private StringBuffer region;
     private StringBuffer c_type;
     private boolean isRefreshing;

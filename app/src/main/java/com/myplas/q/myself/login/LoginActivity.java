@@ -50,11 +50,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private ScrollView mScrollView;
     private SharedUtils sharedUtils;
     private Button mButtonNomal, mButtonPhone;
-    private TextView textView_zhc, textView_wj, mTextView_send;
+    private TextView textviewZhc, textviewWj, mtextviewSend;
     private boolean clicked, isRemember, isNomalNull, isPhoneNull;
-    private ImageView imageView1, imageView2, imageView_verification;
-    private LinearLayout linearLayout_nomal, linearLayout_phone, button_nomal, button_phone, mLayoutRoot;
-    private MyEditText editText_tel, editText_tel1, editText_pass, editText_verification1, editText_verification2;
+    private ImageView imageView1, imageView2, imageviewVerification;
+    private LinearLayout linearlayoutNomal, linearlayoutPhone, buttonNomal, buttonPhone, mLayoutRoot;
+    private MyEditText edittextTel, edittextTel1, edittextPass, edittextVerification1, edittextVerification2;
 
     private ACache mACache;
     private MainActivity mainActivity;
@@ -71,7 +71,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         setLeftIVResId(R.drawable.btn_back_black);
         setTitleBarBackground(R.color.color_white);
         setTitleBarTextColor(R.color.color_transparent);
+
         initView();
+        getVCode();
     }
 
     @SuppressLint("HandlerLeak")
@@ -82,73 +84,70 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         sharedUtils = SharedUtils.getSharedUtils();
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
-        editText_tel = F(R.id.dl_tel);
+        edittextTel = F(R.id.dl_tel);
         mScrollView = F(R.id.sv_login);
-        editText_pass = F(R.id.dl_pass);
-        editText_tel1 = F(R.id.dl_tel2);
-        editText_verification1 = F(R.id.dl_verification1);
-        editText_verification2 = F(R.id.dl_verification2);
+        edittextPass = F(R.id.dl_pass);
+        edittextTel1 = F(R.id.dl_tel2);
+        edittextVerification1 = F(R.id.dl_verification1);
+        edittextVerification2 = F(R.id.dl_verification2);
 
         imageView1 = F(R.id.imageView1);
         imageView2 = F(R.id.imageView2);
-        imageView_verification = F(R.id.login_phone_send1);
+        imageviewVerification = F(R.id.login_phone_send1);
 
         mButtonNomal = F(R.id.dl_ok);
         mButtonPhone = F(R.id.dl_ok2);
-        mTextView_send = F(R.id.zhc_hq_yzm);
-        button_nomal = F(R.id.ll_login_nomal);
-        button_phone = F(R.id.ll_login_phone);
+        mtextviewSend = F(R.id.zhc_hq_yzm);
+        buttonNomal = F(R.id.ll_login_nomal);
+        buttonPhone = F(R.id.ll_login_phone);
 
-        textView_wj = F(R.id.dl_wjmm);
-        textView_zhc = F(R.id.dl_zhc);
+        textviewWj = F(R.id.dl_wjmm);
+        textviewZhc = F(R.id.dl_zhc);
 
         mLayoutRoot = F(R.id.login_rootview);
-        linearLayout_nomal = F(R.id.linearlayout_login_nomal);
-        linearLayout_phone = F(R.id.linearlayout_login_phone);
+        linearlayoutNomal = F(R.id.linearlayout_login_nomal);
+        linearlayoutPhone = F(R.id.linearlayout_login_phone);
 
         mLayoutRoot.setOnClickListener(this);
         mButtonNomal.setOnClickListener(this);
         mButtonPhone.setOnClickListener(this);
-        textView_wj.setOnClickListener(this);
-        textView_zhc.setOnClickListener(this);
-        button_nomal.setOnClickListener(this);
-        button_phone.setOnClickListener(this);
-        mTextView_send.setOnClickListener(this);
-        imageView_verification.setOnClickListener(this);
+        textviewWj.setOnClickListener(this);
+        textviewZhc.setOnClickListener(this);
+        buttonNomal.setOnClickListener(this);
+        buttonPhone.setOnClickListener(this);
+        mtextviewSend.setOnClickListener(this);
+        imageviewVerification.setOnClickListener(this);
 
-        editText_tel.addOnTextWatcher(this);
-        editText_pass.addOnTextWatcher(this);
-        editText_tel1.addOnTextWatcher(this);
-        editText_verification1.addOnTextWatcher(this);
-        editText_verification2.addOnTextWatcher(this);
+        edittextTel.addOnTextWatcher(this);
+        edittextPass.addOnTextWatcher(this);
+        edittextTel1.addOnTextWatcher(this);
+        edittextVerification1.addOnTextWatcher(this);
+        edittextVerification2.addOnTextWatcher(this);
 
         // 将账号和密码都设置到文本框中
         if (isRemember) {
             String account = sharedUtils.getData(this, "tel");
             String password = sharedUtils.getData(this, "password");
-            editText_tel.setText(account);
-            editText_pass.setText(password);
+            edittextTel.setText(account);
+            edittextPass.setText(password);
             mButtonNomal.setBackgroundResource(R.drawable.login_btn_shape_hl);
-            editText_pass.setSelection(editText_pass.getText().length());
-            editText_tel.setSelection(editText_tel.getText().length());
+            edittextPass.setSelection(edittextPass.getText().length());
+            edittextTel.setSelection(edittextTel.getText().length());
         }
 
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
-                    mTextView_send.setText(msg.obj.toString() + "秒后重试");
-                    mTextView_send.setClickable(false);
+                    mtextviewSend.setText(msg.obj.toString() + "秒后重试");
+                    mtextviewSend.setClickable(false);
                     if (msg.obj.toString().equals("0")) {
-                        mTextView_send.setText("重新发送");
-                        mTextView_send.setClickable(true);
+                        mtextviewSend.setText("重新发送");
+                        mtextviewSend.setClickable(true);
                     }
                 }
             }
         };
-        //获取验证码
-        String url = API.BASEURL_API + API.VCODE;
-        postAsyn(this, url, null, this, 2);
     }
 
     @Override
@@ -165,10 +164,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
             //登陆；
             case R.id.dl_ok:
-                if (TextUtils.isPhoneNum(editText_tel.getText().toString()) && TextUtils.isNullOrEmpty(editText_pass.getText().toString())) {
+                if (TextUtils.isPhoneNum(edittextTel.getText().toString()) && TextUtils.isNullOrEmpty(edittextPass.getText().toString())) {
                     Map<String, String> map = new HashMap<String, String>();
-                    map.put("username", editText_tel.getText().toString());
-                    map.put("password", editText_pass.getText().toString());
+                    map.put("username", edittextTel.getText().toString());
+                    map.put("password", edittextPass.getText().toString());
                     map.put("chanel", "6");
                     postAsyn(this, API.BASEURL + API.LOGIN, map, this, 1);
                     mButtonNomal.setClickable(false);
@@ -179,13 +178,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
             //手机动态码登陆
             case R.id.dl_ok2:
-                if (TextUtils.isPhoneNum(editText_tel1.getText().toString())
-                        && TextUtils.isNullOrEmpty(editText_verification1.getText().toString())
-                        && TextUtils.isNullOrEmpty(editText_verification2.getText().toString())) {
+                if (TextUtils.isPhoneNum(edittextTel1.getText().toString())
+                        && TextUtils.isNullOrEmpty(edittextVerification1.getText().toString())
+                        && TextUtils.isNullOrEmpty(edittextVerification2.getText().toString())) {
                     Map<String, String> map = new HashMap<String, String>();
-                    map.put("phonenum", editText_tel1.getText().toString());
-                    map.put("phonevaild", editText_verification2.getText().toString());
-                    map.put("regcode", editText_verification1.getText().toString());
+                    map.put("phonenum", edittextTel1.getText().toString());
+                    map.put("phonevaild", edittextVerification2.getText().toString());
+                    map.put("regcode", edittextVerification1.getText().toString());
                     map.put("key", key);
                     //登陆；
                     postAsyn(this, API.BASEURL + API.SIMPLE_LOGIN, map, this, 1);
@@ -200,25 +199,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 mTextView.setText("普通登录");
                 imageView2.setVisibility(View.GONE);
                 imageView1.setVisibility(View.VISIBLE);
-                textView_wj.setVisibility(View.VISIBLE);
-                linearLayout_phone.setVisibility(View.GONE);
-                linearLayout_nomal.setVisibility(View.VISIBLE);
+                textviewWj.setVisibility(View.VISIBLE);
+                linearlayoutPhone.setVisibility(View.GONE);
+                linearlayoutNomal.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_login_phone:
                 mTextView.setText("手机动态码登录");
                 imageView1.setVisibility(View.GONE);
-                textView_wj.setVisibility(View.GONE);
+                textviewWj.setVisibility(View.GONE);
                 imageView2.setVisibility(View.VISIBLE);
-                linearLayout_nomal.setVisibility(View.GONE);
-                linearLayout_phone.setVisibility(View.VISIBLE);
+                linearlayoutNomal.setVisibility(View.GONE);
+                linearlayoutPhone.setVisibility(View.VISIBLE);
                 break;
             case R.id.zhc_hq_yzm:
                 checkVCide();
                 break;
             case R.id.login_phone_send1:
-                //获取验证码
-                String url1 = API.BASEURL_API + API.VCODE;
-                postAsyn(this, url1, null, this, 2);
+                getVCode();
                 break;
             case R.id.login_rootview:
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -229,9 +226,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+    /**
+     * 获取验证码
+     */
+    private void getVCode() {
+        String url1 = API.BASEURL_API + API.VCODE;
+        postAsyn1(this, url1, null, this, 2, false);
+    }
+
+    /**
+     * 发送动态码之前先验证
+     */
     public void checkVCide() {
-        //发送动态码之前先验证
-        String value = editText_verification1.getText().toString();
+        String value = edittextVerification1.getText().toString();
         if (TextUtils.isNullOrEmpty(value)) {
             String url = API.BASEURL_API + API.CHK_VCODE;
             Map<String, String> map1 = new HashMap<String, String>();
@@ -244,12 +251,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+    /**
+     * 发送验证码
+     */
     public void sendMSG() {
-        String tel = editText_tel1.getText().toString();
+        String tel = edittextTel1.getText().toString();
         if (!TextUtils.isPhoneNum(tel)) {
             Toast.makeText(this, "手机号输入有误！", Toast.LENGTH_SHORT).show();
         } else {
-            //发送验证码
             String url = API.BASEURL_API + API.SEND_MOBILE_MSG;
             Map<String, String> map1 = new HashMap<String, String>();
             map1.put("phonenum", tel);
@@ -288,7 +297,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             if (type == 2 && s.equals("0")) {
                 String url = jsonObject.getString("img");
                 key = jsonObject.getString("key");
-                Glide.with(this).load(url).placeholder(R.drawable.bg_verification_code).into(imageView_verification);
+                Glide.with(this)
+                        .load(url)
+                        .into(imageviewVerification);
             }
             if (type == 3 && s.equals("0")) {
                 sendMSG();
@@ -320,17 +331,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     //edittext的内容变化监听：
     @Override
     public void onTextChanged(View v, String s) {
-        if (linearLayout_nomal.getVisibility() == View.VISIBLE) {
+        if (linearlayoutNomal.getVisibility() == View.VISIBLE) {
 
-            isNomalNull = TextUtils.isNullOrEmpty(editText_tel.getText().toString())
-                    && TextUtils.isNullOrEmpty(editText_pass.getText().toString());
+            isNomalNull = TextUtils.isNullOrEmpty(edittextTel.getText().toString())
+                    && TextUtils.isNullOrEmpty(edittextPass.getText().toString());
             mButtonNomal.setBackgroundResource(isNomalNull
                     ? R.drawable.login_btn_shape_hl
                     : R.drawable.login_btn_shape);
         } else {
-            isPhoneNull = TextUtils.isNullOrEmpty(editText_tel1.getText().toString())
-                    && TextUtils.isNullOrEmpty(editText_verification1.getText().toString())
-                    && TextUtils.isNullOrEmpty(editText_verification1.getText().toString());
+            isPhoneNull = TextUtils.isNullOrEmpty(edittextTel1.getText().toString())
+                    && TextUtils.isNullOrEmpty(edittextVerification1.getText().toString())
+                    && TextUtils.isNullOrEmpty(edittextVerification1.getText().toString());
             mButtonPhone.setBackgroundResource(isPhoneNull
                     ? R.drawable.login_btn_shape_hl
                     : R.drawable.login_btn_shape);
@@ -343,10 +354,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         if (requestCode == 0 && resultCode == 1 && data != null) {
             String tel = data.getStringExtra("phone");
             String pass = data.getStringExtra("pass");
-            editText_tel.setText(tel);
-            editText_pass.setText(pass);
-            editText_pass.setSelection(editText_pass.getText().length());
-            editText_tel.setSelection(editText_tel.getText().length());
+            edittextTel.setText(tel);
+            edittextPass.setText(pass);
+            edittextPass.setSelection(edittextPass.getText().length());
+            edittextTel.setSelection(edittextTel.getText().length());
         }
     }
 
@@ -372,7 +383,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Glide.clear(imageView_verification);
+        Glide.clear(imageviewVerification);
     }
 
     public void setData(JSONObject jsonObject) {
@@ -381,8 +392,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             imm.hideSoftInputFromWindow(mButtonNomal.getWindowToken(), 0);
             //记住密码：
             sharedUtils.setBooloean(this, "remember_password", true);
-            sharedUtils.setData(this, "tel", editText_tel.getText().toString());
-            sharedUtils.setData(this, "password", editText_pass.getText().toString());
+            sharedUtils.setData(this, "tel", edittextTel.getText().toString());
+            sharedUtils.setData(this, "password", edittextPass.getText().toString());
 
             sharedUtils.setData(this, Constant.TOKEN, jsonObject.getString("dataToken"));
             sharedUtils.setData(this, Constant.USERID, jsonObject.getString("user_id"));

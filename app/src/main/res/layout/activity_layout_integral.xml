@@ -13,6 +13,7 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_white">
@@ -27,34 +28,12 @@
             <include layout="@layout/layout_integral_listview_head" />
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/scrollview"
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/jf_gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:text="商品信息"
-                    android:textColor="@color/color_balank"
-                    android:textSize="16.0sp" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/jf_gridview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="none"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-            </LinearLayout>
-
-        </android.support.v4.widget.NestedScrollView>
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

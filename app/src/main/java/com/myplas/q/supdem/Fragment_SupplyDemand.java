@@ -27,7 +27,7 @@ import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.release.MyOnPageChangeListener;
+import com.myplas.q.common.view.MyOnPageChangeListener;
 import com.myplas.q.supdem.activity.SupDem_Search_Activity;
 import com.myplas.q.supdem.adapter.SupDem_ViewPager_Adapter;
 import com.myplas.q.supdem.beans.ConfigData;

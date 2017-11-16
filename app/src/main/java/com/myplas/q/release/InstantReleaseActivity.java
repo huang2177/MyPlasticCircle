@@ -3,6 +3,7 @@ package com.myplas.q.release;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,8 +16,10 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.release.adapter.InstantReleaseLVAdapter;
 import com.myplas.q.release.bean.PreViewBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
@@ -32,21 +35,24 @@ import java.util.Map;
  * @date 2017/11/13 0013
  */
 
-public class InstantReleaseActivity extends BaseActivity implements ResultCallBack {
+public class InstantReleaseActivity extends BaseActivity implements ResultCallBack
+        , InstantReleaseLVAdapter.MyInterface, CommonDialog.DialogShowInterface {
     private Button button;
     private ListView listView;
 
-    private String type;
-    private PreViewBean bean;
+    private PreViewBean preViewBean;
     private InstantReleaseLVAdapter adapter;
     private List<PreViewBean.DataBean> mList;
+    private int modifyPosition, deletePosition;
 
+    private String id;
     private SharedUtils mSharedUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_release_instantrelease_layout);
+        ActivityManager.addActivity(this);
 
         initTileBar();
         setTitle("供求预览");
@@ -56,13 +62,13 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
     private void initView() {
         button = F(R.id.release_btn);
         listView = F(R.id.instant_lv);
-
         mSharedUtils = SharedUtils.getSharedUtils();
 
-        type = getIntent().getStringExtra("type");
-        bean = (PreViewBean) getIntent().getSerializableExtra("preViewBean");
+        id = getIntent().getStringExtra("id");
+        preViewBean = (PreViewBean) getIntent().getSerializableExtra("preViewBean");
+        mList = preViewBean.getData();
 
-        adapter = new InstantReleaseLVAdapter(this, bean.getData(), null, type);
+        adapter = new InstantReleaseLVAdapter(this, mList, this);
         listView.setAdapter(adapter);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -79,9 +85,9 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
 
     public void instantRelease() {
         Map<String, String> map = new HashMap<>();
-        map.put("type", type);
         map.put("channel", "1");
-        map.put("data", new Gson().toJson(bean.getData()));
+        map.put("data", new Gson().toJson(mList));
+        map.put("type", getIntent().getStringExtra("type"));
         postAsyn(this, API.BASEURL + API.INSTANTRELEASE, map, this, 1);
     }
 
@@ -102,10 +108,11 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
                 intent1.putExtra("userid", mSharedUtils.getData(this, Constant.USERID));
                 startActivity(intent1);
 
+                finish();
                 ActivityManager.finishActivity(ReleaseActivity.class);
-//                if (id != null) {
-//                    ActivityManager.finishActivity(MySupDemActivity.class);
-//                }
+                if (id != null) {
+                    ActivityManager.finishActivity(MySupDemActivity.class);
+                }
             } else {
                 TextUtils.Toast(this, jsonObject.getString("msg"));
             }
@@ -116,5 +123,41 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
     @Override
     public void failCallBack(int type) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 100 && data != null) {
+            mList.remove(modifyPosition);
+            mList.add((PreViewBean.DataBean) data.getSerializableExtra("bean"));
+            adapter = new InstantReleaseLVAdapter(this, mList, this);
+            listView.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void delete(int position) {
+        deletePosition = position;
+        CommonDialog commonDialog = new CommonDialog();
+        commonDialog.showDialog(this, "确定删除?", 1, this);
+    }
+
+    @Override
+    public void modify(int position) {
+        modifyPosition = position;
+        Intent intent = new Intent(this, SupDemModifyActivity.class);
+        intent.putExtra("preViewBean", preViewBean.getData().get(position));
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void ok(int type) {
+        if (mList.size() == 1) {
+            finish();
+        } else if (deletePosition < mList.size()) {
+            mList.remove(deletePosition);
+            adapter = new InstantReleaseLVAdapter(this, mList, this);
+            listView.setAdapter(adapter);
+        }
     }
 }
