@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
+import com.bumptech.glide.Glide;
 import com.huangbryant.hindicator.HIndicatorAdapter;
 import com.huangbryant.hindicator.HIndicatorBuilder;
 import com.huangbryant.hindicator.HIndicatorDialog;
@@ -28,6 +29,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.MyOnPageChangeListener;
+import com.myplas.q.common.view.MarqueeView;
 import com.myplas.q.supdem.activity.SupDem_Search_Activity;
 import com.myplas.q.supdem.adapter.SupDem_ViewPager_Adapter;
 import com.myplas.q.supdem.beans.ConfigData;
@@ -53,6 +55,9 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private EditText editText;
     private LinearLayout mLayout;
     private TextView tvType, mTVTab;
+    private MarqueeView marqueeView;
+    private LinearLayout notifyRoot;
+    private ImageView imageViewClose, imageView;
 
     private boolean logined;
     public int currentItem;
@@ -85,20 +90,28 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         logined = mSharedUtils.getBoolean(getActivity(), Constant.LOGINED);
         view = View.inflate(getActivity(), R.layout.layout_supdem_fragment, null);
 
+        imageView = F(R.id.notify_img);
+        notifyRoot = F(R.id.notify_root);
         tvType = F(R.id.supplydemand_btn);
+        marqueeView = F(R.id.marqueeView);
         mLayout = F(R.id.supdem_titlebar_ll);
         editText = F(R.id.supplydemand_edit);
         mTabLayout = F(R.id.supdem_tablayout);
         mViewPager = F(R.id.supdem_viewpager);
+        imageViewClose = F(R.id.notify_img_close);
 
         tvType.setOnClickListener(this);
         editText.setOnClickListener(this);
+        imageViewClose.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
+
+        Glide.with(getActivity()).load(R.drawable.icon_voice).into(imageView);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        initMarqueeView();
         return view;
     }
 
@@ -130,6 +143,11 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
             //setUpTabBadge(0);
         }
+    }
+
+    private void initMarqueeView() {
+        marqueeView.setText("依据赫兹接触强度计算理论，着重研究了圆柱滚子轴承内、外圈及滚动体的接触应力");
+        marqueeView.startScroll();
     }
 
     /**
@@ -193,6 +211,9 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                         tvType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_supdemxiala, 0);
                     }
                 });
+                break;
+            case R.id.notify_img_close:
+                notifyRoot.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -321,6 +342,9 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         MobclickAgent.onPageEnd("MainScreen");
         if (mFragmentAll.refreshPopou != null) {
             mFragmentAll.refreshPopou.dismiss();
+        }
+        if (marqueeView != null) {
+            marqueeView.stopScroll();
         }
     }
 

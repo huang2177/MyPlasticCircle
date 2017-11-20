@@ -1,44 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="calendar_cell">
-        <attr name="state_selectable" format="boolean"/>
-        <attr name="state_current_month" format="boolean"/>
-        <attr name="state_today" format="boolean"/>
-        <attr name="state_range_first" format="boolean"/>
-        <attr name="state_range_middle" format="boolean"/>
-        <attr name="state_range_last" format="boolean"/>
-        <attr name="state_highlighted" format="boolean"/>
+        <attr name="state_selectable" format="boolean" />
+        <attr name="state_current_month" format="boolean" />
+        <attr name="state_today" format="boolean" />
+        <attr name="state_range_first" format="boolean" />
+        <attr name="state_range_middle" format="boolean" />
+        <attr name="state_range_last" format="boolean" />
+        <attr name="state_highlighted" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="RoundImageView">
-        <attr name="border_width" format="dimension"/>
-        <attr name="border_color" format="color"/>
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
     </declare-styleable>
     <declare-styleable name="DragBubbleView">
-        <attr name="bubbleRadius" format="dimension"/>
-        <attr name="bubbleColor" format="color"/>
-        <attr name="text" format="string"/>
-        <attr name="textSize" format="dimension"/>
-        <attr name="textColor" format="color"/>
+        <attr name="bubbleRadius" format="dimension" />
+        <attr name="bubbleColor" format="color" />
+        <attr name="text" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="NumberProgressBar">
-        <attr name="progress" format="integer"/>
-        <attr name="max" format="integer"/>
+        <attr name="progress" format="integer" />
+        <attr name="max" format="integer" />
 
-        <attr name="progress_unreached_color" format="color"/>
-        <attr name="progress_reached_color" format="color"/>
+        <attr name="progress_unreached_color" format="color" />
+        <attr name="progress_reached_color" format="color" />
 
-        <attr name="progress_reached_bar_height" format="dimension"/>
-        <attr name="progress_unreached_bar_height" format="dimension"/>
+        <attr name="progress_reached_bar_height" format="dimension" />
+        <attr name="progress_unreached_bar_height" format="dimension" />
 
-        <attr name="progress_text_size" format="dimension"/>
-        <attr name="progress_text_color" format="color"/>
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_color" format="color" />
 
-        <attr name="progress_text_offset" format="dimension"/>
+        <attr name="progress_text_offset" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="Themes">
-        <attr name="numberProgressBarStyle" format="reference"/>
+        <attr name="numberProgressBarStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="MarqueeView">
+        <attr name="mvTextcolor" format="color" />
+        <attr name="mvTextSize" format="dimension" />
+        <attr name="mvIsRepeat" format="boolean" />
+        <attr name="mvSpeed" format="integer" />
+        <attr name="mvStartPoint" format="integer">
+            <enum name="start" value="0" />
+            <enum name="end" value="1" />
+        </attr>
+        <attr name="mvDirection" format="integer">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
     </declare-styleable>
 </resources>

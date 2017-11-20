@@ -12,7 +12,7 @@ public class HeadSearchBean {
 
     /**
      * err : 0
-     * data : [{"id":"50493","cate_id":"13","title":"交易收评：贸易商今天啥都没干，就跟着别人涨价了！","type":"低压注塑","input_time":"2017-09-01","pv":"1531","is_free":0},{"id":"50492","cate_id":"13","title":"日评：涨价不可怕！可怕的是涨价还没货","type":"均聚拉丝","input_time":"2017-09-01","pv":"1182","is_free":0},{"id":"44419","cate_id":"32","title":"神华PE竞拍结果（20170721）","type":"高压吹膜","input_time":"2017-07-21","pv":"1798","is_free":0},{"id":"44228","cate_id":"32","title":"神华PE竞拍结果（20170720）","type":"高压吹膜","input_time":"2017-07-20","pv":"1669","is_free":0},{"id":"29526","cate_id":"15","title":"月报：期货反弹涨逾4% PP月末又见利好","type":"","input_time":"2017-04-28","pv":"6483","is_free":0},{"id":"25131","cate_id":"53","title":"期货周报：美元加息预期，塑料期货步步走低","type":"","input_time":"2017-04-05","pv":"891","is_free":0},{"id":"24695","cate_id":"15","title":"本月收评：塑市整体势弱，空头压制难言反弹","type":"","input_time":"2017-03-31","pv":"5231","is_free":0},{"id":"21984","cate_id":"14","title":"本周收评：期货/石化联手唱空 塑市跌势难止","type":"","input_time":"2017-03-10","pv":"4453","is_free":0},{"id":"21981","cate_id":"76","title":"期货周报：美元加息预期，塑料期货步步走低","type":"","input_time":"2017-03-10","pv":"1393","is_free":0},{"id":"13603","cate_id":"14","title":"周报：西北氯碱联合体保价，PVC市场深跌后反弹","type":"","input_time":"2016-12-23","pv":"2490","is_free":0}]
+     * data : [{"id":"50493","cateId":"13","title":"交易收评：贸易商今天啥都没干，就跟着别人涨价了！","type":"低压注塑","input_time":"2017-09-01","pv":"1531","is_free":0},{"id":"50492","cateId":"13","title":"日评：涨价不可怕！可怕的是涨价还没货","type":"均聚拉丝","input_time":"2017-09-01","pv":"1182","is_free":0},{"id":"44419","cateId":"32","title":"神华PE竞拍结果（20170721）","type":"高压吹膜","input_time":"2017-07-21","pv":"1798","is_free":0},{"id":"44228","cateId":"32","title":"神华PE竞拍结果（20170720）","type":"高压吹膜","input_time":"2017-07-20","pv":"1669","is_free":0},{"id":"29526","cateId":"15","title":"月报：期货反弹涨逾4% PP月末又见利好","type":"","input_time":"2017-04-28","pv":"6483","is_free":0},{"id":"25131","cateId":"53","title":"期货周报：美元加息预期，塑料期货步步走低","type":"","input_time":"2017-04-05","pv":"891","is_free":0},{"id":"24695","cateId":"15","title":"本月收评：塑市整体势弱，空头压制难言反弹","type":"","input_time":"2017-03-31","pv":"5231","is_free":0},{"id":"21984","cateId":"14","title":"本周收评：期货/石化联手唱空 塑市跌势难止","type":"","input_time":"2017-03-10","pv":"4453","is_free":0},{"id":"21981","cateId":"76","title":"期货周报：美元加息预期，塑料期货步步走低","type":"","input_time":"2017-03-10","pv":"1393","is_free":0},{"id":"13603","cateId":"14","title":"周报：西北氯碱联合体保价，PVC市场深跌后反弹","type":"","input_time":"2016-12-23","pv":"2490","is_free":0}]
      * total : 14
      */
 
@@ -47,7 +47,7 @@ public class HeadSearchBean {
     public static class DataBean {
         /**
          * id : 50493
-         * cate_id : 13
+         * cateId : 13
          * title : 交易收评：贸易商今天啥都没干，就跟着别人涨价了！
          * type : 低压注塑
          * input_time : 2017-09-01

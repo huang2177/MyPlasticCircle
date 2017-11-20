@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/supdem_titlebar_ll"
-              android:layout_width="match_parent"
+    android:id="@+id/supdem_titlebar_ll"
+    android:layout_width="match_parent"
     android:layout_height="45dp">
 
     <FrameLayout
@@ -20,14 +20,14 @@
                 android:id="@+id/supplydemand_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/icon_supdemxiala"
                 android:gravity="center"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
                 android:text="全部"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/x66"/>
+                android:textSize="@dimen/x66" />
 
             <EditText
                 android:id="@+id/supplydemand_edit"
@@ -48,7 +48,7 @@
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"
                 android:textSelectHandleRight="@drawable/textselecthandle"
-                android:textSize="@dimen/x66"/>
+                android:textSize="@dimen/x66" />
 
         </LinearLayout>
     </FrameLayout>

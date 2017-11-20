@@ -248,9 +248,6 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
 
             Glide.with(this)
                     .load(contactBean.getData().getThumb())
-                    .placeholder(("男".equals(contactBean.getData().getSex()))
-                            ? (R.drawable.img_defaul_male)
-                            : (R.drawable.img_defaul_female))
                     .into(mHead);
 
             mStart.setImageResource(("0".equals(contactBean.getData().getIs_vip()))

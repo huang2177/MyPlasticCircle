@@ -23,6 +23,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
+import com.myplas.q.common.view.MyOnPageChangeListener;
 import com.myplas.q.headlines.activity.Cate_Dialog_Activtiy;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.adapter.HeadLineViewPagerAdapter;
@@ -40,7 +41,8 @@ import java.util.List;
  * 时间：2017/3/17 14:45
  */
 public class Fragment_HeadLines extends Fragment implements View.OnClickListener
-        , HeadLineListFragment.Myinterface {
+        , HeadLineListFragment.Myinterface
+        , MyOnPageChangeListener.OnPageChangeListener {
     private Handler handler;
     private String keywords;
     private int currentItem;
@@ -53,7 +55,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private EditText editText;
     private LinearLayout mLayoutTitle;
     private CustomPopupWindow popupWindow;
-    private TextView search_src_text, textView_refresh;
+    private TextView textView_refresh;
     private HeadLineViewPagerAdapter mViewPagerAdapter;
 
     private ViewPager mViewPager;
@@ -82,28 +84,10 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         mViewPager = F(R.id.headline_viewpager);
         mTabLayout = F(R.id.headline_tablayout);
         mLayoutTitle = F(R.id.headline_ll_title);
-        search_src_text = F(R.id.search_src_text);
 
         editText.setOnClickListener(this);
         gd_imgbtn.setOnClickListener(this);
-        search_src_text.setOnClickListener(this);
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentItem = position;
-                // mViewPager.setCurrentItem(position);
-                mFragments.get(position).po = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
+        mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
     }
 
     private void initViewPager() {
@@ -113,10 +97,8 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
             list2 = Arrays.asList("", "2", "1", "9", "76", "20", "21", "11", "12", "22");
             for (int i = 0; i < list1.size(); i++) {
                 mTabLayout.addTab(mTabLayout.newTab().setText(list1.get(i).toString()));
-                HeadLineListFragment fragment = new HeadLineListFragment();
+                HeadLineListFragment fragment = HeadLineListFragment.newInstance(list2.get(i), i);
                 fragment.setMyinterface(this);
-                fragment.po = i;
-                fragment.cate_id = list2.get(i);
                 mFragments.add(fragment);
             }
             mViewPagerAdapter = new HeadLineViewPagerAdapter(getChildFragmentManager(), mFragments, list1);
@@ -137,11 +119,16 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     }
 
     @Override
+    public void onPageSelected(int position) {
+        currentItem = position;
+        // mViewPager.setCurrentItem(position);
+        //mFragments.get(position).po = position;
+    }
+
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.search_src_text:
-                searchData(editText.getText().toString());
-                break;
             case R.id.fx_gd_imgbtn:
                 Intent intent = new Intent(getActivity(), Cate_Dialog_Activtiy.class);
                 startActivity(intent);
@@ -156,24 +143,10 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         }
     }
 
-    public void searchData(String keywords) {
-        if (TextUtils.isNullOrEmpty(keywords)) {
-            mViewPager.setCurrentItem(0);
-            mTabLayout.getTabAt(0).select();
-            mFragments.get(currentItem).po = -1;
-            mFragments.get(currentItem).keywords1 = keywords;
-            mFragments.get(currentItem).get_Subscribe(1, keywords, "1", true);
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        } else {
-            TextUtils.Toast(getActivity(), "请输入关键字！");
-        }
-    }
 
     public <T extends View> T F(int id) {
         return (T) view.findViewById(id);
     }
-
 
     //展示刷新后的popou
     @Override

@@ -8,6 +8,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
 
     private Handler mHandler;
 
-    private int position;
+    private String cateId;
     private int mIndex = 0;
     private boolean move = false;
     private SharedUtils sharedUtils;
@@ -58,9 +59,9 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         setTitle("塑豆商城");
         setRightTVText("如何赚塑豆");
 
-        position = -1;
         mHandler = new Handler();
         sharedUtils = SharedUtils.getSharedUtils();
+        cateId = getIntent().getStringExtra("type");
 
         appBarLayout = F(R.id.appbar);
         intergralChz = F(R.id.jf_chz);
@@ -80,10 +81,6 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         intergralChz.setOnClickListener(this);
         intergralRecord.setOnClickListener(this);
 
-//        String type = getIntent().getStringExtra("type");
-//        if (type != null) {
-//            position = Integer.parseInt(type);
-//        }
         getProducts(1);
     }
 
@@ -108,16 +105,15 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 integralAdapter = new IntegralAdapter(this, this, list, this);
                 mRecyclerView.setAdapter(integralAdapter);
 
-                if (position == -1) {
-                    // moveToPosition(5);
-                }
+                moveToPosition(cateId);
+
             }
             if (type == 2 && err.equals("0")) {
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
                 integralAll.setText(" " + integralBean.getPointsAll().toString());
             }
         } catch (Exception e) {
-            TextUtils.Toast(this, "数据解析错啦！");
+            //TextUtils.Toast(this, "数据解析错啦！");
         }
     }
 
@@ -158,24 +154,30 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
      *
      * @param n
      */
-    private void moveToPosition(int n) {
-        if (n < 0 || n >= integralAdapter.getItemCount()) {
-            return;
-        }
-        mIndex = n;
-        mRecyclerView.stopScroll();
-        appBarLayout.setExpanded(false);
+    private void moveToPosition(String cateId) {
+        if (cateId != null) {
+            for (int n = 0; n < list.size(); n++) {
+                if (list.get(n).getExtra_config().get(0).getCate_id().equals(cateId)) {
+                    if (n < 0 || n >= integralAdapter.getItemCount()) {
+                        return;
+                    }
+                    mIndex = n;
+                    mRecyclerView.stopScroll();
+                    appBarLayout.setExpanded(false);
 
-        int firstItem = manager.findFirstVisibleItemPosition();
-        int lastItem = manager.findLastVisibleItemPosition();
-        if (n <= firstItem) {
-            mRecyclerView.scrollToPosition(n);
-        } else if (n <= lastItem) {
-            int top = mRecyclerView.getChildAt(n - firstItem).getTop();
-            mRecyclerView.scrollBy(0, top);
-        } else {
-            mRecyclerView.scrollToPosition(n);
-            move = true;
+                    int firstItem = manager.findFirstVisibleItemPosition();
+                    int lastItem = manager.findLastVisibleItemPosition();
+                    if (n <= firstItem) {
+                        mRecyclerView.scrollToPosition(n);
+                    } else if (n <= lastItem) {
+                        int top = mRecyclerView.getChildAt(n - firstItem).getTop();
+                        mRecyclerView.scrollBy(0, top);
+                    } else {
+                        mRecyclerView.scrollToPosition(n);
+                        move = true;
+                    }
+                }
+            }
         }
     }
 

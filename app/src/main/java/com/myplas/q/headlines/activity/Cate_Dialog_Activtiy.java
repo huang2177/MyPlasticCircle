@@ -109,7 +109,7 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     public void setSelectCate() {
         Map<String, String> map = new HashMap<>();
         map.put("type", "1");
-        map.put("cate_id", getData(list_column_selected));
+        map.put("cateId", getData(list_column_selected));
         map.put("prop_id", getData(list_product_selected));
         postAsyn1(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 3, false);
     }

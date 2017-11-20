@@ -346,7 +346,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
         Glide.with(this)
                 .load(mDetailBean.getData().getThumb())
-                .placeholder(R.drawable.img_defaul_male)
                 .into(mIVHead);
 
         mIVFollow.setImageResource("0".equals(mDetailBean.getData().getStatus())

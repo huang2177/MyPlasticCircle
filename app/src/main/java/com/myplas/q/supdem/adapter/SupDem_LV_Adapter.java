@@ -38,14 +38,13 @@ import java.util.Map;
  */
 public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, CommonDialog.DialogShowInterface {
     Context context;
-    String type, user_id, id_;
+    String user_id, id_;
     List<SupDemBean.DataBean> list;
     SharedUtils sharedUtils = SharedUtils.getSharedUtils();
 
-    public SupDem_LV_Adapter(String type, Context context, List<SupDemBean.DataBean> list) {
+    public SupDem_LV_Adapter(Context context, List<SupDemBean.DataBean> list) {
         this.context = context;
         this.list = list;
-        this.type = type;
     }
 
     public void setList(List<SupDemBean.DataBean> list) {
@@ -77,6 +76,8 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
             viewHolder.time = (TextView) convertView.findViewById(R.id.supply_demand_time);
             viewHolder.typeSupDem = (ImageView) convertView.findViewById(R.id.supdem_img_type);
             viewHolder.content = (TextView) convertView.findViewById(R.id.supply_demand_content);
+            viewHolder.reply = (TextView) convertView.findViewById(R.id.supply_demand_reply);
+            viewHolder.deliver = (TextView) convertView.findViewById(R.id.supply_demand_deliver);
             viewHolder.mLayout = (LinearLayout) convertView.findViewById(R.id.supply_demand_company);
             viewHolder.typeNowFutures = (ImageView) convertView.findViewById(R.id.supply_demand_now_futures);
             convertView.setTag(viewHolder);
@@ -87,10 +88,11 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
             viewHolder.company.setText(replace(list.get(position).getC_name()) + "  "
                     + list.get(position).getName());
 
-            String time = ("1".equals(list.get(position).getFrom())
-                    ? "来自供求  "
-                    : "来自QQ群  ") + list.get(position).getInput_time();
-            viewHolder.time.setText(time);
+            viewHolder.time.setText(list.get(position).getInput_time());
+            if ("1".equals(list.get(position).getFrom())) {
+                viewHolder.reply.setText("回复()");
+                viewHolder.deliver.setText("出价()");
+            }
 
             String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + list.get(position).getStore_house()
                     + "<font color='#9c9c9c'>" + "   牌号:" + "</font>" + list.get(position).getModel()
@@ -132,8 +134,8 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
 
     class viewHolder {
         LinearLayout mLayout;
-        TextView company, content, time;
         ImageView typeSupDem, typeNowFutures;
+        TextView company, content, time, deliver, reply;
     }
 
     @Override

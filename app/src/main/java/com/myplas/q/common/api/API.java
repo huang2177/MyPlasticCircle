@@ -20,7 +20,7 @@ public class API {
      */
     public final static String BASEURL_API = (BuildConfig.API_ENV)
             ? "https://api.myplas.com/"
-            : "https://test.myplas.com/";
+            : "https://ssl.myplas.com/";
 
     /*common*/
     /**
@@ -66,11 +66,15 @@ public class API {
             ? "http://q.myplas.com/plasticzone/plastic#/supplybuydetail/"
             : "http://test.myplas.com/plasticzone/plastic#/supplybuydetail/";
     /**
-     * 分享供求
+     * 分享供求-QQ
      */
     public final static String PLASTIC_SUPPLY_DEMAND_QQ = (BuildConfig.API_ENV)
             ? "http://q.myplas.com/plasticzone/plastic#/qqinfo?id="
             : "http://test.myplas.com/plasticzone/plastic#/qqinfo?id=";
+    /**
+     * 极光推送用户个人偏好设置
+     */
+    public final static String JPUSHSET = "common/jpushSet";
 
 
     /*socket*/

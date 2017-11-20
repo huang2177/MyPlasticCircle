@@ -33,6 +33,7 @@ public class SettingAdapter extends RecyclerView.Adapter {
 
     Map<Integer, View> mViewMap;
     Map<Integer, SwitchButton> mSwitchMap;
+    private boolean notificationsEnabled;
 
     public SettingAdapter(Context context, List<String> list, List<Integer> list1) {
         this.list = list;
@@ -69,7 +70,10 @@ public class SettingAdapter extends RecyclerView.Adapter {
             viewHolder.mSwitch.setVisibility(View.VISIBLE);
             viewHolder.mSwitch.setOnCheckedChangeListener(new myOnCheckedChangeListener());
         }
-        if (position == 6) {
+        if (position == 3) {
+            viewHolder.mTextView1.setText(notificationsEnabled ? "已开启" : "已关闭，去开启");
+        }
+        if (position == 7) {
             String cacheSize = FileUtils.getTotalCacheSize(context);
             if (NumUtils.getNum(cacheSize) > 6) {
 //                FileUtils.clearAllCache(context);
@@ -80,7 +84,7 @@ public class SettingAdapter extends RecyclerView.Adapter {
                 viewHolder.mTextView1.setText(cacheSize1);
             }
         }
-        if (position == 7) {
+        if (position == 8) {
             viewHolder.mTextView1.setCompoundDrawablesWithIntrinsicBounds(versionImg
                     , 0
                     , R.drawable.icon_more
@@ -102,6 +106,10 @@ public class SettingAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return list != null ? list.size() : 0;
+    }
+
+    public void setNotificationsEnabled(boolean notificationsEnabled) {
+        this.notificationsEnabled = notificationsEnabled;
     }
 
 

@@ -186,7 +186,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
                     mListView.setVisibility(View.VISIBLE);
                     linearLayout_prompt.setVisibility(View.GONE);
                     if (page == 1) {
-                        mSupDemLVAdapter = new SupDem_LV_Adapter(ConfigData.what, getActivity(), mSupDemBean.getData());
+                        mSupDemLVAdapter = new SupDem_LV_Adapter(getActivity(), mSupDemBean.getData());
                         mListView.setAdapter(mSupDemLVAdapter);
                         mDataBeanList.clear();
                         mDataBeanList.addAll(mSupDemBean.getData());

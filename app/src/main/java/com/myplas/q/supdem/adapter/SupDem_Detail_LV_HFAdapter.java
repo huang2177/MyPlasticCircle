@@ -65,7 +65,6 @@ public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
 
             Glide.with(context)
                     .load(list.get(position).getThumb())
-                    .placeholder(R.drawable.img_defaul_female)
                     .into(viewHolder.mIVHead);
             viewHolder.mIVStart.setImageResource(list.get(position).getIs_pass().equals("0")
                     ? R.drawable.icon_identity

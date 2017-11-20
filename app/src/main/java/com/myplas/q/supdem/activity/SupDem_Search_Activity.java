@@ -33,13 +33,13 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.supdem.PopouShowUtils;
+import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
+import com.myplas.q.supdem.adapter.SupDem_Search_List_Adapter;
 import com.myplas.q.supdem.beans.HistoryBean;
 import com.myplas.q.supdem.beans.SearchNoResultBean;
 import com.myplas.q.supdem.beans.SearchResultBean;
 import com.myplas.q.supdem.beans.TabCofigBean;
-import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
-import com.myplas.q.supdem.adapter.SupDem_Search_List_Adapter;
-import com.myplas.q.supdem.PopouShowUtils;
 import com.optimus.edittextfield.EditTextField;
 import com.umeng.analytics.MobclickAgent;
 

@@ -315,7 +315,6 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
 
         Glide.with(this)
                 .load(detailBean.getThumb_qq())
-                .placeholder(R.drawable.img_defaul_male)
                 .into(roundImagView);
 
         if (detailBean.getOperate().equals("1")) {

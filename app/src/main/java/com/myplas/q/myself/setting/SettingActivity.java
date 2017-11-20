@@ -3,8 +3,11 @@ package com.myplas.q.myself.setting;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -65,8 +68,10 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
     private SharedUtils sharedUtils;
     private MainActivity mainActivity;
 
+    private boolean isOpen;
     private String promit, url;
     private int versionService, versionLocate;
+    private NotificationManagerCompat managerCompat;
     private VersionUpdateDialogUtils mUpdateDialogUtils;
 
     @Override
@@ -104,10 +109,13 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
     public void initSetting() {
         mStringList = new ArrayList<>();
         mIntegerList = new ArrayList<>();
+        managerCompat = NotificationManagerCompat.from(this);
+        isOpen = managerCompat.areNotificationsEnabled();
 
         mStringList.add("个人资料");
         mStringList.add("手机号码公开");
         mStringList.add("短信设置");
+        mStringList.add("新消息通知");
         mStringList.add("修改密码");
         mStringList.add("帮助中心");
         mStringList.add("在线客服");
@@ -119,6 +127,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         mIntegerList.add(R.drawable.setup_icon_user);
         mIntegerList.add(R.drawable.setup_icon_phone);
         mIntegerList.add(R.drawable.setup_icon_message);
+        mIntegerList.add(R.drawable.setup_icon_switch);
         mIntegerList.add(R.drawable.setup_icon_password);
         mIntegerList.add(R.drawable.setup_icon_help);
         mIntegerList.add(R.drawable.setup_icon_customer_service);
@@ -129,6 +138,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
 
         mAdapter = new SettingAdapter(this, mStringList, mIntegerList);
         mAdapter.setMySwitchCheckedListenler(this);
+        mAdapter.setNotificationsEnabled(isOpen);
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new SettingAdapter.OnItemClickListener() {
@@ -148,25 +158,28 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                         startActivity(intent2);
                         break;
                     case 3:
+                        getAppDetailSettingIntent();
+                        break;
+                    case 4:
                         Intent intent3 = new Intent(SettingActivity.this, FindPSWActivity.class);
                         intent3.putExtra("title", "修改密码");
                         startActivity(intent3);
                         break;
-                    case 4:
+                    case 5:
                         Intent intent4 = new Intent(SettingActivity.this, HelpActivity.class);
                         startActivity(intent4);
                         break;
-                    case 5:
+                    case 6:
                         information = new Information();
                         information.setAppkey(appkey);
                         SobotApi.startSobotChat(SettingActivity.this, information);
                         break;
-                    case 6:
+                    case 7:
                         String content = "确定清除？";
                         CommonDialog commonDialog = new CommonDialog();
                         commonDialog.showDialog(SettingActivity.this, content, 10, SettingActivity.this);
                         break;
-                    case 7:
+                    case 8:
                         //比较版本号
                         if (versionService > versionLocate) {
                             mUpdateDialogUtils = new VersionUpdateDialogUtils(SettingActivity.this, promit, url);
@@ -175,7 +188,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                             TextUtils.Toast(SettingActivity.this, "当前已是最新版本！");
                         }
                         break;
-                    case 8:
+                    case 9:
                         try {
                             Uri uri = Uri.parse("market://details?id=" + getPackageName());
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -184,7 +197,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                         } catch (Exception e) {
                         }
                         break;
-                    case 9:
+                    case 10:
                         Intent intent8 = new Intent(SettingActivity.this, AboutPlasticActivity.class);
                         startActivity(intent8);
                         break;
@@ -209,6 +222,25 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
 
     public void getRecommendVersion() {
         postAsyn1(this, API.BASEURL + API.CHECKAPPVERSION, null, this, 4, false);
+    }
+
+    /**
+     * 跳转到设置页面
+     */
+    private void getAppDetailSettingIntent() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Intent intent = new Intent();
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", getPackageName());
+            intent.putExtra("app_uid", getApplicationInfo().uid);
+            startActivity(intent);
+        } else if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse("package:" + getPackageName()));
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -277,6 +309,21 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
             ACache.get(this).clear();
             FileUtils.clearAllCache(this);
             mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        managerCompat = NotificationManagerCompat.from(this);
+        boolean isOpen = managerCompat.areNotificationsEnabled();
+        mAdapter.setNotificationsEnabled(isOpen);
+        mAdapter.notifyDataSetChanged();
+
+        if (this.isOpen != isOpen) {
+            Map<String, String> map = new HashMap<>();
+            map.put("is_allow", isOpen ? "1" : "0");
+            postAsyn1(this, API.BASEURL + API.JPUSHSET, map, this, 6, false);
         }
     }
 }

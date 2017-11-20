@@ -124,6 +124,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             rCallback(false);
         } else {
             goToMySelf();
+            getConfig();
         }
     }
 

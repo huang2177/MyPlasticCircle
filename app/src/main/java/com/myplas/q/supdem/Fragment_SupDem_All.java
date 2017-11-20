@@ -274,7 +274,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                 mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
                 if (page == 1) {
                     mRefreshLayout.setRefreshing(false);
-                    mSupDemLVAdapter = new SupDem_LV_Adapter(ConfigData.what, getActivity(), mSupDemBean.getData());
+                    mSupDemLVAdapter = new SupDem_LV_Adapter(getActivity(), mSupDemBean.getData());
                     mListView.setAdapter(mSupDemLVAdapter);
                     mDataBeanList.clear();
                     mDataBeanList.addAll(mSupDemBean.getData());

@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/color_white">
+    android:id="@+id/preimg_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:gravity="center"
+    android:transitionName="bigImageView">
 
-    <FrameLayout
-        android:id="@+id/img_big_linear"
+
+    <com.sobot.chat.widget.photoview.PhotoView
+        android:id="@+id/photoview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transitionName="bigImageView">
-
-        <com.sobot.chat.widget.photoview.PhotoView
-            android:id="@+id/photoview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"/>
-    </FrameLayout>
+        android:layout_gravity="center"
+        android:scaleType="center" />
 </LinearLayout>

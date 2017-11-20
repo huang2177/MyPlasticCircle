@@ -87,10 +87,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/my_theme_animation" />
         <activity
-            android:name="com.myplas.q.guide.activity.BigImageViewActivity"
+            android:name="com.myplas.q.guide.activity.PreImageViewActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/AppBlankTheme" />
+            android:theme="@style/app_theme_transparent" />
 
         <!--contact-->
         <activity

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,7 +64,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     public boolean isFree;
     public String keywords1;
     private SharedUtils sharedUtils;
-    public String cate_id, keywords, clickId;
+    public String cateId, keywords, clickId;
     public int page, po, visibleItemCount, lastvisibleItemCount;
 
     private HBanner mBanner;
@@ -91,6 +92,15 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     private ACache mACache;
     private Handler mHandler;
 
+    public static HeadLineListFragment newInstance(String cateId, int position) {
+        HeadLineListFragment fragment = new HeadLineListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("cateId", cateId);
+        bundle.putInt("position", position);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +108,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     }
 
     private void intiView() {
+        page = 1;
         mHandler = new Handler();
         mListId = new ArrayList<>();
         mListImg = new ArrayList<>();
@@ -109,6 +120,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         emptyView = new EmptyView(getActivity());
         sharedUtils = SharedUtils.getSharedUtils();
         mRefreshPopou = new RefreshPopou(getActivity(), 1);
+
+        po = getArguments().getInt("position");
+        cateId = getArguments().getString("cateId");
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_headline_list_fm, null, false);
         imageButton = (ImageButton) view.findViewById(R.id.img_reload);
@@ -149,9 +163,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                 }
             });
             loadCache(); //先读缓存中的数据
-            get_Subscribe(1, "", "2", true);
+            get_Subscribe(1, "2", true);
         } else {
-            get_CateList(1, cate_id, false);
+            get_CateList(1, cateId, false);
         }
 
         //item的监听
@@ -159,10 +173,10 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetUtils.isNetworkStateed(getActivity())) {
-                    clickId = (po == 0 || po == -1)
+                    clickId = (po == 0)
                             ? (list_subcirble.get(position - 1).getId())
                             : (list_catelist.get(position).getId());
-                    isFree = (po == 0 || po == -1)
+                    isFree = (po == 0)
                             ? (list_subcirble.get(position - 1).getIs_free().equals("1"))
                             : (list_catelist.get(position).getIs_free().equals("1"));
                     if (isFree) {
@@ -236,12 +250,12 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     }
 
     //获取推荐
-    public void get_Subscribe(int page, String keywords, String subscribe, boolean isShow) {
+    public void get_Subscribe(int page, String subscribe, boolean isShow) {
         this.page = page;
         this.keywords = keywords;
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page + "");
-        map.put("keywords", keywords);
+        map.put("keywords", "");
         map.put("subscribe", subscribe);
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_SUBSCRIBE, map, this, 4, isShow);
     }
@@ -249,7 +263,8 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     //获取其他
     public void get_CateList(int page, String cate_id, boolean isShow) {
         this.page = page;
-        this.cate_id = cate_id;
+        this.cateId = cate_id;
+
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page + "");
         map.put("size", "10");
@@ -380,7 +395,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     @Override
     public void ok(int type) {
         Intent intent = new Intent(getActivity(), IntegralActivity.class);
-        intent.putExtra("type", po + "");
+        intent.putExtra("type", cateId + "");
         startActivity(intent);
     }
 
@@ -403,9 +418,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         page = 1;
         mRefreshPopou.setCanShowPopou(true);
         if (po == 0) {
-            get_Subscribe(page, "", "2", false);
+            get_Subscribe(page, "2", false);
         } else {
-            get_CateList(page, cate_id, false);
+            get_CateList(page, cateId, false);
         }
     }
 
@@ -416,7 +431,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         if (po == 0) {
             get_CateList(page, "999", false);
         } else {
-            get_CateList(page, cate_id, false);
+            get_CateList(page, cateId, false);
         }
     }
 
@@ -426,9 +441,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             case R.id.img_reload:
                 page = 1;
                 if (po == 0) {
-                    get_Subscribe(1, "", "2", true);
+                    get_Subscribe(1, "2", true);
                 } else {
-                    get_CateList(1, cate_id, true);
+                    get_CateList(1, cateId, true);
                 }
                 break;
             case R.id.image_backup:

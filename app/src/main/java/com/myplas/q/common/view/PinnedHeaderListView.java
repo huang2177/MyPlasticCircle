@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.*;
 import android.widget.AbsListView.OnScrollListener;
 
+/**
+ * @author huangshuang
+ */
 public class PinnedHeaderListView extends ListView implements OnScrollListener {
 
     private OnScrollListener mOnScrollListener;

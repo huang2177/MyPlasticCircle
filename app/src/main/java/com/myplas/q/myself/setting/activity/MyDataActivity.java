@@ -1,9 +1,11 @@
 package com.myplas.q.myself.setting.activity;
 
+import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.guide.activity.PreImageViewActivity;
 import com.myplas.q.myself.beans.MySelfInfo;
 
 import org.json.JSONObject;
@@ -48,14 +51,15 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private String sexInPut, regionInPut;
     private String type, address, addressId, sex, region, product, monthUse, mainPro, model;
 
-    private RoundCornerImageView image_tx;
-    private ImageView imageShch, cardMore, headMore;
+    private View shareView;
+    private RoundCornerImageView imageHead;
+    private ImageView imageCard, cardMore, headMore;
     private RadioGroup radiogroupSex, radiogroupAddress;
     private LinearLayout llProMonth, llAdd, llSex, llRegion, llPro, llMothonuse, llMainsell, llMode;
     private TextView textXb, textviewDzh, textGs, textDh, textviewZhy, textviewPh, textviewNum, textviewProduct,
             textviewAddress, textviewCompany, myMainProd, myMainProdSave;
 
-    private String from;
+    private String from, imgCard, imgHead;
     private final String ACTION = "com.broadcast.databack";
 
     @Override
@@ -75,8 +79,8 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         textDh = F(R.id.wd_zl_tel);
         cardMore = F(R.id.data_img_card);
         headMore = F(R.id.data_head_card);
-        image_tx = F(R.id.wd_zl_text_headimg);
-        imageShch = F(R.id.wd_zl_text_upload);
+        imageCard = F(R.id.wd_zl_text_upload);
+        imageHead = F(R.id.wd_zl_text_headimg);
 
         myMainProd = F(R.id.textView8);
         textXb = F(R.id.wd_zl_text_xb);
@@ -114,9 +118,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             llPro.setOnClickListener(this);
             llMode.setOnClickListener(this);
             mIVLeft.setOnClickListener(this);
-            image_tx.setOnClickListener(this);
             llRegion.setOnClickListener(this);
-            imageShch.setOnClickListener(this);
             llMainsell.setOnClickListener(this);
             llProMonth.setOnClickListener(this);
             llMothonuse.setOnClickListener(this);
@@ -131,6 +133,8 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             textviewAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             textviewProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
         }
+        imageHead.setOnClickListener(this);
+        imageCard.setOnClickListener(this);
     }
 
 
@@ -142,14 +146,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         }
         switch (v.getId()) {
             case R.id.wd_zl_text_headimg:
-                Intent intent1 = new Intent(this, TakePhotoDialogActivity.class);
-                intent1.putExtra("type", "1");
-                startActivityForResult(intent1, 100);
+                shareView = imageHead;
+                preViewOrUpLoad("1", imgHead, 100);
                 break;
             case R.id.wd_zl_text_upload:
-                Intent intent2 = new Intent(this, TakePhotoDialogActivity.class);
-                intent2.putExtra("type", "2");
-                startActivityForResult(intent2, 200);
+                shareView = imageCard;
+                preViewOrUpLoad("2", imgCard, 200);
                 break;
             case R.id.setting_data_sex:
                 Intent intent3 = new Intent(this, DataCommonActivity.class);
@@ -215,6 +217,42 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+    /**
+     * 判断是上传图片还是放大图片
+     *
+     * @param type        使相机还是相册
+     * @param imgurl      图片url
+     * @param requestCode
+     */
+
+    private void preViewOrUpLoad(String type, String imgurl, int requestCode) {
+        if ("1".equals(from)) {
+            Intent intent1 = new Intent(this, PreImageViewActivity.class);
+            intent1.putExtra("imgurl", imgurl);
+            startActivityByTras(intent1);
+        } else {
+            Intent intent1 = new Intent(this, TakePhotoDialogActivity.class);
+            intent1.putExtra("type", type);
+            startActivityForResult(intent1, requestCode);
+        }
+    }
+
+    /**
+     * 使用共享元素--activity跳转
+     *
+     * @param intent
+     */
+    private void startActivityByTras(Intent intent) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this
+                    , shareView
+                    , "bigImageView"
+            ).toBundle());
+        } else {
+            startActivity(intent);
+        }
+    }
+
     public void requestNetData() {
         Map<String, String> map = new HashMap<>();
         map.put("token", sharedUtils.getData(this, "token"));
@@ -238,7 +276,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
      */
     public void saveData() {
         try {
-            Map map = new HashMap();
+            Map map = new HashMap(20);
             if (type.equals("1")) {
                 map.put("month_consum", monthUse);
                 map.put("main_product", product);
@@ -299,11 +337,13 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     public void showInfo(MySelfInfo mySelfInfo) {
         try {
-            type = mySelfInfo.getData().getType();
             sex = mySelfInfo.getData().getSex();
-            region = mySelfInfo.getData().getAdistinct();
+            type = mySelfInfo.getData().getType();
+            imgHead = mySelfInfo.getData().getThumb();
             address = mySelfInfo.getData().getAddress();
+            region = mySelfInfo.getData().getAdistinct();
             addressId = mySelfInfo.getData().getOrigin();
+            imgCard = mySelfInfo.getData().getThumbcard();
             model = mySelfInfo.getData().getConcern_model();
             product = mySelfInfo.getData().getMain_product();
             mainPro = mySelfInfo.getData().getNeed_product();
@@ -319,13 +359,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             textGs.setText(mySelfInfo.getData().getC_name());
             textDh.setText(mySelfInfo.getData().getMobile());
             Glide.with(this)
-                    .load(mySelfInfo.getData().getThumbcard())
+                    .load(imageCard)
                     .placeholder(R.drawable.card)
-                    .into(imageShch);
+                    .into(imageCard);
             Glide.with(this)
-                    .load(mySelfInfo.getData().getThumb())
-                    .placeholder(R.drawable.img_defaul_male)
-                    .into(image_tx);
+                    .load(imgHead)
+                    .into(imageHead);
 
             switch (type) {
                 case "1":
@@ -418,12 +457,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
         if (requestCode == 100 && resultCode == 1) {
             String imagePath = data.getStringExtra("img_url");
-            Glide.with(this).load(imagePath).into(image_tx);
+            Glide.with(this).load(imagePath).into(imageHead);
             upLoadImg(API.SAVE_PIC_TO_SERVER, imagePath, 5);
         }
         if (requestCode == 200 && resultCode == 2) {
             String imagePath = data.getStringExtra("img_url");
-            Glide.with(this).load(imagePath).into(imageShch);
+            Glide.with(this).load(imagePath).into(imageCard);
             upLoadImg(API.SAVE_CARD_IMG, imagePath, 6);
         }
         if (requestCode == 6 && data != null) {

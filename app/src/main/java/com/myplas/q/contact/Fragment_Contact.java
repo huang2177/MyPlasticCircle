@@ -336,7 +336,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
     }
 
-    private void _startActivity(Intent intent) {
+    private void startActivityByTras(Intent intent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()
                     , shareView1

@@ -121,7 +121,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
                 : R.drawable.login_btn_shape);
     }
 
-    //点击下一步
+    //点击确定
     public void getNetData() {
         String name = mName.getText().toString();
         String company = mCompany.getText().toString();
@@ -197,15 +197,13 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1) {
-                if (!jsonObject.getString("err").equals("0")) {
+                if (!"0".equals(jsonObject.getString("err"))) {
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
                     TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
                 } else {
                     Gson gson = new Gson();
                     RegisterBean bean = gson.fromJson(object.toString(), RegisterBean.class);
-
                     setRedDots(bean);
-
                     if (mBaseInterface != null) {
                         mBaseInterface.complete(2);
                         mBaseInterface.dataBack(this, Arrays.asList(bean.getRegister_ranking()));
@@ -217,21 +215,11 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
     }
 
     /**
-     * 保存默认小红点数据和token userId
+     * 保存token userId
      *
      * @param object
      */
     private void setRedDots(RegisterBean bean) {
-
-        mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
-        mACache.put(Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
-        mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
-        mACache.put(Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
-        mACache.put(Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
-        mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
-        mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
-        mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
-
         mShareUtils.setData(getActivity(), Constant.TOKEN, bean.getToken());
         mShareUtils.setBooloean(getActivity(), Constant.LOGINED, true);
         mShareUtils.setData(getActivity(), Constant.USERID, bean.getUser_id());

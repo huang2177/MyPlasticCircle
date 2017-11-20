@@ -34,7 +34,8 @@
                     android:layout_height="60dp"
                     android:layout_margin="3dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_defaul_male" />
+                    android:src="@drawable/img_defaul_male"
+                    android:transitionName="bigImageView" />
 
                 <ImageView
                     android:id="@+id/data_head_card"
@@ -361,7 +362,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/card" />
+                    android:src="@drawable/card"
+                    android:transitionName="bigImageView" />
 
                 <ImageView
                     android:id="@+id/data_img_card"

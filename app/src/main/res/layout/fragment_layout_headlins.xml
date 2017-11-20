@@ -43,16 +43,6 @@
             android:textSize="14.0sp"
             android:maxLines="1"/>
 
-        <TextView
-            android:id="@+id/search_src_text"
-            android:layout_width="65dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/toplines_shape_text"
-            android:gravity="center"
-            android:text="搜索"
-            android:textColor="@color/color_white"
-            android:visibility="gone"/>
     </LinearLayout>
 
     <include layout="@layout/fragment_layout_headline_tabbar"/>

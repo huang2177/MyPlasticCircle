@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tl="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_white"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <View
@@ -15,6 +12,8 @@
         android:background="@color/color_red" />
 
     <include layout="@layout/layout_titlebar_gq" />
+
+    <include layout="@layout/layout_notification" />
 
     <com.androidkun.xtablayout.XTabLayout
         android:id="@+id/supdem_tablayout"

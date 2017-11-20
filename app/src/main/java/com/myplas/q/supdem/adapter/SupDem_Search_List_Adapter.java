@@ -75,8 +75,10 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
             convertView = LayoutInflater.from(context).inflate(R.layout.item_supdem_lv_layout, parent, false);
             viewHolder.company = (TextView) convertView.findViewById(R.id.gq_listview_gs);
             viewHolder.time = (TextView) convertView.findViewById(R.id.supply_demand_time);
+            viewHolder.reply = (TextView) convertView.findViewById(R.id.supply_demand_reply);
             viewHolder.typeSupDem = (ImageView) convertView.findViewById(R.id.supdem_img_type);
             viewHolder.content = (TextView) convertView.findViewById(R.id.supply_demand_content);
+            viewHolder.deliver = (TextView) convertView.findViewById(R.id.supply_demand_deliver);
             viewHolder.mLayout = (LinearLayout) convertView.findViewById(R.id.supply_demand_company);
             viewHolder.typeNowFutures = (ImageView) convertView.findViewById(R.id.supply_demand_now_futures);
             convertView.setTag(viewHolder);
@@ -87,11 +89,11 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
             viewHolder.company.setText(replace(list.get(position).getC_name()) + "  "
                     + list.get(position).getName());
 
-            String time = ("1".equals(list.get(position).getFrom())
-                    ? "来自供求 "
-                    : "来自QQ群 ")
-                    + list.get(position).getInput_time();
-            viewHolder.time.setText(time);
+            viewHolder.time.setText(list.get(position).getInput_time());
+            if ("1".equals(list.get(position).getFrom())) {
+                viewHolder.reply.setText("回复()");
+                viewHolder.deliver.setText("出价()");
+            }
 
             String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + list.get(position).getStore_house()
                     + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + list.get(position).getModel()
@@ -132,8 +134,8 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
 
     class viewHolder {
         LinearLayout mLayout;
-        TextView company, content, time;
         ImageView typeSupDem, typeNowFutures;
+        TextView company, content, time, deliver, reply;
     }
 
     @Override
