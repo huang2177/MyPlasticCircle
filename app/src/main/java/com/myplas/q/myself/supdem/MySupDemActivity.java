@@ -144,7 +144,7 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
                         emptyText.setMovementMethod(LinkMovementMethod.getInstance());
 
                     } else {
-                        TextUtils.Toast(this, "没有更多数据了！");
+                        TextUtils.toast(this, "没有更多数据了！");
                     }
                 }
             }

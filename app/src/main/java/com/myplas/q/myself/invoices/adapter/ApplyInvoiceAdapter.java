@@ -179,7 +179,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
                             mEditText.addTextChangedListener(this);
                         } else if (isFourFloat(s.toString()) == 3) {
                             mEditText.setText(maxString);
-                            TextUtils.Toast(context, "最多可以输入四位小数！");
+                            TextUtils.toast(context, "最多可以输入四位小数！");
                         }
                     }
                 } catch (Exception e) {

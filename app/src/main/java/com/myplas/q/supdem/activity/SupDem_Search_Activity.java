@@ -168,7 +168,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                             if (hasMoerData) {
                                 getphysicalSearch(page, keywords, time, isBuy, area, false);
                             } else {
-                                TextUtils.Toast(SupDem_Search_Activity.this, "没有更多数据了！");
+                                TextUtils.toast(SupDem_Search_Activity.this, "没有更多数据了！");
                             }
                         }
                     }
@@ -365,7 +365,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                         adapterGrid = new SupDem_Search_Grid_Adapter(this, bean.getCombine());
                         gridviewSubcribeNo.setAdapter(adapterGrid);
                     } else {
-                        TextUtils.Toast(this, "没有更多数据！");
+                        TextUtils.toast(this, "没有更多数据！");
                     }
                 }
             }
@@ -386,7 +386,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 SharedUtils.getSharedUtils().setData(this, "position_city", 0 + "");
             }
             if (type == 4 && err) {
-                TextUtils.Toast(this, "删除成功！");
+                TextUtils.toast(this, "删除成功！");
                 adapterGrid = new SupDem_Search_Grid_Adapter(this, null);
                 gridviewHistory.setAdapter(adapterGrid);
             }

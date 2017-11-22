@@ -1,24 +1,15 @@
 package com.myplas.q.myself.login;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.lib.WheelView;
@@ -35,10 +26,8 @@ import com.myplas.q.guide.activity.BaseActivity;
 
 import org.json.JSONObject;
 
-import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -130,7 +119,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
                 || !TextUtils.isNullOrEmpty(name)
                 || !TextUtils.isNullOrEmpty(company)) {
 
-            TextUtils.Toast(getActivity(), "请输入完整信息！");
+            TextUtils.toast(getActivity(), "请输入完整信息！");
             return;
         }
 
@@ -199,7 +188,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
             if (type == 1) {
                 if (!"0".equals(jsonObject.getString("err"))) {
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
-                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 } else {
                     Gson gson = new Gson();
                     RegisterBean bean = gson.fromJson(object.toString(), RegisterBean.class);

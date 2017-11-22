@@ -173,7 +173,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     mButtonNomal.setClickable(false);
                     mButtonNomal.setBackgroundResource(R.drawable.login_btn_shape);
                 } else {
-                    TextUtils.Toast(this, "手机号码或密码输入有误！");
+                    TextUtils.toast(this, "手机号码或密码输入有误！");
                 }
                 break;
             //手机动态码登陆
@@ -191,7 +191,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     mButtonPhone.setClickable(false);
                     mButtonPhone.setBackgroundResource(R.drawable.login_btn_shape);
                 } else {
-                    TextUtils.Toast(this, "手机号码或验证码输入有误！");
+                    TextUtils.toast(this, "手机号码或验证码输入有误！");
                 }
                 break;
 
@@ -247,7 +247,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             map1.put("key", key);
             postAsyn(this, url, map1, this, 3);
         } else {
-            TextUtils.Toast(this, "验证码不能为空！");
+            TextUtils.toast(this, "验证码不能为空！");
         }
     }
 
@@ -283,7 +283,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                         ? R.drawable.login_btn_shape_hl
                         : R.drawable.login_btn_shape);
 
-                TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
                 if (s.equals("0")) {
 
                     setData(jsonObject);
@@ -305,14 +305,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 sendMSG();
             } else if (type == 3 && !s.equals("0")) {
                 String msg = new JSONObject(object.toString()).getString("msg");
-                TextUtils.Toast(this, msg);
+                TextUtils.toast(this, msg);
             }
             if (type == 4 && s.equals("0")) {
-                TextUtils.Toast(this, "发送成功！");
+                TextUtils.toast(this, "发送成功！");
                 initThread();
             } else if (type == 4 && !s.equals("0")) {
                 String msg = new JSONObject(object.toString()).getString("msg");
-                TextUtils.Toast(this, msg);
+                TextUtils.toast(this, msg);
             }
         } catch (Exception e) {
         }

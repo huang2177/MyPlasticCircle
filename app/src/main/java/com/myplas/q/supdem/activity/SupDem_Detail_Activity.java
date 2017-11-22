@@ -191,7 +191,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     public void deliverOrReply() {
         String s = mEditText.getText().toString();
         if (!TextUtils.isNullOrEmpty(s)) {
-            TextUtils.Toast(this, "内容不能为空！");
+            TextUtils.toast(this, "内容不能为空！");
             return;
         }
 
@@ -286,7 +286,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 }
             }
             if (type == 2 && err.equals("0")) {
-                TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
                 String msg = new JSONObject(object.toString()).getString("msg");
                 mIVFollow.setImageResource(msg.equals("关注成功")
                         ? R.drawable.img_supdem_detail_followed

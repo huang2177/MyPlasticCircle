@@ -90,7 +90,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                             page++;
                             getData(String.valueOf(page), type);
                         } else {
-                            TextUtils.Toast(IntegralDetialActivtity.this, "没有更多数据！");
+                            TextUtils.toast(IntegralDetialActivtity.this, "没有更多数据！");
                         }
                     }
                 }

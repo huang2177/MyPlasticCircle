@@ -169,7 +169,7 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
     public void callBack(Object object, int type) {
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
-            TextUtils.Toast(context, jsonObject.getString("msg"));
+            TextUtils.toast(context, jsonObject.getString("msg"));
             if (jsonObject.getString("err").equals("0")) {
                 if (myInterface != null) {
                     myInterface.reQuestNet();

@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -323,7 +322,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                         emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
                         mListView.setEmptyView(emptyView);
                     } else {
-                        TextUtils.Toast(getActivity(), "没有更多数据了！");
+                        TextUtils.toast(getActivity(), "没有更多数据了！");
                     }
                 }
             }
@@ -385,7 +384,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                     emptyView.setNoMessageText(new JSONObject(data).getString("msg"));
                     mListView.setEmptyView(emptyView);
                 } else {
-                    TextUtils.Toast(getActivity(), "没有更多数据了！");
+                    TextUtils.toast(getActivity(), "没有更多数据了！");
                 }
             }
         } catch (Exception e) {

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -136,13 +135,13 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
             }
             if (type == 2) {
                 if ("0".equals(err)) {
-                    TextUtils.Toast(this, "提交成功！");
+                    TextUtils.toast(this, "提交成功！");
                     finish();
                 } else {
                     mButton.setClickable(true);
                     mButton.setBackgroundColor(getResources().getColor(R.color.color_red));
                     String msg = new JSONObject(object.toString()).getString("msg");
-                    TextUtils.Toast(this, msg);
+                    TextUtils.toast(this, msg);
                 }
             }
         } catch (Exception e) {

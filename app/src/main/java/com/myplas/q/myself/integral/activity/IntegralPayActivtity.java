@@ -18,14 +18,14 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyGridview;
-import com.myplas.q.myself.integral.adapter.Integral_Pay_Adapter;
+import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.OrderBean;
 import com.myplas.q.myself.beans.SelectableBean;
+import com.myplas.q.myself.integral.adapter.Integral_Pay_Adapter;
 import com.myplas.q.wechatpay.PayUtis;
 import com.umeng.analytics.MobclickAgent;
 
@@ -112,7 +112,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                             editText.removeTextChangedListener(this);
                             editText.setText("");
                             editText.addTextChangedListener(this);
-                            TextUtils.Toast(IntegralPayActivtity.this, "你输入的金额无效！");
+                            TextUtils.toast(IntegralPayActivtity.this, "你输入的金额无效！");
                         } else {
                             getExact(s.toString(), this);
                         }
@@ -148,7 +148,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
             editText.setText(string);
             editText.addTextChangedListener(textWatcher);
             editText.setSelection(s.toString().length());
-            TextUtils.Toast(IntegralPayActivtity.this, "你输入的金额已达上限！");
+            TextUtils.toast(IntegralPayActivtity.this, "你输入的金额已达上限！");
         }
         getExactAmount(string);
         isSelected_money = true;
@@ -173,6 +173,8 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.chz_rules:
                 startActivity(new Intent(this, IntegralRuleActivtity.class));
+                break;
+            default:
                 break;
         }
     }
@@ -199,7 +201,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
             map.put("goods_num", plasticBean + "");
             postAsyn(this, API.BASEURL + API.GET_PREPAY_ORDER, map, this, 3);
         } else {
-            TextUtils.Toast(this, "请选择您需要充值的金额！");
+            TextUtils.toast(this, "请选择您需要充值的金额！");
         }
     }
 
@@ -242,7 +244,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                     callWeChat(order_id, "-2");
                 }
             } else if (type == 3) {
-                TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
             }
         } catch (Exception e) {
         }

@@ -77,6 +77,8 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
             case R.id.takephoto_close:
                 finish();
                 break;
+            default:
+                break;
         }
     }
 
@@ -91,7 +93,6 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
                     int backcode = Integer.parseInt(type);
                     Intent intent = new Intent();
                     intent.putExtra("img_url", pathList.get(0));
-                    Log.e("*********", pathList.get(0));
                     setResult(backcode, intent);
                     finish();
                 }
@@ -101,6 +102,12 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
                 if (resultCode == RESULT_OK) {  //相册
                     pathList = Album.parseResult(data);
                     cutPhoto(pathList);
+//                    int backcode = Integer.parseInt(type);
+//                    String pick_url = (pathList.size() == 0) ? (pathList.get(0)) : (pathList.get(0));
+//                    Intent intent = new Intent();
+//                    intent.putExtra("img_url", pick_url);
+//                    setResult(backcode, intent);
+//                    finish();
                 }
             }
             if (requestCode == 300) {  // 解析剪切结果：
@@ -112,13 +119,17 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
                     intent.putExtra("img_url", pick_url);
                     setResult(backcode, intent);
                     finish();
-
                 }
             }
         } catch (Exception e) {
         }
     }
 
+    /**
+     * 裁剪
+     *
+     * @param pathList
+     */
     private void cutPhoto(ArrayList<String> pathList) {
         Durban.with(this)
                 // 裁剪界面的标题。
@@ -129,35 +140,25 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
                 .inputImagePaths(pathList)
                 // 图片输出文件夹路径。
                 // 裁剪图片输出的最大宽高。
-                .maxWidthHeight(100, 100)
+                //.maxWidthHeight(100, 100)
                 // 裁剪时的宽高比。
-                .aspectRatio(1, 1)
+                //.aspectRatio(1, 1)
                 // 图片压缩格式：JPEG、PNG。
                 .compressFormat(Durban.COMPRESS_PNG)
                 // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)
-                .compressQuality(90)
+                .compressQuality(100)
                 // 裁剪时的手势支持：ROTATE, SCALE, ALL, NONE.
                 .gesture(Durban.GESTURE_SCALE)
-                .controller(
-                        Controller.newBuilder()
-                                .enable(true) // 是否开启控制面板。
-                                .rotation(true) // 是否有旋转按钮。
-                                .rotationTitle(true) // 旋转控制按钮上面的标题。
-                                .scale(true) // 是否有缩放按钮。
-                                .scaleTitle(true) // 缩放控制按钮上面的标题。
-                                .build()) // 创建控制面板配置。
+                .controller(Controller.newBuilder()
+                        .enable(true) // 是否开启控制面板。
+                        .rotation(true) // 是否有旋转按钮。
+                        .rotationTitle(true) // 旋转控制按钮上面的标题。
+                        .scale(true) // 是否有缩放按钮。
+                        .scaleTitle(true) // 缩放控制按钮上面的标题。
+                        .build()) // 创建控制面板配置。
                 .requestCode(300)
                 .start();
     }
 
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

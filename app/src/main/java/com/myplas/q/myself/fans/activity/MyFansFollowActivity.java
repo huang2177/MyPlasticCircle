@@ -136,7 +136,7 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                         emptyView.setMyManager(R.drawable.icon_null);
                         listView.setEmptyView(emptyView);
                     } else {
-                        TextUtils.Toast(this, "没有更多数据了！");
+                        TextUtils.toast(this, "没有更多数据了！");
                     }
                 }
             }

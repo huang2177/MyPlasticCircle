@@ -1,5 +1,6 @@
 package com.myplas.q.contact.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * 邮箱： 15378412400@163.com
  */
 
-public class ContactInfoBean {
+public class ContactInfoBean implements Serializable {
 
 
     /**
@@ -35,7 +36,7 @@ public class ContactInfoBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * user_id : 53441
          * name : 韩梅梅
@@ -220,7 +221,7 @@ public class ContactInfoBean {
             this.demand = demand;
         }
 
-        public static class SuppliesBean {
+        public static class SuppliesBean implements Serializable {
             /**
              * pur_id : 436
              * model : 9001
@@ -336,7 +337,7 @@ public class ContactInfoBean {
             }
         }
 
-        public static class DemandBean {
+        public static class DemandBean implements Serializable {
             /**
              * pur_id : 387
              * model : 9001

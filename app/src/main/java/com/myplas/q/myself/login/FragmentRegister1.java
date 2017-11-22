@@ -10,7 +10,6 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.myself.supdem.MySupDemActivity;
 
 import org.json.JSONObject;
 
@@ -103,7 +101,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         mIndentify = (MyEditText) mView.findViewById(R.id.register_identify);
         mTVIndentify = (TextView) mView.findViewById(R.id.register_tv_indentify);
 
-        mTVRead.setText(Html.fromHtml("已阅读<font color='#0099cc'>" + "《塑料圈通讯录协议》</font>"));
+        mTVRead.setText(Html.fromHtml("已阅读<font color='#0099cc'>《塑料圈通讯录协议》</font>"));
 
         mTVRead.setOnClickListener(this);
         buttonNext.setOnClickListener(this);
@@ -155,7 +153,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
      */
     private void getIndentify() {
         if (!TextUtils.isPhoneNum(phone)) {
-            TextUtils.Toast(getActivity(), "手机号输入有误！");
+            TextUtils.toast(getActivity(), "手机号输入有误！");
             return;
         }
         Map<String, String> map1 = new HashMap<String, String>(4);
@@ -172,11 +170,11 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         pass = mPassWord.getText().toString();
         indentify = mIndentify.getText().toString();
         if (!TextUtils.isNullOrEmpty(pass) || !TextUtils.isNullOrEmpty(indentify)) {
-            TextUtils.Toast(getActivity(), "请输入完整信息！");
+            TextUtils.toast(getActivity(), "请输入完整信息！");
             return;
         }
         if (checked) {
-            TextUtils.Toast(getActivity(), "请您先阅读《塑料圈通讯录》相关协议！");
+            TextUtils.toast(getActivity(), "请您先阅读《塑料圈通讯录》相关协议！");
             return;
         }
         Map<String, String> map1 = new HashMap<String, String>();
@@ -222,13 +220,13 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1) {
                 if (!jsonObject.getString("err").equals("0")) {
-                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 } else {
                     getIndentify();
                 }
             }
             if (type == 2) {
-                TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 if ("0".equals(jsonObject.getString("err"))) {
                     initThread();
                 }
@@ -238,7 +236,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
                 imm.hideSoftInputFromWindow(mPhone.getWindowToken(), 0);
                 if (!jsonObject.getString("err").equals("0")) {
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
-                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 } else {
                     if (mBaseInterface != null) {
                         mBaseInterface.complete(1);

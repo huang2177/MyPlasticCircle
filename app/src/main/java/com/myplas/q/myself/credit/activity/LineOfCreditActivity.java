@@ -122,7 +122,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
             map.put("token", sharedUtils.getData(this, "token"));
             postAsyn(this, API.BASEURL + API.CREDIT_CERTIFICATE, map, this, 1);
         } else {
-            TextUtils.Toast(this, "请输入搜索关键字！");
+            TextUtils.toast(this, "请输入搜索关键字！");
         }
     }
 
@@ -147,7 +147,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
                         startActivity(intent);
                     }
                 } else {
-                    TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                    TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
                 }
             }
             if (type == 2 && err.equals("0")) {

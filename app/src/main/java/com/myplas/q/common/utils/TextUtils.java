@@ -60,7 +60,7 @@ public class TextUtils {
         }
     }
 
-    public static void Toast(Context context, String msg) {
+    public static void toast(Context context, String msg) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_toast, null);
         TextView textView = (TextView) view.findViewById(R.id.toast_text);
 
@@ -140,7 +140,7 @@ public class TextUtils {
     }
 
     // 取得版本号
-    public static String GetVersion(Context context) {
+    public static String getversion(Context context) {
         try {
             PackageInfo manager = context.getPackageManager().getPackageInfo(
                     context.getPackageName(), 0);

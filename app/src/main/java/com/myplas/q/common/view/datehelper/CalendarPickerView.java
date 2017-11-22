@@ -732,7 +732,7 @@ public class CalendarPickerView extends ListView {
             String errMessage =
                     getResources().getString(R.string.invalid_date, fullDateFormat.format(minCal.getTime()),
                             fullDateFormat.format(maxCal.getTime()));
-            // Toast.makeText(getContext(), errMessage, Toast.LENGTH_SHORT).show();
+            // toast.makeText(getContext(), errMessage, toast.LENGTH_SHORT).show();
         }
     }
 

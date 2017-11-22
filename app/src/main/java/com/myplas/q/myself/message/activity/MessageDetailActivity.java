@@ -19,7 +19,6 @@ import com.myplas.q.myself.message.adapter.MessageHFAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myself.message.adapter.MessageSupDemAdapter;
 import com.myplas.q.sockethelper.RabbitMQConfig;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -124,7 +123,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
 
                     } else {
-                        TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                        TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
                     }
                 }
             }
@@ -152,7 +151,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mEmptyView.setMyManager(R.drawable.icon_follow1);
                         mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
                     } else {
-                        TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                        TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
                     }
                 }
 
@@ -182,7 +181,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mEmptyView.setMyManager(R.drawable.icon_follow1);
                         mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
                     } else {
-                        TextUtils.Toast(this, new JSONObject(object.toString()).getString("msg"));
+                        TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
                     }
                 }
             }

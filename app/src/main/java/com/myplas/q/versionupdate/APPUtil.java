@@ -196,7 +196,7 @@ public class APPUtil {
                 }
                 context.startActivity(install);
             } else {
-                TextUtils.Toast(context, "安装失败");
+                TextUtils.toast(context, "安装失败");
             }
         } catch (Exception e) {
         }

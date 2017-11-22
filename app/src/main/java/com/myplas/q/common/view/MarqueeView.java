@@ -52,7 +52,7 @@ public class MarqueeView extends SurfaceView implements SurfaceHolder.Callback {
 
     public int currentX = 0;// 当前x的位置
 
-    public int sepX = 2;//每一步滚动的距离
+    public int sepX = 3;//每一步滚动的距离
 
     public MarqueeView(Context context) {
         this(context, null);
@@ -221,8 +221,6 @@ public class MarqueeView extends SurfaceView implements SurfaceHolder.Callback {
                     int c = mSpeed / b == 0 ? 1 : mSpeed / b;
 
                     Thread.sleep(c);//睡眠时间为移动的频率
-
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();

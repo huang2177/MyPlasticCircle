@@ -3,7 +3,6 @@ package com.myplas.q.release;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -114,7 +113,7 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
                     ActivityManager.finishActivity(MySupDemActivity.class);
                 }
             } else {
-                TextUtils.Toast(this, jsonObject.getString("msg"));
+                TextUtils.toast(this, jsonObject.getString("msg"));
             }
         } catch (Exception e) {
         }

@@ -65,7 +65,7 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
                         if (hasMoerData) {
                             getBuyRecord(page + "");
                         } else {
-                            TextUtils.Toast(IntegralRecordActivtity.this, "没有更多数据了！");
+                            TextUtils.toast(IntegralRecordActivtity.this, "没有更多数据了！");
                         }
                     }
                 }

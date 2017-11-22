@@ -182,7 +182,7 @@ public class StandardFragment extends Fragment implements View.OnClickListener
                         ActivityManager.finishActivity(MySupDemActivity.class);
                     }
                 }else {
-                    TextUtils.Toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
+                    TextUtils.toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
                 }
             }
             if (type == 2) {
@@ -241,7 +241,7 @@ public class StandardFragment extends Fragment implements View.OnClickListener
                     || !TextUtils.isNullOrEmpty(model)
                     || !TextUtils.isNullOrEmpty(pirce)
                     || !TextUtils.isNullOrEmpty(production)) {
-                TextUtils.Toast(getActivity(), "请输入完整的数据！");
+                TextUtils.toast(getActivity(), "请输入完整的数据！");
                 return false;
             } else {
                 return true;

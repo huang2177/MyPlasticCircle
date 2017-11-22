@@ -1,12 +1,8 @@
 package com.myplas.q.common.utils;
 
-import android.app.Activity;
 import android.content.Context;
-import android.icu.text.DateFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.view.Window;
-import android.widget.Toast;
 
 /**
  * 作者:huangshuang
@@ -26,7 +22,7 @@ public class NetUtils {
                 if (info != null) {
                     return info.isAvailable();
                 } else {
-                    TextUtils.Toast(context, "您的网络有问题，请检查后重新连接！");
+                    TextUtils.toast(context, "您的网络有问题，请检查后重新连接！");
                     return false;
                 }
             }

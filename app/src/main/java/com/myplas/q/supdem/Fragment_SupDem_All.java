@@ -36,7 +36,6 @@ import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 import com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity;
 import com.myplas.q.supdem.adapter.SupDem_LV_Adapter;
-import com.myplas.q.supdem.beans.ConfigData;
 import com.myplas.q.supdem.beans.SupDemBean;
 
 import org.json.JSONObject;
@@ -314,7 +313,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     layoutPrompt.setVisibility(View.VISIBLE);
                     mTVPromit.setText(new JSONObject(object.toString()).getString("msg"));
                 } else {
-                    TextUtils.Toast(getContext(), "没有更多数据了！");
+                    TextUtils.toast(getContext(), "没有更多数据了！");
                 }
             }
         } catch (Exception e) {

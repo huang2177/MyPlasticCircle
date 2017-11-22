@@ -157,7 +157,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     break;
                 case R.id.supdem_qq_layout_find:
                     if (detailBean.getFind_relevant().size() == 0) {
-                        TextUtils.Toast(this, "没有相关数据！");
+                        TextUtils.toast(this, "没有相关数据！");
                         return;
                     }
                     if (!isClicked2) {
@@ -175,7 +175,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     break;
                 case R.id.supdem_qq_layout_wx:
                     if (bean.getData().size() == 0) {
-                        TextUtils.Toast(this, "没有相关数据！");
+                        TextUtils.toast(this, "没有相关数据！");
                         return;
                     }
                     if (bean != null && bean.getData().size() == 1) {
@@ -192,7 +192,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     break;
                 case R.id.supdem_qq_layout_tell:
                     if (detailBean.getMobile_list().size() == 0) {
-                        TextUtils.Toast(this, "没有相关数据！");
+                        TextUtils.toast(this, "没有相关数据！");
                         return;
                     }
                     if (!isClicked3) {

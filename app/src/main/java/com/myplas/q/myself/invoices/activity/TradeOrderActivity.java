@@ -24,7 +24,6 @@ import com.myplas.q.myself.beans.OrderListsBean;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -83,7 +82,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                     if (TextUtils.isNullOrEmpty(keywords)) {
                         getorderLists(keywords, 1);
                     } else {
-                        TextUtils.Toast(TradeOrderActivity.this, "你还没有输入搜索内容！");
+                        TextUtils.toast(TradeOrderActivity.this, "你还没有输入搜索内容！");
                     }
                     return true;
                 }

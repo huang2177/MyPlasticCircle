@@ -11,7 +11,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -32,8 +31,6 @@ import com.myplas.q.headlines.adapter.HeadLinesDetail_More_LVAdapetr;
 import com.myplas.q.common.api.API;
 import com.myplas.q.headlines.bean.SucribleDetailBean;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
-import com.myplas.q.release.ReleaseActivity;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -226,7 +223,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 if (!("").equals(clickId)) {
                     isPaidSubscription(clickId);
                 } else {
-                    TextUtils.Toast(this, "没有更多了！");
+                    TextUtils.toast(this, "没有更多了！");
                 }
                 break;
             case R.id.btn_next:
@@ -234,7 +231,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 if (!("").equals(clickId)) {
                     isPaidSubscription(clickId);
                 } else {
-                    TextUtils.Toast(this, "没有更多了！");
+                    TextUtils.toast(this, "没有更多了！");
                 }
                 break;
             case R.id.wd_linear_share:

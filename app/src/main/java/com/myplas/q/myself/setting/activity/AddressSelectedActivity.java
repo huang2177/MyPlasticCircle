@@ -21,7 +21,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.beans.RegionsBean;
 import com.optimus.edittextfield.EditTextField;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -176,7 +175,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
                 sendBroadcast(intent);
                 finish();
             } else {
-                TextUtils.Toast(this, "详细地址不能为空！");
+                TextUtils.toast(this, "详细地址不能为空！");
             }
         }
     }

@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,7 +14,6 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyGridview;
@@ -194,7 +192,7 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
             setSelectCate();
             finish();
         } else {
-            TextUtils.Toast(this, "订阅栏目与制品分类至少各选6个!");
+            TextUtils.toast(this, "订阅栏目与制品分类至少各选6个!");
         }
     }
 

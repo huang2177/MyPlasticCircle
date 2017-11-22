@@ -139,10 +139,10 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
                         setResult(1, intent);
                         this.finish();
                     } else {
-                        TextUtils.Toast(this, "目的地不能为空！");
+                        TextUtils.toast(this, "目的地不能为空！");
                     }
                 } else {
-                    TextUtils.Toast(this, "出发地不能为空！");
+                    TextUtils.toast(this, "出发地不能为空！");
                 }
             } else {
                 dataBack = "全国路线";

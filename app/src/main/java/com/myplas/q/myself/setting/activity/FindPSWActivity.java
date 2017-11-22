@@ -19,7 +19,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.guide.activity.BaseActivity;
 import com.myplas.q.myself.login.LoginActivity;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -121,7 +120,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
 
                     getNetData(API.FINF_MY_PWD, map, 2);
                 } else {
-                    TextUtils.Toast(this, "请输入完整信息！");
+                    TextUtils.toast(this, "请输入完整信息！");
                 }
                 break;
             default:
@@ -157,12 +156,12 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
             String s = jsonObject.getString("msg");
-            TextUtils.Toast(this, s);
+            TextUtils.toast(this, s);
             if (type == 1 && jsonObject.getString("err").equals("0")) {
                 initThread();
             }
             if (type == 2) {
-                TextUtils.Toast(this, s);
+                TextUtils.toast(this, s);
                 if (s.equals("密码重置成功")) {
                     Intent intent = new Intent(this, LoginActivity.class);
                     String phone = editText_tel.getText().toString();

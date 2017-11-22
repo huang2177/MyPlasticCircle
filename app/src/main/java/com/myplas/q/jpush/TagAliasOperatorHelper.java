@@ -177,7 +177,7 @@ public class TagAliasOperatorHelper {
                 message.obj = tagAliasBean;
                 delaySendHandler.sendMessageDelayed(message, 1000 * 60);
                 String logs = getRetryStr(tagAliasBean.isAliasAction, tagAliasBean.action, errorCode);
-                //TextUtils.Toast(context, logs);
+                //TextUtils.toast(context, logs);
                 return true;
             }
         }
@@ -218,7 +218,7 @@ public class TagAliasOperatorHelper {
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = tagAliasActionCache.get(sequence);
         if (tagAliasBean == null) {
-            //TextUtils.Toast(context, "获取缓存记录失败");
+            //TextUtils.toast(context, "获取缓存记录失败");
             return;
         }
         if (jPushMessage.getErrorCode() == 0) {
@@ -226,7 +226,7 @@ public class TagAliasOperatorHelper {
             tagAliasActionCache.remove(sequence);
             String logs = getActionStr(tagAliasBean.action) + " tags success";
             Logger.e(TAG, logs);
-            //TextUtils.Toast(context, logs);
+            //TextUtils.toast(context, logs);
         } else {
             String logs = "Failed to " + getActionStr(tagAliasBean.action) + " tags";
             if (jPushMessage.getErrorCode() == 6018) {
@@ -236,7 +236,7 @@ public class TagAliasOperatorHelper {
             logs += ", errorCode:" + jPushMessage.getErrorCode();
             Logger.e(TAG, logs);
             if (!RetryActionIfNeeded(jPushMessage.getErrorCode(), tagAliasBean)) {
-                //TextUtils.Toast(context, logs);
+                //TextUtils.toast(context, logs);
             }
         }
     }
@@ -248,7 +248,7 @@ public class TagAliasOperatorHelper {
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = tagAliasActionCache.get(sequence);
         if (tagAliasBean == null) {
-            // TextUtils.Toast(context, "获取缓存记录失败");
+            // TextUtils.toast(context, "获取缓存记录失败");
             return;
         }
         if (jPushMessage.getErrorCode() == 0) {
@@ -256,12 +256,12 @@ public class TagAliasOperatorHelper {
             tagAliasActionCache.remove(sequence);
             String logs = getActionStr(tagAliasBean.action) + " tag " + jPushMessage.getCheckTag() + " bind state success,state:" + jPushMessage.getTagCheckStateResult();
             Logger.e(TAG, logs);
-            //TextUtils.Toast(context, logs);
+            //TextUtils.toast(context, logs);
         } else {
             String logs = "Failed to " + getActionStr(tagAliasBean.action) + " tags, errorCode:" + jPushMessage.getErrorCode();
             Logger.e(TAG, logs);
             if (!RetryActionIfNeeded(jPushMessage.getErrorCode(), tagAliasBean)) {
-                //TextUtils.Toast(context, logs);
+                //TextUtils.toast(context, logs);
             }
         }
     }
@@ -273,7 +273,7 @@ public class TagAliasOperatorHelper {
         //根据sequence从之前操作缓存中获取缓存记录
         TagAliasBean tagAliasBean = tagAliasActionCache.get(sequence);
         if (tagAliasBean == null) {
-            //TextUtils.Toast(context, "获取缓存记录失败");
+            //TextUtils.toast(context, "获取缓存记录失败");
             return;
         }
         if (jPushMessage.getErrorCode() == 0) {
@@ -281,12 +281,12 @@ public class TagAliasOperatorHelper {
             tagAliasActionCache.remove(sequence);
             String logs = getActionStr(tagAliasBean.action) + " alias success";
             Logger.e(TAG, logs);
-            //TextUtils.Toast(context, logs);
+            //TextUtils.toast(context, logs);
         } else {
             String logs = "Failed to " + getActionStr(tagAliasBean.action) + " alias, errorCode:" + jPushMessage.getErrorCode();
             Logger.e(TAG, logs);
             if (!RetryActionIfNeeded(jPushMessage.getErrorCode(), tagAliasBean)) {
-                // TextUtils.Toast(context, logs);
+                // TextUtils.toast(context, logs);
             }
         }
     }

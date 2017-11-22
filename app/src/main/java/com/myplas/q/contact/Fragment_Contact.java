@@ -31,8 +31,8 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.BaiduProgressBar;
 import com.myplas.q.common.view.CommonDialog;
+import com.myplas.q.common.view.MarqueeView;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.contact.activity.AD_DialogActivtiy;
@@ -77,20 +77,21 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private ListView listView;
     private ImageButton imageButton;
     private HIndicatorDialog dialog;
+    private MarqueeView marqueeView;
     private RefreshPopou mRefreshPopou;
     private MyNestedScrollView mScrollView;
-    private ImageView mIVBanner, mIVTop, mSign;
     private View view, shareView1, shareView2;
     private SwipeRefreshLayout mRefreshLayout;
     private TextView mTVClass, mTVRegion, mTVTitle;
-    private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch;
+    private ImageView mIVBanner, mIVTop, mSign, imageViewClose, imageView;
+    private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch, notifyRoot;
 
     public int page;
     private StringBuffer region;
     private StringBuffer c_type;
-    private boolean isRefreshing;
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
+    private boolean isRefreshing, isLoading;
     private String userId, jumpUrl, jumpToWhere, jumpTitle;
 
 
@@ -115,12 +116,16 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         mIVTop = (ImageView) view.findViewById(R.id.top_img);
         mSign = (ImageView) view.findViewById(R.id.contact_sign);
         listView = (ListView) view.findViewById(R.id.contact_lv);
+        imageView = (ImageView) view.findViewById(R.id.notify_img);
         mTVTitle = (TextView) view.findViewById(R.id.contanct_title);
         mTVRegion = (TextView) view.findViewById(R.id.contact_region);
         mTVClass = (TextView) view.findViewById(R.id.contact_classify);
         imageButton = (ImageButton) view.findViewById(R.id.img_reload);
+        notifyRoot = (LinearLayout) view.findViewById(R.id.notify_root);
+        marqueeView = (MarqueeView) view.findViewById(R.id.marqueeView);
         mIVBanner = (ImageView) view.findViewById(R.id.contact_banner_img);
         mLayoutTop = (LinearLayout) view.findViewById(R.id.contact_top_ll);
+        imageViewClose = (ImageView) view.findViewById(R.id.notify_img_close);
         mLayoutCofig = (LinearLayout) view.findViewById(R.id.contact_config_ll);
         mLayoutSearch = (LinearLayout) view.findViewById(R.id.contact_search_ll);
         mScrollView = (MyNestedScrollView) view.findViewById(R.id.contact_scrollview);
@@ -130,13 +135,16 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         mTVClass.setOnClickListener(this);
         mTVRegion.setOnClickListener(this);
         mIVBanner.setOnClickListener(this);
+        notifyRoot.setOnClickListener(this);
         mLayoutTop.setOnClickListener(this);
         imageButton.setOnClickListener(this);
         mScrollView.setOnScrollIterface(this);
         mLayoutSearch.setOnClickListener(this);
+        imageViewClose.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setColorSchemeResources(R.color.color_red);
 
+        Glide.with(getActivity()).load(R.drawable.icon_voice).into(imageView);
 
         //点击item判断是否消耗积分
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -160,6 +168,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        initMarqueeView();
         return view;
     }
 
@@ -195,10 +204,19 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             case R.id.contact_sign:
                 startActivity(new Intent(getActivity(), ContactDaliySignActivity.class));
                 break;
+            case R.id.notify_img_close:
+                marqueeView.stopScroll();
+                marqueeView.setVisibility(View.GONE);
+                notifyRoot.setVisibility(View.GONE);
+                break;
             default:
                 break;
         }
 
+    }
+
+    private void initMarqueeView() {
+        marqueeView.setText("依据赫兹接触强度计算理论，着重研究了圆柱滚子轴承内、外圈及滚动体的接触应力");
     }
 
     private void openDialog(final int type, final TextView textView) {
@@ -297,7 +315,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                     }
                 }
                 if (err.equals("2") || err.equals("3")) {
-                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 }
             }
             //是否消耗积分
@@ -361,6 +379,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             if (page == 1) {
                 showInfo(mContactBean, topBean);
             } else {
+                isLoading = false;
                 mListBean.addAll(mContactBean.getPersons());
                 mLVAdapter.setList(mListBean);
                 mLVAdapter.notifyDataSetChanged();
@@ -475,9 +494,12 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
      */
     @Override
     public void loadMore() {
-        page++;
-        checkPageNum();
-        getNetData(page + "", false);
+        if (!isLoading) {
+            page++;
+            checkPageNum();
+            isLoading = true;
+            getNetData(page + "", false);
+        }
     }
 
 
@@ -534,6 +556,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         MobclickAgent.onPageStart("MainScreen");
         //检查登录状态
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
+        if (marqueeView != null) {
+            marqueeView.startScroll();
+        }
     }
 
     @Override
@@ -541,5 +566,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
         mRefreshPopou.dismiss();
+        if (marqueeView != null) {
+            marqueeView.stopScroll();
+        }
     }
 }

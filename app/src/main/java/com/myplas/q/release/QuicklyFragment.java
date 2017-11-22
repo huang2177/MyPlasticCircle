@@ -147,7 +147,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
     public void onTextChanged(View v, String s) {
         String s1 = s.toString();
         if (s.length() >= 100) {
-            TextUtils.Toast(getActivity(), "输入的字符已达上限！");
+            TextUtils.toast(getActivity(), "输入的字符已达上限！");
         }
     }
 
@@ -167,10 +167,10 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                         intent.putExtra("id", id);
                         startActivity(intent);
                     } else {
-                        TextUtils.Toast(getActivity(), "请按照示例填写完整的参数！");
+                        TextUtils.toast(getActivity(), "请按照示例填写完整的参数！");
                     }
                 } else {
-                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 }
             }
             if (type == 2) {
@@ -190,7 +190,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                         ActivityManager.finishActivity(MySupDemActivity.class);
                     }
                 } else {
-                    TextUtils.Toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 }
             }
         } catch (Exception e) {
@@ -281,7 +281,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                     && !TextUtils.isNullOrEmpty(t) ? false : true;
         } else {
             if (!TextUtils.isNullOrEmpty(content) || !TextUtils.isNullOrEmpty(t)) {
-                TextUtils.Toast(getActivity(), "您还未输入内容或者没有选择发布类型！");
+                TextUtils.toast(getActivity(), "您还未输入内容或者没有选择发布类型！");
                 return false;
             } else {
                 return true;

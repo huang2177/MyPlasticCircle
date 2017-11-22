@@ -255,7 +255,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
                                 break;
                         }
                     } else {
-                        TextUtils.Toast(getContext(), "没有更多数据了！");
+                        TextUtils.toast(getContext(), "没有更多数据了！");
                     }
                 }
             }

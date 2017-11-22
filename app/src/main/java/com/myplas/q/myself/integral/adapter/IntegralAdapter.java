@@ -148,7 +148,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     SupDemDialogShowUtils supDemDialogShowUtils = new SupDemDialogShowUtils();
                     supDemDialogShowUtils.showDialog(context, list_msg, integral_supplyDemandAdapter);
                 } else {
-                    TextUtils.Toast(context, "你还没有发布相关的供求信息！");
+                    TextUtils.toast(context, "你还没有发布相关的供求信息！");
                 }
             }
         });
@@ -169,10 +169,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                             String p_id = list_msg.get(num).getId();
                             exchangeSupOrDem(id, dates, p_id, 1);
                         } else {
-                            TextUtils.Toast(context, "你还没有选择置顶的供求信息！");
+                            TextUtils.toast(context, "你还没有选择置顶的供求信息！");
                         }
                     } else {
-                        TextUtils.Toast(context, "你还没有选择置顶的日期！");
+                        TextUtils.toast(context, "你还没有选择置顶的日期！");
                     }
 
                 }
@@ -184,7 +184,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                         String id = list.get(datePosition).getId();
                         exchangeSupOrDem(id, dates, "", 0);
                     } else {
-                        TextUtils.Toast(context, "你还没有选择置顶的日期！");
+                        TextUtils.toast(context, "你还没有选择置顶的日期！");
                     }
                 }
                 if (type.equals("3")) {
@@ -195,7 +195,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                         String goods_id = list.get(classifyPosition).getId();
                         newExchangeToutiao(goods_id, plasticNum, cate_ids, month_num, 3);
                     } else {
-                        TextUtils.Toast(context, "你还没有选择头条分类!");
+                        TextUtils.toast(context, "你还没有选择头条分类!");
                     }
                 }
             }

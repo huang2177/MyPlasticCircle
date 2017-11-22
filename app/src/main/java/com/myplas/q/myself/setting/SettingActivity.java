@@ -185,7 +185,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                             mUpdateDialogUtils = new VersionUpdateDialogUtils(SettingActivity.this, promit, url);
                             mUpdateDialogUtils.showDialog(false);
                         } else {
-                            TextUtils.Toast(SettingActivity.this, "当前已是最新版本！");
+                            TextUtils.toast(SettingActivity.this, "当前已是最新版本！");
                         }
                         break;
                     case 9:

@@ -225,7 +225,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
                         emptyView.setMyManager(R.drawable.icon_null);
                         mListViews.get(position).setEmptyView(emptyView);
                     } else {
-                        TextUtils.Toast(this, msg);
+                        TextUtils.toast(this, msg);
                     }
                 }
             }

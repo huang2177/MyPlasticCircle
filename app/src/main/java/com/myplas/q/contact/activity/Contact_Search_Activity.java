@@ -71,6 +71,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     private NoSearchInfoBean mInfoBean;
     private SupDem_Search_Grid_Adapter mGridAdapter;
 
+    private boolean isLoading;
     private Map<Integer, Integer> map;
     private int page, visibleItemCount;
     private StringBuffer c_type, region;
@@ -84,7 +85,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         setContentView(R.layout.activity_contact_search_layout);
         goBack(findViewById(R.id.back));
         initView();
-        getSearch_Record();
+        getsearchRecord();
     }
 
     public void initView() {
@@ -148,8 +149,11 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                     InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        page++;
-                        getNetData("" + page, false);
+                        if (!isLoading) {
+                            page++;
+                            isLoading = true;
+                            getNetData("" + page, false);
+                        }
                     }
                 }
             }
@@ -161,12 +165,16 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         });
     }
 
-    //获取历史搜索
-    public void getSearch_Record() {
+    /**
+     * 获取历史搜索
+     */
+    public void getsearchRecord() {
         postAsyn(this, API.BASEURL + API.GETF_RECORD, null, this, 1);
     }
 
-    //查询
+    /**
+     * 查询
+     */
     private void getNetData(String page, boolean isShowDialog) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page);
@@ -178,8 +186,10 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         postAsyn1(this, url, map, this, 2, isShowDialog);
     }
 
-    //删除搜索历史记录
-    public void delSearch_Record() {
+    /**
+     * 删除历史记录
+     */
+    public void delsearchRecord() {
         Map map = new HashMap();
         map.put("keywords", "");
         postAsyn(this, API.BASEURL + API.DELETEF_RECORD, map, this, 4);
@@ -205,7 +215,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 getNetData("1", true);
                 break;
             case R.id.img_search_delete:
-                delSearch_Record();
+                delsearchRecord();
                 break;
             case R.id.contact_classify:
                 openDialog(1, textView_classify);
@@ -236,6 +246,8 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
             case R.id.search_listview_result:
                 userId = mListBean.get(position).getUser_id();
                 getPersonInfoData(userId, "1", 5);
+                break;
+            default:
                 break;
         }
     }
@@ -283,6 +295,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                         mListBean.addAll(mContactBean.getPersons());
                         mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + mContactBean.getTotals() + "条信息");
                     } else {
+                        isLoading = false;
                         mListBean.addAll(mContactBean.getPersons());
                         mLVAdapter.setList(mListBean);
                         mLVAdapter.notifyDataSetChanged();
@@ -296,13 +309,13 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                         mGridAdapter = new SupDem_Search_Grid_Adapter(this, mInfoBean.getRecommendation());
                         mGV_Empty.setAdapter(mGridAdapter);
                     } else {
-                        TextUtils.Toast(this, "没有更多数据了！");
+                        TextUtils.toast(this, "没有更多数据了！");
                     }
                 }
             }
 
             if (type == 4 && "0".equals(err)) {
-                TextUtils.Toast(this, "删除成功！");
+                TextUtils.toast(this, "删除成功！");
                 mGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
                 mGV_History.setAdapter(mGridAdapter);
             }
@@ -395,6 +408,8 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 break;
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));
+                break;
+            default:
                 break;
         }
     }

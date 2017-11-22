@@ -94,7 +94,7 @@ public class DownLoadUtils {
                 context.startActivity(install);
             }
         } catch (Exception e) {
-            TextUtils.Toast(context, "安装失败!");
+            TextUtils.toast(context, "安装失败!");
         }
     }
 }

@@ -113,7 +113,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 integralAll.setText(" " + integralBean.getPointsAll().toString());
             }
         } catch (Exception e) {
-            //TextUtils.Toast(this, "数据解析错啦！");
+            //TextUtils.toast(this, "数据解析错啦！");
         }
     }
 

@@ -299,12 +299,12 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                         mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
                         mgvEmpty.setAdapter(mSearchGridAdapter);
                     } else {
-                        TextUtils.Toast(this, "没有更多数据了！");
+                        TextUtils.toast(this, "没有更多数据了！");
                     }
                 }
             }
             if (type == 3 && err.equals("0")) {
-                TextUtils.Toast(this, "删除成功！");
+                TextUtils.toast(this, "删除成功！");
                 mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
                 mgvHistory.setAdapter(mSearchGridAdapter);
             }

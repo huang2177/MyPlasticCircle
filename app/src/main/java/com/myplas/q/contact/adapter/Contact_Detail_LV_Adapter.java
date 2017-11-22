@@ -64,25 +64,27 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_contact_lv_layout, parent, false);
             viewHolder.mIVType = (ImageView) convertView.findViewById(R.id.item_nf);
             viewHolder.mTVTime = (TextView) convertView.findViewById(R.id.item_time);
-            viewHolder.mIVHead = (RoundCornerImageView) convertView.findViewById(R.id.item_head);
             viewHolder.mIVStart = (ImageView) convertView.findViewById(R.id.item_start);
             viewHolder.mTVContent = (TextView) convertView.findViewById(R.id.item_content);
+            viewHolder.mIVHead = (RoundCornerImageView) convertView.findViewById(R.id.item_head);
+
+            viewHolder.reply = (TextView) convertView.findViewById(R.id.supply_demand_reply);
+            viewHolder.deliver = (TextView) convertView.findViewById(R.id.supply_demand_deliver);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
             if (list != null) {
-                String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + list.get(position).getStore_house()
+                String html1 = "<font color='#9c9c9c'>" + "交货地:" + "</font>" + list.get(position).getStore_house()
                         + "   <font color='#9c9c9c'>" + "  牌号:" + "</font>" + list.get(position).getModel()
                         + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + list.get(position).getF_name()
                         + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + list.get(position).getUnit_price();
                 viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
-                String time = "回复:" + list.get(position).getReply()
-                        + "  出价:" + list.get(position).getBid()
-                        + "  " + list.get(position).getInput_time();
-                viewHolder.mTVTime.setText(time);
+                viewHolder.mTVTime.setText(list.get(position).getInput_time());
+                viewHolder.deliver.setText("出价:" + list.get(position).getBid());
+                viewHolder.reply.setText("回复:" + list.get(position).getReply());
 
                 Glide.with(context)
                         .load(list.get(position).getThumb())
@@ -97,22 +99,20 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
                         ? R.drawable.icon_now
                         : R.drawable.icon_futures);
             } else {
-                String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + mList.get(position).getStore_house()
+                String html1 = "<font color='#9c9c9c'>" + "交货地:" + "</font>" + mList.get(position).getStore_house()
                         + "   <font color='#9c9c9c'>" + "  牌号:" + "</font>" + mList.get(position).getModel()
                         + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + mList.get(position).getF_name()
                         + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + mList.get(position).getUnit_price();
                 viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
-                String time = "回复:" + mList.get(position).getReply()
-                        + "  出价:" + mList.get(position).getBid()
-                        + "  " + mList.get(position).getInput_time();
-                viewHolder.mTVTime.setText(time);
+                viewHolder.mTVTime.setText(mList.get(position).getInput_time());
+                viewHolder.deliver.setText("出价:" + mList.get(position).getBid());
+                viewHolder.reply.setText("回复:" + mList.get(position).getReply());
 
                 Glide.with(context)
                         .load(mList.get(position).getThumb())
                         .placeholder(R.drawable.img_defaul_male)
                         .into(viewHolder.mIVHead);
-
 
                 viewHolder.mIVType.setImageResource("1".equals(mList.get(position).getCargo_type())
                         ? R.drawable.icon_now
@@ -130,8 +130,8 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
 //    }
 
     class viewHolder {
-        RoundCornerImageView mIVHead;
         ImageView mIVStart, mIVType;
-        TextView mTVCompany, mTVContent, mTVTime;
+        RoundCornerImageView mIVHead;
+        TextView mTVCompany, mTVContent, mTVTime, reply, deliver;
     }
 }

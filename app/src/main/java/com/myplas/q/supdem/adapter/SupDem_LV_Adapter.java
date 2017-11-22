@@ -94,7 +94,7 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
                 viewHolder.deliver.setText("出价()");
             }
 
-            String html1 = "<font color='#9c9c9c'>" + "货物位置:" + "</font>" + list.get(position).getStore_house()
+            String html1 = "<font color='#9c9c9c'>" + "交货地:" + "</font>" + list.get(position).getStore_house()
                     + "<font color='#9c9c9c'>" + "   牌号:" + "</font>" + list.get(position).getModel()
                     + "<font color='#9c9c9c'>" + "   厂家:" + "</font>" + list.get(position).getF_name()
                     + "<font color='#9c9c9c'>" + "   价格:" + "</font>" + list.get(position).getUnit_price();

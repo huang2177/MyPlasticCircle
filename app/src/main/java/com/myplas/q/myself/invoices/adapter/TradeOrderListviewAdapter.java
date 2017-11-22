@@ -107,7 +107,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
                         TradeOrderListviewAdapter.this.position = position;
                         confirmSign(mList.get(position).getO_id());
                     } else if (sign_status.equals("2")) {
-                        TextUtils.Toast(context, "订单未全部发货，暂无法签收!");
+                        TextUtils.toast(context, "订单未全部发货，暂无法签收!");
                     }
                 }
             });
@@ -119,7 +119,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
                     if (billing_status.equals("0")) {
                         mListener.onClick1(mList.get(position).getOrder_sn());
                     } else if (billing_status.equals("2")) {
-                        TextUtils.Toast(context, "订单未签收或未付款，暂无法开票!");
+                        TextUtils.toast(context, "订单未签收或未付款，暂无法开票!");
                     }
                 }
             });
@@ -224,7 +224,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
 
             } else {
                 String msg = new JSONObject(object.toString()).getString("msg");
-                TextUtils.Toast(context, msg);
+                TextUtils.toast(context, msg);
             }
         } catch (Exception e) {
         }

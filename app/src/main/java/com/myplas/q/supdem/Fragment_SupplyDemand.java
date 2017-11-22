@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,6 +107,7 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
 
         Glide.with(getActivity()).load(R.drawable.icon_voice).into(imageView);
+
     }
 
     @Nullable
@@ -147,7 +149,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 
     private void initMarqueeView() {
         marqueeView.setText("依据赫兹接触强度计算理论，着重研究了圆柱滚子轴承内、外圈及滚动体的接触应力");
-        marqueeView.startScroll();
     }
 
     /**
@@ -172,7 +173,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             mTVTab.setTypeface(Typeface.DEFAULT);
             mTVTab.setTextSize(16);
         }
-
     }
 
     public <T extends View> T F(int id) {
@@ -213,6 +213,8 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                 });
                 break;
             case R.id.notify_img_close:
+                marqueeView.stopScroll();
+                marqueeView.setVisibility(View.GONE);
                 notifyRoot.setVisibility(View.GONE);
                 break;
             default:
@@ -334,6 +336,9 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("MainScreen");
+        if (marqueeView != null) {
+            marqueeView.startScroll();
+        }
     }
 
     @Override
@@ -353,6 +358,5 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             mFragmentAll.getNetData("1", false);
         }
     }
-
 }
 

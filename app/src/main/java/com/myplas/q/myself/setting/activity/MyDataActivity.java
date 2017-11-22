@@ -123,8 +123,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             llProMonth.setOnClickListener(this);
             llMothonuse.setOnClickListener(this);
 
-            cardMore.setVisibility(View.VISIBLE);
-            headMore.setVisibility(View.VISIBLE);
             textXb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             textviewPh.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             textviewNum.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
@@ -358,12 +356,16 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             textviewAddress.setText(region);
             textGs.setText(mySelfInfo.getData().getC_name());
             textDh.setText(mySelfInfo.getData().getMobile());
+
             Glide.with(this)
-                    .load(imageCard)
+                    .load(imgCard)
                     .placeholder(R.drawable.card)
                     .into(imageCard);
             Glide.with(this)
                     .load(imgHead)
+                    .placeholder("男".equals(sex)
+                            ? R.drawable.img_defaul_male
+                            : R.drawable.img_defaul_female)
                     .into(imageHead);
 
             switch (type) {

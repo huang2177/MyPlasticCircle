@@ -8,20 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.appcontext.ActivityManager;
-import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyBottomSheetDialog;
 import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
 import com.myplas.q.release.bean.PreViewBean;
-import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
-
-import org.json.JSONObject;
 
 /**
  * @author 黄双
@@ -162,7 +153,7 @@ public class SupDemModifyActivity extends BaseActivity implements
                 || !TextUtils.isNullOrEmpty(fName)
                 || !TextUtils.isNullOrEmpty(model)
                 || !TextUtils.isNullOrEmpty(pirce)) {
-            TextUtils.Toast(this, "请输入完整的数据！");
+            TextUtils.toast(this, "请输入完整的数据！");
             return false;
         } else {
             return true;

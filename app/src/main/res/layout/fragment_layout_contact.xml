@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:background="@color/color_red"/>
+        android:background="@color/color_red" />
 
     <!--titlebar-->
-    <include layout="@layout/fragment_layout_contact_titlebar"/>
+    <include layout="@layout/fragment_layout_contact_titlebar" />
+
+    <include layout="@layout/layout_notification" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -33,14 +35,14 @@
                 android:layout_height="45dp"
                 android:scaleType="fitXY"
                 android:visibility="gone"
-                app:layout_scrollFlags="scroll"/>
+                app:layout_scrollFlags="scroll" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                app:layout_scrollFlags="scroll"/>
+                app:layout_scrollFlags="scroll" />
             <!--选项卡-->
-            <include layout="@layout/fragment_layout_contact_config"/>
+            <include layout="@layout/fragment_layout_contact_config" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -57,7 +59,7 @@
                 <!--置顶-->
                 <include
                     layout="@layout/item_fragment_contact_lv_layout"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <com.myplas.q.common.view.MyNestedScrollView
                     android:id="@+id/contact_scrollview"
@@ -72,8 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:divider="@null"
-                        android:visibility="visible">
-                    </com.myplas.q.common.view.MyListview>
+                        android:visibility="visible"></com.myplas.q.common.view.MyListview>
 
 
                 </com.myplas.q.common.view.MyNestedScrollView>
@@ -91,5 +92,5 @@
         android:alpha="1"
         android:background="@null"
         android:src="@drawable/img_reload"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </LinearLayout>
