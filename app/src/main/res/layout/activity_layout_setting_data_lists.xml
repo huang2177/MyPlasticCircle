@@ -54,6 +54,34 @@
                 android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
+                android:id="@+id/setting_data_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="姓名："
+                    android:textColor="#171717"
+                    android:textSize="16.0sp" />
+
+                <TextView
+                    android:id="@+id/wd_zl_name"
+                    style="@style/setting_text_style"
+                    android:drawableRight="@drawable/btn_more"
+                    android:maxLines="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_gray_divider_in" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -107,7 +135,7 @@
                 android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
-                android:id="@+id/setting_data_address"
+                android:id="@+id/setting_data_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -121,9 +149,8 @@
                     android:textColor="#171717"
                     android:textSize="16.0sp" />
 
-
                 <TextView
-                    android:id="@+id/wd_zl_text_dzh"
+                    android:id="@+id/wd_zl_text_location"
                     style="@style/setting_text_style"
                     android:layout_width="match_parent"
                     android:drawableRight="@drawable/btn_more"
@@ -251,7 +278,7 @@
                     android:background="@color/color_gray_divider_in" />
 
                 <LinearLayout
-                    android:id="@+id/setting_data_monthlyuse"
+                    android:id="@+id/setting_data_monthuse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -267,7 +294,7 @@
                         android:textSize="16.0sp" />
 
                     <TextView
-                        android:id="@+id/wd_zl_text_num"
+                        android:id="@+id/wd_zl_text_monthuse"
                         style="@style/setting_text_style"
                         android:drawableRight="@drawable/btn_more" />
                 </LinearLayout>
@@ -279,7 +306,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/setting_data_mainsell"
+                android:id="@+id/setting_data_needproduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -295,7 +322,7 @@
                     android:textSize="16.0sp" />
 
                 <TextView
-                    android:id="@+id/wd_zl_text_zhy"
+                    android:id="@+id/wd_zl_text_needproduct"
                     style="@style/setting_text_style"
                     android:layout_width="match_parent"
                     android:drawableRight="@drawable/btn_more"
@@ -308,7 +335,7 @@
                 android:background="@color/color_gray_divider_in" />
 
             <LinearLayout
-                android:id="@+id/wd_zl_linear_ph"
+                android:id="@+id/wd_zl_linear_caremodel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -329,7 +356,7 @@
                         android:textSize="16.0sp" />
 
                     <TextView
-                        android:id="@+id/wd_zl_text_ph"
+                        android:id="@+id/wd_zl_text_caremodel"
                         style="@style/setting_text_style"
                         android:layout_width="match_parent"
                         android:drawableRight="@drawable/btn_more"

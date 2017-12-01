@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.myplas.q.R;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 
 /**
  * 作者:huangshuang

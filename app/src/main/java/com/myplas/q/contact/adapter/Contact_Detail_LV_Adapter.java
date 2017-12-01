@@ -24,26 +24,26 @@ import java.util.List;
  */
 public class Contact_Detail_LV_Adapter extends BaseAdapter {
     Context context;
-    List<ContactInfoBean.DataBean.DemandBean> list;
-    private List<ContactInfoBean.DataBean.SuppliesBean> mList;
+    List<ContactInfoBean.DataBean.DemandBean> demandList;
+    private List<ContactInfoBean.DataBean.SuppliesBean> suppliesList;
 
-    public Contact_Detail_LV_Adapter(Context context, List<ContactInfoBean.DataBean.DemandBean> list, int type) {
-        this.list = list;
-        this.context = context;
-    }
 
-    public Contact_Detail_LV_Adapter(Context context, List<ContactInfoBean.DataBean.SuppliesBean> list) {
-        this.mList = list;
+    public Contact_Detail_LV_Adapter(Context context
+            , List<ContactInfoBean.DataBean.SuppliesBean> list
+            , List<ContactInfoBean.DataBean.DemandBean> list1) {
+        this.demandList = list1;
+        this.suppliesList = list;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        if (list != null) {
-            return (list.size() == 0) ? (0) : (list.size());
-        } else {
-            return (mList.size() == 0) ? (0) : (mList.size());
+        if (demandList != null) {
+            return (demandList.size() == 0) ? (0) : (demandList.size());
+        } else if (suppliesList != null) {
+            return (suppliesList.size() == 0) ? (0) : (suppliesList.size());
         }
+        return 0;
     }
 
     @Override
@@ -66,7 +66,6 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
             viewHolder.mTVTime = (TextView) convertView.findViewById(R.id.item_time);
             viewHolder.mIVStart = (ImageView) convertView.findViewById(R.id.item_start);
             viewHolder.mTVContent = (TextView) convertView.findViewById(R.id.item_content);
-            viewHolder.mIVHead = (RoundCornerImageView) convertView.findViewById(R.id.item_head);
 
             viewHolder.reply = (TextView) convertView.findViewById(R.id.supply_demand_reply);
             viewHolder.deliver = (TextView) convertView.findViewById(R.id.supply_demand_deliver);
@@ -75,63 +74,46 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-            if (list != null) {
-                String html1 = "<font color='#9c9c9c'>" + "交货地:" + "</font>" + list.get(position).getStore_house()
-                        + "   <font color='#9c9c9c'>" + "  牌号:" + "</font>" + list.get(position).getModel()
-                        + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + list.get(position).getF_name()
-                        + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + list.get(position).getUnit_price();
+            if (demandList != null) {
+                String html1 = "<font color='#9c9c9c'>" + "牌号:" + "</font>" + demandList.get(position).getModel()
+                        + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + demandList.get(position).getF_name()
+                        + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + demandList.get(position).getUnit_price()
+                        + "   <font color='#9c9c9c'>" + "  交货地:" + "</font>" + demandList.get(position).getStore_house();
                 viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
-                viewHolder.mTVTime.setText(list.get(position).getInput_time());
-                viewHolder.deliver.setText("出价:" + list.get(position).getBid());
-                viewHolder.reply.setText("回复:" + list.get(position).getReply());
+                viewHolder.mTVTime.setText(demandList.get(position).getInput_time());
+                viewHolder.deliver.setText("出价:" + demandList.get(position).getBid());
+                viewHolder.reply.setText("回复:" + demandList.get(position).getReply());
 
-                Glide.with(context)
-                        .load(list.get(position).getThumb())
-                        .placeholder(R.drawable.img_defaul_male)
-                        .into(viewHolder.mIVHead);
 
-//            viewHolder.mIVStart.setImageResource("0".equals(list.get(position).get)
-//                    ? R.drawable.icon_identity
-//                    : R.drawable.icon_identity_hl);
-
-                viewHolder.mIVType.setImageResource("1".equals(list.get(position).getCargo_type())
+                viewHolder.mIVType.setImageResource(("1".equals(demandList.get(position).getCargo_type()))
                         ? R.drawable.icon_now
                         : R.drawable.icon_futures);
             } else {
-                String html1 = "<font color='#9c9c9c'>" + "交货地:" + "</font>" + mList.get(position).getStore_house()
-                        + "   <font color='#9c9c9c'>" + "  牌号:" + "</font>" + mList.get(position).getModel()
-                        + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + mList.get(position).getF_name()
-                        + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + mList.get(position).getUnit_price();
+                String html1 = "<font color='#9c9c9c'>" + "牌号:" + "</font>" + suppliesList.get(position).getModel()
+                        + "   <font color='#9c9c9c'>" + "  厂家:" + "</font>" + suppliesList.get(position).getF_name()
+                        + "   <font color='#9c9c9c'>" + "  价格:" + "</font>" + suppliesList.get(position).getUnit_price()
+                        + "    <font color='#9c9c9c'>" + "  交货地:" + "</font>" + suppliesList.get(position).getStore_house();
                 viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
-                viewHolder.mTVTime.setText(mList.get(position).getInput_time());
-                viewHolder.deliver.setText("出价:" + mList.get(position).getBid());
-                viewHolder.reply.setText("回复:" + mList.get(position).getReply());
+                viewHolder.mTVTime.setText(suppliesList.get(position).getInput_time());
+                viewHolder.deliver.setText("出价:" + suppliesList.get(position).getBid());
+                viewHolder.reply.setText("回复:" + suppliesList.get(position).getReply());
 
-                Glide.with(context)
-                        .load(mList.get(position).getThumb())
-                        .placeholder(R.drawable.img_defaul_male)
-                        .into(viewHolder.mIVHead);
 
-                viewHolder.mIVType.setImageResource("1".equals(mList.get(position).getCargo_type())
+                viewHolder.mIVType.setImageResource(("1".equals(suppliesList.get(position).getCargo_type()))
                         ? R.drawable.icon_now
                         : R.drawable.icon_futures);
             }
-            viewHolder.mIVHead.setBorderColor(context.getResources().getColor(R.color.color_white));
         } catch (Exception e) {
         }
 
         return convertView;
     }
 
-    //public void setList(List<ContactSupDemBean.DataBean> list) {
-//        mList = list;
-//    }
 
     class viewHolder {
         ImageView mIVStart, mIVType;
-        RoundCornerImageView mIVHead;
         TextView mTVCompany, mTVContent, mTVTime, reply, deliver;
     }
 }

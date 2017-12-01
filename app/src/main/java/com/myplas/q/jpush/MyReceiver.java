@@ -12,16 +12,12 @@ import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.fans.activity.MyFansFollowActivity;
-import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -86,7 +82,7 @@ public class MyReceiver extends BroadcastReceiver {
                 case "purchase"://发布供求
                     Intent i2 = new Intent(context, SupDem_Detail_Activity.class);
                     i2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i2.putExtra("id", extras.getString("pur_id"));
+                    i2.putExtra("id", extras.getString("id"));
                     i2.putExtra("userid", extras.getString("rev_id"));
                     context.startActivity(i2);
                     break;
@@ -103,7 +99,6 @@ public class MyReceiver extends BroadcastReceiver {
 //                    i4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    context.startActivity(i4);
 //                    break;
-
                 default:
                     break;
             }
@@ -123,7 +118,7 @@ public class MyReceiver extends BroadcastReceiver {
                 Activity activity = ActivityManager.currentActivity();
                 if (activity != null && activity instanceof MainActivity) {
                     MainActivity mainActivity = (MainActivity) activity;
-                    mainActivity.rCallback(true);
+                    mainActivity.rCallback(true, false);
                 }
             }
         } catch (Exception e) {

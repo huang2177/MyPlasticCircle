@@ -56,4 +56,13 @@
             <enum name="right" value="1" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="MarqueeView1">
+        <attr name="mAnimDuration" format="integer" />
+        <attr name="mTextColor" format="integer" />
+        <attr name="mTextGravity" format="integer">
+            <enum name="center_vertical" value="0" />
+        </attr>
+        <attr name="mTextSize" format="dimension" />
+    </declare-styleable>
 </resources>

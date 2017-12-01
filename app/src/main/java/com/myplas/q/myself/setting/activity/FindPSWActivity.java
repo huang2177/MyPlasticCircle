@@ -17,7 +17,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.login.LoginActivity;
 
 import org.json.JSONObject;

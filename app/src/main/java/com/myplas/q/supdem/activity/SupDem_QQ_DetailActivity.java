@@ -17,8 +17,8 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.ShareActivity;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
@@ -45,11 +45,11 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         , AdapterView.OnItemClickListener
         , CommonDialog.DialogShowInterface {
 
+    private ImageView imgTell, imgZx, imgFind;
     private RoundCornerImageView roundImagView;
-    private ImageView img_tell, img_zx, img_find;
-    private MyListview listview_tell, listView_zx, listView_find;
-    private LinearLayout layout_zx, layout_find, layout_wx, layout_tell, layout_zx_more;
-    private TextView text_gs, text_qq_num, text_hw, text_ph, text_chd, text_jg, text_xq, text_qq;
+    private MyListview listviewTell, listviewZx, listviewFind;
+    private LinearLayout layoutZx, layoutFind, layoutWx, layoutTell, layoutZxMore;
+    private TextView textGs, textQqNum, textHw, textPh, textChd, textJg, textXq, textQq;
 
     private PhysicalBean bean;
     private SupDem_Search_QQ_Detail_Adapter adapter;
@@ -74,40 +74,40 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         isClicked2 = false;
         isClicked3 = false;
 
-        text_qq_num = F(R.id.qq_number);
-        text_gs = F(R.id.supdem_qq_text_gs);
-        text_hw = F(R.id.supdem_qq_text_wz);
-        text_ph = F(R.id.supdem_qq_text_ph);
-        text_chd = F(R.id.supdem_qq_text_chd);
-        text_jg = F(R.id.supdem_qq_text_jg);
-        text_xq = F(R.id.supdem_qq_text_xq);
-        text_qq = F(R.id.supdem_qq_text_qq);
+        textQqNum = F(R.id.qq_number);
+        textGs = F(R.id.supdem_qq_text_gs);
+        textHw = F(R.id.supdem_qq_text_wz);
+        textPh = F(R.id.supdem_qq_text_ph);
+        textChd = F(R.id.supdem_qq_text_chd);
+        textJg = F(R.id.supdem_qq_text_jg);
+        textXq = F(R.id.supdem_qq_text_xq);
+        textQq = F(R.id.supdem_qq_text_qq);
 
-        img_zx = F(R.id.supdem_qq_img_zx);
-        img_find = F(R.id.supdem_qq_img_find);
-        img_tell = F(R.id.supdem_qq_img_tell);
+        imgZx = F(R.id.supdem_qq_img_zx);
+        imgFind = F(R.id.supdem_qq_img_find);
+        imgTell = F(R.id.supdem_qq_img_tell);
         roundImagView = F(R.id.roundimagviewutil);
 
-        listView_zx = F(R.id.supdem_qq_listview_zx);
-        listView_find = F(supdem_qq_listview_find);
-        listview_tell = F(R.id.supdem_qq_listview_tell);
+        listviewZx = F(R.id.supdem_qq_listview_zx);
+        listviewFind = F(supdem_qq_listview_find);
+        listviewTell = F(R.id.supdem_qq_listview_tell);
 
-        layout_zx = F(R.id.supdem_qq_layout_zx);
-        layout_find = F(R.id.supdem_qq_layout_find);
-        layout_wx = F(R.id.supdem_qq_layout_wx);
-        layout_tell = F(R.id.supdem_qq_layout_tell);
-        layout_zx_more = F(R.id.supdem_qq_layout_zx_more);
+        layoutZx = F(R.id.supdem_qq_layout_zx);
+        layoutFind = F(R.id.supdem_qq_layout_find);
+        layoutWx = F(R.id.supdem_qq_layout_wx);
+        layoutTell = F(R.id.supdem_qq_layout_tell);
+        layoutZxMore = F(R.id.supdem_qq_layout_zx_more);
 
         roundImagView.setShapeType(1);
 
         mIVConact.setOnClickListener(this);
-        layout_zx.setOnClickListener(this);
-        layout_wx.setOnClickListener(this);
-        layout_find.setOnClickListener(this);
-        layout_tell.setOnClickListener(this);
-        layout_zx_more.setOnClickListener(this);
-        listView_zx.setOnItemClickListener(this);
-        listview_tell.setOnItemClickListener(this);
+        layoutZx.setOnClickListener(this);
+        layoutWx.setOnClickListener(this);
+        layoutFind.setOnClickListener(this);
+        layoutTell.setOnClickListener(this);
+        layoutZxMore.setOnClickListener(this);
+        listviewZx.setOnItemClickListener(this);
+        listviewTell.setOnItemClickListener(this);
     }
 
     //获取数据
@@ -142,17 +142,17 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     if (!isClicked1) {
                         isClicked1 = true;
-                        img_zx.setImageResource(R.drawable.icon_more_hl);
-                        listView_zx.setVisibility(View.VISIBLE);
-                        layout_zx_more.setVisibility(View.VISIBLE);
+                        imgZx.setImageResource(R.drawable.icon_more_hl);
+                        listviewZx.setVisibility(View.VISIBLE);
+                        layoutZxMore.setVisibility(View.VISIBLE);
                         adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
                         adapter.setList_showinfo(detailBean.getShow_information());
-                        listView_zx.setAdapter(adapter);
+                        listviewZx.setAdapter(adapter);
                     } else {
                         isClicked1 = false;
-                        listView_zx.setVisibility(View.GONE);
-                        layout_zx_more.setVisibility(View.GONE);
-                        img_zx.setImageResource(R.drawable.icon_more);
+                        listviewZx.setVisibility(View.GONE);
+                        layoutZxMore.setVisibility(View.GONE);
+                        imgZx.setImageResource(R.drawable.icon_more);
                     }
                     break;
                 case R.id.supdem_qq_layout_find:
@@ -162,15 +162,15 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     if (!isClicked2) {
                         isClicked2 = true;
-                        img_find.setImageResource(R.drawable.icon_more_hl);
-                        listView_find.setVisibility(View.VISIBLE);
+                        imgFind.setImageResource(R.drawable.icon_more_hl);
+                        listviewFind.setVisibility(View.VISIBLE);
                         adapter = new SupDem_Search_QQ_Detail_Adapter(this, 2);
                         adapter.setList_friend(detailBean.getFind_relevant());
-                        listView_find.setAdapter(adapter);
+                        listviewFind.setAdapter(adapter);
                     } else {
                         isClicked2 = false;
-                        listView_find.setVisibility(View.GONE);
-                        img_find.setImageResource(R.drawable.icon_more);
+                        listviewFind.setVisibility(View.GONE);
+                        imgFind.setImageResource(R.drawable.icon_more);
                     }
                     break;
                 case R.id.supdem_qq_layout_wx:
@@ -197,16 +197,16 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     if (!isClicked3) {
                         isClicked3 = true;
-                        img_tell.setImageResource(R.drawable.icon_more_hl);
-                        listview_tell.setVisibility(View.VISIBLE);
-                        listview_tell.setSelection(layout_tell.getChildCount());
+                        imgTell.setImageResource(R.drawable.icon_more_hl);
+                        listviewTell.setVisibility(View.VISIBLE);
+                        listviewTell.setSelection(layoutTell.getChildCount());
                         adapter = new SupDem_Search_QQ_Detail_Adapter(this, 3);
                         adapter.setList_phone(detailBean.getMobile_list());
-                        listview_tell.setAdapter(adapter);
+                        listviewTell.setAdapter(adapter);
                     } else {
                         isClicked3 = false;
-                        listview_tell.setVisibility(View.GONE);
-                        img_tell.setImageResource(R.drawable.icon_more);
+                        listviewTell.setVisibility(View.GONE);
+                        imgTell.setImageResource(R.drawable.icon_more);
                     }
                     break;
                 case R.id.supdem_qq_layout_zx_more:
@@ -276,7 +276,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
 
                 adapter = new SupDem_Search_QQ_Detail_Adapter(this, 1);
                 adapter.setList_showinfo(detailBean.getShow_information());
-                listView_zx.setAdapter(adapter);
+                listviewZx.setAdapter(adapter);
             }
             if (type == 2 && err.equals("0")) {
                 bean = gson.fromJson(object.toString(), PhysicalBean.class);
@@ -304,14 +304,14 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
 
     public void showInfo(SearchResultDetailBean.DataBean detailBean) {
         setTitle(detailBean.getC_name());
-        text_ph.setText(detailBean.getModel());
-        text_gs.setText(detailBean.getC_name());
-        text_qq_num.setText(detailBean.getQq());
-        text_qq.setText(detailBean.getQq_name());
-        text_chd.setText(detailBean.getF_name());
-        text_xq.setText(detailBean.getCargo_type());
-        text_jg.setText(detailBean.getUnit_price());
-        text_hw.setText(detailBean.getStore_house());
+        textPh.setText(detailBean.getModel());
+        textGs.setText(detailBean.getC_name());
+        textQqNum.setText(detailBean.getQq());
+        textQq.setText(detailBean.getQq_name());
+        textChd.setText(detailBean.getF_name());
+        textXq.setText(detailBean.getCargo_type());
+        textJg.setText(detailBean.getUnit_price());
+        textHw.setText(detailBean.getStore_house());
 
         Glide.with(this)
                 .load(detailBean.getThumb_qq())

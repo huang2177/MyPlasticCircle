@@ -84,7 +84,6 @@
             android:id="@+id/supply_demand_deliver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_sd_offer"
             android:drawablePadding="3dp"
             android:textColor="@color/color_content" />
 
@@ -92,7 +91,6 @@
             android:id="@+id/supply_demand_reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_sd_reply"
             android:drawablePadding="3dp"
             android:layout_marginLeft="8dp"
             android:textColor="@color/color_content" />

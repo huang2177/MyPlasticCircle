@@ -18,7 +18,7 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.contact.adapter.TheirFansFollowAdapter;
 import com.myplas.q.contact.beans.TheirFansBean;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 
 import org.json.JSONObject;
@@ -81,7 +81,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && listView.getCount() > visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
-                        getMyFans(String.valueOf(page), false);
+                        getMyFans(page + "", false);
                     }
                 }
             }
@@ -96,6 +96,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     public void getMyFans(String page, boolean isShow) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("user_id", user_id);
+        map.put("page", page);
         postAsyn1(this, API.BASEURL + function, map, this, 1, isShow);
     }
 

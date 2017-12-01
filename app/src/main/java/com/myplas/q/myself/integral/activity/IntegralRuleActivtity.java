@@ -8,7 +8,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.utils.SharedUtils;
 import com.umeng.analytics.MobclickAgent;
 

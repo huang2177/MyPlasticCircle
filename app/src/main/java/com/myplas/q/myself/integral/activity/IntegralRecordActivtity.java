@@ -13,7 +13,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.RecordBean;
 import com.myplas.q.myself.integral.adapter.Integral_Record_Adapter;
 import com.umeng.analytics.MobclickAgent;

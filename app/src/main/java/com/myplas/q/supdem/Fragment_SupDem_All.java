@@ -30,7 +30,7 @@ import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.contact.activity.Contact_Detail_Activity;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;

@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.ShareActivity;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.api.API;
@@ -153,7 +153,7 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
     }
 
     private String getContent(int position) {
-        return "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + list.get(position).getStore_house()
+        return "<font color='#9c9c9c'>" + " 交货地:" + "</font>" + list.get(position).getStore_house()
                 + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + list.get(position).getModel()
                 + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + list.get(position).getF_name()
                 + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + list.get(position).getUnit_price();

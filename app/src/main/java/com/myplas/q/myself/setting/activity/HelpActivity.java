@@ -5,7 +5,7 @@ import android.view.View;
 
 
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.umeng.analytics.MobclickAgent;

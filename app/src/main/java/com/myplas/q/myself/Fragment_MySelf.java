@@ -29,7 +29,7 @@ import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.MyZone;
 import com.myplas.q.myself.credit.activity.LineOfCreditActivity;
 import com.myplas.q.myself.credit.activity.PlasticMoneyActivity;
@@ -373,7 +373,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
 
     /*rabbitmq */
     @Override
-    public void rCallback(boolean showRedDot) {
+    public void rCallback(boolean showRedDot, boolean isShowNotify) {
         try {
             int numSeeMe = Integer.parseInt(mACache.getAsString(Constant.R_SEEME));
             int numMyOrder = Integer.parseInt(mACache.getAsString(Constant.R_MYORDER));
@@ -404,7 +404,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        rCallback(true);
+        rCallback(true, false);
         getLoginInfo(false);
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }

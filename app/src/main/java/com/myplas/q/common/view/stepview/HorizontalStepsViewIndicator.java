@@ -1,4 +1,4 @@
-package com.myplas.q.common.view;
+package com.myplas.q.common.view.stepview;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -90,7 +90,7 @@ public class HorizontalStepsViewIndicator extends View {
     }
 
     /**
-     * init
+     * start
      */
     private void init() {
         mStepBeanList = new ArrayList<>();

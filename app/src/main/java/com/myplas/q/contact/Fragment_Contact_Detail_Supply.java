@@ -20,7 +20,7 @@ import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.contact.adapter.Contact_Detail_LV_Adapter;
 import com.myplas.q.contact.beans.ContactInfoBean;
 import com.myplas.q.contact.beans.ContactSupDemBean;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
 import java.util.HashMap;
@@ -110,7 +110,7 @@ public class Fragment_Contact_Detail_Supply extends Fragment implements ResultCa
         if (suppliesList.size() != 0) {
             setListener(false);
             this.suppliesList = suppliesList;
-            mAdapter = new Contact_Detail_LV_Adapter(getActivity(), suppliesList);
+            mAdapter = new Contact_Detail_LV_Adapter(getActivity(), suppliesList, null);
             mMyListview.setAdapter(mAdapter);
         } else {
             setListener(true);

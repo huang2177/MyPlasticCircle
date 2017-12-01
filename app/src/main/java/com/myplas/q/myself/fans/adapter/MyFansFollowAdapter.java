@@ -36,8 +36,9 @@ public class MyFansFollowAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list != null)
+        if (list != null) {
             return list.size();
+        }
         return 0;
     }
 

@@ -10,7 +10,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,16 +20,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
-import com.bumptech.glide.Glide;
 import com.huangbryant.hindicator.HIndicatorAdapter;
 import com.huangbryant.hindicator.HIndicatorBuilder;
 import com.huangbryant.hindicator.HIndicatorDialog;
 import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyOnPageChangeListener;
-import com.myplas.q.common.view.MarqueeView;
+import com.myplas.q.common.view.marqueeview.MarqueeFactory;
+import com.myplas.q.common.view.marqueeview.MarqueeViewHelper;
+import com.myplas.q.sockethelper.DefConfigBean;
+import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 import com.myplas.q.supdem.activity.SupDem_Search_Activity;
 import com.myplas.q.supdem.adapter.SupDem_ViewPager_Adapter;
 import com.myplas.q.supdem.beans.ConfigData;
@@ -50,15 +53,13 @@ import java.util.Map;
  */
 public class Fragment_SupplyDemand extends Fragment implements View.OnClickListener
         , Fragment_SupDem_All.RefreshPopouInterface
-        , MyOnPageChangeListener.OnPageChangeListener {
+        , MyOnPageChangeListener.OnPageChangeListener, MarqueeFactory.OnItemClickListener {
 
     private View view;
     private EditText editText;
     private LinearLayout mLayout;
     private TextView tvType, mTVTab;
-    private MarqueeView marqueeView;
     private LinearLayout notifyRoot;
-    private ImageView imageViewClose, imageView;
 
     private boolean logined;
     public int currentItem;
@@ -70,11 +71,13 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private Map<String, Integer> mMap;
 
     private ViewPager mViewPager;
-    private HIndicatorDialog dialog;
     private XTabLayout mTabLayout;
+    private HIndicatorDialog dialog;
 
+    private MarqueeViewHelper mVHelper;
     public Fragment_SupDem_All mFragmentAll;
     private SupDem_ViewPager_Adapter mViewPagerAdapter;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,34 +89,28 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     private void initView() {
         sType = "0";
         mMap = new HashMap<>();
+        mVHelper = new MarqueeViewHelper();
         mSharedUtils = SharedUtils.getSharedUtils();
         mList = Arrays.asList("全部", "供给", "求购");
         logined = mSharedUtils.getBoolean(getActivity(), Constant.LOGINED);
         view = View.inflate(getActivity(), R.layout.layout_supdem_fragment, null);
 
-        imageView = F(R.id.notify_img);
         notifyRoot = F(R.id.notify_root);
         tvType = F(R.id.supplydemand_btn);
-        marqueeView = F(R.id.marqueeView);
         mLayout = F(R.id.supdem_titlebar_ll);
         editText = F(R.id.supplydemand_edit);
         mTabLayout = F(R.id.supdem_tablayout);
         mViewPager = F(R.id.supdem_viewpager);
-        imageViewClose = F(R.id.notify_img_close);
 
         tvType.setOnClickListener(this);
         editText.setOnClickListener(this);
-        imageViewClose.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
-
-        Glide.with(getActivity()).load(R.drawable.icon_voice).into(imageView);
 
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        initMarqueeView();
         return view;
     }
 
@@ -145,10 +142,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
             //setUpTabBadge(0);
         }
-    }
-
-    private void initMarqueeView() {
-        marqueeView.setText("依据赫兹接触强度计算理论，着重研究了圆柱滚子轴承内、外圈及滚动体的接触应力");
     }
 
     /**
@@ -211,11 +204,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
                         tvType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_supdemxiala, 0);
                     }
                 });
-                break;
-            case R.id.notify_img_close:
-                marqueeView.stopScroll();
-                marqueeView.setVisibility(View.GONE);
-                notifyRoot.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -282,6 +270,33 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
+    /**
+     * 展示滚动通知
+     *
+     * @param datas
+     */
+    public void showMarquee(List<DefConfigBean.NoticeBean.PurchaseContentBean> datas) {
+        if (mVHelper != null && notifyRoot.getVisibility() == View.GONE) {
+            notifyRoot.setVisibility(View.VISIBLE);
+            mVHelper.onResume(getActivity(), notifyRoot, datas, this);
+        }
+    }
+
+
+    @Override
+    public void onItemClickListener(MarqueeFactory.ViewHolder holder) {
+        DefConfigBean.NoticeBean.PurchaseContentBean bean = (DefConfigBean.NoticeBean.PurchaseContentBean) holder.data;
+
+        if (bean == null && !NetUtils.isNetworkStateed(getActivity())) {
+            return;
+        }
+        Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
+        intent.putExtra("id", bean.getId());
+        intent.putExtra("userid", bean.getUser_id());
+        startActivity(intent);
+
+    }
+
 
     public class Supdem_Dialog_Adapter extends HIndicatorAdapter {
 
@@ -336,10 +351,17 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("MainScreen");
-        if (marqueeView != null) {
-            marqueeView.startScroll();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mVHelper != null) {
+            mVHelper.start();
         }
     }
+
 
     @Override
     public void onPause() {
@@ -348,9 +370,20 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         if (mFragmentAll.refreshPopou != null) {
             mFragmentAll.refreshPopou.dismiss();
         }
-        if (marqueeView != null) {
-            marqueeView.stopScroll();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mVHelper != null) {
+            mVHelper.stop();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mVHelper.onDestroy();
     }
 
     public void onLogined() {

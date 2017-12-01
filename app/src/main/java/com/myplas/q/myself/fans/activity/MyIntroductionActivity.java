@@ -12,7 +12,7 @@ import com.myplas.q.R;
 import com.myplas.q.contact.activity.Contact_Detail_Activity;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;

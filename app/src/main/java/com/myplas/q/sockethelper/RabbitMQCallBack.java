@@ -7,5 +7,11 @@ package com.myplas.q.sockethelper;
  */
 
 public interface RabbitMQCallBack {
-    public void rCallback(boolean showRedDot);
+    /**
+     * 红点消息及滚动通知的回调
+     *
+     * @param isShowRedDot
+     * @param isShowNotify
+     */
+    public void rCallback(boolean isShowRedDot, boolean isShowNotify);
 }

@@ -1,40 +1,24 @@
 package com.myplas.q.myself.login;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.MyEditText;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
 
-import org.json.JSONObject;
-
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author 黄双

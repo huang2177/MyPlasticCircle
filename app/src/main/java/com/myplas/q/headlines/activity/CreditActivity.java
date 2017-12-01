@@ -3,8 +3,7 @@ package com.myplas.q.headlines.activity;
 import android.os.Bundle;
 
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.umeng.analytics.MobclickAgent;
+import com.myplas.q.app.activity.BaseActivity;
 
 /**
  * 编写： 黄双

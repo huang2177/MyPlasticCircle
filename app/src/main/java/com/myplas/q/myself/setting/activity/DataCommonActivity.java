@@ -2,7 +2,6 @@ package com.myplas.q.myself.setting.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -11,7 +10,7 @@ import android.widget.ListView;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.setting.adapter.SettingSex_RegionAdapter;
 import com.optimus.edittextfield.EditTextField;
 

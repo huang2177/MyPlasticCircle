@@ -1,30 +1,21 @@
 package com.myplas.q.common.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Looper;
-import android.support.design.widget.Snackbar;
 import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidadvance.topsnackbar.TSnackbar;
 import com.myplas.q.R;
-import com.myplas.q.common.appcontext.ActivityManager;
-import com.myplas.q.guide.activity.MainActivity;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -79,26 +70,26 @@ public class TextUtils {
         }
     }
 
-    public static void topTSnackbar(View view, String s) {
-        View view1 = null;
-        try {
-            Activity activity = ActivityManager.getInstance().getCurrentActivity();
-            view1 = activity.findViewById(android.R.id.content);
-        } catch (Exception e) {
-        }
-
-        TSnackbar snackbar = TSnackbar.make(view1, s, Snackbar.LENGTH_SHORT);
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(Color.WHITE);
-        ViewGroup.LayoutParams lp = snackbarView.getLayoutParams();
-        lp.height = 200;
-        snackbarView.setLayoutParams(lp);
-        TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
-        textView.setTextColor(Color.BLACK);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(18);
-        snackbar.show();
-    }
+//    public static void topTSnackbar(View view, String s) {
+//        View view1 = null;
+//        try {
+//            Activity activity = ActivityManager.getInstance().getCurrentActivity();
+//            view1 = activity.findViewById(android.R.id.content);
+//        } catch (Exception e) {
+//        }
+//
+//        TSnackbar snackbar = TSnackbar.make(view1, s, Snackbar.LENGTH_SHORT);
+//        View snackbarView = snackbar.getView();
+//        snackbarView.setBackgroundColor(Color.WHITE);
+//        ViewGroup.LayoutParams lp = snackbarView.getLayoutParams();
+//        lp.height = 200;
+//        snackbarView.setLayoutParams(lp);
+//        TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
+//        textView.setTextColor(Color.BLACK);
+//        textView.setGravity(Gravity.CENTER);
+//        textView.setTextSize(18);
+//        snackbar.show();
+//    }
 
 
     public static boolean isEmpty(String s) {

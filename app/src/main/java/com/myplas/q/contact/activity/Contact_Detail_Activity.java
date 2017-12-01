@@ -26,7 +26,8 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
 
 import org.json.JSONObject;
@@ -49,12 +50,12 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
     private boolean isSelf;
     private SharedUtils sharedUtils;
 
-    private RoundCornerImageView mHead;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
-    private ImageView mStart, mFollow, mCall, mBack, mSign;
-    private TextView mCompany, mName, phone, address, pro, mFans, mfollow, mIntrudtion;
+    private RoundCornerImageView mHead;
+    private ImageView mStart, mFollow, mCall, mBack, mSign, mShare, mIndentify;
     private LinearLayout mLayoutInfo, mLayoutFans, mLayoutFollow, mLayoutIntrudtion;
+    private TextView mCompany, mName, phone, address, pro, mFans, mfollow, mIntrudtion, mHeat;
 
     private ContactSupDemBean p1, p2;
     private List<ContactSupDemBean.DataBean> list;
@@ -86,6 +87,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
 
         mHead = F(R.id.xq_tx);
         mStart = F(R.id.xq_rz);
+        mHeat = F(R.id.wd_text_heat);
         mFans = F(R.id.wd_text_fans);
         mViewPager = F(R.id.viewpager);
         mTabLayout = F(R.id.tabLayout);
@@ -97,17 +99,20 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         mName = F(R.id.contact_detail_name);
         mLayoutFans = F(R.id.wd_linear_fans);
         mLayoutInfo = F(R.id.contact_info_ll);
+        mShare = F(R.id.contact_detail_share);
         mIntrudtion = F(R.id.wd_text_introdus);
         mFollow = F(R.id.contact_detail_follow);
         address = F(R.id.contact_detail_address);
         mLayoutFollow = F(R.id.wd_linear_follow);
         mCompany = F(R.id.contact_detail_company);
+        mIndentify = F(R.id.contact_detail_indentify);
         mLayoutIntrudtion = F(R.id.wd_linear_introdus);
 
         mSign.setVisibility(View.VISIBLE);
         mHead.setBorderColor(getResources().getColor(R.color.color_white));
 
         mCall.setOnClickListener(this);
+        mShare.setOnClickListener(this);
         mFollow.setOnClickListener(this);
         mIVConact.setOnClickListener(this);
         mLayoutBack.setOnClickListener(this);
@@ -127,8 +132,8 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         mfragmentDemand = Fragment_Contact_Detail_Demand.newInstance();
         mfragmentSupply = Fragment_Contact_Detail_Supply.newInstance();
         mfragmentCompany = Fragment_Contact_Detail_Company.newInstance();
-        mFragmentList.add(mfragmentDemand);
         mFragmentList.add(mfragmentSupply);
+        mFragmentList.add(mfragmentDemand);
         mFragmentList.add(mfragmentCompany);
 
         mPagerAdapter = new Contact_Detail_ViewPager_Adapter(getSupportFragmentManager()
@@ -192,6 +197,14 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
             case R.id.titlebar_img_back:
                 onBackPressed();
                 break;
+            case R.id.contact_detail_share:
+                Intent in = new Intent(this, ShareActivity.class);
+                in.putExtra("type", "1");
+                in.putExtra("id", contactBean.getData().getUser_id());
+                in.putExtra("title", contactBean.getData().getC_name());
+                in.putExtra("des", "主营：" + contactBean.getData().getMain_product());
+                startActivity(in);
+                break;
             default:
                 break;
         }
@@ -248,10 +261,11 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
             mCompany.setText(contactBean.getData().getC_name());
             mName.setText(Html.fromHtml("<font color='#999898'>姓名：</font>" + contactBean.getData().getName()));
             phone.setText(Html.fromHtml("<font color='#999898'>手机号码：</font>" + contactBean.getData().getMobile()));
-            pro.setText(Html.fromHtml("<font color='#999898'>主营：</font>" + contactBean.getData().getC_name()));
-            address.setText(Html.fromHtml("<font color='#999898'>地址：</font>" + contactBean.getData().getC_name()));
+            pro.setText(Html.fromHtml("<font color='#999898'>主营：</font>" + contactBean.getData().getMain_product()));
+            address.setText(Html.fromHtml("<font color='#999898'>地址：</font>" + contactBean.getData().getAddress()));
 
             mFans.setText(contactBean.getData().getFans());
+            mHeat.setText(contactBean.getData().getHeat());
             mfollow.setText(contactBean.getData().getFollowers());
             mIntrudtion.setText(contactBean.getData().getRecommendation());
 
@@ -267,7 +281,9 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
                     ? R.drawable.btn_contact_follow
                     : R.drawable.btn_contact_followed);
 
-
+            if ("1".equals(contactBean.getData().getMerge_three())) {
+                mIndentify.setVisibility(View.VISIBLE);
+            }
             if ("1".equals(contactBean.getData().getType())) {
                 mSign.setImageResource(R.drawable.icon_factory);
             }
@@ -280,6 +296,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
 
             mfragmentDemand.showDemand(contactBean.getData().getDemand());
             mfragmentSupply.showSupplies(contactBean.getData().getSupplies());
+            mfragmentCompany.setCompanyInfo(contactBean.getData().getCom_intro());
 
             isSelf = (contactBean.getData().getUser_id())
                     .equals(sharedUtils.getData(this, Constant.USERID));

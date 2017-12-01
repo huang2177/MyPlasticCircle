@@ -92,6 +92,24 @@ public class SearchResultBean {
         private String from;
         private String name;
         private String data_model;
+        private String platicCount;
+        private String replyCount;
+
+        public void setPlaticCount(String platicCount) {
+            this.platicCount = platicCount;
+        }
+
+        public void setReplyCount(String replyCount) {
+            this.replyCount = replyCount;
+        }
+
+        public String getPlaticCount() {
+            return platicCount;
+        }
+
+        public String getReplyCount() {
+            return replyCount;
+        }
 
         public void setData_model(String data_model) {
             this.data_model = data_model;

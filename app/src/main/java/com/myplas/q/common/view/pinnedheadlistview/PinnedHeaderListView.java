@@ -1,4 +1,4 @@
-package com.myplas.q.common.view;
+package com.myplas.q.common.view.pinnedheadlistview;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -39,10 +39,15 @@ public class Constant {
 
     public static final String R_SEEME = "unread_who_saw_me";
 
-
     public static final String POINTSINFO = "pointsInfo";
 
     public static final String SUPDEMCACHE = "supdemCache";
+
+    public static final String R_MARQUEE_CONTENT = "toutiao_content";
+
+    public static final String R_CONTACT_CONTENT = "contact_content";
+
+    public static final String R_SUPDEM_CONTENT = "supdem_contact";
 
 
 }

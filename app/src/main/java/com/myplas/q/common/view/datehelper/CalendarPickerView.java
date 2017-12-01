@@ -310,7 +310,7 @@ public class CalendarPickerView extends ListView {
     }
 
     /**
-     * Returns a string summarizing what the client sent us for init() params.
+     * Returns a string summarizing what the client sent us for start() params.
      */
     private static String dbg(Date minDate, Date maxDate) {
         return "minDate: " + minDate + "\nmaxDate: " + maxDate;

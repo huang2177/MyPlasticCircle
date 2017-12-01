@@ -22,7 +22,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyGridview;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.OrderBean;
 import com.myplas.q.myself.beans.SelectableBean;
 import com.myplas.q.myself.integral.adapter.Integral_Pay_Adapter;

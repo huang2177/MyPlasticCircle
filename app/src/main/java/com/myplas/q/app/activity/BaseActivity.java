@@ -1,4 +1,4 @@
-package com.myplas.q.guide.activity;
+package com.myplas.q.app.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,7 +23,6 @@ import com.myplas.q.common.view.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.Map;
-import java.util.TimerTask;
 
 /**
  * 编写： 黄双
@@ -139,8 +138,7 @@ public class BaseActivity extends FragmentActivity {
     //post请求
     public static synchronized void postAsyn(Context context
             , String url
-            , Map<String
-            , String> map
+            , Map<String, String> map
             , ResultCallBack resultCallBack
             , int type) {
         try {
@@ -158,8 +156,7 @@ public class BaseActivity extends FragmentActivity {
     //post请求
     public static synchronized void postAsyn1(Context context
             , String url
-            , Map<String
-            , String> map
+            , Map<String, String> map
             , ResultCallBack resultCallBack
             , int type
             , boolean isShowDialog) {

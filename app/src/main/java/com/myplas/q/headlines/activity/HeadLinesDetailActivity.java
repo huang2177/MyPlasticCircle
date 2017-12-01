@@ -20,9 +20,9 @@ import com.myplas.q.R;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.StatusUtils;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.guide.activity.ShareActivity;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.MainActivity;
+import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -235,14 +235,11 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 }
                 break;
             case R.id.wd_linear_share:
-                try {
-                    Intent intent = new Intent(this, ShareActivity.class);
-                    intent.putExtra("type", "2");
-                    intent.putExtra("id", sucribleDetailBean.getInfo().getId());
-                    intent.putExtra("title", sucribleDetailBean.getInfo().getTitle());
-                    startActivity(intent);
-                } catch (Exception e) {
-                }
+                Intent intent = new Intent(this, ShareActivity.class);
+                intent.putExtra("type", "2");
+                intent.putExtra("id", sucribleDetailBean.getInfo().getId());
+                intent.putExtra("title", sucribleDetailBean.getInfo().getTitle());
+                startActivity(intent);
                 break;
             default:
                 break;

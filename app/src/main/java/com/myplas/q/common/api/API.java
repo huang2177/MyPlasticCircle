@@ -54,6 +54,12 @@ public class API {
     public final static String SAVE_SHARE_LOG = "wechat/saveShareLog";
 
     /**
+     * 分享店铺
+     */
+    public final static String PLASTIC_CONTACT = (BuildConfig.API_ENV)
+            ? "http://q.myplas.com/plasticzone/plastic#/personinfoshare/"
+            : "http://test.myplas.com/plasticzone/plastic#/personinfoshare/";
+    /**
      * 分享文章
      */
     public final static String PLASTIC_SUCRIBLE = (BuildConfig.API_ENV)

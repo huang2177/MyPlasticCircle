@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,8 +15,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.IntegralBean;
 import com.myplas.q.myself.integral.adapter.IntegralAdapter;
 
@@ -124,7 +121,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
     }
 
     @Override
-    public void refresgData() {
+    public void refreshData() {
         getProducts(2);
     }
 
@@ -156,6 +153,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
      */
     private void moveToPosition(String cateId) {
         if (cateId != null) {
+            integralAdapter.setClickIsFinish(true);
             for (int n = 0; n < list.size(); n++) {
                 if (list.get(n).getExtra_config().get(0).getCate_id().equals(cateId)) {
                     if (n < 0 || n >= integralAdapter.getItemCount()) {

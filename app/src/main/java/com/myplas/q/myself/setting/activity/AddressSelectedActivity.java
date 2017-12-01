@@ -18,7 +18,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.RegionsBean;
 import com.optimus.edittextfield.EditTextField;
 
@@ -66,7 +66,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
         setRightTVVisibility(View.VISIBLE);
         setTitle(getIntent().getStringExtra("title"));
         address = getIntent().getStringExtra("address");
-        addressId = getIntent().getStringExtra("addressId");
+        addressId = getIntent().getStringExtra("location");
 
         mPList = new ArrayList<>();
         mCList = new ArrayList<>();
@@ -171,7 +171,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
                 Intent intent = new Intent("com.broadcast.databack");
                 intent.putExtra("type", "2");
                 intent.putExtra("updateData", tx + "|" + inPut);
-                intent.putExtra("addressId", addressId);
+                intent.putExtra("location", addressId);
                 sendBroadcast(intent);
                 finish();
             } else {

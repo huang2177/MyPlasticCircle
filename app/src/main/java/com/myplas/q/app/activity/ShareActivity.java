@@ -1,16 +1,18 @@
-package com.myplas.q.guide.activity;
+package com.myplas.q.app.activity;
 
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.myplas.q.R;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.api.API;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -37,13 +39,18 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
     private int flag;
     private String type;
     private boolean isShareed;
-    private String description = "塑料圈通讯录-塑料人都在用";
+    private final String DESCRIPTION = "塑料圈通讯录-塑料人都在用";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wd_share_popou);
-        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        int screenHeight = ScreenUtils.getScreenHeight(this);
+        int statusBarHeight = StatusUtils.getStatusBarHeight(this);
+        int dialogHeight = screenHeight - statusBarHeight;
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0
+                ? ViewGroup.LayoutParams.MATCH_PARENT
+                : dialogHeight);
 
         view = F(R.id.share_view);
         shareTocircle = F(R.id.share_py);
@@ -63,10 +70,18 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
             case R.id.share_wx:
                 flag = (v.getId() == R.id.share_py) ? (0) : (1);
                 switch (type) {
-                    case "2"://文章
-                        isShareed = shareToWX(API.PLASTIC_SUCRIBLE
-                                        + getIntent().getStringExtra("id")
+                    case "1"://店铺
+                        isShareed = shareToWX(API.PLASTIC_CONTACT + getIntent().getStringExtra("id")
                                 , getIntent().getStringExtra("title")
+                                , getIntent().getStringExtra("des")
+                                , R.drawable.toutiaologo);
+
+                        shareLog("1", getIntent().getStringExtra("id"));//加积分
+                        break;
+                    case "2"://文章
+                        isShareed = shareToWX(API.PLASTIC_SUCRIBLE + getIntent().getStringExtra("id")
+                                , getIntent().getStringExtra("title")
+                                , null
                                 , R.drawable.toutiaologo);
 
                         shareLog("3", getIntent().getStringExtra("id"));//加积分
@@ -74,22 +89,22 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
                     case "3"://授信
                         shareToWX(API.PLASTIC_CREDIT + getIntent().getStringExtra("id")
                                 , getIntent().getStringExtra("title")
+                                , null
                                 , R.drawable.sharelog);
                         break;
                     case "4"://供求
-                        isShareed = shareToWX(API.PLASTIC_SUPPLY_DEMAND
-                                        + getIntent().getStringExtra("id")
-                                        + "/" + getIntent().getStringExtra("userid")
+                        isShareed = shareToWX(API.PLASTIC_SUPPLY_DEMAND + getIntent().getStringExtra("id") + "/" + getIntent().getStringExtra("userid")
                                 , getIntent().getStringExtra("title")
+                                , null
                                 , R.drawable.gongqiulogo);
 
                         shareLog(getIntent().getStringExtra("supdemType")
                                 , getIntent().getStringExtra("id"));//加积分
                         break;
                     case "5"://供求-QQ
-                        isShareed = shareToWX(API.PLASTIC_SUPPLY_DEMAND_QQ
-                                        + getIntent().getStringExtra("id")
+                        isShareed = shareToWX(API.PLASTIC_SUPPLY_DEMAND_QQ + getIntent().getStringExtra("id")
                                 , getIntent().getStringExtra("title")
+                                , null
                                 , R.drawable.gongqiulogo);
 
                         shareLog(getIntent().getStringExtra("supdemType")
@@ -107,7 +122,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-    public boolean shareToWX(String url, String title, int resId) {
+    public boolean shareToWX(String url, String title, String des, int resId) {
         if (isWebchatAvaliable()) {
             api = WXAPIFactory.createWXAPI(this, API.WXAPI);
             api.registerApp(API.WXAPI);
@@ -117,7 +132,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
             //创建一个WXMediaMessage对象
             WXMediaMessage msg = new WXMediaMessage(webpage);
             msg.title = title;
-            msg.description = description;
+            msg.description = (null == des ? DESCRIPTION : des);
 
             Bitmap bp = BitmapFactory.decodeResource(getResources(), resId);
             Bitmap thumbBmp = Bitmap.createScaledBitmap(bp, 150, 150, true);

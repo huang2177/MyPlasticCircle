@@ -24,7 +24,7 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.IntegralBean;
 import com.myplas.q.myself.beans.TookDateBean;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
@@ -47,8 +47,10 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 16:29
  */
-public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallBack, Integral_Diaolog_SupDem_Adapter.MyInterface
-        , CommonDialog.DialogShowInterface, ClassifyDialogShowUtils.MyInterface {
+public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallBack
+        , Integral_Diaolog_SupDem_Adapter.MyInterface
+        , CommonDialog.DialogShowInterface
+        , ClassifyDialogShowUtils.MyInterface {
 
     private MyInterface myInterface;
 
@@ -66,9 +68,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     private List<IntegralBean.InfoBean.MyMsgBean> list_msg;
 
     private Integral_Date_Grid_Adapter gridAdapter;
-    private Integral_Diaolog_SupDem_Adapter integral_supplyDemandAdapter;
+    private Integral_Diaolog_SupDem_Adapter integralSupplydemandadapter;
 
     private Activity context;
+    private boolean isFinish;
     private String type, cate_ids;
     private TookDateBean tookDateBean;
     private int num = -1, month_num, plasticNum;
@@ -76,8 +79,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
 
     public IntegralAdapter(Context context, Activity activity, List<IntegralBean.InfoBean> list, MyInterface myInterface) {
         this.list = list;
-        map = new HashMap<>();
         this.context = activity;
+
+        map = new HashMap<>();
         mHolderMap = new HashMap<>();
         mIntegerMap = new HashMap<>();
         mDefCPostionMap = new HashMap<>();
@@ -109,15 +113,15 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         if (type.equals("1")) {
             supDemPosition = position;
             viewHolder.shm.setVisibility(View.VISIBLE);
-            viewHolder.linear_supdem.setVisibility(View.VISIBLE);
+            viewHolder.linearSupdem.setVisibility(View.VISIBLE);
         } else if (type.equals("2")) {
-            viewHolder.type.setText("*请选择置顶日期：");
+            viewHolder.type.setText("请选择置顶日期：");
         } else {
-            viewHolder.type.setText("*请选择分类：");
+            viewHolder.type.setText("请选择分类：");
         }
 
         //日期dialog 与 选择分类dialog
-        viewHolder.linear_time.setOnClickListener(new View.OnClickListener() {
+        viewHolder.linearTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String type = list.get(position).getType();
@@ -125,6 +129,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     datePosition = position;
                     getValidDate(list.get(position).getType());
                 } else {
+                    payPosition = position;
                     classifyPosition = position;
                     utils = new ClassifyDialogShowUtils();
                     utils.showDialog(context
@@ -139,14 +144,14 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         });
 
         //供求dialog
-        viewHolder.linear_supdem.setOnClickListener(new View.OnClickListener() {
+        viewHolder.linearSupdem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 list_msg = list.get(position).getMyMsg();
                 if (list_msg.size() != 0) {
-                    integral_supplyDemandAdapter = new Integral_Diaolog_SupDem_Adapter(context, list_msg, IntegralAdapter.this);
+                    integralSupplydemandadapter = new Integral_Diaolog_SupDem_Adapter(context, list_msg, IntegralAdapter.this);
                     SupDemDialogShowUtils supDemDialogShowUtils = new SupDemDialogShowUtils();
-                    supDemDialogShowUtils.showDialog(context, list_msg, integral_supplyDemandAdapter);
+                    supDemDialogShowUtils.showDialog(context, list_msg, integralSupplydemandadapter);
                 } else {
                     TextUtils.toast(context, "你还没有发布相关的供求信息！");
                 }
@@ -188,7 +193,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     }
                 }
                 if (type.equals("3")) {
-                    int num = NumUtils.getNum(viewHolder.num_all.getText().toString());
+                    int num = NumUtils.getNum(viewHolder.numAll.getText().toString());
                     if (num != 0) {
                         viewHolder.button.setClickable(false);
                         //viewHolder.button.setBackgroundResource(R.drawable.btn_cacle);
@@ -247,8 +252,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     //根据选择的日期改变显示
     public void changeTextShow(List<Date> list) {
         int num = list.size();
-        mHolderMap.get(datePosition).num_all.setText("共" + num + "件：");
-        mHolderMap.get(datePosition).point_all.setText("总计：" + (num * 100) + "塑豆");
+        mHolderMap.get(datePosition).numAll.setText("共" + num + "件：");
+        mHolderMap.get(datePosition).pointAll.setText("总计：" + (num * 100) + "塑豆");
     }
 
     //日期上传之前拼接
@@ -278,15 +283,19 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         }
     }
 
+    public void setClickIsFinish(boolean isFinish) {
+        this.isFinish = isFinish;
+    }
+
     class viewHolder extends RecyclerView.ViewHolder {
 
         boolean isPay;
         Button button;
         GridView gridView;
         ImageView imageView;
-        TextView shm, point_all, num_all, textView, time, type;
-        LinearLayout linear_supdem, linear_time, linear_supdem_isselected,
-                linear_date_isselected, linear_date_isselected1, supply_demand_shm;
+        TextView shm, pointAll, numAll, textView, time, type;
+        LinearLayout linearSupdem, linearTime, linearSupdemIsselected,
+                linearDateIsselected, linearDateIsselected1, supplyDemandShm;
 
         public viewHolder(View convertView, int position) {
             super(convertView);
@@ -296,16 +305,16 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             time = (TextView) convertView.findViewById(R.id.radio_1);
             gridView = (GridView) convertView.findViewById(R.id.grid);
             textView = (TextView) convertView.findViewById(R.id.radio_);
-            num_all = (TextView) convertView.findViewById(R.id.num_all);
-            point_all = (TextView) convertView.findViewById(R.id.point_all);
+            numAll = (TextView) convertView.findViewById(R.id.num_all);
+            pointAll = (TextView) convertView.findViewById(R.id.point_all);
             type = (TextView) convertView.findViewById(R.id.integral_text_type);
             imageView = (ImageView) convertView.findViewById(R.id.jf_gridview_img);
-            linear_time = (LinearLayout) convertView.findViewById(R.id.linear_time_dialog);
-            supply_demand_shm = (LinearLayout) convertView.findViewById(R.id.supply_demand_shm);
-            linear_supdem = (LinearLayout) convertView.findViewById(R.id.supply_demand_listview);
-            linear_date_isselected1 = (LinearLayout) convertView.findViewById(R.id.integral_date_linearlayout);
-            linear_supdem_isselected = (LinearLayout) convertView.findViewById(R.id.integral_isselected_linearlayout);
-            linear_date_isselected = (LinearLayout) convertView.findViewById(R.id.integral_isselected_linearlayout_date);
+            linearTime = (LinearLayout) convertView.findViewById(R.id.linear_time_dialog);
+            supplyDemandShm = (LinearLayout) convertView.findViewById(R.id.supply_demand_shm);
+            linearSupdem = (LinearLayout) convertView.findViewById(R.id.supply_demand_listview);
+            linearDateIsselected1 = (LinearLayout) convertView.findViewById(R.id.integral_date_linearlayout);
+            linearSupdemIsselected = (LinearLayout) convertView.findViewById(R.id.integral_isselected_linearlayout);
+            linearDateIsselected = (LinearLayout) convertView.findViewById(R.id.integral_isselected_linearlayout_date);
         }
 
     }
@@ -317,9 +326,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     list_date_conact.clear();
-                    myInterface.refresgData();
-                    mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
-                    mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
+                    myInterface.refreshData();
+                    mHolderMap.get(datePosition).linearDateIsselected.setVisibility(View.VISIBLE);
+                    mHolderMap.get(datePosition).linearDateIsselected1.setVisibility(View.GONE);
                     mCommonDialog = new CommonDialog();
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, "兑换成功!", 2, this);
@@ -340,11 +349,11 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
                     list_date_supdem.clear();
-                    myInterface.refresgData();
-                    mHolderMap.get(supDemPosition).supply_demand_shm.setVisibility(View.VISIBLE);
-                    mHolderMap.get(supDemPosition).linear_supdem_isselected.setVisibility(View.GONE);
-                    mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
-                    mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
+                    myInterface.refreshData();
+                    mHolderMap.get(supDemPosition).supplyDemandShm.setVisibility(View.VISIBLE);
+                    mHolderMap.get(supDemPosition).linearSupdemIsselected.setVisibility(View.GONE);
+                    mHolderMap.get(datePosition).linearDateIsselected.setVisibility(View.VISIBLE);
+                    mHolderMap.get(datePosition).linearDateIsselected1.setVisibility(View.GONE);
                     mCommonDialog = new CommonDialog();
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, "兑换成功!", 2, this);
@@ -364,10 +373,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             if (type == 3) {//分类
                 String err = new JSONObject(object.toString()).getString("err");
                 if (err.equals("0")) {
-                    myInterface.refresgData();
-                    mHolderMap.get(classifyPosition).num_all.setText("共0件：");
-                    mHolderMap.get(classifyPosition).type.setText("*请选择分类：");
-                    mHolderMap.get(classifyPosition).point_all.setText("总计：0塑豆");
+                    myInterface.refreshData();
+                    mHolderMap.get(classifyPosition).numAll.setText("共0件：");
+                    mHolderMap.get(classifyPosition).type.setText("请选择分类：");
+                    mHolderMap.get(classifyPosition).pointAll.setText("总计：0塑豆");
 
                     mCommonDialog = new CommonDialog();
                     mCommonDialog.setCanceledOnTouchOutside(false);
@@ -413,6 +422,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 if (utils != null) {
                     utils.dismiss();
                 }
+                if (isFinish) {
+                    context.finish();
+                }
                 break;
             default:
                 break;
@@ -441,26 +453,26 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         switch (type) {
             case "2"://通讯录
                 if (list_date_conact.size() != 0) {
-                    mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.GONE);
-                    mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.VISIBLE);
+                    mHolderMap.get(datePosition).linearDateIsselected.setVisibility(View.GONE);
+                    mHolderMap.get(datePosition).linearDateIsselected1.setVisibility(View.VISIBLE);
                     setGridViewParams(mHolderMap.get(datePosition).gridView, list_date_conact);
                     gridAdapter = new Integral_Date_Grid_Adapter(context, list_date_conact);
                     mHolderMap.get(datePosition).gridView.setAdapter(gridAdapter);
                 } else {
-                    mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
-                    mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
+                    mHolderMap.get(datePosition).linearDateIsselected.setVisibility(View.VISIBLE);
+                    mHolderMap.get(datePosition).linearDateIsselected1.setVisibility(View.GONE);
                 }
                 break;
             case "1"://供求
                 if (list_date_supdem.size() != 0) {
-                    mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.GONE);
-                    mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.VISIBLE);
+                    mHolderMap.get(datePosition).linearDateIsselected.setVisibility(View.GONE);
+                    mHolderMap.get(datePosition).linearDateIsselected1.setVisibility(View.VISIBLE);
                     setGridViewParams(mHolderMap.get(datePosition).gridView, list_date_supdem);
                     gridAdapter = new Integral_Date_Grid_Adapter(context, list_date_supdem);
                     mHolderMap.get(datePosition).gridView.setAdapter(gridAdapter);
                 } else {
-                    mHolderMap.get(datePosition).linear_date_isselected.setVisibility(View.VISIBLE);
-                    mHolderMap.get(datePosition).linear_date_isselected1.setVisibility(View.GONE);
+                    mHolderMap.get(datePosition).linearDateIsselected.setVisibility(View.VISIBLE);
+                    mHolderMap.get(datePosition).linearDateIsselected1.setVisibility(View.GONE);
                 }
                 break;
             default:
@@ -472,8 +484,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     @Override
     public void supDemSelected(int position) {
         this.num = position;
-        mHolderMap.get(supDemPosition).supply_demand_shm.setVisibility(View.GONE);
-        mHolderMap.get(supDemPosition).linear_supdem_isselected.setVisibility(View.VISIBLE);
+        mHolderMap.get(supDemPosition).supplyDemandShm.setVisibility(View.GONE);
+        mHolderMap.get(supDemPosition).linearSupdemIsselected.setVisibility(View.VISIBLE);
         String html = (list_msg.get(position).getType().equals("1")) ?
                 ("<font color='#EEAD0E'>" + "求购:" + "</font>" + list_msg.get(position).getContents()) :
                 ("<font color='#9AC0CD'>" + "供给:" + "</font>" + list_msg.get(position).getContents());
@@ -491,8 +503,8 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         plasticNum = Integer.parseInt(list.get(classifyPosition).getPoints()) * num;
 
         mHolderMap.get(classifyPosition).type.setText("已选择：" + type);
-        mHolderMap.get(classifyPosition).num_all.setText("共" + num + "件：");
-        mHolderMap.get(classifyPosition).point_all.setText("总计：" + plasticNum + "塑豆");
+        mHolderMap.get(classifyPosition).numAll.setText("共" + num + "件：");
+        mHolderMap.get(classifyPosition).pointAll.setText("总计：" + plasticNum + "塑豆");
         if (t == -1) {
             String goods_id = list.get(classifyPosition).getId();
             newExchangeToutiao(goods_id, plasticNum, cate_ids, month_num, 3);
@@ -516,6 +528,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     }
 
     public interface MyInterface {
-        void refresgData();
+        void refreshData();
     }
 }

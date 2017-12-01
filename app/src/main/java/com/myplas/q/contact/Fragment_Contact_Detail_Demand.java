@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,23 +11,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.contact.adapter.Contact_Detail_LV_Adapter;
-import com.myplas.q.contact.beans.ContactBean;
 import com.myplas.q.contact.beans.ContactInfoBean;
 import com.myplas.q.contact.beans.ContactSupDemBean;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
-import com.myplas.q.supdem.activity.SupDem_QQ_DetailActivity;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -124,7 +117,7 @@ public class Fragment_Contact_Detail_Demand extends Fragment implements ResultCa
         if (demandList.size() != 0) {
             setListener(false);
             this.demandList = demandList;
-            mAdapter = new Contact_Detail_LV_Adapter(getActivity(), demandList, 0);
+            mAdapter = new Contact_Detail_LV_Adapter(getActivity(), null, demandList);
             mMyListview.setAdapter(mAdapter);
         } else {
             setListener(true);

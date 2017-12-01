@@ -23,7 +23,7 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1" />
 
-    <com.myplas.q.common.view.HorizontalStepView
+    <com.myplas.q.common.view.stepview.HorizontalStepView
         android:id="@+id/stepview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

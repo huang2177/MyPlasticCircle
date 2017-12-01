@@ -1,4 +1,4 @@
-package com.myplas.q.common.view;
+package com.myplas.q.common.view.xlistview;
 
 
 /**

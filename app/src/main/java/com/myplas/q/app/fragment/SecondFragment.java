@@ -1,4 +1,4 @@
-package com.myplas.q.guide.fragment;
+package com.myplas.q.app.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,14 +16,14 @@ import com.myplas.q.R;
  * 邮箱：15378412400@163.com
  * 时间：2017/5/27 15:53
  */
-public class FirstFragment extends Fragment {
+public class SecondFragment extends Fragment {
     private ImageView imageView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate( R.layout.layout_guide,null,false);
         imageView= (ImageView) view.findViewById(R.id.guide_img);
-        imageView.setImageResource(R.drawable.launchimage_contact);
+        imageView.setImageResource(R.drawable.launchimage_trade);
         return view;
     }
 }

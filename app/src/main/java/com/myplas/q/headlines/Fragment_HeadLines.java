@@ -1,16 +1,15 @@
 package com.myplas.q.headlines;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -20,13 +19,18 @@ import android.widget.TextView;
 import com.androidkun.xtablayout.XTabLayout;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.MyOnPageChangeListener;
+import com.myplas.q.common.view.marqueeview.MarqueeFactory;
+import com.myplas.q.common.view.marqueeview.MarqueeViewHelper;
 import com.myplas.q.headlines.activity.Cate_Dialog_Activtiy;
 import com.myplas.q.headlines.activity.HeadLineSearchActivity;
+import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.headlines.adapter.HeadLineViewPagerAdapter;
+import com.myplas.q.sockethelper.DefConfigBean;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -42,25 +46,26 @@ import java.util.List;
  */
 public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         , HeadLineListFragment.Myinterface
-        , MyOnPageChangeListener.OnPageChangeListener {
+        , MyOnPageChangeListener.OnPageChangeListener, MarqueeFactory.OnItemClickListener {
     private Handler handler;
     private String keywords;
     private int currentItem;
     private boolean logined;
     private SharedUtils sharedUtils;
     private List<String> list1, list2;
+    private MarqueeViewHelper mVHelper;
 
     private View view;
     private GridView gridView;
     private EditText editText;
-    private LinearLayout mLayoutTitle;
+    private TextView tvRefresh;
     private CustomPopupWindow popupWindow;
-    private TextView textView_refresh;
+    private LinearLayout mLayoutTitle, notifyRoot;
     private HeadLineViewPagerAdapter mViewPagerAdapter;
 
+    private ImageButton gdImgbtn;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
-    private ImageButton gd_imgbtn;
     private List<HeadLineListFragment> mFragments;
 
     @Override
@@ -76,17 +81,19 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_headlins, null, false);
 
         handler = new Handler();
+        mVHelper = new MarqueeViewHelper();
         sharedUtils = SharedUtils.getSharedUtils();
         logined = sharedUtils.getBoolean(getActivity(), Constant.LOGINED);
 
         editText = F(R.id.find_edit);
-        gd_imgbtn = F(R.id.fx_gd_imgbtn);
+        gdImgbtn = F(R.id.fx_gd_imgbtn);
+        notifyRoot = F(R.id.notify_root);
         mViewPager = F(R.id.headline_viewpager);
         mTabLayout = F(R.id.headline_tablayout);
         mLayoutTitle = F(R.id.headline_ll_title);
 
         editText.setOnClickListener(this);
-        gd_imgbtn.setOnClickListener(this);
+        gdImgbtn.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
     }
 
@@ -173,11 +180,62 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (mVHelper != null) {
+            mVHelper.start();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mVHelper != null) {
+            mVHelper.stop();
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mVHelper != null) {
+            mVHelper.onDestroy();
+        }
     }
 
     public void onLogined() {
         initViewPager();
+    }
+
+    /**
+     * 展示滚动通知
+     *
+     * @param datas
+     */
+    public void showMarquee(List<DefConfigBean.NoticeBean.ToutiaoContentBean> datas) {
+        if (mVHelper != null && notifyRoot.getVisibility() == View.GONE) {
+            notifyRoot.setVisibility(View.VISIBLE);
+            mVHelper.onResume(getActivity(), notifyRoot, datas, this);
+        }
+    }
+
+
+    @Override
+    public void onItemClickListener(MarqueeFactory.ViewHolder holder) {
+        DefConfigBean.NoticeBean.ToutiaoContentBean bean =
+                (DefConfigBean.NoticeBean.ToutiaoContentBean) holder.data;
+        if (bean == null
+                && !NetUtils.isNetworkStateed(getActivity())
+                && mFragments == null
+                && mFragments.size() == 0) {
+            return;
+        }
+        if ("1".equals(bean.getFree())) {
+            Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
+            intent.putExtra("id", bean.getId());
+            startActivity(intent);
+        } else {
+            mFragments.get(0).isPaidSubscription(bean.getId());
+        }
     }
 }

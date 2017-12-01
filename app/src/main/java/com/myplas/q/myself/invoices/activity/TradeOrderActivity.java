@@ -18,7 +18,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.invoices.adapter.TradeOrderListviewAdapter;
 import com.myplas.q.myself.beans.OrderListsBean;
 import com.myplas.q.sockethelper.RabbitMQConfig;

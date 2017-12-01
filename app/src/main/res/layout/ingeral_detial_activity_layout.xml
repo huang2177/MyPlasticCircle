@@ -6,7 +6,7 @@
 
     <include layout="@layout/common_layout_titlebar"/>
 
-    <com.myplas.q.common.view.PinnedHeaderListView
+    <com.myplas.q.common.view.pinnedheadlistview.PinnedHeaderListView
         android:id="@+id/integral_detial_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package com.myplas.q.guide.activity;
+package com.myplas.q.app.activity;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.myplas.q.guide.activity;
+package com.myplas.q.app.activity;
 
 import android.Manifest;
 import android.app.ActivityOptions;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.view.MyOnPageChangeListener;
 import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
@@ -33,7 +34,7 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.contact.Fragment_Contact;
-import com.myplas.q.guide.adapter.ViewPager_Adapter;
+import com.myplas.q.app.adapter.ViewPager_Adapter;
 import com.myplas.q.headlines.Fragment_HeadLines;
 import com.myplas.q.myself.Fragment_MySelf;
 import com.myplas.q.myself.login.LoginActivity;
@@ -63,6 +64,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         , ResultCallBack
         , RabbitMQCallBack
         , CommonDialog.DialogShowInterface
+        , MyOnPageChangeListener.OnPageChangeListener
         , VersionUpdateDialogUtils.VersionUpdateInterface {
 
     private boolean logined;
@@ -88,6 +90,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private VersionUpdateDialogUtils mUpdateDialogUtils;
     private DragView mMsgContact, mMsgSupDem, mMsgMySelf;
+    private DefConfigBean.NoticeBean mNticeBean;
     private ACache mACache;
 
 
@@ -121,7 +124,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         } else if (Constant.LOGINOUT.equals(type)) {
             firstInto();
             onClosed();
-            rCallback(false);
+            rCallback(false, false);
         } else {
             goToMySelf();
             getConfig();
@@ -159,9 +162,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         layoutFx.setOnClickListener(this);
         layoutWd.setOnClickListener(this);
+        layoutGq.setOnClickListener(this);
         layoutJia.setOnClickListener(this);
         layoutTxl.setOnClickListener(this);
-        layoutGq.setOnClickListener(this);
+        viewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
 
         fragmentContact = new Fragment_Contact();
         fragmentlist.add(fragmentContact);
@@ -347,21 +351,37 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
             }
             if (type == 3 && err.equals("0")) {
-                mACache.put(Constant.R_CONFIG, object.toString());
-                DefConfigBean bean = gson.fromJson(object.toString(), DefConfigBean.class);
 
-                mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
-                mACache.put(Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
-                mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
-                mACache.put(Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
-                mACache.put(Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
-                mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
-                mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
-                mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
-
-                rCallback(true);
+                setCacheData(object, gson, jsonObject);
+                rCallback(true, true);
                 onConnect();
             }
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * 保存红信息
+     *
+     * @param object
+     * @param gson
+     * @param jsonObject
+     */
+    private void setCacheData(Object object, Gson gson, JSONObject jsonObject) {
+        try {
+            mACache.put(Constant.R_CONFIG, object.toString());
+            DefConfigBean bean = gson.fromJson(object.toString(), DefConfigBean.class);
+
+            mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
+            mACache.put(Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
+            mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
+            mACache.put(Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
+            mACache.put(Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
+            mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
+            mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
+            mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
+
+            mACache.put(Constant.R_MARQUEE_CONTENT, bean.getNotice());
         } catch (Exception e) {
         }
     }
@@ -377,11 +397,24 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         exit();
     }
 
-    /*rabbitmq*/
+    /**
+     * rabbitmq的回调
+     */
     @Override
-    public void rCallback(boolean showRedDot) {
+    public void rCallback(boolean isShowRedDot, boolean isShowNotify) {
+        shoeRedDots(isShowRedDot);
+        showNotify(isShowNotify);
+    }
+
+    /**
+     * 回调后处理红点消息
+     *
+     * @param isShowRedDot
+     */
+    private void shoeRedDots(boolean isShowRedDot) {
         try {
-            logined = sharedUtils.getBoolean(this, Constant.LOGINED);
+            boolean showDot = !isShowRedDot || !(sharedUtils.getBoolean(this, Constant.LOGINED));
+
             int numContact = Integer.parseInt(mACache.getAsString(Constant.R_CONTACT));
             int numSupDem = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM));
             int numMySelf = Integer.parseInt(mACache.getAsString(Constant.R_SEEME))
@@ -391,21 +424,77 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     + Integer.parseInt(mACache.getAsString(Constant.R_REPLY_MSG))
                     + Integer.parseInt(mACache.getAsString(Constant.R_INTER_MSG));
 
-            mMsgSupDem.setVisibility(!showRedDot || 0 == numSupDem || !logined
+            mMsgSupDem.setVisibility(showDot || 0 == numSupDem
                     ? View.GONE
                     : View.VISIBLE);
-            mMsgMySelf.setVisibility(!showRedDot || 0 == numMySelf || !logined
+            mMsgMySelf.setVisibility(showDot || 0 == numMySelf
                     ? View.GONE
                     : View.VISIBLE);
-            mMsgContact.setVisibility(!showRedDot || 0 == numContact || !logined
+            mMsgContact.setVisibility(showDot || 0 == numContact
                     ? View.GONE
                     : View.VISIBLE);
 
-            if (showRedDot) {
+            if (isShowRedDot) {
                 mMsgMySelf.setText(numMySelf > 99 ? "..." : numMySelf + "");
                 mMsgSupDem.setText(numSupDem > 99 ? "..." : numSupDem + "");
             }
         } catch (Exception e) {
+
+        }
+    }
+
+    /**
+     * 回调后处理滚动通知
+     *
+     * @param isShowNotify
+     */
+    private void showNotify(boolean isShowNotify) {
+        try {
+            mNticeBean = (DefConfigBean.NoticeBean) mACache.getAsObject(Constant.R_MARQUEE_CONTENT);
+            if (mNticeBean == null) {
+                return;
+            }
+            if (isShowNotify && mNticeBean.getCommunicate_content().size() != 0) {
+                fragmentContact.showMarquee(mNticeBean.getCommunicate_content());
+            }
+            if (isShowNotify && mNticeBean.getToutiao_content().size() != 0) {
+                fragmentHeadLine.showMarquee(mNticeBean.getToutiao_content());
+            }
+            if (isShowNotify && mNticeBean.getPurchase_content().size() != 0) {
+                fragmentSupDem.showMarquee(mNticeBean.getPurchase_content());
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        try {
+            boolean b = (sharedUtils.getBoolean(this, Constant.LOGINED));
+            if (mNticeBean == null || !b) {
+                return;
+            }
+            switch (position) {
+                case 0:
+                    if (mNticeBean.getCommunicate_content().size() != 0) {
+                        fragmentContact.showMarquee(mNticeBean.getCommunicate_content());
+                    }
+                    break;
+                case 1:
+                    if (mNticeBean.getToutiao_content().size() != 0) {
+                        fragmentHeadLine.showMarquee(mNticeBean.getToutiao_content());
+                    }
+                    break;
+                case 2:
+                    if (mNticeBean.getPurchase_content().size() != 0) {
+                        fragmentSupDem.showMarquee(mNticeBean.getPurchase_content());
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -499,5 +588,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 }
 

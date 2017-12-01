@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.ShareActivity;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.api.API;

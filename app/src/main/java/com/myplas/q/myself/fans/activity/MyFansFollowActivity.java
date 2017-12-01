@@ -19,7 +19,7 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.contact.activity.Contact_Detail_Activity;
 import com.myplas.q.contact.beans.MyFansBean;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.fans.adapter.MyFansFollowAdapter;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 

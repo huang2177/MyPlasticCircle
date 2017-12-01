@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyBottomSheetDialog;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.release.bean.PreViewBean;
 
 /**

@@ -7,9 +7,10 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.myself.beans.MsgChJBean;
 import com.myplas.q.myself.beans.MsgHFBean;
@@ -114,7 +115,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mSupDemAdapter.notifyDataSetChanged();
                     }
                     count = mListSupDem.size() - 1;
-                    RabbitMQConfig.getInstance(this).readMsg("unread_reply_user_msg", 15);
+                    RabbitMQConfig.getInstance(this).readMsg(Constant.R_SUPDEM_MSG, 15);
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);
@@ -143,7 +144,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mCHJAdapter.setList(mListChJ);
                         mCHJAdapter.notifyDataSetChanged();
                     }
-                    RabbitMQConfig.getInstance(this).readMsg("unread_reply_user_msg", 16);
+                    RabbitMQConfig.getInstance(this).readMsg(Constant.R_PUR_MSG, 16);
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);
@@ -173,7 +174,8 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mHFAdapter.notifyDataSetChanged();
                     }
                     count = mListHF.size() - 1;
-                    RabbitMQConfig.getInstance(this).readMsg("unread_reply_user_msg", (type == 3 ? 17 : 18));
+                    RabbitMQConfig.getInstance(this).readMsg(type == 3 ? Constant.R_REPLY_MSG : Constant.R_INTER_MSG
+                            , (type == 3 ? 17 : 18));
                 } else {
                     if (page == 1) {
                         mRecyclerView.setVisibility(View.GONE);

@@ -5,8 +5,7 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.common.utils.VersionUtils;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.umeng.analytics.MobclickAgent;
+import com.myplas.q.app.activity.BaseActivity;
 
 /**
  * 编写： 黄双

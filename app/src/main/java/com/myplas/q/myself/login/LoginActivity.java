@@ -26,8 +26,8 @@ import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
 
 import org.json.JSONObject;

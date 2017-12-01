@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
@@ -90,8 +90,10 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
 
             viewHolder.time.setText(list.get(position).getInput_time());
             if ("1".equals(list.get(position).getFrom())) {
-                viewHolder.reply.setText("回复()");
-                viewHolder.deliver.setText("出价()");
+                viewHolder.reply.setText("回复(" + list.get(position).getReplyCount() + ")");
+                viewHolder.deliver.setText("出价(" + list.get(position).getPlaticCount() + ")");
+                viewHolder.reply.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_reply, 0, 0, 0);
+                viewHolder.deliver.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_offer, 0, 0, 0);
             }
 
             String html1 = "<font color='#9c9c9c'>" + "交货地:" + "</font>" + list.get(position).getStore_house()

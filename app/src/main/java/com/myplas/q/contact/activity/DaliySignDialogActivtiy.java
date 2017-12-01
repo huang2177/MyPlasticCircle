@@ -1,26 +1,17 @@
 package com.myplas.q.contact.activity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.ScreenUtils;
-import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
-import com.myplas.q.common.view.LoadingDialog;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 
 /**
  * 编写： 黄双

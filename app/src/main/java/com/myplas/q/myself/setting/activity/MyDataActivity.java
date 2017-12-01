@@ -22,9 +22,9 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
-import com.myplas.q.guide.activity.PreImageViewActivity;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.MainActivity;
+import com.myplas.q.app.activity.PreImageViewActivity;
 import com.myplas.q.myself.beans.MySelfInfo;
 
 import org.json.JSONObject;
@@ -49,15 +49,14 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private SharedUtils sharedUtils;
     private Map<String, String> map;
     private String sexInPut, regionInPut;
-    private String type, address, addressId, sex, region, product, monthUse, mainPro, model;
+    private String type, address, location, sex, region, product, monthUse, mainPro, model;
 
     private View shareView;
     private RoundCornerImageView imageHead;
     private ImageView imageCard, cardMore, headMore;
-    private RadioGroup radiogroupSex, radiogroupAddress;
-    private LinearLayout llProMonth, llAdd, llSex, llRegion, llPro, llMothonuse, llMainsell, llMode;
-    private TextView textXb, textviewDzh, textGs, textDh, textviewZhy, textviewPh, textviewNum, textviewProduct,
-            textviewAddress, textviewCompany, myMainProd, myMainProdSave;
+    private LinearLayout llMonthUse, llAdd, llSex, llRegion, llProduct, llMothonuse, llMainsell, llMode;
+    private TextView textXb, tvLocation, textGs, textDh, tvNeedProduct, tvCareModel, tvMonthUse, tvProduct,
+            tvAddress, tvCompany, _tvNeedProduct, mName;
 
     private String from, imgCard, imgHead;
     private final String ACTION = "com.broadcast.databack";
@@ -77,29 +76,30 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
         textGs = F(R.id.wd_zl_gs);
         textDh = F(R.id.wd_zl_tel);
+        mName = F(R.id.wd_zl_name);
         cardMore = F(R.id.data_img_card);
         headMore = F(R.id.data_head_card);
         imageCard = F(R.id.wd_zl_text_upload);
         imageHead = F(R.id.wd_zl_text_headimg);
 
-        myMainProd = F(R.id.textView8);
         textXb = F(R.id.wd_zl_text_xb);
-        textviewPh = F(R.id.wd_zl_text_ph);
-        textviewNum = F(R.id.wd_zl_text_num);
-        textviewDzh = F(R.id.wd_zl_text_dzh);
-        textviewZhy = F(R.id.wd_zl_text_zhy);
-        textviewAddress = F(R.id.wd_zl_text_address);
-        textviewCompany = F(R.id.wd_zl_text_company);
-        textviewProduct = F(R.id.wd_zl_text_products);
+        _tvNeedProduct = F(R.id.textView8);
+        tvAddress = F(R.id.wd_zl_text_address);
+        tvCompany = F(R.id.wd_zl_text_company);
+        tvProduct = F(R.id.wd_zl_text_products);
+        tvMonthUse = F(R.id.wd_zl_text_monthuse);
+        tvLocation = F(R.id.wd_zl_text_location);
+        tvCareModel = F(R.id.wd_zl_text_caremodel);
+        tvNeedProduct = F(R.id.wd_zl_text_needproduct);
 
         llSex = F(R.id.setting_data_sex);
-        llMode = F(R.id.wd_zl_linear_ph);
-        llPro = F(R.id.setting_data_product);
-        llAdd = F(R.id.setting_data_address);
+        llAdd = F(R.id.setting_data_location);
         llRegion = F(R.id.setting_data_region);
-        llProMonth = F(R.id.linear_show_close);
-        llMainsell = F(R.id.setting_data_mainsell);
-        llMothonuse = F(R.id.setting_data_monthlyuse);
+        llMonthUse = F(R.id.linear_show_close);
+        llMode = F(R.id.wd_zl_linear_caremodel);
+        llProduct = F(R.id.setting_data_product);
+        llMothonuse = F(R.id.setting_data_monthuse);
+        llMainsell = F(R.id.setting_data_needproduct);
 
         if ("1".equals(from)) {  //从通讯录跳转
             setTitle("个人资料");
@@ -115,21 +115,21 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
             llSex.setOnClickListener(this);
             llAdd.setOnClickListener(this);
-            llPro.setOnClickListener(this);
             llMode.setOnClickListener(this);
             mIVLeft.setOnClickListener(this);
             llRegion.setOnClickListener(this);
+            llProduct.setOnClickListener(this);
             llMainsell.setOnClickListener(this);
-            llProMonth.setOnClickListener(this);
+            llMonthUse.setOnClickListener(this);
             llMothonuse.setOnClickListener(this);
 
             textXb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            textviewPh.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            textviewNum.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            textviewZhy.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            textviewDzh.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            textviewAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            textviewProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvCareModel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvMonthUse.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvNeedProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvLocation.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
         }
         imageHead.setOnClickListener(this);
         imageCard.setOnClickListener(this);
@@ -166,12 +166,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent4);
                 break;
 
-            case R.id.setting_data_address:
+            case R.id.setting_data_location:
                 Intent intent5 = new Intent(this, AddressSelectedActivity.class);
                 intent5.putExtra("type", "3");
                 intent5.putExtra("title", "地址");
                 intent5.putExtra("address", address);
-                intent5.putExtra("addressId", addressId);
+                intent5.putExtra("location", location);
                 startActivity(intent5);
                 break;
             case R.id.setting_data_product:
@@ -181,14 +181,14 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 intent6.putExtra("hint", product);
                 startActivityForResult(intent6, 6);
                 break;
-            case R.id.setting_data_monthlyuse:
+            case R.id.setting_data_monthuse:
                 Intent intent7 = new Intent(this, DataCommonActivity.class);
                 intent7.putExtra("type", "2");
                 intent7.putExtra("title", "月用量");
                 intent7.putExtra("hint", monthUse);
                 startActivityForResult(intent7, 7);
                 break;
-            case R.id.setting_data_mainsell:
+            case R.id.setting_data_needproduct:
                 Intent intent8 = new Intent(this, ("4".equals(type))
                         ? (MyMainPro_LogisticsActivity.class)
                         : (DataCommonActivity.class));
@@ -199,14 +199,13 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 intent8.putExtra("hint", mainPro);
                 startActivityForResult(intent8, 8);
                 break;
-            case R.id.wd_zl_linear_ph:
+            case R.id.wd_zl_linear_caremodel:
                 Intent intent9 = new Intent(this, DataCommonActivity.class);
                 intent9.putExtra("type", "2");
                 intent9.putExtra("title", "关注的牌号");
                 intent9.putExtra("hint", model);
                 startActivityForResult(intent9, 9);
                 break;
-
             case R.id.titlebar_img_left:
                 eixt();
                 break;
@@ -283,7 +282,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             map.put("sex", sexInPut);
             map.put("address", address);
             map.put("dist", regionInPut);
-            map.put("address_id", addressId);
+            map.put("address_id", location);
             map.put("concern", getString(model));
             map.put("major", getString(mainPro));
             map.put("token", sharedUtils.getData(this, "token"));
@@ -340,7 +339,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             imgHead = mySelfInfo.getData().getThumb();
             address = mySelfInfo.getData().getAddress();
             region = mySelfInfo.getData().getAdistinct();
-            addressId = mySelfInfo.getData().getOrigin();
+            location = mySelfInfo.getData().getOrigin();
             imgCard = mySelfInfo.getData().getThumbcard();
             model = mySelfInfo.getData().getConcern_model();
             product = mySelfInfo.getData().getMain_product();
@@ -350,10 +349,11 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             sexInPut = ("男".equals(sex)) ? ("0") : ("1");
 
             textXb.setText(sex);
-            textviewPh.setText(model);
-            textviewDzh.setText(address);
-            textviewZhy.setText(mainPro);
-            textviewAddress.setText(region);
+            tvAddress.setText(region);
+            tvCareModel.setText(model);
+            tvLocation.setText(address);
+            tvNeedProduct.setText(product);
+            mName.setText(mySelfInfo.getData().getName());
             textGs.setText(mySelfInfo.getData().getC_name());
             textDh.setText(mySelfInfo.getData().getMobile());
 
@@ -371,47 +371,48 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             switch (type) {
                 case "1":
                     llMode.setVisibility(View.VISIBLE);       //"‘关注的牌号’是否显示"
-                    llProMonth.setVisibility(View.VISIBLE); //"‘月用量与生产产品’是否显示"
-                    textviewCompany.setText("塑料制品厂");
-                    myMainProd.setText("我的需求：");
-                    textviewProduct.setText(product);
-                    textviewNum.setText(monthUse);
+                    llMonthUse.setVisibility(View.VISIBLE); //"‘月用量与生产产品’是否显示"
+                    tvCompany.setText("塑料制品厂");
+                    _tvNeedProduct.setText("我的需求：");
+
+                    tvProduct.setText(product);//生产产品
+                    tvMonthUse.setText(monthUse);
                     break;
                 case "2":
                     llMode.setVisibility(View.VISIBLE);
-                    textviewCompany.setText("原料供应商");
-                    llProMonth.setVisibility(View.GONE);
+                    tvCompany.setText("原料供应商");
+                    llMonthUse.setVisibility(View.GONE);
                     break;
                 case "4":
                     llMode.setVisibility(View.GONE);
-                    llProMonth.setVisibility(View.GONE);
-                    myMainProd.setText("我的主营：");
-                    textviewCompany.setText("物流商");
+                    llMonthUse.setVisibility(View.GONE);
+                    _tvNeedProduct.setText("我的主营：");
+                    tvCompany.setText("物流商");
                     break;
                 case "5":
                     llMode.setVisibility(View.GONE);
-                    llProMonth.setVisibility(View.GONE);
-                    textviewCompany.setText("金融公司");
+                    llMonthUse.setVisibility(View.GONE);
+                    tvCompany.setText("金融公司");
                     break;
                 case "6":
                     llMode.setVisibility(View.GONE);
-                    llProMonth.setVisibility(View.GONE);
-                    textviewCompany.setText("塑化电商");
+                    llMonthUse.setVisibility(View.GONE);
+                    tvCompany.setText("塑化电商");
                     break;
                 case "7":
                     llMode.setVisibility(View.GONE);
-                    llProMonth.setVisibility(View.GONE);
-                    textviewCompany.setText("回料(含新材料)");
+                    llMonthUse.setVisibility(View.GONE);
+                    tvCompany.setText("回料(含新材料)");
                     break;
                 case "8":
                     llMode.setVisibility(View.GONE);
-                    llProMonth.setVisibility(View.GONE);
-                    textviewCompany.setText("期货");
+                    llMonthUse.setVisibility(View.GONE);
+                    tvCompany.setText("期货");
                     break;
                 case "9":
-                    textviewCompany.setText("塑机");
+                    tvCompany.setText("塑机");
                     llMode.setVisibility(View.GONE);
-                    llProMonth.setVisibility(View.GONE);
+                    llMonthUse.setVisibility(View.GONE);
                     break;
                 default:
                     break;
@@ -508,7 +509,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                     saveData();
                 } else {
                     address = data;
-                    addressId = intent.getStringExtra("addressId");
+                    location = intent.getStringExtra("location");
                     saveData();
                 }
             }

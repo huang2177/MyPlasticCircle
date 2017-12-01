@@ -42,7 +42,7 @@
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
 
     <application
-        android:name="com.myplas.q.guide.application.MyApplication"
+        android:name="com.myplas.q.app.application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
@@ -50,7 +50,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.myplas.q.guide.activity.SplashActivity"
+            android:name="com.myplas.q.app.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppBlankTheme">
             <intent-filter>
@@ -72,25 +72,24 @@
 
         <!--guide-->
         <activity
-            android:name="com.myplas.q.guide.activity.MainActivity"
+            android:name="com.myplas.q.app.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.myplas.q.guide.activity.GuideActivity"
+            android:name="com.myplas.q.app.activity.GuideActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.guide.activity.BaseActivity"
+            android:name="com.myplas.q.app.activity.BaseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.guide.activity.ShareActivity"
+            android:name="com.myplas.q.app.activity.ShareActivity"
             android:screenOrientation="portrait"
             android:theme="@style/my_theme_animation" />
         <activity
-            android:name="com.myplas.q.guide.activity.PreImageViewActivity"
+            android:name="com.myplas.q.app.activity.PreImageViewActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/app_theme_transparent" />
+            android:screenOrientation="portrait" />
 
         <!--contact-->
         <activity
@@ -107,8 +106,7 @@
             android:name="com.myplas.q.contact.activity.Contact_Detail_Activity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/app_theme_transparent" />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.myplas.q.contact.activity.TheirFansFollowActivity"
             android:screenOrientation="portrait" />

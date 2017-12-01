@@ -1,7 +1,6 @@
-package com.myplas.q.common.view;
+package com.myplas.q.common.view.stepview;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;

@@ -11,7 +11,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyOnPageChangeListener;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.release.adapter.ReleaseViewPagerAdapter;
 

@@ -1,32 +1,18 @@
 package com.myplas.q.release.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.ShareActivity;
-import com.myplas.q.myself.beans.MyFollowBean;
-import com.myplas.q.myself.beans.MySupDemBean;
-import com.myplas.q.myself.supdem.SupDemAdapter;
-import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.release.bean.PreViewBean;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +112,7 @@ public class InstantReleaseLVAdapter extends BaseAdapter {
     }
 
     private String getContent(int position) {
-        return "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + list.get(position).getStorehouse()
+        return "<font color='#9c9c9c'>" + " 交货地:" + "</font>" + list.get(position).getStorehouse()
                 + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + list.get(position).getModel()
                 + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + list.get(position).getVendor()
                 + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + list.get(position).getPrice();

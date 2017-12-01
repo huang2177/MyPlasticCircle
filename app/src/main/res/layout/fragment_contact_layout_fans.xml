@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="10dp"
     android:background="@drawable/corner_titlebar"
     android:orientation="horizontal">
 
@@ -14,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp">
 
         <TextView
             android:id="@+id/wd_text_fans"
@@ -48,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp">
 
 
         <TextView
@@ -84,8 +83,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp">
 
         <TextView
             android:id="@+id/wd_text_introdus"
@@ -118,11 +117,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp">
 
         <TextView
-            android:id="@+id/wd_text_rq"
+            android:id="@+id/wd_text_heat"
             style="@style/myself_text_style"
             android:layout_gravity="center"
             android:layout_weight="0"

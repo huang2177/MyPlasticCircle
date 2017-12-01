@@ -3,15 +3,14 @@
     android:id="@+id/preimg_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
     android:gravity="center"
     android:transitionName="bigImageView">
 
 
-    <com.sobot.chat.widget.photoview.PhotoView
+    <me.panpf.sketch.SketchImageView
         android:id="@+id/photoview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:scaleType="center" />
+        android:scaleType="fitCenter" />
 </LinearLayout>

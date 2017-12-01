@@ -21,7 +21,7 @@ import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.MySupDemBean;
 import com.myplas.q.release.ReleaseActivity;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;

@@ -1,4 +1,4 @@
-package com.myplas.q.guide.activity;
+package com.myplas.q.app.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,10 +9,10 @@ import android.view.WindowManager;
 
 import com.myplas.q.R;
 import com.myplas.q.common.utils.StatusUtils;
-import com.myplas.q.guide.adapter.Guide_Adapter;
-import com.myplas.q.guide.fragment.FirstFragment;
-import com.myplas.q.guide.fragment.SecondFragment;
-import com.myplas.q.guide.fragment.ThirdFragment;
+import com.myplas.q.app.adapter.Guide_Adapter;
+import com.myplas.q.app.fragment.FirstFragment;
+import com.myplas.q.app.fragment.SecondFragment;
+import com.myplas.q.app.fragment.ThirdFragment;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;

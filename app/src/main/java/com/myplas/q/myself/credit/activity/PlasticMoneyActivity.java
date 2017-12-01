@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.credit.adapter.EDu_Listview_ADapter;
 import com.myplas.q.myself.beans.EDuBean;
 import com.sobot.chat.SobotApi;

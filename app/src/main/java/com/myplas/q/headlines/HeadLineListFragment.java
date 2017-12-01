@@ -40,7 +40,7 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.headlines.adapter.CateListAdapter;
 import com.myplas.q.headlines.adapter.SubcribleAdapter;
@@ -178,6 +178,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                     isFree = (po == 0)
                             ? (list_subcirble.get(position - 1).getIs_free().equals("1"))
                             : (list_catelist.get(position).getIs_free().equals("1"));
+                    //cateId = list_subcirble.get(position).getCate_id();
                     if (isFree) {
                         Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
                         intent.putExtra("id", clickId);
@@ -394,7 +395,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     @Override
     public void ok(int type) {
         Intent intent = new Intent(getActivity(), IntegralActivity.class);
-        intent.putExtra("type", cateId + "");
+        intent.putExtra("type", cateId);
         startActivity(intent);
     }
 

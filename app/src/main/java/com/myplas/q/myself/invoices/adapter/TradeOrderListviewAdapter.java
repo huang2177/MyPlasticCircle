@@ -16,7 +16,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.OrderListsBean;
 
 import org.json.JSONObject;

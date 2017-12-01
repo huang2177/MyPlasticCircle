@@ -2,14 +2,14 @@ package com.myplas.q.myself.setting.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.umeng.analytics.MobclickAgent;
+import com.myplas.q.common.utils.ScreenUtils;
+import com.myplas.q.common.utils.StatusUtils;
+import com.myplas.q.app.activity.BaseActivity;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.durban.Controller;
 import com.yanzhenjie.durban.Durban;
@@ -35,7 +35,12 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_takephoto);
-        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        int screenHeight = ScreenUtils.getScreenHeight(this);
+        int statusBarHeight = StatusUtils.getStatusBarHeight(this);
+        int dialogHeight = screenHeight - statusBarHeight;
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0
+                ? ViewGroup.LayoutParams.MATCH_PARENT
+                : dialogHeight);
 
         init();
     }

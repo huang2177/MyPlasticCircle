@@ -91,7 +91,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="*请选择置顶日期："/>
+                    android:text="请选择置顶日期：" />
             </LinearLayout>
 
             <include layout="@layout/layout_integral_date_issleteced"/>

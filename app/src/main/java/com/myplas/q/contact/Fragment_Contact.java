@@ -32,9 +32,9 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.common.view.MarqueeView;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
+import com.myplas.q.common.view.marqueeview.*;
 import com.myplas.q.contact.activity.AD_DialogActivtiy;
 import com.myplas.q.contact.activity.ContactDaliySignActivity;
 import com.myplas.q.contact.activity.Contact_Detail_Activity;
@@ -43,10 +43,11 @@ import com.myplas.q.contact.activity.Cover_WebActivity;
 import com.myplas.q.contact.adapter.Fragment_Contact_LV_Adapter;
 import com.myplas.q.contact.adapter.Fragment_Dialog_Adapter;
 import com.myplas.q.contact.beans.ContactBean;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myself.login.LoginActivity;
+import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.umeng.analytics.MobclickAgent;
 
@@ -67,23 +68,23 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         , ResultCallBack
         , CommonDialog.DialogShowInterface
         , MyNestedScrollView.onScrollIterface
-        , SwipeRefreshLayout.OnRefreshListener {
+        , SwipeRefreshLayout.OnRefreshListener, MarqueeFactory.OnItemClickListener {
 
     private List<String> mList;
     private Map<Integer, Integer> map;
+    private MarqueeViewHelper mVHelper;
     private Fragment_Contact_LV_Adapter mLVAdapter;
     private List<ContactBean.PersonsBean> mListBean;
 
     private ListView listView;
     private ImageButton imageButton;
     private HIndicatorDialog dialog;
-    private MarqueeView marqueeView;
     private RefreshPopou mRefreshPopou;
     private MyNestedScrollView mScrollView;
     private View view, shareView1, shareView2;
     private SwipeRefreshLayout mRefreshLayout;
+    private ImageView mIVBanner, mIVTop, mSign;
     private TextView mTVClass, mTVRegion, mTVTitle;
-    private ImageView mIVBanner, mIVTop, mSign, imageViewClose, imageView;
     private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch, notifyRoot;
 
     public int page;
@@ -105,31 +106,29 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private void initView() {
         page = 1;
         map = new HashMap<>();
+        mListBean = new ArrayList<>();
         region = new StringBuffer("0");
         c_type = new StringBuffer("0");
-        mListBean = new ArrayList<>();
+        mVHelper = new MarqueeViewHelper();
         sharedUtils = SharedUtils.getSharedUtils();
         mRefreshPopou = new RefreshPopou(getActivity(), 2);
         sharedUtils.setData(getActivity(), Constant.POINTSINFO, "您还未登录,请先登录塑料圈!");
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_contact, null, false);
 
-        mIVTop = (ImageView) view.findViewById(R.id.top_img);
-        mSign = (ImageView) view.findViewById(R.id.contact_sign);
-        listView = (ListView) view.findViewById(R.id.contact_lv);
-        imageView = (ImageView) view.findViewById(R.id.notify_img);
-        mTVTitle = (TextView) view.findViewById(R.id.contanct_title);
-        mTVRegion = (TextView) view.findViewById(R.id.contact_region);
-        mTVClass = (TextView) view.findViewById(R.id.contact_classify);
-        imageButton = (ImageButton) view.findViewById(R.id.img_reload);
-        notifyRoot = (LinearLayout) view.findViewById(R.id.notify_root);
-        marqueeView = (MarqueeView) view.findViewById(R.id.marqueeView);
-        mIVBanner = (ImageView) view.findViewById(R.id.contact_banner_img);
-        mLayoutTop = (LinearLayout) view.findViewById(R.id.contact_top_ll);
-        imageViewClose = (ImageView) view.findViewById(R.id.notify_img_close);
-        mLayoutCofig = (LinearLayout) view.findViewById(R.id.contact_config_ll);
-        mLayoutSearch = (LinearLayout) view.findViewById(R.id.contact_search_ll);
-        mScrollView = (MyNestedScrollView) view.findViewById(R.id.contact_scrollview);
-        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.contact_swipelayout);
+        mIVTop = F(R.id.top_img);
+        mSign = F(R.id.contact_sign);
+        listView = F(R.id.contact_lv);
+        mTVTitle = F(R.id.contanct_title);
+        mTVRegion = F(R.id.contact_region);
+        mTVClass = F(R.id.contact_classify);
+        imageButton = F(R.id.img_reload);
+        notifyRoot = F(R.id.notify_root);
+        mIVBanner = F(R.id.contact_banner_img);
+        mLayoutTop = F(R.id.contact_top_ll);
+        mLayoutCofig = F(R.id.contact_config_ll);
+        mLayoutSearch = F(R.id.contact_search_ll);
+        mScrollView = F(R.id.contact_scrollview);
+        mRefreshLayout = F(R.id.contact_swipelayout);
 
         mSign.setOnClickListener(this);
         mTVClass.setOnClickListener(this);
@@ -140,17 +139,15 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         imageButton.setOnClickListener(this);
         mScrollView.setOnScrollIterface(this);
         mLayoutSearch.setOnClickListener(this);
-        imageViewClose.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setColorSchemeResources(R.color.color_red);
 
-        Glide.with(getActivity()).load(R.drawable.icon_voice).into(imageView);
 
         //点击item判断是否消耗积分
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                checkIsLogin();
+                isLogin();
                 shareView1 = view.findViewById(R.id.xq_tx);
                 shareView2 = view.findViewById(R.id.xq_rz);
                 userId = mListBean.get(position).getUser_id();
@@ -165,16 +162,19 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 //        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);  //再设置模式，和Activity的一样，覆盖。
     }
 
+    public <T extends View> T F(int id) {
+        return (T) view.findViewById(id);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        initMarqueeView();
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        if (!checkIsLogin() && v.getId() != R.id.img_reload) {
+        if (!isLogin() && v.getId() != R.id.img_reload) {
             return;
         }
         switch (v.getId()) {
@@ -204,19 +204,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             case R.id.contact_sign:
                 startActivity(new Intent(getActivity(), ContactDaliySignActivity.class));
                 break;
-            case R.id.notify_img_close:
-                marqueeView.stopScroll();
-                marqueeView.setVisibility(View.GONE);
-                notifyRoot.setVisibility(View.GONE);
-                break;
             default:
                 break;
         }
 
-    }
-
-    private void initMarqueeView() {
-        marqueeView.setText("依据赫兹接触强度计算理论，着重研究了圆柱滚子轴承内、外圈及滚动体的接触应力");
     }
 
     private void openDialog(final int type, final TextView textView) {
@@ -311,6 +302,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
                     if (page == 1 && isRefreshing) {
                         isRefreshing = false;
+                        //mVHelper.start();
                         RabbitMQConfig.getInstance(getActivity()).readMsg("unread_customer", 10);
                     }
                 }
@@ -485,6 +477,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     public void onRefresh() {
         page = 1;
         isRefreshing = true;
+        // mVHelper.stop();
         mRefreshPopou.setCanShowPopou(true);
         getNetData("1", false);
     }
@@ -506,8 +499,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     /**
      * Jump to where.
      */
-    public void JumpToWhere() {
-        checkIsLogin();
+    private void JumpToWhere() {
+        isLogin();
         if ("1".equals(jumpToWhere)) {  //原生
             Intent intent = new Intent(getActivity(), IntegralActivity.class);
             startActivity(intent);
@@ -522,7 +515,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     /**
      * 检查是否登录
      */
-    private boolean checkIsLogin() {
+    private boolean isLogin() {
         boolean logined = sharedUtils.getBoolean(getActivity(), Constant.LOGINED);
         if (!logined) {
             CommonDialog commonDialog = new CommonDialog();
@@ -556,8 +549,21 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         MobclickAgent.onPageStart("MainScreen");
         //检查登录状态
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
-        if (marqueeView != null) {
-            marqueeView.startScroll();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mVHelper != null) {
+            mVHelper.start();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mVHelper != null) {
+            mVHelper.stop();
         }
     }
 
@@ -566,8 +572,45 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
         mRefreshPopou.dismiss();
-        if (marqueeView != null) {
-            marqueeView.stopScroll();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mVHelper != null) {
+            mVHelper.onDestroy();
         }
     }
+
+    /**
+     * 展示滚动通知
+     *
+     * @param datas
+     */
+    public void showMarquee(List<DefConfigBean.NoticeBean.CommunicateContentBean> datas) {
+
+        if (mVHelper != null && notifyRoot.getVisibility() == View.GONE) {
+            notifyRoot.setVisibility(View.VISIBLE);
+            mVHelper.onResume(getActivity(), notifyRoot, datas, this);
+        }
+    }
+
+    public void hideMarquee() {
+        if (mVHelper != null) {
+            mVHelper.hide();
+        }
+    }
+
+    @Override
+    public void onItemClickListener(MarqueeFactory.ViewHolder holder) {
+        if (!isLogin()) {
+            return;
+        }
+        DefConfigBean.NoticeBean.CommunicateContentBean bean = (DefConfigBean.NoticeBean.CommunicateContentBean) holder.data;
+        if (bean != null) {
+            userId = bean.getId();
+            getPersonInfoData(userId, "1", 2);
+        }
+    }
+
 }

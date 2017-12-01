@@ -5,31 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/color_notification"
-    android:orientation="horizontal">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:visibility="gone">
 
     <ImageView
         android:id="@+id/notify_img"
         android:layout_width="105px"
         android:layout_height="105px"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />
 
-    <com.myplas.q.common.view.MarqueeView
+    <com.myplas.q.common.view.marqueeview.MarqueeView
         android:id="@+id/marqueeView"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        app:mvDirection="left"
-        app:mvIsRepeat="true"
-        app:mvSpeed="40"
-        app:mvStartPoint="start"
-        app:mvTextSize="14.0sp"
-        app:mvTextcolor="@color/color_red" />
+        android:flipInterval="2800"
+        android:inAnimation="@anim/in_right"
+        android:outAnimation="@anim/out_left"
+        app:mAnimDuration="1800" />
 
     <ImageView
         android:id="@+id/notify_img_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:src="@drawable/btn_notify_close" />

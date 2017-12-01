@@ -29,7 +29,7 @@
                 android:layout_height="fill_parent"
                 android:numColumns="auto_fit"
                 android:scrollbars="none"
-                android:stretchMode="spacingWidthUniform"></GridView>
+                android:stretchMode="spacingWidthUniform" />
         </LinearLayout>
     </HorizontalScrollView>
 </LinearLayout>

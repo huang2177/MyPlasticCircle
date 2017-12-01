@@ -5,14 +5,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.guide.activity.BaseActivity;
-import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.app.activity.BaseActivity;
 
 import org.json.JSONObject;
 
@@ -98,6 +95,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
                 return;
             }
             mACache = ACache.get(context);
+            boolean isShowNotify = false;
             switch (type) {
                 case 10:
                     mACache.put(Constant.R_CONTACT, "0");
@@ -124,7 +122,10 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
                     mACache.put(Constant.R_INTER_MSG, "0");
                     break;
                 case 4:
-                    if ("0".equals(new JSONObject(object.toString()).getString("err"))) {
+                    isShowNotify = true;
+                    Log.e("--------", object.toString());
+                    JSONObject jsonObject = new JSONObject(object.toString());
+                    if ("0".equals(jsonObject.getString("err"))) {
                         Gson gson = new Gson();
                         DotBean dotBean = gson.fromJson(object.toString(), DotBean.class);
                         mACache.put(Constant.R_MYORDER, dotBean.getData().getUnread_myorder());
@@ -135,6 +136,27 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
                         mACache.put(Constant.R_INTER_MSG, dotBean.getData().getUnread_reply_user_msg());
                         mACache.put(Constant.R_SUPDEM, dotBean.getData().getUnread_supply_and_demand());
                         mACache.put(Constant.R_REPLY_MSG, dotBean.getData().getUnread_reply_purchase_msg());
+
+
+                        DefConfigBean.NoticeBean noticeBean = new DefConfigBean.NoticeBean();
+                        DefConfigBean.NoticeBean.CommunicateContentBean communicateBean = new DefConfigBean.NoticeBean.CommunicateContentBean();
+                        DefConfigBean.NoticeBean.ToutiaoContentBean toutiaoBean = new DefConfigBean.NoticeBean.ToutiaoContentBean();
+                        DefConfigBean.NoticeBean.PurchaseContentBean purchaseBean = new DefConfigBean.NoticeBean.PurchaseContentBean();
+                        for (int i = 0; i < dotBean.getNotice().getCommunicate_content().size(); i++) {
+                            communicateBean.setInfo(dotBean.getNotice().getCommunicate_content().get(i).getInfo());
+                            communicateBean.setId(dotBean.getNotice().getCommunicate_content().get(i).getId());
+                        }
+                        for (int i = 0; i < dotBean.getNotice().getToutiao_content().size(); i++) {
+                            toutiaoBean.setInfo(dotBean.getNotice().getToutiao_content().get(i).getInfo());
+                            toutiaoBean.setId(dotBean.getNotice().getToutiao_content().get(i).getId());
+                            toutiaoBean.setFree(dotBean.getNotice().getToutiao_content().get(i).getFree());
+                        }
+                        for (int i = 0; i < dotBean.getNotice().getPurchase_content().size(); i++) {
+                            purchaseBean.setInfo(dotBean.getNotice().getPurchase_content().get(i).getInfo());
+                            purchaseBean.setId(dotBean.getNotice().getPurchase_content().get(i).getId());
+                            purchaseBean.setUser_id(dotBean.getNotice().getPurchase_content().get(i).getUser_id());
+                        }
+                        mACache.put(Constant.R_MARQUEE_CONTENT, noticeBean);
                     }
                     break;
                 default:
@@ -143,7 +165,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
             for (int i = 0; i < mqCallBackList.size(); i++) {
                 RabbitMQCallBack mMQCallBack = mqCallBackList.get(i);
                 if (mMQCallBack != null) {
-                    mMQCallBack.rCallback(true);
+                    mMQCallBack.rCallback(true, isShowNotify);
                 }
             }
         } catch (Exception e) {

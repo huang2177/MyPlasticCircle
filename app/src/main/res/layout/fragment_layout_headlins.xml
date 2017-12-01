@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:background="@color/color_red"/>
+        android:background="@color/color_red" />
+
 
     <LinearLayout
         android:id="@+id/headline_ll_title"
@@ -34,16 +35,18 @@
             android:focusable="false"
             android:hint="搜你想搜的"
             android:imeOptions="actionSearch"
+            android:maxLines="1"
             android:paddingLeft="5dp"
             android:textColor="#3b3a3a"
             android:textCursorDrawable="@drawable/text_cursor_shape"
             android:textSelectHandle="@drawable/textselecthandle"
             android:textSelectHandleLeft="@drawable/textselecthandle"
             android:textSelectHandleRight="@drawable/textselecthandle"
-            android:textSize="14.0sp"
-            android:maxLines="1"/>
+            android:textSize="14.0sp" />
 
     </LinearLayout>
 
-    <include layout="@layout/fragment_layout_headline_tabbar"/>
+    <include layout="@layout/layout_notification" />
+
+    <include layout="@layout/fragment_layout_headline_tabbar" />
 </LinearLayout>

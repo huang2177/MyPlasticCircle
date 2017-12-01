@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:divider="@null"
-                        android:visibility="visible"></com.myplas.q.common.view.MyListview>
+                        android:overScrollHeader="@null" />
 
 
                 </com.myplas.q.common.view.MyNestedScrollView>

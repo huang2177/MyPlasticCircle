@@ -18,7 +18,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.supdem.beans.SearchResultBean;
 
@@ -91,8 +91,10 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
 
             viewHolder.time.setText(list.get(position).getInput_time());
             if ("1".equals(list.get(position).getFrom())) {
-                viewHolder.reply.setText("回复()");
-                viewHolder.deliver.setText("出价()");
+                viewHolder.reply.setText("回复(" + list.get(position).getReplyCount() + ")");
+                viewHolder.deliver.setText("出价(" + list.get(position).getPlaticCount() + ")");
+                viewHolder.reply.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_reply, 0, 0, 0);
+                viewHolder.deliver.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_offer, 0, 0, 0);
             }
 
             String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + list.get(position).getStore_house()

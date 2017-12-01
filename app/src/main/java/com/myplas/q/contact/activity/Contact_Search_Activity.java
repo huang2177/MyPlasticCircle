@@ -33,7 +33,7 @@ import com.myplas.q.contact.adapter.Fragment_Dialog_Adapter;
 import com.myplas.q.contact.beans.ContactBean;
 import com.myplas.q.contact.beans.NoSearchInfoBean;
 import com.myplas.q.contact.beans.RecordBean;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myself.login.LoginActivity;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;

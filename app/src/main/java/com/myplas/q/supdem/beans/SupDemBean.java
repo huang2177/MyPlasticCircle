@@ -263,20 +263,22 @@ public class SupDemBean {
 
     public static class DataBean {
         /**
-         * id : 373
-         * name : 胖墩
+         * id : 196438
+         * name : 王铭
          * sync : 6
-         * model : 9001
-         * type : 2
+         * model : 2119
+         * type : 1
          * from : 1
-         * c_name : 上海中信有限公司
-         * user_id : 2062
-         * f_name : 台湾塑胶
-         * input_time : 10-24 14:51
-         * cargo_type : 2
-         * unit_price : 10900.00
-         * store_house : 广州
-         * img : http://pic.myplas.com/myapp/img/icon_supply.png
+         * c_name : 上海梓晨实业有限公司
+         * user_id : 53991
+         * f_name : 上海
+         * input_time : 11-29 10:21
+         * cargo_type : 1
+         * unit_price : 9500.00
+         * store_house : 上海
+         * img : http://pic.myplas.com/myapp/img/icon_purchase.png
+         * platicCount : 0
+         * replyCount : 0
          */
 
         private String id;
@@ -293,6 +295,8 @@ public class SupDemBean {
         private String unit_price;
         private String store_house;
         private String img;
+        private String platicCount;
+        private String replyCount;
 
         public String getId() {
             return id;
@@ -404,6 +408,22 @@ public class SupDemBean {
 
         public void setImg(String img) {
             this.img = img;
+        }
+
+        public String getPlaticCount() {
+            return platicCount;
+        }
+
+        public void setPlaticCount(String platicCount) {
+            this.platicCount = platicCount;
+        }
+
+        public String getReplyCount() {
+            return replyCount;
+        }
+
+        public void setReplyCount(String replyCount) {
+            this.replyCount = replyCount;
         }
     }
 }

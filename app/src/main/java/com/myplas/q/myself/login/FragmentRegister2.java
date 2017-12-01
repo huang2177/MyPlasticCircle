@@ -22,7 +22,7 @@ import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 
 import org.json.JSONObject;
 

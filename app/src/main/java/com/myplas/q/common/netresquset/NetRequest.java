@@ -3,9 +3,7 @@ package com.myplas.q.common.netresquset;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.SystemUtils;
 import com.myplas.q.common.utils.VersionUtils;
@@ -58,7 +56,7 @@ public class NetRequest implements Callback {
         client = new OkHttpClient.Builder()
                 .readTimeout(8000, TimeUnit.SECONDS)
                 .connectTimeout(8000, TimeUnit.SECONDS)
-                .addNetworkInterceptor(new StethoInterceptor())
+                //.addNetworkInterceptor(new StethoInterceptor())
                 .build();
         builder = new Request.Builder();
         myHandler = new MyHandler(context);

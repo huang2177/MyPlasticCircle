@@ -17,7 +17,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyGridview;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.headlines.adapter.HeadLine_Column_Adapetr;
 import com.myplas.q.headlines.adapter.HeadLine_Product_Adapetr;
 import com.myplas.q.headlines.bean.CateListSelectBean;

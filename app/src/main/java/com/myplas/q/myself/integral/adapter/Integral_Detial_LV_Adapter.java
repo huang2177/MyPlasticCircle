@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.common.view.SectionedBaseAdapter;
+import com.myplas.q.common.view.pinnedheadlistview.SectionedBaseAdapter;
 import com.myplas.q.myself.beans.Integraldetialbean;
 
 import java.util.List;

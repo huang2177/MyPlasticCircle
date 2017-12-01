@@ -1,4 +1,4 @@
-package com.myplas.q.guide.fragment;
+package com.myplas.q.app.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.myplas.q.R;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.guide.activity.MainActivity;
+import com.myplas.q.app.activity.MainActivity;
 
 /**
  * 编写： 黄双

@@ -10,10 +10,10 @@ import android.widget.LinearLayout;
 
 import com.myplas.q.R;
 import com.myplas.q.common.utils.StatusUtils;
-import com.myplas.q.common.view.HorizontalStepView;
+import com.myplas.q.common.view.stepview.HorizontalStepView;
 import com.myplas.q.common.view.MyViewPager;
-import com.myplas.q.common.view.StepBean;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.common.view.stepview.StepBean;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.view.MyOnPageChangeListener;
 
 import java.util.ArrayList;

@@ -17,7 +17,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.guide.activity.BaseActivity;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.supdem.beans.ReplyBean;
 import com.myplas.q.supdem.adapter.SupDem_Detail_LV_HFAdapter;
 
