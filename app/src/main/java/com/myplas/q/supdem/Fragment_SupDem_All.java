@@ -73,9 +73,9 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     private MyNestedScrollView mScrollView;
     private SwipeRefreshLayout mRefreshLayout;
     private List<SupDemBean.DataBean> mDataBeanList;
-    private TextView company, content, time, mTVPromit;
     private ImageView typeSupDem, typeNowFutures, imgUp;
     private LinearLayout layoutPrompt, layoutFirstitem, layoutUp;
+    private TextView company, content, time, mTVPromit, reply, deliver;
 
     public String followRelease, user_id, type;
     private String mLastData, hotSearch, jsonStr;
@@ -103,8 +103,10 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
         mListView = f(R.id.gq_listview);
         mScrollView = f(R.id.mynested_sv);
+        reply = f(R.id.supply_demand_reply);
         mRefreshLayout = f(R.id.smartlayout);
         mTVPromit = f(R.id.supply_demand_text);
+        deliver = f(R.id.supply_demand_deliver);
         layoutFirstitem = f(R.id.supdem_head_ll);
         layoutPrompt = f(R.id.supply_demand_prompt_linear);
 
@@ -350,12 +352,15 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             try {
                 company.setText(topBean.getC_name() + "  " + topBean.getName());
 
-                String s = ("1".equals(topBean.getFrom())
-                        ? "来自供求  "
-                        : "来自QQ群  ") + topBean.getInput_time();
-                time.setText(s);
+                time.setText(topBean.getInput_time());
+                if ("1".equals(topBean.getFrom())) {
+                    reply.setText("回复(" + topBean.getReplyCount() + ")");
+                    deliver.setText("出价(" + topBean.getPlaticCount() + ")");
+                    reply.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_reply, 0, 0, 0);
+                    deliver.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_offer, 0, 0, 0);
+                }
 
-                String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + topBean.getStore_house()
+                String html1 = "<font color='#9c9c9c'>" + " 交货地:" + "</font>" + topBean.getStore_house()
                         + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + topBean.getModel()
                         + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + topBean.getF_name()
                         + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + topBean.getUnit_price();
@@ -374,7 +379,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
 
     //dialog回调
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(user_id, "5", 3);

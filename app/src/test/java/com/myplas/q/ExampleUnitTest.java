@@ -1,5 +1,10 @@
 package com.myplas.q;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.view.animation.Animation;
+import android.widget.ImageView;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,4 +17,5 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
 }

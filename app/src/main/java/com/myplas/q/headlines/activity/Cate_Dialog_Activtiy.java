@@ -251,7 +251,9 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     }
 
     @Override
-    public void ok(int type) {
-        finish();
+    public void dialogClick(int type) {
+        if (type != -1) {
+            finish();
+        }
     }
 }

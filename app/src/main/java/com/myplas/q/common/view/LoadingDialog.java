@@ -29,7 +29,7 @@ public class LoadingDialog {
             View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_dialog, null);
             dialog.setView(view);
             dialog.setCancelable(true);
-            dialog.setCanceledOnTouchOutside(true);
+            dialog.setCanceledOnTouchOutside(false);
         }
         return dialog;
     }

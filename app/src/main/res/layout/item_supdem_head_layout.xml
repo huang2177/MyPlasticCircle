@@ -5,7 +5,7 @@
               android:layout_height="wrap_content"
               android:background="@color/color_white"
               android:orientation="vertical"
-              android:visibility="gone">
+    android:visibility="visible">
 
     <LinearLayout
         android:id="@+id/supply_demand_company"
@@ -75,13 +75,34 @@
                 android:textColor="@color/color_balank"
                 android:textSize="15.0sp"/>
 
-            <TextView
-                android:id="@+id/supply_demand_time"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="0dp"
-                android:textColor="@color/color_content"/>
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/supply_demand_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/color_content" />
+
+                <TextView
+                    android:id="@+id/supply_demand_deliver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="3dp"
+                    android:textColor="@color/color_content" />
+
+                <TextView
+                    android:id="@+id/supply_demand_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="3dp"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/color_content" />
+            </LinearLayout>
         </LinearLayout>
 
         <ImageView

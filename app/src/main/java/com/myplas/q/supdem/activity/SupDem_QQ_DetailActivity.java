@@ -297,9 +297,11 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     }
 
     @Override
-    public void ok(int type) {
-        Intent intent = new Intent(this, IntegralActivity.class);
-        startActivity(intent);
+    public void dialogClick(int type) {
+        if (type != -1) {
+            Intent intent = new Intent(this, IntegralActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void showInfo(SearchResultDetailBean.DataBean detailBean) {

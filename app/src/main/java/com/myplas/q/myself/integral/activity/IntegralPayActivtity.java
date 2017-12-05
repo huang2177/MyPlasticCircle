@@ -41,7 +41,8 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/29 09:57
  */
-public class IntegralPayActivtity extends BaseActivity implements View.OnClickListener, ResultCallBack, CommonDialog.DialogShowInterface {
+public class IntegralPayActivtity extends BaseActivity implements View.OnClickListener
+        , ResultCallBack {
     private int money;
     private Button button;
     private int plasticBean;
@@ -267,41 +268,27 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                 if (data.equals("0")) {//支付成功
                     type = 4;
                     CommonDialog commonDialog = new CommonDialog();
-                    commonDialog.showDialog(context, "支付成功!", 5, IntegralPayActivtity.this);
+                    commonDialog.showDialog(context, "支付成功!", 5, null);
                 }
                 if (data.equals("-1")) {//支付失败
                     type = -4;
                     CommonDialog commonDialog = new CommonDialog();
-                    commonDialog.showDialog(context, "请重新充值!", 6, IntegralPayActivtity.this);
+                    commonDialog.showDialog(context, "请重新充值!", 6, null);
                 }
                 if (data.equals("-2")) {//支付取消
                     type = -3;
                     CommonDialog commonDialog = new CommonDialog();
-                    commonDialog.showDialog(context, "您已取消支付!", 7, IntegralPayActivtity.this);
+                    commonDialog.showDialog(context, "您已取消支付!", 7, null);
                 }
                 callWeChat(order_id, type + "");
             }
         }
     }
 
-    //dialog 回调
-    @Override
-    public void ok(int type) {
-
-    }
 
     @Override
     public void failCallBack(int type) {
 
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

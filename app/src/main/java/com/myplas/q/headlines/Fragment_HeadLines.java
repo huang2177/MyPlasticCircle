@@ -182,17 +182,13 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     @Override
     public void onStart() {
         super.onStart();
-        if (mVHelper != null) {
-            mVHelper.start();
-        }
+        mVHelper.start();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mVHelper != null) {
-            mVHelper.stop();
-        }
+        mVHelper.stop();
     }
 
     @Override
@@ -212,10 +208,11 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
      *
      * @param datas
      */
-    public void showMarquee(List<DefConfigBean.NoticeBean.ToutiaoContentBean> datas) {
-        if (mVHelper != null && notifyRoot.getVisibility() == View.GONE) {
-            notifyRoot.setVisibility(View.VISIBLE);
-            mVHelper.onResume(getActivity(), notifyRoot, datas, this);
+    public void showMarquee(List datas, int type) {
+        try {
+            mVHelper.onResume(getActivity(), notifyRoot, datas, type, this);
+        } catch (Exception e) {
+            notifyRoot.setVisibility(View.GONE);
         }
     }
 

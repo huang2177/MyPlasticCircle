@@ -174,7 +174,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     }
 
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(userid, "5", 3);

@@ -162,9 +162,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                 }
             });
             loadCache(); //先读缓存中的数据
-            get_Subscribe(1, "2", true);
+            getSubscribe(1, "2", true);
         } else {
-            get_CateList(1, cateId, false);
+            getCatelist(1, cateId, false);
         }
 
         //item的监听
@@ -172,13 +172,15 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetUtils.isNetworkStateed(getActivity())) {
-                    clickId = (po == 0)
-                            ? (list_subcirble.get(position - 1).getId())
-                            : (list_catelist.get(position).getId());
-                    isFree = (po == 0)
-                            ? (list_subcirble.get(position - 1).getIs_free().equals("1"))
-                            : (list_catelist.get(position).getIs_free().equals("1"));
-                    //cateId = list_subcirble.get(position).getCate_id();
+                    if (po == 0) {
+                        clickId = list_subcirble.get(position - 1).getId();
+                        cateId = list_subcirble.get(position - 1).getCate_id();
+                        isFree = "1".equals(list_subcirble.get(position - 1).getIs_free());
+                    } else {
+                        clickId = list_catelist.get(position).getId();
+                        cateId = list_catelist.get(position).getCate_id();
+                        isFree = "1".equals(list_catelist.get(position).getIs_free());
+                    }
                     if (isFree) {
                         Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
                         intent.putExtra("id", clickId);
@@ -250,7 +252,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     }
 
     //获取推荐
-    public void get_Subscribe(int page, String subscribe, boolean isShow) {
+    public void getSubscribe(int page, String subscribe, boolean isShow) {
         this.page = page;
         this.keywords = keywords;
         Map<String, String> map = new HashMap<String, String>();
@@ -261,7 +263,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     }
 
     //获取其他
-    public void get_CateList(int page, String cate_id, boolean isShow) {
+    public void getCatelist(int page, String cate_id, boolean isShow) {
         this.page = page;
         this.cateId = cate_id;
 
@@ -329,7 +331,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             }
 
             if (type == 6) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
                     intent.putExtra("id", clickId);
                     startActivity(intent);
@@ -347,7 +349,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         try {
             Gson gson = new Gson();
             String err = new JSONObject(data.toString()).getString("err");
-            if (err.equals("0")) {
+            if ("0".equals(err)) {
                 setListener(false);
                 SubcribleBean subcribleBean = gson.fromJson(data.toString(), SubcribleBean.class);
                 if (page == 1) {
@@ -393,10 +395,12 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     }
 
     @Override
-    public void ok(int type) {
-        Intent intent = new Intent(getActivity(), IntegralActivity.class);
-        intent.putExtra("type", cateId);
-        startActivity(intent);
+    public void dialogClick(int type) {
+        if (type != -1) {
+            Intent intent = new Intent(getActivity(), IntegralActivity.class);
+            intent.putExtra("type", cateId);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -418,9 +422,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         page = 1;
         mRefreshPopou.setCanShowPopou(true);
         if (po == 0) {
-            get_Subscribe(page, "2", false);
+            getSubscribe(page, "2", false);
         } else {
-            get_CateList(page, cateId, false);
+            getCatelist(page, cateId, false);
         }
     }
 
@@ -429,9 +433,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     public void loadMore() {
         page++;
         if (po == 0) {
-            get_CateList(page, "999", false);
+            getSubscribe(page, "2", false);
         } else {
-            get_CateList(page, cateId, false);
+            getCatelist(page, cateId, false);
         }
     }
 
@@ -441,9 +445,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
             case R.id.img_reload:
                 page = 1;
                 if (po == 0) {
-                    get_Subscribe(1, "2", true);
+                    getSubscribe(1, "2", true);
                 } else {
-                    get_CateList(1, cateId, true);
+                    getCatelist(1, cateId, true);
                 }
                 break;
             case R.id.image_backup:

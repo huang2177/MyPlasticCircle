@@ -84,7 +84,7 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
 
             Glide.with(context)
                     .load(personsBean.getThumb())
-                    .placeholder(personsBean.getSex().equals("男")
+                    .placeholder("男".equals(personsBean.getSex())
                             ? R.drawable.img_defaul_male
                             : R.drawable.img_defaul_female)
                     .into(viewHolder.mHead);
@@ -96,7 +96,7 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
             viewHolder.mSign.setVisibility(View.VISIBLE);
             String type = personsBean.getType();
             CharSequence product = replace(personsBean.getMain_product());
-            if (type.equals("1")) {
+            if ("1".equals(type)) {
                 viewHolder.mNeed.setVisibility(View.VISIBLE);
                 viewHolder.mPro.setVisibility(View.VISIBLE);
                 viewHolder.mSign.setImageResource(R.drawable.icon_factory);
@@ -105,20 +105,20 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
                 viewHolder.mPro.setText(replace("需求:" + personsBean.getNeed_product()
                         + "  月用量:" + personsBean.getMonth_consum()));
 
-            } else if (type.equals("2")) {
+            } else if ("2".equals(type)) {
                 viewHolder.mNeed.setVisibility(View.INVISIBLE);
                 viewHolder.mPro.setVisibility(View.VISIBLE);
                 viewHolder.mSign.setImageResource(R.drawable.icon_raw_material);
-                viewHolder.mPro.setText(replace("主营:" + personsBean.getNeed_product()));
+                viewHolder.mPro.setText(replace("主营:" + product));
             } else {
                 viewHolder.mNeed.setVisibility(View.INVISIBLE);
                 viewHolder.mPro.setVisibility(View.VISIBLE);
-                viewHolder.mPro.setText(replace("主营产品:" + personsBean.getNeed_product()));
-                if (type.equals("4")) {
+                viewHolder.mPro.setText(replace("主营产品:" + product));
+                if ("4".equals(type)) {
                     viewHolder.mSign.setImageResource(R.drawable.icon_logistics);
                 }
             }
-            viewHolder.mStart.setImageResource(personsBean.getIs_pass().equals("0")
+            viewHolder.mStart.setImageResource("0".equals(personsBean.getIs_pass())
                     ? R.drawable.icon_identity
                     : R.drawable.icon_identity_hl);
         } catch (Exception e) {

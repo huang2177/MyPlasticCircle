@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,21 +60,23 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     private Map<Integer, viewHolder> mHolderMap;
     private Map<Integer, Integer> mDefFPostionMap;
     private Map<Integer, Integer> mDefCPostionMap;
-    private List<Date> list_date_conact;
 
+    private List<Date> list_date_conact;
     private List<Date> list_date_supdem;
     private ClassifyDialogShowUtils utils;
-    private CommonDialog mCommonDialog;
     private List<IntegralBean.InfoBean> list;
     private List<IntegralBean.InfoBean.MyMsgBean> list_msg;
 
     private Integral_Date_Grid_Adapter gridAdapter;
     private Integral_Diaolog_SupDem_Adapter integralSupplydemandadapter;
 
+    private TookDateBean tookDateBean;
+    private CommonDialog mCommonDialog;
+    private IntegralBean.InfoBean.ExtraConfigBean extraConfigBean;
+
     private Activity context;
     private boolean isFinish;
     private String type, cate_ids;
-    private TookDateBean tookDateBean;
     private int num = -1, month_num, plasticNum;
     private int datePosition, supDemPosition, classifyPosition, payPosition;
 
@@ -109,7 +112,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final viewHolder viewHolder = mHolderMap.get(position);
         type = list.get(position).getType();
-        Glide.with(context).load(list.get(position).getThumb()).into(viewHolder.imageView);
+        Glide.with(context)
+                .load(list.get(position).getThumb())
+                .into(viewHolder.imageView);
         if (type.equals("1")) {
             supDemPosition = position;
             viewHolder.shm.setVisibility(View.VISIBLE);
@@ -206,6 +211,14 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             }
         });
 
+        if (extraConfigBean != null) {
+            classifySelected(1, extraConfigBean.getCate_name()
+                    , ""
+                    , extraConfigBean.getCate_id()
+                    , ""
+                    , 1);
+        }
+
     }
 
     @Override
@@ -222,7 +235,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     }
 
 
-    //兑换--通讯录 供求
+    /**
+     * 兑换--通讯录 供求
+     */
+
     public void exchangeSupOrDem(String goods_id, String dates, String p_id, int type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", SharedUtils.getSharedUtils().getData(context, "token"));
@@ -232,7 +248,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         BaseActivity.postAsyn(context, API.BASEURL + API.NEW_EXCHANGE_SUPPLYORDEMAND, map, this, type);
     }
 
-    //兑换--头条
+    /**
+     * 兑换--头条
+     */
+
     public void newExchangeToutiao(String goods_id, int plastic_num, String cate_ids, int month_num, int type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("month_num", month_num + "");
@@ -242,21 +261,29 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         BaseActivity.postAsyn(context, API.BASEURL + API.NEW_EXCHANGE_TOUTIAO, map, this, type);
     }
 
-    //获取可选日期
+    /**
+     * 获取可选日期
+     */
+
     public void getValidDate(String type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("type", type);
         BaseActivity.postAsyn(context, API.BASEURL + API.GET_VALID_DATE, map, this, 2);
     }
 
-    //根据选择的日期改变显示
+    /**
+     * 根据选择的日期改变显示
+     */
     public void changeTextShow(List<Date> list) {
         int num = list.size();
         mHolderMap.get(datePosition).numAll.setText("共" + num + "件：");
         mHolderMap.get(datePosition).pointAll.setText("总计：" + (num * 100) + "塑豆");
     }
 
-    //日期上传之前拼接
+    /**
+     * 日期上传之前拼接
+     */
+
     public String getDates(List<Date> list) {
         if (list.size() == 0) {
             return null;
@@ -273,7 +300,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         }
     }
 
-    //日期标准化
+    /**
+     * 日期标准化
+     */
+
     public Date parseDate(String dateString) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -410,10 +440,12 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         }
     }
 
-    //提示dialog接口回掉；
+    /**
+     * 提示dialog接口回掉；
+     */
+
     @Override
-    public void ok(int type) {
-        setIsPay();
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 context.startActivity(new Intent(context, IntegralPayActivtity.class));
@@ -425,6 +457,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 if (isFinish) {
                     context.finish();
                 }
+                break;
+            case -1:
+                setIsPay();
                 break;
             default:
                 break;
@@ -438,7 +473,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         }
     }
 
-    //设置支付按钮可点击
+    /***
+     * 设置支付按钮可点击
+     */
     public void setIsPay() {
         if (utils != null) {
             utils.setIsPay(false);
@@ -447,7 +484,9 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     }
 
 
-    //日期选择后显示在列表上
+    /**
+     * 日期选择后显示在列表上
+     */
     public void dateSelected() {
         String type = list.get(datePosition).getType();
         switch (type) {
@@ -480,7 +519,10 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         }
     }
 
-    //供求选择后显示在列表上
+    /**
+     * 供求选择后显示在列表上
+     */
+
     @Override
     public void supDemSelected(int position) {
         this.num = position;
@@ -493,15 +535,17 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         mHolderMap.get(supDemPosition).time.setText(list_msg.get(position).getInput_time());
     }
 
-    //分类 选择后显示在列表上
+    /**
+     * 分类 选择后显示在列表上
+     */
+
     @Override
     public void classifySelected(int t, String fName, String cName, String fid, String cId, int num) {
         month_num = num;
         mIntegerMap.put(classifyPosition, num);
-        cate_ids = (cId.equals("")) ? (fid) : (cId);
-        String type = (cName.equals("")) ? (fName) : (fName + cName);
+        cate_ids = ("".equals(cId)) ? (fid) : (cId);
+        String type = ("".equals(cName)) ? (fName) : (fName + cName);
         plasticNum = Integer.parseInt(list.get(classifyPosition).getPoints()) * num;
-
         mHolderMap.get(classifyPosition).type.setText("已选择：" + type);
         mHolderMap.get(classifyPosition).numAll.setText("共" + num + "件：");
         mHolderMap.get(classifyPosition).pointAll.setText("总计：" + plasticNum + "塑豆");
@@ -525,6 +569,14 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         gridView.setHorizontalSpacing(0); // 设置列表项水平间距
         gridView.setStretchMode(GridView.NO_STRETCH);
         gridView.setNumColumns(list.size()); // 设置列数量=列表集合数
+    }
+
+    public void setClassifyPosition(int classifyPosition) {
+        this.classifyPosition = classifyPosition;
+    }
+
+    public void setExtraConfigBean(IntegralBean.InfoBean.ExtraConfigBean extraConfigBean) {
+        this.extraConfigBean = extraConfigBean;
     }
 
     public interface MyInterface {

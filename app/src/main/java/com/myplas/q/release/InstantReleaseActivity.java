@@ -150,13 +150,15 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
     }
 
     @Override
-    public void ok(int type) {
-        if (mList.size() == 1) {
-            finish();
-        } else if (deletePosition < mList.size()) {
-            mList.remove(deletePosition);
-            adapter = new InstantReleaseLVAdapter(this, mList, this);
-            listView.setAdapter(adapter);
+    public void dialogClick(int type) {
+        if (type != -1) {
+            if (mList.size() == 1) {
+                finish();
+            } else if (deletePosition < mList.size()) {
+                mList.remove(deletePosition);
+                adapter = new InstantReleaseLVAdapter(this, mList, this);
+                listView.setAdapter(adapter);
+            }
         }
     }
 }

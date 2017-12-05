@@ -97,7 +97,7 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
                 viewHolder.deliver.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_offer, 0, 0, 0);
             }
 
-            String html1 = "<font color='#9c9c9c'>" + " 货物位置:" + "</font>" + list.get(position).getStore_house()
+            String html1 = "<font color='#9c9c9c'>" + " 交货地:" + "</font>" + list.get(position).getStore_house()
                     + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + list.get(position).getModel()
                     + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + list.get(position).getF_name()
                     + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + list.get(position).getUnit_price();
@@ -182,7 +182,7 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
 
     //dialog回调
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(user_id, "5", 2);

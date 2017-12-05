@@ -107,6 +107,8 @@ public class SupDemBean {
         private String member_level;
         private String status;
         private String img;
+        private String platicCount;
+        private String replyCount;
 
         public String getId() {
             return id;
@@ -258,6 +260,22 @@ public class SupDemBean {
 
         public void setImg(String img) {
             this.img = img;
+        }
+
+        public String getReplyCount() {
+            return replyCount;
+        }
+
+        public String getPlaticCount() {
+            return platicCount;
+        }
+
+        public void setReplyCount(String replyCount) {
+            this.replyCount = replyCount;
+        }
+
+        public void setPlaticCount(String platicCount) {
+            this.platicCount = platicCount;
         }
     }
 

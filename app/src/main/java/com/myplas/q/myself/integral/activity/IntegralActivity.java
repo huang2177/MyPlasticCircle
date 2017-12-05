@@ -16,6 +16,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.myself.beans.IntegralBean;
 import com.myplas.q.myself.integral.adapter.IntegralAdapter;
 
@@ -110,7 +111,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 integralAll.setText(" " + integralBean.getPointsAll().toString());
             }
         } catch (Exception e) {
-            //TextUtils.toast(this, "数据解析错啦！");
+//            TextUtils.toast(this, "数据解析错啦！");
         }
     }
 
@@ -155,7 +156,15 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         if (cateId != null) {
             integralAdapter.setClickIsFinish(true);
             for (int n = 0; n < list.size(); n++) {
-                if (list.get(n).getExtra_config().get(0).getCate_id().equals(cateId)) {
+                List<IntegralBean.InfoBean.ExtraConfigBean> listConfig = list.get(n).getExtra_config();
+                if (listConfig.size() == 0) {
+                    return;
+                }
+                IntegralBean.InfoBean.ExtraConfigBean extraConfigBean = listConfig.get(0);
+                if (extraConfigBean == null) {
+                    return;
+                }
+                if (extraConfigBean.getCate_id().equals(cateId)) {
                     if (n < 0 || n >= integralAdapter.getItemCount()) {
                         return;
                     }
@@ -174,6 +183,9 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                         mRecyclerView.scrollToPosition(n);
                         move = true;
                     }
+
+                    integralAdapter.setClassifyPosition(mIndex);
+                    integralAdapter.setExtraConfigBean(extraConfigBean);
                 }
             }
         }

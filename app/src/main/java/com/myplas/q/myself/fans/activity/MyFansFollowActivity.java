@@ -176,13 +176,15 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
     }
 
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(user_id, "5", 3);
                 break;
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));
+                break;
+            default:
                 break;
         }
     }

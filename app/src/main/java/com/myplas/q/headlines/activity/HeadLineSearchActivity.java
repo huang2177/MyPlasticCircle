@@ -324,10 +324,12 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void ok(int type) {
-        Intent intent = new Intent(this, IntegralActivity.class);
-        intent.putExtra("type", "0");
-        startActivity(intent);
+    public void dialogClick(int type) {
+        if (type != -1) {
+            Intent intent = new Intent(this, IntegralActivity.class);
+            intent.putExtra("type", "0");
+            startActivity(intent);
+        }
     }
 
     @Override

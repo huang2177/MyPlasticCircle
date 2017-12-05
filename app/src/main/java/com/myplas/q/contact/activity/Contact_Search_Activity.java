@@ -4,8 +4,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.transition.Fade;
 import android.support.v7.widget.LinearLayoutManager;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -72,6 +79,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     private SupDem_Search_Grid_Adapter mGridAdapter;
 
     private boolean isLoading;
+    private String transition;
     private Map<Integer, Integer> map;
     private int page, visibleItemCount;
     private StringBuffer c_type, region;
@@ -97,6 +105,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         region = new StringBuffer("0");
         c_type = new StringBuffer("0");
         mRefreshPopou = new RefreshPopou(this, 2);
+        transition = getIntent().getStringExtra("transition");
 
         imageView = F(R.id.img_search_delete);
         mGV_Empty = F(R.id.mygrid_search_null);
@@ -164,6 +173,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
             }
         });
     }
+
 
     /**
      * 获取历史搜索
@@ -398,7 +408,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
 
     //dialog接口回调
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(userId, "5", 6);

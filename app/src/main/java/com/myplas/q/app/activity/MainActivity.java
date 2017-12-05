@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -103,6 +105,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ActivityManager.addActivity(this);
 
         initView();
+        //http://www.jianshu.com/search?q=window%20view%20activity&page=1&type=note
     }
 
     @Override
@@ -124,6 +127,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         } else if (Constant.LOGINOUT.equals(type)) {
             firstInto();
             onClosed();
+            JPushInterface.setAlias(this, 10, "");
             rCallback(false, false);
         } else {
             goToMySelf();
@@ -309,7 +313,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         if (type == 4) {
             startActivity(new Intent(this, LoginActivity.class));
         }
@@ -455,13 +459,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 return;
             }
             if (isShowNotify && mNticeBean.getCommunicate_content().size() != 0) {
-                fragmentContact.showMarquee(mNticeBean.getCommunicate_content());
+                fragmentContact.showMarquee(mNticeBean.getCommunicate_content(), 1);
             }
             if (isShowNotify && mNticeBean.getToutiao_content().size() != 0) {
-                fragmentHeadLine.showMarquee(mNticeBean.getToutiao_content());
+                fragmentHeadLine.showMarquee(mNticeBean.getToutiao_content(), 1);
             }
             if (isShowNotify && mNticeBean.getPurchase_content().size() != 0) {
-                fragmentSupDem.showMarquee(mNticeBean.getPurchase_content());
+                fragmentSupDem.showMarquee(mNticeBean.getPurchase_content(), 1);
             }
         } catch (Exception e) {
         }
@@ -477,17 +481,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             switch (position) {
                 case 0:
                     if (mNticeBean.getCommunicate_content().size() != 0) {
-                        fragmentContact.showMarquee(mNticeBean.getCommunicate_content());
+                        fragmentContact.showMarquee(mNticeBean.getCommunicate_content(), 2);
                     }
                     break;
                 case 1:
                     if (mNticeBean.getToutiao_content().size() != 0) {
-                        fragmentHeadLine.showMarquee(mNticeBean.getToutiao_content());
+                        fragmentHeadLine.showMarquee(mNticeBean.getToutiao_content(), 2);
                     }
                     break;
                 case 2:
                     if (mNticeBean.getPurchase_content().size() != 0) {
-                        fragmentSupDem.showMarquee(mNticeBean.getPurchase_content());
+                        fragmentSupDem.showMarquee(mNticeBean.getPurchase_content(), 2);
                     }
                     break;
                 default:

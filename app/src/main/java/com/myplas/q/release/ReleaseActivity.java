@@ -23,6 +23,7 @@ import java.util.List;
  * 电话：15378412400
  * 邮箱：15378412400@163.com
  * 时间：2017/3/21 10:26
+ *
  * @author 黄双
  */
 public class ReleaseActivity extends BaseActivity implements View.OnClickListener
@@ -120,7 +121,9 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void ok(int type) {
-        onBackPressed();
+    public void dialogClick(int type) {
+        if (type != -1) {
+            onBackPressed();
+        }
     }
 }

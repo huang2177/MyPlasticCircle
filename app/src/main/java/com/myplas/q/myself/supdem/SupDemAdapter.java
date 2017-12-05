@@ -189,11 +189,13 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
     }
 
     @Override
-    public void ok(int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(context, "token"));
-        map.put("id", list.get(position).getId());
-        BaseActivity.postAsyn(context, API.BASEURL + API.DELETE_MY_MSG, map, this, 1);
+    public void dialogClick(int type) {
+        if (type != -1) {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("token", sharedUtils.getData(context, "token"));
+            map.put("id", list.get(position).getId());
+            BaseActivity.postAsyn(context, API.BASEURL + API.DELETE_MY_MSG, map, this, 1);
+        }
     }
 
     public interface MyInterface {

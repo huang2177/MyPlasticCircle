@@ -182,7 +182,7 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
 
     //dialog回调
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(user_id, "5", 2);

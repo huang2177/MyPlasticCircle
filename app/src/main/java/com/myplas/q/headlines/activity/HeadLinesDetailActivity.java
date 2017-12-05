@@ -209,10 +209,12 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     }
 
     @Override
-    public void ok(int type) {
-        Intent intent = new Intent(this, IntegralActivity.class);
-        intent.putExtra("type", "5");
-        startActivity(intent);
+    public void dialogClick(int type) {
+        if (type != -1) {
+            Intent intent = new Intent(this, IntegralActivity.class);
+            intent.putExtra("type", "5");
+            startActivity(intent);
+        }
     }
 
     @Override

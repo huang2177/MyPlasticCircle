@@ -298,7 +298,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
     }
 
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         if (type == 4) {//退出登陆；
             Map<String, String> map = new HashMap<String, String>();
             map.put("token", sharedUtils.getData(this, "token"));

@@ -35,8 +35,8 @@ import java.util.Observer;
 public class MarqueeView extends ViewFlipper implements Observer {
     protected MarqueeFactory factory;
     private int textColor = R.color.color_red;
-    private final int DEFAULT_ANIM_RES_IN = R.anim.in_bottom;
-    private final int DEFAULT_ANIM_RES_OUT = R.anim.out_top;
+    private final int DEFAULT_ANIM_RES_IN = R.anim.in_right;
+    private final int DEFAULT_ANIM_RES_OUT = R.anim.out_left;
 
     public MarqueeView(Context context) {
         this(context, null);

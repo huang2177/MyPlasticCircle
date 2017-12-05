@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -49,7 +50,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     private SharedUtils sharedUtils;
     private Map<String, String> map;
     private String sexInPut, regionInPut;
-    private String type, address, location, sex, region, product, monthUse, mainPro, model;
+    private String type, address, location, sex, region, mainProduct, monthUse, needProduct, model;
 
     private View shareView;
     private RoundCornerImageView imageHead;
@@ -178,7 +179,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 Intent intent6 = new Intent(this, DataCommonActivity.class);
                 intent6.putExtra("type", "2");
                 intent6.putExtra("title", "生产产品");
-                intent6.putExtra("hint", product);
+                intent6.putExtra("hint", mainProduct);
                 startActivityForResult(intent6, 6);
                 break;
             case R.id.setting_data_monthuse:
@@ -192,11 +193,9 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                 Intent intent8 = new Intent(this, ("4".equals(type))
                         ? (MyMainPro_LogisticsActivity.class)
                         : (DataCommonActivity.class));
-                intent8.putExtra("title", (type.equals("1"))
-                        ? ("我的需求")
-                        : ("我的主营"));
                 intent8.putExtra("type", "2");
-                intent8.putExtra("hint", mainPro);
+                intent8.putExtra("hint", (type.equals("1") ? needProduct : mainProduct));
+                intent8.putExtra("title", (type.equals("1")) ? ("我的需求") : ("我的主营"));
                 startActivityForResult(intent8, 8);
                 break;
             case R.id.wd_zl_linear_caremodel:
@@ -274,21 +273,20 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
     public void saveData() {
         try {
             Map map = new HashMap(20);
-            if (type.equals("1")) {
+            if ("1".equals(type)) {
                 map.put("month_consum", monthUse);
-                map.put("main_product", product);
+                map.put("need_product", getString(needProduct));
             }
             map.put("type", type);
             map.put("sex", sexInPut);
             map.put("address", address);
             map.put("dist", regionInPut);
             map.put("address_id", location);
-            map.put("concern", getString(model));
-            map.put("major", getString(mainPro));
+            map.put("main_product", getString(mainProduct));
             map.put("token", sharedUtils.getData(this, "token"));
 
             String url = API.BASEURL + API.SAVE_SELFINFO;
-            postAsyn1(this, url, map, this, 3, false);
+            postAsyn1(this, url, map, this, 3, true);
         } catch (Exception e) {
         }
 
@@ -302,7 +300,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
      * @param type
      */
     public void upLoadImg(String method, String imgpath, int type) {
-        Map<String, String> map = new HashMap<>();
         String token = sharedUtils.getData(this, "token");
         postUpLoadIMG(this, API.BASEURL + method, imgpath, token, this, type);
     }
@@ -323,6 +320,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             if (type == 3 && err.equals("0")) {
                 requestNetData();
             }
+
         } catch (Exception e) {
         }
     }
@@ -338,24 +336,25 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             type = mySelfInfo.getData().getType();
             imgHead = mySelfInfo.getData().getThumb();
             address = mySelfInfo.getData().getAddress();
-            region = mySelfInfo.getData().getAdistinct();
             location = mySelfInfo.getData().getOrigin();
+            region = mySelfInfo.getData().getAdistinct();
             imgCard = mySelfInfo.getData().getThumbcard();
-            model = mySelfInfo.getData().getConcern_model();
-            product = mySelfInfo.getData().getMain_product();
-            mainPro = mySelfInfo.getData().getNeed_product();
             monthUse = mySelfInfo.getData().getMonth_consum();
+            mainProduct = mySelfInfo.getData().getMain_product();
+            needProduct = mySelfInfo.getData().getNeed_product();
 
             sexInPut = ("男".equals(sex)) ? ("0") : ("1");
+//            imgHead = imgHead.contains("http") ? imgHead : "http:" + imgHead;
+//            imgCard = imgCard.contains("http") ? imgCard : "http:" + imgCard;
 
             textXb.setText(sex);
             tvAddress.setText(region);
             tvCareModel.setText(model);
             tvLocation.setText(address);
-            tvNeedProduct.setText(product);
             mName.setText(mySelfInfo.getData().getName());
             textGs.setText(mySelfInfo.getData().getC_name());
             textDh.setText(mySelfInfo.getData().getMobile());
+            tvNeedProduct.setText("1".equals(type) ? needProduct : mainProduct);
 
             Glide.with(this)
                     .load(imgCard)
@@ -370,50 +369,37 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
             switch (type) {
                 case "1":
-                    llMode.setVisibility(View.VISIBLE);       //"‘关注的牌号’是否显示"
+                    //llMode.setVisibility(View.VISIBLE);       //"‘关注的牌号’是否显示"
                     llMonthUse.setVisibility(View.VISIBLE); //"‘月用量与生产产品’是否显示"
                     tvCompany.setText("塑料制品厂");
                     _tvNeedProduct.setText("我的需求：");
 
-                    tvProduct.setText(product);//生产产品
+                    tvProduct.setText(mainProduct);//生产产品
                     tvMonthUse.setText(monthUse);
                     break;
                 case "2":
-                    llMode.setVisibility(View.VISIBLE);
+                    //llMode.setVisibility(View.VISIBLE);
                     tvCompany.setText("原料供应商");
                     llMonthUse.setVisibility(View.GONE);
                     break;
                 case "4":
-                    llMode.setVisibility(View.GONE);
-                    llMonthUse.setVisibility(View.GONE);
                     _tvNeedProduct.setText("我的主营：");
                     tvCompany.setText("物流商");
                     break;
                 case "5":
-                    llMode.setVisibility(View.GONE);
-                    llMonthUse.setVisibility(View.GONE);
                     tvCompany.setText("金融公司");
                     break;
                 case "6":
-                    llMode.setVisibility(View.GONE);
-                    llMonthUse.setVisibility(View.GONE);
                     tvCompany.setText("塑化电商");
                     break;
                 case "7":
-                    llMode.setVisibility(View.GONE);
-                    llMonthUse.setVisibility(View.GONE);
                     tvCompany.setText("回料(含新材料)");
                     break;
                 case "8":
-                    llMode.setVisibility(View.GONE);
-                    llMonthUse.setVisibility(View.GONE);
                     tvCompany.setText("期货");
                     break;
                 case "9":
                     tvCompany.setText("塑机");
-                    llMode.setVisibility(View.GONE);
-                    llMonthUse.setVisibility(View.GONE);
-                    break;
                 default:
                     break;
             }
@@ -469,8 +455,8 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             upLoadImg(API.SAVE_CARD_IMG, imagePath, 6);
         }
         if (requestCode == 6 && data != null) {
-            if (!product.equals(data.getStringExtra("updateData"))) {
-                product = data.getStringExtra("updateData");
+            if (!mainProduct.equals(data.getStringExtra("updateData"))) {
+                mainProduct = data.getStringExtra("updateData");
                 saveData();
             }
         }
@@ -481,10 +467,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             }
         }
         if (requestCode == 8 && data != null) {
-            if (!mainPro.equals(data.getStringExtra("updateData"))) {
-                mainPro = data.getStringExtra("updateData");
-                saveData();
+            if ("1".equals(type)) {
+                needProduct = data.getStringExtra("updateData");
+            } else {
+                mainProduct = data.getStringExtra("updateData");
             }
+            saveData();
         }
         if (requestCode == 9 && data != null) {
             if (!model.equals(data.getStringExtra("updateData"))) {

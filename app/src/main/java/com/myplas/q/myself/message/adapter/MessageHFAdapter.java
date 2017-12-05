@@ -119,7 +119,7 @@ public class MessageHFAdapter extends RecyclerView.Adapter {
         }
 
         @Override
-        public void ok(int type) {
+        public void dialogClick(int type) {
         }
     }
 

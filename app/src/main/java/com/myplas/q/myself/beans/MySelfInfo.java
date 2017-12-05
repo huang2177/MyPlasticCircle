@@ -86,7 +86,6 @@ public class MySelfInfo implements Serializable {
         private String total;
         private String rank;
         private String fans;
-        private String concern_model;
 
         public String getUser_id() {
             return user_id;
@@ -270,14 +269,6 @@ public class MySelfInfo implements Serializable {
 
         public void setFans(String fans) {
             this.fans = fans;
-        }
-
-        public String getConcern_model() {
-            return concern_model;
-        }
-
-        public void setConcern_model(String concern_model) {
-            this.concern_model = concern_model;
         }
 
         public static class AllowSendBean implements Serializable {

@@ -49,6 +49,8 @@ public class AD_DialogActivtiy extends BaseActivity {
                 finish();
             }
         });
+
+
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

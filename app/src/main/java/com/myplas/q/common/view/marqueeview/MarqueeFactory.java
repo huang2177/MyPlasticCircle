@@ -33,6 +33,7 @@ public abstract class MarqueeFactory<T extends View, E> extends Observable {
         return mViews != null ? mViews : Collections.EMPTY_LIST;
     }
 
+
     public void setData(List<E> datas) {
         if (datas == null) {
             return;

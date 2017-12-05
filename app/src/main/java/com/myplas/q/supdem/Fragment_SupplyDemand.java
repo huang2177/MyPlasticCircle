@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -270,19 +271,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         //editText.setHint(hotSearch.equals("") ? "大家都在搜：" + hotSearch : "大家都在搜：7000F");
     }
 
-    /**
-     * 展示滚动通知
-     *
-     * @param datas
-     */
-    public void showMarquee(List<DefConfigBean.NoticeBean.PurchaseContentBean> datas) {
-        if (mVHelper != null && notifyRoot.getVisibility() == View.GONE) {
-            notifyRoot.setVisibility(View.VISIBLE);
-            mVHelper.onResume(getActivity(), notifyRoot, datas, this);
-        }
-    }
-
-
     @Override
     public void onItemClickListener(MarqueeFactory.ViewHolder holder) {
         DefConfigBean.NoticeBean.PurchaseContentBean bean = (DefConfigBean.NoticeBean.PurchaseContentBean) holder.data;
@@ -345,27 +333,19 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         public int getItemCount() {
             return mList.size();
         }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("MainScreen");
-
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mVHelper != null) {
-            mVHelper.start();
-        }
-    }
-
 
     @Override
     public void onPause() {
         super.onPause();
+        Log.e("-------", "-----1111");
         MobclickAgent.onPageEnd("MainScreen");
         if (mFragmentAll.refreshPopou != null) {
             mFragmentAll.refreshPopou.dismiss();
@@ -373,9 +353,14 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (mVHelper != null) {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (mVHelper == null) {
+            return;
+        }
+        if (isVisibleToUser) {
+            mVHelper.start();
+        } else {
             mVHelper.stop();
         }
     }
@@ -389,6 +374,21 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     public void onLogined() {
         if (mFragmentAll != null) {
             mFragmentAll.getNetData("1", false);
+        }
+    }
+
+    /**
+     * 展示滚动通知
+     *
+     * @param datas
+     */
+    public void showMarquee(List datas, int type) {
+        try {
+            if (mVHelper != null) {
+                mVHelper.onResume(getActivity(), notifyRoot, datas, type, this);
+            }
+        } catch (Exception e) {
+            notifyRoot.setVisibility(View.GONE);
         }
     }
 }

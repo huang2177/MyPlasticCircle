@@ -2,6 +2,7 @@ package com.myplas.q.common.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -67,7 +68,7 @@ public class CommonDialog {
             @Override
             public void onClick(View v) {
                 if (dialogShowInterface != null) {
-                    CommonDialog.this.dialogShowInterface.ok(CommonDialog.this.type);
+                    CommonDialog.this.dialogShowInterface.dialogClick(CommonDialog.this.type);
                 }
                 normalDialog.dismiss();
             }
@@ -76,6 +77,12 @@ public class CommonDialog {
             @Override
             public void onClick(View v) {
                 normalDialog.dismiss();
+            }
+        });
+        normalDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                CommonDialog.this.dialogShowInterface.dialogClick(-1);
             }
         });
     }
@@ -110,6 +117,6 @@ public class CommonDialog {
     }
 
     public interface DialogShowInterface {
-        void ok(int type);
+        void dialogClick(int type);
     }
 }

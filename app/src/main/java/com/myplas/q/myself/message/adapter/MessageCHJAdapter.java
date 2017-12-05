@@ -106,7 +106,7 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
     }
 
     //长按监听类
-    public class MyOnLongClickListener implements View.OnLongClickListener, CommonDialog.DialogShowInterface {
+    public class MyOnLongClickListener implements View.OnLongClickListener {
         int position;
 
         public MyOnLongClickListener(int position) {
@@ -116,13 +116,11 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
         @Override
         public boolean onLongClick(View v) {
             CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(context, "确认删除？", 1, this);
+            commonDialog.showDialog(context, "确认删除？", 1, null);
             return true;
         }
 
-        @Override
-        public void ok(int type) {
-        }
+
     }
 
     public class MyOnClickListener implements View.OnClickListener {

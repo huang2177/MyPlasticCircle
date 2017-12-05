@@ -7,12 +7,14 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -88,8 +90,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch, notifyRoot;
 
     public int page;
-    private StringBuffer region;
-    private StringBuffer c_type;
+    private String region, c_type;
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
     private boolean isRefreshing, isLoading;
@@ -105,10 +106,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
     private void initView() {
         page = 1;
+        region = "0";
+        c_type = "0";
         map = new HashMap<>();
         mListBean = new ArrayList<>();
-        region = new StringBuffer("0");
-        c_type = new StringBuffer("0");
         mVHelper = new MarqueeViewHelper();
         sharedUtils = SharedUtils.getSharedUtils();
         mRefreshPopou = new RefreshPopou(getActivity(), 2);
@@ -219,9 +220,9 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 textView.setTextColor(getResources().getColor(R.color.color_red));
                 textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
                 if (type == 1) {
-                    c_type = new StringBuffer(value);
+                    c_type = value;
                 } else {
-                    region = new StringBuffer(value);
+                    region = value;
                 }
                 page = 1;
                 mRefreshPopou.setCanShowPopou(false);
@@ -454,7 +455,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
     //dialog接口回调
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(userId, "5", 3);
@@ -551,27 +552,25 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mVHelper != null) {
-            mVHelper.start();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mVHelper != null) {
-            mVHelper.stop();
-        }
-    }
 
     @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
         mRefreshPopou.dismiss();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mVHelper.start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mVHelper.stop();
     }
 
     @Override
@@ -587,11 +586,11 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
      *
      * @param datas
      */
-    public void showMarquee(List<DefConfigBean.NoticeBean.CommunicateContentBean> datas) {
-
-        if (mVHelper != null && notifyRoot.getVisibility() == View.GONE) {
-            notifyRoot.setVisibility(View.VISIBLE);
-            mVHelper.onResume(getActivity(), notifyRoot, datas, this);
+    public void showMarquee(List datas, int type) {
+        try {
+            mVHelper.onResume(getActivity(), notifyRoot, datas, type, this);
+        } catch (Exception e) {
+            notifyRoot.setVisibility(View.GONE);
         }
     }
 

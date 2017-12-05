@@ -273,7 +273,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
     }
 
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(userid, "5", 2);

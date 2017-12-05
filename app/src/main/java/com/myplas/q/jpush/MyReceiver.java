@@ -74,7 +74,7 @@ public class MyReceiver extends BroadcastReceiver {
                 case "price"://出价
                     Intent i1 = new Intent(context, SupDem_Detail_Activity.class);
                     i1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i1.putExtra("id", extras.getString("pur_id"));
+                    i1.putExtra("id", extras.getString("id"));
                     i1.putExtra("userid", extras.getString("rev_id"));
                     context.startActivity(i1);
                     break;

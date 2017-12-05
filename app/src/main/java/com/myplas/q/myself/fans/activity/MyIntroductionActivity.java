@@ -161,7 +161,7 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
     }
 
     @Override
-    public void ok(int type) {
+    public void dialogClick(int type) {
         switch (type) {
             case 1:
                 getPersonInfoData(userid, "5", 2);
@@ -169,18 +169,8 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));
                 break;
+            default:
+                break;
         }
     }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
-
-
 }

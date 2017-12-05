@@ -87,7 +87,9 @@ public class PreImageViewActivity extends BaseActivity {
 
             @Override
             public void onCompleted(Drawable drawable, ImageFrom imageFrom, ImageAttrs imageAttrs) {
-                changeBackgroundColor(((BitmapDrawable) drawable).getBitmap());
+                if (drawable != null) {
+                    changeBackgroundColor(((BitmapDrawable) drawable).getBitmap());
+                }
             }
 
             @Override
@@ -103,7 +105,14 @@ public class PreImageViewActivity extends BaseActivity {
 
         photoView.setShowDownloadProgressEnabled(true, Color.parseColor("#000000"));
         //photoView.setZoomEnabled(true);
-        photoView.displayImage("http://img3.imgtn.bdimg.com/it/u=3905849546,2426550521&fm=11&gp=0.jpg");
+        photoView.displayImage(getIntent().getStringExtra("imgurl"));
+
+        photoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     /**
