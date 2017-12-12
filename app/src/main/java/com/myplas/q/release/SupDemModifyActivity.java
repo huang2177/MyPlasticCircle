@@ -149,10 +149,10 @@ public class SupDemModifyActivity extends BaseActivity implements
         fName = mEditfName.getText().toString();
         jhd = mEditJh.getText().toString();
 
-        if (!TextUtils.isNullOrEmpty(jhd)
-                || !TextUtils.isNullOrEmpty(fName)
-                || !TextUtils.isNullOrEmpty(model)
-                || !TextUtils.isNullOrEmpty(pirce)) {
+        if (!TextUtils.notEmpty(jhd)
+                || !TextUtils.notEmpty(fName)
+                || !TextUtils.notEmpty(model)
+                || !TextUtils.notEmpty(pirce)) {
             TextUtils.toast(this, "请输入完整的数据！");
             return false;
         } else {

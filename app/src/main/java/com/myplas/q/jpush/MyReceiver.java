@@ -14,6 +14,7 @@ import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.fans.activity.MyFansFollowActivity;
+import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
@@ -94,11 +95,11 @@ public class MyReceiver extends BroadcastReceiver {
                     context.startActivity(i3);
                     break;
 
-//                case ""://开票、签收
-//                    Intent i4 = new Intent(context, TradeOrderActivity.class);
-//                    i4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    context.startActivity(i4);
-//                    break;
+                case "order"://开票、签收
+                    Intent i4 = new Intent(context, TradeOrderActivity.class);
+                    i4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(i4);
+                    break;
                 default:
                     break;
             }
@@ -135,7 +136,7 @@ public class MyReceiver extends BroadcastReceiver {
     private static JSONObject getExtra(Bundle bundle, String key) {
         JSONObject jsonObject = null;
 
-        if (TextUtils.isEmpty(bundle.getString(key))) {
+        if (!TextUtils.notEmpty(bundle.getString(key))) {
             Log.e(TAG, "This message has no Extra data");
             return jsonObject;
         }

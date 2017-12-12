@@ -277,10 +277,10 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         String t = mtvType.getText().toString();
         content = mEditText.getText().toString();
         if (_type == 1) {
-            return !TextUtils.isNullOrEmpty(content)
-                    && !TextUtils.isNullOrEmpty(t) ? false : true;
+            return !TextUtils.notEmpty(content)
+                    && !TextUtils.notEmpty(t) ? false : true;
         } else {
-            if (!TextUtils.isNullOrEmpty(content) || !TextUtils.isNullOrEmpty(t)) {
+            if (!TextUtils.notEmpty(content) || !TextUtils.notEmpty(t)) {
                 TextUtils.toast(getActivity(), "您还未输入内容或者没有选择发布类型！");
                 return false;
             } else {

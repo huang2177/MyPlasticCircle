@@ -59,25 +59,6 @@ public class PreImageViewActivity extends BaseActivity {
         layout = F(R.id.preimg_ll);
         photoView = F(R.id.photoview);
 
-//        Glide.with(this)
-//                .load(getIntent().getStringExtra("imgurl"))
-//                .asBitmap()
-//                .placeholder(R.drawable.card)
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .into(new SimpleTarget<Bitmap>() {
-//                    @Override
-//                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                        photoView.setImageBitmap(resource);
-//                        changeBackgroundColor(resource);
-//                    }
-//                });
-
-//        photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
-//            @Override
-//            public void onPhotoTap(View view, float x, float y) {
-//                onBackPressed();
-//            }
-//        });
         // setDownloadProgressListener() 一定要在 displayImage() 之前
         photoView.setDisplayListener(new DisplayListener() {
             @Override
@@ -94,7 +75,10 @@ public class PreImageViewActivity extends BaseActivity {
 
             @Override
             public void onError(ErrorCause errorCause) {
-
+                String type = getIntent().getStringExtra("type");
+                photoView.displayResourceImage("2".equals(type)
+                        ? R.drawable.card
+                        : "0".equals(type) ? R.drawable.img_defaul_male : R.drawable.img_defaul_female);
             }
 
             @Override
@@ -105,7 +89,8 @@ public class PreImageViewActivity extends BaseActivity {
 
         photoView.setShowDownloadProgressEnabled(true, Color.parseColor("#000000"));
         //photoView.setZoomEnabled(true);
-        photoView.displayImage(getIntent().getStringExtra("imgurl"));
+        String url = getIntent().getStringExtra("imgurl");
+        photoView.displayImage(url);
 
         photoView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,3 +141,18 @@ public class PreImageViewActivity extends BaseActivity {
         return Color.rgb(red, green, blue);
     }
 }
+//        Glide.with(this)
+//                .load(getIntent().getStringExtra("imgurl"))
+//                .asBitmap()
+//                .placeholder("2".equals(type)
+//                        ? R.drawable.card
+//                        : "0".equals(type) ? R.drawable.img_defaul_male : R.drawable.img_defaul_female)
+//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                .into(new SimpleTarget<Bitmap>() {
+//                    @Override
+//                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                        photoView.setImageBitmap(resource);
+//                        changeBackgroundColor(resource);
+//                    }
+//
+//                });

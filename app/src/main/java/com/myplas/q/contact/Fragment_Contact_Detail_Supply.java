@@ -116,7 +116,7 @@ public class Fragment_Contact_Detail_Supply extends Fragment implements ResultCa
             setListener(true);
             EmptyView emptyView = new EmptyView(getActivity());
             emptyView.mustCallInitWay(mMyListview);
-            emptyView.setNoMessageText("没有相关数据");
+            emptyView.setNoMessageText("暂无供给信息~");
             emptyView.setMyManager(R.drawable.icon_null);
             mMyListview.setEmptyView(emptyView);
         }

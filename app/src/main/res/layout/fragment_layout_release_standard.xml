@@ -128,7 +128,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
                     android:gravity="center_vertical"
-                    android:text="货物位置"
+                    android:text="交货地"
                     android:textColor="@color/color_balank"
                     android:textSize="16.0sp" />
 

@@ -114,7 +114,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void getComPany(String keywords) {
-        if (TextUtils.isNullOrEmpty(keywords)) {
+        if (TextUtils.notEmpty(keywords)) {
             Map<String, String> map = new HashMap<>();
             map.put("type", "2");
             map.put("page", "1");

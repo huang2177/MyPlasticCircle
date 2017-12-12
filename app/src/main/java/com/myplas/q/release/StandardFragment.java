@@ -227,20 +227,20 @@ public class StandardFragment extends Fragment implements View.OnClickListener
         type = ("供给".equals(t)) ? ("2") : ("1");
 
         if (_type == 1) {
-            return !TextUtils.isNullOrEmpty(jhd)
-                    && !TextUtils.isNullOrEmpty(t)
-                    && !TextUtils.isNullOrEmpty(nowF)
-                    && !TextUtils.isNullOrEmpty(model)
-                    && !TextUtils.isNullOrEmpty(pirce)
-                    && !TextUtils.isNullOrEmpty(production) ? false : true;
+            return !TextUtils.notEmpty(jhd)
+                    && !TextUtils.notEmpty(t)
+                    && !TextUtils.notEmpty(nowF)
+                    && !TextUtils.notEmpty(model)
+                    && !TextUtils.notEmpty(pirce)
+                    && !TextUtils.notEmpty(production) ? false : true;
 
         } else {
-            if (!TextUtils.isNullOrEmpty(jhd)
-                    || !TextUtils.isNullOrEmpty(t)
-                    || !TextUtils.isNullOrEmpty(nowF)
-                    || !TextUtils.isNullOrEmpty(model)
-                    || !TextUtils.isNullOrEmpty(pirce)
-                    || !TextUtils.isNullOrEmpty(production)) {
+            if (!TextUtils.notEmpty(jhd)
+                    || !TextUtils.notEmpty(t)
+                    || !TextUtils.notEmpty(nowF)
+                    || !TextUtils.notEmpty(model)
+                    || !TextUtils.notEmpty(pirce)
+                    || !TextUtils.notEmpty(production)) {
                 TextUtils.toast(getActivity(), "请输入完整的数据！");
                 return false;
             } else {

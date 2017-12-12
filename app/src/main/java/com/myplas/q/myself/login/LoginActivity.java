@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
         edittextTel = F(R.id.dl_tel);
-        mScrollView = F(R.id.sv_login);
+        //mScrollView = F(R.id.sv_login);
         edittextPass = F(R.id.dl_pass);
         edittextTel1 = F(R.id.dl_tel2);
         edittextVerification1 = F(R.id.dl_verification1);
@@ -164,7 +164,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
             //登陆；
             case R.id.dl_ok:
-                if (TextUtils.isPhoneNum(edittextTel.getText().toString()) && TextUtils.isNullOrEmpty(edittextPass.getText().toString())) {
+                if (TextUtils.isPhoneNum(edittextTel.getText().toString()) && TextUtils.notEmpty(edittextPass.getText().toString())) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("username", edittextTel.getText().toString());
                     map.put("password", edittextPass.getText().toString());
@@ -179,8 +179,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             //手机动态码登陆
             case R.id.dl_ok2:
                 if (TextUtils.isPhoneNum(edittextTel1.getText().toString())
-                        && TextUtils.isNullOrEmpty(edittextVerification1.getText().toString())
-                        && TextUtils.isNullOrEmpty(edittextVerification2.getText().toString())) {
+                        && TextUtils.notEmpty(edittextVerification1.getText().toString())
+                        && TextUtils.notEmpty(edittextVerification2.getText().toString())) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("phonenum", edittextTel1.getText().toString());
                     map.put("phonevaild", edittextVerification2.getText().toString());
@@ -239,7 +239,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
      */
     public void checkVCide() {
         String value = edittextVerification1.getText().toString();
-        if (TextUtils.isNullOrEmpty(value)) {
+        if (TextUtils.notEmpty(value)) {
             String url = API.BASEURL_API + API.CHK_VCODE;
             Map<String, String> map1 = new HashMap<String, String>();
             map1.put("name", "regcode");
@@ -274,32 +274,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             JSONObject jsonObject = new JSONObject(object.toString());
             String s = jsonObject.getString("err");
             if (type == 1) {
-                mButtonNomal.setClickable(true);
-                mButtonPhone.setClickable(true);
-                mButtonNomal.setBackgroundResource(isNomalNull
-                        ? R.drawable.login_btn_shape_hl
-                        : R.drawable.login_btn_shape);
-                mButtonPhone.setBackgroundResource(isPhoneNull
-                        ? R.drawable.login_btn_shape_hl
-                        : R.drawable.login_btn_shape);
-
                 TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
                 if (s.equals("0")) {
-
                     setData(jsonObject);
 
                     //回到主界面
                     Intent intent = new Intent(this, MainActivity.class);
                     intent.putExtra("type", Constant.LOGINED);
                     startActivity(intent);
+                } else {
+                    mButtonNomal.setClickable(true);
+                    mButtonPhone.setClickable(true);
+                    mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
+                    mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
                 }
             }
             if (type == 2 && s.equals("0")) {
                 String url = jsonObject.getString("img");
                 key = jsonObject.getString("key");
-                Glide.with(this)
-                        .load(url)
-                        .into(imageviewVerification);
+                Glide.with(this).load(url).into(imageviewVerification);
             }
             if (type == 3 && s.equals("0")) {
                 sendMSG();
@@ -333,15 +326,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     public void onTextChanged(View v, String s) {
         if (linearlayoutNomal.getVisibility() == View.VISIBLE) {
 
-            isNomalNull = TextUtils.isNullOrEmpty(edittextTel.getText().toString())
-                    && TextUtils.isNullOrEmpty(edittextPass.getText().toString());
+            isNomalNull = TextUtils.notEmpty(edittextTel.getText().toString())
+                    && TextUtils.notEmpty(edittextPass.getText().toString());
             mButtonNomal.setBackgroundResource(isNomalNull
                     ? R.drawable.login_btn_shape_hl
                     : R.drawable.login_btn_shape);
         } else {
-            isPhoneNull = TextUtils.isNullOrEmpty(edittextTel1.getText().toString())
-                    && TextUtils.isNullOrEmpty(edittextVerification1.getText().toString())
-                    && TextUtils.isNullOrEmpty(edittextVerification1.getText().toString());
+            isPhoneNull = TextUtils.notEmpty(edittextTel1.getText().toString())
+                    && TextUtils.notEmpty(edittextVerification1.getText().toString())
+                    && TextUtils.notEmpty(edittextVerification1.getText().toString());
             mButtonPhone.setBackgroundResource(isPhoneNull
                     ? R.drawable.login_btn_shape_hl
                     : R.drawable.login_btn_shape);

@@ -117,7 +117,7 @@ public class DataCommonActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         dataBack = mTextField_other.getText().toString();
         if (NetUtils.isNetworkStateed(DataCommonActivity.this)) {
-            if (TextUtils.isNullOrEmpty(dataBack)) {
+            if (TextUtils.notEmpty(dataBack)) {
                 Intent intent = new Intent();
                 intent.putExtra("updateData", dataBack);
                 setResult(1, intent);

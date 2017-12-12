@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Space;
 
 import com.myplas.q.BuildConfig;
+import com.myplas.q.app.activity.SplashActivity;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.LoadingDialog;
 
@@ -30,7 +33,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         initJPush();
         //initStetho();
         registerActivity();
@@ -66,7 +68,7 @@ public class MyApplication extends Application {
                 ? true
                 : false);
 
-        if (TextUtils.isNullOrEmpty(userId)) {
+        if (TextUtils.notEmpty(userId)) {
             JPushInterface.setAlias(this, 10, userId);
         }
     }
@@ -78,6 +80,10 @@ public class MyApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                if (activity instanceof SplashActivity) {
+                    StatusUtils.setStatusBar(activity, false, false);
+                    StatusUtils.setStatusTextColor(false, activity);
+                }
 
             }
 

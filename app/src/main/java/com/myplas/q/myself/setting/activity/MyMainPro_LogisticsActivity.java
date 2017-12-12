@@ -131,8 +131,8 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
     public void onClick(View v) {
         if (v.getId() == R.id.titlebar_text_right) {
             if (!isClicked) {
-                if (TextUtils.isNullOrEmpty(logisticsStartData)) {
-                    if (TextUtils.isNullOrEmpty(logisticsEndData)) {
+                if (TextUtils.notEmpty(logisticsStartData)) {
+                    if (TextUtils.notEmpty(logisticsEndData)) {
                         dataBack = logisticsStartData + "-" + logisticsEndData;
                         Intent intent = new Intent();
                         intent.putExtra("updateData", dataBack);

@@ -103,10 +103,10 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
                 @Override
                 public void onClick(View v) {
                     setStatus(position);
-                    if (sign_status.equals("0")) {
+                    if ("0".equals(sign_status)) {
                         TradeOrderListviewAdapter.this.position = position;
                         confirmSign(mList.get(position).getO_id());
-                    } else if (sign_status.equals("2")) {
+                    } else if ("2".equals(sign_status)) {
                         TextUtils.toast(context, "订单未全部发货，暂无法签收!");
                     }
                 }
@@ -116,9 +116,9 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
                 @Override
                 public void onClick(View v) {
                     setStatus(position);
-                    if (billing_status.equals("0")) {
+                    if ("0".equals(billing_status)) {
                         mListener.onClick1(mList.get(position).getOrder_sn());
-                    } else if (billing_status.equals("2")) {
+                    } else if ("2".equals(billing_status)) {
                         TextUtils.toast(context, "订单未签收或未付款，暂无法开票!");
                     }
                 }
@@ -142,8 +142,9 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        if (mList != null)
+        if (mList != null) {
             return mList.size();
+        }
         return 0;
     }
 

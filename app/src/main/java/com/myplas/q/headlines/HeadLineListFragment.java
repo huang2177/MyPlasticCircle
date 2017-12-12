@@ -208,7 +208,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         page = 1;
         mACache = ACache.get(getActivity());
         String data = mACache.getAsString("subcrible_cache");
-        if (TextUtils.isNullOrEmpty(data)) {
+        if (TextUtils.notEmpty(data)) {
             loadCacheSubcrible(data);
         }
     }

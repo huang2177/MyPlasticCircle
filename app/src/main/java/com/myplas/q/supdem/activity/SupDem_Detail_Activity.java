@@ -190,7 +190,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     public void deliverOrReply() {
         String s = mEditText.getText().toString();
-        if (!TextUtils.isNullOrEmpty(s)) {
+        if (!TextUtils.notEmpty(s)) {
             TextUtils.toast(this, "内容不能为空！");
             return;
         }

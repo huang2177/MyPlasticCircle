@@ -181,7 +181,8 @@
         <!--myself-->
         <activity
             android:name="com.myplas.q.myself.login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name="com.myplas.q.myself.login.RegisterActivity"
             android:screenOrientation="portrait" />

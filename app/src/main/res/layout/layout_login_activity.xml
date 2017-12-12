@@ -4,8 +4,8 @@
     android:id="@+id/login_rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
     android:background="@color/color_white"
+    android:clickable="true"
     android:orientation="vertical">
 
     <View
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:overScrollMode="never"
         android:scrollbars="none">
 

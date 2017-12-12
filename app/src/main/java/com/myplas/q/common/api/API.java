@@ -3,7 +3,7 @@ package com.myplas.q.common.api;
 import com.myplas.q.BuildConfig;
 
 /**
- * 编写： 黄双
+ * @author 黄双
  * 电话：15378412400
  * 邮箱：15378412400@163.com
  * 时间：2017/5/16 12:10

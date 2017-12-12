@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -39,7 +40,9 @@ public class BaseActivity extends FragmentActivity {
 
     private String type;
 
-
+    /**
+     * 实例化titleBar
+     */
     public void initTileBar() {
         mFrameLayout = F(R.id.title_bar);
         mIVLeft = F(R.id.titlebar_img_left);
@@ -67,26 +70,38 @@ public class BaseActivity extends FragmentActivity {
         mTextView.setTextColor(getResources().getColor(resId));
     }
 
-    //右边确定按钮
+    /**
+     * 右边确定按钮
+     */
+
     public void setRightTVVisibility(int isShow) {
         mTVRight.setVisibility(isShow);
     }
 
-    //右边设置文字（默认为确定）
+    /**
+     * 右边设置文字（默认为确定）
+     */
+
     public void setRightTVText(String text) {
         mTVRight.setText(text);
-        mTVRight.setVisibility(TextUtils.isNullOrEmpty(text)
+        mTVRight.setVisibility(TextUtils.notEmpty(text)
                 ? View.VISIBLE
                 : View.GONE);
     }
 
-    //设置右边图片
+    /**
+     * 设置右边图片
+     */
+
     public void setRightIVResId(int resId) {
         mIVConact.setImageResource(resId);
         mIVConact.setVisibility(View.VISIBLE);
     }
 
-    //左边取消按钮
+    /**
+     * 左边取消按钮
+     */
+
     public void setLeftTVVisibility(int isShow) {
         mTVLeft.setVisibility(isShow);
         findViewById(R.id.titlebar_img_left).setVisibility(View.GONE);
@@ -98,12 +113,18 @@ public class BaseActivity extends FragmentActivity {
         });
     }
 
-    //左边返回按钮
+    /**
+     * 左边返回按钮
+     */
+
     public void setLeftIVVisibility(int isShow) {
         mLayoutBack.setVisibility(isShow);
     }
 
-    //左边返回按钮
+    /**
+     * 左边返回按钮
+     */
+
     public void setLeftIVResId(int resId) {
         mIVLeft.setImageResource(resId);
     }
@@ -121,8 +142,11 @@ public class BaseActivity extends FragmentActivity {
         });
     }
 
-    //get请求
-    public synchronized void getAsyn(Activity context
+    /**
+     * get请求
+     */
+
+    public void getAsyn(Activity context
             , String url
             , Map<String
             , String> map
@@ -135,8 +159,11 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
-    //post请求
-    public static synchronized void postAsyn(Context context
+    /**
+     * post请求
+     */
+
+    public static void postAsyn(Context context
             , String url
             , Map<String, String> map
             , ResultCallBack resultCallBack
@@ -153,8 +180,11 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
-    //post请求
-    public static synchronized void postAsyn1(Context context
+    /**
+     * post请求
+     */
+
+    public static void postAsyn1(Context context
             , String url
             , Map<String, String> map
             , ResultCallBack resultCallBack
@@ -174,8 +204,11 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
-    //post之上传图片
-    public synchronized void postUpLoadIMG(Context context
+    /**
+     * post之上传图片
+     */
+
+    public void postUpLoadIMG(Context context
             , String url
             , String imgpath
             , String token
@@ -194,7 +227,11 @@ public class BaseActivity extends FragmentActivity {
         startActivity(intent);
     }
 
-
+    /**
+     * 弹出软键盘
+     *
+     * @param editText
+     */
     public void showInPutKeybord(final EditText editText) {
         editText.requestFocus();
         Handler handler = new Handler();

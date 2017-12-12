@@ -112,7 +112,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                 String yzm = editText_yzm.getText().toString();
                 String phone = editText_tel.getText().toString();
                 String pass = editText_pass.getText().toString();
-                if (TextUtils.isNullOrEmpty(phone) && TextUtils.isNullOrEmpty(pass) && TextUtils.isNullOrEmpty(yzm)) {
+                if (TextUtils.notEmpty(phone) && TextUtils.notEmpty(pass) && TextUtils.notEmpty(yzm)) {
                     Map<String, Object> map = new HashMap<String, Object>();
                     map.put("mobile", phone);
                     map.put("password", pass);
@@ -192,9 +192,9 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onTextChanged(View v, String s) {
-        boolean isNomalNull = TextUtils.isNullOrEmpty(editText_tel.getText().toString())
-                && TextUtils.isNullOrEmpty(editText_pass.getText().toString())
-                && TextUtils.isNullOrEmpty(editText_yzm.getText().toString());
+        boolean isNomalNull = TextUtils.notEmpty(editText_tel.getText().toString())
+                && TextUtils.notEmpty(editText_pass.getText().toString())
+                && TextUtils.notEmpty(editText_yzm.getText().toString());
         button_next.setBackgroundResource(isNomalNull
                 ? R.drawable.login_btn_shape_hl
                 : R.drawable.login_btn_shape);

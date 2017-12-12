@@ -90,6 +90,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register_ok:
+                buttonNext.setClickable(false);
                 getNetData();
                 break;
             case R.id.register_type:
@@ -102,9 +103,10 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
 
     @Override
     public void onTextChanged(View v, String s) {
-        boolean isNomalNull = TextUtils.isNullOrEmpty(mName.getText().toString())
-                && TextUtils.isNullOrEmpty(mCompany.getText().toString())
-                && TextUtils.isNullOrEmpty(mCompanyType.getText().toString());
+        buttonNext.setClickable(true);
+        boolean isNomalNull = TextUtils.notEmpty(mName.getText().toString())
+                && TextUtils.notEmpty(mCompany.getText().toString())
+                && TextUtils.notEmpty(mCompanyType.getText().toString());
         buttonNext.setBackgroundResource(isNomalNull
                 ? R.drawable.login_btn_shape_hl
                 : R.drawable.login_btn_shape);
@@ -115,9 +117,9 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
         String name = mName.getText().toString();
         String company = mCompany.getText().toString();
 
-        if (!TextUtils.isNullOrEmpty(companyType)
-                || !TextUtils.isNullOrEmpty(name)
-                || !TextUtils.isNullOrEmpty(company)) {
+        if (!TextUtils.notEmpty(companyType)
+                || !TextUtils.notEmpty(name)
+                || !TextUtils.notEmpty(company)) {
 
             TextUtils.toast(getActivity(), "请输入完整信息！");
             return;
@@ -187,6 +189,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1) {
                 if (!"0".equals(jsonObject.getString("err"))) {
+                    buttonNext.setClickable(true);
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
                     TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 } else {
@@ -216,7 +219,8 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
 
     @Override
     public void failCallBack(int type) {
-
+        buttonNext.setClickable(true);
+        buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
     }
 
     /**

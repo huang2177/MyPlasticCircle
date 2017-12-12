@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -96,7 +94,7 @@ public class RefreshPopou {
         @Override
         public void onBindView(BaseViewHolder holder, int position) {
             TextView tv = holder.getView(R.id.text_refresh_fragement);
-            tv.setText((TextUtils.isNullOrEmpty(content))
+            tv.setText((TextUtils.notEmpty(content))
                     ? (content)
                     : (defautContent));
         }

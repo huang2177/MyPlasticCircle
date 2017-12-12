@@ -79,7 +79,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
             public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
                 if (arg1 == EditorInfo.IME_ACTION_SEARCH | (arg2 != null && arg2.getAction() == KeyEvent.ACTION_DOWN)) {
                     String keywords = mEditText.getText().toString();
-                    if (TextUtils.isNullOrEmpty(keywords)) {
+                    if (TextUtils.notEmpty(keywords)) {
                         getorderLists(keywords, 1);
                     } else {
                         TextUtils.toast(TradeOrderActivity.this, "你还没有输入搜索内容！");

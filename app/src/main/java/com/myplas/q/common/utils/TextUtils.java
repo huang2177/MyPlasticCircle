@@ -1,5 +1,6 @@
 package com.myplas.q.common.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -7,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,8 +46,12 @@ public class TextUtils {
         return m.matches();
     }
 
-    public static boolean isNullOrEmpty(String s) {
-        if ((null == s) || ("").equals(s)) {
+    public static boolean notEmpty(String s) {
+        if (null == s) {
+            return false;
+        } else if (s.length() == 0) {
+            return false;
+        } else if (s.trim().length() == 0) {
             return false;
         } else {
             return true;
@@ -92,17 +99,9 @@ public class TextUtils {
 //    }
 
 
-    public static boolean isEmpty(String s) {
-        if (null == s)
-            return true;
-        if (s.length() == 0)
-            return true;
-        if (s.trim().length() == 0)
-            return true;
-        return false;
-    }
-
-    // 校验Tag Alias 只能是数字,英文字母和中文
+    /**
+     * 校验Tag Alias 只能是数字,英文字母和中文
+     */
     public static boolean isValidTagAndAlias(String s) {
         Pattern p = Pattern.compile("^[\u4E00-\u9FA50-9a-zA-Z_!@#$&*+=.|]+$");
         Matcher m = p.matcher(s);
@@ -116,8 +115,9 @@ public class TextUtils {
         try {
             ApplicationInfo ai = context.getPackageManager().getApplicationInfo(
                     context.getPackageName(), PackageManager.GET_META_DATA);
-            if (null != ai)
+            if (null != ai) {
                 metaData = ai.metaData;
+            }
             if (null != metaData) {
                 appKey = metaData.getString(KEY_APP_KEY);
                 if ((null == appKey) || appKey.length() != 24) {
@@ -148,6 +148,7 @@ public class TextUtils {
         return (info != null && info.isConnected());
     }
 
+    @SuppressLint("MissingPermission")
     public static String getImei(Context context, String imei) {
         String ret = null;
         try {
@@ -164,7 +165,9 @@ public class TextUtils {
     }
 
     private static boolean isReadableASCII(CharSequence string) {
-        if (android.text.TextUtils.isEmpty(string)) return false;
+        if (android.text.TextUtils.isEmpty(string)) {
+            return false;
+        }
         try {
             Pattern p = Pattern.compile("[\\x20-\\x7E]+");
             return p.matcher(string).matches();
@@ -188,32 +191,46 @@ public class TextUtils {
         return false;
     }
 
-    // 将px值转换为dip或dp值
+    /**
+     * / 将px值转换为dip或dp值
+     */
+
     public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
 
-    // 将dip或dp值转换为px值
+    /**
+     * 将dip或dp值转换为px值
+     */
     public static int dip2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
 
-    // 将px值转换为sp值
+    /**
+     * 将px值转换为sp值
+     */
+
     public static int px2sp(Context context, float pxValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
 
-    // 将sp值转换为px值
+    /**
+     * 将sp值转换为px值
+     */
+
     public static int sp2px(Context context, float spValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
 
 
-    // 根据Unicode编码判断中文汉字和符号
+    /**
+     * 根据Unicode编码判断中文汉字和符号
+     */
+
     private static boolean isChinese(char c) {
         Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
         if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
@@ -225,7 +242,10 @@ public class TextUtils {
         return false;
     }
 
-    // 判断中文汉字和符号
+    /**
+     * 判断中文汉字和符号
+     */
+
     public static boolean isChinese(String strName) {
         char[] ch = strName.toCharArray();
         for (int i = 0; i < ch.length; i++) {

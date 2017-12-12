@@ -20,6 +20,7 @@ import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXWebpageObject;
+import com.tencent.mm.sdk.platformtools.Log;
 import com.tencent.mm.sdk.platformtools.Util;
 
 import java.util.HashMap;
@@ -74,9 +75,9 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
                         isShareed = shareToWX(API.PLASTIC_CONTACT + getIntent().getStringExtra("id")
                                 , getIntent().getStringExtra("title")
                                 , getIntent().getStringExtra("des")
-                                , R.drawable.toutiaologo);
+                                , R.drawable.personshare);
 
-                        shareLog("1", getIntent().getStringExtra("id"));//加积分
+                        shareLog("5", getIntent().getStringExtra("id"));//加积分
                         break;
                     case "2"://文章
                         isShareed = shareToWX(API.PLASTIC_SUCRIBLE + getIntent().getStringExtra("id")
@@ -122,6 +123,13 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    /**
+     * @param url
+     * @param title
+     * @param des
+     * @param resId
+     * @return
+     */
     public boolean shareToWX(String url, String title, String des, int resId) {
         if (isWebchatAvaliable()) {
             api = WXAPIFactory.createWXAPI(this, API.WXAPI);
@@ -156,6 +164,12 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    /**
+     * 分享加塑豆
+     *
+     * @param type
+     * @param id
+     */
     public void shareLog(String type, String id) {
         if (isShareed) {
             Map<String, String> map = new HashMap<String, String>();
@@ -168,6 +182,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void callBack(Object object, int type) {
+        Log.e("--------", object.toString());
     }
 
     @Override
@@ -175,6 +190,11 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
+    /**
+     * 判断是否安装微信
+     *
+     * @return
+     */
     private boolean isWebchatAvaliable() {
         try {
             getPackageManager().getPackageInfo("com.tencent.mm", PackageManager.GET_ACTIVITIES);

@@ -24,10 +24,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusUtils.setStatusBar(this, false, false);
-        StatusUtils.setStatusTextColor(false, this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        setContentView(R.layout.layout_splash_activity);
         isGuided = SharedUtils.getSharedUtils().getBoolean(this, "isGuided");
         mMyThread.start();
     }
@@ -38,7 +35,7 @@ public class SplashActivity extends Activity {
         public void run() {
             super.run();
             try {
-                Thread.sleep(1500);
+                Thread.sleep(1000);
                 goMainOrGuide();
             } catch (Exception e) {
             }

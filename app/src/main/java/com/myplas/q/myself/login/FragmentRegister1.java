@@ -122,6 +122,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
                 validUserMobile();
                 break;
             case R.id.register_ok:
+                buttonNext.setClickable(false);
                 validIndentify();
                 break;
             case R.id.register_read:
@@ -169,7 +170,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     private void validIndentify() {
         pass = mPassWord.getText().toString();
         indentify = mIndentify.getText().toString();
-        if (!TextUtils.isNullOrEmpty(pass) || !TextUtils.isNullOrEmpty(indentify)) {
+        if (!TextUtils.notEmpty(pass) || !TextUtils.notEmpty(indentify)) {
             TextUtils.toast(getActivity(), "请输入完整信息！");
             return;
         }
@@ -188,11 +189,11 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
 
     @Override
     public void onTextChanged(View v, String s) {
-        boolean isNomalNull = TextUtils.isNullOrEmpty(mPhone.getText().toString())
-                && TextUtils.isNullOrEmpty(mIndentify.getText().toString())
-                && TextUtils.isNullOrEmpty(mPassWord.getText().toString());
-        buttonNext.setBackgroundResource(isNomalNull
-                ? R.drawable.login_btn_shape_hl
+        buttonNext.setClickable(true);
+        boolean isNomalNull = TextUtils.notEmpty(mPhone.getText().toString())
+                && TextUtils.notEmpty(mIndentify.getText().toString())
+                && TextUtils.notEmpty(mPassWord.getText().toString());
+        buttonNext.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl
                 : R.drawable.login_btn_shape);
     }
 
@@ -237,6 +238,8 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
                 if (!jsonObject.getString("err").equals("0")) {
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
                     TextUtils.toast(getActivity(), jsonObject.getString("msg"));
+                    buttonNext.setClickable(true);
+                    buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
                 } else {
                     if (mBaseInterface != null) {
                         mBaseInterface.complete(1);
@@ -250,6 +253,9 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
 
     @Override
     public void failCallBack(int type) {
-
+        if (type == 3) {
+            buttonNext.setClickable(true);
+            buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
+        }
     }
 }

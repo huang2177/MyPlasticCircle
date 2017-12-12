@@ -167,7 +167,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
     private void setDataBack() {
         inPut = mTextField2.getText().toString();
         if (NetUtils.isNetworkStateed(this)) {
-            if (TextUtils.isNullOrEmpty(inPut)) {
+            if (TextUtils.notEmpty(inPut)) {
                 Intent intent = new Intent("com.broadcast.databack");
                 intent.putExtra("type", "2");
                 intent.putExtra("updateData", tx + "|" + inPut);

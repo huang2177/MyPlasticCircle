@@ -78,7 +78,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     private void decideFrom() {
         String data = getIntent().getStringExtra("data");
-        if (TextUtils.isNullOrEmpty(data)) {//从供求qq页面跳转过来
+        if (TextUtils.notEmpty(data)) {//从供求qq页面跳转过来
             getData(data);
         } else {                            //从头条跳转过来
             getSearch_Record();

@@ -124,13 +124,16 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             llMonthUse.setOnClickListener(this);
             llMothonuse.setOnClickListener(this);
 
+            cardMore.setVisibility(View.VISIBLE);
+            headMore.setVisibility(View.VISIBLE);
             textXb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             tvCareModel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             tvMonthUse.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvNeedProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             tvLocation.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             tvAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             tvProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvNeedProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
         }
         imageHead.setOnClickListener(this);
         imageCard.setOnClickListener(this);
@@ -225,6 +228,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         if ("1".equals(from)) {
             Intent intent1 = new Intent(this, PreImageViewActivity.class);
             intent1.putExtra("imgurl", imgurl);
+            intent1.putExtra("type", "1".equals(type) ? sexInPut : "2");
             startActivityByTras(intent1);
         } else {
             Intent intent1 = new Intent(this, TakePhotoDialogActivity.class);
@@ -344,16 +348,14 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             needProduct = mySelfInfo.getData().getNeed_product();
 
             sexInPut = ("男".equals(sex)) ? ("0") : ("1");
-//            imgHead = imgHead.contains("http") ? imgHead : "http:" + imgHead;
-//            imgCard = imgCard.contains("http") ? imgCard : "http:" + imgCard;
 
             textXb.setText(sex);
             tvAddress.setText(region);
             tvCareModel.setText(model);
-            tvLocation.setText(address);
             mName.setText(mySelfInfo.getData().getName());
             textGs.setText(mySelfInfo.getData().getC_name());
             textDh.setText(mySelfInfo.getData().getMobile());
+            tvLocation.setText(address.replace("|", ""));
             tvNeedProduct.setText("1".equals(type) ? needProduct : mainProduct);
 
             Glide.with(this)

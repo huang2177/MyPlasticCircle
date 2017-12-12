@@ -13,7 +13,7 @@ import com.myplas.q.BuildConfig;
 
 public class HLog {
     public static void e(Activity activity, String msg) {
-        if (BuildConfig.LOGABLE && TextUtils.isNullOrEmpty(msg)) {
+        if (BuildConfig.LOGABLE && TextUtils.notEmpty(msg)) {
             Log.e("------>" + activity.getClass().getSimpleName(), msg);
         }
     }

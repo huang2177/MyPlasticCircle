@@ -2,6 +2,7 @@ package com.myplas.q.myself.setting;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,35 +64,38 @@ public class SettingAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        viewHolder viewHolder = (viewHolder) holder;
-        if (position == 1) {
-            mSwitchMap.put(position, viewHolder.mSwitch);
-            viewHolder.mTextView1.setVisibility(View.GONE);
-            viewHolder.mSwitch.setVisibility(View.VISIBLE);
-            viewHolder.mSwitch.setOnCheckedChangeListener(new myOnCheckedChangeListener());
-        }
-        if (position == 3) {
-            viewHolder.mTextView1.setText(notificationsEnabled ? "已开启" : "已关闭，去开启");
-        }
-        if (position == 7) {
-            String cacheSize = FileUtils.getTotalCacheSize(context);
-            if (NumUtils.getNum(cacheSize) > 6) {
-//                FileUtils.clearAllCache(context);
-                //int cache = Integer.parseInt(cacheSize);
-                viewHolder.mTextView1.setText("6.1M ");
-            } else {
-                StringBuffer cacheSize1 = new StringBuffer(FileUtils.getTotalCacheSize(context) + " ");
-                viewHolder.mTextView1.setText(cacheSize1);
+        try {
+            viewHolder viewHolder = (viewHolder) holder;
+            if (position == 1) {
+                mSwitchMap.put(position, viewHolder.mSwitch);
+                viewHolder.mTextView1.setVisibility(View.GONE);
+                viewHolder.mSwitch.setVisibility(View.VISIBLE);
+                viewHolder.mSwitch.setOnCheckedChangeListener(new myOnCheckedChangeListener());
             }
+            if (position == 3) {
+                viewHolder.mTextView1.setText(notificationsEnabled ? "已开启" : "已关闭，去开启");
+            }
+            if (position == 8) {
+                viewHolder.mTextView1.setCompoundDrawablesWithIntrinsicBounds(versionImg
+                        , 0
+                        , R.drawable.icon_more
+                        , 0);
+            }
+            viewHolder.mTextView.setText(list.get(position));
+            viewHolder.mImageView.setImageResource(mList.get(position));
+
+            if (position == 7) {
+                String cacheSize = FileUtils.getTotalCacheSize(context);
+                viewHolder.mTextView1.setText(cacheSize);
+                if (!cacheSize.contains("小于")) {
+                    String str = cacheSize.substring(0, cacheSize.indexOf("M"));
+                    if (Double.parseDouble(str) > 10) {
+                        viewHolder.mTextView1.setText("10.3M");
+                    }
+                }
+            }
+        } catch (Exception e) {
         }
-        if (position == 8) {
-            viewHolder.mTextView1.setCompoundDrawablesWithIntrinsicBounds(versionImg
-                    , 0
-                    , R.drawable.icon_more
-                    , 0);
-        }
-        viewHolder.mTextView.setText(list.get(position));
-        viewHolder.mImageView.setImageResource(mList.get(position));
     }
 
     public void setVersionImg(int versionImg) {

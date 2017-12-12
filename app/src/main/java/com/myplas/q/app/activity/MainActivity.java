@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -105,7 +106,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ActivityManager.addActivity(this);
 
         initView();
-        //http://www.jianshu.com/search?q=window%20view%20activity&page=1&type=note
     }
 
     @Override

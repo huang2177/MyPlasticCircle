@@ -149,7 +149,7 @@ public class ApplyInvoiceAdapter extends BaseAdapter {
                 normalDialog.dismiss();
                 String num = mEditText.getText().toString();
 
-                if (TextUtils.isNullOrEmpty(num)) {
+                if (TextUtils.notEmpty(num)) {
                     double numed = Double.parseDouble(num);
                     mStringMap.put(pos, getDecimalFormatData(num) + "");
                     mDoubleMap.put(pos, getDecimalFormatData((numed * unit_price) + ""));
