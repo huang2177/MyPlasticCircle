@@ -103,7 +103,12 @@
             android:name="com.myplas.q.contact.activity.Contact_Search_Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.contact.activity.Contact_Detail_Activity"
+            android:name="com.myplas.q.contact.activity.NewContactDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.myplas.q.contact.activity.ContactDetailActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />

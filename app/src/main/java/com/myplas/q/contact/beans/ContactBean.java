@@ -257,7 +257,15 @@ public class ContactBean {
         private String buy_count;
         private String sale_count;
         private String fans;
+        private String merge_three;
 
+        public void setMerge_three(String merge_three) {
+            this.merge_three = merge_three;
+        }
+
+        public String getMerge_three() {
+            return merge_three;
+        }
         public String getMember_level() {
             return member_level;
         }
@@ -449,6 +457,15 @@ public class ContactBean {
         private String gender;
         private String buy_count;
         private String sale_count;
+        private String merge_three;
+
+        public void setMerge_three(String merge_three) {
+            this.merge_three = merge_three;
+        }
+
+        public String getMerge_three() {
+            return merge_three;
+        }
 
         public String getUser_id() {
             return user_id;

@@ -75,9 +75,7 @@ public class MyIntroductionAdapter extends BaseAdapter {
             viewHolder.mz.setText(list.get(position).getName());
             viewHolder.gj.setText("发布供给：" + list.get(position).getSale() + "条");
             viewHolder.qg.setText("发布求购：" + list.get(position).getBuy() + "条");
-            if (list.get(position).getIs_pass().equals("0")) {
-                viewHolder.rz.setImageResource(R.drawable.icon_identity);
-            } else if (list.get(position).getIs_pass().equals("1")) {
+            if ("1".equals(list.get(position).getMerge_three())) {
                 viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
             }
             Glide.with(context)

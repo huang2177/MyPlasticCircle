@@ -4,15 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.transition.Fade;
 import android.support.v7.widget.LinearLayoutManager;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -33,6 +26,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
+import com.myplas.q.common.view.EditTextField;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.contact.adapter.Fragment_Contact_LV_Adapter;
@@ -44,7 +38,6 @@ import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myself.login.LoginActivity;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
-import com.optimus.edittextfield.EditTextField;
 
 import org.json.JSONObject;
 
@@ -83,9 +76,9 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     private Map<Integer, Integer> map;
     private int page, visibleItemCount;
     private StringBuffer c_type, region;
-    private String keywords, is_buy, userId;
     private Fragment_Contact_LV_Adapter mLVAdapter;
     private List<ContactBean.PersonsBean> mListBean;
+    private String keywords, is_buy, userId, mergeThere;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -255,6 +248,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 break;
             case R.id.search_listview_result:
                 userId = mListBean.get(position).getUser_id();
+                mergeThere = mListBean.get(position).getMerge_three();
                 getPersonInfoData(userId, "1", 5);
                 break;
             default:
@@ -298,7 +292,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                     if (page == 1) {
                         listView.setVisibility(View.VISIBLE);
                         mLayoutEmpty.setVisibility(View.GONE);
-                        mLVAdapter = new Fragment_Contact_LV_Adapter(this, mContactBean.getPersons(), null);
+                        mLVAdapter = new Fragment_Contact_LV_Adapter(this, mContactBean.getPersons());
                         listView.setAdapter(mLVAdapter);
 
                         mListBean.clear();
@@ -335,20 +329,14 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(this, content, 1, this);
             }
-            //已经消费了积分
-            if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
+            //已经消费了积分 //减积分成功
+            boolean b = type == 5 || type == 6;
+            if (b && err.equals("0")) {
+                Intent intent = getIntent(mergeThere);
                 intent.putExtra("userid", userId);
-                intent.putExtra("id", userId);
                 startActivity(intent);
             }
-            //减积分成功
-            if (type == 6 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
-                intent.putExtra("userid", userId);
-                intent.putExtra("id", userId);
-                startActivity(intent);
-            }
+
             //积分不够
             if (type == 6 && !err.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
@@ -357,6 +345,20 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * 判断是否跳转到店铺
+     *
+     * @param flag
+     * @return
+     */
+    public Intent getIntent(String flag) {
+        Intent intent = new Intent();
+        intent.setClass(this, "1".equals(flag)
+                ? NewContactDetailActivity.class
+                : ContactDetailActivity.class);
+        return intent;
     }
 
     @Override

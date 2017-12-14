@@ -49,7 +49,7 @@
                 android:textColor="@color/color_balank"
                 android:visibility="gone" />
 
-            <com.optimus.edittextfield.EditTextField
+            <com.myplas.q.common.view.EditTextField
                 android:id="@+id/supplydemand_search_edit"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

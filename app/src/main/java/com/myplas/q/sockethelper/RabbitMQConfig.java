@@ -123,7 +123,6 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
                     break;
                 case 4:
                     isShowNotify = true;
-                    Log.e("--------", object.toString());
                     JSONObject jsonObject = new JSONObject(object.toString());
                     if ("0".equals(jsonObject.getString("err"))) {
                         setNoticeBean(object);
@@ -163,6 +162,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
             DefConfigBean.NoticeBean.CommunicateContentBean communicateBean = new DefConfigBean.NoticeBean.CommunicateContentBean();
             communicateBean.setInfo(dotBean.getNotice().getCommunicate_content().get(i).getInfo());
             communicateBean.setId(dotBean.getNotice().getCommunicate_content().get(i).getId());
+            communicateBean.setMerge_three(dotBean.getNotice().getCommunicate_content().get(i).getMerge_three());
             list1.add(communicateBean);
         }
         for (int i = 0; i < dotBean.getNotice().getToutiao_content().size(); i++) {

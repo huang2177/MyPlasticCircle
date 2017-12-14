@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,7 +45,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 13:39
  */
-public class Contact_Detail_Activity extends BaseActivity implements View.OnClickListener
+public class NewContactDetailActivity extends BaseActivity implements View.OnClickListener
         , ResultCallBack {
 
     private boolean isSelf;
@@ -71,7 +72,7 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_contact_detail);
+        setContentView(R.layout.activity_new_layout_contact_detail);
 
         initView();
         initViewPager();
@@ -202,7 +203,9 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
                 in.putExtra("type", "1");
                 in.putExtra("id", contactBean.getData().getUser_id());
                 in.putExtra("title", contactBean.getData().getC_name());
-                in.putExtra("des", "主营：" + contactBean.getData().getMain_product());
+                in.putExtra("des", "姓名：" + contactBean.getData().getName()
+                        + "   联系方式：" + getHidingMobile(contactBean.getData().getMobile())
+                        + "   主营：" + contactBean.getData().getMain_product());
                 startActivity(in);
                 break;
             default:
@@ -227,6 +230,22 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
         map.put("user_id", getIntent().getStringExtra("userid"));
         String url = API.BASEURL + API.GET_ZONE_FRIEND;
         postAsyn1(this, url, map, this, 1, false);
+    }
+
+    /**
+     * 店铺分享时对手机号码进行处理
+     *
+     * @param mobile
+     */
+    public String getHidingMobile(String mobile) {
+        if (!TextUtils.notEmpty(mobile)) {
+            return null;
+        }
+        if (mobile.contains("*")) {
+            return mobile;
+        }
+
+        return mobile.replace(mobile, mobile.substring(0, 7) + "****");
     }
 
     @Override
@@ -273,9 +292,9 @@ public class Contact_Detail_Activity extends BaseActivity implements View.OnClic
                     .load(contactBean.getData().getThumb())
                     .into(mHead);
 
-            mStart.setImageResource(("0".equals(contactBean.getData().getIs_vip()))
-                    ? (R.drawable.icon_identity)
-                    : (R.drawable.icon_identity_hl));
+            mStart.setImageResource(("1".equals(contactBean.getData().getMerge_three()))
+                    ? (R.drawable.icon_identity_hl)
+                    : 0);
 
             mFollow.setImageResource("0".equals(contactBean.getData().getIs_follow())
                     ? R.drawable.btn_contact_follow

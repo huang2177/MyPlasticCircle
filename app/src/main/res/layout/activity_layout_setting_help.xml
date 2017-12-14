@@ -1,55 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_red">
-        <LinearLayout
-            android:id="@+id/img_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back" />
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/fx_ttxq_title"
-            android:text="帮助"
-            android:textColor="@color/color_white"
-            android:textSize="18.0sp"
-            android:gravity="center"/>
-        <ImageView
-            android:layout_width="55dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_customer_service_help"
-            android:layout_gravity="right|center_vertical"
-            android:id="@+id/img_contact" />
-    </FrameLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+    <include layout="@layout/common_layout_titlebar" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <com.myplas.q.common.view.ProgressImageView
+        android:id="@+id/sketchimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/help"/>
-        </LinearLayout>
-    </ScrollView>
+        app:roundPixel="0dp"
+        app:roundProgressTextColor="#00ff00"
+        app:roundProgressTextSize="18sp"
+        app:roundShadowColor="#a6292929"
+        app:useProgress="true" />
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scrollbars="none">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<com.myplas.q.common.view.ProgressImageView-->
+    <!--android:id="@+id/sketchimg"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:scaleType="fitXY"-->
+    <!--app:roundPixel="20dp"-->
+    <!--app:roundProgressTextColor="#00ff00"-->
+    <!--app:roundProgressTextSize="18sp"-->
+    <!--app:roundShadowColor="#a6292929"-->
+    <!--app:useProgress="true" />-->
+    <!--</LinearLayout>-->
+    <!--</ScrollView>-->
 </LinearLayout>

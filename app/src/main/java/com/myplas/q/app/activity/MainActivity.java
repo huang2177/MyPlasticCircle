@@ -354,8 +354,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     mUpdateDialogUtils.showDialog(true);
                 }
             }
-            if (type == 3 && err.equals("0")) {
 
+            if (type == 3 && err.equals("0")) {
                 setCacheData(object, gson, jsonObject);
                 rCallback(true, true);
                 onConnect();

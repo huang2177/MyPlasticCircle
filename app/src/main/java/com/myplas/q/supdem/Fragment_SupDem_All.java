@@ -29,7 +29,8 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
-import com.myplas.q.contact.activity.Contact_Detail_Activity;
+import com.myplas.q.contact.activity.ContactDetailActivity;
+import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.sockethelper.RabbitMQConfig;
@@ -77,9 +78,9 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     private LinearLayout layoutPrompt, layoutFirstitem, layoutUp;
     private TextView company, content, time, mTVPromit, reply, deliver;
 
-    public String followRelease, user_id, type;
     private String mLastData, hotSearch, jsonStr;
     private RefreshPopouInterface mPopouinterface;
+    public String followRelease, user_id, type, mergeThere;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -242,18 +243,11 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(getActivity(), content, 1, this);
             }
-            //已经消费了积分
-            if (type == 2 && result.equals("0")) {
-                Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
+            //已经消费了积分 //减积分成功
+            boolean b = type == 2 || type == 3;
+            if (b && result.equals("0")) {
+                Intent intent = getIntent(mergeThere);
                 intent.putExtra("userid", user_id);
-                intent.putExtra("id", user_id);
-                startActivity(intent);
-            }
-            //减积分成功
-            if (type == 3 && result.equals("0")) {
-                Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
-                intent.putExtra("userid", user_id);
-                intent.putExtra("id", user_id);
                 startActivity(intent);
             }
             //积分不够
@@ -264,6 +258,20 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * 判断是否跳转到店铺
+     *
+     * @param flag
+     * @return
+     */
+    public Intent getIntent(String flag) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), "1".equals(flag)
+                ? NewContactDetailActivity.class
+                : ContactDetailActivity.class);
+        return intent;
     }
 
     private void loadCacheData(Object object, Gson gson) {
@@ -300,6 +308,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     mViewDivider.setVisibility(View.VISIBLE);
                     layoutFirstitem.setVisibility(View.VISIBLE);
                     user_id = topBean.getUser_id();
+                    mergeThere = topBean.getMerge_three();
                     showTopInfo(topBean);
                 } else {
                     topBean = null;

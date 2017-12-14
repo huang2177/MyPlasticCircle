@@ -10,7 +10,8 @@ import android.widget.TextView;
 import com.androidkun.xtablayout.XTabLayout;
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.contact.activity.Contact_Detail_Activity;
+import com.myplas.q.contact.activity.ContactDetailActivity;
+import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
@@ -42,11 +43,10 @@ import java.util.Map;
 public class LookMeActivity extends BaseActivity implements ResultCallBack
         , CommonDialog.DialogShowInterface
         , LookMeAdapter.OnItemClickListener {
-    private String mode;
 
-    private String userid;
     private boolean hasMoreData;
     private StringBuffer promit1, promit2;
+    private String userid, mode, mergeThere;
     private Map<Integer, String> mStringMap1;
     private Map<Integer, String> mStringMap2;
     private int page, visibleItemCount, position;
@@ -175,7 +175,6 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
     }
 
 
-    //listview的item点击事件
     @Override
     public void onItemClick(int section, int p) {
         userid = (position == 0 ? mList1 : mList2)
@@ -183,7 +182,26 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
                 .getPerson()
                 .get(p)
                 .getUserid();
+        mergeThere = (position == 0 ? mList1 : mList2)
+                .get(section)
+                .getPerson()
+                .get(p)
+                .getMerge_three();
         getPersonInfoData(userid, "1", 5);
+    }
+
+    /**
+     * 判断是否跳转到店铺
+     *
+     * @param flag
+     * @return
+     */
+    public Intent getIntent(String flag) {
+        Intent intent = new Intent();
+        intent.setClass(this, "1".equals(flag)
+                ? NewContactDetailActivity.class
+                : ContactDetailActivity.class);
+        return intent;
     }
 
     @Override
@@ -236,25 +254,18 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(this, content, 1, this);
             }
-            //已经消耗积分
-            if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
+            //已经消耗积分 或者 减积分成功
+            boolean b = type == 5 || type == 3;
+            if (b && "0".equals(err)) {
+                Intent intent = getIntent(mergeThere);
                 intent.putExtra("userid", userid);
-                intent.putExtra("id", userid);
-                startActivity(intent);
-            }
-            //减积分成功
-            if (type == 2 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
-                intent.putExtra("userid", userid);
-                intent.putExtra("id", userid);
                 startActivity(intent);
             }
             //积分不足
-            if (type == 2 && !err.equals("0")) {
+            if (type == 2 && !"0".equals(err)) {
                 String content = new JSONObject(object.toString()).getString("msg");
                 CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
+                commonDialog.showDialog(this, content, ("100".equals(err)) ? (2) : (3), this);
             }
         } catch (Exception e) {
         }

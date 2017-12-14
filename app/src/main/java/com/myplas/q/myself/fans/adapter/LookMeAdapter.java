@@ -91,9 +91,9 @@ public class LookMeAdapter extends SectionedBaseAdapter {
             viewHolder.gs.setText(listPerson.get(position).getCompany() + "  " + listPerson.get(position).getName());
             viewHolder.time_detail.setText(listPerson.get(position).getDate());
 
-            viewHolder.rz.setImageResource(listPerson.get(position).getIsvip().equals("0")
-                    ? R.drawable.icon_identity
-                    : R.drawable.icon_identity_hl);
+            viewHolder.rz.setImageResource("1".equals(listPerson.get(position).getMerge_three())
+                    ? R.drawable.icon_identity_hl
+                    : 0);
 
             if ("1".equals(listPerson.get(position).getType())) {
                 viewHolder.mSign.setImageResource(R.drawable.icon_factory);

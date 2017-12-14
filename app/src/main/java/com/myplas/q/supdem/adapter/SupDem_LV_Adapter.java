@@ -18,8 +18,9 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.contact.activity.ContactDetailActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
-import com.myplas.q.contact.activity.Contact_Detail_Activity;
+import com.myplas.q.contact.activity.NewContactDetailActivity;
 
 import com.myplas.q.supdem.beans.SupDemBean;
 
@@ -38,7 +39,7 @@ import java.util.Map;
  */
 public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, CommonDialog.DialogShowInterface {
     Context context;
-    String user_id, id_;
+    String user_id, mergeThere;
     List<SupDemBean.DataBean> list;
     SharedUtils sharedUtils = SharedUtils.getSharedUtils();
 
@@ -94,6 +95,11 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
                 viewHolder.deliver.setText("出价(" + list.get(position).getPlaticCount() + ")");
                 viewHolder.reply.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_reply, 0, 0, 0);
                 viewHolder.deliver.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_offer, 0, 0, 0);
+            } else {
+                viewHolder.reply.setText("");
+                viewHolder.deliver.setText("");
+                viewHolder.reply.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                viewHolder.deliver.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             }
 
             String html1 = "<font color='#9c9c9c'>" + "交货地:" + "</font>" + list.get(position).getStore_house()
@@ -115,7 +121,7 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
                 public void onClick(View v) {
                     if (list.get(position).getFrom().equals("1")) {
                         user_id = list.get(position).getUser_id();
-                        id_ = list.get(position).getId();
+                        mergeThere = list.get(position).getMerge_three();
                         getPersonInfoData(user_id, "1", 1);
                     }
                 }
@@ -150,23 +156,15 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(context, content, 1, this);
             }
-            //已经消费了积分
-            if (type == 1 && err.equals("0")) {
-                Intent intent = new Intent(context, Contact_Detail_Activity.class);
+            //已经消费了积分 //减积分成功
+            boolean b = type == 1 || type == 2;
+            if (b && "0".equals(err)) {
+                Intent intent = getIntent(mergeThere);
                 intent.putExtra("userid", user_id);
-                intent.putExtra("id", user_id);
                 context.startActivity(intent);
-            }
-            //减积分成功
-            if (type == 2 && err.equals("0")) {
-                Intent intent = new Intent(context, Contact_Detail_Activity.class);
-                intent.putExtra("userid", user_id);
-                intent.putExtra("id", user_id);
-                context.startActivity(intent);
-
             }
             //积分不够
-            if (type == 2 && !err.equals("0")) {
+            if (type == 2 && !"0".equals(err)) {
                 String content = new JSONObject(object.toString()).getString("msg");
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(context, content, (err.equals("100")) ? (2) : (3), this);
@@ -180,6 +178,19 @@ public class SupDem_LV_Adapter extends BaseAdapter implements ResultCallBack, Co
 
     }
 
+    /**
+     * 判断是否跳转到店铺
+     *
+     * @param flag
+     * @return
+     */
+    public Intent getIntent(String flag) {
+        Intent intent = new Intent();
+        intent.setClass(context, "1".equals(flag)
+                ? NewContactDetailActivity.class
+                : ContactDetailActivity.class);
+        return intent;
+    }
     //dialog回调
     @Override
     public void dialogClick(int type) {

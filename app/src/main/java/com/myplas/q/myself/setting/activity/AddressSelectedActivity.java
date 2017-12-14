@@ -19,8 +19,8 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.view.EditTextField;
 import com.myplas.q.myself.beans.RegionsBean;
-import com.optimus.edittextfield.EditTextField;
 
 import org.json.JSONObject;
 

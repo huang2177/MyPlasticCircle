@@ -659,6 +659,15 @@ public class DefConfigBean implements Serializable {
 
             private String info;
             private String id;
+            private String merge_three;
+
+            public void setMerge_three(String merge_three) {
+                this.merge_three = merge_three;
+            }
+
+            public String getMerge_three() {
+                return merge_three;
+            }
 
             public String getInfo() {
                 return info;

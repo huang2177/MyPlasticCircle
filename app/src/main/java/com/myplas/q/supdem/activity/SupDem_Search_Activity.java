@@ -30,6 +30,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.HLog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.EditTextField;
 import com.myplas.q.common.view.MyGridview;
 import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.app.activity.BaseActivity;
@@ -40,7 +41,6 @@ import com.myplas.q.supdem.beans.HistoryBean;
 import com.myplas.q.supdem.beans.SearchNoResultBean;
 import com.myplas.q.supdem.beans.SearchResultBean;
 import com.myplas.q.supdem.beans.TabCofigBean;
-import com.optimus.edittextfield.EditTextField;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -287,7 +287,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 getData(keywords);
                 break;
             case R.id.search_listview_result:
-                if (list.get(position).getFrom().equals("1")) {//来自供求
+                if ("1".equals(list.get(position).getFrom())) {//来自供求
                     Intent intent = new Intent(this, SupDem_Detail_Activity.class);
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("userid", list.get(position).getUser_id());

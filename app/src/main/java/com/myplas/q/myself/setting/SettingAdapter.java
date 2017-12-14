@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.FileUtils;
 import com.myplas.q.common.utils.NumUtils;
-import com.suke.widget.SwitchButton;
+import com.myplas.q.common.view.SwitchButton;
 
 import java.util.HashMap;
 import java.util.List;

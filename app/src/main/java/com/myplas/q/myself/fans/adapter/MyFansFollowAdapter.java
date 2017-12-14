@@ -76,9 +76,9 @@ public class MyFansFollowAdapter extends BaseAdapter {
             viewHolder.mz.setText(list.get(position).getName());
             viewHolder.gj.setText("发布供给：" + list.get(position).getSale() + "条");
             viewHolder.qg.setText("发布求购：" + list.get(position).getBuy() + "条");
-            viewHolder.rz.setImageResource(list.get(position).getIs_pass().equals("0")
-                    ? R.drawable.icon_identity
-                    : R.drawable.icon_identity_hl);
+            viewHolder.rz.setImageResource("1".equals(list.get(position).getMerge_three())
+                    ? R.drawable.icon_identity_hl
+                    : 0);
 
             Glide.with(context)
                     .load(list.get(position).getThumb())

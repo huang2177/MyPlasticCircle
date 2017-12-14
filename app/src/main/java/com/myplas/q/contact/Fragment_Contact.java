@@ -28,7 +28,6 @@ import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -40,7 +39,8 @@ import com.myplas.q.common.view.marqueeview.MarqueeFactory;
 import com.myplas.q.common.view.marqueeview.MarqueeViewHelper;
 import com.myplas.q.contact.activity.AD_DialogActivtiy;
 import com.myplas.q.contact.activity.ContactDaliySignActivity;
-import com.myplas.q.contact.activity.Contact_Detail_Activity;
+import com.myplas.q.contact.activity.ContactDetailActivity;
+import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.contact.activity.Contact_Search_Activity;
 import com.myplas.q.contact.activity.Cover_WebActivity;
 import com.myplas.q.contact.adapter.Fragment_Contact_LV_Adapter;
@@ -94,7 +94,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
     private boolean isRefreshing, isLoading;
-    private String userId, jumpUrl, jumpToWhere, jumpTitle;
+    private String userId, jumpUrl, jumpToWhere, jumpTitle, mergeThere;
 
 
     @Override
@@ -152,6 +152,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 shareView1 = view.findViewById(R.id.xq_tx);
                 shareView2 = view.findViewById(R.id.xq_rz);
                 userId = mListBean.get(position).getUser_id();
+                mergeThere = mListBean.get(position).getMerge_three();
                 getPersonInfoData(userId, "1", 2);
             }
         });
@@ -196,6 +197,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 shareView1 = view.findViewById(R.id.xq_tx);
                 shareView2 = view.findViewById(R.id.xq_rz);
                 userId = mContactBean.getTop().getUser_id();
+                mergeThere = mContactBean.getTop().getMerge_three();
                 getPersonInfoData(userId, "1", 2);
                 break;
             case R.id.contact_search_ll:
@@ -317,15 +319,10 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(getActivity(), content, 1, this);
             }
-            //已经消费了积分
-            if (type == 2 && err.equals("0")) {
-                Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
-                intent.putExtra("userid", userId);
-                startActivity(intent);
-            }
-            //减积分成功
-            if (type == 3 && err.equals("0")) {
-                Intent intent = new Intent(getActivity(), Contact_Detail_Activity.class);
+            //已经消费了积分 或者 减积分成功
+            boolean b = type == 2 || type == 3;
+            if (b && "0".equals(err)) {
+                Intent intent = getIntent(mergeThere);
                 intent.putExtra("userid", userId);
                 startActivity(intent);
             }
@@ -347,12 +344,16 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * 通过共享元素启动activtiy
+     *
+     * @param intent
+     */
     private void startActivityByTras(Intent intent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()
                     , shareView1
-                    , "shareView1"
-            ).toBundle());
+                    , "shareView1").toBundle());
         } else {
             startActivity(intent);
         }
@@ -368,9 +369,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private void loadCacheData(Gson gson, String json, boolean isShowCover) {
         try {
             mContactBean = gson.fromJson(json, ContactBean.class);
-            ContactBean.TopBean topBean = (mContactBean.getTop().getC_name() != null) ? mContactBean.getTop() : (null);
             if (page == 1) {
-                showInfo(mContactBean, topBean);
+                showInfo(mContactBean);
             } else {
                 isLoading = false;
                 mListBean.addAll(mContactBean.getPersons());
@@ -382,12 +382,12 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     }
 
 
-    private void showInfo(ContactBean bean, ContactBean.TopBean topBean) {
+    private void showInfo(ContactBean bean) {
         mTVTitle.setText("塑料圈通讯录(" + bean.getMember() + "人)");
-        //editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
+//        editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
 
 //        显示list数据
-        mLVAdapter = new Fragment_Contact_LV_Adapter(getActivity(), bean.getPersons(), topBean);
+        mLVAdapter = new Fragment_Contact_LV_Adapter(getActivity(), bean.getPersons());
         listView.setAdapter(mLVAdapter);
         mListBean.clear();
         mListBean.addAll(bean.getPersons());
@@ -397,23 +397,22 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         mRefreshPopou.show(mLayoutCofig, bean.getShow_msg());
 
         /*展示置顶信息*/
-        showTop(topBean);
+        showTop(bean.getTop());
 
         //判断是否显示banner ；
-        if (bean.getIs_show_banner().equals("1")) {
-            mIVBanner.setVisibility(View.VISIBLE);
+        if ("1".equals(bean.getIs_show_banner())) {
             jumpUrl = bean.getBanner_jump_url();
             jumpTitle = bean.getBanner_jump_url_title();
             jumpToWhere = bean.getIs_banner_jump_native();
-            Glide.with(getActivity())
-                    .load(bean.getBanner_url())
-                    .into(mIVBanner);
+
+            mIVBanner.setVisibility(View.VISIBLE);
+            Glide.with(getActivity()).load(bean.getBanner_url()).into(mIVBanner);
         } else {
             mIVBanner.setVisibility(View.GONE);
         }
         //判断图层是否显示
         boolean isshow = sharedUtils.getBoolean(getActivity(), "isshow");
-        if (bean.getIs_show_cover().equals("1") && isshow) {
+        if ("1".equals(bean.getIs_show_cover()) && isshow) {
             Intent intent = new Intent(getActivity(), AD_DialogActivtiy.class);
             intent.putExtra("imgurl", bean.getCover_url());
             intent.putExtra("url", bean.getCover_jump_url());
@@ -431,6 +430,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             personsBean.setThumb(topBean.getThumb());
             personsBean.setC_name(topBean.getC_name());
             personsBean.setIs_pass(topBean.getIs_pass());
+            personsBean.setMerge_three(topBean.getMerge_three());
             personsBean.setMain_product(topBean.getMain_product());
             personsBean.setNeed_product(topBean.getNeed_product());
             personsBean.setMonth_consum(topBean.getMonth_consum());
@@ -543,6 +543,20 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * 判断是否跳转到店铺
+     *
+     * @param flag
+     * @return
+     */
+    public Intent getIntent(String flag) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), "1".equals(flag)
+                ? NewContactDetailActivity.class
+                : ContactDetailActivity.class);
+        return intent;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -608,8 +622,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         DefConfigBean.NoticeBean.CommunicateContentBean bean = (DefConfigBean.NoticeBean.CommunicateContentBean) holder.data;
         if (bean != null) {
             userId = bean.getId();
+            mergeThere = bean.getMerge_three();
             getPersonInfoData(userId, "1", 2);
         }
     }
-
 }

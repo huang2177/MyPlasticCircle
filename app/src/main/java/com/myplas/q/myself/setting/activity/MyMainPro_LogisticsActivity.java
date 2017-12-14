@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.BaseActivity;
-import com.optimus.edittextfield.EditTextField;
+import com.myplas.q.common.view.EditTextField;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.Timer;
@@ -34,9 +34,9 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
 
     private TextView mTextViewOK;
     private ImageView mImageView;
-    private EditTextField mTextField_start, mTextField_end;
+    private EditTextField mtextfieldStart, mtextfieldEnd;
 
-    private LinearLayout mLayout_logistics;
+    private LinearLayout mlayoutLogistics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +56,13 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
 
         mTextViewOK = F(R.id.titlebar_text_right);
         mImageView = F(R.id.datacommon_img_logistics);
-        mTextField_end = F(R.id.datacommon_edit_ending);
-        mTextField_start = F(R.id.datacommon_edit_starting);
-        mLayout_logistics = F(R.id.datacommon_ll_logistics);
+        mtextfieldEnd = F(R.id.datacommon_edit_ending);
+        mtextfieldStart = F(R.id.datacommon_edit_starting);
+        mlayoutLogistics = F(R.id.datacommon_ll_logistics);
 
         mTextViewOK.setOnClickListener(this);
-        mLayout_logistics.setOnClickListener(this);
-        mTextField_start.addTextChangedListener(new TextWatcher() {
+        mlayoutLogistics.setOnClickListener(this);
+        mtextfieldStart.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -84,7 +84,7 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
 
             }
         });
-        mTextField_end.addTextChangedListener(new TextWatcher() {
+        mtextfieldEnd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -117,10 +117,10 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
             isClicked = false;
             String start = hint.substring(0, hint.indexOf("-"));
             String end = hint.substring(hint.indexOf("-") + 1);
-            mTextField_end.setText(end);
-            mTextField_start.setText(start);
-            mTextField_end.setSelection(end.length());
-            mTextField_start.setSelection(start.length());
+            mtextfieldEnd.setText(end);
+            mtextfieldStart.setText(start);
+            mtextfieldEnd.setSelection(end.length());
+            mtextfieldStart.setSelection(start.length());
 
             showInPutKeybord();
         }
@@ -160,8 +160,8 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
                 dataBack = "全国路线";
                 logisticsEndData = "";
                 logisticsStartData = "";
-                mTextField_end.setText("");
-                mTextField_start.setText("");
+                mtextfieldEnd.setText("");
+                mtextfieldStart.setText("");
                 mImageView.setImageResource(R.drawable.btn_radiohl);
             }
 
@@ -169,9 +169,9 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
     }
 
     private void showInPutKeybord() {
-        mTextField_start.setFocusable(true);
-        mTextField_start.setFocusableInTouchMode(true);
-        mTextField_start.requestFocus();
+        mtextfieldStart.setFocusable(true);
+        mtextfieldStart.setFocusableInTouchMode(true);
+        mtextfieldStart.requestFocus();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
 

@@ -42,8 +42,8 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     private TheirFansFollowAdapter mFansAdapter;
 
     private SharedUtils sharedUtils;
-    private String user_id, userid, function;
     private int page = 1, visibleItemCount;
+    private String user_id, userid, function, mergeThere;
 
     private List<TheirFansBean.DataBean> mList;
 
@@ -70,6 +70,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 userid = mList.get(position).getUser_id();
+                mergeThere = mList.get(position).getMerge_three();
                 //判断是否消耗积分
                 getPersonInfoData(userid, "1", 5);
 
@@ -146,18 +147,14 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(this, content, 1, this);
             }
-            //已经消耗积分
-            if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
+            //已经消耗积分 或者 减积分成功
+            boolean b = type == 5 || type == 3;
+            if (b && err.equals("0")) {
+                Intent intent = getIntent(mergeThere);
                 intent.putExtra("userid", userid);
                 startActivity(intent);
             }
-            //减积分成功
-            if (type == 3 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
-                intent.putExtra("userid", userid);
-                startActivity(intent);
-            }
+
             //积分不足
             if (type == 3 && !err.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
@@ -166,6 +163,20 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * 判断是否跳转到店铺
+     *
+     * @param flag
+     * @return
+     */
+    public Intent getIntent(String flag) {
+        Intent intent = new Intent();
+        intent.setClass(this, "1".equals(flag)
+                ? NewContactDetailActivity.class
+                : ContactDetailActivity.class);
+        return intent;
     }
 
     @Override

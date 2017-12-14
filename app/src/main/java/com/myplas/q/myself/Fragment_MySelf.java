@@ -1,6 +1,7 @@
 package com.myplas.q.myself;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -29,7 +31,6 @@ import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.MyZone;
 import com.myplas.q.myself.credit.activity.LineOfCreditActivity;
 import com.myplas.q.myself.credit.activity.PlasticMoneyActivity;
@@ -315,9 +316,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                     .placeholder(R.drawable.img_defaul_male)
                     .into(imageTx);
 
-            imageStart.setImageResource(("0".equals(myZone.getData().getIs_pass()))
-                    ? (R.drawable.icon_identity)
-                    : (R.drawable.icon_identity_hl));
+            imageStart.setImageResource(("1".equals(myZone.getData().getMerge_three()))
+                    ? (R.drawable.icon_identity_hl)
+                    : 0);
         } catch (Exception e) {
         }
     }
@@ -350,7 +351,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
      */
     public void setToolbar1Alpha(int alpha) {
         textTitle.setTextColor(Color.TRANSPARENT);
-        imageStart.getDrawable().setAlpha(alpha);
         mimageMore.getDrawable().setAlpha(alpha);
         mimageNews.getDrawable().setAlpha(alpha);
         imageTx.getDrawable().mutate().setAlpha(alpha);
@@ -359,6 +359,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         textName.setTextColor(Color.argb(alpha, 255, 255, 255));
         imageTx.setBorderColor(Color.argb(alpha, 255, 255, 255));
         mDragViewMsg.setTextColor(Color.argb(alpha, 255, 255, 255));
+        if (imageStart.getDrawable() != null) {
+            imageStart.getDrawable().setAlpha(alpha);
+        }
     }
 
     /**

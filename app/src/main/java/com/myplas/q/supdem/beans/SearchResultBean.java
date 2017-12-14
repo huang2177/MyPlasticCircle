@@ -94,6 +94,15 @@ public class SearchResultBean {
         private String data_model;
         private String platicCount;
         private String replyCount;
+        private String merge_three;
+
+        public void setMerge_three(String merge_three) {
+            this.merge_three = merge_three;
+        }
+
+        public String getMerge_three() {
+            return merge_three;
+        }
 
         public void setPlaticCount(String platicCount) {
             this.platicCount = platicCount;

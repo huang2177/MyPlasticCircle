@@ -17,7 +17,8 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.contact.activity.Contact_Detail_Activity;
+import com.myplas.q.contact.activity.ContactDetailActivity;
+import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.contact.beans.MyFansBean;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.fans.adapter.MyFansFollowAdapter;
@@ -44,7 +45,7 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
 
     private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
-    private String type = "1", user_id, id_;
+    private String type = "1", user_id, id_, flag;
 
     private List<MyFansBean.DataBean> mList;
 
@@ -65,6 +66,7 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 user_id = mList.get(position).getUser_id();
+                flag = mList.get(position).getMerge_three();
                 //判断是否消耗积分
                 getPersonInfoData(user_id, "1", 5);
             }
@@ -146,20 +148,15 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(this, content, 1, this);
             }
-            //已经消耗积分
-            if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
+            //已经消耗积分或者减积分成功
+            boolean b = type == 5 || type == 3;
+            if (b && err.equals("0")) {
+                Intent intent = getJumpIntent();
                 intent.putExtra("userid", user_id);
                 intent.putExtra("id", user_id);
                 startActivity(intent);
             }
-            //减积分成功
-            if (type == 3 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
-                intent.putExtra("id", id_);
-                intent.putExtra("userid", user_id);
-                startActivity(intent);
-            }
+
             //积分不足
             if (type == 3 && !err.equals("0")) {
                 String content = new JSONObject(object.toString()).getString("msg");
@@ -168,6 +165,20 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * 判断是否跳转到店铺
+     *
+     * @param flag
+     * @return
+     */
+    public Intent getJumpIntent() {
+        Intent intent = new Intent();
+        intent.setClass(this, "1".equals(flag)
+                ? NewContactDetailActivity.class
+                : ContactDetailActivity.class);
+        return intent;
     }
 
     @Override

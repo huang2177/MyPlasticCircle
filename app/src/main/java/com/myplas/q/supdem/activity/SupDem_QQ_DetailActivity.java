@@ -1,6 +1,8 @@
 package com.myplas.q.supdem.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.activity.PreImageViewActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
@@ -100,12 +103,13 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
 
         roundImagView.setShapeType(1);
 
-        mIVConact.setOnClickListener(this);
         layoutZx.setOnClickListener(this);
         layoutWx.setOnClickListener(this);
+        mIVConact.setOnClickListener(this);
         layoutFind.setOnClickListener(this);
         layoutTell.setOnClickListener(this);
         layoutZxMore.setOnClickListener(this);
+        roundImagView.setOnClickListener(this);
         listviewZx.setOnItemClickListener(this);
         listviewTell.setOnItemClickListener(this);
     }
@@ -217,6 +221,12 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                 case R.id.titlebar_img_right:
                     share();
                     break;
+                case R.id.roundimagviewutil:
+                    Intent intent1 = new Intent(this, PreImageViewActivity.class);
+                    intent1.putExtra("imgurl", detailBean.getThumb_qq());
+                    intent1.putExtra("type", "3");
+                    startActivityByTras(intent1);
+                    break;
                 default:
                     break;
             }
@@ -317,6 +327,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
 
         Glide.with(this)
                 .load(detailBean.getThumb_qq())
+                .placeholder(R.drawable.default_qq)
                 .into(roundImagView);
 
         if (detailBean.getOperate().equals("1")) {
@@ -327,5 +338,21 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     @Override
     public void failCallBack(int type) {
 
+    }
+
+    /**
+     * 使用共享元素--activity跳转
+     *
+     * @param intent
+     */
+    private void startActivityByTras(Intent intent) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this
+                    , roundImagView
+                    , "bigImageView"
+            ).toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 }

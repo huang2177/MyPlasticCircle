@@ -26,21 +26,16 @@ import java.util.List;
 public class Fragment_Contact_LV_Adapter extends BaseAdapter {
     Context context;
     viewHolder viewHolder;
-    ContactBean.TopBean topBean;
     List<ContactBean.PersonsBean> list;
 
-    public void setTopBean(ContactBean.TopBean topBean) {
-        this.topBean = topBean;
-    }
 
     public void setList(List<ContactBean.PersonsBean> list) {
         this.list = list;
     }
 
-    public Fragment_Contact_LV_Adapter(Context context, List<ContactBean.PersonsBean> list, ContactBean.TopBean topBean) {
+    public Fragment_Contact_LV_Adapter(Context context, List<ContactBean.PersonsBean> list) {
         this.list = list;
         this.context = context;
-        this.topBean = topBean;
     }
 
 
@@ -64,9 +59,9 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
         viewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater
-                    .from(context)
-                    .inflate(R.layout.item_fragment_contact_lv_layout, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_fragment_contact_lv_layout
+                    , parent
+                    , false);
             initView(viewHolder, convertView);
             convertView.setTag(viewHolder);
         } else {
@@ -78,12 +73,9 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
 
     public void showInfo(viewHolder viewHolder, ContactBean.PersonsBean personsBean) {
         try {
-            viewHolder.mHead.setBorderColor(context
-                    .getResources()
-                    .getColor(R.color.color_white));
+            viewHolder.mHead.setBorderColor(context.getResources().getColor(R.color.color_white));
 
-            Glide.with(context)
-                    .load(personsBean.getThumb())
+            Glide.with(context).load(personsBean.getThumb())
                     .placeholder("男".equals(personsBean.getSex())
                             ? R.drawable.img_defaul_male
                             : R.drawable.img_defaul_female)
@@ -118,9 +110,9 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter {
                     viewHolder.mSign.setImageResource(R.drawable.icon_logistics);
                 }
             }
-            viewHolder.mStart.setImageResource("0".equals(personsBean.getIs_pass())
-                    ? R.drawable.icon_identity
-                    : R.drawable.icon_identity_hl);
+            viewHolder.mStart.setImageResource("1".equals(personsBean.getMerge_three())
+                    ? R.drawable.icon_identity_hl
+                    : 0);
         } catch (Exception e) {
         }
     }

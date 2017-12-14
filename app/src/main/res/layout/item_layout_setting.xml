@@ -43,7 +43,7 @@
             android:drawablePadding="3dp"
             android:drawableRight="@drawable/icon_more"/>
 
-        <com.suke.widget.SwitchButton
+        <com.myplas.q.common.view.SwitchButton
             android:id="@+id/item_lv_setting_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

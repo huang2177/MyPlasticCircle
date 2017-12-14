@@ -93,6 +93,15 @@ public class SupDemDetailBean {
         private String is_pass;
         private String mobile1;
         private String member_level;
+        private String merge_three;
+
+        public void setMerge_three(String merge_three) {
+            this.merge_three = merge_three;
+        }
+
+        public String getMerge_three() {
+            return merge_three;
+        }
 
         public String getId() {
             return id;

@@ -11,8 +11,8 @@ import com.myplas.q.R;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.view.EditTextField;
 import com.myplas.q.myself.setting.adapter.SettingSex_RegionAdapter;
-import com.optimus.edittextfield.EditTextField;
 
 import java.util.Arrays;
 import java.util.List;

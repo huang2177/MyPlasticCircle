@@ -1,15 +1,15 @@
 package com.myplas.q.app.application;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Space;
 
+import com.facebook.stetho.Stetho;
 import com.myplas.q.BuildConfig;
 import com.myplas.q.app.activity.SplashActivity;
 import com.myplas.q.common.appcontext.ActivityManager;
@@ -28,28 +28,29 @@ import me.panpf.sketch.Sketch;
  * 邮箱： 15378412400@163.com
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
         initJPush();
-        //initStetho();
+        initStetho();
         registerActivity();
 
     }
+
 
     /**
      * 初始化Stetho相关
      */
     private void initStetho() {
-//        if (BuildConfig.USE_STETHO) {
-//            Stetho.initialize(
-//                    Stetho.newInitializerBuilder(this)
-//                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-//                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-//                            .build());
-//        }
+        if (BuildConfig.USE_STETHO) {
+            Stetho.initialize(
+                    Stetho.newInitializerBuilder(this)
+                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                            .build());
+        }
     }
 
     /**

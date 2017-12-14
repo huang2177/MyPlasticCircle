@@ -9,9 +9,9 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.view.SwitchButton;
 import com.myplas.q.myself.beans.MySelfInfo;
 import com.sobot.chat.api.model.Information;
-import com.suke.widget.SwitchButton;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -23,7 +23,8 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 10:25
  */
-public class MessageActivity extends BaseActivity implements SwitchButton.OnCheckedChangeListener, ResultCallBack {
+public class MessageActivity extends BaseActivity implements SwitchButton.OnCheckedChangeListener
+        , ResultCallBack {
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
@@ -82,6 +83,8 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
                 map.put("token", sharedUtils.getData(this, "token"));
                 saveSelfInfo(API.FAVORATE_SET, map, 2);
                 break;
+            default:
+                break;
         }
     }
 
@@ -90,15 +93,6 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
         postAsyn(this, url, map, this, type);
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 
     @Override
     protected void onStop() {

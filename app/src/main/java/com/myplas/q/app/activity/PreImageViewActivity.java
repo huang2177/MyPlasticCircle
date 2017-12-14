@@ -76,9 +76,7 @@ public class PreImageViewActivity extends BaseActivity {
             @Override
             public void onError(ErrorCause errorCause) {
                 String type = getIntent().getStringExtra("type");
-                photoView.displayResourceImage("2".equals(type)
-                        ? R.drawable.card
-                        : "0".equals(type) ? R.drawable.img_defaul_male : R.drawable.img_defaul_female);
+                photoView.displayResourceImage(getDefaultDrawable(type));
             }
 
             @Override
@@ -139,6 +137,33 @@ public class PreImageViewActivity extends BaseActivity {
         green = (int) Math.floor(green * (1 - 0.1));
         blue = (int) Math.floor(blue * (1 - 0.1));
         return Color.rgb(red, green, blue);
+    }
+
+    /**
+     * 获取加载出错时的默认图片
+     *
+     * @param type
+     * @return
+     */
+    public int getDefaultDrawable(String type) {
+        int resId = 0;
+        switch (type) {
+            case "0":
+                resId = R.drawable.img_defaul_male;
+                break;
+            case "1":
+                resId = R.drawable.img_defaul_female;
+                break;
+            case "2":
+                resId = R.drawable.card;
+                break;
+            case "3":
+                resId = R.drawable.default_qq;
+                break;
+            default:
+                break;
+        }
+        return resId;
     }
 }
 //        Glide.with(this)

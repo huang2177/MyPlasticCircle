@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.contact.activity.Contact_Detail_Activity;
+import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.app.activity.BaseActivity;
@@ -19,7 +19,6 @@ import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myself.fans.adapter.MyIntroductionAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myself.beans.MyIntroductionBean;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -132,7 +131,7 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
             }
             //已经消耗积分
             if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
+                Intent intent = new Intent(this, NewContactDetailActivity.class);
                 intent.putExtra("userid", userid);
                 intent.putExtra("id", userid);
                 startActivity(intent);
@@ -140,7 +139,7 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
             //减积分成功
             if (type == 2 && err.equals("0")) {
                 sharedUtils.setBooloean(this, userid, true);
-                Intent intent = new Intent(this, Contact_Detail_Activity.class);
+                Intent intent = new Intent(this, NewContactDetailActivity.class);
                 intent.putExtra("userid", userid);
                 intent.putExtra("id", userid);
                 startActivity(intent);

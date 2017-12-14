@@ -3,21 +3,26 @@
     android:id="@+id/supdem_detail_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_gray_bg"
+    android:background="@color/color_white"
     android:orientation="vertical">
     <!--标题-->
     <include layout="@layout/common_layout_titlebar" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/color_red" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="-30dp">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_gray_bg"
+            android:background="@color/color_transparent_"
             app:elevation="0dp">
 
             <!--AppBarLayout里放入的都可以跟着向上滑动滑出布局的的 -->
@@ -26,7 +31,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:background="@color/color_white"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -34,7 +38,7 @@
                 <com.androidkun.xtablayout.XTabLayout
                     android:id="@+id/tabLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center|bottom"
                     android:background="@color/color_white"
                     app:xTabDividerWidthWidthText="true"
@@ -59,7 +63,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_gray_bg"
+            android:background="@color/color_white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v4.view.ViewPager

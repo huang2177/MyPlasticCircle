@@ -10,10 +10,14 @@
         <attr name="state_highlighted" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="RoundImageView">
-        <attr name="border_width" format="dimension" />
-        <attr name="border_color" format="color" />
-    </declare-styleable>
+    <!--圆角边框imageview-->
+    <!--<declare-styleable name="RoundImageView">-->
+    <!--<attr name="border_width" format="dimension" />-->
+    <!--<attr name="border_color" format="color" />-->
+    <!--</declare-styleable>-->
+
+
+    <!--小红点消息-->
     <declare-styleable name="DragBubbleView">
         <attr name="bubbleRadius" format="dimension" />
         <attr name="bubbleColor" format="color" />
@@ -22,6 +26,7 @@
         <attr name="textColor" format="color" />
     </declare-styleable>
 
+    <!--自定义进度条  版本更新的dialog-->
     <declare-styleable name="NumberProgressBar">
         <attr name="progress" format="integer" />
         <attr name="max" format="integer" />
@@ -42,21 +47,8 @@
         <attr name="numberProgressBarStyle" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="MarqueeView">
-        <attr name="mvTextcolor" format="color" />
-        <attr name="mvTextSize" format="dimension" />
-        <attr name="mvIsRepeat" format="boolean" />
-        <attr name="mvSpeed" format="integer" />
-        <attr name="mvStartPoint" format="integer">
-            <enum name="start" value="0" />
-            <enum name="end" value="1" />
-        </attr>
-        <attr name="mvDirection" format="integer">
-            <enum name="left" value="0" />
-            <enum name="right" value="1" />
-        </attr>
-    </declare-styleable>
 
+    <!--跑马灯-->
     <declare-styleable name="MarqueeView1">
         <attr name="mAnimDuration" format="integer" />
         <attr name="mTextColor" format="integer" />
@@ -64,5 +56,59 @@
             <enum name="center_vertical" value="0" />
         </attr>
         <attr name="mTextSize" format="dimension" />
+    </declare-styleable>
+
+    <!--带清除按钮的EditText-->
+    <declare-styleable name="EditTextField">
+        <!-- 清除按钮显示模式 -->
+        <attr name="clearButtonMode">
+            <!--不显示清空按钮-->
+            <enum name="never" value="0" />
+            <!--不为空，获得焦点与没有获得焦点都显示清空按钮-->
+            <enum name="always" value="1" />
+            <!--不为空，且在编辑状态时（及获得焦点）显示清空按钮-->
+            <enum name="whileEditing" value="2" />
+            <!--不为空，且不在编译状态时（焦点不在输入框上）显示清空按钮-->
+            <enum name="unlessEditing" value="3" />
+        </attr>
+        <attr name="clearButtonDrawable" format="reference" />
+    </declare-styleable>
+
+    <!--switch-->
+    <declare-styleable name="SwitchButton">
+        <attr name="sb_shadow_radius" format="reference|dimension" />
+        <attr name="sb_shadow_offset" format="reference|dimension" />
+        <attr name="sb_shadow_color" format="reference|color" />
+        <attr name="sb_uncheck_color" format="reference|color" />
+        <attr name="sb_checked_color" format="reference|color" />
+
+        <attr name="sb_border_width" format="reference|dimension" />
+        <attr name="sb_checkline_color" format="reference|color" />
+        <attr name="sb_checkline_width" format="reference|dimension" />
+        <attr name="sb_uncheckcircle_color" format="reference|color" />
+        <attr name="sb_uncheckcircle_width" format="reference|dimension" />
+        <attr name="sb_uncheckcircle_radius" format="reference|dimension" />
+
+        <attr name="sb_checked" format="reference|boolean" />
+        <attr name="sb_shadow_effect" format="reference|boolean" />
+        <attr name="sb_effect_duration" format="reference|integer" />
+        <attr name="sb_button_color" format="reference|color" />
+        <attr name="sb_show_indicator" format="reference|boolean" />
+        <attr name="sb_background" format="reference|color" />
+        <attr name="sb_enable_effect" format="reference|boolean" />
+    </declare-styleable>
+
+    <!-- ProgressImageView -->
+    <declare-styleable name="ProgressImageView">
+        <!--图片圆角大小-->
+        <attr name="roundPixel" format="dimension|reference" />
+        <!--是否启用进度-->
+        <attr name="useProgress" format="boolean" />
+        <!--进度影音色值-->
+        <attr name="roundShadowColor" format="color|reference" />
+        <!--进度文字大小-->
+        <attr name="roundProgressTextSize" format="dimension|reference" />
+        <!--进度文字大小-->
+        <attr name="roundProgressTextColor" format="color|reference" />
     </declare-styleable>
 </resources>

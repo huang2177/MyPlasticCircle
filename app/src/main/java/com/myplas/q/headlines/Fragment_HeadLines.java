@@ -22,7 +22,6 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.MyOnPageChangeListener;
 import com.myplas.q.common.view.marqueeview.MarqueeFactory;
 import com.myplas.q.common.view.marqueeview.MarqueeViewHelper;
@@ -59,7 +58,6 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
     private GridView gridView;
     private EditText editText;
     private TextView tvRefresh;
-    private CustomPopupWindow popupWindow;
     private LinearLayout mLayoutTitle, notifyRoot;
     private HeadLineViewPagerAdapter mViewPagerAdapter;
 

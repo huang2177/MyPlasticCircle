@@ -109,6 +109,15 @@ public class SupDemBean {
         private String img;
         private String platicCount;
         private String replyCount;
+        private String merge_three;
+
+        public void setMerge_three(String merge_three) {
+            this.merge_three = merge_three;
+        }
+
+        public String getMerge_three() {
+            return merge_three;
+        }
 
         public String getId() {
             return id;
@@ -315,6 +324,15 @@ public class SupDemBean {
         private String img;
         private String platicCount;
         private String replyCount;
+        private String merge_three;
+
+        public void setMerge_three(String merge_three) {
+            this.merge_three = merge_three;
+        }
+
+        public String getMerge_three() {
+            return merge_three;
+        }
 
         public String getId() {
             return id;
