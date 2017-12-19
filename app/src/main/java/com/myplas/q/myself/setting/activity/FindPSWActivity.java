@@ -98,7 +98,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.zhh_hq_yzm:
                 String tel = editText_tel.getText().toString();
-                if (!TextUtils.isPhoneNum(tel)) {
+                if (tel.length() != 11) {
                     Toast.makeText(this, "手机号输入有误！", Toast.LENGTH_SHORT).show();
                 } else {
                     Map<String, Object> map1 = new HashMap<String, Object>();

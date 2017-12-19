@@ -30,22 +30,6 @@ public class HelpActivity extends BaseActivity {
     private ProgressImageView imageView;
     private float progress = 0f;
 
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (progress >= 1) {
-                progress = 1f;
-                imageView.setProgress(progress);
-            } else {
-                progress += 0.01f;
-                imageView.setProgress(progress);
-                handler.sendEmptyMessageDelayed(123, 300);
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,22 +39,14 @@ public class HelpActivity extends BaseActivity {
         setTitle("帮助");
         setRightIVVisibility(View.VISIBLE);
 
-        imageView = F(R.id.sketchimg);
-        Glide.with(this).load(R.drawable.aa).into(imageView);
-
-
         mIVConact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                information = new Information();
-//                information.setAppkey(appkey);
-//                SobotApi.startSobotChat(HelpActivity.this, information);
-                startUpload(null);
+                information = new Information();
+                information.setAppkey(appkey);
+                SobotApi.startSobotChat(HelpActivity.this, information);
             }
         });
     }
 
-    public void startUpload(View view) {
-        handler.sendEmptyMessageDelayed(123, 300);
-    }
 }

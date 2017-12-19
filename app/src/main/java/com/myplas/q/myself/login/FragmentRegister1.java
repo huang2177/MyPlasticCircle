@@ -153,7 +153,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
      * 获取验证码
      */
     private void getIndentify() {
-        if (!TextUtils.isPhoneNum(phone)) {
+        if (phone.length() != 11) {
             TextUtils.toast(getActivity(), "手机号输入有误！");
             return;
         }

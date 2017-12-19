@@ -12,7 +12,7 @@ public class API {
     /**
      * base url
      */
-    public final static String BASEURL = (!BuildConfig.API_ENV)
+    public final static String BASEURL = (BuildConfig.API_ENV)
             ? ("https://api.myplas.com/qapi_4/")
             : ("https://ssl.myplas.com/qapi_4/");
     /**

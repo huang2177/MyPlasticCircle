@@ -114,21 +114,22 @@ public class ProgressImageView extends ImageView {
         super.onDraw(canvas);
         if (useProgress) {
             canvas.saveLayer(0, 0, getWidth(), getHeight(), paint, Canvas.ALL_SAVE_FLAG);
-            //带阴影的圆角矩形框
-            paint.setColor(roundShadowColor);
-            if (null == rectF) {
-                rectF = new RectF(0, 0, getWidth(), getHeight());
-            }
-            canvas.drawRoundRect(rectF, roundPixel, roundPixel, paint);
-            //设置两张图片相交时的模式
-            paint.setXfermode(xfermode);
-            //上部分阴影
-            paint.setColor(roundShadowColor);
-            canvas.drawRect(0, 0, getWidth(), getHeight() * (1 - progress), paint);
-            //下部分透明
-            paint.setColor(Color.TRANSPARENT);
-            canvas.drawRect(0, getHeight() * (1 - progress), getWidth(), getHeight(), paint);
             if (progress < 1f) {
+                //带阴影的圆角矩形框
+                paint.setColor(roundShadowColor);
+                if (null == rectF) {
+                    rectF = new RectF(0, 0, getWidth(), getHeight());
+                }
+                canvas.drawRoundRect(rectF, roundPixel, roundPixel, paint);
+                //设置两张图片相交时的模式
+                paint.setXfermode(xfermode);
+                //上部分阴影
+                paint.setColor(roundShadowColor);
+                canvas.drawRect(0, 0, getWidth(), getHeight() * (1 - progress), paint);
+                //下部分透明
+                paint.setColor(Color.TRANSPARENT);
+                canvas.drawRect(0, getHeight() * (1 - progress), getWidth(), getHeight(), paint);
+
                 paint.setXfermode(null);
                 paint.setTextSize(roundProgressTextSize);
                 paint.setColor(roundProgressTextColor);
@@ -137,6 +138,10 @@ public class ProgressImageView extends ImageView {
                 paint.getTextBounds(progressStr, 0, progressStr.length(), rect);
                 Paint.FontMetricsInt metricsInt = paint.getFontMetricsInt();
                 canvas.drawText(progressStr, getWidth() / 2 - rect.width() / 2, (getHeight() - metricsInt.bottom - metricsInt.top) / 2, paint);
+            } else {
+                paint.setXfermode(null);
+                paint.setColor(Color.TRANSPARENT);
+                canvas.drawText("", 0, 0, paint);
             }
         }
     }
@@ -164,8 +169,8 @@ public class ProgressImageView extends ImageView {
     public void setProgress(float progress) {
         this.progress = progress;
         postInvalidate();
-    }
 
+    }
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);

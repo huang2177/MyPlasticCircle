@@ -7,40 +7,34 @@
 
     <include layout="@layout/common_layout_titlebar" />
 
-    <com.myplas.q.common.view.ProgressImageView
-        android:id="@+id/sketchimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-
-        app:roundPixel="0dp"
-        app:roundProgressTextColor="#00ff00"
-        app:roundProgressTextSize="18sp"
-        app:roundShadowColor="#a6292929"
-        app:useProgress="true" />
-    <!--<ScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:scrollbars="none">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical">-->
-
     <!--<com.myplas.q.common.view.ProgressImageView-->
     <!--android:id="@+id/sketchimg"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
     <!--android:layout_marginBottom="8dp"-->
     <!--android:layout_marginTop="8dp"-->
-    <!--android:scaleType="fitXY"-->
-    <!--app:roundPixel="20dp"-->
+
+    <!--app:roundPixel="0dp"-->
     <!--app:roundProgressTextColor="#00ff00"-->
     <!--app:roundProgressTextSize="18sp"-->
     <!--app:roundShadowColor="#a6292929"-->
     <!--app:useProgress="true" />-->
-    <!--</LinearLayout>-->
-    <!--</ScrollView>-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/sketchimg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/help" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

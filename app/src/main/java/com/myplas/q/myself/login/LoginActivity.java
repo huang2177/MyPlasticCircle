@@ -164,7 +164,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
             //登陆；
             case R.id.dl_ok:
-                if (TextUtils.isPhoneNum(edittextTel.getText().toString()) && TextUtils.notEmpty(edittextPass.getText().toString())) {
+                if (edittextTel.getText().toString().length() == 11
+                        && TextUtils.notEmpty(edittextPass.getText().toString())) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("username", edittextTel.getText().toString());
                     map.put("password", edittextPass.getText().toString());
@@ -178,7 +179,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 break;
             //手机动态码登陆
             case R.id.dl_ok2:
-                if (TextUtils.isPhoneNum(edittextTel1.getText().toString())
+                if (edittextTel1.getText().toString().length() == 11
                         && TextUtils.notEmpty(edittextVerification1.getText().toString())
                         && TextUtils.notEmpty(edittextVerification2.getText().toString())) {
                     Map<String, String> map = new HashMap<String, String>();
@@ -256,7 +257,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
      */
     public void sendMSG() {
         String tel = edittextTel1.getText().toString();
-        if (!TextUtils.isPhoneNum(tel)) {
+        if (tel.length() != 11) {
             Toast.makeText(this, "手机号输入有误！", Toast.LENGTH_SHORT).show();
         } else {
             String url = API.BASEURL_API + API.SEND_MOBILE_MSG;
