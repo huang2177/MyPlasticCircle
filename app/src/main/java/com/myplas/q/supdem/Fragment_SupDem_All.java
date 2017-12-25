@@ -192,7 +192,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         map.put("sortField2", "");
         map.put("sortField1", "ALL");
         map.put("token", sharedUtils.getData(getActivity(), "token"));
-        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
     /**

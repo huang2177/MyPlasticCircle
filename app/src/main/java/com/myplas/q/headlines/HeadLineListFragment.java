@@ -259,7 +259,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         map.put("page", page + "");
         map.put("keywords", "");
         map.put("subscribe", subscribe);
-        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_SUBSCRIBE, map, this, 4, isShow);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.GET_SUBSCRIBE, map, this, 4, isShow);
     }
 
     //获取其他
@@ -271,14 +271,14 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         map.put("page", page + "");
         map.put("size", "10");
         map.put("cate_id", cate_id);
-        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_CATE_LIST, map, this, 5, isShow);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.GET_CATE_LIST, map, this, 5, isShow);
     }
 
     //检查权限
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", cate_id);
-        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 6, false);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 6, false);
     }
 
     @Override

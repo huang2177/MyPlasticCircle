@@ -98,7 +98,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
         Map<String, String> map = new HashMap<String, String>();
         map.put("user_id", user_id);
         map.put("page", page);
-        postAsyn1(this, API.BASEURL + function, map, this, 1, isShow);
+        postAsyn(this, API.BASEURL + function, map, this, 1, isShow);
     }
 
     public void getPersonInfoData(String userid, String showtype, int type) {

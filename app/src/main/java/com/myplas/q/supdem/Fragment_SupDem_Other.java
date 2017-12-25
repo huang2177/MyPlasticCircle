@@ -128,7 +128,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
         map.put("sortField1", ConfigData.sortField1);
         map.put("sortField2", ConfigData.sortField2);
         map.put("token", sharedUtils.getData(getActivity(), "token"));
-        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
     //判断是否消耗积分

@@ -90,7 +90,7 @@ public class Fragment_Contact_Detail_Demand extends Fragment implements ResultCa
         map.put("type", type + "");
         map.put("userid", mIntent.getStringExtra("userid"));
         String url = API.BASEURL + API.GET_TA_PUR;
-        BaseActivity.postAsyn1(getActivity(), url, map, this, _type, false);
+        BaseActivity.postAsyn(getActivity(), url, map, this, _type, false);
     }
 
 

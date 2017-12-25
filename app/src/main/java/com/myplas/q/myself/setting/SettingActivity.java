@@ -212,16 +212,16 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         Map<String, String> map = new HashMap<>();
         map.put("token", sharedUtils.getData(this, "token"));
         String url = API.BASEURL + API.GET_SELF_INFO;
-        postAsyn1(this, url, map, this, 3, false);
+        postAsyn(this, url, map, this, 3, false);
     }
 
     public void saveSelfInfo(String method, Map map, int type, boolean isShowDialog) {
         String url = API.BASEURL + method;
-        postAsyn1(this, url, map, this, type, isShowDialog);
+        postAsyn(this, url, map, this, type, isShowDialog);
     }
 
     public void getRecommendVersion() {
-        postAsyn1(this, API.BASEURL + API.CHECKAPPVERSION, null, this, 4, false);
+        postAsyn(this, API.BASEURL + API.CHECKAPPVERSION, null, this, 4, false);
     }
 
     /**
@@ -323,7 +323,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         if (this.isOpen != isOpen) {
             Map<String, String> map = new HashMap<>();
             map.put("is_allow", isOpen ? "1" : "0");
-            postAsyn1(this, API.BASEURL + API.JPUSHSET, map, this, 6, false);
+            postAsyn(this, API.BASEURL + API.JPUSHSET, map, this, 6, false);
         }
     }
 }

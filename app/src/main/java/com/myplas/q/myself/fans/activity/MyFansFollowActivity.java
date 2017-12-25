@@ -99,7 +99,7 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
         map.put("page", page);
         map.put("type", type);
         map.put("size", "10");
-        postAsyn1(this, API.BASEURL + API.GET_MY_FUNS, map, this, 1, isShow);
+        postAsyn(this, API.BASEURL + API.GET_MY_FUNS, map, this, 1, isShow);
     }
 
     public void getPersonInfoData(String userid, String showtype, int type) {

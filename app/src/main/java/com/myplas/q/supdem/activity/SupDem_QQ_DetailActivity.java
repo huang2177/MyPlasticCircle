@@ -133,7 +133,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", cate_id);
-        postAsyn1(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 3, false);
+        postAsyn(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 3, false);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.myplas.q.myself;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -258,7 +257,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     public void getLoginInfo(boolean isShow) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", sharedUtils.getData(getActivity(), "token"));
-        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.MY_ZONE, map, this, 2, isShow);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.MY_ZONE, map, this, 2, isShow);
     }
 
     @Override

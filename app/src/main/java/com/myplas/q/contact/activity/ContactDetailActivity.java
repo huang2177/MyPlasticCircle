@@ -205,7 +205,7 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("user_id", getIntent().getStringExtra("userid"));
         String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        postAsyn1(this, url, map, this, 1, false);
+        postAsyn(this, url, map, this, 1, false);
     }
 
     @Override

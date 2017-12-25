@@ -162,7 +162,7 @@ public class LookMeActivity extends BaseActivity implements ResultCallBack
         map.put("page", page);
         map.put("size", "15");
         map.put("mode", mode);
-        postAsyn1(this, API.BASEURL + API.GET_VIEW_HISTORY_DETAILS, map, this, type, isShowLoading);
+        postAsyn(this, API.BASEURL + API.GET_VIEW_HISTORY_DETAILS, map, this, type, isShowLoading);
     }
 
     public void getPersonInfoData(String userid, String showtype, int type) {

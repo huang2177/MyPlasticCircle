@@ -199,7 +199,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         map.put("type", is_buy);
         map.put("cargo_type", "0");
         map.put("area_id", area);
-        postAsyn1(this, API.BASEURL + API.PLASTIC_SEARCH, map, this, 2, isShowLoading);
+        postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH, map, this, 2, isShowLoading);
     }
 
     //获取时间和地区

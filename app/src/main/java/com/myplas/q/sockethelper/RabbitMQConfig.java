@@ -2,7 +2,6 @@ package com.myplas.q.sockethelper;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.myplas.q.common.api.API;
@@ -57,7 +56,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     public void closed() {
         Map<String, String> map = new HashMap<>();
         map.put("userid", SharedUtils.getSharedUtils().getData(context, Constant.USERID));
-        BaseActivity.postAsyn1(context, API.BASEURL + API.CLOSED, map, this, 2, false);
+        BaseActivity.postAsyn(context, API.BASEURL + API.CLOSED, map, this, 2, false);
     }
 
     /**
@@ -65,7 +64,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
      */
 
     public void connected() {
-        BaseActivity.postAsyn1(context, API.BASEURL + API.CONNECTED, null, this, 3, false);
+        BaseActivity.postAsyn(context, API.BASEURL + API.CONNECTED, null, this, 3, false);
     }
 
     /**
@@ -74,7 +73,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
      * @param type the type
      */
     public void getRedDotInfo() {
-        BaseActivity.postAsyn1(context, API.BASEURL + API.GETREDDOTINFO, null, this, 4, false);
+        BaseActivity.postAsyn(context, API.BASEURL + API.GETREDDOTINFO, null, this, 4, false);
     }
 
     /**
@@ -85,7 +84,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     public void readMsg(String type, int _type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("type", type);
-        BaseActivity.postAsyn1(context, API.BASEURL + API.READ, map, this, _type, false);
+        BaseActivity.postAsyn(context, API.BASEURL + API.READ, map, this, _type, false);
     }
 
     @Override

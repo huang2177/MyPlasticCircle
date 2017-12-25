@@ -186,7 +186,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         map.put("c_type", c_type.toString());
         map.put("region", region.toString());
         String url = API.BASEURL + API.GET_PLASTIC_PERSON;
-        postAsyn1(this, url, map, this, 2, isShowDialog);
+        postAsyn(this, url, map, this, 2, isShowDialog);
     }
 
     /**
@@ -203,7 +203,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         map.put("user_id", userId);
         map.put("showType", showtype);
         String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn1(this, url, map, this, type, false);
+        BaseActivity.postAsyn(this, url, map, this, type, false);
     }
 
     @Override

@@ -146,7 +146,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
         phone = mPhone.getText().toString();
         Map<String, String> map = new HashMap<String, String>();
         map.put("mobile", phone);
-        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERMOBILE, map, this, 1, false);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.VALIDUSERMOBILE, map, this, 1, false);
     }
 
     /**

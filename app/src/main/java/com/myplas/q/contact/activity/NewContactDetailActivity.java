@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -229,7 +228,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("user_id", getIntent().getStringExtra("userid"));
         String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        postAsyn1(this, url, map, this, 1, false);
+        postAsyn(this, url, map, this, 1, false);
     }
 
     /**

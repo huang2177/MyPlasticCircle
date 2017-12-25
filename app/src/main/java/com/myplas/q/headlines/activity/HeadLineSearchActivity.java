@@ -177,7 +177,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         map.put("size", "15");
         map.put("keywords", keywords);
         map.put("subscribe", "1");
-        postAsyn1(this, API.BASEURL + API.GET_SUBSCRIBE, map, this, 2, isShowLoading);
+        postAsyn(this, API.BASEURL + API.GET_SUBSCRIBE, map, this, 2, isShowLoading);
     }
 
 

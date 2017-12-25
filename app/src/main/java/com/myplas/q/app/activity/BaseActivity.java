@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -146,13 +145,7 @@ public class BaseActivity extends FragmentActivity {
      * get请求
      */
 
-    public void getAsyn(Activity context
-            , String url
-            , Map<String
-            , String> map
-            , ResultCallBack resultCallBack
-            , int type
-            , String jison) {
+    public void getAsyn(Activity context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, String jison) {
         if (NetUtils.isNetworkStateed(context)) {
             NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
             netRequest.getAsyn();
@@ -163,33 +156,15 @@ public class BaseActivity extends FragmentActivity {
      * post请求
      */
 
-    public static void postAsyn(Context context
-            , String url
-            , Map<String, String> map
-            , ResultCallBack resultCallBack
-            , int type) {
-        try {
-            if (NetUtils.isNetworkStateed(context)) {
-                NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
-                netRequest.postAsyn();
-            } else {
-                resultCallBack.failCallBack(type);
-            }
-            LoadingDialog.getInstance(context).show();
-        } catch (Exception e) {
-        }
+    public static void postAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type) {
+        postAsyn(context, url, map, resultCallBack, type, true);
     }
 
     /**
      * post请求
      */
 
-    public static void postAsyn1(Context context
-            , String url
-            , Map<String, String> map
-            , ResultCallBack resultCallBack
-            , int type
-            , boolean isShowDialog) {
+    public static void postAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, boolean isShowDialog) {
         try {
             if (NetUtils.isNetworkStateed(context)) {
                 NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
@@ -208,12 +183,7 @@ public class BaseActivity extends FragmentActivity {
      * post之上传图片
      */
 
-    public void postUpLoadIMG(Context context
-            , String url
-            , String imgpath
-            , String token
-            , ResultCallBack resultCallBack
-            , int type) {
+    public void postUpLoadIMG(Context context, String url, String imgpath, String token, ResultCallBack resultCallBack, int type) {
         if (NetUtils.isNetworkStateed(context)) {
             NetRequest netRequest = new NetRequest(context, url, null, resultCallBack, type);
             netRequest.post_UpLoadIMG(imgpath, token);

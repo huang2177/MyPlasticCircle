@@ -108,7 +108,7 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
         map.put("type", type);
         map.put("page", page);
         map.put("size", "10");
-        postAsyn1(this, API.BASEURL + API.GET_MY_MSG, map, this, 1, isShow);
+        postAsyn(this, API.BASEURL + API.GET_MY_MSG, map, this, 1, isShow);
     }
 
     @Override

@@ -7,12 +7,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -290,7 +288,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             map.put("token", sharedUtils.getData(this, "token"));
 
             String url = API.BASEURL + API.SAVE_SELFINFO;
-            postAsyn1(this, url, map, this, 3, true);
+            postAsyn(this, url, map, this, 3, true);
         } catch (Exception e) {
         }
 

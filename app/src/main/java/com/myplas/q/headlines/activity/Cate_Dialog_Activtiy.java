@@ -100,7 +100,7 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
     public void getSelectCate() {
         Map<String, String> map = new HashMap<>();
         map.put("type", "2");
-        postAsyn1(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 2, false);
+        postAsyn(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 2, false);
     }
 
     //保存我的频道
@@ -109,7 +109,7 @@ public class Cate_Dialog_Activtiy extends BaseActivity implements ResultCallBack
         map.put("type", "1");
         map.put("cateId", getData(list_column_selected));
         map.put("prop_id", getData(list_product_selected));
-        postAsyn1(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 3, false);
+        postAsyn(this, API.BASEURL + API.GET_SELECT_CATE, map, this, 3, false);
     }
 
     //初始化订阅栏目 item数据

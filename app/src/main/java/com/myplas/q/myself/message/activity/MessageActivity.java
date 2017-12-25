@@ -64,7 +64,7 @@ public class MessageActivity extends BaseActivity implements ResultCallBack {
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
         map.put("size", "10");
-        postAsyn1(this, API.BASEURL + API.MYMSG, map, this, 1, false);
+        postAsyn(this, API.BASEURL + API.MYMSG, map, this, 1, false);
     }
 
     @Override

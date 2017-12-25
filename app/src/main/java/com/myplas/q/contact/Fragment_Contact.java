@@ -271,7 +271,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         map.put("c_type", c_type);
         map.put("region", region);
         String url = API.BASEURL + API.GET_PLASTIC_PERSON;
-        BaseActivity.postAsyn1(getActivity(), url, map, this, 1, isShowDialog);
+        BaseActivity.postAsyn(getActivity(), url, map, this, 1, isShowDialog);
     }
 
     /**
@@ -287,7 +287,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         map.put("showType", showtype);
         map.put("token", sharedUtils.getData(getActivity(), "token"));
         String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn1(getActivity(), url, map, this, type, false);
+        BaseActivity.postAsyn(getActivity(), url, map, this, type, false);
     }
 
     @Override
@@ -422,6 +422,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     }
 
     private void showTop(ContactBean.TopBean topBean) {
+        topBean = topBean.getC_name() == null ? null : topBean;
         if (topBean != null) {
             ContactBean.PersonsBean personsBean = new ContactBean.PersonsBean();
             personsBean.setSex(topBean.getSex());
@@ -563,7 +564,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         //统计页面，"MainScreen"为页面名称，可自定义
         MobclickAgent.onPageStart("MainScreen");
         //检查登录状态
-        BaseActivity.postAsyn1(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
+        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
     }
 
 

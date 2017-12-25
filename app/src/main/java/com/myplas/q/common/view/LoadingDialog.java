@@ -31,7 +31,7 @@ public class LoadingDialog {
             dialog.setCancelable(true);
             dialog.setCanceledOnTouchOutside(true);
         }
-        return dialog;
+        return mHashMap.get(context);
     }
 
     public static void clear(Context context) {

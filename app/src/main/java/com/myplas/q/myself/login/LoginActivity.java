@@ -232,7 +232,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
      */
     private void getVCode() {
         String url1 = API.BASEURL_API + API.VCODE;
-        postAsyn1(this, url1, null, this, 2, false);
+        postAsyn(this, url1, null, this, 2, false);
     }
 
     /**

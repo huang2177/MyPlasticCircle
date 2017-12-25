@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -326,14 +323,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Map<String, String> map = new HashMap<String, String>();
         map.put("version", VersionUtils.getVersionName(this));
         map.put("platform", "android");
-        BaseActivity.postAsyn1(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 1, false);
+        BaseActivity.postAsyn(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 1, false);
     }
 
     /**
      * rabbitMQ Gets config.
      */
     public void getConfig() {
-        BaseActivity.postAsyn1(this, API.BASEURL + API.INIT, null, this, 3, false);
+        BaseActivity.postAsyn(this, API.BASEURL + API.INIT, null, this, 3, false);
     }
 
     @Override

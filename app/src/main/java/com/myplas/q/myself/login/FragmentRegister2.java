@@ -136,7 +136,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
         map.put("c_type", companyType);
 
         String url = API.BASEURL + API.REGISTER;
-        BaseActivity.postAsyn1(getActivity(), url, map, this, 1, false);
+        BaseActivity.postAsyn(getActivity(), url, map, this, 1, false);
     }
 
     private void openButtomDialog() {
