@@ -298,6 +298,9 @@
         <activity
             android:name="com.myplas.q.myself.message.activity.NoInfoActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.myplas.q.myself.store.MyStoreActivity"
+            android:screenOrientation="portrait" />
 
         <!--适配6.0以上的系统安装apk-->
         <provider

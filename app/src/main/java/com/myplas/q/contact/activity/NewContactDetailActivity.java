@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
+import com.sobot.chat.widget.gif.GifView;
 
 import org.json.JSONObject;
 
@@ -50,11 +52,13 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
     private boolean isSelf;
     private SharedUtils sharedUtils;
 
+    private GifView imageStore;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private RoundCornerImageView mHead;
-    private ImageView mStart, mFollow, mCall, mBack, mSign, mShare, mIndentify;
+    private FrameLayout frameLayoutStore;
     private LinearLayout mLayoutInfo, mLayoutFans, mLayoutFollow, mLayoutIntrudtion;
+    private ImageView mStart, mFollow, mCall, mBack, mSign, mShare, mIndentify, imageClose;
     private TextView mCompany, mName, phone, address, pro, mFans, mfollow, mIntrudtion, mHeat;
 
     private ContactSupDemBean p1, p2;
@@ -91,8 +95,10 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
         mFans = F(R.id.wd_text_fans);
         mViewPager = F(R.id.viewpager);
         mTabLayout = F(R.id.tabLayout);
+        imageClose = F(R.id.img_close);
         pro = F(R.id.contact_detail_pro);
         mSign = F(R.id.contact_sign_img);
+        imageStore = F(R.id.img_openshop);
         mfollow = F(R.id.wd_text_follow);
         phone = F(R.id.contact_detail_tel);
         mCall = F(R.id.titlebar_img_right);
@@ -101,6 +107,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
         mLayoutInfo = F(R.id.contact_info_ll);
         mShare = F(R.id.contact_detail_share);
         mIntrudtion = F(R.id.wd_text_introdus);
+        frameLayoutStore = F(R.id.fl_openshop);
         mFollow = F(R.id.contact_detail_follow);
         address = F(R.id.contact_detail_address);
         mLayoutFollow = F(R.id.wd_linear_follow);
@@ -115,11 +122,15 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
         mShare.setOnClickListener(this);
         mFollow.setOnClickListener(this);
         mIVConact.setOnClickListener(this);
+        imageClose.setOnClickListener(this);
         mLayoutBack.setOnClickListener(this);
         mLayoutInfo.setOnClickListener(this);
         mLayoutFans.setOnClickListener(this);
         mLayoutFollow.setOnClickListener(this);
         mLayoutIntrudtion.setOnClickListener(this);
+
+        imageStore.setGifImage(R.drawable.btn_openshop);
+        imageStore.startGifView();
     }
 
     private void initViewPager() {
@@ -197,6 +208,10 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
             case R.id.titlebar_img_back:
                 onBackPressed();
                 break;
+            case R.id.img_close:
+                imageStore.stopGifView();
+                frameLayoutStore.setVisibility(View.GONE);
+                break;
             case R.id.contact_detail_share:
                 Intent in = new Intent(this, ShareActivity.class);
                 in.putExtra("type", "1");
@@ -211,7 +226,6 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
                 break;
         }
     }
-
 
     //关注
     public void follow() {

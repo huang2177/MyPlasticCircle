@@ -56,6 +56,39 @@
         android:background="@color/color_gray_divider_out" />
 
     <LinearLayout
+        android:id="@+id/wd_text_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
+
+        <TextView
+            style="@style/myself_text_style"
+            android:layout_marginLeft="8dp"
+            android:drawableLeft="@drawable/icon_my_store"
+            android:padding="10dp"
+            android:text="  我的店铺"
+            android:textColor="@color/color_title_main" />
+
+
+        <TextView
+            style="@style/myself_text_style"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0"
+            android:drawableRight="@drawable/icon_more" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"

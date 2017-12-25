@@ -30,6 +30,7 @@ import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.RoundCornerImageView;
+import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.myself.beans.MyZone;
 import com.myplas.q.myself.credit.activity.LineOfCreditActivity;
 import com.myplas.q.myself.credit.activity.PlasticMoneyActivity;
@@ -41,6 +42,7 @@ import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
 import com.myplas.q.myself.message.activity.MessageActivity;
 import com.myplas.q.myself.setting.SettingActivity;
 import com.myplas.q.myself.setting.activity.MyDataActivity;
+import com.myplas.q.myself.store.MyStoreActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
@@ -72,8 +74,8 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     private ImageView mimageNews, mimageMore;
     private TextView textTitle, textName, textCompany, textRank;
     private DragView mDragViewMsg, mDragViewLook, mDragViewOrder;
-    private LinearLayout linearTitle, linearYj, linearFs, linearGz, linearJf, linearQg, linearGj;
     private TextView textDd, textYj, textFs, textGz, textLook, textSet, textPz, textEdu, textQg, textGj;
+    private LinearLayout linearTitle, linearYj, linearFs, linearGz, linearJf, linearQg, linearGj, linearStore;
 
     private Toolbar mToolbar;
     private AppBarLayout mBarLayout;
@@ -128,12 +130,13 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         linearFs = f(R.id.wd_linear_fans);
         mimageMore = f(R.id.wd_title_more);
         linearGz = f(R.id.wd_linear_follow);
+        linearStore = f(R.id.wd_text_store);
         mDragViewLook = f(R.id.look_dragview);
         linearTitle = f(R.id.wd_linear_title);
         linearYj = f(R.id.wd_linear_introdus);
         mDragViewOrder = f(R.id.order_dragview);
-        mFrameLayout = f(R.id.wd_logined_news_fl);
         mimageNews = f(R.id.wd_logined_news_img);
+        mFrameLayout = f(R.id.wd_logined_news_fl);
         mDragViewMsg = f(R.id.wd_logined_news_text);
         mNestedScrollView = f(R.id.scrollView_myself);
 
@@ -152,8 +155,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         linearYj.setOnClickListener(this);
         linearFs.setOnClickListener(this);
         linearGz.setOnClickListener(this);
-        mDragViewMsg.setOnClickListener(this);
+        linearStore.setOnClickListener(this);
         linearTitle.setOnClickListener(this);
+        mDragViewMsg.setOnClickListener(this);
         mFrameLayout.setOnClickListener(this);
 
         linearFs.setBackgroundResource(R.color.color_white);
@@ -242,6 +246,16 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
             case R.id.wd_text_set:
                 Intent intent7 = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent7);
+                break;
+            case R.id.wd_text_store:
+                if ("1".equals(myZone.getData().getMerge_three())) {
+                    Intent i = new Intent(getActivity(), NewContactDetailActivity.class);
+                    i.putExtra("userid", myZone.getData().getUser_id());
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(getActivity(), MyStoreActivity.class);
+                    startActivity(i);
+                }
                 break;
             default:
                 break;
