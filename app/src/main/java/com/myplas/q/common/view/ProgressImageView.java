@@ -169,7 +169,6 @@ public class ProgressImageView extends ImageView {
     public void setProgress(float progress) {
         this.progress = progress;
         postInvalidate();
-
     }
     @Override
     public void setImageBitmap(Bitmap bm) {

@@ -458,6 +458,7 @@ public class ContactBean {
         private String buy_count;
         private String sale_count;
         private String merge_three;
+        private String mobile;
 
         public void setMerge_three(String merge_three) {
             this.merge_three = merge_three;
@@ -601,6 +602,14 @@ public class ContactBean {
 
         public void setSale_count(String sale_count) {
             this.sale_count = sale_count;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
         }
     }
 }

@@ -19,9 +19,9 @@ import com.myplas.q.common.utils.ScreenUtils;
  */
 
 public class EmptyView extends LinearLayout {
-    private TextView tv_no_message;
-    private ImageView iv_empety_mageger;
-    private LinearLayout ll_no_message_root;
+    private ImageView ivEmpetyMageger;
+    private LinearLayout llNoMessageRoot;
+    private TextView tvNoMessage, tvMessageBold;
 
     public EmptyView(Context context) {
         super(context);
@@ -38,9 +38,10 @@ public class EmptyView extends LinearLayout {
         // TODO Auto-generated method stub
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.emptyview_ll_layout, null);
-        iv_empety_mageger = (ImageView) view.findViewById(R.id.noresult_image);
-        tv_no_message = (TextView) view.findViewById(R.id.noresult_text);
-        ll_no_message_root = (LinearLayout) view.findViewById(R.id.ll_no_message_root);
+        tvNoMessage = (TextView) view.findViewById(R.id.noresult_text);
+        tvMessageBold = (TextView) view.findViewById(R.id.noresult_bold_text);
+        ivEmpetyMageger = (ImageView) view.findViewById(R.id.noresult_image);
+        llNoMessageRoot = (LinearLayout) view.findViewById(R.id.ll_no_message_root);
         addView(view);
     }
 
@@ -51,7 +52,7 @@ public class EmptyView extends LinearLayout {
      */
     public View mustCallInitWay(View view) {
         if (view != null) {
-            ViewGroup.LayoutParams params = ll_no_message_root.getLayoutParams();
+            ViewGroup.LayoutParams params = llNoMessageRoot.getLayoutParams();
             params.width = ScreenUtils.getScreenWidth(getContext());
             params.height = ScreenUtils.getScreenHeight(getContext()) - ScreenUtils.dp2px(getContext(), 50);
             ((ViewGroup) view.getParent()).addView(this, params);
@@ -60,25 +61,30 @@ public class EmptyView extends LinearLayout {
     }
 
     public void setNoMessageText(CharSequence text) {
-        tv_no_message.setText(text);
-        tv_no_message.setVisibility(View.VISIBLE);
+        tvNoMessage.setText(text);
+        tvNoMessage.setVisibility(View.VISIBLE);
+    }
+
+    public void setNoMessageText1(CharSequence text) {
+        tvMessageBold.setText(text);
+        tvMessageBold.setVisibility(View.VISIBLE);
     }
 
     /********修改文字的颜色**********/
     public void setMessageTextColor2(int colorResId) {
-        tv_no_message.setTextColor(colorResId);
-        tv_no_message.setVisibility(View.VISIBLE);
+        tvNoMessage.setTextColor(colorResId);
+        tvNoMessage.setVisibility(View.VISIBLE);
     }
 
     /**
      * 显示不同的文字提示及其图片提示
      */
     public View setMyManager(String showNoTip, int showNoIamgeViewResId, int textSize, int colorResId) {
-        iv_empety_mageger.setImageResource(showNoIamgeViewResId);
-        tv_no_message.setTextColor(colorResId);
-        tv_no_message.setText(showNoTip);
-        tv_no_message.setTextSize(textSize);
-        tv_no_message.setVisibility(View.VISIBLE);
+        ivEmpetyMageger.setImageResource(showNoIamgeViewResId);
+        tvNoMessage.setTextColor(colorResId);
+        tvNoMessage.setText(showNoTip);
+        tvNoMessage.setTextSize(textSize);
+        tvNoMessage.setVisibility(View.VISIBLE);
         return this;
     }
 
@@ -86,9 +92,9 @@ public class EmptyView extends LinearLayout {
      * 显示不同的文字提示及其图片提示
      */
     public View setMyManager(String showNoTip, int showNoIamgeViewResId) {
-        iv_empety_mageger.setImageResource(showNoIamgeViewResId);
-        tv_no_message.setText(showNoTip);
-        tv_no_message.setVisibility(View.VISIBLE);
+        ivEmpetyMageger.setImageResource(showNoIamgeViewResId);
+        tvNoMessage.setText(showNoTip);
+        tvNoMessage.setVisibility(View.VISIBLE);
         return this;
     }
 
@@ -96,8 +102,8 @@ public class EmptyView extends LinearLayout {
      * 显示不同的文字提示及其图片提示
      */
     public View setMyManager(int showNoIamgeViewResId) {
-        iv_empety_mageger.setImageResource(showNoIamgeViewResId);
-        iv_empety_mageger.setVisibility(View.VISIBLE);
+        ivEmpetyMageger.setImageResource(showNoIamgeViewResId);
+        ivEmpetyMageger.setVisibility(View.VISIBLE);
         return this;
     }
 
@@ -105,8 +111,8 @@ public class EmptyView extends LinearLayout {
      * 显示不同的文字提示
      */
     public View setMyManager(String showNoTip) {
-        tv_no_message.setText(showNoTip);
-        tv_no_message.setVisibility(View.VISIBLE);
+        tvNoMessage.setText(showNoTip);
+        tvNoMessage.setVisibility(View.VISIBLE);
         return this;
     }
 
@@ -115,7 +121,7 @@ public class EmptyView extends LinearLayout {
      */
     public View isShowTextTipMassager(boolean isShow) {
         if (isShow) {
-            tv_no_message.setVisibility(View.VISIBLE);
+            tvNoMessage.setVisibility(View.VISIBLE);
         }
         return this;
     }
@@ -125,11 +131,11 @@ public class EmptyView extends LinearLayout {
      */
     public View isShowTextTipMassager(boolean isShow, String showNoTip) {
         if (isShow) {
-            tv_no_message.setVisibility(View.VISIBLE);
-            tv_no_message.setText(showNoTip);
+            tvNoMessage.setVisibility(View.VISIBLE);
+            tvNoMessage.setText(showNoTip);
         } else {
-            tv_no_message.setVisibility(View.GONE);
-            tv_no_message.setText(showNoTip);
+            tvNoMessage.setVisibility(View.GONE);
+            tvNoMessage.setText(showNoTip);
         }
         return this;
     }
@@ -139,10 +145,10 @@ public class EmptyView extends LinearLayout {
      */
     public View isShowIamgeMassager(boolean isShow, int showNoIamgeViewResId) {
         if (isShow) {
-            iv_empety_mageger.setVisibility(View.VISIBLE);
-            iv_empety_mageger.setImageResource(showNoIamgeViewResId);
+            ivEmpetyMageger.setVisibility(View.VISIBLE);
+            ivEmpetyMageger.setImageResource(showNoIamgeViewResId);
         } else {
-            iv_empety_mageger.setVisibility(View.GONE);
+            ivEmpetyMageger.setVisibility(View.GONE);
         }
         return this;
     }
@@ -152,9 +158,9 @@ public class EmptyView extends LinearLayout {
      */
     public View isShowIamgeMassager(boolean isShow) {
         if (isShow) {
-            iv_empety_mageger.setVisibility(View.VISIBLE);
+            ivEmpetyMageger.setVisibility(View.VISIBLE);
         } else {
-            iv_empety_mageger.setVisibility(View.GONE);
+            ivEmpetyMageger.setVisibility(View.GONE);
         }
         return this;
     }

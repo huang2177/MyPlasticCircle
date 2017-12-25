@@ -107,7 +107,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private void initView() {
         page = 1;
         region = "0";
-        c_type = "0";
+        c_type = "7";
         map = new HashMap<>();
         mListBean = new ArrayList<>();
         mVHelper = new MarqueeViewHelper();
@@ -429,6 +429,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             personsBean.setType(topBean.getType());
             personsBean.setName(topBean.getName());
             personsBean.setThumb(topBean.getThumb());
+            personsBean.setMobile(topBean.getMobile());
             personsBean.setC_name(topBean.getC_name());
             personsBean.setIs_pass(topBean.getIs_pass());
             personsBean.setMerge_three(topBean.getMerge_three());

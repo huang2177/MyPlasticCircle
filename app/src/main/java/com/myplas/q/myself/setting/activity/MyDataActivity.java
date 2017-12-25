@@ -303,7 +303,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
      */
     public void upLoadImg(String method, String imgpath, int type) {
         String token = sharedUtils.getData(this, "token");
-        postUpLoadIMG(this, API.BASEURL + method, imgpath, token, this, type);
+        postUpLoadImg(this, API.BASEURL + method, imgpath, token, this, type, null);
     }
 
 

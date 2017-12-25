@@ -111,7 +111,7 @@ public class NetRequest implements Callback {
         }
     }
 
-    public void post_UpLoadIMG(String imgpath, String token) {
+    public void postUploadImg(String imgpath, String token, ProgressListener listener) {
         MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -126,7 +126,7 @@ public class NetRequest implements Callback {
                 .addHeader("X-UA", "android|" + inch + "|" + userid + "|" + token + "|" + uuid + "|" + packgename + "|" + comtroname + "" +
                         "|" + controversion + "|" + kernelVersion + "|" + chrome + "|" + chromeversion + "|" + makename + "|" + phonename + "")
                 .url(url)
-                .post(requestBody)
+                .post(new ProgressRequestBody(requestBody, listener, type))
                 .build();
         client.newCall(request).enqueue(this);
     }

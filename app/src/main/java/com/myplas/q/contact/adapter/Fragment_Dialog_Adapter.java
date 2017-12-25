@@ -29,9 +29,9 @@ public abstract class Fragment_Dialog_Adapter extends HIndicatorAdapter {
     public Fragment_Dialog_Adapter(int type, Map<Integer, Integer> map) {
         this.map = map;
         this.type = type;
-        mListValue = (type == 1) ? Arrays.asList("0", "1", "2", "4", "5")
+        mListValue = (type == 1) ? Arrays.asList("0", "7", "1", "2", "4", "5")
                 : Arrays.asList("0", "1", "3", "2", "4");
-        mListShow = (type == 1) ? Arrays.asList("全部分类", "塑料制品厂", "原料供应商", "物流服务商", "其他")
+        mListShow = (type == 1) ? Arrays.asList("全部分类", "店铺", "塑料制品厂", "原料供应商", "物流服务商", "其他")
                 : Arrays.asList("全国", "华东", "华南", "华北", "其他");
     }
 

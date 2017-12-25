@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.common.netresquset.NetRequest;
+import com.myplas.q.common.netresquset.ProgressListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -183,10 +184,10 @@ public class BaseActivity extends FragmentActivity {
      * post之上传图片
      */
 
-    public void postUpLoadIMG(Context context, String url, String imgpath, String token, ResultCallBack resultCallBack, int type) {
+    public void postUpLoadImg(Context context, String url, String imgpath, String token, ResultCallBack resultCallBack, int type, ProgressListener listener) {
         if (NetUtils.isNetworkStateed(context)) {
             NetRequest netRequest = new NetRequest(context, url, null, resultCallBack, type);
-            netRequest.post_UpLoadIMG(imgpath, token);
+            netRequest.postUploadImg(imgpath, token, listener);
         }
     }
 

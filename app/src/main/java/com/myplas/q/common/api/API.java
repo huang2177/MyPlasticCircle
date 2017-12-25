@@ -480,6 +480,22 @@ public class API {
     /**
      * 塑料头条-检查是否有文章阅读权限
      */
-    public final static String IS_PAID_SUBSCRIPTION = "toutiao/isPaidSubscription";
+    public final static String IS_PAID_SUBSCRIPTION = "shopAudit/UserPicUpload";
+
+
+    /**
+     * 上传个人头像到服务器
+     */
+    public final static String USERPICUPLOAD = "shopAudit/UserPicUpload";
+    /**
+     * 上传个人头像到服务器
+     */
+    public final static String BUSINESSLICENSEUPLOAD = "shopAudit/businessLicenseUpload";
+    /**
+     * 提交申请
+     */
+    public final static String SUBMISSION = "shopAudit/submission";
+
+
 
 }

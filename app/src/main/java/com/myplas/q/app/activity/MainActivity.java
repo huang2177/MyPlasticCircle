@@ -523,7 +523,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      */
     public void exit() {
         if ((System.currentTimeMillis() - exitTime) > 2500) {
-            TextUtils.toast(getApplicationContext(), "再按一次塑料圈通讯录!");
+            TextUtils.toast(this, "再按一次塑料圈通讯录!");
             exitTime = System.currentTimeMillis();
         } else {
             finish();

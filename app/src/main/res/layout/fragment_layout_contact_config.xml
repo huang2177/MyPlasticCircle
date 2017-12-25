@@ -27,7 +27,7 @@
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/down"
                 android:gravity="center"
-                android:text="全部分类"
+                android:text="店铺"
                 android:textColor="@color/color_balank"
                 android:textSize="16.0sp" />
         </RelativeLayout>

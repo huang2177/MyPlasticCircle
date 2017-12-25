@@ -1,23 +1,38 @@
 package com.myplas.q.myself.store;
 
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.netresquset.ProgressListener;
+import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyEditText;
+import com.myplas.q.common.view.ProgressImageView;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.durban.Controller;
 import com.yanzhenjie.durban.Durban;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 黄双
@@ -25,13 +40,16 @@ import java.util.ArrayList;
  */
 
 public class MyStoreActivity extends BaseActivity implements View.OnClickListener
-        , MyEditText.OnTextWatcher {
+        , MyEditText.OnTextWatcher, ResultCallBack, ProgressListener {
     private Button button;
+    private EmptyView emptyView;
+    private ScrollView scrollView;
     private FrameLayout flLicence, flHead;
-    private ImageView imageLicence, imageHead;
     private MyEditText editName, editIntroduction;
+    private ProgressImageView imageLicence, imageHead;
 
     private int color;
+    private SharedUtils sharedUtils;
     private final int HCODE = 10, ICODE = 20;
     private String companyName, companyIntroduction, headPath, licencePath;
 
@@ -49,20 +67,25 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private void initView() {
         button = F(R.id.store_button);
         flHead = F(R.id.store_fl_head);
+        emptyView = F(R.id.store_emptyview);
         flLicence = F(R.id.store_fl_licence);
+        scrollView = F(R.id.store_scrollview);
         imageHead = F(R.id.store_img_show_head);
-        imageLicence = F(R.id.store_img_show_licence);
         editName = F(R.id.store_edit_company_name);
+        imageLicence = F(R.id.store_img_show_licence);
         editIntroduction = F(R.id.store_edit_introduction);
 
         button.setOnClickListener(this);
         flHead.setOnClickListener(this);
-        flLicence.setOnClickListener(this);
-
         editName.addOnTextWatcher(this);
+        flLicence.setOnClickListener(this);
         editIntroduction.addOnTextWatcher(this);
 
+        emptyView.setMyManager(R.drawable.icon_auditing);
+        emptyView.setNoMessageText1("提交成功，请等待客服人员审核！");
+        emptyView.setNoMessageText("预计3个工作日内审核完毕，审核结果会短信通知到您的注册手机。");
 
+        sharedUtils = SharedUtils.getSharedUtils();
         color = getResources().getColor(R.color.color_red);
     }
 
@@ -113,7 +136,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 .inputImagePaths(pathList)
                 // 图片输出文件夹路径。
                 // 裁剪图片输出的最大宽高。
-                .maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
+                //.maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
                 //设置裁剪比例
                 .aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
                 // 图片压缩格式：JPEG、PNG。
@@ -138,7 +161,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
      */
     private void commit() {
         if (isWriteInfo()) {
-//            uCloudUtils.putFile(new File(headPath));
+            upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
+        } else {
+            TextUtils.toast(this, "请先填写完整资料！");
         }
     }
 
@@ -169,6 +194,25 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 && TextUtils.notEmpty(licencePath);
     }
 
+    /**
+     * 上传图片
+     */
+    public void upLoadFile(String method, String path, int type) {
+        String url = API.BASEURL + method;
+        String token = sharedUtils.getData(this, Constant.TOKEN);
+        postUpLoadImg(this, url, path, token, this, type, this);
+    }
+
+    /**
+     * 保存资料
+     */
+    public void saveInfo() {
+        String url = API.BASEURL + API.SUBMISSION;
+        Map<String, String> map = new HashMap(16);
+        map.put("company_description", companyIntroduction);
+        map.put("company", companyName);
+        postAsyn(this, url, map, this, 3, false);
+    }
 
     @Override
     public void onTextChanged(View v, String s) {
@@ -189,9 +233,12 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
             }
             if (requestCode == HCODE * 10) {  // 解析剪切结果：
                 headPath = mImageList.get(0);
+                imageHead.setUseProgress(true);
                 Glide.with(this).load(headPath).into(imageHead);
+
             } else if (requestCode == ICODE * 10) {
                 licencePath = mImageList.get(0);
+                imageLicence.setUseProgress(true);
                 Glide.with(this).load(licencePath).into(imageLicence);
             }
             changeBtnColor();
@@ -199,8 +246,58 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void callBack(Object object, int type) {
+        try {
+            Log.e("-----callBack" + type + type, object.toString());
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String err = jsonObject.getString("err");
+            if (type == 1 && "0".equals(err)) {
+                upLoadFile(API.USERPICUPLOAD, headPath, 2);
+            }
+            if (type == 2 && "0".equals(err)) {
+                saveInfo();
+            }
+            if (type == 3 && "0".equals(err)) {
+                TextUtils.toast(this, "提交成功！");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editName.getWindowToken(), 0);
 
+                ObjectAnimator
+                        .ofFloat(scrollView, "alpha", 1.0F, 0F)
+                        .setDuration(700)
+                        .start();
+
+                emptyView.setVisibility(View.VISIBLE);
+                ObjectAnimator
+                        .ofFloat(emptyView, "alpha", 0F, 1.0F)
+                        .setDuration(700)
+                        .start();
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void failCallBack(int type) {
+
+    }
+
+    /**
+     * 上传进度监听
+     *
+     * @param currentBytes
+     * @param contentLength
+     * @param done
+     * @param type
+     */
+    @Override
+    public void onProgress(long currentBytes, long contentLength, boolean done, int type) {
+        if (type == 2) {
+            imageHead.setProgress((float) currentBytes / contentLength);
+        } else {
+            imageLicence.setProgress((float) currentBytes / contentLength);
+        }
     }
 }
