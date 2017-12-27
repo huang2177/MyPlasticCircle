@@ -85,8 +85,17 @@ public class ContactInfoBean implements Serializable {
         private String recommendation;
         private String heat;
         private String merge_three;
+        private String shop_audit_status;
         private List<SuppliesBean> supplies;
         private List<DemandBean> demand;
+
+        public void setShop_audit_status(String shop_audit_status) {
+            this.shop_audit_status = shop_audit_status;
+        }
+
+        public String getShop_audit_status() {
+            return shop_audit_status;
+        }
 
         public void setMerge_three(String merge_three) {
             this.merge_three = merge_three;

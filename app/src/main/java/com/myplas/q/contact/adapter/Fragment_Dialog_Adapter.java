@@ -1,6 +1,7 @@
 package com.myplas.q.contact.adapter;
 
 import android.graphics.Color;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,9 +25,9 @@ public abstract class Fragment_Dialog_Adapter extends HIndicatorAdapter {
     private int type;
     private List<String> mListShow;
     private List<String> mListValue;
-    private Map<Integer, Integer> map;
+    private SparseArray<Integer> map;
 
-    public Fragment_Dialog_Adapter(int type, Map<Integer, Integer> map) {
+    public Fragment_Dialog_Adapter(int type, SparseArray<Integer> map) {
         this.map = map;
         this.type = type;
         mListValue = (type == 1) ? Arrays.asList("0", "7", "1", "2", "4", "5")

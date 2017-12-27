@@ -20,6 +20,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.MainActivity;
@@ -38,7 +39,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 13:39
  */
-public class MyDataActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
+public class MyInfomationActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
 
     private IntentFilter mFilter;
     private MyReceiver myReceiver;
@@ -52,12 +53,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
 
     private View shareView;
     private RoundCornerImageView imageHead;
-    private ImageView imageCard, cardMore, headMore;
-    private LinearLayout llMonthUse, llAdd, llSex, llRegion, llProduct, llMothonuse, llMainsell, llMode;
-    private TextView textXb, tvLocation, textGs, textDh, tvNeedProduct, tvCareModel, tvMonthUse, tvProduct,
-            tvAddress, tvCompany, _tvNeedProduct, mName;
+    private ImageView imageCard, cardArrow, headArrow, licenceArrow, imageLicence;
+    private LinearLayout llMonthUse, llAdd, llSex, llRegion, llProduct, llMothonuse, llMainsell, llMode, llLicence;
+    private TextView textXb, tvLocation, textGs, tvPhone, tvNeedProduct, tvCareModel, tvMonthUse, tvProduct, tvAddress,
+            tvCompany, _tvNeedProduct, mName;
 
-    private String from, imgCard, imgHead;
+    private String from, imgCard, imgHead, imgLicence;
     private final String ACTION = "com.broadcast.databack";
 
     @Override
@@ -65,7 +66,9 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_seeting_data);
         initTileBar();
+
         initView();
+        judgeFrom();
     }
 
     public void initView() {
@@ -74,12 +77,13 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         from = getIntent().getStringExtra("from");
 
         textGs = F(R.id.wd_zl_gs);
-        textDh = F(R.id.wd_zl_tel);
+        tvPhone = F(R.id.wd_zl_tel);
         mName = F(R.id.wd_zl_name);
-        cardMore = F(R.id.data_img_card);
-        headMore = F(R.id.data_head_card);
+        cardArrow = F(R.id.data_img_card);
+        headArrow = F(R.id.data_head_card);
         imageCard = F(R.id.wd_zl_text_upload);
         imageHead = F(R.id.wd_zl_text_headimg);
+        licenceArrow = F(R.id.data_img_licence);
 
         textXb = F(R.id.wd_zl_text_xb);
         _tvNeedProduct = F(R.id.textView8);
@@ -91,7 +95,9 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         tvCareModel = F(R.id.wd_zl_text_caremodel);
         tvNeedProduct = F(R.id.wd_zl_text_needproduct);
 
+        llLicence = F(R.id.ll_licence);
         llSex = F(R.id.setting_data_sex);
+        imageLicence = F(R.id.wd_licence);
         llAdd = F(R.id.setting_data_location);
         llRegion = F(R.id.setting_data_region);
         llMonthUse = F(R.id.linear_show_close);
@@ -99,7 +105,12 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
         llProduct = F(R.id.setting_data_product);
         llMothonuse = F(R.id.setting_data_monthuse);
         llMainsell = F(R.id.setting_data_needproduct);
+    }
 
+    /**
+     * 判断是从哪里跳转
+     */
+    private void judgeFrom() {
         if ("1".equals(from)) {  //从通讯录跳转
             setTitle("个人资料");
             getPersonInfo();
@@ -122,19 +133,26 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             llMonthUse.setOnClickListener(this);
             llMothonuse.setOnClickListener(this);
 
-            cardMore.setVisibility(View.VISIBLE);
-            headMore.setVisibility(View.VISIBLE);
+            cardArrow.setVisibility(View.VISIBLE);
+            headArrow.setVisibility(View.VISIBLE);
+            licenceArrow.setVisibility(View.VISIBLE);
             textXb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvCareModel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvMonthUse.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvLocation.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             tvAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             tvProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvMonthUse.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvLocation.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+            tvCareModel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
             tvNeedProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+
+            licenceArrow.setImageResource(R.drawable.btn_more);
+            mName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            textGs.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            tvPhone.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+            tvCompany.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
         }
         imageHead.setOnClickListener(this);
         imageCard.setOnClickListener(this);
+        imageLicence.setOnClickListener(this);
     }
 
 
@@ -152,6 +170,10 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             case R.id.wd_zl_text_upload:
                 shareView = imageCard;
                 preViewOrUpLoad("2", imgCard, 200);
+                break;
+            case R.id.wd_licence:
+                shareView = imageLicence;
+                preViewOrUpLoad("5", imgLicence, 200);
                 break;
             case R.id.setting_data_sex:
                 Intent intent3 = new Intent(this, DataCommonActivity.class);
@@ -223,10 +245,10 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
      */
 
     private void preViewOrUpLoad(String type, String imgurl, int requestCode) {
-        if ("1".equals(from)) {
+        if ("1".equals(from) || "5".equals(type)) {
             Intent intent1 = new Intent(this, PreImageViewActivity.class);
             intent1.putExtra("imgurl", imgurl);
-            intent1.putExtra("type", "1".equals(type) ? sexInPut : "2");
+            intent1.putExtra("type", "1".equals(type) ? sexInPut : type);
             startActivityByTras(intent1);
         } else {
             Intent intent1 = new Intent(this, TakePhotoDialogActivity.class);
@@ -291,7 +313,6 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             postAsyn(this, url, map, this, 3, true);
         } catch (Exception e) {
         }
-
     }
 
     /**
@@ -319,7 +340,7 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
                     showInfo(mySelfInfo);
                 }
             }
-            if (type == 3 && err.equals("0")) {
+            if (type == 3 && "0".equals(err)) {
                 requestNetData();
             }
 
@@ -344,28 +365,30 @@ public class MyDataActivity extends BaseActivity implements View.OnClickListener
             monthUse = mySelfInfo.getData().getMonth_consum();
             mainProduct = mySelfInfo.getData().getMain_product();
             needProduct = mySelfInfo.getData().getNeed_product();
+            imgLicence = mySelfInfo.getData().getBusiness_licence_pic();
 
             sexInPut = ("男".equals(sex)) ? ("0") : ("1");
+            imgCard = imgCard.startsWith("http") ? imgCard : "http:" + imgCard;
+            imgHead = imgHead.startsWith("http") ? imgHead : "http:" + imgHead;
+            imgLicence = imgLicence.startsWith("http") ? imgLicence : imgLicence + "http:";
 
             textXb.setText(sex);
             tvAddress.setText(region);
             tvCareModel.setText(model);
             mName.setText(mySelfInfo.getData().getName());
             textGs.setText(mySelfInfo.getData().getC_name());
-            textDh.setText(mySelfInfo.getData().getMobile());
+            tvPhone.setText(mySelfInfo.getData().getMobile());
             tvLocation.setText(address.replace("|", ""));
             tvNeedProduct.setText("1".equals(type) ? needProduct : mainProduct);
 
-            Glide.with(this)
-                    .load(imgCard)
-                    .placeholder(R.drawable.card)
-                    .into(imageCard);
-            Glide.with(this)
-                    .load(imgHead)
-                    .placeholder("男".equals(sex)
-                            ? R.drawable.img_defaul_male
-                            : R.drawable.img_defaul_female)
-                    .into(imageHead);
+            llLicence.setVisibility(TextUtils.notEmpty(imgLicence) ? View.VISIBLE : View.GONE);
+            Glide.with(this).load(imgLicence).into(imageLicence);
+
+            Glide.with(this).load(imgCard).error(R.drawable.card).into(imageCard);
+
+            Glide.with(this).load(imgHead).error("男".equals(sex)
+                    ? R.drawable.img_defaul_male
+                    : R.drawable.img_defaul_female).into(imageHead);
 
             switch (type) {
                 case "1":

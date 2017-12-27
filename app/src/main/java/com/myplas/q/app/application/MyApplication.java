@@ -36,7 +36,6 @@ public class MyApplication extends MultiDexApplication {
         initJPush();
         initStetho();
         registerActivity();
-
     }
 
 

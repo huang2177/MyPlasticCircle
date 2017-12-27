@@ -60,7 +60,7 @@ import cn.jpush.android.api.JPushInterface;
  *
  * @author Administrator
  */
-public class MainActivity extends FragmentActivity implements View.OnClickListener
+public class MainActivity extends BaseActivity implements View.OnClickListener
         , ResultCallBack
         , RabbitMQCallBack
         , CommonDialog.DialogShowInterface
@@ -323,14 +323,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Map<String, String> map = new HashMap<String, String>();
         map.put("version", VersionUtils.getVersionName(this));
         map.put("platform", "android");
-        BaseActivity.postAsyn(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 1, false);
+        postAsyn(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 1, false);
     }
 
     /**
      * rabbitMQ Gets config.
      */
     public void getConfig() {
-        BaseActivity.postAsyn(this, API.BASEURL + API.INIT, null, this, 3, false);
+        postAsyn(this, API.BASEURL + API.INIT, null, this, 3, false);
     }
 
     @Override

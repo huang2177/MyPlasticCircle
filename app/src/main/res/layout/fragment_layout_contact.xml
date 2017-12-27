@@ -32,15 +32,11 @@
             <ImageView
                 android:id="@+id/contact_banner_img"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="40dp"
                 android:scaleType="fitXY"
                 android:visibility="gone"
                 app:layout_scrollFlags="scroll" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                app:layout_scrollFlags="scroll" />
             <!--选项卡-->
             <include layout="@layout/fragment_layout_contact_config" />
 

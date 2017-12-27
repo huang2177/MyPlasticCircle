@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:textColor="#555"
+                android:textColor="@color/color_title_main"
                 android:textSize="14.0sp" />
 
             <TextView

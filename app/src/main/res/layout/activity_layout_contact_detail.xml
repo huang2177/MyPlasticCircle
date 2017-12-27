@@ -13,65 +13,94 @@
         android:layout_height="35dp"
         android:background="@color/color_red" />
 
-    <android.support.design.widget.CoordinatorLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="-30dp">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar_layout"
+
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_transparent_"
-            app:elevation="0dp">
+            android:layout_height="match_parent">
 
-            <!--AppBarLayout里放入的都可以跟着向上滑动滑出布局的的 -->
-            <include layout="@layout/activity_layout_contact_detail_info" />
-
-            <LinearLayout
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:background="@color/color_transparent_"
+                app:elevation="0dp">
 
-                <com.androidkun.xtablayout.XTabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center|bottom"
-                    android:background="@color/color_white"
-                    app:xTabDividerWidthWidthText="true"
-                    app:xTabIndicatorColor="@color/color_red"
-                    app:xTabIndicatorHeight="3dp"
-                    app:xTabMode="scrollable"
-                    app:xTabSelectedTextColor="@color/color_red"
-                    app:xTabSelectedTextSize="16.0sp"
-                    app:xTabTextColor="@color/color_gray"
-                    app:xTabTextSelectedBold="true"
-                    app:xTabTextSize="16.0sp" />
+                <!--AppBarLayout里放入的都可以跟着向上滑动滑出布局的的 -->
+                <include layout="@layout/activity_layout_contact_detail_info" />
 
-                <View
-                    android:id="@+id/headline_divider"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/shape_shande" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-        </android.support.design.widget.AppBarLayout>
+                    <com.androidkun.xtablayout.XTabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center|bottom"
+                        android:background="@color/color_white"
+                        app:xTabDividerWidthWidthText="true"
+                        app:xTabIndicatorColor="@color/color_red"
+                        app:xTabIndicatorHeight="3dp"
+                        app:xTabMode="scrollable"
+                        app:xTabSelectedTextColor="@color/color_red"
+                        app:xTabSelectedTextSize="16.0sp"
+                        app:xTabTextColor="@color/color_gray"
+                        app:xTabTextSelectedBold="true"
+                        app:xTabTextSize="16.0sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_white"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                    <View
+                        android:id="@+id/headline_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/shape_shande" />
+                </LinearLayout>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager"
+            </android.support.design.widget.AppBarLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </RelativeLayout>
-    </android.support.design.widget.CoordinatorLayout>
+                android:layout_height="match_parent"
+                android:background="@color/color_white"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+        </android.support.design.widget.CoordinatorLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_openshop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="20dp"
+            android:background="@android:color/transparent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/img_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:src="@drawable/btn_shop_close" />
+
+            <com.sobot.chat.widget.gif.GifView
+                android:id="@+id/img_openshop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp" />
+        </FrameLayout>
+    </FrameLayout>
 
 </LinearLayout>
 

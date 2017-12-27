@@ -1,6 +1,8 @@
 package com.myplas.q.app.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,11 +11,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +31,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.StatusUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.sobot.chat.widget.photoview.PhotoView;
 import com.sobot.chat.widget.photoview.PhotoViewAttacher;
 
@@ -46,9 +53,18 @@ import me.panpf.sketch.request.ImageFrom;
 public class PreImageViewActivity extends BaseActivity {
 
     private LinearLayout layout;
-    private SketchImageView photoView;
+    private ImageView photoView;
 
-    @SuppressLint("HandlerLeak")
+    public static void launch(Activity activity, View transitionView, String resId) {
+        Intent intent = new Intent(activity, PreImageViewActivity.class);
+        intent.putExtra("imgurl", resId);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(activity, transitionView, "bigImageView");
+
+        ActivityCompat.startActivity(activity, intent, options.toBundle());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,36 +75,43 @@ public class PreImageViewActivity extends BaseActivity {
         layout = F(R.id.preimg_ll);
         photoView = F(R.id.photoview);
 
-        // setDownloadProgressListener() 一定要在 displayImage() 之前
-        photoView.setDisplayListener(new DisplayListener() {
-            @Override
-            public void onStarted() {
-                // 只有在需要进入非主线程加载图片时才会回调 onStarted() 方法
-            }
 
-            @Override
-            public void onCompleted(Drawable drawable, ImageFrom imageFrom, ImageAttrs imageAttrs) {
-                if (drawable != null) {
-                    changeBackgroundColor(((BitmapDrawable) drawable).getBitmap());
-                }
-            }
-
-            @Override
-            public void onError(ErrorCause errorCause) {
-                String type = getIntent().getStringExtra("type");
-                photoView.displayResourceImage(getDefaultDrawable(type));
-            }
-
-            @Override
-            public void onCanceled(CancelCause cancelCause) {
-
-            }
-        });
-
-        photoView.setShowDownloadProgressEnabled(true, Color.parseColor("#000000"));
-        //photoView.setZoomEnabled(true);
+//        // setDownloadProgressListener() 一定要在 displayImage() 之前
+//        photoView.setDisplayListener(new DisplayListener() {
+//            @Override
+//            public void onStarted() {
+//                // 只有在需要进入非主线程加载图片时才会回调 onStarted() 方法
+//            }
+//            @Override
+//            public void onCompleted(Drawable drawable, ImageFrom imageFrom, ImageAttrs imageAttrs) {
+//                if (drawable != null) {
+//                    changeBackgroundColor(((BitmapDrawable) drawable).getBitmap());
+//                }
+//            }
+//            @Override
+//            public void onError(ErrorCause errorCause) {
+//                String type = getIntent().getStringExtra("type");
+//                photoView.displayResourceImage(getDefaultDrawable(type));
+//            }
+//            @Override
+//            public void onCanceled(CancelCause cancelCause) {
+//
+//            }
+//        });
+//        photoView.displayImage(url);
         String url = getIntent().getStringExtra("imgurl");
-        photoView.displayImage(url);
+        String type = getIntent().getStringExtra("type");
+        Glide.with(this)
+                .load(!"http:".equals(url) ? url : getDefaultDrawable(type))
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        photoView.setImageBitmap(resource);
+                        changeBackgroundColor(resource);
+                    }
+                });
 
         photoView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,18 +189,3 @@ public class PreImageViewActivity extends BaseActivity {
         return resId;
     }
 }
-//        Glide.with(this)
-//                .load(getIntent().getStringExtra("imgurl"))
-//                .asBitmap()
-//                .placeholder("2".equals(type)
-//                        ? R.drawable.card
-//                        : "0".equals(type) ? R.drawable.img_defaul_male : R.drawable.img_defaul_female)
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .into(new SimpleTarget<Bitmap>() {
-//                    @Override
-//                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                        photoView.setImageBitmap(resource);
-//                        changeBackgroundColor(resource);
-//                    }
-//
-//                });

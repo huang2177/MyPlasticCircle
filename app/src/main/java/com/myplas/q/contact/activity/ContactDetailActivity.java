@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +27,9 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.myself.setting.activity.MyDataActivity;
+import com.myplas.q.myself.setting.activity.MyInfomationActivity;
+import com.myplas.q.myself.store.MyStoreActivity;
+import com.sobot.chat.widget.gif.GifView;
 
 import org.json.JSONObject;
 
@@ -49,10 +52,12 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
     private boolean isSelf;
     private SharedUtils sharedUtils;
 
-    private RoundCornerImageView mHead;
+    private GifView imageStore;
+    private FrameLayout fLStore;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
-    private ImageView mStart, mFollow, mCall, mBack, mSign;
+    private RoundCornerImageView mHead;
+    private ImageView mStart, mFollow, mCall, mBack, mSign, imageClose;
     private TextView mCompany, mName, mLevel, mFans, mFollow_, mIntrudtion;
     private LinearLayout mLayoutInfo, mLayoutFans, mLayoutFollow, mLayoutIntrudtion;
 
@@ -65,6 +70,7 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
     private Fragment_Contact_Detail_Demand mfragmentDemand;
     private Fragment_Contact_Detail_Supply mfragmentSupply;
     private Contact_Detail_ViewPager_Adapter mPagerAdapter;
+    private String stauts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +92,13 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
         mHead = F(R.id.xq_tx);
         mStart = F(R.id.xq_rz);
         mFans = F(R.id.wd_text_fans);
+        fLStore = F(R.id.fl_openshop);
         mViewPager = F(R.id.viewpager);
+        imageClose = F(R.id.img_close);
         mTabLayout = F(R.id.tabLayout);
         mSign = F(R.id.contact_sign_img);
         mFollow_ = F(R.id.wd_text_follow);
+        imageStore = F(R.id.img_openshop);
         mCall = F(R.id.titlebar_img_right);
         mName = F(R.id.contact_detail_name);
         mLevel = F(R.id.contact_detail_fans);
@@ -107,6 +116,8 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
         mCall.setOnClickListener(this);
         mFollow.setOnClickListener(this);
         mIVConact.setOnClickListener(this);
+        imageClose.setOnClickListener(this);
+        imageStore.setOnClickListener(this);
         mLayoutBack.setOnClickListener(this);
         mLayoutInfo.setOnClickListener(this);
         mLayoutFans.setOnClickListener(this);
@@ -155,7 +166,7 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
                 call(contactBean.getData().getMobile());
                 break;
             case R.id.contact_info_ll:
-                Intent intent = new Intent(this, MyDataActivity.class);
+                Intent intent = new Intent(this, MyInfomationActivity.class);
                 intent.putExtra("userid", contactBean.getData().getUser_id());
                 intent.putExtra("from", "1");
                 startActivity(intent);
@@ -183,6 +194,15 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.titlebar_img_back:
                 onBackPressed();
+                break;
+            case R.id.img_close:
+                imageStore.stopGifView();
+                fLStore.setVisibility(View.GONE);
+                break;
+            case R.id.img_openshop:
+                Intent intent4 = new Intent(this, MyStoreActivity.class);
+                intent4.putExtra(Constant.STAUTS, stauts);
+                startActivity(intent4);
                 break;
             default:
                 break;
@@ -278,6 +298,13 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
                     .equals(sharedUtils.getData(this, Constant.USERID));
 
             mFollow.setVisibility(isSelf ? View.GONE : View.VISIBLE);
+
+            stauts = contactBean.getData().getShop_audit_status();
+            if (!"1".equals(stauts)) {
+                fLStore.setVisibility(View.VISIBLE);
+                imageStore.setGifImage(R.drawable.btn_openshop);
+                imageStore.startGifView();
+            }
 
         } catch (Exception e) {
         }

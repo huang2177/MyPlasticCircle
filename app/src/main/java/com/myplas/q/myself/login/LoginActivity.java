@@ -3,6 +3,7 @@ package com.myplas.q.myself.login;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -74,6 +75,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
         initView();
         getVCode();
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -397,5 +399,4 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         } catch (Exception e) {
         }
     }
-
 }

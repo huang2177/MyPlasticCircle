@@ -2,15 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/preimg_ll"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:transitionName="bigImageView">
+    android:layout_height="match_parent">
 
 
-    <me.panpf.sketch.SketchImageView
+    <ImageView
         android:id="@+id/photoview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scaleType="fitCenter" />
+        android:transitionName="bigImageView" />
 </LinearLayout>

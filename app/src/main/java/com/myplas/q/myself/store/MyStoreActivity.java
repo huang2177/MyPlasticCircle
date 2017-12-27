@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -51,7 +52,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private int color;
     private SharedUtils sharedUtils;
     private final int HCODE = 10, ICODE = 20;
-    private String companyName, companyIntroduction, headPath, licencePath;
+    private String companyName, companyIntroduction, headPath, licencePath, stauts;
 
 
     @Override
@@ -87,6 +88,10 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
         sharedUtils = SharedUtils.getSharedUtils();
         color = getResources().getColor(R.color.color_red);
+        stauts = getIntent().getStringExtra(Constant.STAUTS);
+
+        emptyView.setVisibility("2".equals(stauts) ? View.VISIBLE : View.GONE);
+
     }
 
     @Override
@@ -100,6 +105,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.store_button:
                 commit();
+                button.setClickable(false);
                 break;
             default:
                 break;
@@ -248,7 +254,6 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-----callBack" + type + type, object.toString());
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("err");
             if (type == 1 && "0".equals(err)) {
@@ -262,16 +267,8 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editName.getWindowToken(), 0);
 
-                ObjectAnimator
-                        .ofFloat(scrollView, "alpha", 1.0F, 0F)
-                        .setDuration(700)
-                        .start();
-
                 emptyView.setVisibility(View.VISIBLE);
-                ObjectAnimator
-                        .ofFloat(emptyView, "alpha", 0F, 1.0F)
-                        .setDuration(700)
-                        .start();
+                emptyView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_top));
             }
 
         } catch (Exception e) {
@@ -281,7 +278,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void failCallBack(int type) {
-
+        button.setClickable(true);
     }
 
     /**

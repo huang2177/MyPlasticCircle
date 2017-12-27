@@ -53,7 +53,16 @@ public class ContactBean {
     private String show_msg;
     private TopBean top;
     private String totals;
+    private String shop_audit_status;
     private List<PersonsBean> persons;
+
+    public void setShop_audit_status(String shop_audit_status) {
+        this.shop_audit_status = shop_audit_status;
+    }
+
+    public String getShop_audit_status() {
+        return shop_audit_status;
+    }
 
     public String getErr() {
         return err;

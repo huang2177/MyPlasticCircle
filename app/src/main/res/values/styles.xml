@@ -35,6 +35,11 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
+    <style name="DetailedTheme" parent="AppTheme">
+        <!--无进入动画-->
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
 
     <style name="navigationBar_text_style">
         <item name="android:layout_height">wrap_content</item>
@@ -63,14 +68,6 @@
     </style>
 
 
-    <style name="wd_zhc_text_style">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textSize">14.0sp</item>
-        <item name="android:textColor">@color/color_balank</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
 
     <style name="my_anim_out_in" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/myanim_in</item>

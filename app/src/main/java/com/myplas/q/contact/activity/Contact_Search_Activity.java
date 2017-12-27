@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -73,7 +74,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
 
     private boolean isLoading;
     private String transition;
-    private Map<Integer, Integer> map;
+    private SparseArray<Integer> map;
     private int page, visibleItemCount;
     private StringBuffer c_type, region;
     private Fragment_Contact_LV_Adapter mLVAdapter;
@@ -93,7 +94,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         page = 1;
         is_buy = "1";
         keywords = "7000f";
-        map = new HashMap<>();
+        map = new SparseArray<>();
         mListBean = new ArrayList<>();
         region = new StringBuffer("0");
         c_type = new StringBuffer("0");

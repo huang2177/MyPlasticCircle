@@ -86,6 +86,15 @@ public class MySelfInfo implements Serializable {
         private String total;
         private String rank;
         private String fans;
+        private String business_licence_pic;
+
+        public void setBusiness_licence_pic(String business_licence_pic) {
+            this.business_licence_pic = business_licence_pic;
+        }
+
+        public String getBusiness_licence_pic() {
+            return business_licence_pic;
+        }
 
         public String getUser_id() {
             return user_id;

@@ -2,6 +2,7 @@ package com.myplas.q.myself;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -41,7 +42,7 @@ import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
 import com.myplas.q.myself.message.activity.MessageActivity;
 import com.myplas.q.myself.setting.SettingActivity;
-import com.myplas.q.myself.setting.activity.MyDataActivity;
+import com.myplas.q.myself.setting.activity.MyInfomationActivity;
 import com.myplas.q.myself.store.MyStoreActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
@@ -239,7 +240,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                 startActivity(new Intent(getActivity(), PlasticMoneyActivity.class));
                 break;
             case R.id.wd_linear_title:
-                Intent intent6 = new Intent(getActivity(), MyDataActivity.class);
+                Intent intent6 = new Intent(getActivity(), MyInfomationActivity.class);
                 intent6.putExtra("from", "2");
                 startActivity(intent6);
                 break;
@@ -248,12 +249,13 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
                 startActivity(intent7);
                 break;
             case R.id.wd_text_store:
-                if ("1".equals(myZone.getData().getMerge_three())) {
+                if ("1".equals(myZone.getData().getShop_audit_status())) {
                     Intent i = new Intent(getActivity(), NewContactDetailActivity.class);
                     i.putExtra("userid", myZone.getData().getUser_id());
                     startActivity(i);
                 } else {
                     Intent i = new Intent(getActivity(), MyStoreActivity.class);
+                    i.putExtra(Constant.STAUTS, myZone.getData().getShop_audit_status());
                     startActivity(i);
                 }
                 break;
@@ -332,6 +334,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
             imageStart.setImageResource(("1".equals(myZone.getData().getMerge_three()))
                     ? (R.drawable.icon_identity_hl)
                     : 0);
+
+            sharedUtils.setData(getActivity(), Constant.STAUTS, myZone.getData().getShop_audit_status());
+
         } catch (Exception e) {
         }
     }
@@ -366,7 +371,6 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         textTitle.setTextColor(Color.TRANSPARENT);
         mimageMore.getDrawable().setAlpha(alpha);
         mimageNews.getDrawable().setAlpha(alpha);
-        imageTx.getDrawable().mutate().setAlpha(alpha);
         textRank.setTextColor(Color.argb(alpha, 255, 255, 255));
         textCompany.setTextColor(Color.argb(alpha, 255, 255, 255));
         textName.setTextColor(Color.argb(alpha, 255, 255, 255));
@@ -374,6 +378,9 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         mDragViewMsg.setTextColor(Color.argb(alpha, 255, 255, 255));
         if (imageStart.getDrawable() != null) {
             imageStart.getDrawable().setAlpha(alpha);
+        }
+        if (imageTx.getDrawable() != null) {
+            imageTx.getDrawable().mutate().setAlpha(alpha);
         }
     }
 

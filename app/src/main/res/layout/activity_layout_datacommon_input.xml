@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.optimus.edittextfield.EditTextField
+        <com.myplas.q.common.view.EditTextField
             android:id="@+id/datacommon_input_edit"
             android:layout_width="match_parent"
             android:layout_height="45dp"

@@ -169,12 +169,14 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter implements CommonDi
     }
 
     public void call(String tel) {
-        if (!tel.contains("*") && isLogin()) {
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        } else {
-            TextUtils.toast(context, tel);
+        if (isLogin()) {
+            if (!tel.contains("*")) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            } else {
+                TextUtils.toast(context, "该用户还未公开电话号码！");
+            }
         }
     }
 

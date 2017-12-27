@@ -29,7 +29,8 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.ShareActivity;
-import com.myplas.q.myself.setting.activity.MyDataActivity;
+import com.myplas.q.myself.setting.activity.MyInfomationActivity;
+import com.myplas.q.myself.store.MyStoreActivity;
 import com.sobot.chat.widget.gif.GifView;
 
 import org.json.JSONObject;
@@ -53,17 +54,17 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
     private SharedUtils sharedUtils;
 
     private GifView imageStore;
+    private FrameLayout fLStore;
     private ViewPager mViewPager;
     private XTabLayout mTabLayout;
     private RoundCornerImageView mHead;
-    private FrameLayout frameLayoutStore;
     private LinearLayout mLayoutInfo, mLayoutFans, mLayoutFollow, mLayoutIntrudtion;
     private ImageView mStart, mFollow, mCall, mBack, mSign, mShare, mIndentify, imageClose;
     private TextView mCompany, mName, phone, address, pro, mFans, mfollow, mIntrudtion, mHeat;
 
-    private ContactSupDemBean p1, p2;
     private List<ContactSupDemBean.DataBean> list;
 
+    private String stauts;
     private List<String> mStringList;
     private ContactInfoBean contactBean;
     private List<Fragment> mFragmentList;
@@ -93,6 +94,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
         mStart = F(R.id.xq_rz);
         mHeat = F(R.id.wd_text_heat);
         mFans = F(R.id.wd_text_fans);
+        fLStore = F(R.id.fl_openshop);
         mViewPager = F(R.id.viewpager);
         mTabLayout = F(R.id.tabLayout);
         imageClose = F(R.id.img_close);
@@ -107,7 +109,6 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
         mLayoutInfo = F(R.id.contact_info_ll);
         mShare = F(R.id.contact_detail_share);
         mIntrudtion = F(R.id.wd_text_introdus);
-        frameLayoutStore = F(R.id.fl_openshop);
         mFollow = F(R.id.contact_detail_follow);
         address = F(R.id.contact_detail_address);
         mLayoutFollow = F(R.id.wd_linear_follow);
@@ -123,14 +124,12 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
         mFollow.setOnClickListener(this);
         mIVConact.setOnClickListener(this);
         imageClose.setOnClickListener(this);
+        imageStore.setOnClickListener(this);
         mLayoutBack.setOnClickListener(this);
         mLayoutInfo.setOnClickListener(this);
         mLayoutFans.setOnClickListener(this);
         mLayoutFollow.setOnClickListener(this);
         mLayoutIntrudtion.setOnClickListener(this);
-
-        imageStore.setGifImage(R.drawable.btn_openshop);
-        imageStore.startGifView();
     }
 
     private void initViewPager() {
@@ -179,7 +178,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
                 call(contactBean.getData().getMobile());
                 break;
             case R.id.contact_info_ll:
-                Intent intent = new Intent(this, MyDataActivity.class);
+                Intent intent = new Intent(this, MyInfomationActivity.class);
                 intent.putExtra("userid", contactBean.getData().getUser_id());
                 intent.putExtra("from", "1");
                 startActivity(intent);
@@ -208,10 +207,6 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
             case R.id.titlebar_img_back:
                 onBackPressed();
                 break;
-            case R.id.img_close:
-                imageStore.stopGifView();
-                frameLayoutStore.setVisibility(View.GONE);
-                break;
             case R.id.contact_detail_share:
                 Intent in = new Intent(this, ShareActivity.class);
                 in.putExtra("type", "1");
@@ -222,6 +217,15 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
                         + "   主营：" + contactBean.getData().getMain_product());
                 startActivity(in);
                 break;
+            case R.id.img_close:
+                imageStore.stopGifView();
+                fLStore.setVisibility(View.GONE);
+                break;
+            case R.id.img_openshop:
+                Intent intent4 = new Intent(this, MyStoreActivity.class);
+                intent4.putExtra(Constant.STAUTS, stauts);
+                startActivity(intent4);
+                break;
             default:
                 break;
         }
@@ -229,7 +233,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
 
     //关注
     public void follow() {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("focused_id", getIntent().getStringExtra("userid"));
         String url = API.BASEURL + API.FOCUS_OR_CANCEL;
@@ -237,7 +241,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
     }
 
     public void getPersonInfoData() {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
         map.put("showType", "1");
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("user_id", getIntent().getStringExtra("userid"));
@@ -335,6 +339,12 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
 
             mFollow.setVisibility(isSelf ? View.GONE : View.VISIBLE);
 
+            stauts = contactBean.getData().getShop_audit_status();
+            if (!"1".equals(stauts)) {
+                fLStore.setVisibility(View.VISIBLE);
+                imageStore.setGifImage(R.drawable.btn_openshop);
+                imageStore.startGifView();
+            }
         } catch (Exception e) {
         }
     }

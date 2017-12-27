@@ -49,5 +49,5 @@ public class Constant {
 
     public static final String R_SUPDEM_CONTENT = "supdem_contact";
 
-
+    public static final String STAUTS = "stauts";
 }

@@ -26,7 +26,7 @@
             android:layout_marginLeft="8dp"
             android:drawableLeft="@drawable/icon_trade"
             android:padding="10dp"
-            android:text="  交易订单"
+            android:text=" 交易订单"
             android:textColor="@color/color_title_main" />
 
         <com.myplas.q.common.view.DragView
@@ -49,38 +49,6 @@
         android:layout_height="1px"
         android:background="@color/color_gray_divider_out" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="10dp"
-        android:background="@color/color_gray_divider_out" />
-
-    <LinearLayout
-        android:id="@+id/wd_text_store"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent">
-
-        <TextView
-            style="@style/myself_text_style"
-            android:layout_marginLeft="8dp"
-            android:drawableLeft="@drawable/icon_my_store"
-            android:padding="10dp"
-            android:text="  我的店铺"
-            android:textColor="@color/color_title_main" />
-
-
-        <TextView
-            style="@style/myself_text_style"
-            android:layout_marginRight="10dp"
-            android:layout_weight="0"
-            android:drawableRight="@drawable/icon_more" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_gray_divider_out" />
 
     <View
         android:layout_width="match_parent"
@@ -104,7 +72,7 @@
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/icon_my_supply"
                 android:padding="10dp"
-                android:text="  我的供给"
+                android:text=" 我的供给"
                 android:textColor="@color/color_title_main" />
 
             <TextView
@@ -132,7 +100,7 @@
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/icon_my_purchase"
                 android:padding="10dp"
-                android:text="  我的求购"
+                android:text=" 我的求购"
                 android:textColor="@color/color_title_main" />
 
             <TextView
@@ -156,6 +124,38 @@
         android:layout_marginTop="10dp"
         android:background="@color/color_gray_divider_out" />
 
+    <LinearLayout
+        android:id="@+id/wd_text_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
+
+        <TextView
+            style="@style/myself_text_style"
+            android:layout_marginLeft="8dp"
+            android:drawableLeft="@drawable/icon_my_store"
+            android:padding="10dp"
+            android:text=" 我的店铺"
+            android:textColor="@color/color_title_main" />
+
+
+        <TextView
+            style="@style/myself_text_style"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0"
+            android:drawableRight="@drawable/icon_more" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_divider_out" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_gray_divider_out" />
+
 
     <LinearLayout
         android:id="@+id/wd_linear_jf"
@@ -170,7 +170,7 @@
             android:drawableLeft="@drawable/icon_integral"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="  我的塑豆"
+            android:text=" 我的塑豆"
             android:textColor="@color/color_title_main"
             android:textSize="16.0sp" />
 
@@ -218,7 +218,7 @@
             android:layout_marginLeft="8dp"
             android:drawableLeft="@drawable/icon_who_see_me"
             android:padding="10dp"
-            android:text="  谁看过我"
+            android:text=" 谁看过我"
             android:textColor="@color/color_title_main" />
 
         <com.myplas.q.common.view.DragView
@@ -263,7 +263,7 @@
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/icon_card"
                 android:padding="10dp"
-                android:text="  企业信用额度"
+                android:text=" 企业信用额度"
                 android:textColor="@color/color_title_main" />
 
             <TextView
@@ -290,7 +290,7 @@
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/icon_with_capital"
                 android:padding="10dp"
-                android:text="  塑料配资"
+                android:text=" 塑料配资"
                 android:textColor="@color/color_title_main" />
 
             <TextView
@@ -324,7 +324,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/icon_setup"
             android:padding="10dp"
-            android:text="  设置"
+            android:text=" 设置"
             android:textColor="@color/color_title_main" />
 
         <TextView

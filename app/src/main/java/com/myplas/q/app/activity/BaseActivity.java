@@ -193,9 +193,13 @@ public class BaseActivity extends FragmentActivity {
 
 
     public void call(String tel) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (!tel.contains("*")) {
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else {
+            TextUtils.toast(this, "该用户还未公开电话号码！");
+        }
     }
 
     /**

@@ -16,7 +16,7 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.app.activity.MainActivity;
-import com.myplas.q.myself.setting.activity.MyDataActivity;
+import com.myplas.q.myself.setting.activity.MyInfomationActivity;
 
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class FragmentRegister3 extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register_info:
-                Intent intent = new Intent(getActivity(), MyDataActivity.class);
+                Intent intent = new Intent(getActivity(), MyInfomationActivity.class);
                 intent.putExtra("from", "0");
                 startActivity(intent);
                 break;

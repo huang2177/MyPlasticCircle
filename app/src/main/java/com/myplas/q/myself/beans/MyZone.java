@@ -9,7 +9,7 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/27 16:08
  */
-public class MyZone implements Serializable{
+public class MyZone implements Serializable {
 
 
     /**
@@ -175,6 +175,15 @@ public class MyZone implements Serializable{
         private String rank;
         private String memberlevel;
         private String merge_three;
+        private String shop_audit_status;
+
+        public void setShop_audit_status(String shop_audit_status) {
+            this.shop_audit_status = shop_audit_status;
+        }
+
+        public String getShop_audit_status() {
+            return shop_audit_status;
+        }
 
         public void setMerge_three(String merge_three) {
             this.merge_three = merge_three;

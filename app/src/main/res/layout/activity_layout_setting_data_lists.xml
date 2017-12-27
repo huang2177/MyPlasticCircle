@@ -45,8 +45,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="2dp"
-                    android:visibility="invisible"
-                    android:src="@drawable/btn_more_small" />
+                    android:src="@drawable/btn_more_small"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View
@@ -73,7 +73,6 @@
                 <TextView
                     android:id="@+id/wd_zl_name"
                     style="@style/setting_text_style"
-                    android:drawableRight="@drawable/btn_more"
                     android:maxLines="1" />
             </LinearLayout>
 
@@ -100,7 +99,7 @@
                 <TextView
                     android:id="@+id/wd_zl_gs"
                     style="@style/setting_text_style"
-                    android:drawableRight="@drawable/btn_more"
+
                     android:maxLines="1" />
             </LinearLayout>
 
@@ -126,8 +125,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_tel"
-                    style="@style/setting_text_style"
-                    android:drawableRight="@drawable/btn_more" />
+                    style="@style/setting_text_style" />
             </LinearLayout>
 
             <View
@@ -154,7 +152,6 @@
                     android:id="@+id/wd_zl_text_location"
                     style="@style/setting_text_style"
                     android:layout_width="match_parent"
-                    android:drawableRight="@drawable/btn_more"
                     android:maxLines="2" />
 
             </LinearLayout>
@@ -182,8 +179,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_text_xb"
-                    style="@style/setting_text_style"
-                    android:drawableRight="@drawable/btn_more" />
+                    style="@style/setting_text_style" />
             </LinearLayout>
 
             <View
@@ -209,8 +205,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_text_address"
-                    style="@style/setting_text_style"
-                    android:drawableRight="@drawable/btn_more" />
+                    style="@style/setting_text_style" />
             </LinearLayout>
 
             <View
@@ -235,8 +230,7 @@
 
                 <TextView
                     android:id="@+id/wd_zl_text_company"
-                    style="@style/setting_text_style"
-                    android:drawableRight="@drawable/btn_more" />
+                    style="@style/setting_text_style" />
             </LinearLayout>
 
             <View
@@ -269,8 +263,7 @@
 
                     <TextView
                         android:id="@+id/wd_zl_text_products"
-                        style="@style/setting_text_style"
-                        android:drawableRight="@drawable/btn_more" />
+                        style="@style/setting_text_style" />
                 </LinearLayout>
 
                 <View
@@ -296,8 +289,7 @@
 
                     <TextView
                         android:id="@+id/wd_zl_text_monthuse"
-                        style="@style/setting_text_style"
-                        android:drawableRight="@drawable/btn_more" />
+                        style="@style/setting_text_style" />
                 </LinearLayout>
 
                 <View
@@ -326,7 +318,6 @@
                     android:id="@+id/wd_zl_text_needproduct"
                     style="@style/setting_text_style"
                     android:layout_width="match_parent"
-                    android:drawableRight="@drawable/btn_more"
                     android:maxLines="2" />
             </LinearLayout>
 
@@ -360,7 +351,6 @@
                         android:id="@+id/wd_zl_text_caremodel"
                         style="@style/setting_text_style"
                         android:layout_width="match_parent"
-                        android:drawableRight="@drawable/btn_more"
                         android:maxLines="1" />
                 </LinearLayout>
 
@@ -401,9 +391,57 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="2dp"
                     android:src="@drawable/btn_more_small"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_licence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/color_gray_divider_in" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="我的营业执照："
+                        android:textColor="#171717"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:id="@+id/wd_licence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="236px"
+                        android:maxHeight="338px"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="3dp"
+                        android:transitionName="bigImageView" />
+
+                    <ImageView
+                        android:id="@+id/data_img_licence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:src="@drawable/btn_more_small"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -147,7 +147,7 @@ public class TakePhotoDialogActivity extends BaseActivity implements View.OnClic
                 // 裁剪图片输出的最大宽高。
                 //.maxWidthHeight(100, 100)
                 // 裁剪时的宽高比。
-                .aspectRatio("1".equals(type) ? 1 : 5, "1".equals(type) ? 1 : 3)
+                .aspectRatio("1".equals(type) ? 1 : 133, "1".equals(type) ? 1 : 73)
                 // 图片压缩格式：JPEG、PNG。
                 .compressFormat(Durban.COMPRESS_PNG)
                 // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)

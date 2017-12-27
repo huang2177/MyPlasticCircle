@@ -33,7 +33,7 @@ import com.myplas.q.myself.setting.activity.AboutPlasticActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
 import com.myplas.q.myself.setting.activity.HelpActivity;
 import com.myplas.q.myself.setting.activity.MessageActivity;
-import com.myplas.q.myself.setting.activity.MyDataActivity;
+import com.myplas.q.myself.setting.activity.MyInfomationActivity;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 
@@ -146,7 +146,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
             public void onItemClick(int position) {
                 switch (position) {
                     case 0:
-                        Intent intent0 = new Intent(SettingActivity.this, MyDataActivity.class);
+                        Intent intent0 = new Intent(SettingActivity.this, MyInfomationActivity.class);
                         startActivity(intent0);
                         break;
                     case 2:

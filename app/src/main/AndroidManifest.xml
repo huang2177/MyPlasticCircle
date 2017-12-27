@@ -88,8 +88,8 @@
             android:theme="@style/my_theme_animation" />
         <activity
             android:name="com.myplas.q.app.activity.PreImageViewActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/DetailedTheme" />
 
         <!--contact-->
         <activity
@@ -201,7 +201,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.myplas.q.myself.setting.activity.MyDataActivity"
+            android:name="com.myplas.q.myself.setting.activity.MyInfomationActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 

@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +48,9 @@ import com.myplas.q.contact.activity.Cover_WebActivity;
 import com.myplas.q.contact.adapter.Fragment_Contact_LV_Adapter;
 import com.myplas.q.contact.adapter.Fragment_Dialog_Adapter;
 import com.myplas.q.contact.beans.ContactBean;
-import com.myplas.q.myself.integral.activity.IntegralActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myself.login.LoginActivity;
+import com.myplas.q.myself.store.MyStoreActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.umeng.analytics.MobclickAgent;
@@ -73,7 +75,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         , SwipeRefreshLayout.OnRefreshListener, MarqueeFactory.OnItemClickListener {
 
     private List<String> mList;
-    private Map<Integer, Integer> map;
+    private SparseArray<Integer> map;
     private MarqueeViewHelper mVHelper;
     private Fragment_Contact_LV_Adapter mLVAdapter;
     private List<ContactBean.PersonsBean> mListBean;
@@ -90,11 +92,11 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private LinearLayout mLayoutCofig, mLayoutTop, mLayoutSearch, notifyRoot;
 
     public int page;
-    private String region, c_type;
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
+    private String region, c_type, stauts;
     private boolean isRefreshing, isLoading;
-    private String userId, jumpUrl, jumpToWhere, jumpTitle, mergeThere;
+    private String userId, jumpUrl, jumpToWhere, jumpTitle, mergeThere, isShop;
 
 
     @Override
@@ -107,8 +109,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     private void initView() {
         page = 1;
         region = "0";
-        c_type = "7";
-        map = new HashMap<>();
+        c_type = "8"; //传‘8’表示 默认数据由后台控制
+        map = new SparseArray<>();
         mListBean = new ArrayList<>();
         mVHelper = new MarqueeViewHelper();
         sharedUtils = SharedUtils.getSharedUtils();
@@ -181,7 +183,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
         switch (v.getId()) {
             case R.id.contact_banner_img:
-                JumpToWhere();
+                jumpToWhere();
                 break;
             case R.id.contact_classify:
                 openDialog(1, mTVClass);
@@ -218,7 +220,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             @Override
             public void onItemSelected(String show, String value) {
                 dialog.dismiss();
-                textView.setText(show);
+                //textView.setText(show);
                 textView.setTextColor(getResources().getColor(R.color.color_red));
                 textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
                 if (type == 1) {
@@ -299,6 +301,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("err");
             if (type == 1) {
+                isLoading = false;
                 if (err.equals("0")) {
                     sharedUtils.setData(getActivity(), "txlBean", object.toString());
                     loadCacheData(gson, object.toString(), true);
@@ -309,7 +312,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                         RabbitMQConfig.getInstance(getActivity()).readMsg("unread_customer", 10);
                     }
                 }
-                if (err.equals("2") || err.equals("3")) {
+                if ("2".equals(err) || "3".equals(err)) {
                     TextUtils.toast(getActivity(), jsonObject.getString("msg"));
                 }
             }
@@ -372,7 +375,6 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             if (page == 1) {
                 showInfo(mContactBean);
             } else {
-                isLoading = false;
                 mListBean.addAll(mContactBean.getPersons());
                 mLVAdapter.setList(mListBean);
                 mLVAdapter.notifyDataSetChanged();
@@ -383,6 +385,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
 
     private void showInfo(ContactBean bean) {
+        mTVClass.setText(bean.getShow_ctype());
         mTVTitle.setText("塑料圈通讯录(" + bean.getMember() + "人)");
 //        editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
 
@@ -404,6 +407,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             jumpUrl = bean.getBanner_jump_url();
             jumpTitle = bean.getBanner_jump_url_title();
             jumpToWhere = bean.getIs_banner_jump_native();
+            sharedUtils.setData(getActivity(), Constant.STAUTS, bean.getShop_audit_status());
 
             mIVBanner.setVisibility(View.VISIBLE);
             Glide.with(getActivity()).load(bean.getBanner_url()).into(mIVBanner);
@@ -502,12 +506,20 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     /**
      * Jump to where.
      */
-    private void JumpToWhere() {
+    private void jumpToWhere() {
         isLogin();
         if ("1".equals(jumpToWhere)) {  //原生
-            Intent intent = new Intent(getActivity(), IntegralActivity.class);
-            startActivity(intent);
-        } else {                        //指定的url
+            stauts = sharedUtils.getData(getActivity(), Constant.STAUTS);
+            if ("1".equals(stauts)) {
+                Intent intent = new Intent(getActivity(), NewContactDetailActivity.class);
+                intent.putExtra(Constant.USERID, sharedUtils.getData(getActivity(), Constant.USERID));
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(getActivity(), MyStoreActivity.class);
+                intent.putExtra(Constant.STAUTS, stauts);
+                startActivity(intent);
+            }
+        } else {                       //指定的url
             Intent intent = new Intent(getActivity(), Cover_WebActivity.class);
             intent.putExtra("url", jumpUrl);
             intent.putExtra("title", jumpTitle);
