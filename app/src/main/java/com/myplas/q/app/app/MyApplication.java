@@ -1,6 +1,7 @@
-package com.myplas.q.app.application;
+package com.myplas.q.app.app;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,51 +34,15 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        initJPush();
-        initStetho();
         registerActivity();
-    }
-
-
-    /**
-     * 初始化Stetho相关
-     */
-    private void initStetho() {
-        if (BuildConfig.USE_STETHO) {
-            Stetho.initialize(
-                    Stetho.newInitializerBuilder(this)
-                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-                            .build());
-        }
-    }
-
-    /**
-     * 初始化极光推送相关
-     */
-    private void initJPush() {
-        String userId = SharedUtils
-                .getSharedUtils()
-                .getData(this, Constant.USERID);
-
-        JPushInterface.init(this);
-
-        JPushInterface.setPowerSaveMode(this, true);
-
-        JPushInterface.setDebugMode(BuildConfig.USE_STETHO
-                ? true
-                : false);
-
-        if (TextUtils.notEmpty(userId)) {
-            JPushInterface.setAlias(this, 10, userId);
-        }
+        InitializeService.start(this);
     }
 
     /**
      * 注册activity生命周期的监听
      */
     private void registerActivity() {
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 if (activity instanceof SplashActivity) {

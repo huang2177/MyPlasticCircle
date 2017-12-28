@@ -1,5 +1,6 @@
 package com.myplas.q.app.activity;
 
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +25,7 @@ import com.tencent.mm.sdk.platformtools.Log;
 import com.tencent.mm.sdk.platformtools.Util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -182,7 +184,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void callBack(Object object, int type) {
-        Log.e("--------", object.toString());
+
     }
 
     @Override
@@ -197,8 +199,17 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
      */
     private boolean isWebchatAvaliable() {
         try {
-            getPackageManager().getPackageInfo("com.tencent.mm", PackageManager.GET_ACTIVITIES);
-            return true;
+            final PackageManager packageManager = getPackageManager();// 获取packagemanager
+            List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+            if (pinfo != null) {
+                for (int i = 0; i < pinfo.size(); i++) {
+                    String pn = pinfo.get(i).packageName;
+                    if ("com.tencent.mm".equals(pn)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         } catch (Exception e) {
             return false;
         }
