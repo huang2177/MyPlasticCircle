@@ -180,19 +180,25 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    //  获取可选充值金额
+    /**
+     * 获取可选充值金额
+     */
     public void getSelectableMoney() {
         postAsyn(this, API.BASEURL + API.GET_PAY_CONFIG, null, this, 1);
     }
 
-    //  获取固定充值金额
+    /**
+     * 获取固定充值金额
+     */
     public void getExactAmount(String money) {
         Map<String, String> map = new HashMap<>();
         map.put("money", money);
         postAsyn(this, API.BASEURL + API.GET_EXACT_AMOUNT, map, this, 2);
     }
 
-    //创建订单：
+    /**
+     * 创建订单：
+     */
     public void getOrder() {
         if (isSelected_money) {
             Map<String, String> map = new HashMap<>();
@@ -206,7 +212,9 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    //  微信（服务器） 回调
+    /**
+     * 微信（服务器） 回调
+     */
     public void callWeChat(String order_id, String type) {
         Map<String, String> map = new HashMap<>();
         map.put("order_id", order_id);
@@ -218,7 +226,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            boolean err = new JSONObject(object.toString()).getString("err").equals("0");
+            boolean err = "0".equals(new JSONObject(object.toString()).getString("err"));
             if (type == 1 && err) {
                 SelectableBean selectableBean = gson.fromJson(object.toString(), SelectableBean.class);
                 list = selectableBean.getData();
@@ -258,24 +266,26 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         unregisterReceiver(myBroadcastReceiver);
     }
 
-    //支付回调
+    /**
+     * 支付回调
+     */
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("wechat_pay")) {
+            if ("wechat_pay".equals(intent.getAction())) {
                 int type = 0;
                 String data = intent.getStringExtra("errcode");
-                if (data.equals("0")) {//支付成功
+                if ("0".equals(data)) {//支付成功
                     type = 4;
                     CommonDialog commonDialog = new CommonDialog();
                     commonDialog.showDialog(context, "支付成功!", 5, null);
                 }
-                if (data.equals("-1")) {//支付失败
+                if ("-1".equals(data)) {//支付失败
                     type = -4;
                     CommonDialog commonDialog = new CommonDialog();
                     commonDialog.showDialog(context, "请重新充值!", 6, null);
                 }
-                if (data.equals("-2")) {//支付取消
+                if ("-2".equals(data)) {//支付取消
                     type = -3;
                     CommonDialog commonDialog = new CommonDialog();
                     commonDialog.showDialog(context, "您已取消支付!", 7, null);
@@ -284,11 +294,8 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
             }
         }
     }
-
-
     @Override
     public void failCallBack(int type) {
 
     }
-
 }

@@ -27,30 +27,37 @@ public abstract class Fragment_Dialog_Adapter extends HIndicatorAdapter {
     private List<String> mListValue;
     private SparseArray<Integer> map;
 
-    public Fragment_Dialog_Adapter(int type, SparseArray<Integer> map) {
+    public Fragment_Dialog_Adapter(int type, String showCType, SparseArray<Integer> map) {
         this.map = map;
         this.type = type;
         mListValue = (type == 1) ? Arrays.asList("0", "7", "1", "2", "4", "5")
                 : Arrays.asList("0", "1", "3", "2", "4");
         mListShow = (type == 1) ? Arrays.asList("全部分类", "店铺", "塑料制品厂", "原料供应商", "物流服务商", "其他")
                 : Arrays.asList("全国", "华东", "华南", "华北", "其他");
+        if (this.type == 1) {
+            this.map.put(this.type, mListShow.indexOf(showCType));
+        }
     }
 
     @Override
     public void onBindView(BaseViewHolder holder, int position) {
-        TextView tv = holder.getView(R.id.item_tv);
-        ImageView iv = holder.getView(R.id.item_iv);
-        tv.setText(mListShow.get(position));
-        tv.setGravity(Gravity.LEFT);
-        tv.setTextColor(Color.BLACK);
-        boolean checked = map.get(type) != null && position == map.get(type)
-                || map.get(type) == null && position == 0;
-        if (checked) {
-            iv.setImageResource(R.drawable.icon_check);
+        try {
+            TextView tv = holder.getView(R.id.item_tv);
+            ImageView iv = holder.getView(R.id.item_iv);
+            tv.setText(mListShow.get(position));
+            tv.setGravity(Gravity.LEFT);
+            tv.setTextColor(Color.BLACK);
+            boolean checked = map.get(type) != null && position == map.get(type)
+                    || map.get(type) == null && position == 0;
+            if (checked) {
+                iv.setImageResource(R.drawable.icon_check);
+            }
+            holder.setVisibility(R.id.item_line, position == mListShow.size() - 1
+                    ? BaseViewHolder.GONE
+                    : BaseViewHolder.VISIBLE);
+        } catch (Exception e) {
+
         }
-        holder.setVisibility(R.id.item_line, position == mListShow.size() - 1
-                ? BaseViewHolder.GONE
-                : BaseViewHolder.VISIBLE);
     }
 
     @Override

@@ -63,12 +63,7 @@ public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
             viewHolder.mTVCompany.setText(list.get(position).getC_name()
                     + "  " + list.get(position).getName());
 
-            Glide.with(context)
-                    .load(list.get(position).getThumb())
-                    .into(viewHolder.mIVHead);
-            viewHolder.mIVStart.setImageResource(list.get(position).getIs_pass().equals("0")
-                    ? R.drawable.icon_identity
-                    : R.drawable.icon_identity_hl);
+            Glide.with(context).load(list.get(position).getThumb()).into(viewHolder.mIVHead);
 
             List<ReplyBean.DataBean.ReplayBean> childList = list.get(position).getReplay();
 
@@ -124,7 +119,7 @@ public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
     class viewHolder extends RecyclerView.ViewHolder {
         LinearLayout mLayout;
         MyListview mRecyclerView;
-        ImageView mIVHead, mIVStart, mIVCall;
+        ImageView mIVHead, mIVCall;
         TextView mTVCompany, mTVContent, mTVTime;
 
         public viewHolder(View convertView, int position) {
@@ -133,7 +128,6 @@ public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
             mIVCall = (ImageView) convertView.findViewById(R.id.item_call);
             mIVHead = (ImageView) convertView.findViewById(R.id.item_head);
             mLayout = (LinearLayout) convertView.findViewById(R.id.item_ll);
-            mIVStart = (ImageView) convertView.findViewById(R.id.item_start);
             mTVContent = (TextView) convertView.findViewById(R.id.item_pirce);
             mTVCompany = (TextView) convertView.findViewById(R.id.item_cmpany);
             mRecyclerView = (MyListview) convertView.findViewById(R.id.item_rv);

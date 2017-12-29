@@ -309,9 +309,9 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
                     .load(contactBean.getData().getThumb())
                     .into(mHead);
 
-            mStart.setImageResource(("1".equals(contactBean.getData().getMerge_three()))
-                    ? (R.drawable.icon_identity_hl)
-                    : 0);
+            if ("1".equals(contactBean.getData().getMerge_three())) {
+                Glide.with(this).load(R.drawable.icon_identity_hl).into(mStart);
+            }
 
             mFollow.setImageResource("0".equals(contactBean.getData().getIs_follow())
                     ? R.drawable.btn_contact_follow

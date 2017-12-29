@@ -339,9 +339,9 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTVFans.setText("粉丝：" + mDetailBean.getData().getFans()
                 + "   等级：" + mDetailBean.getData().getMember_level());
 
-        mIVStart.setImageResource("1".equals(mDetailBean.getData().getMerge_three())
-                ? R.drawable.icon_identity_hl
-                : 0);
+        if ("1".equals(mDetailBean.getData().getMerge_three())) {
+            Glide.with(this).load(R.drawable.icon_identity_hl).into(mIVStart);
+        }
 
         Glide.with(this)
                 .load(mDetailBean.getData().getThumb())

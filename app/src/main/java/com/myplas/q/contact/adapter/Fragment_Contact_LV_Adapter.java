@@ -23,6 +23,7 @@ import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.contact.beans.ContactBean;
 import com.myplas.q.myself.login.LoginActivity;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -49,6 +50,9 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter implements CommonDi
         this.list = list;
         this.context = context;
         array = new SparseArray<>();
+//        InputStream is = getResources().openRawResource(R.drawable.icon);
+//
+//        Bitmap mBitmap = BitmapFactory.decodeStream(is);
     }
 
 
@@ -128,9 +132,11 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter implements CommonDi
             viewHolder.mPro.setText(down);
             viewHolder.mSign.setImageResource(resId);
 
-            if ("1".equals(personsBean.getMerge_three())) {
-                Glide.with(context).load(R.drawable.icon_identity_hl).into(viewHolder.mStart);
-            }
+            Glide.with(context)
+                    .load("1".equals(personsBean.getMerge_three())
+                            ? R.drawable.icon_identity_hl
+                            : 0)
+                    .into(viewHolder.mStart);
 
             viewHolder.mDial.setOnClickListener(new View.OnClickListener() {
                 @Override

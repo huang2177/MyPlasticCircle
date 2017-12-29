@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
@@ -46,13 +47,13 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private EmptyView emptyView;
     private ScrollView scrollView;
     private FrameLayout flLicence, flHead;
-    private MyEditText editName, editIntroduction;
-    private ProgressImageView imageLicence, imageHead;
+    private ImageView imageLicence, imageHead;
+    private MyEditText editName, editIntroduction, editBusiness;
 
     private int color;
     private SharedUtils sharedUtils;
     private final int HCODE = 10, ICODE = 20;
-    private String companyName, companyIntroduction, headPath, licencePath, stauts;
+    private String companyName, companyIntroduction, headPath, licencePath, stauts, business;
 
 
     @Override
@@ -72,6 +73,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         flLicence = F(R.id.store_fl_licence);
         scrollView = F(R.id.store_scrollview);
         imageHead = F(R.id.store_img_show_head);
+        editBusiness = F(R.id.store_edit_business);
         editName = F(R.id.store_edit_company_name);
         imageLicence = F(R.id.store_img_show_licence);
         editIntroduction = F(R.id.store_edit_introduction);
@@ -106,6 +108,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
             case R.id.store_button:
                 commit();
                 button.setClickable(false);
+                button.setBackgroundResource(R.drawable.login_btn_shape);
                 break;
             default:
                 break;
@@ -142,8 +145,8 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 .inputImagePaths(pathList)
                 // 图片输出文件夹路径。
                 // 裁剪图片输出的最大宽高。
-                //.maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
-                //设置裁剪比例
+                // .maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
+                // 设置裁剪比例
                 .aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
                 // 图片压缩格式：JPEG、PNG。
                 .compressFormat(Durban.COMPRESS_PNG)
@@ -167,7 +170,8 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
      */
     private void commit() {
         if (isWriteInfo()) {
-            upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
+            saveInfo();
+//            upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
         } else {
             TextUtils.toast(this, "请先填写完整资料！");
         }
@@ -192,12 +196,14 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
      */
     private boolean isWriteInfo() {
         companyName = editName.getText().toString();
+        business = editBusiness.getText().toString();
         companyIntroduction = editIntroduction.getText().toString();
 
         return TextUtils.notEmpty(companyName)
-                && TextUtils.notEmpty(companyIntroduction)
-                && TextUtils.notEmpty(headPath)
-                && TextUtils.notEmpty(licencePath);
+                && TextUtils.notEmpty(business)
+                && TextUtils.notEmpty(companyIntroduction);
+//                && TextUtils.notEmpty(headPath)
+//                && TextUtils.notEmpty(licencePath);
     }
 
     /**
@@ -215,8 +221,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     public void saveInfo() {
         String url = API.BASEURL + API.SUBMISSION;
         Map<String, String> map = new HashMap(16);
-        map.put("company_description", companyIntroduction);
         map.put("company", companyName);
+        map.put("business_licence", business);
+        map.put("company_description", companyIntroduction);
         postAsyn(this, url, map, this, 3, false);
     }
 
@@ -239,13 +246,14 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
             }
             if (requestCode == HCODE * 10) {  // 解析剪切结果：
                 headPath = mImageList.get(0);
-                imageHead.setUseProgress(true);
-                Glide.with(this).load(headPath).into(imageHead);
+                //imageHead.setUseProgress(true);
+                upLoadFile(API.USERPICUPLOAD, headPath, 1);
 
             } else if (requestCode == ICODE * 10) {
                 licencePath = mImageList.get(0);
-                imageLicence.setUseProgress(true);
-                Glide.with(this).load(licencePath).into(imageLicence);
+                //imageLicence.setUseProgress(true);
+                upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 2);
+
             }
             changeBtnColor();
         }
@@ -257,10 +265,10 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("err");
             if (type == 1 && "0".equals(err)) {
-                upLoadFile(API.USERPICUPLOAD, headPath, 2);
+                Glide.with(this).load(headPath).into(imageHead);
             }
             if (type == 2 && "0".equals(err)) {
-                saveInfo();
+                Glide.with(this).load(licencePath).into(imageLicence);
             }
             if (type == 3 && "0".equals(err)) {
                 TextUtils.toast(this, "提交成功！");
@@ -269,6 +277,10 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
                 emptyView.setVisibility(View.VISIBLE);
                 emptyView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_top));
+            } else {
+                button.setClickable(true);
+                button.setBackgroundResource(R.drawable.login_btn_shape_hl);
+                TextUtils.toast(this, jsonObject.getString("msg"));
             }
 
         } catch (Exception e) {
@@ -278,7 +290,10 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void failCallBack(int type) {
-        button.setClickable(true);
+        if (type == 3) {
+            button.setClickable(true);
+            button.setBackgroundResource(R.drawable.login_btn_shape_hl);
+        }
     }
 
     /**
@@ -291,10 +306,10 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
      */
     @Override
     public void onProgress(long currentBytes, long contentLength, boolean done, int type) {
-        if (type == 2) {
-            imageHead.setProgress((float) currentBytes / contentLength);
+        if (type == 1) {
+            //imageHead.setProgress((float) currentBytes / contentLength);
         } else {
-            imageLicence.setProgress((float) currentBytes / contentLength);
+            //imageLicence.setProgress((float) currentBytes / contentLength);
         }
     }
 }

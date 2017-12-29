@@ -272,9 +272,6 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
                     .load(contactBean.getData().getThumb())
                     .into(mHead);
 
-//            mStart.setImageResource(("0".equals(contactBean.getData().getIs_vip()))
-//                    ? (R.drawable.icon_identity)
-//                    : (R.drawable.icon_identity_hl));
 
             mFollow.setImageResource("0".equals(contactBean.getData().getIs_follow())
                     ? R.drawable.img_supdem_detail_follow

@@ -69,15 +69,19 @@ public class ProgressRequestBody extends RequestBody {
     }
 
     @Override
-    public void writeTo(BufferedSink sink) throws IOException {
+    public void writeTo(BufferedSink sink) {
 
-        if (bufferedSink == null) {
-            bufferedSink = Okio.buffer(sink(sink));
+        try {
+            if (bufferedSink == null) {
+                bufferedSink = Okio.buffer(sink(sink));
+            }
+            //写入
+            requestBody.writeTo(bufferedSink);
+            //刷新
+            bufferedSink.flush();
+        } catch (Exception e) {
+
         }
-        //写入
-        requestBody.writeTo(bufferedSink);
-        //刷新
-        bufferedSink.flush();
     }
 
     private Sink sink(BufferedSink sink) {

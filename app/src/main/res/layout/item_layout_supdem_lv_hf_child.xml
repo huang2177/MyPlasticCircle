@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/item_ll"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+    android:id="@+id/item_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/common_ripple_bg"
-              android:orientation="vertical">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,38 +12,28 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        >
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
-                <com.myplas.q.common.view.RoundCornerImageView
-                    android:id="@+id/item_head"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/img_defaul_male" />
+            <com.myplas.q.common.view.RoundCornerImageView
+                android:id="@+id/item_head"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_defaul_male" />
 
-                <ImageView
-                    android:id="@+id/item_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:src="@drawable/icon_identity"
-                    android:visibility="gone"/>
-            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:gravity="center_vertical"
                 android:paddingLeft="5dp">
 
                 <TextView
@@ -54,15 +44,14 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/color_title_main"
-                    android:textSize="14.0sp"/>
+                    android:textSize="14.0sp" />
 
                 <TextView
                     android:id="@+id/item_pirce"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:textSize="14.0sp"/>
+                    android:textSize="14.0sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -77,19 +66,19 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center_vertical|right"
                 android:layout_weight="1.5"
-                android:src="@drawable/img_supdem_detail_call"/>
+                android:src="@drawable/img_supdem_detail_call" />
 
             <TextView
                 android:id="@+id/item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical" />
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_in"/>
+        android:background="@color/color_gray_divider_in" />
 </LinearLayout>

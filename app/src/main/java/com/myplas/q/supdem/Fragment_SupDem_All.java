@@ -86,7 +86,6 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-
         getNetData("1", false);
     }
 

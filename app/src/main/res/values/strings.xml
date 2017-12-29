@@ -23,6 +23,7 @@
     <string name="font_color_red1"><font color="#ff0000">*</font>请上传清晰营业执照</string>
     <string name="font_color_red2"><font color="#ff0000">*</font>请上传本人头像</string>
     <string name="font_color_red3"><font color="#ff0000">*</font>请填写公司名称</string>
+    <string name="font_color_red5"><font color="#ff0000">*</font>请填写统一社会信用代码</string>
     <string name="font_color_red4"><font color="#ff0000">*</font>请填写公司简介</string>
 
 </resources>

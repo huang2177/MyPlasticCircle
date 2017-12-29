@@ -48,10 +48,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     break;
                 case BaseResp.ErrCode.ERR_AUTH_DENIED:
                     break;
+                default:
+                    break;
             }
-			Intent intent = new Intent();
-			intent.setAction("isShareed");
-			sendBroadcast(intent);
+//            Intent intent = new Intent();
+//            intent.setAction("isShareed");
+//            sendBroadcast(intent);
         }
         finish();
     }

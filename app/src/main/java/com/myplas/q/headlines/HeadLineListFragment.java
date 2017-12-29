@@ -255,7 +255,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     public void getSubscribe(int page, String subscribe, boolean isShow) {
         this.page = page;
         this.keywords = keywords;
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", page + "");
         map.put("keywords", "");
         map.put("subscribe", subscribe);
@@ -267,7 +267,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         this.page = page;
         this.cateId = cate_id;
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", page + "");
         map.put("size", "10");
         map.put("cate_id", cate_id);

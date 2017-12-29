@@ -23,13 +23,17 @@ public class API {
             : "https://ssl.myplas.com/";
 
     /*common*/
+
     /**
      * APP更新
      */
+
     public final static String CHECK_VERSION = "common/checkVersion";
+
     /**
      * APP推荐更新
      */
+
     public final static String CHECKAPPVERSION = "common/checkAppVersion";
 
     /**

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/item_ll"
@@ -20,30 +20,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.myplas.q.common.view.RoundCornerImageView
-                    android:id="@+id/item_head"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_defaul_male" />
-
-                <ImageView
-                    android:id="@+id/item_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:src="@drawable/icon_identity"
-                    android:visibility="gone"/>
-            </FrameLayout>
+            <com.myplas.q.common.view.RoundCornerImageView
+                android:id="@+id/item_head"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_defaul_male" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:gravity="center_vertical"
                 android:paddingLeft="5dp">
 
                 <TextView
@@ -55,14 +44,12 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/color_title_main"
-                    android:textSize="14.0sp"/>
+                    android:textSize="14.0sp" />
 
                 <TextView
                     android:id="@+id/item_pirce"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
                     android:textSize="14.0sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -70,6 +57,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <ImageView
@@ -78,25 +66,25 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center_vertical|right"
                 android:layout_weight="1.5"
-                android:src="@drawable/img_supdem_detail_call"/>
+                android:src="@drawable/img_supdem_detail_call" />
 
             <TextView
                 android:id="@+id/item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical" />
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_gray_divider_in"/>
+        android:background="@color/color_gray_divider_in" />
 
     <com.myplas.q.common.view.MyListview
         android:id="@+id/item_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@null"/>
+        android:divider="@null" />
 </LinearLayout>

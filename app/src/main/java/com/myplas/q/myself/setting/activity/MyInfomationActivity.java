@@ -381,7 +381,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
             tvLocation.setText(address.replace("|", ""));
             tvNeedProduct.setText("1".equals(type) ? needProduct : mainProduct);
 
-            llLicence.setVisibility(TextUtils.notEmpty(imgLicence) ? View.VISIBLE : View.GONE);
+            llLicence.setVisibility(!"http:".equals(imgLicence) ? View.VISIBLE : View.GONE);
             Glide.with(this).load(imgLicence).into(imageLicence);
 
             Glide.with(this).load(imgCard).error(R.drawable.card).into(imageCard);

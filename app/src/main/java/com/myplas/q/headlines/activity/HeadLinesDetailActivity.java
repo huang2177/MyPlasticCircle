@@ -190,7 +190,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 + "   " + sucribleDetailBean.getInfo().getPv()));
 
         String html = sucribleDetailBean.getInfo().getContent();
-        String s = "<style>img,div{ width:100%;}table{width:100%;}</style>" + html;
+        String s = "<style>img,div{width:100%;}table{width:100%;}</style>" + html;
         webView.loadData(s, "text/html;charset=UTF-8", null);
 
         List<SucribleDetailBean.InfoBean.SubscribeBean> subscribeBeanList = sucribleDetailBean.getInfo().getSubscribe();
@@ -219,6 +219,9 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
 
     @Override
     public void onClick(View v) {
+        if (sucribleDetailBean == null) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.btn_last:
                 clickId = sucribleDetailBean.getInfo().getLastOne();

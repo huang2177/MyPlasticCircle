@@ -175,7 +175,6 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
                     .setOutSideCancelable(true)//点击外部dismiss default true
                     .isDialog(false)//是否显示为对话框样式
                     .build();
-
             pvOptions.setPicker(mList);//添加数据源
             pvOptions.show();
         } else {

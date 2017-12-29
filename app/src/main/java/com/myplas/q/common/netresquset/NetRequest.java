@@ -7,6 +7,7 @@ import android.os.Message;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.SystemUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.common.view.LoadingDialog;
 
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -55,11 +58,11 @@ public class NetRequest implements Callback {
 
         message = new Message();
         client = new OkHttpClient.Builder()
-                .readTimeout(8000, TimeUnit.SECONDS)
-                .connectTimeout(8000, TimeUnit.SECONDS)
+//                .readTimeout(8000, TimeUnit.SECONDS)
+//                .connectTimeout(8000, TimeUnit.SECONDS)
                 .addNetworkInterceptor(new StethoInterceptor())
                 .build();
-        builder = new Request.Builder();
+        builder = new Request.Builder().cacheControl(CacheControl.FORCE_NETWORK);
         myHandler = new MyHandler(context);
         requestBody = new FormBody.Builder();
 
@@ -126,7 +129,7 @@ public class NetRequest implements Callback {
                 .addHeader("X-UA", "android|" + inch + "|" + userid + "|" + token + "|" + uuid + "|" + packgename + "|" + comtroname + "" +
                         "|" + controversion + "|" + kernelVersion + "|" + chrome + "|" + chromeversion + "|" + makename + "|" + phonename + "")
                 .url(url)
-                .post(new ProgressRequestBody(requestBody, listener, type))
+                .post(requestBody)
                 .build();
         client.newCall(request).enqueue(this);
     }
@@ -162,7 +165,7 @@ public class NetRequest implements Callback {
     public void onResponse(Call call, Response response) throws IOException {
         try {
             String result = UnicodeUtils.decode(response.body().string());
-            if (response.isSuccessful() && result != null && !result.equals("")) {
+            if (response.isSuccessful() && TextUtils.notEmpty(result)) {
                 message.what = 1;
                 message.obj = resultCallBack;
                 message.arg1 = type;

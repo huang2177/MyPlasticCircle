@@ -94,8 +94,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     public int page;
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
-    private String region, c_type, stauts;
     private boolean isRefreshing, isLoading;
+    private String region, c_type, stauts, showCType;
     private String userId, jumpUrl, jumpToWhere, jumpTitle, mergeThere, isShop;
 
 
@@ -216,11 +216,12 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
     }
 
     private void openDialog(final int type, final TextView textView) {
-        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, map) {
+
+        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, showCType, map) {
             @Override
             public void onItemSelected(String show, String value) {
                 dialog.dismiss();
-                //textView.setText(show);
+                textView.setText(show);
                 textView.setTextColor(getResources().getColor(R.color.color_red));
                 textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
                 if (type == 1) {
@@ -385,7 +386,8 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
 
 
     private void showInfo(ContactBean bean) {
-        mTVClass.setText(bean.getShow_ctype());
+        showCType = bean.getShow_ctype();
+        mTVClass.setText(showCType);
         mTVTitle.setText("塑料圈通讯录(" + bean.getMember() + "人)");
 //        editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
 

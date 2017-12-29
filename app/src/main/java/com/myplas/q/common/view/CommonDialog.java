@@ -82,7 +82,9 @@ public class CommonDialog {
         normalDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                CommonDialog.this.dialogShowInterface.dialogClick(-1);
+                if (dialogShowInterface != null) {
+                    dialogShowInterface.dialogClick(-1);
+                }
             }
         });
     }

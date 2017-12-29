@@ -82,9 +82,6 @@ public class SupDem_Detail_LV_HF_Child_Adapter extends BaseAdapter {
                     .load(list.get(position).getThumb())
                     .placeholder(R.drawable.img_defaul_male)
                     .into(viewHolder.mIVHead);
-            viewHolder.mIVStart.setImageResource(list.get(position).getIs_pass().equals("0")
-                    ? R.drawable.icon_identity
-                    : R.drawable.icon_identity_hl);
 
             viewHolder.mIVCall.setOnClickListener(new View.OnClickListener() {
                 @Override

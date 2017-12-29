@@ -79,7 +79,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     private StringBuffer c_type, region;
     private Fragment_Contact_LV_Adapter mLVAdapter;
     private List<ContactBean.PersonsBean> mListBean;
-    private String keywords, is_buy, userId, mergeThere;
+    private String keywords, is_buy, userId, mergeThere, showCType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +93,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     public void initView() {
         page = 1;
         is_buy = "1";
+        showCType = "全部分类";
         keywords = "7000f";
         map = new SparseArray<>();
         mListBean = new ArrayList<>();
@@ -367,10 +368,11 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     }
 
     private void openDialog(final int type, final TextView textView) {
-        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, map) {
+        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, showCType, map) {
             @Override
             public void onItemSelected(String show, String value) {
                 dialog.dismiss();
+                showCType = show;
                 textView.setText(show);
                 textView.setTextColor(getResources().getColor(R.color.color_red));
                 textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
