@@ -1,5 +1,7 @@
 package com.myplas.q.myself.login;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -7,11 +9,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +26,10 @@ import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.lisenter.KeyboardWatcher;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
+import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
@@ -50,6 +58,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private Handler mHandler;
     private ScrollView mScrollView;
     private SharedUtils sharedUtils;
+    private RelativeLayout mLayoutType;
     private Button mButtonNomal, mButtonPhone;
     private TextView textviewZhc, textviewWj, mtextviewSend;
     private boolean clicked, isRemember, isNomalNull, isPhoneNull;
@@ -59,6 +68,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
     private ACache mACache;
     private MainActivity mainActivity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +135,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         edittextTel1.addOnTextWatcher(this);
         edittextVerification1.addOnTextWatcher(this);
         edittextVerification2.addOnTextWatcher(this);
+
 
         // 将账号和密码都设置到文本框中
         if (isRemember) {
