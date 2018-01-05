@@ -19,6 +19,7 @@
             android:background="@drawable/bg_contact_image"
             android:gravity="center_vertical"
             android:orientation="vertical"
+
             android:padding="5dp">
 
             <LinearLayout
