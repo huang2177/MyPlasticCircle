@@ -69,7 +69,7 @@ public class Integral_Pay_Adapter extends BaseAdapter {
             }else {
                 map_bg.get(position).setBackgroundColor(context.getResources().getColor(R.color.color_lightgray));
                 map_text1.get(position).setTextColor(context.getResources().getColor(R.color.color_red));
-                map_text2.get(position).setTextColor(context.getResources().getColor(R.color.color_balank));
+                map_text2.get(position).setTextColor(context.getResources().getColor(R.color.color_black));
             }
             convertView.setTag(viewHolder);
         } else {
@@ -87,7 +87,7 @@ public class Integral_Pay_Adapter extends BaseAdapter {
         for (int i=0;i<map_bg.size();i++){
             map_bg.get(i).setBackgroundColor(context.getResources().getColor(R.color.color_lightgray));
             map_text1.get(i).setTextColor(context.getResources().getColor(R.color.color_red));
-            map_text2.get(i).setTextColor(context.getResources().getColor(R.color.color_balank));
+            map_text2.get(i).setTextColor(context.getResources().getColor(R.color.color_black));
         }
         if (position!=-1) {
             if (isSelected) {
@@ -97,7 +97,7 @@ public class Integral_Pay_Adapter extends BaseAdapter {
             } else {
                 map_bg.get(position).setBackgroundColor(context.getResources().getColor(R.color.color_lightgray));
                 map_text1.get(position).setTextColor(context.getResources().getColor(R.color.color_red));
-                map_text2.get(position).setTextColor(context.getResources().getColor(R.color.color_balank));
+                map_text2.get(position).setTextColor(context.getResources().getColor(R.color.color_black));
             }
         }
 

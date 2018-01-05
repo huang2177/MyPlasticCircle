@@ -29,7 +29,7 @@
                 android:layout_weight="1"
                 android:background="@color/color_white"
                 android:padding="10dp"
-                android:textColor="@color/color_balank"/>
+                android:textColor="@color/color_black" />
 
             <TextView
                 android:id="@+id/tradeorder_item_zht"

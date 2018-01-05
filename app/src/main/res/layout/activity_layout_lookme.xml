@@ -22,7 +22,7 @@
             app:xTabIndicatorHeight="3dp"
             app:xTabIndicatorWidth="33dp"
             app:xTabMode="scrollable"
-            app:xTabSelectedTextColor="@color/color_balank"
+            app:xTabSelectedTextColor="@color/color_black"
             app:xTabTextColor="@color/color_gray"
             app:xTabTextSelectedBold="true"
             app:xTabTextSize="16.0sp">

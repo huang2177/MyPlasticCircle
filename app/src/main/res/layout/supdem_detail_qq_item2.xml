@@ -21,7 +21,7 @@
         android:gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:id="@+id/supdem_qq_item2_text1"
-        android:textColor="@color/color_balank" />
+        android:textColor="@color/color_black" />
 
     <TextView
         android:singleLine="true"
@@ -30,7 +30,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:id="@+id/supdem_qq_item2_text2"
-        android:textColor="@color/color_balank" />
+        android:textColor="@color/color_black" />
 
     <TextView
         android:singleLine="true"
@@ -39,6 +39,6 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:id="@+id/supdem_qq_item2_text3"
-        android:textColor="@color/color_balank" />
+        android:textColor="@color/color_black" />
 </LinearLayout>
 </LinearLayout>

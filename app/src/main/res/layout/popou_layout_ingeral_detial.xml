@@ -17,7 +17,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="选择明细类型"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="16.0sp"/>
 
         <GridView

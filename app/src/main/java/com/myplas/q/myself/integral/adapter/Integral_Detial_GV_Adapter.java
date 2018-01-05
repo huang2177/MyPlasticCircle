@@ -83,7 +83,7 @@ public class Integral_Detial_GV_Adapter extends BaseAdapter {
 
     public void changeImg(int position) {
         for (int i = 0; i < mViewMap.size(); i++) {
-            mTextViewMap.get(i).setTextColor(context.getResources().getColor(R.color.color_balank));
+            mTextViewMap.get(i).setTextColor(context.getResources().getColor(R.color.color_black));
             mTextViewMap.get(i).setBackgroundResource(R.drawable.corner_titlebar);
         }
         mTextViewMap.get(position).setBackgroundResource(R.drawable.btn_shape_red_coners);

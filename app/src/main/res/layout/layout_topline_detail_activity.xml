@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="18.0sp"
             android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
                     android:maxLines="2"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="18.0sp"
                     android:textStyle="bold" />
 
@@ -135,7 +135,7 @@
                     android:layout_marginTop="10dp"
                     android:drawableLeft="@drawable/icon_related_recommendations"
                     android:text=" 相关推荐"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp"
                     android:textStyle="bold" />
 
@@ -155,7 +155,7 @@
                     android:drawableLeft="@drawable/icon_hot_pursuit"
                     android:paddingLeft="12px"
                     android:text=" 热门追踪"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp"
                     android:textStyle="bold" />
 

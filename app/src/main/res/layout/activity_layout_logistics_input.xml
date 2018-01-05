@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="全国线路"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"/>
 
             <ImageView
@@ -56,10 +56,10 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="出发地"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"/>
 
-            <com.optimus.edittextfield.EditTextField
+            <com.myplas.q.common.view.EditTextField
                 android:id="@+id/datacommon_edit_starting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -71,7 +71,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:selectAllOnFocus="true"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textColorHint="@color/color_gray3"
                 android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
@@ -98,10 +98,10 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="目的地"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"/>
 
-            <com.optimus.edittextfield.EditTextField
+            <com.myplas.q.common.view.EditTextField
                 android:id="@+id/datacommon_edit_ending"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -112,7 +112,7 @@
                 android:maxLines="1"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textColorHint="@color/color_gray3"
                 android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"

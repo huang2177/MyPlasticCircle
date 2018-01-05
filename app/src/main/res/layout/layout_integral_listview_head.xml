@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/color_white"
-    app:layout_scrollFlags="scroll|enterAlways">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              app:layout_scrollFlags="scroll|enterAlways">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,6 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="@color/color_white"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/icon_integral_detai" />
+                    android:src="@drawable/icon_integral_detai"/>
 
                 <TextView
                     android:id="@+id/integral_all"
@@ -35,7 +35,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/color_red"
-                    android:textSize="16.0sp" />
+                    android:textSize="16.0sp"/>
 
                 <TextView
                     android:id="@+id/integral_all_"
@@ -43,15 +43,15 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="塑豆"
-                    android:textColor="@color/color_balank"
-                    android:textSize="16.0sp" />
+                    android:textColor="@color/color_black"
+                    android:textSize="16.0sp"/>
             </LinearLayout>
 
             <View
                 android:layout_width="2px"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
-                android:background="@color/color_gray_divider_out" />
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/icon_purchase_record" />
+                    android:src="@drawable/icon_purchase_record"/>
 
                 <TextView
                     android:id="@+id/jf_record"
@@ -73,15 +73,15 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text=" 兑换记录"
-                    android:textColor="@color/color_balank"
-                    android:textSize="16.0sp" />
+                    android:textColor="@color/color_black"
+                    android:textSize="16.0sp"/>
             </LinearLayout>
 
             <View
                 android:layout_width="2px"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
-                android:background="@color/color_gray_divider_out" />
+                android:background="@color/color_gray_divider_out"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/icon_wallet" />
+                    android:src="@drawable/icon_wallet"/>
 
                 <TextView
                     android:id="@+id/jf_chz"
@@ -104,13 +104,13 @@
                     android:gravity="center"
                     android:text=" 兑换塑豆"
                     android:textColor="@color/color_red"
-                    android:textSize="16.0sp" />
+                    android:textSize="16.0sp"/>
             </LinearLayout>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/color_gray_divider_out" />
+            android:background="@color/color_gray_divider_out"/>
     </LinearLayout>
 </LinearLayout>

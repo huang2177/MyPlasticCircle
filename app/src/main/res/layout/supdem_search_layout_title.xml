@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:paddingLeft="8dp"
                 android:text="供给"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:visibility="gone" />
 
             <com.myplas.q.common.view.EditTextField
@@ -61,8 +61,8 @@
                 android:maxLines="1"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:textColor="@color/color_balank"
-                android:textColorHint="@color/color_balank"
+                android:textColor="@color/color_black"
+                android:textColorHint="@color/color_black"
                 android:textCursorDrawable="@drawable/text_cursor_shape"
                 android:textSelectHandle="@drawable/textselecthandle"
                 android:textSelectHandleLeft="@drawable/textselecthandle"

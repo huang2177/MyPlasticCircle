@@ -57,7 +57,7 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_vertical"
                         android:text="早盘预报包月卡"
-                        android:textColor="@color/color_balank"/>
+                        android:textColor="@color/color_black" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:singleLine="true"
-                            android:textColor="@color/color_balank"/>
+                            android:textColor="@color/color_black" />
                     </LinearLayout>
                 </LinearLayout>
 

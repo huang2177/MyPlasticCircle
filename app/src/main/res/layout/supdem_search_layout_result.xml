@@ -25,7 +25,7 @@
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/down"
                 android:gravity="center"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"/>
         </RelativeLayout>
 
@@ -50,7 +50,7 @@
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/down"
                 android:gravity="center"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"/>
         </RelativeLayout>
     </LinearLayout>
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="16.0sp"/>
 
         <TextView

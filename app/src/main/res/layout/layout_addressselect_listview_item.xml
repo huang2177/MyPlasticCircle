@@ -9,6 +9,6 @@
         android:textSize="16.0sp"
         android:text="上海"
         android:gravity="center"
-        android:textColor="@color/color_balank"
+        android:textColor="@color/color_black"
         android:id="@+id/address_textview"/>
 </LinearLayout>

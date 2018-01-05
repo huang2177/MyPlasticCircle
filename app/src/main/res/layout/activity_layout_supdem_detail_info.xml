@@ -90,7 +90,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp" />
 
             <TextView
