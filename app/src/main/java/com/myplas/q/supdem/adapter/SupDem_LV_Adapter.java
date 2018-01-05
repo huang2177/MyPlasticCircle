@@ -40,7 +40,6 @@ import java.util.Map;
  */
 public class SupDem_LV_Adapter extends BaseAdapter {
     Context context;
-    String user_id, mergeThere;
     List<SupDemBean.DataBean> list;
     SharedUtils sharedUtils = SharedUtils.getSharedUtils();
 
@@ -124,7 +123,11 @@ public class SupDem_LV_Adapter extends BaseAdapter {
                 public void onClick(View v) {
                     if (list.get(position).getFrom().equals("1")) {
                         if (listener != null) {
-                            listener.onItemClick(user_id, mergeThere, null, null, null);
+                            listener.onItemClick(list.get(position).getUser_id()
+                                    , list.get(position).getMerge_three()
+                                    , null
+                                    , null
+                                    , null);
                         }
                     }
                 }
@@ -139,7 +142,6 @@ public class SupDem_LV_Adapter extends BaseAdapter {
         ImageView typeSupDem, typeNowFutures;
         TextView company, content, time, deliver, reply;
     }
-
 
 
     public Spanned replace(String s) {

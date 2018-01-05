@@ -63,7 +63,6 @@ public class MySelfInfo implements Serializable {
         private String sex;
         private String member_level;
         private String thumb;
-        private String thumbqq;
         private String thumbcard;
         private AllowSendBean allow_send;
         private String c_name;
@@ -150,14 +149,6 @@ public class MySelfInfo implements Serializable {
 
         public void setThumb(String thumb) {
             this.thumb = thumb;
-        }
-
-        public String getThumbqq() {
-            return thumbqq;
-        }
-
-        public void setThumbqq(String thumbqq) {
-            this.thumbqq = thumbqq;
         }
 
         public String getThumbcard() {

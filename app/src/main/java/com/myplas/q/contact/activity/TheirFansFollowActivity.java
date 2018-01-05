@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
@@ -34,16 +35,14 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:15
  */
-public class TheirFansFollowActivity extends BaseActivity implements ResultCallBack
-        , CommonDialog.DialogShowInterface {
+public class TheirFansFollowActivity extends BaseActivity implements ResultCallBack {
 
     private ListView listView;
-    private TextView textView_title;
     private TheirFansFollowAdapter mFansAdapter;
 
-    private SharedUtils sharedUtils;
+    private ContactAccessUtils utils;
+    private String userid, function;
     private int page = 1, visibleItemCount;
-    private String user_id, userid, function, mergeThere;
 
     private List<TheirFansBean.DataBean> mList;
 
@@ -62,18 +61,15 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
         listView = F(R.id.wdgz_listview);
 
         mList = new ArrayList<>();
-        sharedUtils = SharedUtils.getSharedUtils();
-        user_id = getIntent().getStringExtra("userid");
+        utils = new ContactAccessUtils(this);
+        userid = getIntent().getStringExtra("userid");
         function = getIntent().getStringExtra("function");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                userid = mList.get(position).getUser_id();
-                mergeThere = mList.get(position).getMerge_three();
-                //判断是否消耗积分
-                getPersonInfoData(userid, "1", 5);
-
+                utils.checkPremissions(mList.get(position).getUser_id()
+                        , mList.get(position).getMerge_three());
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -95,29 +91,21 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     }
 
     public void getMyFans(String page, boolean isShow) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("user_id", user_id);
+        Map<String, String> map = new HashMap<String, String>(8);
+        map.put("user_id", userid);
         map.put("page", page);
-        postAsyn(this, API.BASEURL + function, map, this, 1, isShow);
+        getAsyn(this, function, map, this, 1, isShow);
     }
 
-    public void getPersonInfoData(String userid, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
-        map.put("user_id", userid);
-        map.put("showType", showtype);
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        postAsyn(this, url, map, this, 5);
-    }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 TheirFansBean fansBean = null;
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     fansBean = gson.fromJson(object.toString(), TheirFansBean.class);
                     if (page == 1) {
                         mFansAdapter = new TheirFansFollowAdapter(this, fansBean.getData());
@@ -133,7 +121,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
                     if (page == 1) {
                         EmptyView emptyView = new EmptyView(this);
                         emptyView.mustCallInitWay(listView);
-                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
                         emptyView.setMyManager(R.drawable.icon_null);
                         listView.setEmptyView(emptyView);
                     } else {
@@ -141,60 +129,13 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
                     }
                 }
             }
-            //是否消耗积分//
-            if (type == 5 && err.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, 1, this);
-            }
-            //已经消耗积分 或者 减积分成功
-            boolean b = type == 5 || type == 3;
-            if (b && err.equals("0")) {
-                Intent intent = getIntent(mergeThere);
-                intent.putExtra("userid", userid);
-                startActivity(intent);
-            }
-
-            //积分不足
-            if (type == 3 && !err.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
-            }
         } catch (Exception e) {
         }
     }
 
-    /**
-     * 判断是否跳转到店铺
-     *
-     * @param flag
-     * @return
-     */
-    public Intent getIntent(String flag) {
-        Intent intent = new Intent();
-        intent.setClass(this, "1".equals(flag)
-                ? NewContactDetailActivity.class
-                : ContactDetailActivity.class);
-        return intent;
-    }
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
 
-    }
-
-    @Override
-    public void dialogClick(int type) {
-        switch (type) {
-            case 1:
-                getPersonInfoData(userid, "5", 3);
-                break;
-            case 2:
-                startActivity(new Intent(this, IntegralPayActivtity.class));
-                break;
-            default:
-                break;
-        }
     }
 }

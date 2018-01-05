@@ -3,7 +3,6 @@ package com.myplas.q.supdem;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,11 +12,11 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.supdem.beans.DeliverPriceBean;
 import com.myplas.q.supdem.adapter.SupDem_Detail_LV_CHJAdapter;
 
@@ -33,7 +32,7 @@ import java.util.Map;
  * 邮箱： 15378412400@163.com
  */
 
-public class Fragment_SupDem_Detail_CHJ extends Fragment implements ResultCallBack {
+public class Fragment_SupDem_Detail_CHJ extends BaseFragment implements ResultCallBack {
     private View mView;
     private ListView mMyListview;
     private NestedScrollView mScrollView;
@@ -66,9 +65,7 @@ public class Fragment_SupDem_Detail_CHJ extends Fragment implements ResultCallBa
         map.put("size", "15");
         map.put("id", mIntent.getStringExtra("id"));
         map.put("rev_id", mIntent.getStringExtra("userid"));
-        map.put("token", mSharedUtils.getData(getActivity(), "token"));
-        String url1 = API.BASEURL + API.GET_DELIVER_PRICE;
-        BaseActivity.postAsyn(getActivity(), url1, map, this, 1);
+        postAsyn(getActivity(), API.OFFERS, map, this, 1);
     }
 
     private void setListener(final boolean scrollabled) {
@@ -84,7 +81,7 @@ public class Fragment_SupDem_Detail_CHJ extends Fragment implements ResultCallBa
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 if (err.equals("0")) {
                     setListener(false);
@@ -97,7 +94,7 @@ public class Fragment_SupDem_Detail_CHJ extends Fragment implements ResultCallBa
                     EmptyView emptyView = new EmptyView(getActivity());
                     emptyView.mustCallInitWay(mMyListview);
                     emptyView.setMyManager(R.drawable.icon_intelligent_recommendation1);
-                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
                     mMyListview.setEmptyView(emptyView);
                 }
             }

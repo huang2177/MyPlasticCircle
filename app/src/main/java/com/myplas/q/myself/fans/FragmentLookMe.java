@@ -12,6 +12,7 @@ import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.pinnedheadlistview.PinnedHeaderListView;
@@ -42,6 +43,7 @@ public class FragmentLookMe extends BaseFragment implements ResultCallBack, Look
     private int visibleItemCount;
     private List<LookMeBean.DataBean.HistoryBean> mList;
 
+    private ContactAccessUtils utils;
     private InfoCallBackListener listener;
 
 
@@ -62,6 +64,7 @@ public class FragmentLookMe extends BaseFragment implements ResultCallBack, Look
 
         page = 1;
         mList = new ArrayList<>();
+        utils = new ContactAccessUtils(getActivity());
         position = getArguments().getString("position");
         listener = (InfoCallBackListener) getArguments().getSerializable("listener");
         getViewHistoryDetails("1", position);
@@ -154,8 +157,8 @@ public class FragmentLookMe extends BaseFragment implements ResultCallBack, Look
 
     @Override
     public void onItemClick(int section, int position) {
-        String userid = mList.get(section).getPerson().get(position).getUserid();
-        String mergeThere = mList.get(section).getPerson().get(position).getMerge_three();
+        utils.checkPremissions(mList.get(section).getPerson().get(position).getUserid()
+                , mList.get(section).getPerson().get(position).getMerge_three());
     }
 
     public void setPosition(String position) {

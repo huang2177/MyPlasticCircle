@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
@@ -33,9 +34,9 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 17:46
  */
-public class MyIntroductionActivity extends BaseActivity implements ResultCallBack, CommonDialog.DialogShowInterface {
-    private String userid;
-    private SharedUtils sharedUtils;
+public class MyIntroductionActivity extends BaseActivity implements ResultCallBack {
+
+    private ContactAccessUtils utils;
     private int page = 1, visibleItemCount;
 
     private ListView listView;
@@ -52,13 +53,13 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
 
         mList = new ArrayList<>();
         listView = F(R.id.wd_yj_listview);
-        sharedUtils = SharedUtils.getSharedUtils();
+        utils = new ContactAccessUtils(this);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                userid = mList.get(position).getUser_id();
-                // getPersonInfoData(userid, "1", 5);
+                utils.checkPremissions(mList.get(position).getUser_id()
+                        , mList.get(position).getMerge_three());
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -86,7 +87,6 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
         map.put("size", "10");
         getAsyn(this, API.GET_MY_INTRODUCTION, map, this, 1);
     }
-
 
 
     @Override
@@ -122,46 +122,6 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-////是否消耗积分
-//        if (type == 5 && err.equals("99")) {
-//            String content = new JSONObject(object.toString()).getString("msg");
-//            CommonDialog commonDialog = new CommonDialog();
-//            commonDialog.showDialog(this, content, 1, this);
-//        }
-//        //已经消耗积分
-//        if (type == 5 && err.equals("0")) {
-//            Intent intent = new Intent(this, NewContactDetailActivity.class);
-//            intent.putExtra("userid", userid);
-//            intent.putExtra("id", userid);
-//            startActivity(intent);
-//        }
-//        //减积分成功
-//        if (type == 2 && err.equals("0")) {
-//            sharedUtils.setBooloean(this, userid, true);
-//            Intent intent = new Intent(this, NewContactDetailActivity.class);
-//            intent.putExtra("userid", userid);
-//            intent.putExtra("id", userid);
-//            startActivity(intent);
-//        }
-//        //积分不足
-//        if (type == 2 && !err.equals("0")) {
-//            String content = new JSONObject(object.toString()).getString("msg");
-//            CommonDialog commonDialog = new CommonDialog();
-//            commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
-//        }
     }
 
-    @Override
-    public void dialogClick(int type) {
-        switch (type) {
-            case 1:
-                //getPersonInfoData(userid, "5", 2);
-                break;
-            case 2:
-                startActivity(new Intent(this, IntegralPayActivtity.class));
-                break;
-            default:
-                break;
-        }
-    }
 }

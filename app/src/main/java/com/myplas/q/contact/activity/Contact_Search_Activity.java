@@ -25,6 +25,7 @@ import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EditTextField;
@@ -57,7 +58,6 @@ import java.util.Map;
 
 public class Contact_Search_Activity extends BaseActivity implements View.OnClickListener
         , ResultCallBack
-        , CommonDialog.DialogShowInterface
         , AdapterView.OnItemClickListener {
     private ListView listView;
     private ImageView imageView;
@@ -75,11 +75,12 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     private boolean isLoading;
     private String transition;
     private SparseArray<Integer> map;
+    private ContactAccessUtils utils;
     private int page, visibleItemCount;
     private StringBuffer c_type, region;
     private Fragment_Contact_LV_Adapter mLVAdapter;
     private List<ContactBean.PersonsBean> mListBean;
-    private String keywords, is_buy, userId, mergeThere, showCType;
+    private String keywords, is_buy, showCType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         mListBean = new ArrayList<>();
         region = new StringBuffer("0");
         c_type = new StringBuffer("0");
+        utils = new ContactAccessUtils(this);
         mRefreshPopou = new RefreshPopou(this, 2);
         transition = getIntent().getStringExtra("transition");
 
@@ -197,13 +199,6 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         deleteAsyn(this, API.DELETEF_RECORD, null, this, 4, false);
     }
 
-    private void getPersonInfoData(String userId, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("user_id", userId);
-        map.put("showType", showtype);
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        getAsyn(this, url, map, this, type, false);
-    }
 
     @Override
     public void onClick(View v) {
@@ -246,9 +241,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 getData(keywords);
                 break;
             case R.id.search_listview_result:
-                userId = mListBean.get(position).getUser_id();
-                mergeThere = mListBean.get(position).getMerge_three();
-                getPersonInfoData(userId, "1", 5);
+                utils.checkPremissions(mListBean.get(position));
                 break;
             default:
                 break;
@@ -320,42 +313,8 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 mGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
                 mGV_History.setAdapter(mGridAdapter);
             }
-            //是否消耗积分
-            if (type == 5 && "99".equals(err)) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, 1, this);
-            }
-            //已经消费了积分 //减积分成功
-            boolean b = type == 5 || type == 6;
-            if (b && err.equals("0")) {
-                Intent intent = getIntent(mergeThere);
-                intent.putExtra("userid", userId);
-                startActivity(intent);
-            }
-
-            //积分不够
-            if (type == 6 && !err.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
-            }
         } catch (Exception e) {
         }
-    }
-
-    /**
-     * 判断是否跳转到店铺
-     *
-     * @param flag
-     * @return
-     */
-    public Intent getIntent(String flag) {
-        Intent intent = new Intent();
-        intent.setClass(this, "1".equals(flag)
-                ? NewContactDetailActivity.class
-                : ContactDetailActivity.class);
-        return intent;
     }
 
     @Override
@@ -406,23 +365,6 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         });
     }
 
-    //dialog接口回调
-    @Override
-    public void dialogClick(int type) {
-        switch (type) {
-            case 1:
-                getPersonInfoData(userId, "5", 6);
-                break;
-            case 4:
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
-            case 2:
-                startActivity(new Intent(this, IntegralPayActivtity.class));
-                break;
-            default:
-                break;
-        }
-    }
 
     @Override
     public void onBackPressed() {

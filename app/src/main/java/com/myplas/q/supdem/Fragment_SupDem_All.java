@@ -22,6 +22,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -50,7 +51,6 @@ import java.util.Map;
  * 时间：2017/3/17 14:45
  */
 public class Fragment_SupDem_All extends BaseFragment implements View.OnClickListener
-        , CommonDialog.DialogShowInterface
         , ResultCallBack
         , SwipeRefreshLayout.OnRefreshListener
         , MyNestedScrollView.onScrollIterface, MyOnItemClickListener {
@@ -75,6 +75,7 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
     private ImageView typeSupDem, typeNowFutures, imgUp;
     private TextView company, content, time, mTVPromit, reply, deliver;
 
+    private ContactAccessUtils utils;
     private String mLastData, hotSearch, jsonStr;
     private RefreshPopouInterface mPopouinterface;
     public String followRelease, user_id, type, mergeThere;
@@ -92,6 +93,7 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
         mDataBeanList = new ArrayList<>();
         mAcache = ACache.get(getActivity());
         sharedUtils = SharedUtils.getSharedUtils();
+        utils = new ContactAccessUtils(getActivity());
         jsonStr = mAcache.getAsString(Constant.SUPDEMCACHE);
         refreshPopou = new RefreshPopou(getActivity(), 3);
 
@@ -163,7 +165,7 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.supply_demand_company://判断是否消耗积分
                 if ("1".equals(topBean.getFrom())) {
-                    getPersonInfoData(user_id, "1", 2);
+                    utils.checkPremissions(user_id, mergeThere);
                 }
                 break;
             case R.id.supply_demand_detail://跳转到详情
@@ -190,17 +192,6 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
         getAsyn(getActivity(), API.RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
-    /**
-     * 判断是否消耗积分
-     */
-
-    public void getPersonInfoData(String userid, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(getActivity(), "token"));
-        map.put("user_id", userid);
-        map.put("showType", showtype);
-        getAsyn(getActivity(), API.GET_ZONE_FRIEND, map, this, type);
-    }
 
     /**
      * 跳转至详情
@@ -241,8 +232,6 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
             refreshPopou.setCanShowPopou(false);
             mRefreshLayout.setRefreshing(false);
         }
-        // 判断是否已经消耗积分
-        judgeCanSeeDetail(getActivity(), type, httpCode, message, mergeThere, user_id, this);
     }
 
 
@@ -250,7 +239,7 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
             String result = jsonObject.getString("code");
-            if (result.equals("0")) {
+            if ("0".equals(result)) {
                 mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
                 if (page == 1) {
                     mRefreshLayout.setRefreshing(false);
@@ -293,6 +282,7 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
                 }
             }
         } catch (Exception e) {
+            e.toString();
         }
     }
 
@@ -329,20 +319,6 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
         }
     }
 
-    //dialog回调
-    @Override
-    public void dialogClick(int type) {
-        switch (type) {
-            case 1:
-                getPersonInfoData(user_id, "5", 3);
-                break;
-            case 2:
-                startActivity(new Intent(getActivity(), IntegralPayActivtity.class));
-                break;
-            default:
-                break;
-        }
-    }
 
     public void setRefreshPopouInterface(RefreshPopouInterface refreshPopouinterface) {
         this.mPopouinterface = refreshPopouinterface;
@@ -373,13 +349,11 @@ public class Fragment_SupDem_All extends BaseFragment implements View.OnClickLis
      * @param flag
      * @param id
      * @param pur_id
-     * @param user_id
+     * @param user_id (前两个参数有值)
      */
     @Override
     public void onItemClick(String userId, String flag, String id, String pur_id, String user_id) {
-        this.user_id = userId;
-        this.mergeThere = flag;
-        getPersonInfoData(user_id, "1", 2);
+        utils.checkPremissions(userId, flag);
     }
 
     public interface RefreshPopouInterface {

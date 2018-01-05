@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.SparseArray;
@@ -27,12 +26,11 @@ import com.huangbryant.hindicator.HIndicatorBuilder;
 import com.huangbryant.hindicator.HIndicatorDialog;
 import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.AccessContactUtils;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
@@ -42,7 +40,6 @@ import com.myplas.q.common.view.marqueeview.MarqueeFactory;
 import com.myplas.q.common.view.marqueeview.MarqueeViewHelper;
 import com.myplas.q.contact.activity.AD_DialogActivtiy;
 import com.myplas.q.contact.activity.ContactDaliySignActivity;
-import com.myplas.q.contact.activity.ContactDetailActivity;
 import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.contact.activity.Contact_Search_Activity;
 import com.myplas.q.contact.activity.Cover_WebActivity;
@@ -95,9 +92,10 @@ public class Fragment_Contact extends BaseFragment implements View.OnClickListen
     public int page;
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
+    private ContactAccessUtils accessUtils;
     private boolean isRefreshing, isLoading;
     private String region, c_type, stauts, showCType;
-    private String userId, jumpUrl, jumpToWhere, jumpTitle, mergeThere, isShop;
+    private String jumpUrl, jumpToWhere, jumpTitle, isShop;
 
 
     @Override
@@ -115,6 +113,7 @@ public class Fragment_Contact extends BaseFragment implements View.OnClickListen
         mListBean = new ArrayList<>();
         mVHelper = new MarqueeViewHelper();
         sharedUtils = SharedUtils.getSharedUtils();
+        accessUtils = new ContactAccessUtils(getActivity());
         mRefreshPopou = new RefreshPopou(getActivity(), 2);
         sharedUtils.setData(getActivity(), Constant.POINTSINFO, "您还未登录,请先登录塑料圈!");
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_contact, null, false);
@@ -154,9 +153,8 @@ public class Fragment_Contact extends BaseFragment implements View.OnClickListen
                 isLogin();
                 shareView1 = view.findViewById(R.id.xq_tx);
                 shareView2 = view.findViewById(R.id.xq_rz);
-                userId = mListBean.get(position).getUser_id();
-                mergeThere = mListBean.get(position).getMerge_three();
-                getPersonInfoData(userId, "1", 2);
+                accessUtils.checkPremissions(mListBean.get(position));
+                //getPersonInfoData(userId, "1", 2);
             }
         });
 
@@ -199,9 +197,8 @@ public class Fragment_Contact extends BaseFragment implements View.OnClickListen
             case R.id.contact_top_ll:
                 shareView1 = view.findViewById(R.id.xq_tx);
                 shareView2 = view.findViewById(R.id.xq_rz);
-                userId = mContactBean.getTop().getUser_id();
-                mergeThere = mContactBean.getTop().getMerge_three();
-                getPersonInfoData(userId, "1", 2);
+                accessUtils.checkPremissions(mContactBean.getTop().getUser_id()
+                        , mContactBean.getTop().getMerge_three());
                 break;
             case R.id.contact_search_ll:
                 startActivity(new Intent(getActivity(), Contact_Search_Activity.class));
@@ -275,21 +272,6 @@ public class Fragment_Contact extends BaseFragment implements View.OnClickListen
         map.put("c_type", c_type);
         map.put("region", region);
         getAsyn(getActivity(), API.PLASTICPERSON, map, this, 1, isShowDialog);
-    }
-
-    /**
-     * 检查是否消耗过积分
-     *
-     * @param userId
-     * @param showtype
-     * @param type
-     */
-    private void getPersonInfoData(String userId, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("user_id", userId);
-        map.put("showType", showtype);
-        map.put("token", sharedUtils.getData(getActivity(), "token"));
-        getAsyn(getActivity(), API.GET_ZONE_FRIEND, map, this, type, false);
     }
 
     @Override
@@ -446,12 +428,6 @@ public class Fragment_Contact extends BaseFragment implements View.OnClickListen
     @Override
     public void dialogClick(int type) {
         switch (type) {
-            case 1:
-                getPersonInfoData(userId, "5", 3);
-                break;
-            case 2:
-                startActivity(new Intent(getActivity(), IntegralPayActivtity.class));
-                break;
             case 4:
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
@@ -604,10 +580,8 @@ public class Fragment_Contact extends BaseFragment implements View.OnClickListen
             return;
         }
         DefConfigBean.NoticeBean.CommunicateContentBean bean = (DefConfigBean.NoticeBean.CommunicateContentBean) holder.data;
-        if (bean != null) {
-            userId = bean.getId();
-            mergeThere = bean.getMerge_three();
-            getPersonInfoData(userId, "1", 2);
+        if (bean != null && accessUtils != null) {
+            accessUtils.checkPremissions(bean.getId(), bean.getMerge_three());
         }
     }
 }

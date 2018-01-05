@@ -19,6 +19,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
@@ -45,7 +46,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.DialogShowInterface,
+public class Fragment_SupDem_Other extends BaseFragment implements
         ResultCallBack, View.OnClickListener, MyOnItemClickListener {
     private SharedUtils sharedUtils;
     public int page, visibleItemCount, position;
@@ -61,6 +62,8 @@ public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.
     private LinearLayout linearLayout_prompt;
     private List<SupDemBean.DataBean> mDataBeanList;
 
+    private ContactAccessUtils utils;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.
         type = "0";
         mDataBeanList = new ArrayList<>();
         sharedUtils = SharedUtils.getSharedUtils();
+        utils = new ContactAccessUtils(getActivity());
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_supdem_other, null, false);
         mListView = F(R.id.fragment_other_listview);
@@ -114,7 +118,6 @@ public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         return view;
     }
 
@@ -130,16 +133,6 @@ public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.
         getAsyn(getActivity(), API.RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
-    /**
-     * 判断是否消耗积分
-     */
-    public void getPersonInfoData(String userid, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(getActivity(), "token"));
-        map.put("user_id", userid);
-        map.put("showType", showtype);
-        getAsyn(getActivity(), API.GET_ZONE_FRIEND, map, this, type);
-    }
 
     //跳转至详情
     public void goToDetail(String company, String model, String id_, String userid, boolean isFromSupdem) {
@@ -209,33 +202,6 @@ public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.
                     }
                 }
             }
-            //是否消耗积分
-            if (type == 2 && result.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("mesage");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(getActivity(), content, 1, this);
-            }
-            //已经消费了积分
-            if (type == 2 && result.equals("0")) {
-                Intent intent = new Intent(getActivity(), NewContactDetailActivity.class);
-                intent.putExtra("userid", user_id);
-                intent.putExtra("id", user_id);
-                startActivity(intent);
-            }
-            //减积分成功
-            if (type == 3 && result.equals("0")) {
-                Intent intent = new Intent(getActivity(), NewContactDetailActivity.class);
-                intent.putExtra("userid", user_id);
-                intent.putExtra("id", user_id);
-                startActivity(intent);
-
-            }
-            //积分不够
-            if (type == 3 && !result.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("message");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(getActivity(), content, (result.equals("100")) ? (2) : (3), this);
-            }
         } catch (Exception e) {
         }
     }
@@ -243,8 +209,6 @@ public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.
     @Override
     public void failCallBack(int type, String message, int httpCode) {
         try {
-            // 判断是否已经消耗积分
-            judgeCanSeeDetail(getActivity(), type, httpCode, message, mergeThere, user_id, this);
             if (type == 1) {
                 String result = new JSONObject(message).getString("code");
                 String msg = new JSONObject(message).getString("message");
@@ -331,26 +295,9 @@ public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.
         }
     }
 
-    //dialog回调
     @Override
-    public void dialogClick(int type) {
-        switch (type) {
-            case 1:
-                getPersonInfoData(user_id, "5", 3);
-                break;
-            case 2:
-                startActivity(new Intent(getActivity(), IntegralPayActivtity.class));
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onItemClick(String usrId, String flag, String id, String pur_id, String user_id) {
-        this.user_id = user_id;
-        this.mergeThere = flag;
-        getPersonInfoData(user_id, "5", 3);
+    public void onItemClick(String userId, String flag, String id, String pur_id, String user_id) {
+        utils.checkPremissions(userId, flag);
     }
 }
 

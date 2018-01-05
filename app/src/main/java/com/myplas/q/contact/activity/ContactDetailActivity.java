@@ -213,33 +213,29 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
     //关注
     public void follow() {
         Map<String, String> map = new HashMap<>();
-        map.put("token", sharedUtils.getData(this, "token"));
         map.put("focused_id", getIntent().getStringExtra("userid"));
-        String url = API.BASEURL + API.FOCUS_OR_CANCEL;
-        postAsyn(this, url, map, this, 2);
+        postAsyn(this, API.FOCUS_OR_CANCEL, map, this, 2);
     }
 
     public void getPersonInfoData() {
         Map<String, String> map = new HashMap<>();
-        map.put("showType", "1");
-        map.put("token", sharedUtils.getData(this, "token"));
+        map.put("permission", "1");
         map.put("user_id", getIntent().getStringExtra("userid"));
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        postAsyn(this, url, map, this, 1, false);
+        getAsyn(this, API.GET_ZONE_FRIEND, map, this, 1, false);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1 && "0".equals(err)) {
                 contactBean = gson.fromJson(object.toString(), ContactInfoBean.class);
                 showInfo(contactBean);
             }
 
             if (type == 2 && "0".equals(err)) {
-                String msg = new JSONObject(object.toString()).getString("msg");
+                String msg = new JSONObject(object.toString()).getString("message");
                 TextUtils.toast(this, msg);
                 mFollow.setImageResource("关注成功".equals(msg)
                         ? R.drawable.img_supdem_detail_followed

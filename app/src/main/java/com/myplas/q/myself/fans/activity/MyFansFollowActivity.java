@@ -14,6 +14,7 @@ import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
@@ -42,10 +43,11 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
     private ListView listView;
     private MyFansFollowAdapter mFansAdapter;
 
+    private String type = "1";
     private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
-    private String type = "1", user_id, id_, flag;
 
+    private ContactAccessUtils utils;
     private List<MyFansBean.DataBean> mList;
 
     @Override
@@ -60,14 +62,13 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
         listView = F(R.id.wdgz_listview);
 
         mList = new ArrayList<>();
+        utils = new ContactAccessUtils(this);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                user_id = mList.get(position).getUser_id();
-                flag = mList.get(position).getMerge_three();
-                //判断是否消耗积分
-                //getPersonInfoData(user_id, "1", 5);
+                utils.checkPremissions(mList.get(position).getUser_id()
+                        , mList.get(position).getMerge_three());
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -132,27 +133,6 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                     }
                 }
             }
-//            //是否消耗积分//
-//            if (type == 5 && err.equals("99")) {
-//                String content = new JSONObject(object.toString()).getString("msg");
-//                CommonDialog commonDialog = new CommonDialog();
-//                commonDialog.showDialog(this, content, 1, this);
-//            }
-//            //已经消耗积分或者减积分成功
-//            boolean b = type == 5 || type == 3;
-//            if (b && err.equals("0")) {
-//                Intent intent = getJumpIntent();
-//                intent.putExtra("userid", user_id);
-//                intent.putExtra("id", user_id);
-//                startActivity(intent);
-//            }
-//
-//            //积分不足
-//            if (type == 3 && !err.equals("0")) {
-//                String content = new JSONObject(object.toString()).getString("msg");
-//                CommonDialog commonDialog = new CommonDialog();
-//                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
-//            }
         } catch (Exception e) {
         }
     }

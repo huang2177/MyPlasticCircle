@@ -274,9 +274,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void requestNetData() {
-        Map<String, String> map = new HashMap<>();
-        map.put("token", sharedUtils.getData(this, "token"));
-        getAsyn(this, API.GET_SELF_INFO, map, this, 1);
+        getAsyn(this, API.GET_SELF_INFO, null, this, 1);
     }
 
 
@@ -286,8 +284,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     public void getPersonInfo() {
         Map<String, String> map = new HashMap<>();
         map.put("user_id", getIntent().getStringExtra("userid"));
-        String url = API.BASEURL + API.GETINFORMATION;
-        postAsyn(this, url, map, this, 1);
+        getAsyn(this, API.GETINFORMATION, map, this, 1);
     }
 
     /**

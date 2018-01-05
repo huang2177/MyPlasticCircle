@@ -130,57 +130,6 @@ public class BaseFragment extends Fragment {
         startActivity(intent);
     }
 
-    /**
-     * 判断是否已经消耗积分
-     */
-    public void judgeCanSeeDetail(Context context, int type, int httpCode, String message, String mergeThere, String user_id, CommonDialog.DialogShowInterface showInterface) {
-        try {
-            JSONObject jsonObject = new JSONObject(message);
-            String err = jsonObject.getString("code");
-            switch (httpCode) {
-                case 412:
-                    //是否消耗积分
-                    if (type == 2 && "99".equals(err)) {
-                        String content = jsonObject.getString("message");
-                        CommonDialog commonDialog = new CommonDialog();
-                        commonDialog.showDialog(context, content, 1, showInterface);
-                    }
-                    //已经消费了积分 或者 减积分成功
-                    boolean b = type == 2 || type == 3;
-                    if (b && "0".equals(err)) {
-                        Intent intent = getIntent(mergeThere);
-                        intent.putExtra("userid", user_id);
-                        startActivity(intent);
-                    }
-                    //积分不够
-                    if (type == 3 && !"0".equals(err)) {
-                        String content = jsonObject.getString("message");
-                        CommonDialog commonDialog = new CommonDialog();
-                        commonDialog.showDialog(context, content, ("100".equals(err)) ? (2) : (3), showInterface);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        } catch (Exception e) {
-
-        }
-    }
-
-    /**
-     * 判断是否跳转到店铺
-     *
-     * @param flag
-     * @return
-     */
-    public Intent getIntent(String flag) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), "1".equals(flag)
-                ? NewContactDetailActivity.class
-                : ContactDetailActivity.class);
-        return intent;
-    }
-
     public <T extends View> T F(View view, int id) {
         return (T) view.findViewById(id);
     }

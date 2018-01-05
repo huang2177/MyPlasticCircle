@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.contact.activity.ContactDetailActivity;
 import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.myplas.q.common.api.API;
@@ -35,17 +36,18 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/19 14:55
  */
-public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCallBack
-        , CommonDialog.DialogShowInterface {
+public class SupDem_Search_List_Adapter extends BaseAdapter {
 
     Context context;
     String user_id, mergeThere;
-    private SharedUtils mSharedUtils;
+    SharedUtils mSharedUtils;
     List<SearchResultBean.ListBean> list;
+    private ContactAccessUtils utils;
 
     public SupDem_Search_List_Adapter(Context context, List<SearchResultBean.ListBean> list) {
         this.list = list;
         this.context = context;
+        utils = new ContactAccessUtils(context);
         mSharedUtils = SharedUtils.getSharedUtils();
     }
 
@@ -121,9 +123,7 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
                 @Override
                 public void onClick(View v) {
                     if ("1".equals(list.get(position).getFrom())) {
-                        user_id = list.get(position).getUser_id();
-                        mergeThere = list.get(position).getMerge_three();
-                        getPersonInfoData(user_id, "1", 1);
+                        utils.checkPremissions(list.get(position).getUser_id(), list.get(position).getMerge_three());
                     }
                 }
             });
@@ -132,14 +132,6 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
         return convertView;
     }
 
-    public void getPersonInfoData(String userid, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("user_id", userid);
-        map.put("showType", showtype);
-        map.put("token", mSharedUtils.getData(context, "token"));
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn(context, url, map, this, type);
-    }
 
     class viewHolder {
         LinearLayout mLayout;
@@ -147,66 +139,6 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
         TextView company, content, time, deliver, reply;
     }
 
-    @Override
-    public void callBack(Object object, int type) {
-        try {
-            String err = new JSONObject(object.toString()).getString("err");
-            //是否消耗积分
-            if (type == 1 && err.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(context, content, 1, this);
-            }
-            //已经消费了积分 //减积分成功
-            boolean b = type == 1 || type == 2;
-            if (b && "0".equals(err)) {
-                Intent intent = getIntent(mergeThere);
-                intent.putExtra("userid", user_id);
-                context.startActivity(intent);
-            }
-            //积分不够
-            if (type == 2 && !"0".equals(err)) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(context, content, (err.equals("100")) ? (2) : (3), this);
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void failCallBack(int type, String message, int httpCode) {
-
-    }
-
-    //dialog回调
-    @Override
-    public void dialogClick(int type) {
-        switch (type) {
-            case 1:
-                getPersonInfoData(user_id, "5", 2);
-                break;
-            case 2:
-                context.startActivity(new Intent(context, IntegralPayActivtity.class));
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * 判断是否跳转到店铺
-     *
-     * @param flag
-     * @return
-     */
-    public Intent getIntent(String flag) {
-        Intent intent = new Intent();
-        intent.setClass(context, "1".equals(flag)
-                ? NewContactDetailActivity.class
-                : ContactDetailActivity.class);
-        return intent;
-    }
 
     public Spanned replace(String s) {
         s = s.replace("<strong style='color: #ff5000;'>", "<font color='#ff5000'><b>");

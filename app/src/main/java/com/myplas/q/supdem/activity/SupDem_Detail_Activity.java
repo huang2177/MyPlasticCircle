@@ -167,9 +167,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     public void getNetData() {
         Map<String, String> map = new HashMap<>();
         map.put("id", getIntent().getStringExtra("id"));
-        map.put("token", sharedUtils.getData(this, "token"));
-        map.put("user_id", getIntent().getStringExtra("userid"));
-        postAsyn(this, API.GET_RELEASE_MSG_DETAIL, map, this, 1);
+        getAsyn(this, API.RELEASEMSGDETAIL, map, this, 1);
     }
 
     /**
@@ -278,27 +276,27 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 if (err.equals("0")) {
                     mDetailBean = gson.fromJson(object.toString(), SupDemDetailBean.class);
                     showInfo(mDetailBean);
                 }
             }
-            if (type == 2 && err.equals("0")) {
-                TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
-                String msg = new JSONObject(object.toString()).getString("msg");
-                mIVFollow.setImageResource(msg.equals("关注成功")
+            if (type == 2 && "0".equals(err)) {
+                TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
+                String msg = new JSONObject(object.toString()).getString("message");
+                mIVFollow.setImageResource("关注成功".equals(msg)
                         ? R.drawable.img_supdem_detail_followed
                         : R.drawable.img_supdem_detail_follow);
             }
-            if (type == 3 && err.equals("0") && detail_hf != null) {
+            if (type == 3 && "0".equals(err) && detail_hf != null) {
                 mEditText.setText("");
                 detail_hf.getReply();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
             }
-            if (type == 4 && err.equals("0") && detail_chj != null) {
+            if (type == 4 && "0".equals(err) && detail_chj != null) {
                 mEditText.setText("");
                 detail_chj.getDeLiverPrice();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -314,12 +312,12 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     }
 
     private void share() {
-        String s = (mDetailBean.getData().getType().equals("1") ? "求:" : "供：")
+        String s = ("1".equals(mDetailBean.getData().getType()) ? "求:" : "供：")
                 + mDetailBean.getData().getModel()
                 + mDetailBean.getData().getF_name()
                 + "价格" + mDetailBean.getData().getUnit_price()
                 + mDetailBean.getData().getStore_house()
-                + (mDetailBean.getData().getCargo_type().equals("1") ? "现货" : "期货");
+                + ("1".equals(mDetailBean.getData().getCargo_type()) ? "现货" : "期货");
         Intent in = new Intent(this, ShareActivity.class);
         in.putExtra("title", s);
         in.putExtra("type", "4");
@@ -365,7 +363,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 ? "求购"
                 : "供给");
 
-        mTVType.setCompoundDrawablesWithIntrinsicBounds(mDetailBean.getData().getType().equals("1")
+        mTVType.setCompoundDrawablesWithIntrinsicBounds("1".equals(mDetailBean.getData().getType())
                 ? R.drawable.icon_purchase_content
                 : R.drawable.icon_supply_content, 0, 0, 0);
 
@@ -375,7 +373,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTVProduction.setText(mDetailBean.getData().getF_name());
         mTVStorehouse.setText(mDetailBean.getData().getStore_house());
 
-        mTVNf.setText(mDetailBean.getData().getCargo_type().equals("1")
+        mTVNf.setText("1".equals(mDetailBean.getData().getCargo_type())
                 ? "现货"
                 : "期货");
         id = "";

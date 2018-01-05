@@ -178,15 +178,12 @@ public class API {
     /**
      * 取消或关注
      */
-    public final static String FOCUS_OR_CANCEL = "focusOrCancel";
-    /**
-     * 发送回复消息
-     */
-    public final static String SEND_ZONE_CONTACTMSG = "sendZoneContactMsg";
+    public final static String FOCUS_OR_CANCEL = BASEURL + "FocusOrCancel";
+
     /**
      * 获取好友资料
      */
-    public final static String GET_ZONE_FRIEND = BASEURL + "ZoneFriend";
+    public final static String GET_ZONE_FRIEND = BASEURL + "users/details";
     /**
      * 获取好友资料时 检查权限
      */
@@ -354,11 +351,11 @@ public class API {
     /**
      * 中间供求信息-获取供求发布(详情)
      */
-    public final static String GET_RELEASE_MSG_DETAIL = "releaseMsg/getReleaseMsgDetail";
+    public final static String RELEASEMSGDETAIL = BASEURL + "requirements/details";
     /**
-     * 中间供求信息)获取供求发布(详情)的消息回复
+     * 获取供求发布(详情)的消息回复
      */
-    public final static String GET_RELEASE_MSG_DETAIL_REPLY = "releaseMsg/getReleaseMsgDetailReply";
+    public final static String COMMENTS = BASEURL + "requirements/comments";
     /**
      * 二次发布
      */
@@ -387,7 +384,7 @@ public class API {
     /**
      * 获取供求消息的出价
      */
-    public final static String GET_DELIVER_PRICE = "releaseMsg/getDeliverPrice";
+    public final static String OFFERS = "requirements/offers";
     /**
      * 获取我的留言
      */
