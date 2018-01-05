@@ -212,9 +212,9 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
                 in.putExtra("type", "1");
                 in.putExtra("id", contactBean.getData().getUser_id());
                 in.putExtra("title", contactBean.getData().getC_name());
-                in.putExtra("des", "姓名：" + contactBean.getData().getName()
-                        + "   联系方式：" + getHidingMobile(contactBean.getData().getMobile())
-                        + "   主营：" + contactBean.getData().getMain_product());
+                in.putExtra("des", "★主营：" + contactBean.getData().getMain_product()
+                        + "   ★联系方式：" + getHidingMobile(contactBean.getData().getMobile())
+                        + "   ★姓名：" + contactBean.getData().getName());
                 startActivity(in);
                 break;
             case R.id.img_close:
@@ -256,13 +256,9 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
      */
     public String getHidingMobile(String mobile) {
         if (!TextUtils.notEmpty(mobile)) {
-            return null;
+            return "";
         }
-        if (mobile.contains("*")) {
-            return mobile;
-        }
-
-        return mobile.replace(mobile, mobile.substring(0, 7) + "****");
+        return mobile.replace(mobile, mobile.substring(0, 7) + "***2");
     }
 
     @Override

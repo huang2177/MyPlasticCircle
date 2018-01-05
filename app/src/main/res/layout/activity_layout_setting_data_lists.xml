@@ -423,10 +423,8 @@
 
                     <ImageView
                         android:id="@+id/wd_licence"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxWidth="236px"
-                        android:maxHeight="338px"
+                        android:layout_width="236px"
+                        android:layout_height="338px"
                         android:scaleType="fitXY"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="3dp"
