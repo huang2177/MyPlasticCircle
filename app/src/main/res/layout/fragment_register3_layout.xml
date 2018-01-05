@@ -18,7 +18,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:text="注册成功"
-        android:textColor="@color/color_balank"
+        android:textColor="@color/color_black"
         android:textSize="16.0sp"
         android:textStyle="bold" />
 

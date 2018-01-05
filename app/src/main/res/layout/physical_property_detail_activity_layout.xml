@@ -26,7 +26,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:padding="5dp"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
 
                 <View
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
 
                 <View
@@ -59,7 +59,7 @@
                     android:layout_weight="2"
                     android:gravity="left"
                     android:padding="5dp"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
             </LinearLayout>
 
@@ -72,7 +72,7 @@
                 android:layout_marginRight="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/color_balank" />
+                android:textColor="@color/color_black" />
 
             <View
                 android:layout_width="match_parent"
@@ -99,14 +99,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/color_balank" />
+                    android:textColor="@color/color_black" />
 
                 <TextView
                     android:id="@+id/physical_detail_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/color_balank" />
+                    android:textColor="@color/color_black" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="用        途："
-                        android:textColor="@color/color_balank" />
+                        android:textColor="@color/color_black" />
 
                     <TextView
                         android:id="@+id/physical_detail_use"
@@ -127,7 +127,7 @@
                         android:layout_marginTop="10dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:textColor="@color/color_balank" />
+                        android:textColor="@color/color_black" />
                 </LinearLayout>
             </LinearLayout>
 

@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"
                 android:id="@+id/integral_record_tiele"/>
             <TextView
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="16.0sp"
             android:text="总计："></TextView>
         <TextView

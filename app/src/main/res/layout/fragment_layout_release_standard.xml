@@ -27,7 +27,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center_vertical"
                     android:text="牌号"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
 
                 <EditText
@@ -61,7 +61,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center_vertical"
                     android:text="厂家"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
 
                 <EditText
@@ -96,7 +96,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center_vertical"
                     android:text="价格"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
 
                 <EditText
@@ -129,7 +129,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center_vertical"
                     android:text="交货地"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
 
                 <EditText
@@ -162,7 +162,7 @@
                     android:layout_weight="0.7"
                     android:gravity="center_vertical"
                     android:text="现货/期货"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
 
                 <EditText
@@ -198,7 +198,7 @@
                     android:layout_weight="0.7"
                     android:gravity="center_vertical"
                     android:text="供给/求购"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp" />
 
                 <EditText

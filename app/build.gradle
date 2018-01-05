@@ -15,8 +15,8 @@ android {
         applicationId "com.myplas.q"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 98
-        versionName "4.1.0"
+        versionCode 99
+        versionName "4.2.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

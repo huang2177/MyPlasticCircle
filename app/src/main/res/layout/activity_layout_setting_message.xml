@@ -27,7 +27,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:text="关注我提醒"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="16.0sp"/>
 
         <com.myplas.q.common.view.SwitchButton
@@ -67,7 +67,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="回复供求提醒"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="16.0sp"/>
 
         <com.myplas.q.common.view.SwitchButton

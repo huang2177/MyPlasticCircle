@@ -50,7 +50,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
                         android:text="普通登录"
-                        android:textColor="@color/color_balank"
+                        android:textColor="@color/color_black"
                         android:textSize="16.0sp" />
 
                     <ImageView

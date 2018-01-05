@@ -25,7 +25,7 @@
                 android:layout_marginTop="15dp"
                 android:paddingLeft="5dp"
                 android:text="充值金额："
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"/>
 
             <com.myplas.q.common.view.MyGridview
@@ -51,7 +51,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
                     android:text="其他金额："
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp"/>
 
                 <EditText
@@ -101,7 +101,7 @@
                 android:layout_margin="5dp"
                 android:paddingLeft="5dp"
                 android:text="选择支付方式："
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"/>
 
             <!--<LinearLayout-->
@@ -167,7 +167,7 @@
                 android:drawableRight="@drawable/icon_rules"
                 android:padding="10dp"
                 android:text="如何轻松赚塑豆，详见 "
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:textSize="16.0sp"/>
         </LinearLayout>
     </ScrollView>

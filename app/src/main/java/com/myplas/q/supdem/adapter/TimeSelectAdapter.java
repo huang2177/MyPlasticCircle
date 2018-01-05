@@ -43,7 +43,7 @@ public class TimeSelectAdapter extends BaseAdapter {
         map_text = new HashMap<>();
         resources = context.getResources();
         redColor = resources.getColor(R.color.color_red);
-        blackColor = resources.getColor(R.color.color_balank);
+        blackColor = resources.getColor(R.color.color_black);
     }
 
     public void setList_isSelect(List<PopouShowUtils.ItemBean> list) {

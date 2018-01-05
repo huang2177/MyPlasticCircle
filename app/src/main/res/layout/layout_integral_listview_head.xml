@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="塑豆"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp"/>
             </LinearLayout>
 
@@ -73,7 +73,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text=" 兑换记录"
-                    android:textColor="@color/color_balank"
+                    android:textColor="@color/color_black"
                     android:textSize="16.0sp"/>
             </LinearLayout>
 

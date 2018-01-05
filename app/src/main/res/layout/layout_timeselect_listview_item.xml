@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:textSize="16.0sp"
             android:text="最近3天"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:id="@+id/time_textview"/>
     </LinearLayout>
 

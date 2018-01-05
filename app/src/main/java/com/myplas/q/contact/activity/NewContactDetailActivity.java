@@ -295,10 +295,10 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
     public void showInfo(ContactInfoBean contactBean) {
         try {
             mCompany.setText(contactBean.getData().getC_name());
-            mName.setText(Html.fromHtml("<font color='#999898'>姓名：</font>" + contactBean.getData().getName()));
-            phone.setText(Html.fromHtml("<font color='#999898'>手机号码：</font>" + contactBean.getData().getMobile()));
-            pro.setText(Html.fromHtml("<font color='#999898'>主营：</font>" + contactBean.getData().getMain_product()));
-            address.setText(Html.fromHtml("<font color='#999898'>地址：</font>" + contactBean.getData().getAddress().replace("|", "")));
+            mName.setText("姓名：" + contactBean.getData().getName());
+            phone.setText("手机号码：" + contactBean.getData().getMobile());
+            pro.setText("主营：" + contactBean.getData().getMain_product());
+            address.setText("地址：" + contactBean.getData().getAddress().replace("|", ""));
 
             mFans.setText(contactBean.getData().getFans());
             mHeat.setText(contactBean.getData().getHeat());

@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:text="货物位置:上海 牌号:7000F 产地:伊朗 价格:9500.00"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="16.0sp" />
     </LinearLayout>
 

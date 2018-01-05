@@ -231,7 +231,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         dialogCancle.setText("确定");
         dialogTitle.setText("塑料圈通讯录");
         dialogContent.setText("您是否需要预览？可能需要等待几秒钟");
-        dialogCancle.setTextColor(getResources().getColor(R.color.color_balank));
+        dialogCancle.setTextColor(getResources().getColor(R.color.color_black));
         dialogOK.setOnClickListener(this);
         dialogCancle.setOnClickListener(this);
     }

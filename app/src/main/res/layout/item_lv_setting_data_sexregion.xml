@@ -24,7 +24,7 @@
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:textSize="16.0sp"
-                android:textColor="@color/color_balank"
+                android:textColor="@color/color_black"
                 android:singleLine="true"/>
 
             <ImageView

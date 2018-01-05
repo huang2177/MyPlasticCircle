@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/icon_search"
             android:text="  历史搜索"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="16.0sp"/>
 
         <ImageView
@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/icon_hot"
             android:text="  猜你想搜"
-            android:textColor="@color/color_balank"
+            android:textColor="@color/color_black"
             android:textSize="16.0sp"/>
     </LinearLayout>
 
