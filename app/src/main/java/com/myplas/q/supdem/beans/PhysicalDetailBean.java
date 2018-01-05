@@ -28,7 +28,6 @@ public class PhysicalDetailBean {
     private String type;
     private String name;
     private String company;
-    private String err;
 
     public String getParams() {
         return params;
@@ -94,11 +93,4 @@ public class PhysicalDetailBean {
         this.company = company;
     }
 
-    public String getErr() {
-        return err;
-    }
-
-    public void setErr(String err) {
-        this.err = err;
-    }
 }

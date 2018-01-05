@@ -90,14 +90,14 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page);
         map.put("size", "30");
-        postAsyn(this, API.BASEURL + method, map, this, type);
+        getAsyn(this, method, map, this, type);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 if (err.equals("0")) {
                     mEmptyView.setVisibility(View.GONE);
@@ -121,10 +121,10 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mRecyclerView.setVisibility(View.GONE);
                         mEmptyView.setVisibility(View.VISIBLE);
                         mEmptyView.setMyManager(R.drawable.icon_follow1);
-                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
 
                     } else {
-                        TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
+                        TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
                     }
                 }
             }
@@ -150,9 +150,9 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mRecyclerView.setVisibility(View.GONE);
                         mEmptyView.setVisibility(View.VISIBLE);
                         mEmptyView.setMyManager(R.drawable.icon_follow1);
-                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
                     } else {
-                        TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
+                        TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
                     }
                 }
 
@@ -181,9 +181,9 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mRecyclerView.setVisibility(View.GONE);
                         mEmptyView.setVisibility(View.VISIBLE);
                         mEmptyView.setMyManager(R.drawable.icon_follow1);
-                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
                     } else {
-                        TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
+                        TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
                     }
                 }
             }
@@ -192,7 +192,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

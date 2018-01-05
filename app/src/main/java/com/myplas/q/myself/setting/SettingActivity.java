@@ -247,7 +247,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
     public void callBack(Object object, int type) {
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
-            String err = jsonObject.getString("err");
+            String err = jsonObject.getString("code");
             Gson gson = new Gson();
             if (type == 1) {
                 if (("0").equals(err) || "1".equals(err) || "998".equals(err)) {
@@ -283,7 +283,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 
@@ -302,8 +302,7 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         if (type == 4) {//退出登陆；
             Map<String, String> map = new HashMap<String, String>();
             map.put("token", sharedUtils.getData(this, "token"));
-            String url = API.BASEURL + API.LOGOUT;
-            postAsyn(this, url, map, this, 1);
+            postAsyn(this, API.LOGOUT, map, this, 1);
         }
         if (type == 10) {//清除缓存；
             ACache.get(this).clear();

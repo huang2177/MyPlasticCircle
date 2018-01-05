@@ -6,6 +6,9 @@ import android.os.Message;
 
 import com.myplas.q.common.view.LoadingDialog;
 
+/**
+ * @author huangshuang
+ */
 public class MyHandler extends Handler {
     private Context context;
 
@@ -17,25 +20,21 @@ public class MyHandler extends Handler {
     public void handleMessage(Message msg) {
         try {
             ResultCallBack resultCallBack = (ResultCallBack) msg.obj;
+            if (resultCallBack == null) {
+                return;
+            }
             switch (msg.what) {
                 case 1:
-                    if (resultCallBack != null) {
-                        resultCallBack.callBack(msg.getData().get("result"), msg.arg1);
-                    }
-                    if (LoadingDialog.getInstance(context) != null) {
-                        LoadingDialog.getInstance(context).dismiss();
-                    }
+                    resultCallBack.callBack(msg.getData().get("result").toString(), msg.arg1);
                     break;
                 case 2:
-                    if (resultCallBack != null) {
-                        resultCallBack.failCallBack(msg.arg1);
-                    }
-                    if (LoadingDialog.getInstance(context) != null) {
-                        LoadingDialog.getInstance(context).dismiss();
-                    }
+                    resultCallBack.failCallBack(msg.arg1, msg.getData().get("result").toString(), msg.arg2);
                     break;
                 default:
                     break;
+            }
+            if (LoadingDialog.getInstance(context) != null) {
+                LoadingDialog.getInstance(context).dismiss();
             }
         } catch (Exception e) {
 

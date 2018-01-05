@@ -15,16 +15,8 @@ public class MySupDemBean {
      * data : [{"id":"16058","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"07-17 15:10","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"10243","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"06-15 14:19","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"7413","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"06-01 11:10","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"7412","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"06-01 11:09","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"846","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"05-03 18:38","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"},{"id":"845","p_id":"0","user_id":"3858","model":"","unit_price":"0.00","store_house":"","cargo_type":"1","f_name":"","type":"2","input_time":"05-03 18:38","c_name":"上海中晨电子商务股份有限公司","hui_count":"0","chu_count":"0","name":"李一帆","img":"http://statics.myplas.com/myapp/img/icon_supply.png"}]
      */
 
-    private int err;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<DataBean> getData() {
         return data;

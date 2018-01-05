@@ -198,7 +198,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

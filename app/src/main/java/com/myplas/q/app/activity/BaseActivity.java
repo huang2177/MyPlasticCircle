@@ -142,42 +142,92 @@ public class BaseActivity extends FragmentActivity {
         });
     }
 
+
     /**
      * get请求
+     *
+     * @param context
+     * @param url
+     * @param map
+     * @param resultCallBack
+     * @param type
      */
 
-    public void getAsyn(Activity context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, String jison) {
+    public static void getAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type) {
+        getAsyn(context, url, map, resultCallBack, type, true);
+    }
+
+
+    public static void getAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, boolean isShowDialog) {
         if (NetUtils.isNetworkStateed(context)) {
             NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
             netRequest.getAsyn();
+        }
+        if (isShowDialog) {
+            LoadingDialog.getInstance(context).show();
         }
     }
 
     /**
      * post请求
+     *
+     * @param context
+     * @param url
+     * @param map
+     * @param resultCallBack
+     * @param type
      */
 
     public static void postAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type) {
         postAsyn(context, url, map, resultCallBack, type, true);
     }
 
-    /**
-     * post请求
-     */
-
     public static void postAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, boolean isShowDialog) {
         try {
             if (NetUtils.isNetworkStateed(context)) {
                 NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
                 netRequest.postAsyn();
-            } else {
-                resultCallBack.failCallBack(type);
             }
             if (isShowDialog) {
                 LoadingDialog.getInstance(context).show();
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * delete
+     *
+     * @param context
+     * @param url
+     * @param map
+     * @param resultCallBack
+     * @param type
+     * @param isShowDialog
+     */
+    public static void deleteAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, boolean isShowDialog) {
+        if (NetUtils.isNetworkStateed(context)) {
+            NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
+            netRequest.deleteAsyn();
+        }
+    }
+
+    /**
+     * put
+     *
+     * @param context
+     * @param url
+     * @param map
+     * @param resultCallBack
+     * @param type
+     * @param isShowDialog
+     */
+    public static void putAsyn(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type, boolean isShowDialog) {
+        if (NetUtils.isNetworkStateed(context)) {
+            NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
+            netRequest.putAsyn();
+        }
+
     }
 
     /**
@@ -190,7 +240,6 @@ public class BaseActivity extends FragmentActivity {
             netRequest.postUploadImg(imgpath, token, listener);
         }
     }
-
 
     public void call(String tel) {
         if (!tel.contains("*")) {

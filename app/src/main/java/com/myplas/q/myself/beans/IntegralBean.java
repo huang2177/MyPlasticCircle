@@ -12,22 +12,13 @@ public class IntegralBean {
 
 
     /**
-     * err : 0
+     * code : 0
      * info : [{"id":"22","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"独家解读包月卡","points":"340","type":"3","extra_config":[{"cateId":"22","cate_name":"独家解读","children":[{"cateId":"23","cate_name":"下游"},{"cateId":"24","cate_name":"库存"},{"cateId":"25","cate_name":"产量"},{"cateId":"26","cate_name":"装置检修"},{"cateId":"27","cate_name":"排产"},{"cateId":"28","cate_name":"进出口"},{"cateId":"32","cate_name":"网拍"},{"cateId":"29","cate_name":"进口"},{"cateId":"30","cate_name":"出口"}]}]},{"id":"21","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"期刊报告包月卡","points":"340","type":"3","extra_config":[{"cateId":"21","cate_name":"期货资讯"}]},{"id":"20","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"装置动态包月卡","points":"340","type":"3","extra_config":[{"cateId":"20","cate_name":"美金市场"}]},{"id":"19","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"期货资讯包月卡","points":"340","type":"3","extra_config":[{"cateId":"19","cate_name":"行业要闻"}]},{"id":"18","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"美金市场包月卡","points":"340","type":"3","extra_config":null},{"id":"17","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"中晨塑说包月卡","points":"340","type":"3","extra_config":[{"cateId":"62","cate_name":"中晨塑说"}]},{"id":"16","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"企业动态包月卡","points":"340","type":"3","extra_config":[{"cateId":"9","cate_name":"企业动态"}]},{"id":"15","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"早盘预报包月卡","points":"340","type":"3","extra_config":[{"cateId":"7","cate_name":"今日焦点"}]},{"id":"14","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"塑料上游包月卡","points":"340","type":"3","extra_config":[{"cateId":"2","cate_name":"上游动态"}]},{"id":"13","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","image":"http://pic.myplas.com/myapp/img/img_mail_list@2x.png","name":"通讯录一天置顶卡","points":"100","type":"2","extra_config":""},{"id":"12","cateId":"9","thumb":"http://pic.myplas.com/myapp/img/img_supply@2x.png","image":"http://pic.myplas.com/myapp/img/img_supply@2x.png","name":"供求信息一天置顶卡","points":"100","type":"1","extra_config":"","myMsg":[{"id":"110848","p_id":"0","user_id":"53402","model":null,"unit_price":"0.00","store_house":"","f_name":null,"input_time":"08-18 15:28","type":"1","content":"pp","c_name":"上海中晨电子商务股份有限公司","name":"hh","thumb":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","sex":"0","mobile_province":"四川","is_pass":"0","contents":"pp","saysCount":1,"deliverPriceCount":0}]}]
      * pointsAll : 1975
      */
 
-    private int err;
     private String pointsAll;
     private List<InfoBean> info;
-
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getPointsAll() {
         return pointsAll;
@@ -244,8 +235,8 @@ public class IntegralBean {
             private String mobile_province;
             private String is_pass;
             private String contents;
-            private int saysCount;
-            private int deliverPriceCount;
+            private String saysCount;
+            private String deliverPriceCount;
 
             public String getId() {
                 return id;
@@ -391,19 +382,19 @@ public class IntegralBean {
                 this.contents = contents;
             }
 
-            public int getSaysCount() {
+            public String getSaysCount() {
                 return saysCount;
             }
 
-            public void setSaysCount(int saysCount) {
+            public void setSaysCount(String saysCount) {
                 this.saysCount = saysCount;
             }
 
-            public int getDeliverPriceCount() {
+            public String getDeliverPriceCount() {
                 return deliverPriceCount;
             }
 
-            public void setDeliverPriceCount(int deliverPriceCount) {
+            public void setDeliverPriceCount(String deliverPriceCount) {
                 this.deliverPriceCount = deliverPriceCount;
             }
         }

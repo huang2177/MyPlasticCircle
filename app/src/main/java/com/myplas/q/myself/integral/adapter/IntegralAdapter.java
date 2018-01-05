@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -245,7 +244,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         map.put("goods_id", goods_id);
         map.put("dates", dates);
         map.put("pur_id", p_id);
-        BaseActivity.postAsyn(context, API.BASEURL + API.NEW_EXCHANGE_SUPPLYORDEMAND, map, this, type);
+        BaseActivity.getAsyn(context, API.NEW_EXCHANGE_SUPPLYORDEMAND, map, this, type);
     }
 
     /**
@@ -258,7 +257,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         map.put("cate_ids", cate_ids);
         map.put("plasticbean_num", plastic_num + "");
         map.put("goods_id", goods_id);
-        BaseActivity.postAsyn(context, API.BASEURL + API.NEW_EXCHANGE_TOUTIAO, map, this, type);
+        BaseActivity.getAsyn(context, API.NEW_EXCHANGE_TOUTIAO, map, this, type);
     }
 
     /**
@@ -268,7 +267,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     public void getValidDate(String type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("type", type);
-        BaseActivity.postAsyn(context, API.BASEURL + API.GET_VALID_DATE, map, this, 2);
+        BaseActivity.getAsyn(context, API.GET_VALID_DATE, map, this, 2);
     }
 
     /**
@@ -353,7 +352,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     public void callBack(Object object, int type) {
         try {
             if (type == 0) {//通讯录
-                String err = new JSONObject(object.toString()).getString("err");
+                String err = new JSONObject(object.toString()).getString("code");
                 if (err.equals("0")) {
                     list_date_conact.clear();
                     myInterface.refreshData();
@@ -369,14 +368,14 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
                 } else {
-                    String content = new JSONObject(object.toString()).getString("msg");
+                    String content = new JSONObject(object.toString()).getString("message");
                     mCommonDialog = new CommonDialog();
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, content, 3, this);
                 }
             }
             if (type == 1) {//供求
-                String err = new JSONObject(object.toString()).getString("err");
+                String err = new JSONObject(object.toString()).getString("code");
                 if (err.equals("0")) {
                     list_date_supdem.clear();
                     myInterface.refreshData();
@@ -394,7 +393,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
                 } else {
-                    String content = new JSONObject(object.toString()).getString("msg");
+                    String content = new JSONObject(object.toString()).getString("message");
                     mCommonDialog = new CommonDialog();
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, content, 3, this);
@@ -416,7 +415,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
                 } else {
-                    String content = new JSONObject(object.toString()).getString("msg");
+                    String content = new JSONObject(object.toString()).getString("message");
                     mCommonDialog = new CommonDialog();
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, content, 3, this);
@@ -424,7 +423,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             }
             //展示时间dialog
             if (type == 2) {
-                String err = new JSONObject(object.toString()).getString("err");
+                String err = new JSONObject(object.toString()).getString("code");
                 if (err.equals("0")) {
                     Gson gson = new Gson();
                     tookDateBean = gson.fromJson(object.toString(), TookDateBean.class);
@@ -467,7 +466,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
         if (type == 3) {
             setIsPay();
         }

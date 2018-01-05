@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/fragment_titlebar_ll_logined"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              app:layout_collapseMode="parallax"
-              app:layout_collapseParallaxMultiplier="1"
-              app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_titlebar_ll_logined"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_collapseMode="parallax"
+    app:layout_collapseParallaxMultiplier="1"
+    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,26 +30,24 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/btn_news"/>
+                android:src="@drawable/btn_news" />
 
             <com.myplas.q.common.view.DragView
                 android:id="@+id/wd_logined_news_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
 
         <LinearLayout
             android:id="@+id/wd_linear_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical">
 
-            <com.myplas.q.common.view.VImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </com.myplas.q.common.view.VImageView>
+            <include layout="@layout/vimageview_layout" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,6 +55,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
@@ -66,7 +65,7 @@
                     android:layout_weight="1"
                     android:text="* * * * * *"
                     android:textColor="@color/color_white"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/wd_title_gs"
@@ -76,8 +75,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="* * * * * * * * *"
-                    android:textColor="@color/color_white"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
 
                 <TextView
@@ -88,7 +86,7 @@
                     android:maxLines="1"
                     android:text="* * * * * * * * *"
                     android:textColor="@color/color_white"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
             </LinearLayout>
 
             <ImageView
@@ -97,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/btn_more_big"/>
+                android:src="@drawable/btn_more_big" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

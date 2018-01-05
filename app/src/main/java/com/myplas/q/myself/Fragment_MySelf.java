@@ -2,7 +2,6 @@ package com.myplas.q.myself;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -23,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -63,7 +63,7 @@ import java.util.Map;
  *
  * @author Administrator
  */
-public class Fragment_MySelf extends Fragment implements View.OnClickListener
+public class Fragment_MySelf extends BaseFragment implements View.OnClickListener
         , ResultCallBack
         , RabbitMQCallBack {
     private View view;
@@ -81,19 +81,17 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     private Toolbar mToolbar;
     private AppBarLayout mBarLayout;
     private FrameLayout mFrameLayout;
-    private NestedScrollView mNestedScrollView;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private ACache mACache;
-    private Handler mHandler;
     private DefConfigBean.RedDotBean mDotBean;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
 
+        initView();
         setAppBarListener();
         RabbitMQConfig.getInstance(getActivity()).setResultCallBack(this);
     }
@@ -103,47 +101,45 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
      * Init view.
      */
     public void initView() {
-        mHandler = new Handler();
         mACache = ACache.get(getActivity());
         sharedUtils = SharedUtils.getSharedUtils();
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_myself, null, false);
 
-        imageTx = f(R.id.xq_tx);
-        imageStart = f(R.id.xq_rz);
-        textQg = f(R.id.wd_text_qg);
-        textGj = f(R.id.wd_text_gj);
-        textPz = f(R.id.wd_text_pz);
-        textDd = f(R.id.wd_text_dd);
-        textSet = f(R.id.wd_text_set);
-        textEdu = f(R.id.wd_text_edu);
-        textFs = f(R.id.wd_text_fans);
-        textRank = f(R.id.wd_title_pm);
-        linearGj = f(R.id.wd_linear_gj);
-        linearQg = f(R.id.wd_linear_qg);
-        linearJf = f(R.id.wd_linear_jf);
-        textGz = f(R.id.wd_text_follow);
-        textLook = f(R.id.wd_text_look);
-        textName = f(R.id.wd_title_name);
-        textCompany = f(R.id.wd_title_gs);
-        textYj = f(R.id.wd_text_introdus);
-        textTitle = f(R.id.toolbar_title);
+        imageTx = F(view, R.id.xq_tx);
+        imageStart = F(view, R.id.xq_rz);
+        textQg = F(view, R.id.wd_text_qg);
+        textGj = F(view, R.id.wd_text_gj);
+        textPz = F(view, R.id.wd_text_pz);
+        textDd = F(view, R.id.wd_text_dd);
+        textSet = F(view, R.id.wd_text_set);
+        textEdu = F(view, R.id.wd_text_edu);
+        textFs = F(view, R.id.wd_text_fans);
+        textRank = F(view, R.id.wd_title_pm);
+        linearGj = F(view, R.id.wd_linear_gj);
+        linearQg = F(view, R.id.wd_linear_qg);
+        linearJf = F(view, R.id.wd_linear_jf);
+        textGz = F(view, R.id.wd_text_follow);
+        textLook = F(view, R.id.wd_text_look);
+        textName = F(view, R.id.wd_title_name);
+        textCompany = F(view, R.id.wd_title_gs);
+        textYj = F(view, R.id.wd_text_introdus);
+        textTitle = F(view, R.id.toolbar_title);
 
-        linearFs = f(R.id.wd_linear_fans);
-        mimageMore = f(R.id.wd_title_more);
-        linearGz = f(R.id.wd_linear_follow);
-        linearStore = f(R.id.wd_text_store);
-        mDragViewLook = f(R.id.look_dragview);
-        linearTitle = f(R.id.wd_linear_title);
-        linearYj = f(R.id.wd_linear_introdus);
-        mDragViewOrder = f(R.id.order_dragview);
-        mimageNews = f(R.id.wd_logined_news_img);
-        mFrameLayout = f(R.id.wd_logined_news_fl);
-        mDragViewMsg = f(R.id.wd_logined_news_text);
-        mNestedScrollView = f(R.id.scrollView_myself);
+        linearFs = F(view, R.id.wd_linear_fans);
+        mimageMore = F(view, R.id.wd_title_more);
+        linearGz = F(view, R.id.wd_linear_follow);
+        linearStore = F(view, R.id.wd_text_store);
+        mDragViewLook = F(view, R.id.look_dragview);
+        linearTitle = F(view, R.id.wd_linear_title);
+        linearYj = F(view, R.id.wd_linear_introdus);
+        mDragViewOrder = F(view, R.id.order_dragview);
+        mimageNews = F(view, R.id.wd_logined_news_img);
+        mFrameLayout = F(view, R.id.wd_logined_news_fl);
+        mDragViewMsg = F(view, R.id.wd_logined_news_text);
 
-        mToolbar = f(R.id.toolbar);
-        mBarLayout = f(R.id.app_bar_layout);
-        mCollapsingToolbarLayout = f(R.id.collapsing_toolbar);
+        mToolbar = F(view, R.id.toolbar);
+        mBarLayout = F(view, R.id.app_bar_layout);
+        mCollapsingToolbarLayout = F(view, R.id.collapsing_toolbar);
 
         textDd.setOnClickListener(this);
         textPz.setOnClickListener(this);
@@ -165,6 +161,7 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         linearGz.setBackgroundResource(R.color.color_white);
         linearYj.setBackgroundResource(R.color.color_white);
         imageTx.setBorderColor(getResources().getColor(R.color.color_white));
+        Glide.with(getActivity()).load(R.drawable.img_defaul_male).into(imageTx);
     }
 
 
@@ -174,20 +171,10 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         return view;
     }
 
-    /**
-     * F t.
-     *
-     * @param <T> the type parameter
-     * @param id  the id
-     * @return the t
-     */
-    public <T extends View> T f(int id) {
-        return (T) view.findViewById(id);
-    }
 
     @Override
     public void onClick(View v) {
-        if (!NetUtils.isNetworkStateed(getActivity()) || myZone == null) {
+        if (!NetUtils.isNetworkStateed(getActivity())) {
             return;
         }
         switch (v.getId()) {
@@ -270,34 +257,32 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
      *
      * @param isShow the is show
      */
-    public void getLoginInfo(boolean isShow) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(getActivity(), "token"));
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.MY_ZONE, map, this, 2, isShow);
+    public void getLoginInfo() {
+        getAsyn(getActivity(), API.MY_ZONE, null, this, 1, false);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
+            String code = jsonObject.getString("code");
             Gson gson = new Gson();
-            if (type == 2) {
-                if ("0".equals(jsonObject.getString("err"))) {
-                    myZone = gson.fromJson(object.toString(), MyZone.class);
-                    showInfo(myZone);
-                } else if ("1".equals(jsonObject.getString("err"))
-                        || "998".equals(jsonObject.getString("err"))) {
-                    sharedUtils.setData(getActivity(), "token", "");
-                    sharedUtils.setData(getActivity(), "userid", "");
-                    sharedUtils.setBooloean(getActivity(), "logined", false);
-                }
+
+            if ("0".equals(code)) {
+                myZone = gson.fromJson(object.toString(), MyZone.class);
+                showInfo(myZone);
+            } else if ("1".equals(code)
+                    || "998".equals(code)) {
+                sharedUtils.setData(getActivity(), "token", "");
+                sharedUtils.setData(getActivity(), "userid", "");
+                sharedUtils.setBooloean(getActivity(), "logined", false);
             }
         } catch (Exception e) {
         }
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 
@@ -307,38 +292,35 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
      * @param myZone the my zone
      */
     public void showInfo(MyZone myZone) {
-        try {
-            textCompany.setText(myZone.getData().getC_name());
 
-            String sex = myZone.getData().getName() + "  "
-                    + myZone.getData().getMobile() + "  " +
-                    ("0".equals(myZone.getData().getSex()) ? ("男") : ("女"));
-            textName.setText(sex);
+        textCompany.setText(myZone.getData().getC_name());
 
-            String rank = "等级：" + myZone.getData().getMemberlevel()
-                    + "  排名：" + myZone.getData().getRank() + "位";
-            textRank.setText(rank);
+        String sex = myZone.getData().getName() + "  "
+                + myZone.getData().getMobile() + "  " +
+                ("0".equals(myZone.getData().getSex()) ? ("男") : ("女"));
+        textName.setText(sex);
 
-            textFs.setText(myZone.getMyfans());
-            textGz.setText(myZone.getMyconcerns());
-            textYj.setText(myZone.getIntroduction());
+        String rank = "等级：" + myZone.getData().getMemberlevel()
+                + "  排名：" + myZone.getData().getRank() + "位";
+        textRank.setText(rank);
 
-            textQg.setText(myZone.getS_in_count());
-            textGj.setText(myZone.getS_out_count());
+        textFs.setText(myZone.getMyfans());
+        textGz.setText(myZone.getMyconcerns());
+        textYj.setText(myZone.getIntroduction());
 
-            Glide.with(getActivity())
-                    .load(myZone.getData().getThumb())
-                    .placeholder(R.drawable.img_defaul_male)
-                    .into(imageTx);
+        textQg.setText(myZone.getS_in_count());
+        textGj.setText(myZone.getS_out_count());
 
-            imageStart.setImageResource(("1".equals(myZone.getData().getMerge_three()))
-                    ? (R.drawable.icon_identity_hl)
-                    : 0);
+        Glide.with(getActivity())
+                .load(myZone.getData().getThumb())
+                .into(imageTx);
 
-            sharedUtils.setData(getActivity(), Constant.STAUTS, myZone.getData().getShop_audit_status());
+        imageStart.setImageResource(("1".equals(myZone.getData().getIsshop()))
+                ? (R.drawable.icon_identity_hl)
+                : 0);
 
-        } catch (Exception e) {
-        }
+        sharedUtils.setData(getActivity(), Constant.STAUTS, myZone.getData().getShop_audit_status());
+
     }
 
     private void setAppBarListener() {
@@ -374,13 +356,13 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
         textRank.setTextColor(Color.argb(alpha, 255, 255, 255));
         textCompany.setTextColor(Color.argb(alpha, 255, 255, 255));
         textName.setTextColor(Color.argb(alpha, 255, 255, 255));
-        imageTx.setBorderColor(Color.argb(alpha, 255, 255, 255));
         mDragViewMsg.setTextColor(Color.argb(alpha, 255, 255, 255));
         if (imageStart.getDrawable() != null) {
             imageStart.getDrawable().setAlpha(alpha);
         }
         if (imageTx.getDrawable() != null) {
-            imageTx.getDrawable().mutate().setAlpha(alpha);
+            imageTx.getDrawable().setAlpha(alpha);
+            imageTx.setBorderColor(Color.argb(alpha, 255, 255, 255));
         }
     }
 
@@ -427,8 +409,8 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
+        getLoginInfo();
         rCallback(true, false);
-        getLoginInfo(false);
         MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
 
@@ -436,13 +418,5 @@ public class Fragment_MySelf extends Fragment implements View.OnClickListener
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mHandler != null) {
-            mHandler.removeCallbacksAndMessages(null);
-        }
     }
 }

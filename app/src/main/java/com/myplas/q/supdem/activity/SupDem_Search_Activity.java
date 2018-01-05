@@ -182,14 +182,18 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         });
     }
 
-    //获取历史搜索
+    /**
+     * 获取历史搜索
+     */
     public void getsearchRecord() {
         Map map = new HashMap();
         map.put("keywords", "");
-        postAsyn(this, API.BASEURL + API.SEARCH_RECORD, map, this, 1);
+        getAsyn(this, API.SEARCH_RECORD, map, this, 1);
     }
 
-    //查询
+    /**
+     * 查询
+     */
     public void getphysicalSearch(int page, String keyWords, String time, String is_buy, String area, boolean isShowLoading) {
         Map map = new HashMap();
         map.put("keywords", keyWords);
@@ -199,20 +203,23 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
         map.put("type", is_buy);
         map.put("cargo_type", "0");
         map.put("area_id", area);
-        postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH, map, this, 2, isShowLoading);
+        getAsyn(this, API.PLASTIC_SEARCH, map, this, 2, isShowLoading);
     }
 
-    //获取时间和地区
+    /**
+     * 获取时间和地区
+     */
+
     public void getTabConfig() {
-        Map map = new HashMap();
-        postAsyn(this, API.BASEURL + API.GET_TAB_CONFIG, map, this, 3);
+        getAsyn(this, API.GET_TAB_CONFIG, null, this, 3);
     }
 
-    //删除搜索历史记录
+    /**
+     * 删除搜索历史记录
+     */
+
     public void delsearchRecord() {
-        Map map = new HashMap();
-        map.put("keywords", "");
-        postAsyn(this, API.BASEURL + API.DEL_SEARCH_RECORD, map, this, 4);
+        deleteAsyn(this, API.DEL_SEARCH_RECORD, null, this, 4, false);
     }
 
     @Override
@@ -321,7 +328,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            boolean err = new JSONObject(object.toString()).getString("err").equals("0");
+            boolean err = new JSONObject(object.toString()).getString("code").equals("0");
             if (type == 1 && err) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 adapterGrid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
@@ -396,7 +403,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
         if (type == 2) {
             isLoading = false;
         }

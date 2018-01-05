@@ -17,17 +17,9 @@ public class MyIntroductionBean {
      * count : 1
      */
 
-    private int err;
     private String count;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getCount() {
         return count;

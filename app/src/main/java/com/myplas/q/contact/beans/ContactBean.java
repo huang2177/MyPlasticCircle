@@ -12,7 +12,7 @@ public class ContactBean {
 
 
     /**
-     * err : 0
+     * code : 0
      * persons : [{"user_id":"53621","name":"江秀丽","c_id":"53437","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG","c_name":"上海诚信木业有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>|2119","month_consum":"30","main_product":"保鲜膜","type":"1","fans":"4","gender":"1","buy_count":"0","sale_count":"0"},{"user_id":"53580","name":"哈嘿","c_id":"53426","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海城市建设银行","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"0.00","main_product":"","type":"1","fans":"3","gender":"0","buy_count":"28","sale_count":"0"},{"user_id":"53537","name":"王华","c_id":"53416","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海华力微电子有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"13","main_product":"7000f","type":"1","fans":"1","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53497","name":"李洁","c_id":"50417","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海承德载物有限责任公司","need_product":"74GP <strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"56","main_product":"飞机大炮的","type":"1","fans":0,"gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53496","name":"张婷","c_id":"50417","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海承德载物有限责任公司","need_product":"74GP <strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"56","main_product":"飞机大炮的","type":"1","fans":"1","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53475","name":"欧阳震华","c_id":"50402","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"香港TVB塑料塑料","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>|2089","month_consum":"10吨","main_product":"2119，5000S","type":"1","fans":"6","gender":"0","buy_count":"4","sale_count":"1"},{"user_id":"53452","name":"小李23456","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"4","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53451","name":"小李234","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"2","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53446","name":"小李","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"2","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53441","name":"韩梅梅","c_id":"50377","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":"","c_name":"中国能之光新材料科技股份有限公司（宁波分公司）","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"120吨","main_product":"2769","type":"1","fans":"6","gender":"1","buy_count":"0","sale_count":"0"}]
      * hot_search : 7000F
      * member : 3357
@@ -34,7 +34,6 @@ public class ContactBean {
      * totals : 12
      */
 
-    private String err;
     private String hot_search;
     private String member;
     private String is_show_banner;
@@ -64,13 +63,6 @@ public class ContactBean {
         return shop_audit_status;
     }
 
-    public String getErr() {
-        return err;
-    }
-
-    public void setErr(String err) {
-        this.err = err;
-    }
 
     public String getHot_search() {
         return hot_search;

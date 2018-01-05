@@ -178,7 +178,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

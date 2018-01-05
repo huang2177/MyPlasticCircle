@@ -19,19 +19,11 @@ public class SupDemBean {
      * show_msg :
      */
 
-    private int err;
     private TopBean top;
     private String hot_search;
     private String show_msg;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public TopBean getTop() {
         return top;

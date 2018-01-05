@@ -15,16 +15,8 @@ public class MySelfBean implements Serializable{
      * data : {"user_id":"9","c_name":"上海八通石化有限公司","credit_level":"AAAAA","credit_limit":2000000,"is_credit":"date_selected","pre_credit_limit":2000000,"credit_time":"1493282979"}
      */
 
-    private int err;
     private DataBean data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public DataBean getData() {
         return data;

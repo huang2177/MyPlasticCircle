@@ -19,18 +19,10 @@ public class DotBean {
      * notice : {"toutiao_content":[],"purchase_content":[{"info":"供：上海 2119 9500.00 现货","id":"196451"},{"info":"供：上海 2119 9500.00 现货","id":"196450"},{"info":"供：上海 2119 9500.00 现货","id":"196449"},{"info":"供：上海 2119 10500.00 现货","id":"196448"},{"info":"供：伊朗 7000F 12000.00 现货","id":"196447"}],"communicate_content":[]}
      */
 
-    private int err;
     private String msg;
     private DataBean data;
     private NoticeBean notice;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getMsg() {
         return msg;

@@ -68,7 +68,6 @@
     </style>
 
 
-
     <style name="my_anim_out_in" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/myanim_in</item>
         <item name="android:windowExitAnimation">@anim/myanim_out</item>

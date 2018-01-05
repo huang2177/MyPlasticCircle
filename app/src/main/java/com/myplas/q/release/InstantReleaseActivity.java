@@ -120,7 +120,7 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

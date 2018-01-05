@@ -74,7 +74,7 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

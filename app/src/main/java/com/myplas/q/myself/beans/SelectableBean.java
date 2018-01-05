@@ -15,16 +15,8 @@ public class SelectableBean {
      * data : [{"money":10,"plasticBean":100},{"money":20,"plasticBean":200},{"money":30,"plasticBean":300},{"money":50,"plasticBean":500},{"money":100,"plasticBean":1000},{"money":200,"plasticBean":2000},{"money":300,"plasticBean":3000},{"money":500,"plasticBean":500},{"money":600,"plasticBean":600}]
      */
 
-    private int err;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<DataBean> getData() {
         return data;

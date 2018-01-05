@@ -13,16 +13,8 @@ public class SecondPurBean {
      * data : {"model":"1000","vendor":"伊朗石化","storehouse":"上海","price":"0.00","transaction_type":0,"type":"2"}
      */
 
-    private String err;
     private DataBean data;
 
-    public String getErr() {
-        return err;
-    }
-
-    public void setErr(String err) {
-        this.err = err;
-    }
 
     public DataBean getData() {
         return data;

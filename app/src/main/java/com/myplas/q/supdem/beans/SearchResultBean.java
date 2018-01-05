@@ -18,18 +18,10 @@ public class SearchResultBean {
      * search : 7000F
      */
 
-    private int err;
     private String total;
     private String search;
     private List<ListBean> list;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getTotal() {
         return total;

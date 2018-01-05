@@ -16,7 +16,6 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.myself.beans.IntegralBean;
 import com.myplas.q.myself.integral.adapter.IntegralAdapter;
 
@@ -32,7 +31,9 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/28 14:10
  */
-public class IntegralActivity extends BaseActivity implements ResultCallBack, View.OnClickListener, IntegralAdapter.MyInterface {
+public class IntegralActivity extends BaseActivity implements ResultCallBack
+        , View.OnClickListener
+        , IntegralAdapter.MyInterface {
 
     private AppBarLayout appBarLayout;
     private RecyclerView mRecyclerView;
@@ -40,7 +41,6 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
     private CoordinatorLayout mCoordinatorLayout;
     private TextView integralAll, integral_all_, intergralChz, intergralRecord, intergralRule;
 
-    private Handler mHandler;
 
     private String cateId;
     private int mIndex = 0;
@@ -57,7 +57,6 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
         setTitle("塑豆商城");
         setRightTVText("如何赚塑豆");
 
-        mHandler = new Handler();
         sharedUtils = SharedUtils.getSharedUtils();
         cateId = getIntent().getStringExtra("type");
 
@@ -83,20 +82,18 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
     }
 
     public void getProducts(int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", "1");
         map.put("size", "20");
-        postAsyn(this, API.BASEURL + API.GET_PRODUCT_LIST, map, this, type);
-
+        getAsyn(this, API.GET_PRODUCT_LIST, map, this, type);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1 && err.equals("0")) {
+            String err = new JSONObject(object.toString()).getString("code");
+            if (type == 1 && "0".equals(err)) {
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
                 list = integralBean.getInfo();
                 integralAll.setText(" " + integralBean.getPointsAll().toString());
@@ -106,7 +103,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
                 moveToPosition(cateId);
 
             }
-            if (type == 2 && err.equals("0")) {
+            if (type == 2 && "0".equals(err)) {
                 IntegralBean integralBean = gson.fromJson(object.toString(), IntegralBean.class);
                 integralAll.setText(" " + integralBean.getPointsAll().toString());
             }
@@ -117,7 +114,7 @@ public class IntegralActivity extends BaseActivity implements ResultCallBack, Vi
 
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.listener.OnKeyboardChangeListener;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
@@ -29,11 +30,10 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.common.view.MyOnPageChangeListener;
-import com.myplas.q.supdem.MyOnItemClickListener;
+import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.supdem.beans.SupDemDetailBean;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_CHJ;
 import com.myplas.q.supdem.Fragment_SupDem_Detail_HF;
-import com.myplas.q.supdem.OnKeyboardChangeListener;
 import com.myplas.q.supdem.adapter.SupDem_Detail_ViewPager_Adapter;
 import com.myplas.q.common.api.API;
 
@@ -169,7 +169,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         map.put("id", getIntent().getStringExtra("id"));
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("user_id", getIntent().getStringExtra("userid"));
-        postAsyn(this, API.BASEURL + API.GET_RELEASE_MSG_DETAIL, map, this, 1);
+        postAsyn(this, API.GET_RELEASE_MSG_DETAIL, map, this, 1);
     }
 
     /**
@@ -309,7 +309,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

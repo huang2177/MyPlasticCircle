@@ -29,9 +29,6 @@
 
         </com.myplas.q.common.view.MyNestedScrollView>
 
-        <include
-            layout="@layout/layout_supplydemand_prompt_release2"
-            android:visibility="gone" />
     </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

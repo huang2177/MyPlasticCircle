@@ -1,4 +1,4 @@
-package com.myplas.q.common.lisenter;
+package com.myplas.q.common.listener;
 
 import android.app.Activity;
 import android.graphics.Rect;

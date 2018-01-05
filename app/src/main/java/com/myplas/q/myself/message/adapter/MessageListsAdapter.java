@@ -115,7 +115,7 @@ public class MessageListsAdapter extends BaseAdapter {
             }
             viewHolder.type.setText(title);
             viewHolder.mImageView.setImageResource(imgRes);
-            viewHolder.dis.setText(list.get(position).getMsg());
+            viewHolder.dis.setText(list.get(position).getMessage());
             viewHolder.time.setText(list.get(position).getInput_time());
 
         }

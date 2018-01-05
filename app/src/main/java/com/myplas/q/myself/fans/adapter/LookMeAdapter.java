@@ -25,11 +25,8 @@ import java.util.Map;
  * 时间：2017/3/20 22:33
  */
 public class LookMeAdapter extends SectionedBaseAdapter {
-    String userid;
     Context context;
-    List<String> time;
     Map<Integer, View> map;
-    Map<Integer, LinearLayout> map1;
     List<LookMeBean.DataBean.HistoryBean> list;
     List<LookMeBean.DataBean.HistoryBean.PersonBean> listPerson;
     private OnItemClickListener listener;
@@ -38,8 +35,6 @@ public class LookMeAdapter extends SectionedBaseAdapter {
         this.list = list;
         this.context = context;
         map = new HashMap<>();
-        map1 = new HashMap<>();
-        time = new ArrayList<>();
     }
 
     public void setList(List<LookMeBean.DataBean.HistoryBean> list) {
@@ -58,14 +53,12 @@ public class LookMeAdapter extends SectionedBaseAdapter {
 
     @Override
     public int getSectionCount() {
-        return list != null ? list.size() : 0;
+        return list.size();
     }
 
     @Override
     public int getCountForSection(int section) {
-        return list.get(section).getPerson() != null
-                ? list.get(section).getPerson().size()
-                : 0;
+        return list.get(section).getPerson().size();
     }
 
     @Override
@@ -73,7 +66,7 @@ public class LookMeAdapter extends SectionedBaseAdapter {
         viewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new viewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_lookme_layout, null, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_lookme_layout, parent, false);
             viewHolder.tx = (ImageView) convertView.findViewById(R.id.xq_tx);
             viewHolder.rz = (ImageView) convertView.findViewById(R.id.xq_rz);
             viewHolder.gs = (TextView) convertView.findViewById(R.id.lookme_listview_gs);
@@ -121,11 +114,10 @@ public class LookMeAdapter extends SectionedBaseAdapter {
         viewHearderHolder viewHolder = null;
         if (map.get(section) == null) {
             viewHolder = new viewHearderHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_lookme_header_layout, null, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_lookme_header_layout, parent, false);
             viewHolder.time = (TextView) convertView.findViewById(R.id.lookme_time);
             viewHolder.layout = (LinearLayout) convertView.findViewById(R.id.linearhearder);
             map.put(section, convertView);
-            map1.put(section, viewHolder.layout);
             convertView.setTag(viewHolder);
         } else {
             convertView = map.get(section);

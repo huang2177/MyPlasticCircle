@@ -12,22 +12,23 @@ public class CateListBean {
 
 
     /**
-     * err : 0
-     * info : [{"id":"44919","title":"早提示：一天之计在于晨","description":"早上好...","cateId":"1","author":"","input_time":"2017-09-04","type":"高压涂覆","pv":"610","physical":"1,2","cate_name":"早盘预测","is_free":0},{"id":"44891","title":"新闻早提示","description":"一日之计在于晨...","cateId":"1","author":"","input_time":"2017-08-31","type":"管材","pv":"531","physical":"9","cate_name":"早盘预测","is_free":0},{"id":"44885","title":"早盘预测：油价连续两日暴跌，塑料市场能否延续强势","description":"导读：近日，因飓风影响导致多家炼油企业被迫关闭，投资者持续担心供应短期内得不到消化，致使油价连续两日...","cateId":"1","author":"中晨","input_time":"2017-08-30","type":"","pv":"586","physical":"","cate_name":"早盘预测","is_free":0},{"id":"44732","title":"早盘预测：艳阳高照  塑料市场持续升温","description":"导读：上周塑料市场整体受期货带动明显，报价小幅走高。然国际原油价格遭遇重挫约2.5%，加之期货快速拉...","cateId":"1","author":"","input_time":"2017-07-25","type":"均聚拉丝","pv":"809","physical":"7,1,2,8,9,3,5,6,4,10,11,12,13","cate_name":"早盘预测","is_free":0},{"id":"44725","title":"7月25日财经要闻","description":"沪指涨破3250创三个月新高，上证50创两年新高，创业板反弹乏力。\r\n周一，沪指涨0.39%创三个月...","cateId":"1","author":"","input_time":"2017-07-25","type":"","pv":"773","physical":"","cate_name":"早盘预测","is_free":0},{"id":"44721","title":"7月25聚丙烯PP早提示","description":"7月13聚氯乙烯PVC早提示...","cateId":"1","author":"","input_time":"2017-07-25","type":"均聚拉丝","pv":"656","physical":"9,10,12","cate_name":"早盘预测","is_free":0},{"id":"44718","title":"7月25聚乙烯PE早提示","description":"昨日国内PE市场价格小幅上涨。线性期货高开震荡，周初石化多数上调出厂价格，市场受到支撑，贸易商多随行...","cateId":"1","author":"","input_time":"2017-07-25","type":"高压重包","pv":"658","physical":"9,3,2,8,1,7,13,4,5,6","cate_name":"早盘预测","is_free":0},{"id":"44717","title":"7月25聚氯乙烯PVC早提示","description":"7月20聚氯乙烯PVC早提示...","cateId":"1","author":"","input_time":"2017-07-25","type":"","pv":"604","physical":"","cate_name":"早盘预测","is_free":0},{"id":"44497","title":"早盘预测：国际原油遭遇重挫  塑料市场严阵以待","description":"导读：上周塑料市场整体受期货带动明显，报价小幅走高。然国际原油价格遭遇重挫约2.5%，加之期货快速拉...","cateId":"1","author":"","input_time":"2017-07-24","type":"低压拉丝","pv":"1236","physical":"7,1,2,8,9,3,5,6,4,10,11,12,13","cate_name":"早盘预测","is_free":0},{"id":"44493","title":"7月24日财经要闻","description":"创业板再度跳水！两日累跌2.8%，\u201c漂亮50\u201d盘中创新高。\r\n\r\n沪深两市临近收盘双双跳水翻绿。两市...","cateId":"1","author":"","input_time":"2017-07-24","type":"","pv":"955","physical":"","cate_name":"早盘预测","is_free":0}]
+     * code : 0
+     * data : [{"id":59378,"title":"","description":"dfdfdfdfdf...","cate_id":2,"author":"","input_time":"2017-12-21","type":"","pv":530,"physical":"","cate_name":"塑料上游","is_free":1},{"id":59371,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"均聚拉丝","pv":576,"physical":"2,10","cate_name":"塑料上游","is_free":1},{"id":59368,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"均聚拉丝","pv":519,"physical":"2,10","cate_name":"塑料上游","is_free":0},{"id":59369,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"高压涂覆","pv":554,"physical":"2,10","cate_name":"塑料上游","is_free":1},{"id":59370,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"高压涂覆","pv":510,"physical":"2,10","cate_name":"塑料上游","is_free":1},{"id":59365,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"均聚拉丝","pv":562,"physical":"2,10","cate_name":"塑料上游","is_free":1},{"id":59366,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"均聚拉丝","pv":597,"physical":"2,10","cate_name":"塑料上游","is_free":0},{"id":59367,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"均聚拉丝","pv":538,"physical":"2,10","cate_name":"塑料上游","is_free":0},{"id":59363,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"均聚拉丝","pv":513,"physical":"2,10","cate_name":"塑料上游","is_free":1},{"id":59364,"title":"cece","description":"c测试测试测试...","cate_id":2,"author":"","input_time":"2017-12-18","type":"高压涂覆","pv":523,"physical":"2,10","cate_name":"塑料上游","is_free":1}]
+     * hot_search : 5000S
      * show_msg :
      */
 
-    private int err;
-    private String show_msg;
     private String hot_search;
-    private List<InfoBean> info;
+    private String show_msg;
+    private List<DataBean> data;
 
-    public int getErr() {
-        return err;
+
+    public String getHot_search() {
+        return hot_search;
     }
 
-    public void setErr(int err) {
-        this.err = err;
+    public void setHot_search(String hot_search) {
+        this.hot_search = hot_search;
     }
 
     public String getShow_msg() {
@@ -38,35 +39,27 @@ public class CateListBean {
         this.show_msg = show_msg;
     }
 
-    public List<InfoBean> getInfo() {
-        return info;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public void setInfo(List<InfoBean> info) {
-        this.info = info;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
-    public String getHot_search() {
-        return hot_search;
-    }
-
-    public void setHot_search(String hot_search) {
-        this.hot_search = hot_search;
-    }
-
-    public static class InfoBean {
+    public static class DataBean {
         /**
-         * id : 44919
-         * title : 早提示：一天之计在于晨
-         * description : 早上好...
-         * cateId : 1
+         * id : 59378
+         * title :
+         * description : dfdfdfdfdf...
+         * cate_id : 2
          * author :
-         * input_time : 2017-09-04
-         * type : 高压涂覆
-         * pv : 610
-         * physical : 1,2
-         * cate_name : 早盘预测
-         * is_free : 0
+         * input_time : 2017-12-21
+         * type :
+         * pv : 530
+         * physical :
+         * cate_name : 塑料上游
+         * is_free : 1
          */
 
         private String id;

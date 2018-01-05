@@ -16,17 +16,9 @@ public class HeadSearchBean {
      * total : 14
      */
 
-    private int err;
     private String total;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getTotal() {
         return total;

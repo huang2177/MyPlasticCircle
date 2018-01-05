@@ -21,7 +21,6 @@ import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXWebpageObject;
-import com.tencent.mm.sdk.platformtools.Log;
 import com.tencent.mm.sdk.platformtools.Util;
 
 import java.util.HashMap;
@@ -188,7 +187,7 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

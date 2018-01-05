@@ -185,7 +185,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

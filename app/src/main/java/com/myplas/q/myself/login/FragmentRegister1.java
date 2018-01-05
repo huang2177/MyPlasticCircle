@@ -252,7 +252,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
         if (type == 3) {
             buttonNext.setClickable(true);
             buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);

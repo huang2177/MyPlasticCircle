@@ -3,6 +3,7 @@ package com.myplas.q.common.netresquset;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.myplas.q.common.utils.SharedUtils;
@@ -35,19 +36,18 @@ import okhttp3.Response;
  * 时间：2017/3/26 15:41
  */
 public class NetRequest implements Callback {
-    private ResultCallBack resultCallBack;
+    private int type;
+    private String url;
     private Context context;
     private Message message;
-    private int type;
     private MyHandler myHandler;
     private OkHttpClient client;
-    private String url;
     private Map<String, String> map;
     private Request.Builder builder;
     private FormBody.Builder requestBody;
+    private ResultCallBack resultCallBack;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private String token, userid, uuid, packgename, inch, comtroname, controversion,
-            kernelVersion, makename, phonename, chrome, chromeversion;
+
 
     public NetRequest(Context context, String url, Map<String, String> map, ResultCallBack resultCallBack, int type) {
         this.map = map;
@@ -57,32 +57,26 @@ public class NetRequest implements Callback {
         this.resultCallBack = resultCallBack;
 
         message = new Message();
-        client = new OkHttpClient.Builder()
-//                .readTimeout(8000, TimeUnit.SECONDS)
-//                .connectTimeout(8000, TimeUnit.SECONDS)
-                .addNetworkInterceptor(new StethoInterceptor())
-                .build();
-        builder = new Request.Builder().cacheControl(CacheControl.FORCE_NETWORK);
         myHandler = new MyHandler(context);
         requestBody = new FormBody.Builder();
+        builder = new Request.Builder().cacheControl(CacheControl.FORCE_NETWORK);
 
-        token = SharedUtils.getSharedUtils().getData(context, "token");
-        userid = SharedUtils.getSharedUtils().getData(context, "userid");
-        uuid = SharedUtils.getSharedUtils().getData(context, "uuid");
-        packgename = VersionUtils.getVersionCode(context) + "";
-        inch = SystemUtils.getInch(context) + "";
-        comtroname = SystemUtils.getSystem3() + "";
-        controversion = SystemUtils.getSystem2();
-        kernelVersion = SystemUtils.getKernelVersion() + "";
-        makename = SystemUtils.getSystem1() + "";
-        phonename = SystemUtils.getSystem() + "";
-        chrome = "";
-        chromeversion = "";
+        client = new OkHttpClient.Builder()
+                .readTimeout(8000, TimeUnit.SECONDS)
+                .connectTimeout(8000, TimeUnit.SECONDS)
+                .addNetworkInterceptor(new StethoInterceptor())
+                .build();
+
+
     }
 
-    public synchronized void getAsyn() {
+    public void getAsyn() {
         String mUrl = url + initParams(map);
-        Request request = builder.url(mUrl).build();
+        Request request = builder
+                .addHeader("X-UA", Utils.getHeader(context))
+                .url(mUrl)
+                .get()
+                .build();
         client.newCall(request).enqueue(this);
     }
 
@@ -95,20 +89,60 @@ public class NetRequest implements Callback {
         client.newCall(request).enqueue(this);
     }
 
-    public synchronized void postAsyn() {
+    /**
+     * post请求
+     */
+    public void postAsyn() {
         try {
             Request.Builder builder = new Request.Builder().url(url);
-            builder.addHeader("X-UA", "android|" + inch + "|" + userid + "|" + token + "|" + uuid + "|" + packgename + "|" + comtroname + "" +
-                    "|" + controversion + "|" + kernelVersion + "|" + chrome + "|" + chromeversion + "|" + makename + "|" + phonename + "");  //将请求头以键值对形式添加，可添加多个请求头
+            builder.addHeader("X-UA", Utils.getHeader(context));
             Request request = null;
             if (map == null) {
-                request = builder.build();
+                request = builder.get().build();
             } else {
                 for (Map.Entry<String, String> ele : map.entrySet()) {
                     requestBody.add(ele.getKey(), ele.getValue());
                 }
                 request = builder.post(requestBody.build()).build();
             }
+            client.newCall(request).enqueue(this);
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * delete
+     */
+    public void deleteAsyn() {
+        try {
+            Request.Builder builder = new Request.Builder().url(url);
+            builder.addHeader("X-UA", Utils.getHeader(context));
+            Request request = null;
+            if (map == null) {
+                request = builder.delete().build();
+            } else {
+                for (Map.Entry<String, String> ele : map.entrySet()) {
+                    requestBody.add(ele.getKey(), ele.getValue());
+                }
+                request = builder.delete(requestBody.build()).build();
+            }
+            client.newCall(request).enqueue(this);
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * put
+     */
+    public void putAsyn() {
+        try {
+            Request.Builder builder = new Request.Builder().url(url);
+            builder.addHeader("X-UA", Utils.getHeader(context));
+            for (Map.Entry<String, String> ele : map.entrySet()) {
+                requestBody.add(ele.getKey(), ele.getValue());
+            }
+            Request request = builder.put(requestBody.build()).build();
+
             client.newCall(request).enqueue(this);
         } catch (Exception e) {
         }
@@ -126,8 +160,7 @@ public class NetRequest implements Callback {
         MultipartBody requestBody = builder.build();
         //构建请求
         Request request = new Request.Builder()
-                .addHeader("X-UA", "android|" + inch + "|" + userid + "|" + token + "|" + uuid + "|" + packgename + "|" + comtroname + "" +
-                        "|" + controversion + "|" + kernelVersion + "|" + chrome + "|" + chromeversion + "|" + makename + "|" + phonename + "")
+                .addHeader("X-UA", Utils.getHeader(context))
                 .url(url)
                 .post(requestBody)
                 .build();
@@ -136,7 +169,13 @@ public class NetRequest implements Callback {
 
 
     private String initParams(Map<String, String> map) {
+        if (map == null) {
+            return "";
+        }
         StringBuffer params = new StringBuffer();
+        if (map == null && map.size() == 0) {
+            return params.toString();
+        }
         params.append('?');
         for (String name : map.keySet()) {
             try {
@@ -162,25 +201,20 @@ public class NetRequest implements Callback {
     }
 
     @Override
-    public void onResponse(Call call, Response response) throws IOException {
+    public void onResponse(Call call, Response response) {
         try {
-            String result = UnicodeUtils.decode(response.body().string());
-            if (response.isSuccessful() && TextUtils.notEmpty(result)) {
-                message.what = 1;
-                message.obj = resultCallBack;
-                message.arg1 = type;
-                Bundle bundle = new Bundle();
-                bundle.putString("result", result);
-                message.setData(bundle);
-                myHandler.sendMessage(message);
-            } else {
-                message.what = 2;
-                message.arg1 = type;
-                message.obj = resultCallBack;
-                myHandler.sendMessage(message);
-            }
+            String result = Utils.decode(response.body().string());
+            boolean successful = response.isSuccessful() && TextUtils.notEmpty(result);
+            message.what = successful ? 1 : 2;
+            message.arg1 = type;
+            message.obj = resultCallBack;
+            message.arg2 = response.code();
+            Bundle bundle = new Bundle();
+            bundle.putString("result", result);
+            message.setData(bundle);
+            myHandler.sendMessage(message);
         } catch (Exception e) {
+
         }
     }
-
 }

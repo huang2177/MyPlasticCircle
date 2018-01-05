@@ -232,7 +232,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

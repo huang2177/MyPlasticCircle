@@ -15,16 +15,8 @@ public class MyCateBean implements Serializable{
      * data : {"subscribe":["2","1"],"unconcealed_subscribe":[2,20,21,26],"property":["1","2"]}
      */
 
-    private int err;
     private DataBean data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public DataBean getData() {
         return data;

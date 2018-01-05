@@ -104,11 +104,10 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
 
     public void getSupplyDemandList(String page, boolean isShow) {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
         map.put("type", type);
         map.put("page", page);
         map.put("size", "10");
-        postAsyn(this, API.BASEURL + API.GET_MY_MSG, map, this, 1, isShow);
+        getAsyn(this, API.GET_MY_MSG, map, this, 1, isShow);
     }
 
     @Override
@@ -116,7 +115,7 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
         try {
             Gson gson = new Gson();
             if (type == 1) {
-                if (new JSONObject(object.toString()).getString("err").equals("0")) {
+                if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
                     MySupDemBean supplyDemandBean = gson.fromJson(object.toString(), MySupDemBean.class);
                     if (page == 1) {
                         mLayout.setVisibility(View.GONE);
@@ -153,7 +152,7 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 
@@ -163,7 +162,7 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
     }
 
     @Override
-    public void reQuestNet() {
+    public void deleteCallBack() {
         page = 1;
         getSupplyDemandList(String.valueOf(page), false);
     }

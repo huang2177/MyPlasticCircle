@@ -16,17 +16,8 @@ public class RecordBean {
      * search_records : []
      */
 
-    private int err;
     private List<String> recommendation;
     private List<String> search_records;
-
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<String> getRecommendation() {
         return recommendation;

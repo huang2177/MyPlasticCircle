@@ -16,16 +16,8 @@ public class ApplyInvoiceBean {
      * data : {"detail":{"total_price":"6.00","rise":"上海梓辰实业有限公司","order_sn":"SO2017080913461634","unbilling_price":"0.9980","billing_price":"0.9980"},"list":[{"id":"236","f_name":"泰国","model":"7420D","number":"2.0000","unit_price":"2.00","price":"0.9980","total_num":"3.0000","b_number":"0.4990","last_num":1.501}],"page":""}
      */
 
-    private int err;
     private DataBean data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public DataBean getData() {
         return data;

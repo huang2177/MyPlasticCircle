@@ -336,7 +336,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

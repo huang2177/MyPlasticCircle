@@ -4,12 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
@@ -178,30 +174,27 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
      * 获取历史搜索
      */
     public void getsearchRecord() {
-        postAsyn(this, API.BASEURL + API.GETF_RECORD, null, this, 1);
+        getAsyn(this, API.GETF_RECORD, null, this, 1);
     }
 
     /**
      * 查询
      */
     private void getNetData(String page, boolean isShowDialog) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", page);
         map.put("size", "15");
         map.put("keywords", keywords);
         map.put("c_type", c_type.toString());
         map.put("region", region.toString());
-        String url = API.BASEURL + API.GET_PLASTIC_PERSON;
-        postAsyn(this, url, map, this, 2, isShowDialog);
+        getAsyn(this, API.PLASTICPERSON, map, this, 2, isShowDialog);
     }
 
     /**
      * 删除历史记录
      */
     public void delsearchRecord() {
-        Map map = new HashMap();
-        map.put("keywords", "");
-        postAsyn(this, API.BASEURL + API.DELETEF_RECORD, map, this, 4);
+        deleteAsyn(this, API.DELETEF_RECORD, null, this, 4, false);
     }
 
     private void getPersonInfoData(String userId, String showtype, int type) {
@@ -209,7 +202,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         map.put("user_id", userId);
         map.put("showType", showtype);
         String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn(this, url, map, this, type, false);
+        getAsyn(this, url, map, this, type, false);
     }
 
     @Override
@@ -278,7 +271,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1 && "0".equals(err)) {
                 mRecordBean = gson.fromJson(object.toString(), RecordBean.class);
                 mGridAdapter = new SupDem_Search_Grid_Adapter(this, mRecordBean.getSearch_records());
@@ -296,8 +289,6 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 if ("0".equals(err)) {
                     mContactBean = gson.fromJson(object.toString(), ContactBean.class);
                     if (page == 1) {
-                        listView.setVisibility(View.VISIBLE);
-                        mLayoutEmpty.setVisibility(View.GONE);
                         mLVAdapter = new Fragment_Contact_LV_Adapter(this, mContactBean.getPersons());
                         listView.setAdapter(mLVAdapter);
 
@@ -368,7 +359,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
     }
 
     private void openDialog(final int type, final TextView textView) {

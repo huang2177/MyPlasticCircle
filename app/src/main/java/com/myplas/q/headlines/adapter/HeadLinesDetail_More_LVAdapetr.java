@@ -21,13 +21,13 @@ import java.util.List;
  */
 public class HeadLinesDetail_More_LVAdapetr extends BaseAdapter {
     Context context;
-    List<SucribleDetailBean.InfoBean.HotBean> mHotBeanList;
-    List<SucribleDetailBean.InfoBean.SubscribeBean> mSubscribeBeanList;
+    List<SucribleDetailBean.DataBean.HotBean> mHotBeanList;
+    List<SucribleDetailBean.DataBean.SubscribeBean> mSubscribeBeanList;
     viewHolder viewHolder = null;
 
     public HeadLinesDetail_More_LVAdapetr(Context context
-            , List<SucribleDetailBean.InfoBean.HotBean> mHotBeanList
-            , List<SucribleDetailBean.InfoBean.SubscribeBean> mSubscribeBeanList) {
+            , List<SucribleDetailBean.DataBean.HotBean> mHotBeanList
+            , List<SucribleDetailBean.DataBean.SubscribeBean> mSubscribeBeanList) {
         this.context = context;
         this.mHotBeanList = mHotBeanList;
         this.mSubscribeBeanList = mSubscribeBeanList;

@@ -1,8 +1,12 @@
 package com.myplas.q.myself.fans.adapter;
 
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
-import android.view.ViewGroup;
+
+import com.myplas.q.myself.fans.FragmentLookMe;
 
 import java.util.List;
 
@@ -12,34 +16,30 @@ import java.util.List;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:52
  */
-public class LookViewPagerAdapter extends PagerAdapter {
+public class LookViewPagerAdapter extends FragmentPagerAdapter {
     List<String> mTitles;
-    List<View> viewLists;
+    List<Fragment> viewLists;
 
-    public LookViewPagerAdapter(List<View> list, List<String> titles) {
+    public LookViewPagerAdapter(FragmentManager fm, List<Fragment> list, List<String> titles) {
+        super(fm);
         this.viewLists = list;
-        this.mTitles=titles;
+        this.mTitles = titles;
     }
 
     @Override
     public int getCount() {
-        if (viewLists.size() != 0)
+        if (viewLists.size() != 0) {
             return viewLists.size();
+        }
         return 0;
     }
 
     @Override
-    public boolean isViewFromObject(View arg0, Object arg1) {
-        return arg0 == arg1;
-    }
-
-    /*
-    * 实例化item*/
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        container.addView(viewLists.get(position));
+    public Fragment getItem(int position) {
         return viewLists.get(position);
     }
+
+
     @Override
     public CharSequence getPageTitle(int position) {
         return mTitles.get(position);

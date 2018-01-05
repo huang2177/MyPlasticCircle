@@ -172,7 +172,7 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
             TextUtils.toast(context, jsonObject.getString("msg"));
             if (jsonObject.getString("err").equals("0")) {
                 if (myInterface != null) {
-                    myInterface.reQuestNet();
+                    myInterface.deleteCallBack();
                 }
                 if (list.size() == 1) {
                     list.remove(0);
@@ -184,7 +184,7 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 
@@ -194,11 +194,11 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
             Map<String, String> map = new HashMap<String, String>();
             map.put("token", sharedUtils.getData(context, "token"));
             map.put("id", list.get(position).getId());
-            BaseActivity.postAsyn(context, API.BASEURL + API.DELETE_MY_MSG, map, this, 1);
+            BaseActivity.deleteAsyn(context, API.RELEASE_MSG, map, this, 1, false);
         }
     }
 
     public interface MyInterface {
-        void reQuestNet();
+        void deleteCallBack();
     }
 }

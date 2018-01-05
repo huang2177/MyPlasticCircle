@@ -16,17 +16,9 @@ public class SearchNoResultBean {
      * msg : 没有相关数据
      */
 
-    private int err;
     private String msg;
     private List<String> recommendation;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getMsg() {
         return msg;

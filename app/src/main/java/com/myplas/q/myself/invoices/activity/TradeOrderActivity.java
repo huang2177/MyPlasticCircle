@@ -168,7 +168,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

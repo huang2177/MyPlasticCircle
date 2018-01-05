@@ -27,6 +27,7 @@ import com.huangbryant.hbanner.listener.OnHBannerClickListener;
 import com.huangbryant.hbanner.loader.ImageLoader;
 import com.huangbryant.hbanner.view.TagImageView;
 import com.myplas.q.R;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
@@ -55,16 +56,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HeadLineListFragment extends Fragment implements ResultCallBack
+public class HeadLineListFragment extends BaseFragment implements ResultCallBack
         , View.OnClickListener
         , CommonDialog.DialogShowInterface
         , MyNestedScrollView.onScrollIterface
         , SwipeRefreshLayout.OnRefreshListener {
+    public int page, po;
     public boolean isFree;
     public String keywords1;
     private SharedUtils sharedUtils;
     public String cateId, keywords, clickId;
-    public int page, po, visibleItemCount, lastvisibleItemCount;
 
     private HBanner mBanner;
     private ListView mListView;
@@ -79,7 +80,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     private ImageButton imageButton, imageButton_backup;
 
     private List<SubcribleBean.BannerBean> mBeanList;
-    private List<CateListBean.InfoBean> list_catelist;
+    private List<CateListBean.DataBean> list_catelist;
     private List<SubcribleBean.DataBean> list_subcirble;
 
     private List<String> mListId;
@@ -251,7 +252,9 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         }
     }
 
-    //获取推荐
+    /**
+     * 获取推荐
+     */
     public void getSubscribe(int page, String subscribe, boolean isShow) {
         this.page = page;
         this.keywords = keywords;
@@ -259,50 +262,52 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
         map.put("page", page + "");
         map.put("keywords", "");
         map.put("subscribe", subscribe);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.GET_SUBSCRIBE, map, this, 4, isShow);
+        getAsyn(getActivity(), API.GET_SUBSCRIBE, map, this, 4, isShow);
     }
 
-    //获取其他
+    /**
+     * 获取其他
+     */
     public void getCatelist(int page, String cate_id, boolean isShow) {
         this.page = page;
         this.cateId = cate_id;
-
         Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", page + "");
         map.put("size", "10");
         map.put("cate_id", cate_id);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.GET_CATE_LIST, map, this, 5, isShow);
+        getAsyn(getActivity(), API.GET_CATE_LIST, map, this, 5, isShow);
     }
 
-    //检查权限
+    /**
+     * 检查权限
+     */
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", cate_id);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 6, false);
+        getAsyn(getActivity(), API.IS_PAID_SUBSCRIPTION, map, this, 6, false);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 4) {//推荐
                 loadCacheSubcrible(object.toString());
                 mACache.put("subcrible_cache", object.toString());//加入缓存
             }
             if (type == 5) {//其他
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     setListener(false);
                     CateListBean cateListBean = gson.fromJson(object.toString(), CateListBean.class);
                     if (page == 1) {
                         imageButton.setVisibility(View.GONE);
                         imageButton_backup.setVisibility(View.GONE);
-                        cateListAdapter = new CateListAdapter(getActivity(), cateListBean.getInfo());
+                        cateListAdapter = new CateListAdapter(getActivity(), cateListBean.getData());
                         mListView.setAdapter(cateListAdapter);
                         mRefreshLayout.setRefreshing(false);
                         list_catelist.clear();
-                        list_catelist.addAll(cateListBean.getInfo());
-                        lastvisibleItemCount = cateListBean.getInfo().size();
+                        list_catelist.addAll(cateListBean.getData());
 
                         //展示刷新后的popou
                         mMyInterface.callBack(cateListBean.getHot_search()
@@ -310,7 +315,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
 
                     } else {
                         mRefreshPopou.setCanShowPopou(false);
-                        list_catelist.addAll(cateListBean.getInfo());
+                        list_catelist.addAll(cateListBean.getData());
                         cateListAdapter.setList(list_catelist);
                         cateListAdapter.notifyDataSetChanged();
                     }
@@ -322,7 +327,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                         imageButton_backup.setVisibility(View.GONE);
                         emptyView.mustCallInitWay(mListView);
                         emptyView.setMyManager(R.drawable.headline_icon_null);
-                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
                         mListView.setEmptyView(emptyView);
                     } else {
                         TextUtils.toast(getActivity(), "没有更多数据了！");
@@ -336,19 +341,20 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                     intent.putExtra("id", clickId);
                     startActivity(intent);
                 } else {
-                    String content = new JSONObject(object.toString()).getString("msg");
+                    String content = new JSONObject(object.toString()).getString("message");
                     CommonDialog commonDialog = new CommonDialog();
                     commonDialog.showDialog(getActivity(), content, (err.equals("2")) ? (1) : (3), this);
                 }
             }
         } catch (Exception e) {
+            e.toString();
         }
     }
 
     private void loadCacheSubcrible(String data) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(data.toString()).getString("err");
+            String err = new JSONObject(data.toString()).getString("code");
             if ("0".equals(err)) {
                 setListener(false);
                 SubcribleBean subcribleBean = gson.fromJson(data.toString(), SubcribleBean.class);
@@ -361,7 +367,6 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                     mRefreshLayout.setRefreshing(false);
                     list_subcirble.clear();
                     list_subcirble.addAll(subcribleBean.getData());
-                    lastvisibleItemCount = subcribleBean.getData().size();
 
                     //展示刷新后的popou
                     mMyInterface.callBack(subcribleBean.getHot_search()
@@ -384,7 +389,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
                     imageButton_backup.setVisibility(View.GONE);
                     emptyView.mustCallInitWay(mListView);
                     emptyView.setMyManager(R.drawable.headline_icon_null);
-                    emptyView.setNoMessageText(new JSONObject(data).getString("msg"));
+                    emptyView.setNoMessageText(new JSONObject(data).getString("message"));
                     mListView.setEmptyView(emptyView);
                 } else {
                     TextUtils.toast(getActivity(), "没有更多数据了！");
@@ -404,7 +409,7 @@ public class HeadLineListFragment extends Fragment implements ResultCallBack
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
         mRefreshLayout.setRefreshing(false);
         if (po != 0) {
             if (list_catelist.size() == 0) {

@@ -180,7 +180,7 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

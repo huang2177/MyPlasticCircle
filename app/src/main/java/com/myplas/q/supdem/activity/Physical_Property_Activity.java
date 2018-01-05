@@ -80,7 +80,7 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 }

@@ -3,7 +3,6 @@ package com.myplas.q.supdem;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -11,15 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.NetUtils;
@@ -29,9 +29,6 @@ import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.common.view.RefreshPopou;
-import com.myplas.q.contact.activity.ContactDetailActivity;
-import com.myplas.q.contact.activity.NewContactDetailActivity;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
@@ -52,11 +49,11 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_SupDem_All extends Fragment implements View.OnClickListener
+public class Fragment_SupDem_All extends BaseFragment implements View.OnClickListener
         , CommonDialog.DialogShowInterface
         , ResultCallBack
         , SwipeRefreshLayout.OnRefreshListener
-        , MyNestedScrollView.onScrollIterface {
+        , MyNestedScrollView.onScrollIterface, MyOnItemClickListener {
 
     public int page;
     private ACache mAcache;
@@ -73,9 +70,9 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     public RefreshPopou refreshPopou;
     private MyNestedScrollView mScrollView;
     private SwipeRefreshLayout mRefreshLayout;
+    private LinearLayout layoutFirstitem, layoutUp;
     private List<SupDemBean.DataBean> mDataBeanList;
     private ImageView typeSupDem, typeNowFutures, imgUp;
-    private LinearLayout layoutPrompt, layoutFirstitem, layoutUp;
     private TextView company, content, time, mTVPromit, reply, deliver;
 
     private String mLastData, hotSearch, jsonStr;
@@ -108,7 +105,6 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         mTVPromit = f(R.id.supply_demand_text);
         deliver = f(R.id.supply_demand_deliver);
         layoutFirstitem = f(R.id.supdem_head_ll);
-        layoutPrompt = f(R.id.supply_demand_prompt_linear);
 
         mListView.setHeaderDividersEnabled(false);
         mViewDivider.setVisibility(View.GONE);
@@ -191,7 +187,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         map.put("sortField2", "");
         map.put("sortField1", "ALL");
         map.put("token", sharedUtils.getData(getActivity(), "token"));
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
+        getAsyn(getActivity(), API.RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
     /**
@@ -203,8 +199,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         map.put("token", sharedUtils.getData(getActivity(), "token"));
         map.put("user_id", userid);
         map.put("showType", showtype);
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn(getActivity(), url, map, this, type);
+        getAsyn(getActivity(), API.GET_ZONE_FRIEND, map, this, type);
     }
 
     /**
@@ -230,59 +225,37 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String result = new JSONObject(object.toString()).getString("err");
             if (type == 1) {
                 loadCacheData(object, gson);
                 mAcache.put(Constant.SUPDEMCACHE, object.toString());
-            }
-
-            //是否消耗积分
-            if (type == 2 && result.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(getActivity(), content, 1, this);
-            }
-            //已经消费了积分 //减积分成功
-            boolean b = type == 2 || type == 3;
-            if (b && result.equals("0")) {
-                Intent intent = getIntent(mergeThere);
-                intent.putExtra("userid", user_id);
-                startActivity(intent);
-            }
-            //积分不够
-            if (type == 3 && !result.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(getActivity(), content, (result.equals("100")) ? (2) : (3), this);
             }
         } catch (Exception e) {
         }
     }
 
-    /**
-     * 判断是否跳转到店铺
-     *
-     * @param flag
-     * @return
-     */
-    public Intent getIntent(String flag) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), "1".equals(flag)
-                ? NewContactDetailActivity.class
-                : ContactDetailActivity.class);
-        return intent;
+    @Override
+    public void failCallBack(int type, String message, int httpCode) {
+
+        if (type == 1) {
+            isLoading = false;
+            refreshPopou.setCanShowPopou(false);
+            mRefreshLayout.setRefreshing(false);
+        }
+        // 判断是否已经消耗积分
+        judgeCanSeeDetail(getActivity(), type, httpCode, message, mergeThere, user_id, this);
     }
+
 
     private void loadCacheData(Object object, Gson gson) {
         try {
-            String result = new JSONObject(object.toString()).getString("err");
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String result = jsonObject.getString("code");
             if (result.equals("0")) {
-                mScrollView.setVisibility(View.VISIBLE);
-                layoutPrompt.setVisibility(View.GONE);
                 mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
                 if (page == 1) {
                     mRefreshLayout.setRefreshing(false);
                     mSupDemLVAdapter = new SupDem_LV_Adapter(getActivity(), mSupDemBean.getData());
+                    mSupDemLVAdapter.setListener(this);
                     mListView.setAdapter(mSupDemLVAdapter);
                     mDataBeanList.clear();
                     mDataBeanList.addAll(mSupDemBean.getData());
@@ -302,13 +275,8 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                     mSupDemLVAdapter.notifyDataSetChanged();
                 }
                 //展示头部
-                if (new JSONObject(object.toString()).getJSONObject("top").length() != 0) {
-                    topBean = mSupDemBean.getTop();
-                    mViewDivider.setVisibility(View.VISIBLE);
-                    layoutFirstitem.setVisibility(View.VISIBLE);
-                    user_id = topBean.getUser_id();
-                    mergeThere = topBean.getMerge_three();
-                    showTopInfo(topBean);
+                if (jsonObject.getJSONObject("top").length() != 0) {
+                    showTopInfo(mSupDemBean.getTop());
                 } else {
                     topBean = null;
                     mViewDivider.setVisibility(View.GONE);
@@ -319,9 +287,7 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
                 refreshPopou.setCanShowPopou(false);
                 if (page == 1) {
                     mRefreshLayout.setRefreshing(false);
-                    mScrollView.setVisibility(View.GONE);
-                    layoutPrompt.setVisibility(View.VISIBLE);
-                    mTVPromit.setText(new JSONObject(object.toString()).getString("msg"));
+                    mTVPromit.setText(new JSONObject(object.toString()).getString("message"));
                 } else {
                     TextUtils.toast(getContext(), "没有更多数据了！");
                 }
@@ -330,58 +296,36 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
         }
     }
 
-    @Override
-    public void failCallBack(int type) {
-        refreshPopou.setCanShowPopou(false);
-        mRefreshLayout.setRefreshing(false);
-        if (mDataBeanList.size() == 0) {
-            mScrollView.setVisibility(View.GONE);
-            layoutPrompt.setVisibility(View.VISIBLE);
-
-            ImageButton imageButton = new ImageButton(getActivity());
-            imageButton.setImageResource(R.drawable.img_reload);
-            layoutPrompt.addView(imageButton);
-            imageButton.setBackgroundColor(getResources().getColor(R.color.color_white));
-            imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    page = 1;
-                    getNetData("1", true);
-                }
-            });
-        }
-        if (type == 1) {
-            isLoading = false;
-        }
-    }
-
     public void showTopInfo(SupDemBean.TopBean topBean) {
-        if (topBean != null) {
-            try {
-                company.setText(topBean.getC_name() + "  " + topBean.getName());
+        try {
+            user_id = topBean.getUser_id();
+            mergeThere = topBean.getMerge_three();
+            mViewDivider.setVisibility(View.VISIBLE);
+            layoutFirstitem.setVisibility(View.VISIBLE);
 
-                time.setText(topBean.getInput_time());
-                if ("1".equals(topBean.getFrom())) {
-                    reply.setText("回复(" + topBean.getReplyCount() + ")");
-                    deliver.setText("出价(" + topBean.getPlaticCount() + ")");
-                    reply.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_reply, 0, 0, 0);
-                    deliver.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_offer, 0, 0, 0);
-                }
+            time.setText(topBean.getInput_time());
+            company.setText(topBean.getC_name() + "  " + topBean.getName());
 
-                String html1 = "<font color='#9c9c9c'>" + " 交货地:" + "</font>" + topBean.getStore_house()
-                        + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + topBean.getModel()
-                        + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + topBean.getF_name()
-                        + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + topBean.getUnit_price();
-                content.setText(Html.fromHtml(html1));
-
-                typeSupDem.setImageResource("1".equals(topBean.getType())
-                        ? R.drawable.icon_supdem_purchase
-                        : R.drawable.icon_supdem_supply);
-                typeNowFutures.setImageResource("1".equals(topBean.getCargo_type())
-                        ? R.drawable.icon_now
-                        : R.drawable.icon_futures);
-            } catch (Exception e) {
+            if ("1".equals(topBean.getFrom())) {
+                reply.setText("回复(" + topBean.getReplyCount() + ")");
+                deliver.setText("出价(" + topBean.getPlaticCount() + ")");
+                reply.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_reply, 0, 0, 0);
+                deliver.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_offer, 0, 0, 0);
             }
+
+            String html1 = "<font color='#9c9c9c'>" + " 交货地:" + "</font>" + topBean.getStore_house()
+                    + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + topBean.getModel()
+                    + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + topBean.getF_name()
+                    + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + topBean.getUnit_price();
+            content.setText(Html.fromHtml(html1));
+
+            typeSupDem.setImageResource("1".equals(topBean.getType())
+                    ? R.drawable.icon_supdem_purchase
+                    : R.drawable.icon_supdem_supply);
+            typeNowFutures.setImageResource("1".equals(topBean.getCargo_type())
+                    ? R.drawable.icon_now
+                    : R.drawable.icon_futures);
+        } catch (Exception e) {
         }
     }
 
@@ -420,6 +364,22 @@ public class Fragment_SupDem_All extends Fragment implements View.OnClickListene
             isLoading = true;
             getNetData(page + "", false);
         }
+    }
+
+    /**
+     * 点击公司名称的回调
+     *
+     * @param userId
+     * @param flag
+     * @param id
+     * @param pur_id
+     * @param user_id
+     */
+    @Override
+    public void onItemClick(String userId, String flag, String id, String pur_id, String user_id) {
+        this.user_id = userId;
+        this.mergeThere = flag;
+        getPersonInfoData(user_id, "1", 2);
     }
 
     public interface RefreshPopouInterface {

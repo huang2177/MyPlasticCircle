@@ -16,17 +16,9 @@ public class TheirFansBean {
      * count : 4
      */
 
-    private String err;
     private String count;
     private List<DataBean> data;
 
-    public String getErr() {
-        return err;
-    }
-
-    public void setErr(String err) {
-        this.err = err;
-    }
 
     public String getCount() {
         return count;

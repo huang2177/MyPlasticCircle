@@ -16,16 +16,8 @@ public class PhysicalBean implements Serializable {
      * data : [{"lid":"638","type":"HDPE","name":"7000F","company":"燕山石化","purpose":"大棚膜、商品袋、废品袋","standard":"其它 薄膜 其它","color":"","remark":"类型：挤塑"},{"lid":"2803","type":"HDPE","name":"7000F","company":"乐天化学","purpose":"用途：一般薄膜，购物袋，农膜，薄膜。","standard":"高强度 薄膜 挤出","color":"","remark":"特性 ：优良的抗撕裂强度"},{"lid":"7731","type":"HDPE","name":"7000F","company":"三井化学","purpose":"挤出薄膜类。其机械强度和刚性十分优良，特别在高速条件下的加工性能尤为优异，产品的耐气候性能也很突出。主要用来制取高强度薄膜、各类商业用袋和易处理废物袋等","standard":"其它 其它 其它","color":"","remark":""},{"lid":"15978","type":"PC/ABS","name":"TN-7000F","company":"日本帝人","purpose":"","standard":"阻燃 其它 其它","color":"","remark":""},{"lid":"19938","type":"HDPE","name":"7000F","company":"日本普瑞曼","purpose":"超薄强化薄膜","standard":"其它 薄膜 其它","color":"","remark":"较好的冲击强度"},{"lid":"36409","type":"HDPE","name":"7000F","company":"齐鲁石化","purpose":"","standard":"其它 其它 其它","color":"","remark":""},{"lid":"59558","type":"HDPE","name":"7000F","company":"伊朗Mehr","purpose":"增强超薄膜","standard":"其它 薄膜 其它","color":"","remark":""}]
      */
 
-    private int err;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<DataBean> getData() {
         return data;

@@ -19,18 +19,10 @@ public class DefConfigBean implements Serializable {
      * notice : {"toutiao_content":[{"info":"公众号行情中心 ：价格变动","id":59346},{"info":"期货资讯：关于增设线型低密度聚乙烯、聚丙烯指定交割仓库的通知","id":59345},{"info":"装置动态：国内PE装置动态报道汇总（20171103）","id":59344},{"info":"美金市场：PE进口市场线性价格即时报盘（20171103）","id":59343},{"info":"企业动态：中景石化PP价格报道","id":59342}],"purchase_content":[{"info":"供：上海 2119 8655.00 期货","id":196483,"user_id":53991},{"info":"供：上海 2119 8655.00 期货","id":196482,"user_id":53991},{"info":"供：上海 2119 8655.00 期货","id":196481,"user_id":53991},{"info":"供：上海 2119 8655.00 期货","id":196480,"user_id":53991},{"info":"供：上海 2119 8655.00 期货","id":196479,"user_id":53991}],"communicate_content":[{"info":"安徽正枘塑料包装有限司加入塑料圈 ","id":80990},{"info":"上海测试封装有限公司加入塑料圈 ","id":80989},{"info":"无锡市元捷塑业有限公司加入塑料圈 ","id":80988},{"info":"哈哈哈哈哈哈加入塑料圈 ","id":80987},{"info":"浙江长兴紫鑫科技有限公司加入塑料圈 ","id":80986}]}
      */
 
-    private int err;
     private ConfigBean config;
     private RedDotBean redDot;
     private NoticeBean notice;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public ConfigBean getConfig() {
         return config;

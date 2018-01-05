@@ -17,7 +17,6 @@ public class OrderBean {
      * data : {"appid":"wxc0eb2ef58d5df955","noncestr":"wp2EP75XphXzjqiRe5MqYDMSXxl5uioq","package":"Sign=WXPay","partnerid":"1473441002","prepayid":"wx20170606112500649488bbe60351571135","timestamp":1496719501,"sign":"6121E69C5EC299AE2F6DD553C73A508E"}
      */
 
-    private int err;
     private String msg;
     private DataBean data;
     /**
@@ -26,13 +25,6 @@ public class OrderBean {
 
     private String order_id;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getMsg() {
         return msg;

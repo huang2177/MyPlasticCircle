@@ -17,17 +17,9 @@ public class MsgHFBean {
      * data : [{"id":"1610","user_id":"53402","name":"hh","c_name":"上海中晨电子商务股份有限公司","mobile":"15378412400","type":"1","hui_content":"还好","model":"","fa_content":"pp","hui_time":"8月21日 10:30","fa_time":"8月18日 15:28","f_name":"","detail_url":"/plasticzone/plastic#/releasedetail?id=1610&userid=53402&tab=2"}]
      */
 
-    private int err;
     private String count;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getCount() {
         return count;

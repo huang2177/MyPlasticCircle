@@ -110,6 +110,8 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
                 intent1.putExtra("data", "1");
                 startActivity(intent1);
                 break;
+            default:
+                break;
         }
     }
 
@@ -120,34 +122,34 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
             map.put("page", "1");
             map.put("fname", keywords);
             map.put("token", sharedUtils.getData(this, "token"));
-            postAsyn(this, API.BASEURL + API.CREDIT_CERTIFICATE, map, this, 1);
+            getAsyn(this, API.CREDIT_CERTIFICATE, map, this, 1);
         } else {
             TextUtils.toast(this, "请输入搜索关键字！");
         }
     }
 
     public void getData() {
-        postAsyn(this, API.BASEURL + API.CREDIT_PAGE, null, this, 2);
+        getAsyn(this, API.BASEURL + API.CREDIT_PAGE, null, this, 2);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     companyBean = gson.fromJson(object.toString(), CompanyBean.class);
-                    if (companyBean.getData().size() != 1) {
-                        showDialog();
-                    } else {
+                    if (companyBean.getData().size() == 1) {
                         Intent intent = new Intent(LineOfCreditActivity.this, MySelfActivity.class);
                         intent.putExtra("id", companyBean.getData().get(0).getContact_id());
                         intent.putExtra("data", "2");
                         startActivity(intent);
+                    } else if (companyBean.getData().size() != 0) {
+                        showDialog();
                     }
                 } else {
-                    TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
+                    TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
                 }
             }
             if (type == 2 && err.equals("0")) {
@@ -203,17 +205,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 }

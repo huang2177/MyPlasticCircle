@@ -16,16 +16,8 @@ public class DeliverPriceBean {
      * data : [{"id":"309","pur_id":"114111","send_id":"53397","user_id":"3858","price":"55.00","type":"2","status":"0","input_time":"10-10 16:40","is_read":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0"},{"id":"308","pur_id":"114111","send_id":"53397","user_id":"3858","price":"22.00","type":"2","status":"0","input_time":"10-10 16:38","is_read":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0"},{"id":"307","pur_id":"114111","send_id":"53397","user_id":"3858","price":"33.00","type":"2","status":"0","input_time":"10-10 16:37","is_read":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0"},{"id":"306","pur_id":"114111","send_id":"53397","user_id":"3858","price":"32.00","type":"2","status":"0","input_time":"10-10 11:22","is_read":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0"},{"id":"305","pur_id":"114111","send_id":"53397","user_id":"3858","price":"23.00","type":"2","status":"0","input_time":"10-10 11:22","is_read":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0"},{"id":"304","pur_id":"114111","send_id":"53397","user_id":"3858","price":"2323.00","type":"2","status":"0","input_time":"10-10 11:22","is_read":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0"},{"id":"303","pur_id":"114111","send_id":"53397","user_id":"3858","price":"32.00","type":"2","status":"0","input_time":"10-10 11:10","is_read":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0"},{"id":"302","pur_id":"114111","send_id":"53397","user_id":"3858","price":"23.00","type":"2","status":"0","input_time":"10-10 10:08","is_read":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0"}]
      */
 
-    private int err;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<DataBean> getData() {
         return data;

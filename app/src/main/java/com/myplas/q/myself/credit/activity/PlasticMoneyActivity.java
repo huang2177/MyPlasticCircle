@@ -57,25 +57,16 @@ public class PlasticMoneyActivity extends BaseActivity implements ResultCallBack
     }
 
     public void getData() {
-        postAsyn(this, API.BASEURL + API.CREDIT_LIMIT_PAGE, null, this, 1);
+        getAsyn(this, API.CREDIT_LIMIT_PAGE, null, this, 1);
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1 && err.equals("0")) {
+            String err = new JSONObject(object.toString()).getString("code");
+            if ("0".equals(err)) {
                 EDuBean eDuBean = gson.fromJson(object.toString(), EDuBean.class);
                 aDapter = new EDu_Listview_ADapter(this, eDuBean.getData());
                 listView.setAdapter(aDapter);
@@ -85,7 +76,7 @@ public class PlasticMoneyActivity extends BaseActivity implements ResultCallBack
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 
@@ -99,6 +90,8 @@ public class PlasticMoneyActivity extends BaseActivity implements ResultCallBack
                 break;
             case R.id.img_contact_call:
                 startActivity(new Intent(this, Ed_Call_Dialog_Activity.class));
+                break;
+            default:
                 break;
         }
     }

@@ -27,7 +27,6 @@ import com.myplas.q.myself.beans.OrderBean;
 import com.myplas.q.myself.beans.SelectableBean;
 import com.myplas.q.myself.integral.adapter.Integral_Pay_Adapter;
 import com.myplas.q.wechatpay.PayUtis;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -295,7 +294,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         }
     }
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 }

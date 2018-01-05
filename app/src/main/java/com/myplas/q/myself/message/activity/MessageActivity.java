@@ -64,13 +64,13 @@ public class MessageActivity extends BaseActivity implements ResultCallBack {
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
         map.put("size", "10");
-        postAsyn(this, API.BASEURL + API.MYMSG, map, this, 1, false);
+        getAsyn(this, API.MYMSG, map, this, 1, false);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            if (new JSONObject(object.toString()).getString("err").equals("0")) {
+            if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
                 Gson gson = new Gson();
                 MyMessageBean myMessageBean = gson.fromJson(object.toString(), MyMessageBean.class);
                 list = myMessageBean.getData();
@@ -84,7 +84,7 @@ public class MessageActivity extends BaseActivity implements ResultCallBack {
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 
@@ -93,5 +93,4 @@ public class MessageActivity extends BaseActivity implements ResultCallBack {
         super.onResume();
         getMyMsg();
     }
-
 }

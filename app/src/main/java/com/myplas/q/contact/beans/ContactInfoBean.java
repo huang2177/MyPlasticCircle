@@ -13,20 +13,11 @@ public class ContactInfoBean implements Serializable {
 
 
     /**
-     * err : 0
+     * code : 0
      * data : {"user_id":"56656","name":"哈妹","c_id":"4016","is_pass":"0","mobile":"18817391111","sex":"女","thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","thumbqq":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","c_name":"嘉兴鼎辉信息科技有限公司","address":"安徽安庆迎江区|哈哈","main_product":"PP，PE，PVC","type":"2","com_intro":"公司于2015年由原上海中晨塑料有限公司改制建立，专注于塑料化工原料领域的B2B电子商务交易，为各类塑料化工原料领域的上下游企业提供全方位的交易及相关增值服务。","is_follow":1,"ranking":18479,"member_level":"","is_vip":0,"followers":9,"fans":5,"recommendation":0,"supplies":[{"pur_id":"196138","model":"7000F","f_name":"伊朗","store_house":"上海","unit_price":"10000.00","cargo_type":0,"input_time":"11月15日 17:14","bid":"5","reply":"0","user_id":56656,"thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG"},{"pur_id":"195140","model":"2119","f_name":"上海","store_house":"上海","unit_price":"20000.00","cargo_type":0,"input_time":"10月27日 11:17","bid":"0","reply":"0","user_id":56656,"thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG"},{"pur_id":"186769","model":"","f_name":"","store_house":"","unit_price":"0.00","cargo_type":0,"input_time":"09月24日 22:09","bid":"0","reply":"0","user_id":56656,"thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG"},{"pur_id":"186766","model":"","f_name":"","store_house":"","unit_price":"0.00","cargo_type":0,"input_time":"09月24日 20:47","bid":"0","reply":"0","user_id":56656,"thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG"},{"pur_id":"186765","model":"","f_name":"","store_house":"","unit_price":"0.00","cargo_type":0,"input_time":"09月24日 20:46","bid":"0","reply":"0","user_id":56656,"thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG"}],"demand":[{"pur_id":"196394","model":"2119","f_name":"上海","store_house":"上海","unit_price":"95000.00","cargo_type":0,"input_time":"11月27日 13:33","bid":"0","reply":"0","thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","user_id":56656},{"pur_id":"196393","model":"2119","f_name":"上海","store_house":"上海","unit_price":"95000.00","cargo_type":0,"input_time":"11月27日 13:32","bid":"0","reply":"0","thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","user_id":56656},{"pur_id":"196392","model":"2119","f_name":"上海","store_house":"上海","unit_price":"95000.00","cargo_type":0,"input_time":"11月27日 13:31","bid":"0","reply":"0","thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","user_id":56656},{"pur_id":"196386","model":"2119","f_name":"上海","store_house":"上海","unit_price":"9500.00","cargo_type":0,"input_time":"11月24日 17:42","bid":"0","reply":"0","thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","user_id":56656},{"pur_id":"196376","model":"2119","f_name":"青岛","store_house":"上海","unit_price":"9500.00","cargo_type":0,"input_time":"11月24日 17:04","bid":"0","reply":"0","thumb":"//pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","user_id":56656}],"heat":0}
      */
 
-    private int err;
     private DataBean data;
-
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public DataBean getData() {
         return data;

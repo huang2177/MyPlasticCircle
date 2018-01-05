@@ -84,14 +84,14 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("page", page);
         map.put("size", "10");
-        postAsyn(this, API.BASEURL + API.GET_PURCHASE_RECORD, map, this, 1);
+        postAsyn(this, API.GET_PURCHASE_RECORD, map, this, 1);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             RecordBean recordBean = null;
-            if (new JSONObject(object.toString()).getString("err").equals("0")) {
+            if (new JSONObject(object.toString()).getString("code").equals("0")) {
                 Gson gson = new Gson();
                 layout.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
@@ -110,7 +110,7 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
                 if (page == 1) {
                     listView.setVisibility(View.GONE);
                     layout.setVisibility(View.VISIBLE);
-                    textView.setText(new JSONObject(object.toString()).getString("msg"));
+                    textView.setText(new JSONObject(object.toString()).getString("message"));
                 }
             }
         } catch (Exception e) {
@@ -118,17 +118,8 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

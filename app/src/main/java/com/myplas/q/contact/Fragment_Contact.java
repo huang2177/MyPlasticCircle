@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +28,11 @@ import com.huangbryant.hindicator.HIndicatorDialog;
 import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.AccessContactUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
@@ -68,7 +69,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_Contact extends Fragment implements View.OnClickListener
+public class Fragment_Contact extends BaseFragment implements View.OnClickListener
         , ResultCallBack
         , CommonDialog.DialogShowInterface
         , MyNestedScrollView.onScrollIterface
@@ -267,14 +268,13 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
      */
     public void getNetData(String page, boolean isShowDialog) {
         sharedUtils = SharedUtils.getSharedUtils();
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", page);
         map.put("size", "15");
         map.put("keywords", "");
         map.put("c_type", c_type);
         map.put("region", region);
-        String url = API.BASEURL + API.GET_PLASTIC_PERSON;
-        BaseActivity.postAsyn(getActivity(), url, map, this, 1, isShowDialog);
+        getAsyn(getActivity(), API.PLASTICPERSON, map, this, 1, isShowDialog);
     }
 
     /**
@@ -289,21 +289,18 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         map.put("user_id", userId);
         map.put("showType", showtype);
         map.put("token", sharedUtils.getData(getActivity(), "token"));
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn(getActivity(), url, map, this, type, false);
+        getAsyn(getActivity(), API.GET_ZONE_FRIEND, map, this, type, false);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            listView.setVisibility(View.VISIBLE);
-            imageButton.setVisibility(View.GONE);
             JSONObject jsonObject = new JSONObject(object.toString());
-            String err = jsonObject.getString("err");
+            String err = jsonObject.getString("code");
             if (type == 1) {
                 isLoading = false;
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     sharedUtils.setData(getActivity(), "txlBean", object.toString());
                     loadCacheData(gson, object.toString(), true);
 
@@ -314,37 +311,30 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
                     }
                 }
                 if ("2".equals(err) || "3".equals(err)) {
-                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("message"));
                 }
             }
-            //是否消耗积分
-            if (type == 2 && err.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(getActivity(), content, 1, this);
-            }
-            //已经消费了积分 或者 减积分成功
-            boolean b = type == 2 || type == 3;
-            if (b && "0".equals(err)) {
-                Intent intent = getIntent(mergeThere);
-                intent.putExtra("userid", userId);
-                startActivity(intent);
-            }
-            //积分不够
-            if (type == 3 && !err.equals("0")) {
-                String content = jsonObject.getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(getActivity(), content, (err.equals("100")) ? (2) : (3), this);
-            }
-            boolean isLoginout = (type == 1 && err.equals("1") || err.equals("998"))
-                    || (type == 10 && !err.equals("0"));
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void failCallBack(int type, String message, int httpCode) {
+        try {
+            mRefreshLayout.setRefreshing(false);
+            JSONObject jsonObject = new JSONObject(message);
+            String err = jsonObject.getString("code");
+
+            boolean isLoginout = (type == 1 && "1".equals(err) || "998".equals(err))
+                    || (type == 10 && !"0".equals(err));
             if (isLoginout) {
                 sharedUtils.setData(getActivity(), Constant.TOKEN, "");
                 sharedUtils.setData(getActivity(), Constant.USERID, "");
                 sharedUtils.setBooloean(getActivity(), Constant.LOGINED, false);
-                sharedUtils.setData(getActivity(), Constant.POINTSINFO, jsonObject.getString("msg"));
+                sharedUtils.setData(getActivity(), Constant.POINTSINFO, jsonObject.getString("message"));
             }
         } catch (Exception e) {
+
         }
     }
 
@@ -362,6 +352,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             startActivity(intent);
         }
     }
+
 
     /**
      * 默认先加载缓存里面数据
@@ -383,7 +374,6 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         } catch (Exception e) {
         }
     }
-
 
     private void showInfo(ContactBean bean) {
         showCType = bean.getShow_ctype();
@@ -449,15 +439,6 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
             mLayoutTop.setVisibility(View.VISIBLE);
         } else {
             mLayoutTop.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void failCallBack(int type) {
-        mRefreshLayout.setRefreshing(false);
-        if (mListBean.size() == 0) {
-            listView.setVisibility(View.GONE);
-            imageButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -559,19 +540,6 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         }
     }
 
-    /**
-     * 判断是否跳转到店铺
-     *
-     * @param flag
-     * @return
-     */
-    public Intent getIntent(String flag) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), "1".equals(flag)
-                ? NewContactDetailActivity.class
-                : ContactDetailActivity.class);
-        return intent;
-    }
 
     @Override
     public void onResume() {
@@ -579,7 +547,7 @@ public class Fragment_Contact extends Fragment implements View.OnClickListener
         //统计页面，"MainScreen"为页面名称，可自定义
         MobclickAgent.onPageStart("MainScreen");
         //检查登录状态
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
+        //postAsyn(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
     }
 
 

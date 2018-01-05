@@ -1,11 +1,9 @@
 package com.myplas.q.myself.store;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -25,7 +23,6 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyEditText;
-import com.myplas.q.common.view.ProgressImageView;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.durban.Controller;
 import com.yanzhenjie.durban.Durban;
@@ -289,7 +286,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
         if (type == 3) {
             button.setClickable(true);
             button.setBackgroundResource(R.drawable.login_btn_shape_hl);

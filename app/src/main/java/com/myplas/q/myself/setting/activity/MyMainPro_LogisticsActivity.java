@@ -122,7 +122,7 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
             mtextfieldEnd.setSelection(end.length());
             mtextfieldStart.setSelection(start.length());
 
-            showInPutKeybord();
+            showInPutKeybord(mtextfieldEnd);
         }
     }
 
@@ -168,29 +168,5 @@ public class MyMainPro_LogisticsActivity extends BaseActivity implements View.On
         }
     }
 
-    private void showInPutKeybord() {
-        mtextfieldStart.setFocusable(true);
-        mtextfieldStart.setFocusableInTouchMode(true);
-        mtextfieldStart.requestFocus();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
 
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-            }
-
-        }, 200);
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

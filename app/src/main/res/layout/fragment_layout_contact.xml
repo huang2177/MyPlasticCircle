@@ -25,7 +25,7 @@
             android:id="@+id/contact_appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_white"
+            android:background="@android:color/transparent"
             app:elevation="0dp">
 
             <!--AppBarLayout里放入的都可以跟着向上滑动滑出布局的的 -->

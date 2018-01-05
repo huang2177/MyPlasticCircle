@@ -1,20 +1,21 @@
 package com.myplas.q.common.api;
 
 import com.myplas.q.BuildConfig;
+import com.myplas.q.myself.login.BaseInterface;
 
 /**
  * @author 黄双
- * 电话：15378412400
- * 邮箱：15378412400@163.com
- * 时间：2017/5/16 12:10
+ *         电话：15378412400
+ *         邮箱：15378412400@163.com
+ *         时间：2017/5/16 12:10
  */
 public class API {
     /**
      * base url
      */
     public final static String BASEURL = (BuildConfig.API_ENV)
-            ? ("https://api.myplas.com/qapi_4/")
-            : ("https://ssl.myplas.com/qapi_4/");
+            ? ("http://api.91su.cn/")
+            : ("http://api.91su.cn/");
     /**
      * 正式_快速登陆
      */
@@ -23,17 +24,13 @@ public class API {
             : "https://ssl.myplas.com/";
 
     /*common*/
-
     /**
      * APP更新
      */
-
     public final static String CHECK_VERSION = "common/checkVersion";
-
     /**
      * APP推荐更新
      */
-
     public final static String CHECKAPPVERSION = "common/checkAppVersion";
 
     /**
@@ -114,59 +111,59 @@ public class API {
     /**
      * 获取证书
      */
-    public final static String CREDIT_CERTIFICATE = "credit/creditCertificate";
+    public final static String CREDIT_CERTIFICATE = BASEURL + "CreditCertificate";
     /**
      * 塑料配资
      */
-    public final static String CREDIT_LIMIT_PAGE = "credit/creditLimitPage";
+    public final static String CREDIT_LIMIT_PAGE = BASEURL + "CreditLimitPage";
     /**
      * 企业信用额度
      */
-    public final static String CREDIT_PAGE = "credit/creditPage";
+    public final static String CREDIT_PAGE = BASEURL + "CreditPage";
 
 
     /*User*/
     /**
      * 发送验证码
      */
-    public final static String SEND_MSG = "user/sendMsg";
+    public final static String SEND_MSG = "sendMsg";
     /**
      * 找回密码
      */
-    public final static String FINF_MY_PWD = "user/finfMyPwd";
+    public final static String FINF_MY_PWD = "finfMyPwd";
     /**
      * 注册
      */
-    public final static String REGISTER = "user/register";
+    public final static String REGISTER = "register";
     /**
      * 普通登陆
      */
-    public final static String LOGIN = "user/login";
+    public final static String LOGIN = BASEURL + "Login";
     //
     /**
      * 快速登陆
      */
-    public final static String SIMPLE_LOGIN = "user/simpleLogin";
+    public final static String SIMPLE_LOGIN = BASEURL_API + "simpleLogin";
     /**
      * 退出登录
      */
-    public final static String LOGOUT = "user/logout";
+    public final static String LOGOUT = BASEURL + "Logout";
     /**
      * 检查登录状态
      */
-    public final static String VALIDUSERTOKEN = "user/validUserToken";
+    public final static String VALIDUSERTOKEN = API.BASEURL + "validUserToken";
     /**
      * 验证用户注册手机号
      */
-    public final static String VALIDUSERMOBILE = "user/validUserMobile";
+    public final static String VALIDUSERMOBILE = "validUserMobile";
     /**
      * 验证验证码
      */
-    public final static String VALIDVERIFICATIONCODE = "user/validVerificationCode";
+    public final static String VALIDVERIFICATIONCODE = "validVerificationCode";
     /**
      * 发送验证码
      */
-    public final static String SEND_MOBILE_MSG = "user/login/sendMobileMsg";
+    public final static String SEND_MOBILE_MSG = "sendMobileMsg";
     /**
      * 获取验证码--仅供APP使用
      */
@@ -181,47 +178,51 @@ public class API {
     /**
      * 取消或关注
      */
-    public final static String FOCUS_OR_CANCEL = "friend/focusOrCancel";
+    public final static String FOCUS_OR_CANCEL = "focusOrCancel";
     /**
      * 发送回复消息
      */
-    public final static String SEND_ZONE_CONTACTMSG = "friend/sendZoneContactMsg";
+    public final static String SEND_ZONE_CONTACTMSG = "sendZoneContactMsg";
     /**
      * 获取好友资料
      */
-    public final static String GET_ZONE_FRIEND = "friend/getZoneFriend";
+    public final static String GET_ZONE_FRIEND = BASEURL + "ZoneFriend";
+    /**
+     * 获取好友资料时 检查权限
+     */
+    public final static String PERMISSIONS = BASEURL + "users/access/permissions";
     /**
      * 获取ta的求购或供给
      */
-    public final static String GET_TA_PUR = "/friend/getTaPurNew";
+    public final static String GET_TA_PUR = "TaPurNew";
     /**
      * 获取通讯录首页数据
      */
-    public final static String GET_PLASTIC_PERSON = "friend/getPlasticPerson";
+    public final static String PLASTICPERSON = BASEURL + "users";
     /**
      * 获得通讯录搜索记录和推荐
      */
-    public final static String GETF_RECORD = "friend/getFriendSearchRecord";
+    public final static String GETF_RECORD = BASEURL + "FriendSearchRecord";
     /**
      * 删除通讯录搜索记录
      */
-    public final static String DELETEF_RECORD = "friend/deleteFriendSearchRecord";
+    public final static String DELETEF_RECORD = BASEURL + "deleteFriendSearchRecord";
     /**
      * 获取用户资料
      */
-    public final static String GETINFORMATION = "friend/getInformation";
+    public final static String GETINFORMATION = BASEURL + "Information";
     /**
      * 获取用户关注
      */
-    public final static String GETFOLLOWERS = "friend/getFollowers";
+    public final static String GETFOLLOWERS = BASEURL + "Followers";
     /**
      * 获取用户粉丝
      */
-    public final static String GETRECOMMENDATION = "friend/getRecommendation";
+    public final static String GETRECOMMENDATION = BASEURL + "Recommendation";
     /**
      * 获取用户引荐
      */
-    public final static String GETFANS = "friend/getFans";
+    public final static String GETFANS = BASEURL + "Fans";
 
 
 
@@ -229,7 +230,8 @@ public class API {
     /**
      * [我的]首页数据
      */
-    public final static String MY_ZONE = "myInfo/myZone";
+    public final static String MY_ZONE = BASEURL + "MyZone";
+
     /**
      * 保存名片到服务器
      */
@@ -241,11 +243,11 @@ public class API {
     /**
      * 保存资料
      */
-    public final static String SAVE_SELFINFO = "myInfo/saveSelfInfo";
+    public final static String SAVE_SELFINFO = BASEURL + "saveSelfInfo";
     /**
      * 获取我的资料
      */
-    public final static String GET_SELF_INFO = "myInfo/getSelfInfo";
+    public final static String GET_SELF_INFO = BASEURL + "SelfInfo";
     /**
      * 偏好设置
      */
@@ -257,50 +259,51 @@ public class API {
     /**
      * 获取我的引荐
      */
-    public final static String GET_MY_INTRODUCTION = "myInfo/getMyIntroduction";
+    public final static String GET_MY_INTRODUCTION = BASEURL + "MyIntroduction";
     /**
-     * 获取我的关注 粉丝
+     * 获取我的粉丝
      */
-    public final static String GET_MY_FUNS = "myInfo/getMyFuns";
+    public final static String GET_MY_FUNS = BASEURL + "MyFuns";
+
     /**
      * 获取谁看过我详情数据
      */
-    public final static String GET_VIEW_HISTORY_DETAILS = "myInfo/getViewHistoryDetails";
+    public final static String GET_VIEW_HISTORY_DETAILS = BASEURL + "ViewHistoryDetails";
     /**
      * 获取格式化中国的地区
      */
-    public final static String GET_ALL_REGIONS = "myInfo/getAllRegions";
+    public final static String GET_ALL_REGIONS = BASEURL + "AllRegions";
     /**
      * 获取我的消息
      */
-    public final static String MYMSG = "myInfo/myMsg";
+    public final static String MYMSG = BASEURL + "myMsg";
     /**
      * 获取我的消息--供求信息
      */
-    public final static String PLASTICMSG = "myInfo/plasticMsg";
+    public final static String PLASTICMSG = BASEURL + "plasticMsg";
     /**
      * 获取我的消息--出价消息
      */
-    public final static String CHUJIAMSG = "myInfo/chuJiaMsg";
+    public final static String CHUJIAMSG = BASEURL + "chuJiaMsg";
     /**
      * 获取我的消息--回复消息
      */
-    public final static String HUIFUMSG = "myInfo/huiFuMsg";
+    public final static String HUIFUMSG = BASEURL + "huiFuMsg";
     /**
      * 获取我的消息--互动消息
      */
-    public final static String INTERMSG = "myInfo/interMsg";
+    public final static String INTERMSG = BASEURL + "interMsg";
 
 
     /*product*/
     /**
      * 塑料圈app之兑换置顶信息
      */
-    public final static String NEW_EXCHANGE_SUPPLYORDEMAND = "product/newExchangeSupplyOrDemand";
+    public final static String NEW_EXCHANGE_SUPPLYORDEMAND = BASEURL + "exchanges/mall/goods/topcards";
     /**
      * 塑料圈app之积分商品列表
      */
-    public final static String GET_PRODUCT_LIST = "product/getProductList";
+    public final static String GET_PRODUCT_LIST = BASEURL + "mall/goods";
     /**
      * 塑料圈app之积分商品可选日期
      */
@@ -308,11 +311,11 @@ public class API {
     /**
      * 塑料圈app之购买记录
      */
-    public final static String GET_PURCHASE_RECORD = "product/getPurchaseRecord";
+    public final static String GET_PURCHASE_RECORD = BASEURL + "histories/exchanges";
     /**
      * 塑料圈app之购买头条
      */
-    public final static String NEW_EXCHANGE_TOUTIAO = "product/newExchangeToutiao";
+    public final static String NEW_EXCHANGE_TOUTIAO = BASEURL + "exchanges/mall/goods/toutiao";
 
 
     /*pay*/
@@ -338,16 +341,16 @@ public class API {
     /**
      * 塑料圈app之积分记录
      */
-    public final static String SCORE_RECORD = "score/getScoreRecords";
+    public final static String SCORE_RECORD = BASEURL + "histories/points";
 
 
 
 
     /*releaseMsg*/
     /**
-     * 获取通讯录首页数据
+     * 获取供求首页数据
      */
-    public final static String GET_RELEASE_MSG = "releaseMsg/getReleaseMsg";
+    public final static String RELEASE_MSG = BASEURL + "requirements";
     /**
      * 中间供求信息-获取供求发布(详情)
      */
@@ -368,10 +371,6 @@ public class API {
      * 供求消息中的出价
      */
     public final static String DELIVER_PRICE = "releaseMsg/deliverPrice";
-    /**
-     * 删除我的供给或求购
-     */
-    public final static String DELETE_MY_MSG = "releaseMsg/deleteMyMsg";
     /**
      * 判断提交的发布报价(采购1、报价2)
      */
@@ -396,11 +395,11 @@ public class API {
     /**
      * 获取我的供给或求购
      */
-    public final static String GET_MY_MSG = "releaseMsg/getMyMsg";
+    public final static String GET_MY_MSG = BASEURL + "requirements/owns";
     /**
      * 搜索记录查询
      */
-    public final static String SEARCH_RECORD = "releaseMsg/getSearchLogNew";
+    public final static String SEARCH_RECORD = BASEURL + "histories/requirements/search";
     /**
      * 物性表查询列表
      */
@@ -408,15 +407,15 @@ public class API {
     /**
      * 搜塑料app接口
      */
-    public final static String PLASTIC_SEARCH = "releaseMsg/getplasticSearch";
+    public final static String PLASTIC_SEARCH = BASEURL + "requirements/search";
     /**
      * 供求信息置顶之搜索选项配置栏目
      */
-    public final static String GET_TAB_CONFIG = "releaseMsg/getTabConfig";
+    public final static String GET_TAB_CONFIG = BASEURL + "configurations/requirements";
     /**
      * 删除搜索历史记录
      */
-    public final static String DEL_SEARCH_RECORD = "releaseMsg/delplasticSearchRecord";
+    public final static String DEL_SEARCH_RECORD = BASEURL + "histories/requirements/search";
     /**
      * 搜塑料app接口
      */
@@ -454,25 +453,25 @@ public class API {
 
     /*toutiao*/
     /**
-     * 塑料头条
-     */
-    public final static String TOP_LINE = "toutiao/topLine";
-    /**
      * 塑料头条-头条推荐
      */
-    public final static String GET_SUBSCRIBE = "toutiao/getSubscribe";
+    public final static String GET_SUBSCRIBE = BASEURL + "subscribe";
     /**
      * 塑料头条
      */
-    public final static String GET_CATE_LIST = "toutiao/getCateList";
+    public final static String GET_CATE_LIST = BASEURL + "cateList";
     /**
      * 塑料头条-获取订阅频道
      */
-    public final static String GET_SELECT_CATE = "toutiao/getSelectCate";
+    public final static String GET_SELECT_CATE = BASEURL + "selectCate";
+    /**
+     * 塑料头条-获取订阅频道
+     */
+    public final static String SAVE_SELECT_CATE = BASEURL + "updateusershowcateinfo";
     /**
      * 塑料头条-详情列表
      */
-    public final static String GET_DETAIL_INFO = "toutiao/getDetailInfo";
+    public final static String GET_DETAIL_INFO = BASEURL + "detailInfo";
     /**
      * 头条搜索记录及相关推荐
      */
@@ -484,8 +483,18 @@ public class API {
     /**
      * 塑料头条-检查是否有文章阅读权限
      */
-    public final static String IS_PAID_SUBSCRIPTION = "toutiao/isPaidSubscription";
+    public final static String IS_PAID_SUBSCRIPTION = BASEURL + "isPaidSubscription";
 
+
+    /*files*/
+    /**
+     * UCLOUD上传回调接口
+     */
+    public final static String UPLOADNOTIFY = "uploadNotify";
+    /**
+     * ucloud文件上传获取配置文件
+     */
+    public final static String CONFIG = "config";
 
     /**
      * 上传个人头像到服务器
@@ -499,7 +508,6 @@ public class API {
      * 提交申请
      */
     public final static String SUBMISSION = "shopAudit/submission";
-
 
 
 }

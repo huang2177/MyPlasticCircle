@@ -16,17 +16,9 @@ public class SearchNoResultBean {
      * combine : ["7000f","2119","218wj","7000","q281","5000S"]
      */
 
-    private int err;
     private String msg;
     private List<String> combine;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getMsg() {
         return msg;

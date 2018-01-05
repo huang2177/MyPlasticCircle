@@ -17,18 +17,10 @@ public class TookDateBean {
      * end_date : 2017-06-17
      */
 
-    private int err;
     private String start_date;
     private String end_date;
     private List<String> took_date;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getStart_date() {
         return start_date;

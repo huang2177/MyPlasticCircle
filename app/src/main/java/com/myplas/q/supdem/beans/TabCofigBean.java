@@ -10,16 +10,8 @@ import java.util.List;
 
 public class TabCofigBean {
 
-    private int err;
     private DataBeanXXX data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public DataBeanXXX getData() {
         return data;

@@ -122,7 +122,7 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
 
     }

@@ -333,7 +333,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
     }
 
 

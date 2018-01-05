@@ -58,7 +58,7 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 userid = mList.get(position).getUser_id();
-                getPersonInfoData(userid, "1", 5);
+                // getPersonInfoData(userid, "1", 5);
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -82,28 +82,20 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
 
     public void getMyFans(String page) {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
         map.put("page", page);
         map.put("size", "10");
-        postAsyn(this, API.BASEURL + API.GET_MY_INTRODUCTION, map, this, 1);
+        getAsyn(this, API.GET_MY_INTRODUCTION, map, this, 1);
     }
 
-    public void getPersonInfoData(String userid, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
-        map.put("user_id", userid);
-        map.put("showType", showtype);
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        postAsyn(this, url, map, this, type);
-    }
+
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     MyIntroductionBean myIntroductionBean = gson.fromJson(object.toString(), MyIntroductionBean.class);
                     if (page == 1) {
                         wdyjAdapter = new MyIntroductionAdapter(this, myIntroductionBean.getData());
@@ -119,51 +111,51 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
                     EmptyView emptyView = new EmptyView(this);
                     emptyView.mustCallInitWay(listView);
                     emptyView.setMyManager(R.drawable.icon_null);
-                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
                     listView.setEmptyView(emptyView);
                 }
             }
-            //是否消耗积分
-            if (type == 5 && err.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, 1, this);
-            }
-            //已经消耗积分
-            if (type == 5 && err.equals("0")) {
-                Intent intent = new Intent(this, NewContactDetailActivity.class);
-                intent.putExtra("userid", userid);
-                intent.putExtra("id", userid);
-                startActivity(intent);
-            }
-            //减积分成功
-            if (type == 2 && err.equals("0")) {
-                sharedUtils.setBooloean(this, userid, true);
-                Intent intent = new Intent(this, NewContactDetailActivity.class);
-                intent.putExtra("userid", userid);
-                intent.putExtra("id", userid);
-                startActivity(intent);
-            }
-            //积分不足
-            if (type == 2 && !err.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
-            }
+
         } catch (Exception e) {
         }
     }
 
     @Override
-    public void failCallBack(int type) {
-
+    public void failCallBack(int type, String message, int httpCode) {
+////是否消耗积分
+//        if (type == 5 && err.equals("99")) {
+//            String content = new JSONObject(object.toString()).getString("msg");
+//            CommonDialog commonDialog = new CommonDialog();
+//            commonDialog.showDialog(this, content, 1, this);
+//        }
+//        //已经消耗积分
+//        if (type == 5 && err.equals("0")) {
+//            Intent intent = new Intent(this, NewContactDetailActivity.class);
+//            intent.putExtra("userid", userid);
+//            intent.putExtra("id", userid);
+//            startActivity(intent);
+//        }
+//        //减积分成功
+//        if (type == 2 && err.equals("0")) {
+//            sharedUtils.setBooloean(this, userid, true);
+//            Intent intent = new Intent(this, NewContactDetailActivity.class);
+//            intent.putExtra("userid", userid);
+//            intent.putExtra("id", userid);
+//            startActivity(intent);
+//        }
+//        //积分不足
+//        if (type == 2 && !err.equals("0")) {
+//            String content = new JSONObject(object.toString()).getString("msg");
+//            CommonDialog commonDialog = new CommonDialog();
+//            commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
+//        }
     }
 
     @Override
     public void dialogClick(int type) {
         switch (type) {
             case 1:
-                getPersonInfoData(userid, "5", 2);
+                //getPersonInfoData(userid, "5", 2);
                 break;
             case 2:
                 startActivity(new Intent(this, IntegralPayActivtity.class));

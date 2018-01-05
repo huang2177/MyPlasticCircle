@@ -15,16 +15,8 @@ public class CompanyBean {
      * data : [{"c_id":"date_selected","c_name":"上海久红贸易有限公司","contact_id":"date_selected"},{"c_id":"3","c_name":"北大方正物产集团（上海）有限公司","contact_id":"3"},{"c_id":"6","c_name":"上海申北化工原料有限公司","contact_id":"6"},{"c_id":"9","c_name":"上海八通石化有限公司","contact_id":"9"},{"c_id":"11","c_name":"上海塑米信息科技有限公司","contact_id":"11"},{"c_id":"15","c_name":"上海攀润禾贸易发展有限公司","contact_id":"15"},{"c_id":"48","c_name":"志鹏国际贸易（上海）有限公司","contact_id":"48"},{"c_id":"271","c_name":"泽太化纤（上海）有限公司","contact_id":"271"},{"c_id":"274","c_name":"允微电子科技（上海）有限公司","contact_id":"274"},{"c_id":"279","c_name":"原上海增强塑胶有限公司，现苏州鸿创利包装材料有限公司","contact_id":"279"}]
      */
 
-    private int err;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<DataBean> getData() {
         return data;

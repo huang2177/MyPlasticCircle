@@ -16,17 +16,9 @@ public class NoSearchInfoBean {
      * recommendation : ["HDPE","pp","低压","7000F","张"]
      */
 
-    private int err;
     private String msg;
     private List<String> recommendation;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getMsg() {
         return msg;

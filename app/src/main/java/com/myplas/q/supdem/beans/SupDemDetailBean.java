@@ -17,17 +17,9 @@ public class SupDemDetailBean {
      * qapp_status : ["common_user"]
      */
 
-    private int err;
     private DataBean data;
     private List<String> qapp_status;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public DataBean getData() {
         return data;

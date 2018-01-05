@@ -251,7 +251,7 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

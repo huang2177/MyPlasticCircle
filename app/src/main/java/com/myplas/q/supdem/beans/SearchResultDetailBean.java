@@ -16,16 +16,8 @@ public class SearchResultDetailBean {
      * data : {"id":153727,"store_house":"天津","model":"BL3","f_name":"","unit_price":0,"c_name":"中化塑料有限公司","cargo_type":"现货","qq_name":"老富","thumb_qq":"","qq":1057533814,"type":1,"show_information":[],"find_relevant":[{"c_name":"上海华浩彤贸易有限公司","mobile":15896851245,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=3227657064&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"辽宁岩峰塑料有限公司","mobile":18804176777,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=2835499925&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"上海仕进国际贸易有限公司","mobile":13654569856,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=23527625&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"},{"c_name":"苍南县同瑞塑料工艺礼品厂","mobile":13587833361,"model":"BL3","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=32078306&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC"}],"mobile_list":[{"mobile":13052397612,"name":"曹亚梅"},{"mobile":13472575470,"name":"赵礼明"},{"mobile":13600146698,"name":"罗启美"},{"mobile":13709410353,"name":"张燕"},{"mobile":13801006858,"name":"李琳"}],"physical":"","operate":0}
      */
 
-    private int err;
     private DataBean data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public DataBean getData() {
         return data;

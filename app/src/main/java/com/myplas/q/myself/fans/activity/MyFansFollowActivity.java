@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -37,10 +38,8 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/20 22:15
  */
-public class MyFansFollowActivity extends BaseActivity implements ResultCallBack, CommonDialog.DialogShowInterface {
+public class MyFansFollowActivity extends BaseActivity implements ResultCallBack {
     private ListView listView;
-    private Dialog normalDialog;
-    private TextView textView_title;
     private MyFansFollowAdapter mFansAdapter;
 
     private SharedUtils sharedUtils;
@@ -68,7 +67,7 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                 user_id = mList.get(position).getUser_id();
                 flag = mList.get(position).getMerge_three();
                 //判断是否消耗积分
-                getPersonInfoData(user_id, "1", 5);
+                //getPersonInfoData(user_id, "1", 5);
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -95,30 +94,21 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
 
     public void getMyFans(String page, boolean isShow) {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
         map.put("page", page);
-        map.put("type", type);
         map.put("size", "10");
-        postAsyn(this, API.BASEURL + API.GET_MY_FUNS, map, this, 1, isShow);
+        map.put("type", type);
+        getAsyn(this, API.GET_MY_FUNS, map, this, 1, isShow);
     }
 
-    public void getPersonInfoData(String userid, String showtype, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
-        map.put("user_id", userid);
-        map.put("showType", showtype);
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        postAsyn(this, url, map, this, 5);
-    }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 MyFansBean wdgzBean = null;
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     wdgzBean = gson.fromJson(object.toString(), MyFansBean.class);
                     if (page == 1) {
                         mFansAdapter = new MyFansFollowAdapter(this, wdgzBean.getData());
@@ -134,7 +124,7 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                     if (page == 1) {
                         EmptyView emptyView = new EmptyView(this);
                         emptyView.mustCallInitWay(listView);
-                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("msg"));
+                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
                         emptyView.setMyManager(R.drawable.icon_null);
                         listView.setEmptyView(emptyView);
                     } else {
@@ -142,61 +132,34 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                     }
                 }
             }
-            //是否消耗积分//
-            if (type == 5 && err.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, 1, this);
-            }
-            //已经消耗积分或者减积分成功
-            boolean b = type == 5 || type == 3;
-            if (b && err.equals("0")) {
-                Intent intent = getJumpIntent();
-                intent.putExtra("userid", user_id);
-                intent.putExtra("id", user_id);
-                startActivity(intent);
-            }
-
-            //积分不足
-            if (type == 3 && !err.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("msg");
-                CommonDialog commonDialog = new CommonDialog();
-                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
-            }
+//            //是否消耗积分//
+//            if (type == 5 && err.equals("99")) {
+//                String content = new JSONObject(object.toString()).getString("msg");
+//                CommonDialog commonDialog = new CommonDialog();
+//                commonDialog.showDialog(this, content, 1, this);
+//            }
+//            //已经消耗积分或者减积分成功
+//            boolean b = type == 5 || type == 3;
+//            if (b && err.equals("0")) {
+//                Intent intent = getJumpIntent();
+//                intent.putExtra("userid", user_id);
+//                intent.putExtra("id", user_id);
+//                startActivity(intent);
+//            }
+//
+//            //积分不足
+//            if (type == 3 && !err.equals("0")) {
+//                String content = new JSONObject(object.toString()).getString("msg");
+//                CommonDialog commonDialog = new CommonDialog();
+//                commonDialog.showDialog(this, content, (err.equals("100")) ? (2) : (3), this);
+//            }
         } catch (Exception e) {
         }
     }
 
-    /**
-     * 判断是否跳转到店铺
-     *
-     * @param flag
-     * @return
-     */
-    public Intent getJumpIntent() {
-        Intent intent = new Intent();
-        intent.setClass(this, "1".equals(flag)
-                ? NewContactDetailActivity.class
-                : ContactDetailActivity.class);
-        return intent;
-    }
-
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 
-    @Override
-    public void dialogClick(int type) {
-        switch (type) {
-            case 1:
-                getPersonInfoData(user_id, "5", 3);
-                break;
-            case 2:
-                startActivity(new Intent(this, IntegralPayActivtity.class));
-                break;
-            default:
-                break;
-        }
-    }
 }

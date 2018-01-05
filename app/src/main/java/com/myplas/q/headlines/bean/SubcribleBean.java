@@ -17,19 +17,11 @@ public class SubcribleBean {
      * banner : [{"id":"44969","title":"中晨塑说：看了那么多环保消息，塑料人，你该看基本面了","img":"http://pic.myplas.com/upload/17/09/12/59b73ef04af59.jpg"},{"id":"44966","title":"内蒙君正化工PVC报价平稳","img":"http://pic.myplas.com/upload/17/09/12/59b73ed16e162.jpg"},{"id":"44965","title":"齐鲁化工城PVC塑料市场早盘报价小幅下调","img":"http://pic.myplas.com/upload/17/09/12/59b73e822dcb2.jpg"}]
      */
 
-    private int err;
     private String show_msg;
     private List<DataBean> data;
     private List<BannerBean> banner;
     private String hot_search;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getShow_msg() {
         return show_msg;

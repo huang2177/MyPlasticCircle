@@ -16,16 +16,8 @@ public class MySelfInfo implements Serializable {
      * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","adistinct":"华北","sex":"男","member_level":"列兵","thumb":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbcard":"http://pic.myplas.com/upload/17/08/14/599116f59415e.jpg","allow_send":{"focus":1,"repeat":0,"show":0},"c_name":"上海中晨电子商务股份有限公司","need_product":"5000F|2179","address":"北京北京东城区|上海","type":"1","month_consum":"100","main_product":"5000","origin":"|","buy":"1","sale":0,"total":3349,"rank":"22","fans":"7","concern_model":"500"}
      */
 
-    private int err;
     private DataBean data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public DataBean getData() {
         return data;

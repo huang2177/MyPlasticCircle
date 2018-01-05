@@ -157,7 +157,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("page", page);
         map.put("type", type);
-        postAsyn(this, API.BASEURL + API.SCORE_RECORD, map, this, 1);
+        getAsyn(this, API.SCORE_RECORD, map, this, 1);
     }
 
     public void showPopou() {
@@ -189,7 +189,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
     public void callBack(Object object, int type) {
         try {
             Integraldetialbean integraldetialbean = null;
-            if (new JSONObject(object.toString()).getString("err").equals("0")) {
+            if (new JSONObject(object.toString()).getString("code").equals("0")) {
                 Gson gson = new Gson();
                 mEmptyView.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
@@ -218,7 +218,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

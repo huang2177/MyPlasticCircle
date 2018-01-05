@@ -27,17 +27,18 @@ import java.util.List;
  */
 public class CateListAdapter extends BaseAdapter {
     Context context;
-    List<CateListBean.InfoBean> list;
+    List<CateListBean.DataBean> list;
 
-    public CateListAdapter(Context context, List<CateListBean.InfoBean> list) {
+    public CateListAdapter(Context context, List<CateListBean.DataBean> list) {
         this.context = context;
         this.list = list;
     }
 
     @Override
     public int getCount() {
-        if (list != null)
+        if (list != null) {
             return list.size();
+        }
         return 0;
     }
 
@@ -86,7 +87,7 @@ public class CateListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setList(List<CateListBean.InfoBean> list) {
+    public void setList(List<CateListBean.DataBean> list) {
         this.list = list;
     }
 

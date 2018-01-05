@@ -1,18 +1,12 @@
 package com.myplas.q.myself.login;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,10 +20,8 @@ import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.lisenter.KeyboardWatcher;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
-import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
@@ -183,7 +175,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     map.put("username", edittextTel.getText().toString());
                     map.put("password", edittextPass.getText().toString());
                     map.put("chanel", "6");
-                    postAsyn(this, API.BASEURL + API.LOGIN, map, this, 1);
+                    postAsyn(this, API.LOGIN, map, this, 1);
                     mButtonNomal.setClickable(false);
                     mButtonNomal.setBackgroundResource(R.drawable.login_btn_shape);
                 } else {
@@ -286,9 +278,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     public void callBack(Object object, int type) {
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
-            String s = jsonObject.getString("err");
+            String s = jsonObject.getString("code");
             if (type == 1) {
-                TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
+                TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
                 if (s.equals("0")) {
                     setData(jsonObject);
 
@@ -326,7 +318,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
         if (type == 1) {
             mButtonNomal.setClickable(true);
             mButtonPhone.setClickable(true);

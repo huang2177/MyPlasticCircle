@@ -175,7 +175,7 @@ public class SupDem_Search_List_Adapter extends BaseAdapter implements ResultCal
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

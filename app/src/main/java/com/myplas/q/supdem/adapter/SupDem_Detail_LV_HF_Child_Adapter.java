@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.supdem.MyOnItemClickListener;
+import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.supdem.beans.ReplyBean;
 
 import java.util.List;

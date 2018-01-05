@@ -12,7 +12,6 @@ import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.view.SwitchButton;
 import com.myplas.q.myself.beans.MySelfInfo;
 import com.sobot.chat.api.model.Information;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +105,7 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 }

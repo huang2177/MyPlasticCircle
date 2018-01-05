@@ -18,18 +18,10 @@ public class HistoryBean {
      * hot_search : 上海
      */
 
-    private int err;
     private String hot_search;
     private List<String> history;
     private List<String> recommend;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getHot_search() {
         return hot_search;

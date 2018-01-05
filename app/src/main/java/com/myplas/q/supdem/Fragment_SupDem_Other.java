@@ -3,27 +3,26 @@ package com.myplas.q.supdem;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
+import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.contact.activity.NewContactDetailActivity;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.release.ReleaseActivity;
@@ -46,15 +45,15 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/17 14:45
  */
-public class Fragment_SupDem_Other extends Fragment implements CommonDialog.DialogShowInterface,
-        ResultCallBack, View.OnClickListener {
+public class Fragment_SupDem_Other extends BaseFragment implements CommonDialog.DialogShowInterface,
+        ResultCallBack, View.OnClickListener, MyOnItemClickListener {
     private SharedUtils sharedUtils;
     public int page, visibleItemCount, position;
 
     private String mLastData;
     private SupDemBean mSupDemBean;
-    public String follow_release, user_id, type;
     private SupDem_LV_Adapter mSupDemLVAdapter;
+    public String follow_release, user_id, type, mergeThere;
 
     private View view;
     private ListView mListView;
@@ -128,17 +127,18 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
         map.put("sortField1", ConfigData.sortField1);
         map.put("sortField2", ConfigData.sortField2);
         map.put("token", sharedUtils.getData(getActivity(), "token"));
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.GET_RELEASE_MSG, map, this, 1, isShowLoading);
+        getAsyn(getActivity(), API.RELEASE_MSG, map, this, 1, isShowLoading);
     }
 
-    //判断是否消耗积分
+    /**
+     * 判断是否消耗积分
+     */
     public void getPersonInfoData(String userid, String showtype, int type) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("token", sharedUtils.getData(getActivity(), "token"));
         map.put("user_id", userid);
         map.put("showType", showtype);
-        String url = API.BASEURL + API.GET_ZONE_FRIEND;
-        BaseActivity.postAsyn(getActivity(), url, map, this, type);
+        getAsyn(getActivity(), API.GET_ZONE_FRIEND, map, this, type);
     }
 
     //跳转至详情
@@ -179,7 +179,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String result = new JSONObject(object.toString()).getString("err");
+            String result = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 if (result.equals("0")) {
                     mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
@@ -187,6 +187,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
                     linearLayout_prompt.setVisibility(View.GONE);
                     if (page == 1) {
                         mSupDemLVAdapter = new SupDem_LV_Adapter(getActivity(), mSupDemBean.getData());
+                        mSupDemLVAdapter.setListener(this);
                         mListView.setAdapter(mSupDemLVAdapter);
                         mDataBeanList.clear();
                         mDataBeanList.addAll(mSupDemBean.getData());
@@ -202,58 +203,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
                         mListView.setVisibility(View.GONE);
                         linearLayout_prompt.setVisibility(View.VISIBLE);
                         linearLayout_prompt.removeAllViews();
-                        switch (result) {
-                            case "1":
-                            case "998":
-                                sharedUtils.setData(getActivity(), "token", "");
-                                sharedUtils.setData(getActivity(), "userid", "");
-                                sharedUtils.setBooloean(getActivity(), "logined", false);
-                                sharedUtils.setData(getActivity(), "toast_msg", new JSONObject(object.toString()).getString("msg"));
-                                break;
-                            //没有更多数据
-                            case "2":
-                                View v = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null);
-                                linearLayout_prompt.addView(v);
-                                TextView text = (TextView) v.findViewById(R.id.supply_demand_text);
-                                text.setText(new JSONObject(object.toString()).getString("msg"));
-                                break;
-                            //未匹配
-                            case "4":
-                                linearLayout_prompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null));
-                                break;
-                            case "9"://去关注
-                                follow_release = "follow";
-                                View view = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care1, null);
-                                linearLayout_prompt.addView(view);
-                                view.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
-                                break;
-                            //关注 ——未发布
-                            case "6":
-                                linearLayout_prompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care2, null));
-                                break;
-                            //职能推荐——区发布
-                            case "7":
-                                follow_release = "release";
-                                View view3 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
-                                linearLayout_prompt.addView(view3);
-                                TextView t = (TextView) view3.findViewById(R.id.supply_demand_text);
-                                t.setText(new JSONObject(object.toString()).getString("msg"));
-                                view3.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
-                                view3.findViewById(R.id.img_supplydemad_down).setVisibility(View.VISIBLE);
-                                break;
-                            //我的供求——去发布
-                            case "8":
-                                follow_release = "release";
-                                View view2 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
-                                linearLayout_prompt.addView(view2);
-                                TextView textView = (TextView) view2.findViewById(R.id.supply_demand_text);
-                                textView.setText(new JSONObject(object.toString()).getString("msg"));
-                                view2.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
-                                view2.findViewById(R.id.img_supplydemad_down).setVisibility(View.GONE);
-                                break;
-                            default:
-                                break;
-                        }
+
                     } else {
                         TextUtils.toast(getContext(), "没有更多数据了！");
                     }
@@ -261,7 +211,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
             }
             //是否消耗积分
             if (type == 2 && result.equals("99")) {
-                String content = new JSONObject(object.toString()).getString("msg");
+                String content = new JSONObject(object.toString()).getString("mesage");
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(getActivity(), content, 1, this);
             }
@@ -282,7 +232,7 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
             }
             //积分不够
             if (type == 3 && !result.equals("0")) {
-                String content = new JSONObject(object.toString()).getString("msg");
+                String content = new JSONObject(object.toString()).getString("message");
                 CommonDialog commonDialog = new CommonDialog();
                 commonDialog.showDialog(getActivity(), content, (result.equals("100")) ? (2) : (3), this);
             }
@@ -291,23 +241,93 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
     }
 
     @Override
-    public void failCallBack(int type) {
-        if (mDataBeanList.size() == 0) {
-            mListView.setVisibility(View.GONE);
-            linearLayout_prompt.setVisibility(View.VISIBLE);
-            linearLayout_prompt.removeAllViews();
+    public void failCallBack(int type, String message, int httpCode) {
+        try {
+            // 判断是否已经消耗积分
+            judgeCanSeeDetail(getActivity(), type, httpCode, message, mergeThere, user_id, this);
+            if (type == 1) {
+                String result = new JSONObject(message).getString("code");
+                String msg = new JSONObject(message).getString("message");
+                if (mDataBeanList.size() == 0) {
+                    mListView.setVisibility(View.GONE);
+                    linearLayout_prompt.setVisibility(View.VISIBLE);
+                    linearLayout_prompt.removeAllViews();
 
-            ImageButton imageButton = new ImageButton(getActivity());
-            imageButton.setImageResource(R.drawable.img_reload);
-            linearLayout_prompt.addView(imageButton);
-            imageButton.setBackgroundColor(getResources().getColor(R.color.color_white));
-            imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    page = 1;
-                    getNetData("1", true);
+//                    ImageButton imageButton = new ImageButton(getActivity());
+//                    imageButton.setImageResource(R.drawable.img_reload);
+//                    linearLayout_prompt.addView(imageButton);
+//                    imageButton.setBackgroundColor(getResources().getColor(R.color.color_white));
+//                    imageButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            page = 1;
+//                            getNetData("1", true);
+//                        }
+//                    });
+                    switch (httpCode) {
+                        case 404:
+                            switch (result) {
+                                //没有更多数据
+                                case "3":
+                                    View v = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null);
+                                    linearLayout_prompt.addView(v);
+                                    TextView text = (TextView) v.findViewById(R.id.supply_demand_text);
+                                    text.setText(msg);
+                                    break;
+                                //未匹配
+                                case "26":
+                                    linearLayout_prompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null));
+                                    break;
+                                case "23"://去关注
+                                    follow_release = "follow";
+                                    View view = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care1, null);
+                                    linearLayout_prompt.addView(view);
+                                    view.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
+                                    break;
+                                //关注 ——未发布
+                                case "27":
+                                    linearLayout_prompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care2, null));
+                                    break;
+                                //职能推荐——区发布
+                                case "24":
+                                    follow_release = "release";
+                                    View view3 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
+                                    linearLayout_prompt.addView(view3);
+                                    TextView t = (TextView) view3.findViewById(R.id.supply_demand_text);
+                                    t.setText(msg);
+                                    view3.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
+                                    view3.findViewById(R.id.img_supplydemad_down).setVisibility(View.VISIBLE);
+                                    break;
+                                //我的供求——去发布
+                                case "28":
+                                    follow_release = "release";
+                                    View view2 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
+                                    linearLayout_prompt.addView(view2);
+                                    TextView textView = (TextView) view2.findViewById(R.id.supply_demand_text);
+                                    textView.setText(msg);
+                                    view2.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
+                                    view2.findViewById(R.id.img_supplydemad_down).setVisibility(View.GONE);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case 401:
+                            if ("1".equals(result)) {
+                                sharedUtils.setData(getActivity(), "token", "");
+                                sharedUtils.setData(getActivity(), "userid", "");
+                                sharedUtils.setBooloean(getActivity(), "logined", false);
+                                sharedUtils.setData(getActivity(), "toast_msg", msg);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
-            });
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -326,5 +346,11 @@ public class Fragment_SupDem_Other extends Fragment implements CommonDialog.Dial
         }
     }
 
+    @Override
+    public void onItemClick(String usrId, String flag, String id, String pur_id, String user_id) {
+        this.user_id = user_id;
+        this.mergeThere = flag;
+        getPersonInfoData(user_id, "5", 3);
+    }
 }
 

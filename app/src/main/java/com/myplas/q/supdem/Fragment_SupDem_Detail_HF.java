@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.EmptyView;
@@ -100,7 +101,7 @@ public class Fragment_SupDem_Detail_HF extends Fragment implements ResultCallBac
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
     }
 
 }

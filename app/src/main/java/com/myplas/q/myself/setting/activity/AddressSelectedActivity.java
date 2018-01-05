@@ -98,8 +98,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
     }
 
     public void getCityNetData(int type) {
-        String url = API.BASEURL + API.GET_ALL_REGIONS;
-        postAsyn(this, url, null, this, type);
+        getAsyn(this, API.GET_ALL_REGIONS, null, this, type);
     }
 
     private void selectAddress() {
@@ -184,7 +183,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String s = new JSONObject(object.toString()).getString("err");
+            String s = new JSONObject(object.toString()).getString("code");
             if ("0".equals(s)) {
                 mBean = gson.fromJson(object.toString(), RegionsBean.class);
                 mPList.addAll(mBean.getData());
@@ -235,7 +234,7 @@ public class AddressSelectedActivity extends BaseActivity implements ResultCallB
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 }

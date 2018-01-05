@@ -276,8 +276,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     public void requestNetData() {
         Map<String, String> map = new HashMap<>();
         map.put("token", sharedUtils.getData(this, "token"));
-        String url = API.BASEURL + API.GET_SELF_INFO;
-        postAsyn(this, url, map, this, 1);
+        getAsyn(this, API.GET_SELF_INFO, map, this, 1);
     }
 
 
@@ -295,24 +294,21 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
      * 保存资料
      */
     public void saveData() {
-        try {
-            Map map = new HashMap(20);
-            if ("1".equals(type)) {
-                map.put("month_consum", monthUse);
-                map.put("need_product", getString(needProduct));
-            }
-            map.put("type", type);
-            map.put("sex", sexInPut);
-            map.put("address", address);
-            map.put("dist", regionInPut);
-            map.put("address_id", location);
-            map.put("main_product", getString(mainProduct));
-            map.put("token", sharedUtils.getData(this, "token"));
-
-            String url = API.BASEURL + API.SAVE_SELFINFO;
-            postAsyn(this, url, map, this, 3, true);
-        } catch (Exception e) {
+        Map map = new HashMap(16);
+        if ("1".equals(type)) {
+            map.put("month_consum", monthUse);
+            map.put("need_product", getString(needProduct));
         }
+        map.put("type", type);
+        map.put("sex", sexInPut);
+        map.put("address", address);
+        map.put("dist", regionInPut);
+        map.put("address_id", location);
+        map.put("main_product", getString(mainProduct));
+        map.put("token", sharedUtils.getData(this, "token"));
+
+        putAsyn(this, API.SAVE_SELFINFO, map, this, 3, true);
+
     }
 
     /**
@@ -331,7 +327,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void callBack(Object object, int type) {
         try {
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 mySelfInfo = null;
                 if ("0".equals(err)) {
@@ -350,7 +346,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
 
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
     }
 
     public void showInfo(MySelfInfo mySelfInfo) {
@@ -365,12 +361,12 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
             monthUse = mySelfInfo.getData().getMonth_consum();
             mainProduct = mySelfInfo.getData().getMain_product();
             needProduct = mySelfInfo.getData().getNeed_product();
-            imgLicence = mySelfInfo.getData().getBusiness_licence_pic();
+            //imgLicence = mySelfInfo.getData().getBusiness_licence_pic();
 
             sexInPut = ("男".equals(sex)) ? ("0") : ("1");
             imgCard = imgCard.startsWith("http") ? imgCard : "http:" + imgCard;
             imgHead = imgHead.startsWith("http") ? imgHead : "http:" + imgHead;
-            imgLicence = imgLicence.startsWith("http") ? imgLicence : imgLicence + "http:";
+            //imgLicence = imgLicence.startsWith("http") ? imgLicence : imgLicence + "http:";
 
             textXb.setText(sex);
             tvAddress.setText(region);
@@ -452,6 +448,9 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     }
 
     private String getString(String str) {
+        if (!TextUtils.notEmpty(str)) {
+            return "";
+        }
         return str.replace("  ", ",")
                 .replace(" ", ",")
                 .replace("，", ",")

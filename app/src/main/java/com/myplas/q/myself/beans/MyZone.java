@@ -13,24 +13,23 @@ public class MyZone implements Serializable {
 
 
     /**
-     * err : 0
-     * s_in_count : 1
-     * s_out_count : 0
-     * points : 2725
+     * code : 0
+     * s_in_count : 91
+     * s_out_count : 85
+     * points : {"quan_points":5955}
      * leaveword : 0
-     * myviewhistory : 600
-     * message : 0
+     * myviewhistory : 0
+     * message : 1
      * introduction : 0
-     * myfans : 6
-     * myconcerns : 4
-     * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg","thumbqq":"http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg","thumbcard":"http://pic.myplas.com/upload/17/07/07/595f20fa7ab89.jpg","c_name":"上海中晨电子商务股份有限公司","credit_level":"AAAAA","credit_limit":"600.00","is_credit":"1","pre_credit_limit":"600.00","credit_time":"1488357059","sex":"0","rank":"22","memberlevel":"列兵"}
+     * myfans : 8
+     * myconcerns : 14
+     * data : {"user_id":56656,"name":"哈妹","c_id":4016,"mobile":"18817391111","is_pass":0,"thumb":"http://pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","thumbcard":"//pic.myplas.com/upload/17/11/23/5a16869109a4f.PNG","c_name":"嘉兴鼎辉信息科技有限公司","credit_level":"AAAAA","credit_limit":"160.00","is_credit":1,"pre_credit_limit":"160.00","credit_time":1488004267,"sex":1,"rank":18479,"memberlevel":1}
      * help : ["http://statics.myplas.com/myapp/img/h1.jpg","http://statics.myplas.com/myapp/img/h2.jpg","http://statics.myplas.com/myapp/img/h3.jpg","http://statics.myplas.com/myapp/img/h4.jpg","http://statics.myplas.com/myapp/img/h5.jpg"]
      */
 
-    private int err;
     private String s_in_count;
     private String s_out_count;
-    private String points;
+    private PointsBean points;
     private String leaveword;
     private String myviewhistory;
     private String message;
@@ -40,13 +39,6 @@ public class MyZone implements Serializable {
     private DataBean data;
     private List<String> help;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getS_in_count() {
         return s_in_count;
@@ -64,11 +56,11 @@ public class MyZone implements Serializable {
         this.s_out_count = s_out_count;
     }
 
-    public String getPoints() {
+    public PointsBean getPoints() {
         return points;
     }
 
-    public void setPoints(String points) {
+    public void setPoints(PointsBean points) {
         this.points = points;
     }
 
@@ -136,25 +128,40 @@ public class MyZone implements Serializable {
         this.help = help;
     }
 
+    public static class PointsBean {
+        /**
+         * quan_points : 5955
+         */
+
+        private String quan_points;
+
+        public String getQuan_points() {
+            return quan_points;
+        }
+
+        public void setQuan_points(String quan_points) {
+            this.quan_points = quan_points;
+        }
+    }
+
     public static class DataBean {
         /**
-         * user_id : 53402
-         * name : hh
-         * c_id : 5041
-         * mobile : 15378412400
+         * user_id : 56656
+         * name : 哈妹
+         * c_id : 4016
+         * mobile : 18817391111
          * is_pass : 0
-         * thumb : http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg
-         * thumbqq : http://pic.myplas.com/upload/17/07/07/595f0ab4ea011.jpg
-         * thumbcard : http://pic.myplas.com/upload/17/07/07/595f20fa7ab89.jpg
-         * c_name : 上海中晨电子商务股份有限公司
+         * thumb : http://pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG
+         * thumbcard : //pic.myplas.com/upload/17/11/23/5a16869109a4f.PNG
+         * c_name : 嘉兴鼎辉信息科技有限公司
          * credit_level : AAAAA
-         * credit_limit : 600.00
+         * credit_limit : 160.00
          * is_credit : 1
-         * pre_credit_limit : 600.00
-         * credit_time : 1488357059
-         * sex : 0
-         * rank : 22
-         * memberlevel : 列兵
+         * pre_credit_limit : 160.00
+         * credit_time : 1488004267
+         * sex : 1
+         * rank : 18479
+         * memberlevel : 1
          */
 
         private String user_id;
@@ -163,7 +170,6 @@ public class MyZone implements Serializable {
         private String mobile;
         private String is_pass;
         private String thumb;
-        private String thumbqq;
         private String thumbcard;
         private String c_name;
         private String credit_level;
@@ -174,7 +180,7 @@ public class MyZone implements Serializable {
         private String sex;
         private String rank;
         private String memberlevel;
-        private String merge_three;
+        private String isshop;
         private String shop_audit_status;
 
         public void setShop_audit_status(String shop_audit_status) {
@@ -185,12 +191,12 @@ public class MyZone implements Serializable {
             return shop_audit_status;
         }
 
-        public void setMerge_three(String merge_three) {
-            this.merge_three = merge_three;
+        public void setIsshop(String isshop) {
+            this.isshop = isshop;
         }
 
-        public String getMerge_three() {
-            return merge_three;
+        public String getIsshop() {
+            return isshop;
         }
 
         public String getUser_id() {
@@ -239,14 +245,6 @@ public class MyZone implements Serializable {
 
         public void setThumb(String thumb) {
             this.thumb = thumb;
-        }
-
-        public String getThumbqq() {
-            return thumbqq;
-        }
-
-        public void setThumbqq(String thumbqq) {
-            this.thumbqq = thumbqq;
         }
 
         public String getThumbcard() {

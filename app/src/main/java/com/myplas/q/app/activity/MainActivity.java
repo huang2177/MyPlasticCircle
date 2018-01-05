@@ -9,10 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -392,7 +388,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

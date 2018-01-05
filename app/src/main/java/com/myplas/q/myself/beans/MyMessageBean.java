@@ -12,19 +12,11 @@ public class MyMessageBean {
 
     /**
      * err : 0
-     * data : [{"msg":"您有新消息,\u201chh\u201d回复了您的信息！","input_time":"8月21日 10:30","type":3},{"msg":"暂无消息哦！","input_time":"","type":2},{"msg":"您关注的\u201c李一帆\u201d发布新的求购信息啦！","input_time":"8月18日 10:55","count":"64","type":1}]
+     * data : [{"message":"您有新消息,\u201chh\u201d回复了您的信息！","input_time":"8月21日 10:30","type":3},{"message":"暂无消息哦！","input_time":"","type":2},{"message":"您关注的\u201c李一帆\u201d发布新的求购信息啦！","input_time":"8月18日 10:55","count":"64","type":1}]
      */
 
-    private int err;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<DataBean> getData() {
         return data;
@@ -36,23 +28,23 @@ public class MyMessageBean {
 
     public static class DataBean {
         /**
-         * msg : 您有新消息,“hh”回复了您的信息！
+         * message : 您有新消息,“hh”回复了您的信息！
          * input_time : 8月21日 10:30
          * type : 3
          * count : 64
          */
 
-        private String msg;
+        private String message;
         private String input_time;
         private String type;
         private String count;
 
-        public String getMsg() {
-            return msg;
+        public String getMessage() {
+            return message;
         }
 
-        public void setMsg(String msg) {
-            this.msg = msg;
+        public void setMessage(String message) {
+            this.message = message;
         }
 
         public String getInput_time() {

@@ -17,16 +17,8 @@ public class PreViewBean implements Serializable {
      * data : [{"model":2119,"vendor":"伊朗石化","storehouse":"上海","transaction_type":0,"price":7000,"type":2,"company":"上海中晨电子商务股份有限公司","username":"黄双"}]
      */
 
-    private int err;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<DataBean> getData() {
         return data;

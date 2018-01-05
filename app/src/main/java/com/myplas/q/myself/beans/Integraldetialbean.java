@@ -18,18 +18,10 @@ public class Integraldetialbean {
      * points : 1905
      */
 
-    private int err;
     private String msg;
     private DataBean data;
     private String points;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public String getMsg() {
         return msg;

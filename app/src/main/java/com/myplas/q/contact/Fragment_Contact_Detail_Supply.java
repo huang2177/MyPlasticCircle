@@ -171,7 +171,7 @@ public class Fragment_Contact_Detail_Supply extends Fragment implements ResultCa
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
 
     }
 

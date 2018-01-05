@@ -16,16 +16,8 @@ public class InvoiceDetailBean {
      * data : [{"invoice_sn":"33333333","input_time":"2017-08-09","billing_price":"240.00","invoice_status":"2","order_sn":"SO2017080911188350"},{"invoice_sn":"eeeeeeeeeee","input_time":"2017-08-09","billing_price":"20.00","invoice_status":"2","order_sn":"SO2017080911188350"},{"invoice_sn":"p987765","input_time":"2017-08-09","billing_price":"10.00","invoice_status":"2","order_sn":"SO2017080911188350"}]
      */
 
-    private int err;
     private List<DataBean> data;
 
-    public int getErr() {
-        return err;
-    }
-
-    public void setErr(int err) {
-        this.err = err;
-    }
 
     public List<DataBean> getData() {
         return data;
