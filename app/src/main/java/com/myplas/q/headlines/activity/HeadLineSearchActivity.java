@@ -158,9 +158,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
      * 获取历史搜索
      */
     public void getSearch_Record() {
-        Map map = new HashMap();
-        map.put("keywords", "");
-        postAsyn(this, API.BASEURL + API.TOUTIAO_SEARCH_LOG, map, this, 1);
+        getAsyn(this, API.TOUTIAO_SEARCH_LOG, null, this, 1);
     }
 
     /**
@@ -172,12 +170,12 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
      */
 
     public void getSubscribe(int page, String keywords, boolean isShowLoading) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", page + "");
         map.put("size", "15");
         map.put("keywords", keywords);
         map.put("subscribe", "1");
-        postAsyn(this, API.BASEURL + API.GET_SUBSCRIBE, map, this, 2, isShowLoading);
+        getAsyn(this, API.GET_SUBSCRIBE, map, this, 2, isShowLoading);
     }
 
 
@@ -185,7 +183,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
      * 删除搜索历史记录
      */
     public void delsearchRecord() {
-        postAsyn(this, API.BASEURL + API.DEL_TOUTIAO_SEARCH_LOG, null, this, 3);
+        deleteAsyn(this, API.DEL_TOUTIAO_SEARCH_LOG, null, this, 3, false);
     }
 
     /**
@@ -196,7 +194,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", cate_id);
-        BaseActivity.postAsyn(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 4);
+        getAsyn(this, API.IS_PAID_SUBSCRIPTION, map, this, 4);
     }
 
     @Override
@@ -260,8 +258,8 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1 && err.equals("0")) {
+            String err = new JSONObject(object.toString()).getString("code");
+            if (type == 1 && "0".equals(err)) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
                 mgvHistory.setAdapter(mSearchGridAdapter);
@@ -274,7 +272,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
             if (type == 2) {
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     HeadSearchBean searchBean = gson.fromJson(object.toString(), HeadSearchBean.class);
                     if (page == 1) {
                         listView.setVisibility(View.VISIBLE);
@@ -303,18 +301,18 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     }
                 }
             }
-            if (type == 3 && err.equals("0")) {
+            if (type == 3 && "0".equals(err)) {
                 TextUtils.toast(this, "删除成功！");
                 mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
                 mgvHistory.setAdapter(mSearchGridAdapter);
             }
             if (type == 4) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     Intent intent = new Intent(this, HeadLinesDetailActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     startActivity(intent);
                 } else {
-                    String content = new JSONObject(object.toString()).getString("msg");
+                    String content = new JSONObject(object.toString()).getString("message");
                     CommonDialog commonDialog = new CommonDialog();
                     commonDialog.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
                 }

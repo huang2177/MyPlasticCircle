@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.supdem.beans.ReplyBean;
 import com.myplas.q.supdem.adapter.SupDem_Detail_LV_HFAdapter;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -65,7 +67,7 @@ public class Fragment_SupDem_Detail_HF extends BaseFragment implements ResultCal
     }
 
     public void getReply() {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
         map.put("page", "1");
         map.put("size", "15");
         map.put("id", mIntent.getStringExtra("id"));
@@ -78,27 +80,31 @@ public class Fragment_SupDem_Detail_HF extends BaseFragment implements ResultCal
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
-            if (type == 1) {
-                if ("0".equals(err)) {
-                    mEmptyView.setVisibility(View.GONE);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    ReplyBean replyBean = gson.fromJson(object.toString(), ReplyBean.class);
-                    mBeanList = replyBean.getData();
-                    mHFAdapter.setList(mBeanList);
-                    mHFAdapter.notifyDataSetChanged();
-                } else {
-                    mEmptyView.setVisibility(View.VISIBLE);
-                    mRecyclerView.setVisibility(View.GONE);
-                    mEmptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
-                    mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
-                }
+            if ("0".equals(err)) {
+                mEmptyView.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                ReplyBean replyBean = gson.fromJson(object.toString(), ReplyBean.class);
+                mBeanList = replyBean.getData();
+                mHFAdapter.setList(mBeanList);
+                mHFAdapter.notifyDataSetChanged();
             }
+
         } catch (Exception e) {
         }
     }
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-    }
+        try {
+            String err = new JSONObject(message).getString("code");
+            if ("404".equals(err) && httpCode == 404) {
+                mEmptyView.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);
+                mEmptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
+                mEmptyView.setNoMessageText(new JSONObject(message).getString("message"));
+            }
+        } catch (Exception e) {
 
+        }
+    }
 }

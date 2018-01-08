@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.listener.BaseInterface;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
-import com.myplas.q.app.activity.BaseActivity;
 
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ import java.util.Map;
  * @date 2017/11/1 0001
  */
 
-public class FragmentRegister1 extends Fragment implements View.OnClickListener
+public class FragmentRegister1 extends BaseFragment implements View.OnClickListener
         , ResultCallBack
         , MyEditText.OnTextWatcher {
     private View mView;
@@ -70,7 +71,6 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         count = 60;
-//        mBaseInterface = (BaseInterface) getArguments().getSerializable("interface");
         wr = new WeakReference<Activity>(getActivity());
         mHandler = new Handler() {
             @Override
@@ -144,9 +144,9 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
      */
     public void validUserMobile() {
         phone = mPhone.getText().toString();
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("mobile", phone);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.VALIDUSERMOBILE, map, this, 1, false);
+        getAsyn(getActivity(), API.VALIDUSERMOBILE, map, this, 1, false);
     }
 
     /**
@@ -157,11 +157,10 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
             TextUtils.toast(getActivity(), "手机号输入有误！");
             return;
         }
-        Map<String, String> map1 = new HashMap<String, String>(4);
+        Map<String, String> map1 = new HashMap<String, String>(8);
         map1.put("type", "0");
         map1.put("mobile", phone);
-        String url = API.BASEURL + API.SEND_MSG;
-        BaseActivity.postAsyn(getActivity(), url, map1, this, 2);
+        getAsyn(getActivity(), API.SEND_MSG, map1, this, 2);
     }
 
     /**
@@ -178,12 +177,11 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
             TextUtils.toast(getActivity(), "请您先阅读《塑料圈通讯录》相关协议！");
             return;
         }
-        Map<String, String> map1 = new HashMap<String, String>();
+        Map<String, String> map1 = new HashMap<String, String>(8);
         map1.put("mobile", phone);
         map1.put("password", pass);
         map1.put("verification", indentify);
-        String url = API.BASEURL + API.VALIDVERIFICATIONCODE;
-        BaseActivity.postAsyn(getActivity(), url, map1, this, 3);
+        postAsyn(getActivity(), API.VALIDVERIFICATIONCODE, map1, this, 3);
     }
 
 
@@ -218,16 +216,17 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("-----", object.toString());
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1) {
-                if (!jsonObject.getString("err").equals("0")) {
-                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
+                if (!"0".equals(jsonObject.getString("code"))) {
+                    TextUtils.toast(getActivity(), jsonObject.getString("messgae"));
                 } else {
                     getIndentify();
                 }
             }
             if (type == 2) {
-                TextUtils.toast(getActivity(), jsonObject.getString("msg"));
+                TextUtils.toast(getActivity(), jsonObject.getString("messgae"));
                 if ("0".equals(jsonObject.getString("err"))) {
                     initThread();
                 }
@@ -235,9 +234,9 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
             if (type == 3) {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mPhone.getWindowToken(), 0);
-                if (!jsonObject.getString("err").equals("0")) {
+                if (!"0".equals(jsonObject.getString("code"))) {
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
-                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("messgae"));
                     buttonNext.setClickable(true);
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
                 } else {
@@ -253,6 +252,7 @@ public class FragmentRegister1 extends Fragment implements View.OnClickListener
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        Log.e("======", message);
         if (type == 3) {
             buttonNext.setClickable(true);
             buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);

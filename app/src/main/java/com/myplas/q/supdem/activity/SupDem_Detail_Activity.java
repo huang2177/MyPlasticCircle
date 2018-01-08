@@ -8,6 +8,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -178,8 +179,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         Map<String, String> map = new HashMap<>();
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("focused_id", getIntent().getStringExtra("userid"));
-        String url = API.BASEURL + API.FOCUS_OR_CANCEL;
-        postAsyn(this, url, map, this, 2);
+        postAsyn(this, API.FOCUS_OR_CANCEL, map, this, 2);
     }
 
     /**
@@ -193,7 +193,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
             return;
         }
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
         map.put("type", mDetailBean.getData().getType());
         map.put("token", sharedUtils.getData(this, "token"));
 
@@ -201,7 +201,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
             map.put("price", s);
             map.put("id", getIntent().getStringExtra("id"));
             map.put("rev_id", getIntent().getStringExtra("userid"));
-            postAsyn(this, API.BASEURL + API.DELIVER_PRICE, map, this, 4);
+            postAsyn(this, API.OFFERS, map, this, 4);
 
         } else {               //回复
             map.put("id", id);
@@ -209,7 +209,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
             map.put("content", s);
             map.put("pur_id", pur_id);
             map.put("send_id", send_id);
-            postAsyn(this, API.BASEURL + API.SAVE_MSG, map, this, 3);
+            postAsyn(this, API.COMMENTS, map, this, 3);
         }
     }
 
@@ -275,6 +275,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("-----", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
@@ -308,7 +309,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-
+        Log.e("-----", message);
     }
 
     private void share() {

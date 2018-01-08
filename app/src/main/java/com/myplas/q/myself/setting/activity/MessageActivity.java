@@ -3,6 +3,7 @@ package com.myplas.q.myself.setting.activity;
 import android.app.Service;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
@@ -70,7 +71,6 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
 //                mVibrator.vibrate(new long[]{0,100}, -1);
                 allow_sendmsg_gz = (isChecked) ? "0" : "1";
                 map.put("type", "0");
-                map.put("token", sharedUtils.getData(this, "token"));
                 map.put("is_allow", allow_sendmsg_gz);
                 saveSelfInfo(API.FAVORATE_SET, map, 1);
                 break;
@@ -79,7 +79,6 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
                 allow_sendmsg_hf = (isChecked) ? "0" : "1";
                 map.put("type", "1");
                 map.put("is_allow", allow_sendmsg_hf);
-                map.put("token", sharedUtils.getData(this, "token"));
                 saveSelfInfo(API.FAVORATE_SET, map, 2);
                 break;
             default:
@@ -88,8 +87,7 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
     }
 
     public void saveSelfInfo(String method, Map map, int type) {
-        String url = API.BASEURL + method;
-        postAsyn(this, url, map, this, type);
+        postAsyn(this, method, map, this, type);
     }
 
 
@@ -101,11 +99,9 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
 
     @Override
     public void callBack(Object object, int type) {
-
     }
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-
     }
 }

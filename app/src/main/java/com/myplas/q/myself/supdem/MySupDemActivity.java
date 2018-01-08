@@ -7,6 +7,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -114,37 +115,19 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            if (type == 1) {
-                if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
-                    MySupDemBean supplyDemandBean = gson.fromJson(object.toString(), MySupDemBean.class);
-                    if (page == 1) {
-                        mLayout.setVisibility(View.GONE);
-                        listView.setVisibility(View.VISIBLE);
-                        mList.clear();
-                        mList.addAll(supplyDemandBean.getData());
-                        supplyDemandAdapter = new SupDemAdapter(this, supplyDemandBean.getData(), this);
-                        listView.setAdapter(supplyDemandAdapter);
-                    } else {
-                        mList.addAll(supplyDemandBean.getData());
-                        supplyDemandAdapter.setList(mList);
-                        supplyDemandAdapter.notifyDataSetChanged();
-                    }
+            if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
+                MySupDemBean supplyDemandBean = gson.fromJson(object.toString(), MySupDemBean.class);
+                if (page == 1) {
+                    mLayout.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
+                    mList.clear();
+                    mList.addAll(supplyDemandBean.getData());
+                    supplyDemandAdapter = new SupDemAdapter(this, supplyDemandBean.getData(), this);
+                    listView.setAdapter(supplyDemandAdapter);
                 } else {
-                    if (page == 1) {
-                        listView.setVisibility(View.GONE);
-                        mLayout.setVisibility(View.VISIBLE);
-                        SpannableString spanableInfo = new SpannableString("您还未发布任何"
-                                + (this.type.equals("0")
-                                ? "供给"
-                                : "求购")
-                                + "信息，快去发布吧！");
-                        spanableInfo.setSpan(new Clickable(this), 14, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        emptyText.setText(spanableInfo);
-                        emptyText.setMovementMethod(LinkMovementMethod.getInstance());
-
-                    } else {
-                        TextUtils.toast(this, "没有更多数据了！");
-                    }
+                    mList.addAll(supplyDemandBean.getData());
+                    supplyDemandAdapter.setList(mList);
+                    supplyDemandAdapter.notifyDataSetChanged();
                 }
             }
         } catch (Exception e) {
@@ -153,7 +136,29 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            String errCode = jsonObject.getString("code");
+            if (httpCode == 404 && "404".equals(errCode)) {
+                if (page == 1) {
+                    listView.setVisibility(View.GONE);
+                    mLayout.setVisibility(View.VISIBLE);
+                    SpannableString spanableInfo = new SpannableString("您还未发布任何"
+                            + ("0".equals(this.type)
+                            ? "供给"
+                            : "求购")
+                            + "信息，快去发布吧！");
+                    spanableInfo.setSpan(new Clickable(this), 14, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    emptyText.setText(spanableInfo);
+                    emptyText.setMovementMethod(LinkMovementMethod.getInstance());
 
+                } else {
+                    TextUtils.toast(this, jsonObject.getString("message"));
+                }
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     @Override

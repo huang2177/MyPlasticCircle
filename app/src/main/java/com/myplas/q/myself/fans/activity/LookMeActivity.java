@@ -3,6 +3,7 @@ package com.myplas.q.myself.fans.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
@@ -67,7 +68,8 @@ public class LookMeActivity extends BaseActivity implements MyOnPageChangeListen
         titles.add("我看过谁");
         for (int i = 0; i < titles.size(); i++) {
             mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(i)));
-            FragmentLookMe fragment = FragmentLookMe.newInstance(i, this);
+            FragmentLookMe fragment = FragmentLookMe.newInstance(i);
+            fragment.setListener(this);
             mViewList.add(fragment);
         }
         mAdapter = new LookViewPagerAdapter(getSupportFragmentManager(), mViewList, titles);
@@ -105,4 +107,5 @@ public class LookMeActivity extends BaseActivity implements MyOnPageChangeListen
         promit.append(promit2).append(today).append("  ").append(promit1).append(totals);
         textviewNum.setText(promit);
     }
+
 }

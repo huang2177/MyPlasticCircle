@@ -144,9 +144,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 // 裁剪图片输出的最大宽高。
                 // .maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
                 // 设置裁剪比例
-                .aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
+                //.aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
                 // 图片压缩格式：JPEG、PNG。
-                .compressFormat(Durban.COMPRESS_PNG)
+                //.compressFormat(Durban.COMPRESS_PNG)
                 // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)
                 .compressQuality(100)
                 // 裁剪时的手势支持：ROTATE, SCALE, ALL, NONE.

@@ -1,7 +1,6 @@
 package com.myplas.q.common.api;
 
 import com.myplas.q.BuildConfig;
-import com.myplas.q.myself.login.BaseInterface;
 
 /**
  * @author 黄双
@@ -27,11 +26,11 @@ public class API {
     /**
      * APP更新
      */
-    public final static String CHECK_VERSION = "common/checkVersion";
+    public final static String CHECK_VERSION = BASEURL + "Version";
     /**
      * APP推荐更新
      */
-    public final static String CHECKAPPVERSION = "common/checkAppVersion";
+    public final static String CHECKAPPVERSION = BASEURL + "AppVersion";
 
     /**
      * 微信分享缩略图
@@ -81,7 +80,7 @@ public class API {
     /**
      * 极光推送用户个人偏好设置
      */
-    public final static String JPUSHSET = "common/jpushSet";
+    public final static String JPUSHSET = BASEURL + "JpushSet";
 
 
     /*socket*/
@@ -126,7 +125,7 @@ public class API {
     /**
      * 发送验证码
      */
-    public final static String SEND_MSG = "sendMsg";
+    public final static String SEND_MSG = BASEURL + "sendMsg";
     /**
      * 找回密码
      */
@@ -155,11 +154,11 @@ public class API {
     /**
      * 验证用户注册手机号
      */
-    public final static String VALIDUSERMOBILE = "validUserMobile";
+    public final static String VALIDUSERMOBILE = BASEURL + "validUserMobile";
     /**
      * 验证验证码
      */
-    public final static String VALIDVERIFICATIONCODE = "validVerificationCode";
+    public final static String VALIDVERIFICATIONCODE = BASEURL + "validVerificationCode";
     /**
      * 发送验证码
      */
@@ -248,7 +247,7 @@ public class API {
     /**
      * 偏好设置
      */
-    public final static String FAVORATE_SET = "myInfo/favorateSet";
+    public final static String FAVORATE_SET = BASEURL + "favorateSet";
     /**
      * 塑料圈联系人的-我的消息
      */
@@ -428,7 +427,7 @@ public class API {
     /**
      * 我的发票列表
      */
-    public final static String BILLINGLIST = "billingInfo/billingList";
+    public final static String BILLINGLIST = BASEURL + "billingList";
     /**
      * 开票基本信息以及开票明细
      */
@@ -472,11 +471,11 @@ public class API {
     /**
      * 头条搜索记录及相关推荐
      */
-    public final static String TOUTIAO_SEARCH_LOG = "toutiao/ToutiaoSearchLog";
+    public final static String TOUTIAO_SEARCH_LOG = BASEURL + "toutiaoSearchLog";
     /**
      * 清空头条搜索记录
      */
-    public final static String DEL_TOUTIAO_SEARCH_LOG = "toutiao/delToutiaoSearchLog";
+    public final static String DEL_TOUTIAO_SEARCH_LOG = BASEURL + "delToutiaoSearchLog";
     /**
      * 塑料头条-检查是否有文章阅读权限
      */

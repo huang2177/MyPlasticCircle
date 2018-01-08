@@ -47,11 +47,10 @@ public class FragmentLookMe extends BaseFragment implements ResultCallBack, Look
     private InfoCallBackListener listener;
 
 
-    public static FragmentLookMe newInstance(int position, InfoCallBackListener listener) {
+    public static FragmentLookMe newInstance(int position) {
         FragmentLookMe fragment = new FragmentLookMe();
         Bundle bundle = new Bundle();
         bundle.putString("position", position + "");
-        bundle.putSerializable("listener", listener);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -66,7 +65,6 @@ public class FragmentLookMe extends BaseFragment implements ResultCallBack, Look
         mList = new ArrayList<>();
         utils = new ContactAccessUtils(getActivity());
         position = getArguments().getString("position");
-        listener = (InfoCallBackListener) getArguments().getSerializable("listener");
         getViewHistoryDetails("1", position);
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -165,7 +163,7 @@ public class FragmentLookMe extends BaseFragment implements ResultCallBack, Look
         this.position = position;
     }
 
-    public interface InfoCallBackListener extends Serializable {
+    public interface InfoCallBackListener {
         void onResult(String position, String today, String totals);
     }
 

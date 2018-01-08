@@ -163,7 +163,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
                 }
             });
             loadCache(); //先读缓存中的数据
-            getSubscribe(1, "2", true);
+            getSubscribe(1, true);
         } else {
             getCatelist(1, cateId, false);
         }
@@ -255,13 +255,14 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
     /**
      * 获取推荐
      */
-    public void getSubscribe(int page, String subscribe, boolean isShow) {
+    public void getSubscribe(int page, boolean isShow) {
         this.page = page;
         this.keywords = keywords;
         Map<String, String> map = new HashMap<String, String>(16);
+        map.put("size", "10");
         map.put("page", page + "");
         map.put("keywords", "");
-        map.put("subscribe", subscribe);
+        map.put("subscribe", "2");
         getAsyn(getActivity(), API.GET_SUBSCRIBE, map, this, 4, isShow);
     }
 
@@ -343,7 +344,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
                 } else {
                     String content = new JSONObject(object.toString()).getString("message");
                     CommonDialog commonDialog = new CommonDialog();
-                    commonDialog.showDialog(getActivity(), content, (err.equals("2")) ? (1) : (3), this);
+                    commonDialog.showDialog(getActivity(), content, ("2".equals(err)) ? (1) : (3), this);
                 }
             }
         } catch (Exception e) {
@@ -396,6 +397,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
                 }
             }
         } catch (Exception e) {
+
         }
     }
 
@@ -415,10 +417,6 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
             if (list_catelist.size() == 0) {
                 imageButton.setVisibility(View.VISIBLE);
             }
-        } else {
-            if (list_subcirble.size() == 0) {
-                imageButton.setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -427,7 +425,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
         page = 1;
         mRefreshPopou.setCanShowPopou(true);
         if (po == 0) {
-            getSubscribe(page, "2", false);
+            getSubscribe(page, false);
         } else {
             getCatelist(page, cateId, false);
         }
@@ -438,7 +436,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
     public void loadMore() {
         page++;
         if (po == 0) {
-            getSubscribe(page, "2", false);
+            getSubscribe(page, false);
         } else {
             getCatelist(page, cateId, false);
         }
@@ -450,7 +448,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
             case R.id.img_reload:
                 page = 1;
                 if (po == 0) {
-                    getSubscribe(1, "2", true);
+                    getSubscribe(1, true);
                 } else {
                     getCatelist(1, cateId, true);
                 }
@@ -502,7 +500,6 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
         @Override
         public ImageView createImageView(Context context) {
             return new TagImageView(context);
-
         }
     }
 
@@ -522,6 +519,11 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
         if (mBanner != null) {
             mBanner.stopAutoPlay();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
     }
 }

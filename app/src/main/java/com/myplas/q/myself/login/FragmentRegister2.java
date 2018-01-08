@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.listener.BaseInterface;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.SharedUtils;

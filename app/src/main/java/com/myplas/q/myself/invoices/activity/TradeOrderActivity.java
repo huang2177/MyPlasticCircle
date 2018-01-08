@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -92,11 +94,11 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     }
 
     public void getorderLists(String keywords, int type) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", "1");
         map.put("size", "20");
         map.put("order_sn", keywords);
-        postAsyn(this, API.BASEURL + API.BILLINGLIST, map, this, type);
+        getAsyn(this, API.BILLINGLIST, map, this, type);
     }
 
 
@@ -134,9 +136,9 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     mEmptyView.setVisibility(View.GONE);
                     mListView.setVisibility(View.VISIBLE);
                     mBarLayout.setVisibility(View.VISIBLE);
@@ -147,12 +149,6 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                     mListView.setAdapter(mAdapter);
 
                     RabbitMQConfig.getInstance(this).readMsg("unread_myorder", 13);
-                } else {
-                    mListView.setVisibility(View.GONE);
-                    mBarLayout.setVisibility(View.GONE);
-                    String msg = new JSONObject(object.toString()).getString("msg");
-                    //mEmptyView.setNoMessageText(msg);
-                    mEmptyView.setMyManager(R.drawable.icon_invoices_null);
                 }
             }
             if (type == 2) {
@@ -169,7 +165,19 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        Log.e("-----", message);
+        try {
+            String err = new JSONObject(message).getString("code");
+            if (type == 1 && "404".equals(err) && httpCode == 404) {
+                mListView.setVisibility(View.GONE);
+                mBarLayout.setVisibility(View.GONE);
+                String msg = new JSONObject(message).getString("message");
+                //mEmptyView.setNoMessageText(msg);
+                mEmptyView.setMyManager(R.drawable.icon_invoices_null);
+            }
+        } catch (Exception e) {
 
+        }
     }
 
 }

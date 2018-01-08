@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -209,19 +210,15 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
     }
 
     public void requestNetData() {
-        Map<String, String> map = new HashMap<>();
-        map.put("token", sharedUtils.getData(this, "token"));
-        String url = API.BASEURL + API.GET_SELF_INFO;
-        postAsyn(this, url, map, this, 3, false);
+        getAsyn(this, API.GET_SELF_INFO, null, this, 3, false);
     }
 
     public void saveSelfInfo(String method, Map map, int type, boolean isShowDialog) {
-        String url = API.BASEURL + method;
-        postAsyn(this, url, map, this, type, isShowDialog);
+        postAsyn(this, method, map, this, type, isShowDialog);
     }
 
     public void getRecommendVersion() {
-        postAsyn(this, API.BASEURL + API.CHECKAPPVERSION, null, this, 4, false);
+        getAsyn(this, API.CHECKAPPVERSION, null, this, 4, false);
     }
 
     /**
@@ -266,15 +263,15 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                 if ("0".equals(err)) {
                     mySelfInfo = gson.fromJson(object.toString(), MySelfInfo.class);
                     MySelfInfo.DataBean.AllowSendBean ab = mySelfInfo.getData().getAllow_send();
-                    mAdapter.setSwitchChecked(ab.getShow().equals("1") ? false : true);
+                    mAdapter.setSwitchChecked("1".equals(ab.getShow()) ? false : true);
                 }
             }
-            if (type == 4 && err.equals("1")) {
+            if (type == 4 && "1".equals(err)) {
                 mAdapter.setVersionImg(R.drawable.tag_new);
                 mAdapter.notifyDataSetChanged();
 
                 url = jsonObject.getString("url");
-                promit = jsonObject.getString("msg");
+                promit = jsonObject.getString("message");
                 versionLocate = NumUtils.getNum(VersionUtils.getVersionName(this));
                 versionService = NumUtils.getNum(jsonObject.getString("new_version"));
             }
@@ -284,16 +281,14 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-
     }
 
     //switch的选择回调
     @Override
     public void onChecked(String s) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(8);
         map.put("type", "2");
         map.put("is_allow", s);
-        map.put("token", sharedUtils.getData(this, "token"));
         saveSelfInfo(API.FAVORATE_SET, map, 2, false);
     }
 
@@ -320,9 +315,9 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         mAdapter.notifyDataSetChanged();
 
         if (this.isOpen != isOpen) {
-            Map<String, String> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>(8);
             map.put("is_allow", isOpen ? "1" : "0");
-            postAsyn(this, API.BASEURL + API.JPUSHSET, map, this, 6, false);
+            postAsyn(this, API.JPUSHSET, map, this, 6, false);
         }
     }
 }

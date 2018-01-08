@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,12 +61,12 @@ public class Fragment_SupDem_Detail_CHJ extends BaseFragment implements ResultCa
     }
 
     public void getDeLiverPrice() {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
         map.put("page", "1");
         map.put("size", "15");
         map.put("id", mIntent.getStringExtra("id"));
         map.put("rev_id", mIntent.getStringExtra("userid"));
-        postAsyn(getActivity(), API.OFFERS, map, this, 1);
+        getAsyn(getActivity(), API.OFFERS, map, this, 1);
     }
 
     private void setListener(final boolean scrollabled) {
@@ -80,23 +81,15 @@ public class Fragment_SupDem_Detail_CHJ extends BaseFragment implements ResultCa
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("------", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
-            if (type == 1) {
-                if (err.equals("0")) {
-                    setListener(false);
-                    DeliverPriceBean deliverPriceBean = gson.fromJson(object.toString(), DeliverPriceBean.class);
-                    mBeanList = deliverPriceBean.getData();
-                    mCHJAdapter.setList(mBeanList);
-                    mCHJAdapter.notifyDataSetChanged();
-                } else {
-                    setListener(true);
-                    EmptyView emptyView = new EmptyView(getActivity());
-                    emptyView.mustCallInitWay(mMyListview);
-                    emptyView.setMyManager(R.drawable.icon_intelligent_recommendation1);
-                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
-                    mMyListview.setEmptyView(emptyView);
-                }
+            if (err.equals("0")) {
+                setListener(false);
+                DeliverPriceBean deliverPriceBean = gson.fromJson(object.toString(), DeliverPriceBean.class);
+                mBeanList = deliverPriceBean.getData();
+                mCHJAdapter.setList(mBeanList);
+                mCHJAdapter.notifyDataSetChanged();
             }
         } catch (Exception e) {
         }
@@ -104,6 +97,19 @@ public class Fragment_SupDem_Detail_CHJ extends BaseFragment implements ResultCa
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            Log.e("===", message);
+            String err = new JSONObject(message).getString("code");
+            if ("404".equals(err) && httpCode == 404) {
+                setListener(true);
+                EmptyView emptyView = new EmptyView(getActivity());
+                emptyView.mustCallInitWay(mMyListview);
+                emptyView.setMyManager(R.drawable.icon_intelligent_recommendation1);
+                emptyView.setNoMessageText(new JSONObject(message).getString("message"));
+                mMyListview.setEmptyView(emptyView);
+            }
+        } catch (Exception e) {
 
+        }
     }
 }
