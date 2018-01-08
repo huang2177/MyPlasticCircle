@@ -2,6 +2,7 @@ package com.myplas.q.app.activity;
 
 import android.Manifest;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +53,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +98,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
     private DragView mMsgContact, mMsgSupDem, mMsgMySelf;
     private DefConfigBean.NoticeBean mNticeBean;
     private ACache mACache;
-    private String TAG = "----->MainActivity";
 
 
     @Override
@@ -324,7 +326,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
      * Gets version.
      */
     public void getVersion() {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("version", VersionUtils.getVersionName(this));
         map.put("platform", "android");
         postAsyn(MainActivity.this, API.BASEURL + API.CHECK_VERSION, map, this, 1, false);
