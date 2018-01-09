@@ -147,13 +147,13 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 // 裁剪图片输出的最大宽高。
                 // .maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
                 // 设置裁剪比例
-                .aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
+                //.aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
                 // 图片压缩格式：JPEG、PNG。
-                .compressFormat(Durban.COMPRESS_PNG)
+                //.compressFormat(Durban.COMPRESS_PNG)
                 // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)
-                .compressQuality(100)
+                //.compressQuality(100)
                 // 裁剪时的手势支持：ROTATE, SCALE, ALL, NONE.
-                .gesture(Durban.GESTURE_SCALE)
+                //.gesture(Durban.GESTURE_SCALE)
                 .controller(Controller.newBuilder()
                         .enable(true) // 是否开启控制面板。
                         .rotation(true) // 是否有旋转按钮。
@@ -171,7 +171,6 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private void commit() {
         if (isWriteInfo()) {
             saveInfo();
-//            upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
         } else {
             TextUtils.toast(this, "请先填写完整资料！");
         }
@@ -202,8 +201,6 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         return TextUtils.notEmpty(companyName)
                 && TextUtils.notEmpty(business)
                 && TextUtils.notEmpty(companyIntroduction);
-//                && TextUtils.notEmpty(headPath)
-//                && TextUtils.notEmpty(licencePath);
     }
 
     /**
@@ -236,8 +233,11 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == HCODE || requestCode == ICODE) {
-            if (resultCode == RESULT_OK) {  //相册
+            if (requestCode == HCODE) {  // 解析剪切结果：
                 cutPhoto(Album.parseResult(data), requestCode * 10);
+            } else if (requestCode == ICODE) {
+                licencePath = Album.parseResult(data).get(0);
+                upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 2);
             }
         } else if (resultCode == RESULT_OK) {
             ArrayList<String> mImageList = Durban.parseResult(data);
@@ -246,14 +246,10 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
             }
             if (requestCode == HCODE * 10) {  // 解析剪切结果：
                 headPath = mImageList.get(0);
-                //imageHead.setUseProgress(true);
                 upLoadFile(API.USERPICUPLOAD, headPath, 1);
-
             } else if (requestCode == ICODE * 10) {
                 licencePath = mImageList.get(0);
-                //imageLicence.setUseProgress(true);
                 upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 2);
-
             }
             changeBtnColor();
         }
@@ -282,7 +278,6 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 button.setBackgroundResource(R.drawable.login_btn_shape_hl);
                 TextUtils.toast(this, jsonObject.getString("msg"));
             }
-
         } catch (Exception e) {
 
         }
