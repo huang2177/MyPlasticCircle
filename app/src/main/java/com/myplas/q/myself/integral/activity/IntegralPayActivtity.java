@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -183,7 +184,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
      * 获取可选充值金额
      */
     public void getSelectableMoney() {
-        postAsyn(this, API.BASEURL + API.GET_PAY_CONFIG, null, this, 1);
+        getAsyn(this, API.GET_PAY_CONFIG, null, this, 1);
     }
 
     /**
@@ -192,20 +193,23 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     public void getExactAmount(String money) {
         Map<String, String> map = new HashMap<>();
         map.put("money", money);
-        postAsyn(this, API.BASEURL + API.GET_EXACT_AMOUNT, map, this, 2);
+        getAsyn(this, API.GET_EXACT_AMOUNT, map, this, 2);
     }
 
     /**
      * 创建订单：
      */
-    public void getOrder() {
+    public void
+
+
+    getOrder() {
         if (isSelected_money) {
             Map<String, String> map = new HashMap<>();
             map.put("type", "1");
             map.put("goods_id", "99");
             map.put("total_fee", money + "");
             map.put("goods_num", plasticBean + "");
-            postAsyn(this, API.BASEURL + API.GET_PREPAY_ORDER, map, this, 3);
+            postAsyn(this, API.GET_PREPAY_ORDER, map, this, 3);
         } else {
             TextUtils.toast(this, "请选择您需要充值的金额！");
         }
@@ -224,8 +228,9 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     @Override
     public void callBack(Object object, int type) {
         try {
+            Log.e("-----", object.toString());
             Gson gson = new Gson();
-            boolean err = "0".equals(new JSONObject(object.toString()).getString("err"));
+            boolean err = "0".equals(new JSONObject(object.toString()).getString("code"));
             if (type == 1 && err) {
                 SelectableBean selectableBean = gson.fromJson(object.toString(), SelectableBean.class);
                 list = selectableBean.getData();
@@ -252,11 +257,19 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                     callWeChat(order_id, "-2");
                 }
             } else if (type == 3) {
-                TextUtils.toast(this, new JSONObject(object.toString()).getString("msg"));
+                TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
             }
         } catch (Exception e) {
         }
 
+    }
+
+    /**
+     * 支付回调
+     */
+    @Override
+    public void failCallBack(int type, String message, int httpCode) {
+        Log.e("-----", message);
     }
 
     @Override
@@ -264,10 +277,6 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         super.onDestroy();
         unregisterReceiver(myBroadcastReceiver);
     }
-
-    /**
-     * 支付回调
-     */
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -292,9 +301,6 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                 callWeChat(order_id, type + "");
             }
         }
-    }
-    @Override
-    public void failCallBack(int type, String message, int httpCode) {
 
     }
 }

@@ -168,7 +168,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private void commit() {
         if (isWriteInfo()) {
             saveInfo();
-//            upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
+            //upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
         } else {
             TextUtils.toast(this, "请先填写完整资料！");
         }

@@ -27,6 +27,7 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyEditText;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -160,7 +161,7 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
         Map<String, String> map1 = new HashMap<String, String>(8);
         map1.put("type", "0");
         map1.put("mobile", phone);
-        getAsyn(getActivity(), API.SEND_MSG, map1, this, 2);
+        postAsyn(getActivity(), API.SEND_MSG, map1, this, 2);
     }
 
     /**
@@ -181,7 +182,7 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
         map1.put("mobile", phone);
         map1.put("password", pass);
         map1.put("verification", indentify);
-        postAsyn(getActivity(), API.VALIDVERIFICATIONCODE, map1, this, 3);
+        getAsyn(getActivity(), API.VALIDVERIFICATIONCODE, map1, this, 3);
     }
 
 
@@ -219,14 +220,12 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
             Log.e("-----", object.toString());
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1) {
-                if (!"0".equals(jsonObject.getString("code"))) {
-                    TextUtils.toast(getActivity(), jsonObject.getString("messgae"));
-                } else {
+                if ("0".equals(jsonObject.getString("code"))) {
                     getIndentify();
                 }
             }
             if (type == 2) {
-                TextUtils.toast(getActivity(), jsonObject.getString("messgae"));
+                TextUtils.toast(getActivity(), jsonObject.getString("message"));
                 if ("0".equals(jsonObject.getString("err"))) {
                     initThread();
                 }
@@ -236,7 +235,7 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
                 imm.hideSoftInputFromWindow(mPhone.getWindowToken(), 0);
                 if (!"0".equals(jsonObject.getString("code"))) {
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
-                    TextUtils.toast(getActivity(), jsonObject.getString("messgae"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("message"));
                     buttonNext.setClickable(true);
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
                 } else {
@@ -253,9 +252,16 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
     @Override
     public void failCallBack(int type, String message, int httpCode) {
         Log.e("======", message);
-        if (type == 3) {
-            buttonNext.setClickable(true);
-            buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            TextUtils.toast(getActivity(), jsonObject.getString("message"));
+
+            if (type == 3) {
+                buttonNext.setClickable(true);
+                buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
+            }
+        } catch (Exception e) {
+
         }
     }
 }

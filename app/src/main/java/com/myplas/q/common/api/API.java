@@ -1,6 +1,7 @@
 package com.myplas.q.common.api;
 
 import com.myplas.q.BuildConfig;
+import com.myplas.q.app.fragment.BaseFragment;
 
 /**
  * @author 黄双
@@ -150,7 +151,7 @@ public class API {
     /**
      * 检查登录状态
      */
-    public final static String VALIDUSERTOKEN = API.BASEURL + "validUserToken";
+    public final static String VALIDUSERTOKEN = API.BASEURL + "user/validUserToken";
     /**
      * 验证用户注册手机号
      */
@@ -268,7 +269,7 @@ public class API {
     /**
      * 获取格式化中国的地区
      */
-    public final static String GET_ALL_REGIONS = BASEURL + "AllRegions";
+    public final static String GET_ALL_REGIONS = BASEURL + "regions/formatter";
     /**
      * 获取我的消息
      */
@@ -318,11 +319,11 @@ public class API {
     /**
      * 塑料圈app之获取订单
      */
-    public final static String GET_PREPAY_ORDER = "pay/getPrePayOrder";
+    public final static String GET_PREPAY_ORDER = BASEURL + "prePayOrder";
     /**
      * 塑料圈app之获取可选金额
      */
-    public final static String GET_PAY_CONFIG = "pay/getPayConfig";
+    public final static String GET_PAY_CONFIG = BASEURL + "PayConfig";
     /**
      * 塑料圈app之获取固定金额
      */
@@ -330,7 +331,7 @@ public class API {
     /**
      * 塑料圈app之订单状态
      */
-    public final static String UPDATE_ORDER_STATUS = "pay/updateOrderStatus";
+    public final static String UPDATE_ORDER_STATUS = BASEURL + "OrderStatus";
 
 
     /*score*/

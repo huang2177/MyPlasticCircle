@@ -523,7 +523,7 @@ public class Fragment_Contact extends BaseFragment implements View.OnClickListen
         //统计页面，"MainScreen"为页面名称，可自定义
         MobclickAgent.onPageStart("MainScreen");
         //检查登录状态
-        //postAsyn(getActivity(), API.BASEURL + API.VALIDUSERTOKEN, null, this, 10, false);
+        getAsyn(getActivity(), API.VALIDUSERTOKEN, null, this, 10, false);
     }
 
 

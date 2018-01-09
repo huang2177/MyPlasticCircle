@@ -15,6 +15,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.lib.WheelView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.listener.BaseInterface;
@@ -37,7 +38,7 @@ import java.util.Map;
  * @date 2017/11/1 0001
  */
 
-public class FragmentRegister2 extends Fragment implements View.OnClickListener
+public class FragmentRegister2 extends BaseFragment implements View.OnClickListener
         , ResultCallBack
         , MyEditText.OnTextWatcher {
     private View mView;
@@ -136,8 +137,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
         map.put("password", passWord);
         map.put("c_type", companyType);
 
-        String url = API.BASEURL + API.REGISTER;
-        BaseActivity.postAsyn(getActivity(), url, map, this, 1, false);
+        postAsyn(getActivity(), API.REGISTER, map, this, 1, false);
     }
 
     private void openButtomDialog() {
@@ -188,11 +188,7 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1) {
-                if (!"0".equals(jsonObject.getString("err"))) {
-                    buttonNext.setClickable(true);
-                    buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
-                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
-                } else {
+                if ("0".equals(jsonObject.getString("code"))) {
                     Gson gson = new Gson();
                     RegisterBean bean = gson.fromJson(object.toString(), RegisterBean.class);
                     setRedDots(bean);
@@ -219,8 +215,14 @@ public class FragmentRegister2 extends Fragment implements View.OnClickListener
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        buttonNext.setClickable(true);
-        buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            buttonNext.setClickable(true);
+            buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
+            TextUtils.toast(getActivity(), jsonObject.getString("message"));
+        } catch (Exception e) {
+
+        }
     }
 
     /**
