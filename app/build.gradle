@@ -95,6 +95,9 @@ dependencies {
     /*glide与gson*/
     compile files('libs/glide-3.6.1.jar')
     compile 'io.github.openfeign:feign-gson:9.4.0'
+
+
+
     /*其他第三方框架*/
     compile 'me.panpf:sketch:2.6.0'
     compile 'com.yanzhenjie:album:1.0.7'
@@ -106,4 +109,5 @@ dependencies {
     compile 'com.github.huangbryant210707:MyBanner:2.6.1'
     compile 'com.github.huangbryant210707:HCalendarView:1.2.0'
     compile 'com.github.huangbryant210707:HIndicatorDialog:2.2.0'
+    compile project(path: ':ufilesdk')
 }

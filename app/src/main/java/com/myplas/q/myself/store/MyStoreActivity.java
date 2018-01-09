@@ -1,9 +1,11 @@
 package com.myplas.q.myself.store;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +25,7 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyEditText;
+import com.myplas.q.common.view.ProgressImageView;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.durban.Controller;
 import com.yanzhenjie.durban.Durban;
@@ -144,9 +147,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 // 裁剪图片输出的最大宽高。
                 // .maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
                 // 设置裁剪比例
-                //.aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
+                .aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
                 // 图片压缩格式：JPEG、PNG。
-                //.compressFormat(Durban.COMPRESS_PNG)
+                .compressFormat(Durban.COMPRESS_PNG)
                 // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)
                 .compressQuality(100)
                 // 裁剪时的手势支持：ROTATE, SCALE, ALL, NONE.
@@ -168,7 +171,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private void commit() {
         if (isWriteInfo()) {
             saveInfo();
-            //upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
+//            upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
         } else {
             TextUtils.toast(this, "请先填写完整资料！");
         }
@@ -286,7 +289,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void failCallBack(int type, String message, int httpCode) {
+    public void failCallBack(int type) {
         if (type == 3) {
             button.setClickable(true);
             button.setBackgroundResource(R.drawable.login_btn_shape_hl);
