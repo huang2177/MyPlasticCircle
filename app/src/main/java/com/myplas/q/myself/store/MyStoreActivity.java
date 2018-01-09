@@ -23,6 +23,7 @@ import com.myplas.q.common.netresquset.ProgressListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.utils.UCloudUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.common.view.ProgressImageView;
@@ -42,7 +43,9 @@ import java.util.Map;
  */
 
 public class MyStoreActivity extends BaseActivity implements View.OnClickListener
-        , MyEditText.OnTextWatcher, ResultCallBack, ProgressListener {
+        , MyEditText.OnTextWatcher
+        , ResultCallBack
+        , UCloudUtils.UCloudListener {
     private Button button;
     private EmptyView emptyView;
     private ScrollView scrollView;
@@ -54,6 +57,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private SharedUtils sharedUtils;
     private final int HCODE = 10, ICODE = 20;
     private String companyName, companyIntroduction, headPath, licencePath, stauts, business;
+    private UCloudUtils uCloudUtils;
 
 
     @Override
@@ -83,6 +87,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         editName.addOnTextWatcher(this);
         flLicence.setOnClickListener(this);
         editIntroduction.addOnTextWatcher(this);
+
+        uCloudUtils = new UCloudUtils(this);
+        uCloudUtils.setUCloudListener(this);
 
         emptyView.setMyManager(R.drawable.icon_auditing);
         emptyView.setNoMessageText1("提交成功，请等待客服人员审核！");
@@ -209,7 +216,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     public void upLoadFile(String method, String path, int type) {
         String url = API.BASEURL + method;
         String token = sharedUtils.getData(this, Constant.TOKEN);
-        postUpLoadImg(this, url, path, token, this, type, this);
+        postUpLoadImg(this, url, path, token, this, type, null);
     }
 
     /**
@@ -291,20 +298,20 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    /**
-     * 上传进度监听
-     *
-     * @param currentBytes
-     * @param contentLength
-     * @param done
-     * @param type
-     */
+
     @Override
-    public void onProgress(long currentBytes, long contentLength, boolean done, int type) {
-        if (type == 1) {
-            //imageHead.setProgress((float) currentBytes / contentLength);
-        } else {
-            //imageLicence.setProgress((float) currentBytes / contentLength);
-        }
+    public void uCloudCallBack(String url) {
+
+    }
+
+    @Override
+    public void uCloudProcess(int value) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        uCloudUtils.cancleRequest();
     }
 }
