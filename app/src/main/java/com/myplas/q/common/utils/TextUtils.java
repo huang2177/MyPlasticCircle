@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myplas.q.R;
+import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.view.CommonDialog;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,7 +42,7 @@ public class TextUtils {
     public static final String PREFS_END_TIME = "PREFS_END_TIME";
     public static final String KEY_APP_KEY = "JPUSH_APPKEY";
 
-
+    private static SharedUtils utils = SharedUtils.getSharedUtils();
     /**
      * 判断一个字符串是否为空
      *
@@ -255,5 +257,21 @@ public class TextUtils {
             }
         }
         return false;
+    }
+
+
+    /**
+     * 检查是否登录
+     */
+    public static boolean isLogin(Context context, CommonDialog.DialogShowInterface showInterface) {
+        boolean logined = utils.getBoolean(context, Constant.LOGINED);
+        if (!logined) {
+            CommonDialog commonDialog = new CommonDialog();
+            commonDialog.showDialog(context
+                    , utils.getData(context, Constant.POINTSINFO)
+                    , 4
+                    , showInterface);
+        }
+        return logined;
     }
 }

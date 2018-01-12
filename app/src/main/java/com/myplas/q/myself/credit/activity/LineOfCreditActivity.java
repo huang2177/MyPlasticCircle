@@ -117,11 +117,10 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
 
     public void getComPany(String keywords) {
         if (TextUtils.notEmpty(keywords)) {
-            Map<String, String> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>(8);
             map.put("type", "2");
             map.put("page", "1");
             map.put("fname", keywords);
-            map.put("token", sharedUtils.getData(this, "token"));
             getAsyn(this, API.CREDIT_CERTIFICATE, map, this, 1);
         } else {
             TextUtils.toast(this, "请输入搜索关键字！");
@@ -129,7 +128,7 @@ public class LineOfCreditActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void getData() {
-        getAsyn(this, API.BASEURL + API.CREDIT_PAGE, null, this, 2);
+        getAsyn(this, API.CREDIT_PAGE, null, this, 2);
     }
 
     @Override

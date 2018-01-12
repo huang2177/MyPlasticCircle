@@ -1,7 +1,6 @@
 package com.myplas.q.supdem.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -13,23 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.contact.activity.ContactDetailActivity;
-import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
-import com.myplas.q.contact.activity.NewContactDetailActivity;
 
 import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.supdem.beans.SupDemBean;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -93,8 +81,8 @@ public class SupDem_LV_Adapter extends BaseAdapter {
 
             viewHolder.time.setText(list.get(position).getInput_time());
             if ("1".equals(list.get(position).getFrom())) {
-                viewHolder.reply.setText("回复(" + list.get(position).getReplyCount() + ")");
-                viewHolder.deliver.setText("出价(" + list.get(position).getPlaticCount() + ")");
+                viewHolder.reply.setText("回复(" + list.get(position).getComments() + ")");
+                viewHolder.deliver.setText("出价(" + list.get(position).getOffers() + ")");
                 viewHolder.reply.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_reply, 0, 0, 0);
                 viewHolder.deliver.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sd_offer, 0, 0, 0);
             } else {
@@ -124,7 +112,7 @@ public class SupDem_LV_Adapter extends BaseAdapter {
                     if (list.get(position).getFrom().equals("1")) {
                         if (listener != null) {
                             listener.onItemClick(list.get(position).getUser_id()
-                                    , list.get(position).getMerge_three()
+                                    , list.get(position).getIs_shop()
                                     , null
                                     , null
                                     , null);

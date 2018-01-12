@@ -314,16 +314,16 @@ public class SupDemBean {
         private String unit_price;
         private String store_house;
         private String img;
-        private String platicCount;
-        private String replyCount;
-        private String merge_three;
+        private String offers;
+        private String comments;
+        private String is_shop;
 
-        public void setMerge_three(String merge_three) {
-            this.merge_three = merge_three;
+        public void setIs_shop(String merge_three) {
+            this.is_shop = merge_three;
         }
 
-        public String getMerge_three() {
-            return merge_three;
+        public String getIs_shop() {
+            return is_shop;
         }
 
         public String getId() {
@@ -438,20 +438,20 @@ public class SupDemBean {
             this.img = img;
         }
 
-        public String getPlaticCount() {
-            return platicCount;
+        public String getOffers() {
+            return offers;
         }
 
-        public void setPlaticCount(String platicCount) {
-            this.platicCount = platicCount;
+        public void setOffers(String platicCount) {
+            this.offers = platicCount;
         }
 
-        public String getReplyCount() {
-            return replyCount;
+        public String getComments() {
+            return comments;
         }
 
-        public void setReplyCount(String replyCount) {
-            this.replyCount = replyCount;
+        public void setComments(String replyCount) {
+            this.comments = replyCount;
         }
     }
 }

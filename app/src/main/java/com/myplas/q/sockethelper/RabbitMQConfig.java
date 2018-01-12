@@ -56,7 +56,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     public void closed() {
         Map<String, String> map = new HashMap<>();
         map.put("userid", SharedUtils.getSharedUtils().getData(context, Constant.USERID));
-        BaseActivity.postAsyn(context, API.BASEURL + API.CLOSED, map, this, 2, false);
+        BaseActivity.postAsyn(context, API.CLOSED, map, this, 2, false);
     }
 
     /**
@@ -64,7 +64,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
      */
 
     public void connected() {
-        BaseActivity.postAsyn(context, API.BASEURL + API.CONNECTED, null, this, 3, false);
+        BaseActivity.putAsyn(context, API.CONNECTED, null, this, 3, false);
     }
 
     /**
@@ -73,7 +73,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
      * @param type the type
      */
     public void getRedDotInfo() {
-        BaseActivity.postAsyn(context, API.BASEURL + API.GETREDDOTINFO, null, this, 4, false);
+        BaseActivity.postAsyn(context, API.GETREDDOTINFO, null, this, 4, false);
     }
 
     /**
@@ -123,7 +123,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
                 case 4:
                     isShowNotify = true;
                     JSONObject jsonObject = new JSONObject(object.toString());
-                    if ("0".equals(jsonObject.getString("err"))) {
+                    if ("0".equals(jsonObject.getString("code"))) {
                         setNoticeBean(object);
                     }
                     break;

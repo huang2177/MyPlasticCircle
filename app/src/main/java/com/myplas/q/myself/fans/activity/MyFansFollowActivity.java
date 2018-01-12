@@ -1,30 +1,22 @@
 package com.myplas.q.myself.fans.activity;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.contact.activity.ContactDetailActivity;
-import com.myplas.q.contact.activity.NewContactDetailActivity;
-import com.myplas.q.contact.beans.MyFansBean;
+import com.myplas.q.homepage.beans.MyFansBean;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.fans.adapter.MyFansFollowAdapter;
-import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 
 import org.json.JSONObject;
 

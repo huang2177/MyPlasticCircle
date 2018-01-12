@@ -1,31 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:gravity="center">
-
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:background="@drawable/corner_white_left_radius"
         android:gravity="center"
-        android:padding="10dp"
         android:textColor="@color/color_red"
         android:textSize="17.0sp"
         android:textStyle="bold" />
 
-    <com.myplas.q.common.view.DragView
-        android:id="@+id/dragview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:translationX="23dp"
-        android:translationY="-10dp"
-        app:bubbleColor="#ff0000"
-        app:bubbleRadius="5dp"
-        app:textColor="@color/color_white"
-        app:textSize="9.0sp" />
 </FrameLayout>

@@ -171,6 +171,6 @@
     </ScrollView>
 
     <include
-        layout="@layout/navigation_main_layout"
+        layout="@layout/layout_navegationbar"
         android:visibility="gone" />
 </LinearLayout>

@@ -239,12 +239,11 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
      */
 
     public void exchangeSupOrDem(String goods_id, String dates, String p_id, int type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", SharedUtils.getSharedUtils().getData(context, "token"));
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("goods_id", goods_id);
         map.put("dates", dates);
         map.put("pur_id", p_id);
-        BaseActivity.getAsyn(context, API.NEW_EXCHANGE_SUPPLYORDEMAND, map, this, type);
+        BaseActivity.postAsyn(context, API.NEW_EXCHANGE_SUPPLYORDEMAND, map, this, type);
     }
 
     /**
@@ -252,12 +251,12 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
      */
 
     public void newExchangeToutiao(String goods_id, int plastic_num, String cate_ids, int month_num, int type) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("month_num", month_num + "");
         map.put("cate_ids", cate_ids);
         map.put("plasticbean_num", plastic_num + "");
         map.put("goods_id", goods_id);
-        BaseActivity.getAsyn(context, API.NEW_EXCHANGE_TOUTIAO, map, this, type);
+        BaseActivity.postAsyn(context, API.NEW_EXCHANGE_TOUTIAO, map, this, type);
     }
 
     /**
@@ -265,7 +264,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
      */
 
     public void getValidDate(String type) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("type", type);
         BaseActivity.getAsyn(context, API.GET_VALID_DATE, map, this, 2);
     }
@@ -400,7 +399,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 }
             }
             if (type == 3) {//分类
-                String err = new JSONObject(object.toString()).getString("err");
+                String err = new JSONObject(object.toString()).getString("code");
                 if (err.equals("0")) {
                     myInterface.refreshData();
                     mHolderMap.get(classifyPosition).numAll.setText("共0件：");
@@ -424,7 +423,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             //展示时间dialog
             if (type == 2) {
                 String err = new JSONObject(object.toString()).getString("code");
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     Gson gson = new Gson();
                     tookDateBean = gson.fromJson(object.toString(), TookDateBean.class);
                     List<Date> list1 = (list.get(datePosition).getType().equals("1")) ? (list_date_supdem) : (list_date_conact);

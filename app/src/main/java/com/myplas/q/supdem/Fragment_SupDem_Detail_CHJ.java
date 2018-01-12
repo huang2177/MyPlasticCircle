@@ -84,7 +84,7 @@ public class Fragment_SupDem_Detail_CHJ extends BaseFragment implements ResultCa
             Log.e("------", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
-            if (err.equals("0")) {
+            if ("0".equals(err)) {
                 setListener(false);
                 DeliverPriceBean deliverPriceBean = gson.fromJson(object.toString(), DeliverPriceBean.class);
                 mBeanList = deliverPriceBean.getData();

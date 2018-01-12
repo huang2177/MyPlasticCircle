@@ -1,26 +1,16 @@
 package com.myplas.q.app.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import com.myplas.q.common.netresquset.NetRequest;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
-import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.LoadingDialog;
-import com.myplas.q.contact.activity.ContactDetailActivity;
-import com.myplas.q.contact.activity.NewContactDetailActivity;
 import com.umeng.analytics.MobclickAgent;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Map;
 

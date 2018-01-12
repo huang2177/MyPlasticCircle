@@ -88,23 +88,23 @@ public class API {
     /**
      * rabbitmq链接配置文件
      */
-    public final static String INIT = "socket/init";
+    public final static String INIT = BASEURL + "socket/initialization";
     /**
      * rabbitmq链接关闭后回调通知服务器
      */
-    public final static String CLOSED = "socket/closed";
+    public final static String CLOSED = BASEURL + "socket/closed";
     /**
      * rabbitmq链接成功后回调通知服务器
      */
-    public final static String CONNECTED = "socket/connected";
+    public final static String CONNECTED = BASEURL + "socket/queue";
     /**
      * 更新已读的红点推送
      */
-    public final static String READ = "socket/read";
+    public final static String READ = BASEURL + "socket/read";
     /**
      * 推送后获取数据
      */
-    public final static String GETREDDOTINFO = "socket/getRedDotInfo";
+    public final static String GETREDDOTINFO = BASEURL + "socket/getRedDotInfo";
 
 
     /*Credit*/
@@ -119,7 +119,7 @@ public class API {
     /**
      * 企业信用额度
      */
-    public final static String CREDIT_PAGE = BASEURL + "CreditPage";
+    public final static String CREDIT_PAGE = BASEURL + "creditPage";
 
 
     /*User*/
@@ -130,20 +130,20 @@ public class API {
     /**
      * 找回密码
      */
-    public final static String FINF_MY_PWD = "finfMyPwd";
+    public final static String FINF_MY_PWD = BASEURL + "finfMyPwd";
     /**
      * 注册
      */
-    public final static String REGISTER = "register";
+    public final static String REGISTER = BASEURL + "register";
     /**
      * 普通登陆
      */
-    public final static String LOGIN = BASEURL + "Login";
+    public final static String LOGIN = BASEURL + "user/login";
     //
     /**
      * 快速登陆
      */
-    public final static String SIMPLE_LOGIN = BASEURL_API + "simpleLogin";
+    public final static String SIMPLE_LOGIN = BASEURL_API + "user/simpleLogin";
     /**
      * 退出登录
      */
@@ -161,17 +161,13 @@ public class API {
      */
     public final static String VALIDVERIFICATIONCODE = BASEURL + "validVerificationCode";
     /**
-     * 发送验证码
-     */
-    public final static String SEND_MOBILE_MSG = "sendMobileMsg";
-    /**
      * 获取验证码--仅供APP使用
      */
-    public final static String VCODE = "api/vcode/app";
+    public final static String VCODE = BASEURL + "appcode";
     /**
      * 验证码
      */
-    public final static String CHK_VCODE = "api/vcode/chkVcode";
+    public final static String CHK_VCODE = "checkVcode";
 
 
     /*friend*/
@@ -304,7 +300,7 @@ public class API {
     /**
      * 塑料圈app之积分商品可选日期
      */
-    public final static String GET_VALID_DATE = "product/getValidDate";
+    public final static String GET_VALID_DATE = BASEURL + "validDate";
     /**
      * 塑料圈app之购买记录
      */
@@ -450,13 +446,9 @@ public class API {
 
     /*toutiao*/
     /**
-     * 塑料头条-头条推荐
-     */
-    public final static String GET_SUBSCRIBE = BASEURL + "subscribe";
-    /**
      * 塑料头条
      */
-    public final static String GET_CATE_LIST = BASEURL + "cateList";
+    public final static String GET_CATE_LIST = BASEURL + "news";
     /**
      * 塑料头条-获取订阅频道
      */

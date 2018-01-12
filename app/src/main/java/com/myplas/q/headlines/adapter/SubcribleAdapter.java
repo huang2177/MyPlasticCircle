@@ -27,17 +27,18 @@ import java.util.List;
  */
 public class SubcribleAdapter extends BaseAdapter {
     Context context;
-    List<SubcribleBean.DataBean> list;
+    List<SubcribleBean.NewsBean> list;
 
-    public SubcribleAdapter(Context context, List<SubcribleBean.DataBean> list) {
+    public SubcribleAdapter(Context context, List<SubcribleBean.NewsBean> list) {
         this.context = context;
         this.list = list;
     }
 
     @Override
     public int getCount() {
-        if (list != null)
+        if (list != null) {
             return list.size();
+        }
         return 0;
     }
 
@@ -68,7 +69,7 @@ public class SubcribleAdapter extends BaseAdapter {
         }
         viewHolder.num.setText(list.get(position).getPv());
         viewHolder.time.setText(list.get(position).getInput_time());
-        viewHolder.author.setText(replaceContent(list.get(position).getType()));
+        viewHolder.author.setText(replaceContent(list.get(position).getPhysical_label()));
         viewHolder.title2.setText(replaceContent(list.get(position).getTitle()));
         viewHolder.mImgFree.setVisibility(list.get(position).getIs_free().equals("1")
                 ? View.VISIBLE
@@ -76,7 +77,7 @@ public class SubcribleAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setList(List<SubcribleBean.DataBean> list) {
+    public void setList(List<SubcribleBean.NewsBean> list) {
         this.list = list;
     }
 

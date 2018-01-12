@@ -3,12 +3,9 @@ package com.myplas.q.myself;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +18,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
@@ -31,7 +27,7 @@ import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.contact.activity.NewContactDetailActivity;
+import com.myplas.q.homepage.activity.NewContactDetailActivity;
 import com.myplas.q.myself.beans.MyZone;
 import com.myplas.q.myself.credit.activity.LineOfCreditActivity;
 import com.myplas.q.myself.credit.activity.PlasticMoneyActivity;
@@ -51,9 +47,6 @@ import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 编写： 黄双
@@ -236,6 +229,9 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 startActivity(intent7);
                 break;
             case R.id.wd_text_store:
+                if (myZone == null) {
+                    return;
+                }
                 if ("1".equals(myZone.getData().getShop_audit_status())) {
                     Intent i = new Intent(getActivity(), NewContactDetailActivity.class);
                     i.putExtra("userid", myZone.getData().getUser_id());
@@ -250,8 +246,6 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 break;
         }
     }
-
-
     /**
      * Gets logininfo.
      *

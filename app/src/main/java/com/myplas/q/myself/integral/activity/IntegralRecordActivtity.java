@@ -84,14 +84,14 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("page", page);
         map.put("size", "10");
-        postAsyn(this, API.GET_PURCHASE_RECORD, map, this, 1);
+        getAsyn(this, API.GET_PURCHASE_RECORD, map, this, 1);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
             RecordBean recordBean = null;
-            if (new JSONObject(object.toString()).getString("code").equals("0")) {
+            if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
                 Gson gson = new Gson();
                 layout.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);

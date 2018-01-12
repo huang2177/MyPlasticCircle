@@ -2,9 +2,12 @@ package com.myplas.q.supdem;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -40,6 +43,10 @@ import com.myplas.q.supdem.adapter.SupDem_ViewPager_Adapter;
 import com.myplas.q.supdem.beans.ConfigData;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -54,7 +61,8 @@ import java.util.Map;
  */
 public class Fragment_SupplyDemand extends Fragment implements View.OnClickListener
         , Fragment_SupDem_All.RefreshPopouInterface
-        , MyOnPageChangeListener.OnPageChangeListener, MarqueeFactory.OnItemClickListener {
+        , MyOnPageChangeListener.OnPageChangeListener
+        , MarqueeFactory.OnItemClickListener {
 
     private View view;
     private EditText editText;
@@ -106,7 +114,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
         tvType.setOnClickListener(this);
         editText.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
-
     }
 
     @Nullable
@@ -142,30 +149,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             //给TabLayout设置适配器
             mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
             //setUpTabBadge(0);
-        }
-    }
-
-    /**
-     * 给tab设置消息小红点
-     *
-     * @param position
-     */
-    private void setUpTabBadge(int position) {
-        XTabLayout.Tab tab = mTabLayout.getTabAt(position);
-        if (tab != null && tab.getCustomView() == null && position == 0) {
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.tab_title_layout, null);
-            mTVTab = ((TextView) view.findViewById(R.id.tv_title));
-            mTVTab.setText(mListTitle.get(position));
-            tab.setCustomView(view);
-        }
-        if (position == 0) {
-            mTVTab.setTextColor(getResources().getColor(R.color.color_red));
-            mTVTab.setTypeface(Typeface.DEFAULT_BOLD);
-            mTVTab.setTextSize(17);
-        } else {
-            mTVTab.setTextColor(getResources().getColor(R.color.color_title_main));
-            mTVTab.setTypeface(Typeface.DEFAULT);
-            mTVTab.setTextSize(16);
         }
     }
 
@@ -285,8 +268,8 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
 
     }
 
-
     public class Supdem_Dialog_Adapter extends HIndicatorAdapter {
+
 
         @Override
         public void onBindView(BaseViewHolder holder, int position) {
@@ -345,7 +328,6 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
     @Override
     public void onPause() {
         super.onPause();
-        Log.e("-------", "-----1111");
         MobclickAgent.onPageEnd("MainScreen");
         if (mFragmentAll.refreshPopou != null) {
             mFragmentAll.refreshPopou.dismiss();
@@ -389,6 +371,30 @@ public class Fragment_SupplyDemand extends Fragment implements View.OnClickListe
             }
         } catch (Exception e) {
             notifyRoot.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 给tab设置消息小红点
+     *
+     * @param position
+     */
+    private void setUpTabBadge(int position) {
+        XTabLayout.Tab tab = mTabLayout.getTabAt(position);
+        if (tab != null && tab.getCustomView() == null && position == 0) {
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.tab_title_layout, null);
+            mTVTab = ((TextView) view.findViewById(R.id.tv_title));
+            mTVTab.setText(mListTitle.get(position));
+            tab.setCustomView(view);
+        }
+        if (position == 0) {
+            mTVTab.setTextColor(getResources().getColor(R.color.color_red));
+            mTVTab.setTypeface(Typeface.DEFAULT_BOLD);
+            mTVTab.setTextSize(17);
+        } else {
+            mTVTab.setTextColor(getResources().getColor(R.color.color_title_main));
+            mTVTab.setTypeface(Typeface.DEFAULT);
+            mTVTab.setTextSize(16);
         }
     }
 }

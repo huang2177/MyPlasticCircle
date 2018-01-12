@@ -31,6 +31,7 @@ import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -193,7 +194,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     map.put("regcode", edittextVerification1.getText().toString());
                     map.put("key", key);
                     //登陆；
-                    postAsyn(this, API.BASEURL + API.SIMPLE_LOGIN, map, this, 1);
+                    postAsyn(this, API.SIMPLE_LOGIN, map, this, 1);
                     mButtonPhone.setClickable(false);
                     mButtonPhone.setBackgroundResource(R.drawable.login_btn_shape);
                 } else {
@@ -236,8 +237,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
      * 获取验证码
      */
     private void getVCode() {
-        String url1 = API.BASEURL_API + API.VCODE;
-        postAsyn(this, url1, null, this, 2, false);
+        getAsyn(this, API.VCODE, null, this, 2, false);
     }
 
     /**
@@ -246,12 +246,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     public void checkVCide() {
         String value = edittextVerification1.getText().toString();
         if (TextUtils.notEmpty(value)) {
-            String url = API.BASEURL_API + API.CHK_VCODE;
             Map<String, String> map1 = new HashMap<String, String>();
             map1.put("name", "regcode");
             map1.put("value", value);
             map1.put("key", key);
-            postAsyn(this, url, map1, this, 3);
+            postAsyn(this, API.CHK_VCODE, map1, this, 3);
         } else {
             TextUtils.toast(this, "验证码不能为空！");
         }
@@ -265,11 +264,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         if (tel.length() != 11) {
             Toast.makeText(this, "手机号输入有误！", Toast.LENGTH_SHORT).show();
         } else {
-            String url = API.BASEURL_API + API.SEND_MOBILE_MSG;
             Map<String, String> map1 = new HashMap<String, String>();
-            map1.put("phonenum", tel);
-            map1.put("from", "android");
-            postAsyn(this, url, map1, this, 4);
+            map1.put("mobile", tel);
+            map1.put("type", "2");
+            postAsyn(this, API.SEND_MSG, map1, this, 4);
         }
     }
 
@@ -319,11 +317,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        if (type == 1) {
-            mButtonNomal.setClickable(true);
-            mButtonPhone.setClickable(true);
-            mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
-            mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
+        try {
+            if (type == 1) {
+                mButtonNomal.setClickable(true);
+                mButtonPhone.setClickable(true);
+                mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
+                mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
+
+                if (httpCode == 412) {
+                    TextUtils.toast(this, new JSONObject(message).getString("message"));
+                }
+            }
+        } catch (Exception e) {
+
         }
     }
 

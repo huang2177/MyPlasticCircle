@@ -2,19 +2,16 @@ package com.myplas.q.common.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.contact.activity.ContactDetailActivity;
-import com.myplas.q.contact.activity.NewContactDetailActivity;
-import com.myplas.q.contact.beans.ContactBean;
+import com.myplas.q.homepage.activity.ContactDetailActivity;
+import com.myplas.q.homepage.activity.NewContactDetailActivity;
+import com.myplas.q.homepage.beans.ContactBean;
 import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -44,7 +41,7 @@ public class ContactAccessUtils extends BaseActivity implements ResultCallBack,
         if (personsBean == null) {
             return;
         }
-        checkPremissions(personsBean.getUser_id(), personsBean.getMerge_three());
+        checkPremissions(personsBean.getUser_id(), personsBean.getIsshop());
     }
 
     public void checkPremissions(String userId, String isShop) {

@@ -95,33 +95,33 @@
 
         <!--contact-->
         <activity
-            android:name="com.myplas.q.contact.activity.AD_DialogActivtiy"
+            android:name="com.myplas.q.homepage.activity.AD_DialogActivtiy"
             android:screenOrientation="portrait"
             android:theme="@style/my_theme_animation" />
         <activity
-            android:name="com.myplas.q.contact.activity.Cover_WebActivity"
+            android:name="com.myplas.q.homepage.activity.Cover_WebActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.contact.activity.Contact_Search_Activity"
+            android:name="com.myplas.q.homepage.activity.Contact_Search_Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.contact.activity.NewContactDetailActivity"
+            android:name="com.myplas.q.homepage.activity.NewContactDetailActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.contact.activity.ContactDetailActivity"
+            android:name="com.myplas.q.homepage.activity.ContactDetailActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.contact.activity.TheirFansFollowActivity"
+            android:name="com.myplas.q.homepage.activity.TheirFansFollowActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.contact.activity.ContactDaliySignActivity"
+            android:name="com.myplas.q.homepage.activity.ContactDaliySignActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.myplas.q.contact.activity.DaliySignDialogActivtiy"
+            android:name="com.myplas.q.homepage.activity.DaliySignDialogActivtiy"
             android:screenOrientation="portrait"
             android:theme="@style/themeTopAnimation" />
 

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -153,8 +154,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
     }
 
     public void getData(String page, String type) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("token", sharedUtils.getData(this, "token"));
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("page", page);
         map.put("type", type);
         getAsyn(this, API.SCORE_RECORD, map, this, 1);
@@ -219,7 +219,6 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-
     }
 
     public void setBackgroundAlpha(float bgAlpha) {

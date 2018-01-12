@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -302,7 +303,6 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
         map.put("dist", regionInPut);
         map.put("address_id", location);
         map.put("main_product", getString(mainProduct));
-        map.put("token", sharedUtils.getData(this, "token"));
 
         putAsyn(this, API.SAVE_SELFINFO, map, this, 3, true);
 
@@ -336,7 +336,6 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
             if (type == 3 && "0".equals(err)) {
                 requestNetData();
             }
-
         } catch (Exception e) {
         }
     }
@@ -344,6 +343,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        Log.e("----", "----");
     }
 
     public void showInfo(MySelfInfo mySelfInfo) {

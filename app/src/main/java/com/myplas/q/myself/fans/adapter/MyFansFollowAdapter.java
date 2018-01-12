@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.contact.beans.MyFansBean;
+import com.myplas.q.homepage.beans.MyFansBean;
 
 import java.util.List;
 

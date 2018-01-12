@@ -1,6 +1,5 @@
 package com.myplas.q.myself.fans.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
@@ -10,13 +9,9 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.ContactAccessUtils;
-import com.myplas.q.contact.activity.NewContactDetailActivity;
-import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.myself.fans.adapter.MyIntroductionAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myself.beans.MyIntroductionBean;

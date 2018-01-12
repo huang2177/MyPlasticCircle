@@ -214,7 +214,7 @@ public class NetRequest implements Callback {
             message.setData(bundle);
             myHandler.sendMessage(message);
         } catch (Exception e) {
-
+            e.toString();
         }
     }
 }

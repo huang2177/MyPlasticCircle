@@ -101,11 +101,11 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                 if (tel.length() != 11) {
                     Toast.makeText(this, "手机号输入有误！", Toast.LENGTH_SHORT).show();
                 } else {
-                    Map<String, Object> map1 = new HashMap<String, Object>();
-                    map1.put("mobile", tel);
-                    map1.put("type", "1");
+                    Map<String, String> map = new HashMap<String, String>(8);
+                    map.put("mobile", tel);
+                    map.put("type", "1");
                     //发送验证码
-                    getNetData(API.SEND_MSG, map1, 1);
+                    postAsyn(this, API.SEND_MSG, map, this, 1);
                 }
                 break;
             case R.id.zhh_next:
@@ -113,12 +113,12 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                 String phone = editText_tel.getText().toString();
                 String pass = editText_pass.getText().toString();
                 if (TextUtils.notEmpty(phone) && TextUtils.notEmpty(pass) && TextUtils.notEmpty(yzm)) {
-                    Map<String, Object> map = new HashMap<String, Object>();
+                    Map<String, String> map = new HashMap<String, String>(8);
                     map.put("mobile", phone);
                     map.put("password", pass);
                     map.put("code", yzm);
 
-                    getNetData(API.FINF_MY_PWD, map, 2);
+                    postAsyn(this, API.FINF_MY_PWD, map, this, 2);
                 } else {
                     TextUtils.toast(this, "请输入完整信息！");
                 }
@@ -128,10 +128,6 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    public void getNetData(String method, Map map, int type) {
-        String url = API.BASEURL + method;
-        postAsyn(this, url, map, this, type);
-    }
 
     public void initThread() {
         new Thread() {
@@ -155,14 +151,14 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
     public void callBack(Object object, int type) {
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
-            String s = jsonObject.getString("msg");
+            String s = jsonObject.getString("message");
             TextUtils.toast(this, s);
-            if (type == 1 && jsonObject.getString("err").equals("0")) {
+            if (type == 1 && "0".equals(jsonObject.getString("code"))) {
                 initThread();
             }
             if (type == 2) {
                 TextUtils.toast(this, s);
-                if (s.equals("密码重置成功")) {
+                if ("密码重置成功".equals(s)) {
                     Intent intent = new Intent(this, LoginActivity.class);
                     String phone = editText_tel.getText().toString();
                     String pass = editText_pass.getText().toString();

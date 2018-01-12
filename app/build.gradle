@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 android {
-    //使用h5的签名，项目运行的时候可以直接改变签名
     signingConfigs {
         sign {
             keyAlias 'hbuilder'
@@ -15,8 +14,8 @@ android {
         applicationId "com.myplas.q"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 99
-        versionName "4.2.0"
+        versionCode 100
+        versionName "4.5.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -104,6 +103,7 @@ dependencies {
     compile 'com.yanzhenjie:durban:1.0.1'
     compile 'com.mengfei:AddSubUtils:1.5.0'
     compile 'com.androidkun:XTabLayout:1.1.3'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     //    compile 'com.androidadvance:topsnackbar:1.1.1'
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     compile 'com.github.huangbryant210707:MyBanner:2.6.1'

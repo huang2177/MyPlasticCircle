@@ -99,7 +99,7 @@ public class Fragment_HeadLines extends Fragment implements View.OnClickListener
         if (mFragments == null) {
             mFragments = new ArrayList<>();
             list1 = Arrays.asList("推荐", "塑料上游", "早盘预报", "企业动态", "中晨塑说", "美金市场", "期货资讯", "装置动态", "期刊报告", "独家解读");
-            list2 = Arrays.asList("", "2", "1", "9", "76", "20", "21", "11", "12", "22");
+            list2 = Arrays.asList("0", "2", "1", "9", "76", "20", "21", "11", "12", "22");
             for (int i = 0; i < list1.size(); i++) {
                 mTabLayout.addTab(mTabLayout.newTab().setText(list1.get(i).toString()));
                 HeadLineListFragment fragment = HeadLineListFragment.newInstance(list2.get(i), i);

@@ -127,7 +127,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     mLayoutDefault.setVisibility(View.GONE);
                     mLayoutResult.setVisibility(View.VISIBLE);
                     keywords = ("".equals(editText.getText().toString())) ? ("7000f") : (editText.getText().toString());
-                    getSubscribe(page, keywords, true);
+                    getCateList(page, keywords, true);
                     return true;
                 }
                 return false;
@@ -142,7 +142,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
                         page++;
-                        getSubscribe(page, keywords, false);
+                        getCateList(page, keywords, false);
                     }
                 }
             }
@@ -169,13 +169,12 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
      * @param isShowLoading the is show loading
      */
 
-    public void getSubscribe(int page, String keywords, boolean isShowLoading) {
+    public void getCateList(int page, String keywords, boolean isShowLoading) {
         Map<String, String> map = new HashMap<String, String>(16);
         map.put("page", page + "");
         map.put("size", "15");
         map.put("keywords", keywords);
-        map.put("subscribe", "1");
-        getAsyn(this, API.GET_SUBSCRIBE, map, this, 2, isShowLoading);
+        getAsyn(this, API.GET_CATE_LIST, map, this, 2, isShowLoading);
     }
 
 
@@ -208,7 +207,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 keywords = (editText.getText().toString().equals(""))
                         ? ("7000f")
                         : (editText.getText().toString());
-                getSubscribe(page, keywords, true);
+                getCateList(page, keywords, true);
                 break;
             case R.id.img_search_delete:
                 delsearchRecord();
@@ -251,7 +250,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
         editText.setText(keywords);
         editText.setSelection(keywords.length());
-        getSubscribe(page, keywords, true);
+        getCateList(page, keywords, true);
     }
 
     @Override

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/color_red">
+    android:background="@color/color_red"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/contact_search_ll"
@@ -20,13 +22,42 @@
             android:src="@drawable/btn_search" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/contanct_title"
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!---->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/corner_white"-->
+    <!--android:gravity="center">-->
+
+    <!--<com.androidkun.xtablayout.XTabLayout-->
+    <!--android:id="@+id/homepage_tablayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="center|bottom"-->
+    <!--android:layout_margin="5dp"-->
+    <!--app:xTabIndicatorHeight="0dp"-->
+    <!--app:xTabMode="scrollable"-->
+    <!--app:xTabSelectedTextColor="@color/color_red"-->
+    <!--app:xTabSelectedTextSize="16.0sp"-->
+    <!--app:xTabTextColor="@color/color_gray"-->
+    <!--app:xTabTextSelectedBold="true"-->
+    <!--app:xTabTextSize="16.0sp" />-->
+    <!--</LinearLayout>-->
+    <com.flyco.tablayout.SegmentTabLayout
+        android:id="@+id/homepage_tablayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/color_white"
-        android:textSize="18.0sp" />
+        android:layout_margin="5dp"
+        tl:tl_bar_color="@android:color/transparent"
+        tl:tl_indicator_anim_enable="true"
+        tl:tl_indicator_color="#ffffff"
+        tl:tl_indicator_corner_radius="5dp"
+        tl:tl_tab_padding="20dp"
+        tl:tl_tab_space_equal="true"
+        tl:tl_textBold="SELECT"
+        tl:tl_textSelectColor="@color/color_red"
+        tl:tl_textsize="16.0sp" />
 
     <ImageView
         android:id="@+id/contact_sign"
@@ -38,7 +69,7 @@
         android:src="@drawable/btn_sign_data"
         android:visibility="gone" />
 
-</FrameLayout>
+</LinearLayout>
 
 
 

@@ -23,6 +23,7 @@ import com.myplas.q.common.netresquset.ProgressListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.utils.UCloudUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.common.view.ProgressImageView;
@@ -32,6 +33,7 @@ import com.yanzhenjie.durban.Durban;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +44,7 @@ import java.util.Map;
  */
 
 public class MyStoreActivity extends BaseActivity implements View.OnClickListener
-        , MyEditText.OnTextWatcher, ResultCallBack, ProgressListener {
+        , MyEditText.OnTextWatcher, ResultCallBack, UCloudUtils.UCloudListener {
     private Button button;
     private EmptyView emptyView;
     private ScrollView scrollView;
@@ -54,7 +56,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private SharedUtils sharedUtils;
     private final int HCODE = 10, ICODE = 20;
     private String companyName, companyIntroduction, headPath, licencePath, stauts, business;
-
+    private UCloudUtils uCloudUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +85,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         editName.addOnTextWatcher(this);
         flLicence.setOnClickListener(this);
         editIntroduction.addOnTextWatcher(this);
+
+        uCloudUtils = new UCloudUtils(this);
+        uCloudUtils.setUCloudListener(this);
 
         emptyView.setMyManager(R.drawable.icon_auditing);
         emptyView.setNoMessageText1("提交成功，请等待客服人员审核！");
@@ -147,11 +152,11 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 // 裁剪图片输出的最大宽高。
                 // .maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
                 // 设置裁剪比例
-                .aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
+                //.aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
                 // 图片压缩格式：JPEG、PNG。
-                .compressFormat(Durban.COMPRESS_PNG)
+                //.compressFormat(Durban.COMPRESS_JPEG)
                 // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)
-                .compressQuality(100)
+                //.compressQuality(100)
                 // 裁剪时的手势支持：ROTATE, SCALE, ALL, NONE.
                 .gesture(Durban.GESTURE_SCALE)
                 .controller(Controller.newBuilder()
@@ -202,8 +207,6 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         return TextUtils.notEmpty(companyName)
                 && TextUtils.notEmpty(business)
                 && TextUtils.notEmpty(companyIntroduction);
-//                && TextUtils.notEmpty(headPath)
-//                && TextUtils.notEmpty(licencePath);
     }
 
     /**
@@ -212,7 +215,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     public void upLoadFile(String method, String path, int type) {
         String url = API.BASEURL + method;
         String token = sharedUtils.getData(this, Constant.TOKEN);
-        postUpLoadImg(this, url, path, token, this, type, this);
+        postUpLoadImg(this, url, path, token, this, type, null);
     }
 
     /**
@@ -235,27 +238,31 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == HCODE || requestCode == ICODE) {
-            if (resultCode == RESULT_OK) {  //相册
-                cutPhoto(Album.parseResult(data), requestCode * 10);
+        try {
+            if (requestCode == HCODE || requestCode == ICODE) {
+                if (resultCode == RESULT_OK) {  //相册
+                    String list = Album.parseResult(data).get(0);
+                    //uCloudUtils.putFile(new File(Album.parseResult(data).get(0)));
+                }
+            } else if (resultCode == RESULT_OK) {
+                ArrayList<String> mImageList = Durban.parseResult(data);
+                if (mImageList.size() == 0) {
+                    return;
+                }
+                if (requestCode == HCODE * 10) {  // 解析剪切结果：
+                    headPath = mImageList.get(0);
+                    //imageHead.setUseProgress(true);
+                    upLoadFile(API.USERPICUPLOAD, headPath, 1);
+                } else if (requestCode == ICODE * 10) {
+                    licencePath = mImageList.get(0);
+                    //imageLicence.setUseProgress(true);
+                    Glide.with(this).load(licencePath).into(imageLicence);
+                    //upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 2);
+                }
+                changeBtnColor();
             }
-        } else if (resultCode == RESULT_OK) {
-            ArrayList<String> mImageList = Durban.parseResult(data);
-            if (mImageList.size() == 0) {
-                return;
-            }
-            if (requestCode == HCODE * 10) {  // 解析剪切结果：
-                headPath = mImageList.get(0);
-                //imageHead.setUseProgress(true);
-                upLoadFile(API.USERPICUPLOAD, headPath, 1);
+        } catch (Exception e) {
 
-            } else if (requestCode == ICODE * 10) {
-                licencePath = mImageList.get(0);
-                //imageLicence.setUseProgress(true);
-                upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 2);
-
-            }
-            changeBtnColor();
         }
     }
 
@@ -289,27 +296,27 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void failCallBack(int type) {
+    public void failCallBack(int type, String message, int httpCode) {
         if (type == 3) {
             button.setClickable(true);
             button.setBackgroundResource(R.drawable.login_btn_shape_hl);
         }
     }
 
-    /**
-     * 上传进度监听
-     *
-     * @param currentBytes
-     * @param contentLength
-     * @param done
-     * @param type
-     */
+
     @Override
-    public void onProgress(long currentBytes, long contentLength, boolean done, int type) {
-        if (type == 1) {
-            //imageHead.setProgress((float) currentBytes / contentLength);
-        } else {
-            //imageLicence.setProgress((float) currentBytes / contentLength);
-        }
+    public void uCloudCallBack(String url) {
+
+    }
+
+    @Override
+    public void uCloudProcess(int value) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        uCloudUtils.cancleRequest();
     }
 }

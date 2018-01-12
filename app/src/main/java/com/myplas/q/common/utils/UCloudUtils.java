@@ -11,6 +11,8 @@ import com.myplas.q.common.appcontext.Constant;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Random;
 
 import cn.ucloud.ufilesdk.Callback;
 import cn.ucloud.ufilesdk.UFileRequest;
@@ -36,25 +38,35 @@ public class UCloudUtils {
     private HttpAsyncTask httpAsyncTask;
     private UCloudListener uCloudListener;
 
+    private Random random;
     private static String TAG = "------>UCloudUtils";
 
     public UCloudUtils(Context context) {
         this.context = context;
+        random = new Random();
         mACache = ACache.get(context);
+//        bucket = mACache.getAsString(Constant.BUCKET);
+//        authServer = mACache.getAsString(Constant.AUTHSERVER);
+//        proxySuffix = mACache.getAsString(Constant.PROXYSUFFIX);
+
         bucket = "myplas";
-        bucket = mACache.getAsString(Constant.BUCKET);
-        authServer = mACache.getAsString(Constant.AUTHSERVER);
-        proxySuffix = mACache.getAsString(Constant.PROXYSUFFIX);
+        proxySuffix = ".ufile.ucloud.com.cn";
+        authServer = "http://api.91su.cn";
+
         uFileSDK = new UFileSDK(bucket, proxySuffix, authServer);
     }
 
+    /**
+     * 上传文件
+     *
+     * @param file
+     */
     public void putFile(final File file) {
         String date = "";
         String httpMethod = "PUT";
-        String keyName = file.getName();
+        String keyName = getFileName();
         String contentType = "text/plain";
         String contentMd5 = UFileUtils.getFileMD5(file);
-
 
         final UFileRequest request = new UFileRequest();
         request.setHttpMethod(httpMethod);
@@ -67,7 +79,7 @@ public class UCloudUtils {
         httpAsyncTask = uFileSDK.putFile(request, file, keyName, new Callback() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.i(TAG, "onSuccess " + response);
+                Log.e(TAG, "onSuccess " + response);
                 dialog.dismiss();
                 if (uCloudListener != null) {
                     uCloudListener.uCloudCallBack(response.toString());
@@ -78,7 +90,7 @@ public class UCloudUtils {
             public void onProcess(long len) {
                 int value = (int) (len * 100 / file.length());
                 dialog.setProgress(value);
-                Log.i(TAG, "progress value is " + value);
+                Log.e(TAG, "progress value is " + value);
                 if (uCloudListener != null) {
                     uCloudListener.uCloudProcess(value);
                 }
@@ -86,7 +98,7 @@ public class UCloudUtils {
 
             @Override
             public void onFail(JSONObject response) {
-                Log.i(TAG, "onFail " + response);
+                Log.e(TAG, "onFail " + response);
                 dialog.dismiss();
             }
         });
@@ -132,5 +144,41 @@ public class UCloudUtils {
 
     public void setUCloudListener(UCloudListener uCloudListener) {
         this.uCloudListener = uCloudListener;
+    }
+
+    /**
+     * 生成文件名字
+     *
+     * @return
+     */
+    public String getFileName() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String str = getRandomString(10);
+        return new StringBuffer().append("upload/")
+                .append(year)
+                .append("/")
+                .append(month)
+                .append("/")
+                .append(str)
+                .append(".jpg").toString();
+    }
+
+    /**
+     * 获取一个随机字符串
+     *
+     * @param length
+     * @return
+     */
+    public String getRandomString(int length) {
+        String base = "abcdefghijklmnopqrstuvwxyz";
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
     }
 }

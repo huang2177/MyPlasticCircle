@@ -3,6 +3,7 @@ package com.myplas.q.headlines.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -59,12 +60,12 @@ public class MySelfActivity extends BaseActivity implements ResultCallBack, View
         shuom_btn = (ImageButton) findViewById(R.id.btn_shm);
         share_btn.setOnClickListener(this);
         shuom_btn.setOnClickListener(this);
-        if (getIntent().getStringExtra("data").equals("2")) {
+        if ("2".equals(getIntent().getStringExtra("data"))) {
             setTitle("企业信用信息");
             share_btn.setVisibility(View.GONE);
             map.put("link_id", getIntent().getStringExtra("id"));
             getSelectCate();
-        } else if (getIntent().getStringExtra("data").equals("1")) {
+        } else if ("1".equals(getIntent().getStringExtra("data"))) {
             setTitle("我的信用信息");
             share_btn.setVisibility(View.VISIBLE);
             getSelectCate();
@@ -78,8 +79,8 @@ public class MySelfActivity extends BaseActivity implements ResultCallBack, View
     @Override
     public void callBack(Object object, int type) {
         try {
-            String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1 && err.equals("0")) {
+            String err = new JSONObject(object.toString()).getString("code");
+            if (type == 1 && "0".equals(err)) {
                 Gson gson = new Gson();
                 findViewById(R.id.tishi_text).setVisibility(View.GONE);
                 findViewById(R.id.scrollView_myself).setVisibility(View.VISIBLE);
@@ -95,7 +96,6 @@ public class MySelfActivity extends BaseActivity implements ResultCallBack, View
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-
     }
 
     @Override
