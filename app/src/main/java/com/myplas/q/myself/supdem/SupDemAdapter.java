@@ -90,8 +90,8 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
                 viewHolder.name.setText(list.get(position).getC_name() + "  "
                         + list.get(position).getName());
 
-                String reply = "回复:" + list.get(position).getHui_count()
-                        + "  出价:" + list.get(position).getChu_count()
+                String reply = "回复:" + list.get(position).getComments()
+                        + "  出价:" + list.get(position).getOffers()
                         + "  " + list.get(position).getInput_time();
                 viewHolder.time.setText(reply);
 

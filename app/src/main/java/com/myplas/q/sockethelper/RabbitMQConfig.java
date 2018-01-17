@@ -60,7 +60,7 @@ public class RabbitMQConfig implements com.myplas.q.common.netresquset.ResultCal
     }
 
     /**
-     * Connected.
+     * 连接成功后回调服务器
      */
 
     public void connected() {

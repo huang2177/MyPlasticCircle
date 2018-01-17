@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_layout_titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主题"
+                android:textColor="@color/color_title_main"
+                android:textSize="16.0sp" />
+
+            <com.myplas.q.common.view.MyEditText
+                android:id="@+id/blacklist_edit_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textSize="16.0sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_gray_divider_out" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="详细描述"
+                android:textColor="@color/color_title_main"
+                android:textSize="16.0sp" />
+
+            <com.myplas.q.common.view.MyEditText
+                android:id="@+id/blacklist_edit_detail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/corner_titlebar"
+                android:gravity="start"
+                android:padding="5dp"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="照片上传"
+                android:textColor="@color/color_title_main"
+                android:textSize="16.0sp" />
+
+            <com.myplas.q.common.view.MyGridview
+                android:id="@+id/blacklist_gv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:horizontalSpacing="5dp"
+                android:numColumns="3"
+                android:verticalSpacing="5dp" />
+
+            <Button
+                android:id="@+id/blacklist_btn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="15dp"
+                android:background="@drawable/login_btn_shape"
+                android:text="确认提交"
+                android:textColor="@color/color_white"
+                android:textSize="18.0sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

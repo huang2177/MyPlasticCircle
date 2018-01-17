@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
@@ -46,7 +47,7 @@ import java.util.Map;
  * 邮箱： 15378412400@163.com
  */
 
-public class QuicklyFragment extends Fragment implements View.OnClickListener
+public class QuicklyFragment extends BaseFragment implements View.OnClickListener
         , ResultCallBack
         , MyEditText.OnTextWatcher {
     private View view;
@@ -109,14 +110,14 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
             case R.id.btn_cancle:
                 mDialog.dismiss();
                 isPreView = "0";
-                pub(1);
+                analysis();
                 break;
 
             //不解析直接发布
             case R.id.btn_ok:
                 mDialog.dismiss();
                 isPreView = "1";
-                pub(2);
+                pub();
                 break;
             default:
                 break;
@@ -127,8 +128,8 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
      * 不解析直接发布
      */
 
-    public void pub(int _type) {
-        Map<String, String> map = new HashMap<>();
+    public void pub() {
+        Map<String, String> map = new HashMap<>(16);
         map.put("mode", "1");
         map.put("model", "");
         map.put("price", "");
@@ -139,7 +140,18 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         map.put("content", content);
         map.put("transaction_type", "");
         map.put("is_preview", isPreView);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.PUB, map, this, _type);
+        postAsyn(getActivity(), API.RELEASE_MSG, map, this, 2);
+    }
+
+    /**
+     * 不解析直接发布
+     */
+
+    public void analysis() {
+        Map<String, String> map = new HashMap<>(8);
+        map.put("type", type);
+        map.put("content", content);
+        getAsyn(getActivity(), API.ANALYSIS, map, this, 1);
     }
 
 
@@ -156,7 +168,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
         try {
             Gson gson = new Gson();
             JSONObject jsonObject = new JSONObject(object.toString());
-            String err = jsonObject.getString("err");
+            String err = jsonObject.getString("code");
             if (type == 1) {
                 if (err.equals("0")) {
                     PreViewBean preViewBean = gson.fromJson(object.toString(), PreViewBean.class);
@@ -170,7 +182,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                         TextUtils.toast(getActivity(), "请按照示例填写完整的参数！");
                     }
                 } else {
-                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("message"));
                 }
             }
             if (type == 2) {
@@ -190,7 +202,7 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
                         ActivityManager.finishActivity(MySupDemActivity.class);
                     }
                 } else {
-                    TextUtils.toast(getActivity(), jsonObject.getString("msg"));
+                    TextUtils.toast(getActivity(), jsonObject.getString("message"));
                 }
             }
         } catch (Exception e) {
@@ -199,7 +211,14 @@ public class QuicklyFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+//            if (type == 1 && httpCode == 404) {
+            TextUtils.toast(getActivity(), jsonObject.getString("message"));
+//            }
+        } catch (Exception e) {
 
+        }
     }
 
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
@@ -25,6 +26,7 @@ import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.release.bean.SecondPurBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -36,7 +38,7 @@ import java.util.Map;
  * 邮箱： 15378412400@163.com
  */
 
-public class StandardFragment extends Fragment implements View.OnClickListener
+public class StandardFragment extends BaseFragment implements View.OnClickListener
         , ResultCallBack {
     private View view;
     private MyBottomSheetDialog dialog;
@@ -89,7 +91,7 @@ public class StandardFragment extends Fragment implements View.OnClickListener
         if (!isInputContent(2)) {
             return;
         }
-        Map<String, String> map = new HashMap<>(20);
+        Map<String, String> map = new HashMap<>(16);
         if (id != null) {
             map.put("id", id);
         }
@@ -103,13 +105,13 @@ public class StandardFragment extends Fragment implements View.OnClickListener
         map.put("is_preview", "0");
         map.put("vendor", production);
         map.put("transaction_type", nf);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.PUB, map, this, 1);
+        postAsyn(getActivity(), API.RELEASE_MSG, map, this, 1);
     }
 
     public void secondPub() {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("id", id);
-        BaseActivity.postAsyn(getActivity(), API.BASEURL + API.SECOND_PUB, map, this, 2);
+        postAsyn(getActivity(), API.SECOND_PUB, map, this, 2);
     }
 
     @Override
@@ -164,7 +166,7 @@ public class StandardFragment extends Fragment implements View.OnClickListener
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 if ("0".equals(err)) {
                     //关闭activity
@@ -181,8 +183,8 @@ public class StandardFragment extends Fragment implements View.OnClickListener
                     if (id != null) {
                         ActivityManager.finishActivity(MySupDemActivity.class);
                     }
-                }else {
-                    TextUtils.toast(getActivity(), new JSONObject(object.toString()).getString("msg"));
+                } else {
+                    TextUtils.toast(getActivity(), new JSONObject(object.toString()).getString("message"));
                 }
             }
             if (type == 2) {
@@ -194,10 +196,10 @@ public class StandardFragment extends Fragment implements View.OnClickListener
                     mEditF_Name.setText(secondPurBean.getData().getVendor());
                     mEdit_JH.setText(secondPurBean.getData().getStorehouse());
 
-                    mTV_Type.setText(secondPurBean.getData().getType().equals("2")
+                    mTV_Type.setText("2".equals(secondPurBean.getData().getType())
                             ? "供给"
                             : "求购");
-                    mTV_NF.setText(secondPurBean.getData().getTransaction_type().equals("0")
+                    mTV_NF.setText("0".equals(secondPurBean.getData().getTransaction_type())
                             ? "现货"
                             : "期货");
 
@@ -213,7 +215,14 @@ public class StandardFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            if (type == 1 && httpCode == 400) {
+                TextUtils.toast(getActivity(), jsonObject.getString("message"));
+            }
+        } catch (Exception e) {
 
+        }
     }
 
     public boolean isInputContent(int _type) {

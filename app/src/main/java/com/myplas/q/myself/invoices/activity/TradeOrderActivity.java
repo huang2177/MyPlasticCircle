@@ -50,7 +50,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
     private AppBarLayout mBarLayout;
 
     private TradeOrderListviewAdapter mAdapter;
-    private List<OrderListsBean.DataBean.ListBean> mList;
+    private List<OrderListsBean.DataBean> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +143,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                     mListView.setVisibility(View.VISIBLE);
                     mBarLayout.setVisibility(View.VISIBLE);
                     OrderListsBean bean = gson.fromJson(object.toString(), OrderListsBean.class);
-                    mList = bean.getData().getList();
+                    mList = bean.getData();
                     mAdapter = new TradeOrderListviewAdapter(this, mList);
                     mAdapter.setMyOnClickListener(this);
                     mListView.setAdapter(mAdapter);
@@ -154,7 +154,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
             if (type == 2) {
                 if (err.equals("0")) {
                     OrderListsBean bean = gson.fromJson(object.toString(), OrderListsBean.class);
-                    mList = bean.getData().getList();
+                    mList = bean.getData();
                     mAdapter.setList(mList);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -165,10 +165,9 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        Log.e("-----", message);
         try {
             String err = new JSONObject(message).getString("code");
-            if (type == 1 && "404".equals(err) && httpCode == 404) {
+            if (type == 1 && "2".equals(err) && httpCode == 404) {
                 mListView.setVisibility(View.GONE);
                 mBarLayout.setVisibility(View.GONE);
                 String msg = new JSONObject(message).getString("message");

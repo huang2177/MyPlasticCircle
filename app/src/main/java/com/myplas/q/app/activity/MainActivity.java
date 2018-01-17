@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -102,18 +103,18 @@ public class MainActivity extends BaseActivity implements ResultCallBack
         String type = intent.getStringExtra("type");
         String userId = sharedUtils.getData(this, Constant.USERID);
 
-        if (Constant.LOGINED.equals(type)) {
+        if (Constant.LOGINED.equals(type)) { //登录
             navegationBar.firstInto();
             getConfig();
             fragmentSupDem.onLogined();
             fragmentHeadLine.onLogined();
             JPushInterface.setAlias(this, 10, userId);
-        } else if (Constant.LOGINOUT.equals(type)) {
+        } else if (Constant.LOGINOUT.equals(type)) { //退出登录
             navegationBar.firstInto();
             onClosed();
             JPushInterface.setAlias(this, 10, "");
             rCallback(false, false);
-        } else {
+        } else {  //注册
             navegationBar.goToMySelf();
             getConfig();
         }
@@ -165,10 +166,10 @@ public class MainActivity extends BaseActivity implements ResultCallBack
         try {
             Gson gson = new Gson();
             JSONObject jsonObject = new JSONObject(object.toString());
-            String err = jsonObject.getString("err");
+            String err = jsonObject.getString("code");
             if (type == 1 && "1".equals(err)) {
                 url = jsonObject.getString("url");
-                promit = jsonObject.getString("msg");
+                promit = jsonObject.getString("message");
                 versionLocate = NumUtils.getNum(VersionUtils.getVersionName(this));
                 versionService = NumUtils.getNum(jsonObject.getString("new_version"));
                 //比较版本号
@@ -189,7 +190,7 @@ public class MainActivity extends BaseActivity implements ResultCallBack
     }
 
     /**
-     * 保存红信息
+     * 保存红点信息
      *
      * @param object
      * @param gson
@@ -216,7 +217,6 @@ public class MainActivity extends BaseActivity implements ResultCallBack
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-
     }
 
     //更新dialog的返回监听 回调
@@ -375,12 +375,6 @@ public class MainActivity extends BaseActivity implements ResultCallBack
         getAsyn(this, API.INIT, null, this, 3, false);
     }
 
-    /**
-     * 获取ucloud默认配置项
-     */
-    public void getUCloudConfig() {
-        getAsyn(this, API.CONFIG, null, this, 2, false);
-    }
 
     /**
      * rabbitMQ On connect.

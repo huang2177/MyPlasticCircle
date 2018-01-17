@@ -124,6 +124,12 @@
             android:name="com.myplas.q.homepage.activity.DaliySignDialogActivtiy"
             android:screenOrientation="portrait"
             android:theme="@style/themeTopAnimation" />
+        <activity
+            android:name=".homepage.activity.BrokeNewsActivtiy"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".homepage.activity.BlackListDetailActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--headline-->
@@ -302,8 +308,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.myplas.q.myself.store.MyStoreActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <!--适配6.0以上的系统安装apk-->
         <provider
@@ -384,6 +390,7 @@
                 <category android:name="com.myplas.q" />
             </intent-filter>
         </activity>
+
 
         <!-- Required SDK核心功能-->
         <service

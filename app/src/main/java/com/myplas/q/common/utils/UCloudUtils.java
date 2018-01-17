@@ -1,12 +1,7 @@
 package com.myplas.q.common.utils;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
-
-import com.myplas.q.common.appcontext.Constant;
 
 import org.json.JSONObject;
 
@@ -41,13 +36,12 @@ public class UCloudUtils {
     private Random random;
     private static String TAG = "------>UCloudUtils";
 
-    public UCloudUtils(Context context) {
+    public UCloudUtils(Context context, UCloudListener uCloudListener) {
         this.context = context;
+        this.uCloudListener = uCloudListener;
+
         random = new Random();
         mACache = ACache.get(context);
-//        bucket = mACache.getAsString(Constant.BUCKET);
-//        authServer = mACache.getAsString(Constant.AUTHSERVER);
-//        proxySuffix = mACache.getAsString(Constant.PROXYSUFFIX);
 
         bucket = "myplas";
         proxySuffix = ".ufile.ucloud.com.cn";
@@ -61,10 +55,10 @@ public class UCloudUtils {
      *
      * @param file
      */
-    public void putFile(final File file) {
+    public void putFile(final File file, final int type) {
         String date = "";
         String httpMethod = "PUT";
-        String keyName = getFileName();
+        final String keyName = getFileName();
         String contentType = "text/plain";
         String contentMd5 = UFileUtils.getFileMD5(file);
 
@@ -75,44 +69,29 @@ public class UCloudUtils {
         request.setDate(date);
         request.setKeyName(keyName);
 
-        final ProgressDialog dialog = new ProgressDialog(context);
         httpAsyncTask = uFileSDK.putFile(request, file, keyName, new Callback() {
             @Override
             public void onSuccess(JSONObject response) {
                 Log.e(TAG, "onSuccess " + response);
-                dialog.dismiss();
                 if (uCloudListener != null) {
-                    uCloudListener.uCloudCallBack(response.toString());
+                    uCloudListener.uCloudSucess(type, keyName);
                 }
             }
 
             @Override
             public void onProcess(long len) {
                 int value = (int) (len * 100 / file.length());
-                dialog.setProgress(value);
-                Log.e(TAG, "progress value is " + value);
                 if (uCloudListener != null) {
-                    uCloudListener.uCloudProcess(value);
+                    uCloudListener.uCloudProcess(type, value);
                 }
             }
 
             @Override
             public void onFail(JSONObject response) {
-                Log.e(TAG, "onFail " + response);
-                dialog.dismiss();
+                TextUtils.toast(context, "图片上传失败！");
             }
         });
 
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        dialog.setMax(100);
-        dialog.setButton(DialogInterface.BUTTON_NEUTRAL, "取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                httpAsyncTask.cancel();
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
 
@@ -130,21 +109,21 @@ public class UCloudUtils {
         /**
          * 上传成功后回调
          *
-         * @param url
+         * @param type
+         * @param flieName
          */
-        void uCloudCallBack(String url);
+        void uCloudSucess(int type, String flieName);
 
         /**
          * 进度回调
          *
          * @param value
+         * @param type
+         * @param flieName
          */
-        void uCloudProcess(int value);
+        void uCloudProcess(int type, int value);
     }
 
-    public void setUCloudListener(UCloudListener uCloudListener) {
-        this.uCloudListener = uCloudListener;
-    }
 
     /**
      * 生成文件名字
@@ -173,7 +152,7 @@ public class UCloudUtils {
      * @return
      */
     public String getRandomString(int length) {
-        String base = "abcdefghijklmnopqrstuvwxyz";
+        String base = "abcdefghijklmnopqrstuvwxyz12345657890";
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < length; i++) {
             int number = random.nextInt(base.length());

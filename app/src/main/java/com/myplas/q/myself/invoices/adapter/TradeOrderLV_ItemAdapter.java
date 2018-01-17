@@ -20,17 +20,18 @@ import java.util.List;
 
 public class TradeOrderLV_ItemAdapter extends BaseAdapter {
     private Context context;
-    private List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct;
+    private List<OrderListsBean.DataBean.ProductBean> listProduct;
 
-    public TradeOrderLV_ItemAdapter(Context context, List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct) {
+    public TradeOrderLV_ItemAdapter(Context context, List<OrderListsBean.DataBean.ProductBean> listProduct) {
         this.context = context;
         this.listProduct = listProduct;
     }
 
     @Override
     public int getCount() {
-        if (listProduct != null)
+        if (listProduct != null) {
             return listProduct.size();
+        }
         return 0;
     }
 

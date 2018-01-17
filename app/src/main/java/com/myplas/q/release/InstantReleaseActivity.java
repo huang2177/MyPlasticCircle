@@ -87,7 +87,7 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
         map.put("channel", "1");
         map.put("data", new Gson().toJson(mList));
         map.put("type", getIntent().getStringExtra("type"));
-        postAsyn(this, API.BASEURL + API.INSTANTRELEASE, map, this, 1);
+        postAsyn(this, API.RELEASE_MSG, map, this, 1);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
         try {
             Gson gson = new Gson();
             JSONObject jsonObject = new JSONObject(object.toString());
-            String err = jsonObject.getString("err");
+            String err = jsonObject.getString("code");
             if ("0".equals(err)) {
                 //关闭activity
                 MainActivity mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
@@ -113,7 +113,7 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
                     ActivityManager.finishActivity(MySupDemActivity.class);
                 }
             } else {
-                TextUtils.toast(this, jsonObject.getString("msg"));
+                TextUtils.toast(this, jsonObject.getString("message"));
             }
         } catch (Exception e) {
         }
@@ -121,7 +121,14 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            if (type == 1 && httpCode == 400) {
+                TextUtils.toast(this, jsonObject.getString("message"));
+            }
+        } catch (Exception e) {
 
+        }
     }
 
     @Override

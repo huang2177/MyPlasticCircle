@@ -53,7 +53,7 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
     public void getBillingDetailList(String keywords) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("order_sn", keywords);
-        postAsyn(this, API.BASEURL + API.BILLINGDETAILLIST, map, this, 1);
+        getAsyn(this, API.BILLINGDETAILLIST, map, this, 1);
     }
 
 
@@ -61,7 +61,7 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (err.equals("0")) {
                 InvoiceDetailBean bean = gson.fromJson(object.toString(), InvoiceDetailBean.class);
                 mAdapter = new InvoiceListviewAdapter(this, bean.getData());
@@ -76,15 +76,5 @@ public class InvoicesDetailActivity extends BaseActivity implements ResultCallBa
     @Override
     public void failCallBack(int type, String message, int httpCode) {
 
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 }

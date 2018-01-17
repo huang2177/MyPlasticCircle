@@ -1,6 +1,7 @@
 package com.myplas.q.myself.invoices.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.umeng.analytics.MobclickAgent;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
@@ -80,15 +82,15 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     }
 
     public void getInvioceList(String keywords) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("page", "1");
         map.put("size", "20");
         map.put("order_sn", keywords);
-        postAsyn(this, API.BASEURL + API.INVOICE, map, this, 1);
+        getAsyn(this, API.INVOICE, map, this, 1);
     }
 
     public void applyInvioce() {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("rise", rise);
         map.put("remark", keywords);
         map.put("id", ids.toString());
@@ -96,7 +98,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         map.put("b_number", b_number.toString());
         map.put("unbilling_price", unbilling_price);
         map.put("order_sn", getIntent().getStringExtra("order_sn"));
-        postAsyn(this, API.BASEURL + API.INVOICEDETAILADD, map, this, 2);
+        postAsyn(this, API.INVOICEDETAILADD, map, this, 2);
     }
 
     @Override
@@ -113,6 +115,8 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                 keywords = mEditText.getText().toString();
                 applyInvioce();
                 break;
+            default:
+                break;
 
         }
     }
@@ -121,7 +125,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
                 if ("0".equals(err)) {
                     mListView.setVisibility(View.VISIBLE);
@@ -140,7 +144,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
                 } else {
                     mButton.setClickable(true);
                     mButton.setBackgroundColor(getResources().getColor(R.color.color_red));
-                    String msg = new JSONObject(object.toString()).getString("msg");
+                    String msg = new JSONObject(object.toString()).getString("message");
                     TextUtils.toast(this, msg);
                 }
             }
@@ -173,9 +177,17 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        if (type == 2) {
-            mButton.setClickable(true);
-            mButton.setBackgroundColor(getResources().getColor(R.color.color_red));
+        try {
+            if (type == 2) {
+                mButton.setClickable(true);
+                mButton.setBackgroundColor(getResources().getColor(R.color.color_red));
+                if (httpCode == 412) {
+                    String msg = new JSONObject(message).getString("message");
+                    TextUtils.toast(this, msg);
+                }
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -208,15 +220,5 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         DecimalFormat format = new DecimalFormat("#.0000");
 //        return Double.parseDouble(format.format(Double.parseDouble(data)));
         return data;
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 }

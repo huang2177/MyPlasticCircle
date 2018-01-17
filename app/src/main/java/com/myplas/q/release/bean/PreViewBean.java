@@ -13,12 +13,20 @@ public class PreViewBean implements Serializable {
 
 
     /**
-     * err : 0
-     * data : [{"model":2119,"vendor":"伊朗石化","storehouse":"上海","transaction_type":0,"price":7000,"type":2,"company":"上海中晨电子商务股份有限公司","username":"黄双"}]
+     * code : 0
+     * data : [{"model":"7000F","vendor":"伊朗","storehouse":"上海","transaction_type":0,"price":10000,"type":"2","company":"打得过","username":"黄双"}]
      */
 
+    private String code;
     private List<DataBean> data;
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public List<DataBean> getData() {
         return data;
@@ -30,13 +38,13 @@ public class PreViewBean implements Serializable {
 
     public static class DataBean implements Serializable {
         /**
-         * model : 2119
-         * vendor : 伊朗石化
+         * model : 7000F
+         * vendor : 伊朗
          * storehouse : 上海
          * transaction_type : 0
-         * price : 7000
+         * price : 10000
          * type : 2
-         * company : 上海中晨电子商务股份有限公司
+         * company : 打得过
          * username : 黄双
          */
 

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/common_ripple_bg"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -31,14 +32,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/blacklist_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/icon_time1"
-                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/news_time"
+                    android:drawablePadding="3dp"
                     android:text="10:29" />
 
                 <TextView
@@ -46,8 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:drawableLeft="@drawable/icon_see"
-                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/news_see"
+                    android:drawablePadding="3dp"
                     android:text="1234" />
             </LinearLayout>
 

@@ -25,6 +25,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.listener.BaseInterface;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.utils.VerifyCodeUtils;
 import com.myplas.q.common.view.MyEditText;
 
 import org.json.JSONException;
@@ -42,7 +43,8 @@ import java.util.Map;
 
 public class FragmentRegister1 extends BaseFragment implements View.OnClickListener
         , ResultCallBack
-        , MyEditText.OnTextWatcher {
+        , MyEditText.OnTextWatcher
+        , VerifyCodeUtils.CountListener {
     private View mView;
     private Button buttonNext;
     private ImageView mImgRead;
@@ -50,44 +52,17 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
     private TextView mTVIndentify, mTVRead;
     private MyEditText mPhone, mPassWord, mIndentify;
 
-    private int count;
     private boolean checked;
-    private Handler mHandler;
-    private WeakReference<Activity> wr;
     public BaseInterface mBaseInterface;
     private String phone, pass, indentify;
 
+    private VerifyCodeUtils utils;
 
     public static FragmentRegister1 newInstance() {
         FragmentRegister1 fragment = new FragmentRegister1();
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("interface", mBaseInterface);
-//        fragment.setArguments(bundle);
         return fragment;
     }
 
-
-    @SuppressLint("HandlerLeak")
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        count = 60;
-        wr = new WeakReference<Activity>(getActivity());
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                Activity activity = wr.get();
-                if (msg.what == 1 && activity != null) {
-                    mTVIndentify.setText(msg.obj.toString() + "秒后重试");
-                    mTVIndentify.setClickable(false);
-                    if ("0".equals(msg.obj.toString())) {
-                        mTVIndentify.setText("重新发送");
-                        mTVIndentify.setClickable(true);
-                    }
-                }
-            }
-        };
-    }
 
     @Nullable
     @Override
@@ -112,6 +87,8 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
         mPhone.addOnTextWatcher(this);
         mPassWord.addOnTextWatcher(this);
         mIndentify.addOnTextWatcher(this);
+
+        utils = new VerifyCodeUtils(getActivity(), this);
 
         return mView;
     }
@@ -196,28 +173,9 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
                 : R.drawable.login_btn_shape);
     }
 
-    public void initThread() {
-        new Thread() {
-            @Override
-            public void run() {
-                for (int i = count; i >= 0; i--) {
-                    Message msg = new Message();
-                    msg.what = 1;
-                    msg.obj = i;
-                    mHandler.sendMessage(msg);
-                    try {
-                        sleep(1000);
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }.start();
-    }
-
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-----", object.toString());
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1) {
                 if ("0".equals(jsonObject.getString("code"))) {
@@ -226,8 +184,8 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
             }
             if (type == 2) {
                 TextUtils.toast(getActivity(), jsonObject.getString("message"));
-                if ("0".equals(jsonObject.getString("err"))) {
-                    initThread();
+                if ("0".equals(jsonObject.getString("code"))) {
+                    utils.startCount();
                 }
             }
             if (type == 3) {
@@ -251,10 +209,11 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        Log.e("======", message);
         try {
-            JSONObject jsonObject = new JSONObject(message);
-            TextUtils.toast(getActivity(), jsonObject.getString("message"));
+            if (httpCode == 412) {
+                JSONObject jsonObject = new JSONObject(message);
+                TextUtils.toast(getActivity(), jsonObject.getString("message"));
+            }
 
             if (type == 3) {
                 buttonNext.setClickable(true);
@@ -263,5 +222,21 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
         } catch (Exception e) {
 
         }
+    }
+
+    @Override
+    public void count(Activity activity, String count) {
+        mTVIndentify.setText(count + "秒后重试");
+        mTVIndentify.setClickable(false);
+        if ("0".equals(count)) {
+            mTVIndentify.setText("重新发送");
+            mTVIndentify.setClickable(true);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        utils.setStop(true);
     }
 }

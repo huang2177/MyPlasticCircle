@@ -2,6 +2,9 @@ package com.myplas.q.homepage;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,14 +22,16 @@ import android.widget.ListView;
 import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.view.RoundCornerImageView;
+import com.myplas.q.homepage.activity.BrokeNewsActivtiy;
 import com.myplas.q.homepage.adapter.BlackListAdapter;
+import com.myplas.q.release.ReleaseActivity;
 
 /**
  * @author 黄双
  * @date 2018/1/11 0011
  */
 
-public class FragmentHomePageBlackList extends BaseFragment {
+public class FragmentHomePageBlackList extends BaseFragment implements View.OnClickListener {
     private View view;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
@@ -49,12 +54,7 @@ public class FragmentHomePageBlackList extends BaseFragment {
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
 
-        mActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        mActionButton.setOnClickListener(this);
     }
 
     @Nullable
@@ -87,5 +87,23 @@ public class FragmentHomePageBlackList extends BaseFragment {
             set.setDuration(500);
             set.start();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUserVisible(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        setUserVisible(false);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), BrokeNewsActivtiy.class);
+        getActivity().startActivity(intent);
     }
 }

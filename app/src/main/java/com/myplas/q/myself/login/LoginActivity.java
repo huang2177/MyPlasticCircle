@@ -1,6 +1,6 @@
 package com.myplas.q.myself.login;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,14 +26,15 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.utils.VerifyCodeUtils;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.setting.activity.FindPSWActivity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,10 +46,10 @@ import java.util.Map;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener
         , ResultCallBack
+        , VerifyCodeUtils.CountListener
         , MyEditText.OnTextWatcher {
     private int count;
     private String key;
-    private Handler mHandler;
     private ScrollView mScrollView;
     private SharedUtils sharedUtils;
     private RelativeLayout mLayoutType;
@@ -61,6 +62,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
     private ACache mACache;
     private MainActivity mainActivity;
+
+    private VerifyCodeUtils utils;
 
 
     @Override
@@ -81,12 +84,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    @SuppressLint("HandlerLeak")
     public void initView() {
         count = 60;
         clicked = true;
         mACache = ACache.get(this);
         sharedUtils = SharedUtils.getSharedUtils();
+        utils = new VerifyCodeUtils(this, this);
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
         edittextTel = F(R.id.dl_tel);
@@ -140,20 +143,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             edittextPass.setSelection(edittextPass.getText().length());
             edittextTel.setSelection(edittextTel.getText().length());
         }
-
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == 1) {
-                    mtextviewSend.setText(msg.obj.toString() + "秒后重试");
-                    mtextviewSend.setClickable(false);
-                    if (msg.obj.toString().equals("0")) {
-                        mtextviewSend.setText("重新发送");
-                        mtextviewSend.setClickable(true);
-                    }
-                }
-            }
-        };
     }
 
     @Override
@@ -247,10 +236,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         String value = edittextVerification1.getText().toString();
         if (TextUtils.notEmpty(value)) {
             Map<String, String> map1 = new HashMap<String, String>();
-            map1.put("name", "regcode");
             map1.put("value", value);
             map1.put("key", key);
-            postAsyn(this, API.CHK_VCODE, map1, this, 3);
+            getAsyn(this, API.CHK_VCODE, map1, this, 3);
         } else {
             TextUtils.toast(this, "验证码不能为空！");
         }
@@ -279,7 +267,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             String s = jsonObject.getString("code");
             if (type == 1) {
                 TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
-                if (s.equals("0")) {
+                if ("0".equals(s)) {
                     setData(jsonObject);
 
                     //回到主界面
@@ -293,23 +281,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                     mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
                 }
             }
-            if (type == 2 && s.equals("0")) {
-                String url = jsonObject.getString("img");
+            if (type == 2 && "0".equals(s)) {
                 key = jsonObject.getString("key");
-                Glide.with(this).load(url).into(imageviewVerification);
+                Glide.with(this).load(jsonObject.getString("img")).into(imageviewVerification);
             }
-            if (type == 3 && s.equals("0")) {
+            if (type == 3 && "0".equals(s)) {
                 sendMSG();
-            } else if (type == 3 && !s.equals("0")) {
-                String msg = new JSONObject(object.toString()).getString("msg");
-                TextUtils.toast(this, msg);
             }
-            if (type == 4 && s.equals("0")) {
+            if (type == 4 && "0".equals(s)) {
                 TextUtils.toast(this, "发送成功！");
-                initThread();
-            } else if (type == 4 && !s.equals("0")) {
-                String msg = new JSONObject(object.toString()).getString("msg");
-                TextUtils.toast(this, msg);
+                utils.startCount();
             }
         } catch (Exception e) {
         }
@@ -324,9 +305,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 mButtonNomal.setBackgroundResource(isNomalNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
                 mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
 
-                if (httpCode == 412) {
-                    TextUtils.toast(this, new JSONObject(message).getString("message"));
+            }
+            if (httpCode == 412) {
+                if (type == 3) {
+                    getVCode();
                 }
+                TextUtils.toast(this, new JSONObject(message).getString("message"));
             }
         } catch (Exception e) {
 
@@ -346,7 +330,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         } else {
             isPhoneNull = TextUtils.notEmpty(edittextTel1.getText().toString())
                     && TextUtils.notEmpty(edittextVerification1.getText().toString())
-                    && TextUtils.notEmpty(edittextVerification1.getText().toString());
+                    && TextUtils.notEmpty(edittextVerification2.getText().toString());
             mButtonPhone.setBackgroundResource(isPhoneNull
                     ? R.drawable.login_btn_shape_hl
                     : R.drawable.login_btn_shape);
@@ -366,33 +350,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    public void initThread() {
-        new Thread() {
-            @Override
-            public void run() {
-                for (int i = count; i >= 0; i--) {
-                    Message msg = new Message();
-                    msg.what = 1;
-                    msg.obj = i;
-                    mHandler.sendMessage(msg);
-                    try {
-                        sleep(1000);
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }.start();
-    }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        utils.setStop(true);
         Glide.clear(imageviewVerification);
     }
 
     public void setData(JSONObject jsonObject) {
         try {
+            utils.setStop(true);
+
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mButtonNomal.getWindowToken(), 0);
             //记住密码：
@@ -406,6 +375,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             sharedUtils.setData(this, Constant.UUID, SystemUtils.getMyUUID(this));
 
         } catch (Exception e) {
+        }
+    }
+
+    /**
+     * 60s 倒计时
+     *
+     * @param activity
+     * @param count
+     */
+    @Override
+    public void count(Activity activity, String count) {
+        LoginActivity act = (LoginActivity) activity;
+        act.mtextviewSend.setText(count + "秒后重试");
+        act.mtextviewSend.setClickable(false);
+        if ("0".equals(count)) {
+            act.mtextviewSend.setText("重新发送");
+            act.mtextviewSend.setClickable(true);
         }
     }
 }

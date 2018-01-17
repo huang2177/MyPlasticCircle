@@ -16,10 +16,12 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.utils.VerifyCodeUtils;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.login.LoginActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -34,15 +36,15 @@ import java.util.Map;
  */
 public class FindPSWActivity extends BaseActivity implements View.OnClickListener
         , ResultCallBack
-        , MyEditText.OnTextWatcher {
-    private int count = 60;
-    private static Handler mHandler;
+        , MyEditText.OnTextWatcher
+        , VerifyCodeUtils.CountListener {
 
-    private Button button_next;
+    private Button buttonNext;
     private TextView mTextView, mTextViewYZM;
-    private MyEditText editText_tel, editText_pass, editText_yzm;
+    private MyEditText edittextTel, edittextPass, edittextYzm;
 
-    private WeakReference<Activity> weakReference;
+    private VerifyCodeUtils utils;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,41 +65,26 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
     @SuppressLint("HandlerLeak")
     public void initView() {
         mTextView = F(R.id.title_rs);
-        editText_tel = F(R.id.zhh_tel);
-        editText_yzm = F(R.id.zhh_yzm);
-        button_next = F(R.id.zhh_next);
+        edittextTel = F(R.id.zhh_tel);
+        edittextYzm = F(R.id.zhh_yzm);
+        buttonNext = F(R.id.zhh_next);
         mTextViewYZM = F(R.id.zhh_hq_yzm);
-        editText_pass = F(R.id.zhh_pass);
+        edittextPass = F(R.id.zhh_pass);
 
-        editText_tel.addOnTextWatcher(this);
-        editText_yzm.addOnTextWatcher(this);
-        button_next.setOnClickListener(this);
-        editText_pass.addOnTextWatcher(this);
+        edittextTel.addOnTextWatcher(this);
+        edittextYzm.addOnTextWatcher(this);
+        buttonNext.setOnClickListener(this);
+        edittextPass.addOnTextWatcher(this);
         mTextViewYZM.setOnClickListener(this);
 
-        weakReference = new WeakReference<Activity>(FindPSWActivity.this);
-
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                Activity activity = weakReference.get();
-                if (msg.what == 1 && activity != null) {
-                    mTextViewYZM.setText(msg.obj.toString() + "秒后重试");
-                    mTextViewYZM.setClickable(false);
-                    if (msg.obj.toString().equals("0")) {
-                        mTextViewYZM.setText("重新发送");
-                        mTextViewYZM.setClickable(true);
-                    }
-                }
-            }
-        };
+        utils = new VerifyCodeUtils(this, this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.zhh_hq_yzm:
-                String tel = editText_tel.getText().toString();
+                String tel = edittextTel.getText().toString();
                 if (tel.length() != 11) {
                     Toast.makeText(this, "手机号输入有误！", Toast.LENGTH_SHORT).show();
                 } else {
@@ -109,9 +96,9 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
                 }
                 break;
             case R.id.zhh_next:
-                String yzm = editText_yzm.getText().toString();
-                String phone = editText_tel.getText().toString();
-                String pass = editText_pass.getText().toString();
+                String yzm = edittextYzm.getText().toString();
+                String phone = edittextTel.getText().toString();
+                String pass = edittextPass.getText().toString();
                 if (TextUtils.notEmpty(phone) && TextUtils.notEmpty(pass) && TextUtils.notEmpty(yzm)) {
                     Map<String, String> map = new HashMap<String, String>(8);
                     map.put("mobile", phone);
@@ -128,25 +115,6 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-
-    public void initThread() {
-        new Thread() {
-            @Override
-            public void run() {
-                for (int i = count; i >= 0; i--) {
-                    Message msg = Message.obtain();
-                    msg.what = 1;
-                    msg.obj = i;
-                    mHandler.sendMessage(msg);
-                    try {
-                        sleep(1000);
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }.start();
-    }
-
     @Override
     public void callBack(Object object, int type) {
         try {
@@ -154,20 +122,19 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
             String s = jsonObject.getString("message");
             TextUtils.toast(this, s);
             if (type == 1 && "0".equals(jsonObject.getString("code"))) {
-                initThread();
+                utils.startCount();
             }
-            if (type == 2) {
-                TextUtils.toast(this, s);
-                if ("密码重置成功".equals(s)) {
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    String phone = editText_tel.getText().toString();
-                    String pass = editText_pass.getText().toString();
-                    intent.putExtra("phone", phone);
-                    intent.putExtra("pass", pass);
-                    intent.putExtra("isRegerter", "1");
-                    setResult(1, intent);
-                    finish();
-                }
+            if (type == 2 && "0".equals(jsonObject.getString("code"))) {
+                utils.setStop(true);
+
+                Intent intent = new Intent(this, LoginActivity.class);
+                String phone = edittextTel.getText().toString();
+                String pass = edittextPass.getText().toString();
+                intent.putExtra("phone", phone);
+                intent.putExtra("pass", pass);
+                intent.putExtra("isRegerter", "1");
+                setResult(1, intent);
+                finish();
             }
         } catch (Exception e) {
         }
@@ -175,24 +142,39 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            if (httpCode == 412) {
+                TextUtils.toast(this, new JSONObject(message).getString("message"));
+            }
+        } catch (Exception e) {
 
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mHandler != null) {
-            mHandler.removeCallbacksAndMessages(null);
-        }
+        utils.setStop(true);
     }
 
     @Override
     public void onTextChanged(View v, String s) {
-        boolean isNomalNull = TextUtils.notEmpty(editText_tel.getText().toString())
-                && TextUtils.notEmpty(editText_pass.getText().toString())
-                && TextUtils.notEmpty(editText_yzm.getText().toString());
-        button_next.setBackgroundResource(isNomalNull
+        boolean isNomalNull = TextUtils.notEmpty(edittextTel.getText().toString())
+                && TextUtils.notEmpty(edittextPass.getText().toString())
+                && TextUtils.notEmpty(edittextYzm.getText().toString());
+        buttonNext.setBackgroundResource(isNomalNull
                 ? R.drawable.login_btn_shape_hl
                 : R.drawable.login_btn_shape);
+    }
+
+    @Override
+    public void count(Activity activity, String count) {
+        FindPSWActivity act = (FindPSWActivity) activity;
+        act.mTextViewYZM.setText(count + "秒后重试");
+        act.mTextViewYZM.setClickable(false);
+        if ("0".equals(count)) {
+            act.mTextViewYZM.setText("重新发送");
+            act.mTextViewYZM.setClickable(true);
+        }
     }
 }

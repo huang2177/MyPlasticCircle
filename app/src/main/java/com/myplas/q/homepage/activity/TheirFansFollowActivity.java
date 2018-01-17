@@ -97,32 +97,22 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
         try {
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
-            if (type == 1) {
-                TheirFansBean fansBean = null;
-                if ("0".equals(err)) {
-                    fansBean = gson.fromJson(object.toString(), TheirFansBean.class);
-                    if (page == 1) {
-                        mFansAdapter = new TheirFansFollowAdapter(this, fansBean.getData());
-                        listView.setAdapter(mFansAdapter);
-                        mList.clear();
-                        mList.addAll(fansBean.getData());
-                    } else {
-                        mList.addAll(fansBean.getData());
-                        mFansAdapter.setList(mList);
-                        mFansAdapter.notifyDataSetChanged();
-                    }
+
+            TheirFansBean fansBean = null;
+            if ("0".equals(err)) {
+                fansBean = gson.fromJson(object.toString(), TheirFansBean.class);
+                if (page == 1) {
+                    mFansAdapter = new TheirFansFollowAdapter(this, fansBean.getData());
+                    listView.setAdapter(mFansAdapter);
+                    mList.clear();
+                    mList.addAll(fansBean.getData());
                 } else {
-                    if (page == 1) {
-                        EmptyView emptyView = new EmptyView(this);
-                        emptyView.mustCallInitWay(listView);
-                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
-                        emptyView.setMyManager(R.drawable.icon_null);
-                        listView.setEmptyView(emptyView);
-                    } else {
-                        TextUtils.toast(this, "没有更多数据了！");
-                    }
+                    mList.addAll(fansBean.getData());
+                    mFansAdapter.setList(mList);
+                    mFansAdapter.notifyDataSetChanged();
                 }
             }
+
         } catch (Exception e) {
         }
     }
@@ -130,6 +120,21 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            if (httpCode == 404) {
+                if (page == 1) {
+                    EmptyView emptyView = new EmptyView(this);
+                    emptyView.mustCallInitWay(listView);
+                    emptyView.setNoMessageText(jsonObject.getString("message"));
+                    emptyView.setMyManager(R.drawable.icon_null);
+                    listView.setEmptyView(emptyView);
+                } else {
+                    TextUtils.toast(this, "没有更多数据了！");
+                }
+            }
+        } catch (Exception e) {
 
+        }
     }
 }

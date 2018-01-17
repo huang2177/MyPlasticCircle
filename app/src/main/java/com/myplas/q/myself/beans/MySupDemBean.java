@@ -56,8 +56,8 @@ public class MySupDemBean {
         private String type;
         private String input_time;
         private String c_name;
-        private String hui_count;
-        private String chu_count;
+        private String comments;
+        private String offers;
         private String name;
         private String img;
 
@@ -149,20 +149,20 @@ public class MySupDemBean {
             this.c_name = c_name;
         }
 
-        public String getHui_count() {
-            return hui_count;
+        public String getComments() {
+            return comments;
         }
 
-        public void setHui_count(String hui_count) {
-            this.hui_count = hui_count;
+        public void setComments(String comments) {
+            this.comments = comments;
         }
 
-        public String getChu_count() {
-            return chu_count;
+        public String getOffers() {
+            return offers;
         }
 
-        public void setChu_count(String chu_count) {
-            this.chu_count = chu_count;
+        public void setOffers(String chu_count) {
+            this.offers = offers;
         }
 
         public String getName() {

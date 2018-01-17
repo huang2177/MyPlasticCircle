@@ -1,6 +1,5 @@
 package com.myplas.q.myself.store;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
@@ -19,7 +17,6 @@ import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ProgressListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -44,12 +41,14 @@ import java.util.Map;
  */
 
 public class MyStoreActivity extends BaseActivity implements View.OnClickListener
-        , MyEditText.OnTextWatcher, ResultCallBack, UCloudUtils.UCloudListener {
+        , MyEditText.OnTextWatcher
+        , ResultCallBack
+        , UCloudUtils.UCloudListener {
     private Button button;
     private EmptyView emptyView;
     private ScrollView scrollView;
     private FrameLayout flLicence, flHead;
-    private ImageView imageLicence, imageHead;
+    private ProgressImageView imageLicence, imageHead;
     private MyEditText editName, editIntroduction, editBusiness;
 
     private int color;
@@ -86,8 +85,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         flLicence.setOnClickListener(this);
         editIntroduction.addOnTextWatcher(this);
 
-        uCloudUtils = new UCloudUtils(this);
-        uCloudUtils.setUCloudListener(this);
+        uCloudUtils = new UCloudUtils(this, this);
 
         emptyView.setMyManager(R.drawable.icon_auditing);
         emptyView.setNoMessageText1("提交成功，请等待客服人员审核！");
@@ -152,11 +150,11 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 // 裁剪图片输出的最大宽高。
                 // .maxWidthHeight(code == 100 ? 340 : 288, code == 100 ? 485 : 288)
                 // 设置裁剪比例
-                //.aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
+                .aspectRatio(code == 100 ? 1 : 339, code == 100 ? 1 : 486)
                 // 图片压缩格式：JPEG、PNG。
-                //.compressFormat(Durban.COMPRESS_JPEG)
+                .compressFormat(Durban.COMPRESS_JPEG)
                 // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)
-                //.compressQuality(100)
+                .compressQuality(100)
                 // 裁剪时的手势支持：ROTATE, SCALE, ALL, NONE.
                 .gesture(Durban.GESTURE_SCALE)
                 .controller(Controller.newBuilder()
@@ -239,26 +237,23 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            if (requestCode == HCODE || requestCode == ICODE) {
-                if (resultCode == RESULT_OK) {  //相册
-                    String list = Album.parseResult(data).get(0);
-                    //uCloudUtils.putFile(new File(Album.parseResult(data).get(0)));
-                }
-            } else if (resultCode == RESULT_OK) {
+            if (requestCode == ICODE) {
+                String list = Album.parseResult(data).get(0);
+                imageHead.setUseProgress(true);
+                uCloudUtils.putFile(new File(Album.parseResult(data).get(0)), 1);
+
+                changeBtnColor();
+            } else if (requestCode == HCODE) {
+                cutPhoto(Album.parseResult(data), HCODE * 10);
+            } else {
                 ArrayList<String> mImageList = Durban.parseResult(data);
                 if (mImageList.size() == 0) {
                     return;
                 }
-                if (requestCode == HCODE * 10) {  // 解析剪切结果：
-                    headPath = mImageList.get(0);
-                    //imageHead.setUseProgress(true);
-                    upLoadFile(API.USERPICUPLOAD, headPath, 1);
-                } else if (requestCode == ICODE * 10) {
-                    licencePath = mImageList.get(0);
-                    //imageLicence.setUseProgress(true);
-                    Glide.with(this).load(licencePath).into(imageLicence);
-                    //upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 2);
-                }
+                licencePath = mImageList.get(0);
+                imageLicence.setUseProgress(true);
+                uCloudUtils.putFile(new File(licencePath), 2);
+
                 changeBtnColor();
             }
         } catch (Exception e) {
@@ -305,13 +300,17 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
 
     @Override
-    public void uCloudCallBack(String url) {
+    public void uCloudSucess(int type, String flieName) {
 
     }
 
     @Override
-    public void uCloudProcess(int value) {
-
+    public void uCloudProcess(int type, int value) {
+        if (type == 1) {
+            imageHead.setProgress(value);
+        } else {
+            imageLicence.setProgress(value);
+        }
     }
 
     @Override

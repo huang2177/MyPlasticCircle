@@ -16,12 +16,6 @@ public class API {
     public final static String BASEURL = (BuildConfig.API_ENV)
             ? ("http://api.91su.cn/")
             : ("http://api.91su.cn/");
-    /**
-     * 正式_快速登陆
-     */
-    public final static String BASEURL_API = (BuildConfig.API_ENV)
-            ? "https://api.myplas.com/"
-            : "https://ssl.myplas.com/";
 
     /*common*/
     /**
@@ -134,7 +128,7 @@ public class API {
     /**
      * 注册
      */
-    public final static String REGISTER = BASEURL + "register";
+    public final static String REGISTER = BASEURL + "user/register";
     /**
      * 普通登陆
      */
@@ -143,11 +137,11 @@ public class API {
     /**
      * 快速登陆
      */
-    public final static String SIMPLE_LOGIN = BASEURL_API + "user/simpleLogin";
+    public final static String SIMPLE_LOGIN = BASEURL + "user/simpleLogin";
     /**
      * 退出登录
      */
-    public final static String LOGOUT = BASEURL + "Logout";
+    public final static String LOGOUT = BASEURL + "user/logout";
     /**
      * 检查登录状态
      */
@@ -167,7 +161,7 @@ public class API {
     /**
      * 验证码
      */
-    public final static String CHK_VCODE = "checkVcode";
+    public final static String CHK_VCODE = BASEURL + "checkVcode";
 
 
     /*friend*/
@@ -357,22 +351,10 @@ public class API {
      */
     public final static String SECOND_PUB = "releaseMsg/repeatRelease";
     /**
-     * 供求信息置顶之供求信息列表
+     * 获取解析内容
      */
-    public final static String SUPPLYDEMAND_LIST = "releaseMsg/supplyDemandList";
-    /**
-     * 供求消息中的出价
-     */
-    public final static String DELIVER_PRICE = "releaseMsg/deliverPrice";
-    /**
-     * 判断提交的发布报价(采购1、报价2)
-     */
-    public final static String PUB = "releaseMsg/releaseNewDemand";
+    public final static String ANALYSIS = BASEURL + "requirements/analysis";
 
-    /**
-     * 解析后重新发布
-     */
-    public final static String INSTANTRELEASE = "releaseMsg/instantRelease";
     /**
      * 回复供求消息
      */
@@ -380,11 +362,7 @@ public class API {
     /**
      * 获取供求消息的出价
      */
-    public final static String OFFERS = "requirements/offers";
-    /**
-     * 获取我的留言
-     */
-    public final static String GET_MY_COMMENT = "releaseMsg/getMyComment";
+    public final static String OFFERS = BASEURL + "requirements/offers";
     /**
      * 获取我的供给或求购
      */
@@ -428,19 +406,19 @@ public class API {
     /**
      * 开票基本信息以及开票明细
      */
-    public final static String INVOICE = "billingInfo/invoice";
+    public final static String INVOICE = BASEURL + "invoice";
     /**
      * 申请开票
      */
-    public final static String INVOICEDETAILADD = "billingInfo/invoiceDetailAdd";
+    public final static String INVOICEDETAILADD = BASEURL + "invoiceDetail";
     /**
      * 确认签收
      */
-    public final static String ORDERSIGN = "billingInfo/orderSign";
+    public final static String ORDERSIGN = BASEURL + "orderSign";
     /**
      * 发票详情列表
      */
-    public final static String BILLINGDETAILLIST = "billingInfo/billingDetailList";
+    public final static String BILLINGDETAILLIST = BASEURL + "billingDetailList";
 
 
 
@@ -479,11 +457,11 @@ public class API {
     /**
      * UCLOUD上传回调接口
      */
-    public final static String UPLOADNOTIFY = "uploadNotify";
+    public final static String UPLOADNOTIFY = "files/storage/notification";
     /**
      * ucloud文件上传获取配置文件
      */
-    public final static String CONFIG = "config";
+    public final static String CONFIG = BASEURL + "files/storage/configuration";
 
     /**
      * 上传个人头像到服务器

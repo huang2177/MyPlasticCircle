@@ -63,7 +63,6 @@ public class RabbitMQHelper {
         return mRabbitMQHelper;
     }
 
-
     /**
      * On connect.
      */
@@ -113,7 +112,6 @@ public class RabbitMQHelper {
         mFactory.setVirtualHost(mConfigBean.getConfig().getVhost());
         mFactory.setAutomaticRecoveryEnabled(true);
     }
-
 
     /**
      * 消费者线程
@@ -190,6 +188,7 @@ public class RabbitMQHelper {
                         //wait for the next message delivery and return it.
                         QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                         String message = new String(delivery.getBody());
+                        Log.e("------>RabbitMQ", message + "<-------");
                         //从message池中获取msg对象更高效
                         Message msg = handler.obtainMessage();
                         Bundle bundle = new Bundle();
@@ -199,12 +198,9 @@ public class RabbitMQHelper {
                     }
                 } catch (ShutdownSignalException se) {
                     createConnect();
-                } catch (InterruptedException ie) {
-
                 } catch (Exception e) {
                     Log.e("------>RabbitMQ", e.toString());
                 }
-
             }
         });
         subscribeThread.start();

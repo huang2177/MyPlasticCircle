@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ResultCallBack {
     private Context context;
-    private List<OrderListsBean.DataBean.ListBean> mList;
+    private List<OrderListsBean.DataBean> mList;
 
     private int position;
     private Handler mHandler;
@@ -46,7 +46,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
 
     private String invoice_status, sign_status, billing_status, isHaveInvoicesDetail;
 
-    public TradeOrderListviewAdapter(Context context, List<OrderListsBean.DataBean.ListBean> mList) {
+    public TradeOrderListviewAdapter(Context context, List<OrderListsBean.DataBean> mList) {
         this.mList = mList;
         mHandler = new Handler();
         this.context = context;
@@ -56,7 +56,7 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
 
-    public void setList(List<OrderListsBean.DataBean.ListBean> list) {
+    public void setList(List<OrderListsBean.DataBean> list) {
         mList = list;
     }
 
@@ -82,14 +82,11 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
                 viewHolder.mView.setVisibility(View.GONE);
             }
             String html1 = "   合计 " + "<font color='#ff5550'>¥" + mList.get(position).getTotal_price() + "</font>";
-            String html2 = "   (含运费 " + "<font color='#ff5550'>¥" + mList.get(position).getTransport() + "</font>" + ")";
             viewHolder.textView_title.setText("订单号：" + mList.get(position).getOrder_sn());
             viewHolder.textView_num2.setText("共 " + mList.get(position).getTotal_num() + "吨  ");
             viewHolder.textView_tprice.setText(Html.fromHtml(html1));
-            //viewHolder.textView_feight.setText(Html.fromHtml(html2));
 
-
-            List<OrderListsBean.DataBean.ListBean.ProductBean> listProduct = mList.get(position).getProduct();
+            List<OrderListsBean.DataBean.ProductBean> listProduct = mList.get(position).getProduct();
             TradeOrderLV_ItemAdapter itemAdapter = new TradeOrderLV_ItemAdapter(context, listProduct);
             viewHolder.mMyListview.setAdapter(itemAdapter);
 
@@ -202,29 +199,19 @@ public class TradeOrderListviewAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public void confirmSign(String orderNum) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("o_id", orderNum);
-        BaseActivity.postAsyn(context, API.BASEURL + API.ORDERSIGN, map, this, 1);
+        BaseActivity.postAsyn(context, API.ORDERSIGN, map, this, 1);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            String err = new JSONObject(object.toString()).getString("err");
+            String err = new JSONObject(object.toString()).getString("code");
             if (err.equals("0")) {
                 mListener.onClick2();
-//                String time = new JSONObject(object.toString()).getString("time");
-//                mMapTextViews.get(position).setVisibility(View.VISIBLE);
-//                mMapTextViews.get(position).setText("签收时间：" + time);
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mMapTextViews.get(position).setVisibility(View.GONE);
-//                    }
-//                }, 1500);
-
             } else {
-                String msg = new JSONObject(object.toString()).getString("msg");
+                String msg = new JSONObject(object.toString()).getString("message");
                 TextUtils.toast(context, msg);
             }
         } catch (Exception e) {
