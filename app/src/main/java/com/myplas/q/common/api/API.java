@@ -145,7 +145,7 @@ public class API {
     /**
      * 检查登录状态
      */
-    public final static String VALIDUSERTOKEN = API.BASEURL + "user/validUserToken";
+    public final static String VALIDUSERTOKEN = API.BASEURL + "validations";
     /**
      * 验证用户注册手机号
      */
@@ -222,15 +222,15 @@ public class API {
     /**
      * 保存名片到服务器
      */
-    public final static String SAVE_CARD_IMG = "myInfo/saveCardImg";
+    public final static String SAVE_CARD_IMG = BASEURL + "users/cards";
     /**
      * 保存头像到服务器
      */
-    public final static String SAVE_PIC_TO_SERVER = "myInfo/savePicToServer";
+    public final static String SAVE_PIC_TO_SERVER = BASEURL + "users/avatars";
     /**
      * 保存资料
      */
-    public final static String SAVE_SELFINFO = BASEURL + "saveSelfInfo";
+    public final static String SAVE_SELFINFO = BASEURL + "users/profiles";
     /**
      * 获取我的资料
      */
@@ -457,24 +457,20 @@ public class API {
     /**
      * UCLOUD上传回调接口
      */
-    public final static String UPLOADNOTIFY = "files/storage/notification";
-    /**
-     * ucloud文件上传获取配置文件
-     */
-    public final static String CONFIG = BASEURL + "files/storage/configuration";
-
-    /**
-     * 上传个人头像到服务器
-     */
-    public final static String USERPICUPLOAD = "shopAudit/UserPicUpload";
-    /**
-     * 上传个人头像到服务器
-     */
-    public final static String BUSINESSLICENSEUPLOAD = "shopAudit/businessLicenseUpload";
+    public final static String UPLOADNOTIFY = BASEURL + "files/storage/notification";
     /**
      * 提交申请
      */
-    public final static String SUBMISSION = "shopAudit/submission";
+    public final static String SHOPS = BASEURL + "shops";
 
+    /*blacklists*/
+    /**
+     * 塑料黑名单用户爆料接口
+     */
+    public final static String BLACKLISTS = BASEURL + "blacklists";
+    /**
+     * 塑料黑名单用户留言接口
+     */
+    public final static String BLACKLISTSCOMMENTS = BASEURL + "blacklists/comments";
 
 }

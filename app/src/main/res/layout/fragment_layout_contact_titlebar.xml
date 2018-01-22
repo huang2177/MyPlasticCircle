@@ -22,38 +22,17 @@
             android:src="@drawable/btn_search" />
     </LinearLayout>
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!---->
-    <!--android:layout_weight="1"-->
-    <!--android:background="@drawable/corner_white"-->
-    <!--android:gravity="center">-->
-
-    <!--<com.androidkun.xtablayout.XTabLayout-->
-    <!--android:id="@+id/homepage_tablayout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_gravity="center|bottom"-->
-    <!--android:layout_margin="5dp"-->
-    <!--app:xTabIndicatorHeight="0dp"-->
-    <!--app:xTabMode="scrollable"-->
-    <!--app:xTabSelectedTextColor="@color/color_red"-->
-    <!--app:xTabSelectedTextSize="16.0sp"-->
-    <!--app:xTabTextColor="@color/color_gray"-->
-    <!--app:xTabTextSelectedBold="true"-->
-    <!--app:xTabTextSize="16.0sp" />-->
-    <!--</LinearLayout>-->
     <com.flyco.tablayout.SegmentTabLayout
         android:id="@+id/homepage_tablayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
+        android:layout_weight="1"
         tl:tl_bar_color="@android:color/transparent"
         tl:tl_indicator_anim_enable="true"
         tl:tl_indicator_color="#ffffff"
         tl:tl_indicator_corner_radius="5dp"
-        tl:tl_tab_padding="20dp"
+        tl:tl_tab_padding="5dp"
         tl:tl_tab_space_equal="true"
         tl:tl_textBold="SELECT"
         tl:tl_textSelectColor="@color/color_red"
@@ -67,7 +46,7 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:src="@drawable/btn_sign_data"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </LinearLayout>
 

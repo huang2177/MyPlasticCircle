@@ -8,6 +8,12 @@
 
     <include layout="@layout/common_layout_titlebar" />
 
+    <com.myplas.q.common.view.EmptyView
+        android:id="@+id/blacklist_emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -81,7 +87,10 @@
                 android:id="@+id/blacklist_btn"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_margin="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/login_btn_shape"
                 android:text="确认提交"
                 android:textColor="@color/color_white"

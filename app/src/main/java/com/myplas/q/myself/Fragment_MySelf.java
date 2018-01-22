@@ -294,7 +294,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 ("0".equals(myZone.getData().getSex()) ? ("男") : ("女"));
         textName.setText(sex);
 
-        String rank = "等级：" + myZone.getData().getMemberlevel()
+        String rank = "等级：" + myZone.getData().getMember_level()
                 + "  排名：" + myZone.getData().getRank() + "位";
         textRank.setText(rank);
 

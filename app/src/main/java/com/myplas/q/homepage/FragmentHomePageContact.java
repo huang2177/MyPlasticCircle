@@ -286,22 +286,7 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        try {
-            mRefreshLayout.setRefreshing(false);
-            JSONObject jsonObject = new JSONObject(message);
-            String err = jsonObject.getString("code");
-
-            boolean isLoginout = (type == 1 && "1".equals(err) || "998".equals(err))
-                    || (type == 10 && !"0".equals(err));
-            if (isLoginout) {
-                sharedUtils.setData(getActivity(), Constant.TOKEN, "");
-                sharedUtils.setData(getActivity(), Constant.USERID, "");
-                sharedUtils.setBooloean(getActivity(), Constant.LOGINED, false);
-                sharedUtils.setData(getActivity(), Constant.POINTSINFO, jsonObject.getString("message"));
-            }
-        } catch (Exception e) {
-
-        }
+        mRefreshLayout.setRefreshing(false);
     }
 
     /**
@@ -505,8 +490,6 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         super.onResume();
         //统计页面，"MainScreen"为页面名称，可自定义
         MobclickAgent.onPageStart("MainScreen");
-        //检查登录状态
-        getAsyn(getActivity(), API.VALIDUSERTOKEN, null, this, 10, false);
     }
 
 

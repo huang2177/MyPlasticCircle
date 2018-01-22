@@ -247,16 +247,8 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
             String err = jsonObject.getString("code");
             Gson gson = new Gson();
             if (type == 1) {
-                if (("0").equals(err) || "1".equals(err) || "998".equals(err)) {
-
-                    sharedUtils.setBooloean(this, Constant.LOGINED, false);
-                    sharedUtils.setData(this, Constant.TOKEN, "");
-                    sharedUtils.setData(this, Constant.USERID, "");
-
-                    //回到主界面
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.putExtra("type", Constant.LOGINOUT);
-                    startActivity(intent);
+                if (("0").equals(err)) {
+                    goToHomePage();
                 }
             }
             if (type == 3) {
@@ -279,8 +271,24 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
         }
     }
 
+    /**
+     * 回到主界面
+     */
+    private void goToHomePage() {
+        sharedUtils.setBooloean(this, Constant.LOGINED, false);
+        sharedUtils.setData(this, Constant.TOKEN, "");
+        sharedUtils.setData(this, Constant.USERID, "");
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("type", Constant.LOGINOUT);
+        startActivity(intent);
+    }
+
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        if (type == 1 && httpCode == 401) {
+            goToHomePage();
+        }
     }
 
     //switch的选择回调

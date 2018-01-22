@@ -8,41 +8,40 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/blacklist_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="上海中晨电子商务有限公司上海中晨电子商务有限公司上海中晨电子商务有限公司上海中晨电子商务有限公司"
                 android:textColor="@color/color_title_main"
                 android:textSize="16.0sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/blacklist_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/news_time"
-                    android:drawablePadding="3dp"
-                    android:text="10:29" />
+                    android:drawablePadding="3dp" />
 
                 <TextView
                     android:id="@+id/blacklist_num"
@@ -50,18 +49,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:drawableLeft="@drawable/news_see"
-                    android:drawablePadding="3dp"
-                    android:text="1234" />
+                    android:drawablePadding="3dp" />
             </LinearLayout>
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/blacklist_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:src="@drawable/img_defaul_male" />
+            android:layout_width="100dp"
+            android:layout_height="65dp"
+            android:scaleType="fitCenter" />
 
     </LinearLayout>
 

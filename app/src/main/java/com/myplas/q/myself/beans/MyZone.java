@@ -179,7 +179,7 @@ public class MyZone implements Serializable {
         private String credit_time;
         private String sex;
         private String rank;
-        private String memberlevel;
+        private String member_level;
         private String isshop;
         private String shop_audit_status;
 
@@ -319,12 +319,12 @@ public class MyZone implements Serializable {
             this.rank = rank;
         }
 
-        public String getMemberlevel() {
-            return memberlevel;
+        public String getMember_level() {
+            return member_level;
         }
 
-        public void setMemberlevel(String memberlevel) {
-            this.memberlevel = memberlevel;
+        public void setMember_level(String memberlevel) {
+            this.member_level = memberlevel;
         }
     }
 }

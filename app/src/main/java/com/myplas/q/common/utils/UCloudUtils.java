@@ -74,7 +74,13 @@ public class UCloudUtils {
             public void onSuccess(JSONObject response) {
                 Log.e(TAG, "onSuccess " + response);
                 if (uCloudListener != null) {
-                    uCloudListener.uCloudSucess(type, keyName);
+                    StringBuffer stringBuffer = new StringBuffer();
+                    stringBuffer.append("http://")
+                            .append(bucket)
+                            .append(proxySuffix)
+                            .append("/")
+                            .append(keyName);
+                    uCloudListener.uCloudSucess(type, stringBuffer.toString());
                 }
             }
 
@@ -104,7 +110,6 @@ public class UCloudUtils {
         }
     }
 
-
     public interface UCloudListener {
         /**
          * 上传成功后回调
@@ -133,13 +138,14 @@ public class UCloudUtils {
     public String getFileName() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
+        String month = String.valueOf((calendar.get(Calendar.MONTH) + 1));
+        String strMonth = month.length() == 1 ? "0" + month : month;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         String str = getRandomString(10);
         return new StringBuffer().append("upload/")
                 .append(year)
                 .append("/")
-                .append(month)
+                .append(strMonth)
                 .append("/")
                 .append(str)
                 .append(".jpg").toString();

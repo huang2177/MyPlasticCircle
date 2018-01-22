@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <com.myplas.q.common.view.RoundCornerImageView
+            android:id="@+id/item_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_defaul_male" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_cmpany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="huang 上海中晨电子"
+                android:textSize="14.0sp" />
+
+            <TextView
+                android:id="@+id/item_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="火灾无情！塑料人不容易啊！"
+                android:textColor="#000000"
+                android:textSize="14.0sp" />
+
+            <TextView
+                android:id="@+id/item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12小时前" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" 回复 "
+            android:textColor="@color/color_regions_dialog" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/blacklist_detail_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_gray_divider_in" />
+
+    <com.myplas.q.common.view.MyListview
+        android:id="@+id/item_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent" />
+
+</LinearLayout>

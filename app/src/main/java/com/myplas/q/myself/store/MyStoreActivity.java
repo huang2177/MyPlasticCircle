@@ -57,6 +57,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private String companyName, companyIntroduction, headPath, licencePath, stauts, business;
     private UCloudUtils uCloudUtils;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,15 +88,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
         uCloudUtils = new UCloudUtils(this, this);
 
-        emptyView.setMyManager(R.drawable.icon_auditing);
-        emptyView.setNoMessageText1("提交成功，请等待客服人员审核！");
-        emptyView.setNoMessageText("预计3个工作日内审核完毕，审核结果会短信通知到您的注册手机。");
-
         sharedUtils = SharedUtils.getSharedUtils();
         color = getResources().getColor(R.color.color_red);
         stauts = getIntent().getStringExtra(Constant.STAUTS);
-
-        emptyView.setVisibility("2".equals(stauts) ? View.VISIBLE : View.GONE);
 
     }
 
@@ -169,17 +164,31 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     }
 
     /**
+     * 图片上传后回调服务器
+     */
+    private void uploadNotify(String path, String type) {
+        Map<String, String> map = new HashMap(16);
+        map.put("type", type);
+        map.put("path", path);
+        postAsyn(this, API.UPLOADNOTIFY, map, this, 1, false);
+    }
+
+    /**
      * 提交
      */
     private void commit() {
         if (isWriteInfo()) {
-            saveInfo();
-//            upLoadFile(API.BUSINESSLICENSEUPLOAD, licencePath, 1);
+            Map<String, String> map = new HashMap(16);
+            map.put("company", companyName);
+            map.put("avatar_url", headPath);
+            map.put("business_license", business);
+            map.put("business_license_url", licencePath);
+            map.put("company_description", companyIntroduction);
+            postAsyn(this, API.SHOPS, map, this, 2, false);
         } else {
             TextUtils.toast(this, "请先填写完整资料！");
         }
     }
-
 
     /**
      * 改变button颜色
@@ -204,28 +213,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
         return TextUtils.notEmpty(companyName)
                 && TextUtils.notEmpty(business)
+                && TextUtils.notEmpty(headPath)
+                && TextUtils.notEmpty(licencePath)
                 && TextUtils.notEmpty(companyIntroduction);
-    }
-
-    /**
-     * 上传图片
-     */
-    public void upLoadFile(String method, String path, int type) {
-        String url = API.BASEURL + method;
-        String token = sharedUtils.getData(this, Constant.TOKEN);
-        postUpLoadImg(this, url, path, token, this, type, null);
-    }
-
-    /**
-     * 保存资料
-     */
-    public void saveInfo() {
-        String url = API.BASEURL + API.SUBMISSION;
-        Map<String, String> map = new HashMap(16);
-        map.put("company", companyName);
-        map.put("business_licence", business);
-        map.put("company_description", companyIntroduction);
-        postAsyn(this, url, map, this, 3, false);
     }
 
     @Override
@@ -238,8 +228,8 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (requestCode == ICODE) {
-                String list = Album.parseResult(data).get(0);
-                imageHead.setUseProgress(true);
+                imageLicence.setUseProgress(true);
+                Glide.with(this).load(Album.parseResult(data).get(0)).into(imageLicence);
                 uCloudUtils.putFile(new File(Album.parseResult(data).get(0)), 1);
 
                 changeBtnColor();
@@ -250,9 +240,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 if (mImageList.size() == 0) {
                     return;
                 }
-                licencePath = mImageList.get(0);
-                imageLicence.setUseProgress(true);
-                uCloudUtils.putFile(new File(licencePath), 2);
+                imageHead.setUseProgress(true);
+                Glide.with(this).load(mImageList.get(0)).into(imageHead);
+                uCloudUtils.putFile(new File(mImageList.get(0)), 2);
 
                 changeBtnColor();
             }
@@ -265,24 +255,22 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     public void callBack(Object object, int type) {
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
-            String err = jsonObject.getString("err");
+            String err = jsonObject.getString("code");
+
             if (type == 1 && "0".equals(err)) {
-                Glide.with(this).load(headPath).into(imageHead);
+                TextUtils.toast(this, jsonObject.getString("message"));
             }
+
             if (type == 2 && "0".equals(err)) {
-                Glide.with(this).load(licencePath).into(imageLicence);
-            }
-            if (type == 3 && "0".equals(err)) {
-                TextUtils.toast(this, "提交成功！");
+                TextUtils.toast(this, jsonObject.getString("message"));
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editName.getWindowToken(), 0);
 
-                emptyView.setVisibility(View.VISIBLE);
-                emptyView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_top));
+                loadAnimation();
             } else {
                 button.setClickable(true);
                 button.setBackgroundResource(R.drawable.login_btn_shape_hl);
-                TextUtils.toast(this, jsonObject.getString("msg"));
+                TextUtils.toast(this, jsonObject.getString("message"));
             }
 
         } catch (Exception e) {
@@ -292,25 +280,52 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        if (type == 3) {
-            button.setClickable(true);
-            button.setBackgroundResource(R.drawable.login_btn_shape_hl);
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+
+            if (type == 2) {
+                button.setClickable(true);
+                button.setBackgroundResource(R.drawable.login_btn_shape_hl);
+            }
+            TextUtils.toast(this, jsonObject.getString("message"));
+
+        } catch (Exception e) {
+
         }
     }
 
 
     @Override
     public void uCloudSucess(int type, String flieName) {
-
+        if (type == 1) {
+            licencePath = flieName;
+            uploadNotify(flieName, "license");
+        } else {
+            headPath = flieName;
+            uploadNotify(flieName, "thumb");
+        }
     }
 
     @Override
     public void uCloudProcess(int type, int value) {
         if (type == 1) {
-            imageHead.setProgress(value);
-        } else {
             imageLicence.setProgress(value);
+        } else {
+            imageHead.setProgress(value);
         }
+    }
+
+    /**
+     * 保存成功后显示审核中
+     */
+    private void loadAnimation() {
+        emptyView.setMyManager(R.drawable.icon_auditing);
+        emptyView.setVisibility("2".equals(stauts) ? View.VISIBLE : View.GONE);
+
+        emptyView.setNoMessageText1("提交成功，请等待客服人员审核！");
+        emptyView.setNoMessageText("预计3个工作日内审核完毕，审核结果会短信通知到您的注册手机。");
+
+        emptyView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_top));
     }
 
     @Override

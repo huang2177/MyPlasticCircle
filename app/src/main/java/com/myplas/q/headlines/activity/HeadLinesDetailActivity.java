@@ -58,7 +58,6 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     private TextView textView_title, textView_content;
     private TextView imageView_btn_next, imageView_btn_last;
 
-    private Handler mHandler;
     private ScrollView mScrollView;
 
     private String clickId;
@@ -72,7 +71,6 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         StatusUtils.setStatusTextColor(true, this);
         goBack(findViewById(R.id.img_back));
 
-        mHandler = new Handler();
         resources = getResources();
         sharedUtils = SharedUtils.getSharedUtils();
         mMainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
@@ -161,12 +159,12 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
             }
             //滚动到顶部
             if (type == 2) {
-                mHandler.post(new Runnable() {
+                mScrollView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mScrollView.fullScroll(ScrollView.FOCUS_UP);
                     }
-                });
+                }, 300);
             }
             if (type == 3) {
                 if ("0".equals(err)) {
@@ -254,7 +252,6 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
         if (webView != null) {
             webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             webView.clearHistory();

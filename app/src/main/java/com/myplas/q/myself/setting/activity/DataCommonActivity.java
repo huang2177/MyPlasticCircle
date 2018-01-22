@@ -91,16 +91,16 @@ public class DataCommonActivity extends BaseActivity implements View.OnClickList
                     intent.putExtra("type", "1");
                     switch (position) {
                         case 0:
-                            dataBack = "EC";
+                            dataBack = "1";
                             break;
                         case 1:
-                            dataBack = "SC";
+                            dataBack = "3";
                             break;
                         case 2:
-                            dataBack = "NC";
+                            dataBack = "2";
                             break;
                         case 3:
-                            dataBack = "OT";
+                            dataBack = "4";
                             break;
                         default:
                             break;

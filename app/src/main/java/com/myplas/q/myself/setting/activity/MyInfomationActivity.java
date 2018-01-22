@@ -22,6 +22,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.utils.UCloudUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.MainActivity;
@@ -30,6 +31,7 @@ import com.myplas.q.myself.beans.MySelfInfo;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ import java.util.Map;
  * 邮箱：15378412400@163.com
  * 时间：2017/3/23 13:39
  */
-public class MyInfomationActivity extends BaseActivity implements View.OnClickListener, ResultCallBack {
+public class MyInfomationActivity extends BaseActivity implements View.OnClickListener, ResultCallBack, UCloudUtils.UCloudListener {
 
     private IntentFilter mFilter;
     private MyReceiver myReceiver;
@@ -48,7 +50,6 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     private int regionPosition;
     private MySelfInfo mySelfInfo;
     private SharedUtils sharedUtils;
-    private Map<String, String> map;
     private String sexInPut, regionInPut;
     private String type, address, location, sex, region, mainProduct, monthUse, needProduct, model;
 
@@ -62,6 +63,8 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     private String from, imgCard, imgHead, imgLicence;
     private final String ACTION = "com.broadcast.databack";
 
+    private UCloudUtils utils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +76,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void initView() {
-        map = new HashMap<String, String>();
+        utils = new UCloudUtils(this, this);
         sharedUtils = SharedUtils.getSharedUtils();
         from = getIntent().getStringExtra("from");
 
@@ -294,10 +297,9 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     public void saveData() {
         Map map = new HashMap(16);
         if ("1".equals(type)) {
-            map.put("month_consum", monthUse);
+            map.put("amount_per_month", monthUse);
             map.put("need_product", getString(needProduct));
         }
-        map.put("type", type);
         map.put("sex", sexInPut);
         map.put("address", address);
         map.put("dist", regionInPut);
@@ -308,23 +310,12 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    /**
-     * 上传图片
-     *
-     * @param method
-     * @param imgpath
-     * @param type
-     */
-    public void upLoadImg(String method, String imgpath, int type) {
-        String token = sharedUtils.getData(this, "token");
-        postUpLoadImg(this, API.BASEURL + method, imgpath, token, this, type, null);
-    }
-
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            String err = new JSONObject(object.toString()).getString("code");
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String err = jsonObject.getString("code");
             if (type == 1) {
                 mySelfInfo = null;
                 if ("0".equals(err)) {
@@ -335,6 +326,10 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
             }
             if (type == 3 && "0".equals(err)) {
                 requestNetData();
+                TextUtils.toast(this, jsonObject.getString("message"));
+            }
+            if (type == 5 || type == 6) {
+                TextUtils.toast(this, jsonObject.getString("message"));
             }
         } catch (Exception e) {
         }
@@ -343,7 +338,13 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        Log.e("----", "----");
+        try {
+            if (httpCode == 403) {
+                String msg = new JSONObject(message).getString("message");
+                TextUtils.toast(this, msg);
+            }
+        } catch (Exception e) {
+        }
     }
 
     public void showInfo(MySelfInfo mySelfInfo) {
@@ -358,12 +359,12 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
             monthUse = mySelfInfo.getData().getMonth_consum();
             mainProduct = mySelfInfo.getData().getMain_product();
             needProduct = mySelfInfo.getData().getNeed_product();
-            //imgLicence = mySelfInfo.getData().getBusiness_licence_pic();
+            imgLicence = mySelfInfo.getData().getBusiness_licence_pic();
 
             sexInPut = ("男".equals(sex)) ? ("0") : ("1");
             imgCard = imgCard.startsWith("http") ? imgCard : "http:" + imgCard;
             imgHead = imgHead.startsWith("http") ? imgHead : "http:" + imgHead;
-            //imgLicence = imgLicence.startsWith("http") ? imgLicence : imgLicence + "http:";
+            imgLicence = imgLicence.startsWith("http") ? imgLicence : imgLicence + "http:";
 
             textXb.setText(sex);
             tvAddress.setText(region);
@@ -423,19 +424,19 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
             switch (region) {
                 case "华东":
                     regionPosition = 0;
-                    regionInPut = "EC";
-                    break;
-                case "华南":
-                    regionPosition = 1;
-                    regionInPut = "SC";
+                    regionInPut = "1";
                     break;
                 case "华北":
                     regionPosition = 2;
-                    regionInPut = "NC";
+                    regionInPut = "2";
+                    break;
+                case "华南":
+                    regionPosition = 1;
+                    regionInPut = "3";
                     break;
                 case "其他":
                     regionPosition = 3;
-                    regionInPut = "OT";
+                    regionInPut = "4";
                     break;
                 default:
                     break;
@@ -466,12 +467,12 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
         if (requestCode == 100 && resultCode == 1) {
             String imagePath = data.getStringExtra("img_url");
             Glide.with(this).load(imagePath).into(imageHead);
-            upLoadImg(API.SAVE_PIC_TO_SERVER, imagePath, 5);
+            utils.putFile(new File(imagePath), 5);
         }
         if (requestCode == 200 && resultCode == 2) {
             String imagePath = data.getStringExtra("img_url");
             Glide.with(this).load(imagePath).into(imageCard);
-            upLoadImg(API.SAVE_CARD_IMG, imagePath, 6);
+            utils.putFile(new File(imagePath), 6);
         }
         if (requestCode == 6 && data != null) {
             if (!mainProduct.equals(data.getStringExtra("updateData"))) {
@@ -499,6 +500,26 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
                 saveData();
             }
         }
+    }
+
+    /**
+     * ucloud 回调成功后上传
+     *
+     * @param type
+     * @param flieName
+     */
+    @Override
+    public void uCloudSucess(int type, String flieName) {
+        String url = type == 5 ? API.SAVE_PIC_TO_SERVER : API.SAVE_CARD_IMG;
+
+        Map<String, String> map = new HashMap<>(16);
+        map.put("path", flieName);
+        putAsyn(this, url, map, this, type, false);
+    }
+
+    @Override
+    public void uCloudProcess(int type, int value) {
+
     }
 
     public class MyReceiver extends BroadcastReceiver {

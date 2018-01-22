@@ -19,10 +19,16 @@ import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.MyOnPageChangeListener;
 import com.myplas.q.homepage.activity.ContactDaliySignActivity;
 import com.myplas.q.homepage.activity.Contact_Search_Activity;
 import com.myplas.q.homepage.adapter.HomePageViewPagerAdapter;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +40,7 @@ import java.util.List;
  */
 
 public class FragmentHomePage extends BaseFragment implements View.OnClickListener
-        , MyOnPageChangeListener.OnPageChangeListener {
+        , MyOnPageChangeListener.OnPageChangeListener, ResultCallBack {
 
     private View view;
 
@@ -49,10 +55,12 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
 
     private FragmentHomePageContact contact;
     private FragmentHomePageBlackList blackList;
+    private SharedUtils sharedUtils;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedUtils = SharedUtils.getSharedUtils();
         view = View.inflate(getActivity(), R.layout.fragment_homepage_layout, null);
 
         mSign = F(view, R.id.contact_sign);
@@ -78,7 +86,7 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
      */
     private void initViewPager() {
         mFragments = new ArrayList<>();
-        String[] title = new String[]{"塑料圈通讯录(11111人)", "塑料黑名单"};
+        String[] title = new String[]{"塑料圈通讯录", "塑料黑名单"};
         mTabLayout.setTabData(title);
 
         contact = new FragmentHomePageContact();
@@ -139,5 +147,40 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
         if (blackList != null) {
             blackList.setUserVisible(isVisibleToUser);
         }
+    }
+
+    /**
+     * 检查登录状态
+     */
+    public void validations() {
+        getAsyn(getActivity(), API.VALIDUSERTOKEN, null, this, 10, false);
+    }
+
+    @Override
+    public void callBack(Object object, int type) {
+
+    }
+
+    @Override
+    public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            String err = jsonObject.getString("code");
+
+            if (httpCode == 401) {
+                sharedUtils.setData(getActivity(), Constant.TOKEN, "");
+                sharedUtils.setData(getActivity(), Constant.USERID, "");
+                sharedUtils.setBooloean(getActivity(), Constant.LOGINED, false);
+                sharedUtils.setData(getActivity(), Constant.POINTSINFO, jsonObject.getString("message"));
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //validations();
     }
 }

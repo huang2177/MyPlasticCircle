@@ -275,11 +275,10 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-----", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     mDetailBean = gson.fromJson(object.toString(), SupDemDetailBean.class);
                     showInfo(mDetailBean);
                 }
@@ -309,7 +308,13 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        Log.e("-----", message);
+        try {
+            if (httpCode == 403) {
+                String msg = new JSONObject(message).getString("message");
+                TextUtils.toast(this, msg);
+            }
+        } catch (Exception e) {
+        }
     }
 
     private void share() {
@@ -328,7 +333,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         startActivity(in);
     }
 
-    @SuppressLint("SetTextI18n")
     public void showInfo(SupDemDetailBean mDetailBean) {
         String companyName = mDetailBean.getData().getC_name()
                 + " "

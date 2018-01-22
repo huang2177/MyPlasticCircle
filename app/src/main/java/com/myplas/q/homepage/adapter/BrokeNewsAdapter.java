@@ -1,6 +1,7 @@
 package com.myplas.q.homepage.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.SparseArray;
@@ -23,18 +24,22 @@ import java.util.List;
  * @date 2018/1/17 0017
  */
 
-public class BrokeNewsAdapter extends BaseAdapter implements View.OnClickListener {
+public class BrokeNewsAdapter extends BaseAdapter {
     private Activity context;
-    private List<String> list;
+    private ArrayList<String> list;
     private SparseArray<View> sparseArray;
 
     private int color;
 
-    public BrokeNewsAdapter(Activity context, List<String> list) {
+    public BrokeNewsAdapter(Activity context, ArrayList<String> list) {
         this.list = list;
         this.context = context;
         sparseArray = new SparseArray<>();
         color = ContextCompat.getColor(context, R.color.color_red);
+    }
+
+    public void setList(ArrayList<String> list) {
+        this.list = list;
     }
 
     @Override
@@ -51,6 +56,7 @@ public class BrokeNewsAdapter extends BaseAdapter implements View.OnClickListene
     public long getItemId(int position) {
         return 0;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -69,32 +75,12 @@ public class BrokeNewsAdapter extends BaseAdapter implements View.OnClickListene
 
         if (position == list.size()) {
             viewHolder.imageView.setImageResource(R.drawable.upload);
-            viewHolder.imageView.setOnClickListener(this);
         } else {
             viewHolder.imageView.setUseProgress(true);
             Glide.with(context).load(list.get(position)).into(viewHolder.imageView);
         }
+        viewHolder.imageView.setOnClickListener(new MyOnClickListner(position));
         return convertView;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (list.size() < 10) {
-            Album.album(context)
-                    .toolBarColor(color)
-                    .statusBarColor(color)
-                    .title("选取图片")
-                    .columnCount(3)
-                    .camera(true)
-                    .selectCount(10 - list.size())
-                    .start(100);
-        } else {
-            TextUtils.toast(context, "最多只能上传10张图片！");
-        }
-    }
-
-    public void setList(ArrayList<String> list) {
-        this.list = list;
     }
 
     /**
@@ -108,6 +94,56 @@ public class BrokeNewsAdapter extends BaseAdapter implements View.OnClickListene
             ViewHolder viewHolder = (ViewHolder) sparseArray.get(type).getTag();
             viewHolder.imageView.setProgress(value);
         }
+    }
+
+
+    public class MyOnClickListner implements View.OnClickListener {
+        private int position;
+
+        public MyOnClickListner(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (position == list.size()) {
+                pickPicture();
+            } else {
+                galleryAlbum();
+            }
+        }
+
+        /**
+         * 大图预览
+         */
+        private void galleryAlbum() {
+            Album.gallery(context)
+                    .statusBarColor(color)
+                    .checkedList(list)
+                    .currentPosition(position)
+                    .checkFunction(false)
+                    .toolBarColor(Color.TRANSPARENT)
+                    .start(200);
+        }
+
+        /**
+         * 选择图片
+         */
+        private void pickPicture() {
+            if (list.size() < 10) {
+                Album.album(context)
+                        .toolBarColor(color)
+                        .statusBarColor(color)
+                        .title("选取图片")
+                        .columnCount(3)
+                        .camera(true)
+                        .selectCount(10 - list.size())
+                        .start(100);
+            } else {
+                TextUtils.toast(context, "最多只能上传10张图片！");
+            }
+        }
+
     }
 
     class ViewHolder {
