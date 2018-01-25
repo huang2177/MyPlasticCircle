@@ -11,12 +11,20 @@ import java.util.List;
 public class ReplyBean {
 
     /**
-     * err : 0
-     * data : [{"id":"1757","rev_id":"3858","user_id":"53402","is_read":"1","content":"下班了","input_time":"10-11 19:08","pur_id":"114111","reply_id":"0","name":"hh","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","c_name":"上海中晨电子商务股份有限公司","mobile":"15378412400","thumbqq":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","is_pass":"0","replay":[{"id":"1760","rev_id":"3858","reply_id":"1759","user_id":"3858","is_read":"0","content":"keyi","input_time":"10-12 09:15:11","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"李一帆"},{"id":"1759","rev_id":"53402","reply_id":"1757","user_id":"3858","is_read":"0","content":"zao","input_time":"10-12 09:14:48","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"}]},{"id":"1738","rev_id":"3858","user_id":"53402","is_read":"1","content":"123","input_time":"10-11 15:54","pur_id":"114111","reply_id":"0","name":"hh","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","c_name":"上海中晨电子商务股份有限公司","mobile":"15378412400","thumbqq":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","is_pass":"0","replay":[{"id":"1756","rev_id":"53402","reply_id":"1738","user_id":"3858","is_read":"1","content":"xixi","input_time":"10-11 19:07:11","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"},{"id":"1755","rev_id":"3858","reply_id":"1754","user_id":"3858","is_read":"1","content":"000","input_time":"10-11 18:57:52","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"李一帆"},{"id":"1754","rev_id":"53402","reply_id":"1738","user_id":"3858","is_read":"1","content":"test1","input_time":"10-11 18:57:28","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"},{"id":"1744","rev_id":"53402","reply_id":"1738","user_id":"3858","is_read":"1","content":"no","input_time":"10-11 17:51:45","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"},{"id":"1743","rev_id":"53402","reply_id":"1738","user_id":"3858","is_read":"1","content":"yes","input_time":"10-11 17:42:49","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"},{"id":"1741","rev_id":"53402","reply_id":"1738","user_id":"53397","is_read":"1","content":"ceshi2222","input_time":"10-11 17:29:53","pur_id":"114111","name":"测试","is_pass":"0","mobile":"18817391111","thumb":"17/09/14/59b9f291e30dc.png","thumbqq":"","c_name":"上海测试科技","hui_name":"hh"}]},{"id":"1706","rev_id":"3858","user_id":"53397","is_read":"1","content":"多少吨？","input_time":"10-10 10:07","pur_id":"114111","reply_id":"0","name":"测试","thumb":"http://pic.myplas.com/upload/17/09/14/59b9f291e30dc.png","c_name":"上海测试科技","mobile":"18817391111","thumbqq":"","is_pass":"0","replay":[{"id":"1732","rev_id":"9266","reply_id":"1717","user_id":"3858","is_read":"1","content":"yao10","input_time":"10-10 16:22:30","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"成平"},{"id":"1731","rev_id":"53397","reply_id":"1708","user_id":"3858","is_read":"1","content":"yao8","input_time":"10-10 16:22:27","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"测试"},{"id":"1730","rev_id":"9266","reply_id":"1707","user_id":"3858","is_read":"1","content":"yao5","input_time":"10-10 16:22:25","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"成平"},{"id":"1717","rev_id":"53397","reply_id":"1706","user_id":"3858","is_read":"1","content":"10吨","input_time":"10-10 16:22:21","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"测试"},{"id":"1707","rev_id":"53397","reply_id":"1706","user_id":"3858","is_read":"1","content":"5吨","input_time":"10-10 10:07:59","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"测试"},{"id":"1708","rev_id":"9266","reply_id":"1706","user_id":"3858","is_read":"1","content":"我有8吨","input_time":"10-10 09:46:40","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"成平"}]}]
+     * code : 0
+     * data : [{"id":2735,"rev_id":56656,"user_id":41497,"is_read":0,"content":"123","input_time":"1月18日 14:49","pur_id":197612,"reply_id":0,"mobile":"15378412400","thumb":"http:myplas.ufile.ucloud.com.cn/upload/2018/1/whnpugd6qj.jpg","c_name":"打得过","name":"黄双","is_pass":0,"comments":[{"id":2739,"rev_id":56656,"user_id":45782,"is_read":0,"content":"刚回家","input_time":"14:48","pur_id":197612,"reply_id":2735,"mobile":"18817392632","thumb":"http://statics.myplas.com/upload/17/06/05/593501f1bd99b.jpg","c_name":"嘉兴鼎辉信息科技有限公司","name":"王铭","is_pass":""}]},{"id":2734,"rev_id":56656,"user_id":41497,"is_read":0,"content":"粉红","input_time":"1月18日 14:40","pur_id":197612,"reply_id":0,"mobile":"15378412400","thumb":"http:myplas.ufile.ucloud.com.cn/upload/2018/1/whnpugd6qj.jpg","c_name":"打得过","name":"黄双","is_pass":0,"comments":[]},{"id":2731,"rev_id":56656,"user_id":81088,"is_read":0,"content":"1111","input_time":"1月17日 17:18","pur_id":197612,"reply_id":0,"mobile":"18817392655","thumb":"http://myplas.ufile.ucloud.com.cn/upload/18/01/17/V41CW99H1F.jpg","c_name":"上海测试封装有限公司","name":"郑成功","is_pass":0,"comments":[{"id":2738,"rev_id":56656,"user_id":45782,"is_read":0,"content":"波哥","input_time":"14:43","pur_id":197612,"reply_id":2731,"mobile":"18817392632","thumb":"http://statics.myplas.com/upload/17/06/05/593501f1bd99b.jpg","c_name":"嘉兴鼎辉信息科技有限公司","name":"王铭","is_pass":""},{"id":2738,"rev_id":56656,"user_id":45782,"is_read":0,"content":"波哥","input_time":"14:43","pur_id":197612,"reply_id":2731,"mobile":"18817392632","thumb":"http://statics.myplas.com/upload/17/06/05/593501f1bd99b.jpg","c_name":"嘉兴鼎辉信息科技有限公司","name":"王铭","is_pass":""}]}]
      */
 
+    private String code;
     private List<DataBean> data;
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public List<DataBean> getData() {
         return data;
@@ -28,21 +36,20 @@ public class ReplyBean {
 
     public static class DataBean {
         /**
-         * id : 1757
-         * rev_id : 3858
-         * user_id : 53402
-         * is_read : 1
-         * content : 下班了
-         * input_time : 10-11 19:08
-         * pur_id : 114111
+         * id : 2735
+         * rev_id : 56656
+         * user_id : 41497
+         * is_read : 0
+         * content : 123
+         * input_time : 1月18日 14:49
+         * pur_id : 197612
          * reply_id : 0
-         * name : hh
-         * thumb : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
-         * c_name : 上海中晨电子商务股份有限公司
          * mobile : 15378412400
-         * thumbqq : http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG
+         * thumb : http:myplas.ufile.ucloud.com.cn/upload/2018/1/whnpugd6qj.jpg
+         * c_name : 打得过
+         * name : 黄双
          * is_pass : 0
-         * replay : [{"id":"1760","rev_id":"3858","reply_id":"1759","user_id":"3858","is_read":"0","content":"keyi","input_time":"10-12 09:15:11","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"李一帆"},{"id":"1759","rev_id":"53402","reply_id":"1757","user_id":"3858","is_read":"0","content":"zao","input_time":"10-12 09:14:48","pur_id":"114111","name":"李一帆","is_pass":"0","mobile":"13764999601","thumb":"http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0","thumbqq":"http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG","c_name":"上海中晨电子商务股份有限公司","hui_name":"hh"}]
+         * comments : [{"id":2739,"rev_id":56656,"user_id":45782,"is_read":0,"content":"刚回家","input_time":"14:48","pur_id":197612,"reply_id":2735,"mobile":"18817392632","thumb":"http://statics.myplas.com/upload/17/06/05/593501f1bd99b.jpg","c_name":"嘉兴鼎辉信息科技有限公司","name":"王铭","is_pass":""}]
          */
 
         private String id;
@@ -53,13 +60,12 @@ public class ReplyBean {
         private String input_time;
         private String pur_id;
         private String reply_id;
-        private String name;
+        private String mobile;
         private String thumb;
         private String c_name;
-        private String mobile;
-        private String thumbqq;
+        private String name;
         private String is_pass;
-        private List<ReplayBean> replay;
+        private List<CommentsBean> comments;
 
         public String getId() {
             return id;
@@ -125,12 +131,12 @@ public class ReplyBean {
             this.reply_id = reply_id;
         }
 
-        public String getName() {
-            return name;
+        public String getMobile() {
+            return mobile;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
         }
 
         public String getThumb() {
@@ -149,20 +155,12 @@ public class ReplyBean {
             this.c_name = c_name;
         }
 
-        public String getMobile() {
-            return mobile;
+        public String getName() {
+            return name;
         }
 
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
-        }
-
-        public String getThumbqq() {
-            return thumbqq;
-        }
-
-        public void setThumbqq(String thumbqq) {
-            this.thumbqq = thumbqq;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getIs_pass() {
@@ -173,48 +171,44 @@ public class ReplyBean {
             this.is_pass = is_pass;
         }
 
-        public List<ReplayBean> getReplay() {
-            return replay;
+        public List<CommentsBean> getComments() {
+            return comments;
         }
 
-        public void setReplay(List<ReplayBean> replay) {
-            this.replay = replay;
+        public void setComments(List<CommentsBean> comments) {
+            this.comments = comments;
         }
 
-        public static class ReplayBean {
+        public static class CommentsBean {
             /**
-             * id : 1760
-             * rev_id : 3858
-             * reply_id : 1759
-             * user_id : 3858
+             * id : 2739
+             * rev_id : 56656
+             * user_id : 45782
              * is_read : 0
-             * content : keyi
-             * input_time : 10-12 09:15:11
-             * pur_id : 114111
-             * name : 李一帆
-             * is_pass : 0
-             * mobile : 13764999601
-             * thumb : http://wx.qlogo.cn/mmopen/DYmcO9MQb0INDdmVib95SpSPCibrlygBMK5UicGtW5hr1o1HkLia4f4T444a8IhDwbXhujkFs1JWtSxX8WSxOA5h7sVET48Hm23z/0
-             * thumbqq : http://pic.myplas.com/upload/17/08/03/5982a32bc386f.PNG
-             * c_name : 上海中晨电子商务股份有限公司
-             * hui_name : 李一帆
+             * content : 刚回家
+             * input_time : 14:48
+             * pur_id : 197612
+             * reply_id : 2735
+             * mobile : 18817392632
+             * thumb : http://statics.myplas.com/upload/17/06/05/593501f1bd99b.jpg
+             * c_name : 嘉兴鼎辉信息科技有限公司
+             * name : 王铭
+             * is_pass : 
              */
 
             private String id;
             private String rev_id;
-            private String reply_id;
             private String user_id;
             private String is_read;
             private String content;
             private String input_time;
             private String pur_id;
-            private String name;
-            private String is_pass;
+            private String reply_id;
             private String mobile;
             private String thumb;
-            private String thumbqq;
             private String c_name;
-            private String hui_name;
+            private String name;
+            private String is_pass;
 
             public String getId() {
                 return id;
@@ -230,14 +224,6 @@ public class ReplyBean {
 
             public void setRev_id(String rev_id) {
                 this.rev_id = rev_id;
-            }
-
-            public String getReply_id() {
-                return reply_id;
-            }
-
-            public void setReply_id(String reply_id) {
-                this.reply_id = reply_id;
             }
 
             public String getUser_id() {
@@ -280,20 +266,12 @@ public class ReplyBean {
                 this.pur_id = pur_id;
             }
 
-            public String getName() {
-                return name;
+            public String getReply_id() {
+                return reply_id;
             }
 
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getIs_pass() {
-                return is_pass;
-            }
-
-            public void setIs_pass(String is_pass) {
-                this.is_pass = is_pass;
+            public void setReply_id(String reply_id) {
+                this.reply_id = reply_id;
             }
 
             public String getMobile() {
@@ -312,14 +290,6 @@ public class ReplyBean {
                 this.thumb = thumb;
             }
 
-            public String getThumbqq() {
-                return thumbqq;
-            }
-
-            public void setThumbqq(String thumbqq) {
-                this.thumbqq = thumbqq;
-            }
-
             public String getC_name() {
                 return c_name;
             }
@@ -328,12 +298,20 @@ public class ReplyBean {
                 this.c_name = c_name;
             }
 
-            public String getHui_name() {
-                return hui_name;
+            public String getName() {
+                return name;
             }
 
-            public void setHui_name(String hui_name) {
-                this.hui_name = hui_name;
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getIs_pass() {
+                return is_pass;
+            }
+
+            public void setIs_pass(String is_pass) {
+                this.is_pass = is_pass;
             }
         }
     }

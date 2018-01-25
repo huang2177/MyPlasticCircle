@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,10 +19,8 @@ import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.login.LoginActivity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +51,7 @@ public class FindPSWActivity extends BaseActivity implements View.OnClickListene
 
         initTileBar();
         setLeftIVResId(R.drawable.btn_back_black);
-        setTitleBarTextColor(R.color.color_transparent);
+        setTitleBarTextColor(R.color.color_black1);
         setTitleBarBackground(R.color.color_white);
         setTitle(getIntent().getStringExtra("title"));
 

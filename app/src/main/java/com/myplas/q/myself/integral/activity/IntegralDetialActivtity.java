@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +14,7 @@ import android.widget.PopupWindow;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
@@ -22,7 +22,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.pinnedheadlistview.PinnedHeaderListView;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.Integraldetialbean;
 import com.myplas.q.myself.integral.adapter.Integral_Detial_GV_Adapter;
 import com.myplas.q.myself.integral.adapter.Integral_Detial_LV_Adapter;
@@ -189,7 +188,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
     public void callBack(Object object, int type) {
         try {
             Integraldetialbean integraldetialbean = null;
-            if (new JSONObject(object.toString()).getString("code").equals("0")) {
+            if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
                 Gson gson = new Gson();
                 mEmptyView.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
@@ -204,14 +203,6 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                     mLVAdapter.setList(list);
                     mLVAdapter.notifyDataSetChanged();
                 }
-            } else {
-                if (page == 1) {
-                    hasMoreData = false;
-                    listView.setVisibility(View.GONE);
-                    mEmptyView.setVisibility(View.VISIBLE);
-                    mEmptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
-                    mEmptyView.setNoMessageText("没有更多数据！");
-                }
             }
         } catch (Exception e) {
         }
@@ -219,21 +210,22 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        if (httpCode == 404) {
+            if (page == 1) {
+                hasMoreData = false;
+                listView.setVisibility(View.GONE);
+                mEmptyView.setVisibility(View.VISIBLE);
+                mEmptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
+                mEmptyView.setNoMessageText("没有相关数据！");
+            } else {
+                TextUtils.toast(this, "没有更多数据！");
+            }
+        }
     }
 
     public void setBackgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha;
         getWindow().setAttributes(lp);
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 }

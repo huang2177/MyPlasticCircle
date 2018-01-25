@@ -27,11 +27,6 @@ public class API {
      */
     public final static String CHECKAPPVERSION = BASEURL + "AppVersion";
 
-    /**
-     * 微信分享缩略图
-     */
-    public final static String LOG_HL_URL = "http://pic.myplas.com/myapp/img/toutiaoLogo.png";
-    public final static String LOG_SD_URL = "http://pic.myplas.com/myapp/img/gongqiuLogo.png";
 
     /**
      * 微信appid
@@ -178,10 +173,6 @@ public class API {
      * 获取好友资料时 检查权限
      */
     public final static String PERMISSIONS = BASEURL + "users/access/permissions";
-    /**
-     * 获取ta的求购或供给
-     */
-    public final static String GET_TA_PUR = "TaPurNew";
     /**
      * 获取通讯录首页数据
      */
@@ -355,10 +346,6 @@ public class API {
      */
     public final static String ANALYSIS = BASEURL + "requirements/analysis";
 
-    /**
-     * 回复供求消息
-     */
-    public final static String SAVE_MSG = "releaseMsg/saveMsg";
     /**
      * 获取供求消息的出价
      */

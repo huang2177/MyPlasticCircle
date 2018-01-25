@@ -88,7 +88,6 @@ public class Fragment_SupDem_Detail_HF extends BaseFragment implements ResultCal
                 mHFAdapter.setList(mBeanList);
                 mHFAdapter.notifyDataSetChanged();
             }
-
         } catch (Exception e) {
         }
     }

@@ -1,16 +1,13 @@
 package com.myplas.q.homepage.activity;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -26,27 +23,21 @@ import com.huangbryant.hbanner.HBannerConfig;
 import com.huangbryant.hbanner.Transformer;
 import com.huangbryant.hbanner.listener.OnHBannerClickListener;
 import com.huangbryant.hbanner.loader.ImageLoader;
-import com.huangbryant.hbanner.loader.ImageLoaderInterface;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.common.listener.OnKeyboardChangeListener;
 import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.utils.KeyboardHelper;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.headlines.HeadLineListFragment;
-import com.myplas.q.headlines.bean.SubcribleBean;
 import com.myplas.q.homepage.adapter.BlackListDetailAdapter;
 import com.myplas.q.homepage.beans.BlackListsDetailBean;
-import com.yanzhenjie.album.Album;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +56,7 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
     private int color;
     private String id, content, commentId;
 
+    private View root;
     private Button button;
     private HBanner mBanner;
     private EditText editText;
@@ -73,17 +65,26 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
     private LinearLayout layoutComments, layoutInput;
     private TextView tvTitle, tvAuthor, tvTime, tvPV, tvContent;
 
-    private BlackListDetailAdapter adapter;
+    private KeyboardHelper mKeyboardHelper;
+    private BlackListDetailAdapter mAdapter;
+    private OnKeyboardChangeListener mKeyboardChangeListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.setStatusBar(this, false, false);
+        StatusUtils.setStatusTextColor(true, this);
         setContentView(R.layout.activity_blacklistdetail_layout);
         initTileBar();
         setTitle("详细信息");
+        setLeftIVResId(R.drawable.btn_back_black);
+        setTitleBarBackground(R.color.color_white);
+        setTitleBarTextColor(R.color.color_black1);
+        setRightIVResId(R.drawable.btn_share_black);
 
         initView();
         getBlackLists();
+
     }
 
     private void initView() {
@@ -92,10 +93,11 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         color = ContextCompat.getColor(this, R.color.color_red);
 
         tvPV = F(R.id.detail_pv);
+        root = F(R.id.detail_root);
         tvTime = F(R.id.detail_time);
-        mBanner = F(R.id.detail_banner);
         tvTitle = F(R.id.detail_title);
         scrollView = F(R.id.detail_sv);
+        mBanner = F(R.id.detail_banner);
         mRecycleView = F(R.id.detail_rv);
         tvAuthor = F(R.id.detail_author);
         tvContent = F(R.id.detail_content);
@@ -108,7 +110,12 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         editText.setHint("写留言");
         button.setOnClickListener(this);
         mBanner.setOnBannerListener(this);
-        layoutInput.addOnLayoutChangeListener(new OnKeyboardChangeListener(this, this));
+        mIVRight.setOnClickListener(this);
+        mKeyboardChangeListener = new OnKeyboardChangeListener(this, this);
+        layoutInput.addOnLayoutChangeListener(mKeyboardChangeListener);
+
+        mKeyboardHelper = new KeyboardHelper(this, root);
+        mKeyboardHelper.enable();
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecycleView.setNestedScrollingEnabled(false);
@@ -131,6 +138,7 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         mBanner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object o, ImageView imageView, int i) {
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(o.toString()).into(imageView);
             }
         });
@@ -159,6 +167,13 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
                 break;
 //            case R.id.blacklist_detail_btn:
 //                break;
+            case R.id.titlebar_img_right:
+                Intent intent = new Intent(this, ShareActivity.class);
+//                intent.putExtra("type", "2");
+//                intent.putExtra("id", sucribleDetailBean.getData().getId());
+//                intent.putExtra("title", sucribleDetailBean.getData().getTitle());
+                startActivity(intent);
+                break;
             default:
                 break;
         }
@@ -253,13 +268,13 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
             tvTime.setText(bean.getCreated_at());
             //tvAuthor.setText(bean.getCreated_at());
 
-            adapter = new BlackListDetailAdapter(this, this);
-            adapter.setList(bean.getComments());
-            mRecycleView.setAdapter(adapter);
+            mAdapter = new BlackListDetailAdapter(this, this);
+            mAdapter.setList(bean.getComments());
+            mRecycleView.setAdapter(mAdapter);
 
         } else {
-            adapter.setList(bean.getComments());
-            adapter.notifyDataSetChanged();
+            mAdapter.setList(bean.getComments());
+            mAdapter.notifyDataSetChanged();
         }
 
         layoutComments.setVisibility(bean.getComments().size() == 0
@@ -277,5 +292,12 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
     public void onPause() {
         super.onPause();
         mBanner.stopAutoPlay();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        layoutInput.removeOnLayoutChangeListener(mKeyboardChangeListener);
+        mKeyboardHelper.disable();
     }
 }

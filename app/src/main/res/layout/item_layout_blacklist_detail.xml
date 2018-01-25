@@ -65,6 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="@color/color_gray_divider_in" />
 
     <com.myplas.q.common.view.MyListview

@@ -26,9 +26,9 @@ import java.util.List;
 public class SupDem_Detail_LV_HF_Child_Adapter extends BaseAdapter {
     Context context;
     MyOnItemClickListener mMyOnItemClickListener;
-    List<ReplyBean.DataBean.ReplayBean> list;
+    List<ReplyBean.DataBean.CommentsBean> list;
 
-    public void setList(List<ReplyBean.DataBean.ReplayBean> list) {
+    public void setList(List<ReplyBean.DataBean.CommentsBean> list) {
         this.list = list;
     }
 
@@ -71,7 +71,7 @@ public class SupDem_Detail_LV_HF_Child_Adapter extends BaseAdapter {
         }
         try {
             viewHolder.mTVContent.setText("回复"
-                    + list.get(position).getHui_name()
+                    + list.get(position).getName()
                     + "："
                     + list.get(position).getContent());
             viewHolder.mTVTime.setText(list.get(position).getInput_time());

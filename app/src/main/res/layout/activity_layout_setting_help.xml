@@ -6,22 +6,18 @@
     android:orientation="vertical">
 
     <include layout="@layout/common_layout_titlebar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/sketchimg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/help" />
 
-            <ImageView
-                android:id="@+id/sketchimg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/help" />
-        </LinearLayout>
     </ScrollView>
 </LinearLayout>

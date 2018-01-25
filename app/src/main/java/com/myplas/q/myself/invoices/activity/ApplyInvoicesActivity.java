@@ -1,7 +1,6 @@
 package com.myplas.q.myself.invoices.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,9 +17,7 @@ import com.myplas.q.myself.invoices.adapter.ApplyInvoiceAdapter;
 import com.myplas.q.myself.beans.ApplyInvoiceBean;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
-import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
@@ -78,7 +75,7 @@ public class ApplyInvoicesActivity extends BaseActivity implements View.OnClickL
         mTextView_notapplied = F(R.id.applyinvoices_notapplied);
 
         mButton.setOnClickListener(this);
-        mIVConact.setOnClickListener(this);
+        mIVRight.setOnClickListener(this);
     }
 
     public void getInvioceList(String keywords) {

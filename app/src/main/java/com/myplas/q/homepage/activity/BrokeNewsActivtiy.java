@@ -191,7 +191,7 @@ public class BrokeNewsActivtiy extends BaseActivity implements View.OnClickListe
     public void callBack(Object object, int type) {
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
-            if ("0".equals(jsonObject.getString("code"))) {
+            if (type == 2 && "0".equals(jsonObject.getString("code"))) {
                 loadAnimation();
             }
         } catch (Exception e) {

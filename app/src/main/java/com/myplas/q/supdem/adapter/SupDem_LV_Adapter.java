@@ -44,7 +44,7 @@ public class SupDem_LV_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.size() != 0 ? list.size() : 0;
+        return list != null ? list.size() : 0;
     }
 
     @Override

@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
@@ -16,8 +18,6 @@ import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.release.adapter.InstantReleaseLVAdapter;
 import com.myplas.q.release.bean.PreViewBean;
@@ -85,6 +85,7 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
     public void instantRelease() {
         Map<String, String> map = new HashMap<>();
         map.put("channel", "1");
+        map.put("mode", "3");
         map.put("data", new Gson().toJson(mList));
         map.put("type", getIntent().getStringExtra("type"));
         postAsyn(this, API.RELEASE_MSG, map, this, 1);

@@ -72,15 +72,19 @@ public class Integral_Diaolog_SupDem_Adapter extends BaseAdapter {
             convertView = map_view.get(position);
             viewHolder = (viewHolder) convertView.getTag();
         }
-        String html = null;
         viewHolder.time.setText(list.get(position).getInput_time());
-        if ("1".equals(list.get(position).getType())) {
-            html = "<font color='#EEAD0E'>" + "求购:" + "</font>" + list.get(position).getContents();
-            viewHolder.textView.setText(Html.fromHtml(html));
-        } else {
-            html = "<font color='#9AC0CD'>" + "供给:" + "</font>" + list.get(position).getContents();
-            viewHolder.textView.setText(Html.fromHtml(html));
-        }
+
+        String type = ("1".equals(list.get(position).getType()))
+                ? ("<font color='#EEAD0E'>" + "求购:" + "</font>")
+                : ("<font color='#9AC0CD'>" + "供给:" + "</font>");
+
+        String content = type + "价格" + list.get(position).getUnit_price()
+                + "/" + list.get(position).getModel()
+                + "/" + list.get(position).getF_name()
+                + "/" + list.get(position).getC_name();
+
+        viewHolder.textView.setText(Html.fromHtml(content));
+
         return convertView;
     }
 

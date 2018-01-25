@@ -34,8 +34,7 @@ import java.util.Map;
  * @author huangshuang
  */
 
-public class Fragment_Contact_Detail_Demand extends Fragment implements ResultCallBack
-        , MyNestedScrollView.onScrollIterface {
+public class Fragment_Contact_Detail_Demand extends Fragment implements ResultCallBack {
 
     private View mView;
     private ListView mMyListview;
@@ -44,7 +43,6 @@ public class Fragment_Contact_Detail_Demand extends Fragment implements ResultCa
     private Intent mIntent;
     private SharedUtils mSharedUtils;
     private Contact_Detail_LV_Adapter mAdapter;
-    private List<ContactSupDemBean.DataBean> mBeanList;
 
     public int page;
     private List<ContactInfoBean.DataBean.DemandBean> demandList;
@@ -65,13 +63,11 @@ public class Fragment_Contact_Detail_Demand extends Fragment implements ResultCa
         mMyListview = (ListView) mView.findViewById(R.id.fragment_supdem_detail_lv);
         mScrollView = (MyNestedScrollView) mView.findViewById(R.id.scrollview);
 
-        mScrollView.setOnScrollIterface(this);
 
-        //getTaPur(type, type, page);
         mMyListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                goToDetail(null, null, position);
+                goToDetail(position);
             }
         });
 
@@ -83,33 +79,15 @@ public class Fragment_Contact_Detail_Demand extends Fragment implements ResultCa
         return mView;
     }
 
-    private void getTaPur(int type, int _type, int page) {
-        Map<String, String> map = new HashMap<>();
-        map.put("size", "15");
-        map.put("page", page + "");
-        map.put("type", type + "");
-        map.put("userid", mIntent.getStringExtra("userid"));
-        String url = API.BASEURL + API.GET_TA_PUR;
-        BaseActivity.postAsyn(getActivity(), url, map, this, _type, false);
-    }
-
-
-    @Override
-    public void loadMore() {
-//        page++;
-//        getTaPur(type, type, page);
-    }
 
     /**
      * 跳转至详情
      */
 
-    private void goToDetail(String id_, String userid, int position) {
-        id_ = demandList.get(position).getPur_id();
-        userid = demandList.get(position).getUser_id();
+    private void goToDetail(int position) {
         Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
-        intent.putExtra("id", id_);
-        intent.putExtra("userid", userid);
+        intent.putExtra("id", demandList.get(position).getId());
+        intent.putExtra("userid", demandList.get(position).getUser_id());
         startActivity(intent);
     }
 

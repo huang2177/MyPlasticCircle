@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/detail_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="23dp" />
 
     <include layout="@layout/common_layout_titlebar" />
 
@@ -17,14 +22,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/detail_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:textColor="@color/color_black"
                 android:textSize="16.0sp"
@@ -34,13 +39,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/detail_author"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="中晨" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/detail_time"
@@ -63,14 +68,15 @@
                 android:id="@+id/detail_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:textColor="@color/color_title_main" />
 
             <com.huangbryant.hbanner.HBanner
                 android:id="@+id/detail_banner"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="180dp"
                 android:layout_margin="10dp"
                 android:visibility="gone" />
 
@@ -78,13 +84,13 @@
                 android:id="@+id/layout_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="2px"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@color/color_gray_divider_out" />
@@ -99,6 +105,7 @@
                     android:layout_width="0dp"
                     android:layout_height="2px"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@color/color_gray_divider_out" />
             </LinearLayout>

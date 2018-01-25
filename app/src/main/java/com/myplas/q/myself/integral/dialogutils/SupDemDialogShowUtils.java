@@ -31,7 +31,6 @@ public class SupDemDialogShowUtils implements View.OnClickListener {
     private Dialog theDialog;
     private ListView listView;
     private TextView textView, time, textView1;
-    private String html;
     private ImageView imageView;
     private LinearLayout linearLayout;
 
@@ -82,13 +81,18 @@ public class SupDemDialogShowUtils implements View.OnClickListener {
         dlg.getWindow().setAttributes(lp);
     }
 
-    public void showData(List<IntegralBean.InfoBean.MyMsgBean> list_msg, int position) {
-        html = (list_msg.get(position).getType().equals("1")) ?
-                ("<font color='#EEAD0E'>" + "求购:" + "</font>" + list_msg.get(position).getContents()) :
-                ("<font color='#9AC0CD'>" + "供给:" + "</font>" + list_msg.get(position).getContents());
-        //textView1.setText("已选择：");
-        textView.setText(Html.fromHtml(html));
-        time.setText(list_msg.get(position).getInput_time());
+    public void showData(List<IntegralBean.InfoBean.MyMsgBean> list, int position) {
+        String type = ("1".equals(list.get(position).getType()))
+                ? ("<font color='#EEAD0E'>" + "求购:" + "</font>")
+                : ("<font color='#9AC0CD'>" + "供给:" + "</font>");
+
+        String content = type + "价格" + list.get(position).getUnit_price()
+                + "/" + list.get(position).getModel()
+                + "/" + list.get(position).getF_name()
+                + "/" + list.get(position).getC_name();
+
+        textView.setText(Html.fromHtml(content));
+        time.setText(list.get(position).getInput_time());
     }
 
     @Override

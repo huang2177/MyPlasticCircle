@@ -39,10 +39,8 @@ import com.myplas.q.common.view.RefreshPopou;
 import com.myplas.q.common.view.marqueeview.MarqueeFactory;
 import com.myplas.q.common.view.marqueeview.MarqueeViewHelper;
 import com.myplas.q.homepage.activity.AD_DialogActivtiy;
-import com.myplas.q.homepage.activity.ContactDaliySignActivity;
-import com.myplas.q.homepage.activity.NewContactDetailActivity;
-import com.myplas.q.homepage.activity.Contact_Search_Activity;
 import com.myplas.q.homepage.activity.Cover_WebActivity;
+import com.myplas.q.homepage.activity.NewContactDetailActivity;
 import com.myplas.q.homepage.adapter.Fragment_Contact_LV_Adapter;
 import com.myplas.q.homepage.adapter.Fragment_Dialog_Adapter;
 import com.myplas.q.homepage.beans.ContactBean;
@@ -145,7 +143,7 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                isLogin();
+                TextUtils.isLogin(getContext(), FragmentHomePageContact.this);
                 shareView1 = view.findViewById(R.id.xq_tx);
                 shareView2 = view.findViewById(R.id.xq_rz);
                 accessUtils.checkPremissions(mListBean.get(position));
@@ -168,7 +166,7 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if (!isLogin() && v.getId() != R.id.img_reload) {
+        if (!TextUtils.isLogin(getContext(), this) && v.getId() != R.id.img_reload) {
             return;
         }
         switch (v.getId()) {
@@ -264,20 +262,15 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
             Gson gson = new Gson();
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("code");
-            if (type == 1) {
-                isLoading = false;
-                if ("0".equals(err)) {
-                    sharedUtils.setData(getActivity(), "txlBean", object.toString());
-                    loadCacheData(gson, object.toString(), true);
+            isLoading = false;
+            if ("0".equals(err)) {
+                sharedUtils.setData(getActivity(), "txlBean", object.toString());
+                loadCacheData(gson, object.toString(), true);
 
-                    if (page == 1 && isRefreshing) {
-                        isRefreshing = false;
-                        //mVHelper.start();
-                        RabbitMQConfig.getInstance(getActivity()).readMsg("unread_customer", 10);
-                    }
-                }
-                if ("2".equals(err) || "3".equals(err)) {
-                    TextUtils.toast(getActivity(), jsonObject.getString("message"));
+                if (page == 1 && isRefreshing) {
+                    isRefreshing = false;
+                    //mVHelper.start();
+                    RabbitMQConfig.getInstance(getActivity()).readMsg("unread_customer", 10);
                 }
             }
         } catch (Exception e) {
@@ -286,7 +279,17 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        mRefreshLayout.setRefreshing(false);
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            isLoading = false;
+            if (page == 1) {
+                mRefreshLayout.setRefreshing(false);
+            }
+            if (httpCode == 404) {
+                TextUtils.toast(getActivity(), jsonObject.getString("message"));
+            }
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -434,7 +437,7 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
      * Jump to where.
      */
     private void jumpToWhere() {
-        isLogin();
+        TextUtils.isLogin(getContext(), this);
         if ("1".equals(jumpToWhere)) {  //原生
             stauts = sharedUtils.getData(getActivity(), Constant.STAUTS);
             if ("1".equals(stauts)) {
@@ -452,21 +455,6 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
             intent.putExtra("title", jumpTitle);
             startActivity(intent);
         }
-    }
-
-    /**
-     * 检查是否登录
-     */
-    private boolean isLogin() {
-        boolean logined = sharedUtils.getBoolean(getActivity(), Constant.LOGINED);
-        if (!logined) {
-            CommonDialog commonDialog = new CommonDialog();
-            commonDialog.showDialog(getActivity()
-                    , sharedUtils.getData(getActivity(), Constant.POINTSINFO)
-                    , 4
-                    , this);
-        }
-        return logined;
     }
 
     /**
@@ -542,7 +530,7 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
 
     @Override
     public void onItemClickListener(MarqueeFactory.ViewHolder holder) {
-        if (!isLogin()) {
+        if (!TextUtils.isLogin(getContext(), this)) {
             return;
         }
         DefConfigBean.NoticeBean.CommunicateContentBean bean = (DefConfigBean.NoticeBean.CommunicateContentBean) holder.data;

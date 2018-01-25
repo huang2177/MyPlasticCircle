@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -22,6 +20,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
+import com.myplas.q.common.utils.KeyboardHelper;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.SystemUtils;
@@ -34,7 +33,6 @@ import com.myplas.q.myself.setting.activity.FindPSWActivity;
 
 import org.json.JSONObject;
 
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,12 +48,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         , MyEditText.OnTextWatcher {
     private int count;
     private String key;
-    private ScrollView mScrollView;
     private SharedUtils sharedUtils;
+    private boolean clicked, isRemember, isNomalNull, isPhoneNull;
+
     private RelativeLayout mLayoutType;
     private Button mButtonNomal, mButtonPhone;
     private TextView textviewZhc, textviewWj, mtextviewSend;
-    private boolean clicked, isRemember, isNomalNull, isPhoneNull;
     private ImageView imageView1, imageView2, imageviewVerification;
     private LinearLayout linearlayoutNomal, linearlayoutPhone, buttonNomal, buttonPhone, mLayoutRoot;
     private MyEditText edittextTel, edittextTel1, edittextPass, edittextVerification1, edittextVerification2;
@@ -64,6 +62,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private MainActivity mainActivity;
 
     private VerifyCodeUtils utils;
+    private KeyboardHelper mKeyboardHelper;
 
 
     @Override
@@ -77,7 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         setTitle("普通登录");
         setLeftIVResId(R.drawable.btn_back_black);
         setTitleBarBackground(R.color.color_white);
-        setTitleBarTextColor(R.color.color_transparent);
+        setTitleBarTextColor(R.color.color_black1);
 
         initView();
         getVCode();
@@ -93,7 +92,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         isRemember = sharedUtils.getBoolean(this, "remember_password");
 
         edittextTel = F(R.id.dl_tel);
-        //mScrollView = F(R.id.sv_login);
         edittextPass = F(R.id.dl_pass);
         edittextTel1 = F(R.id.dl_tel2);
         edittextVerification1 = F(R.id.dl_verification1);
@@ -112,7 +110,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         textviewWj = F(R.id.dl_wjmm);
         textviewZhc = F(R.id.dl_zhc);
 
-        mLayoutRoot = F(R.id.login_rootview);
+        mLayoutRoot = F(R.id.login_root);
         linearlayoutNomal = F(R.id.linearlayout_login_nomal);
         linearlayoutPhone = F(R.id.linearlayout_login_phone);
 
@@ -132,6 +130,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         edittextVerification1.addOnTextWatcher(this);
         edittextVerification2.addOnTextWatcher(this);
 
+        mKeyboardHelper = new KeyboardHelper(this, mLayoutRoot);
+        mKeyboardHelper.enable();
 
         // 将账号和密码都设置到文本框中
         if (isRemember) {
@@ -213,7 +213,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             case R.id.login_phone_send1:
                 getVCode();
                 break;
-            case R.id.login_rootview:
+            case R.id.login_root:
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mButtonNomal.getWindowToken(), 0);
                 break;
@@ -351,13 +351,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        utils.setStop(true);
-        Glide.clear(imageviewVerification);
-    }
-
     public void setData(JSONObject jsonObject) {
         try {
             utils.setStop(true);
@@ -393,5 +386,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
             act.mtextviewSend.setText("重新发送");
             act.mtextviewSend.setClickable(true);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        utils.setStop(true);
+        mKeyboardHelper.disable();
+        Glide.clear(imageviewVerification);
     }
 }

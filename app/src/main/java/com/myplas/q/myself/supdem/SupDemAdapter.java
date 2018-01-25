@@ -22,6 +22,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.myself.beans.MySupDemBean;
 import com.myplas.q.release.ReleaseActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -167,31 +168,30 @@ public class SupDemAdapter extends BaseAdapter implements ResultCallBack, Common
 
     @Override
     public void callBack(Object object, int type) {
-        try {
-            JSONObject jsonObject = new JSONObject(object.toString());
-            TextUtils.toast(context, jsonObject.getString("msg"));
-            if (jsonObject.getString("err").equals("0")) {
-                if (myInterface != null) {
-                    myInterface.deleteCallBack();
-                }
-                if (list.size() == 1) {
-                    list.remove(0);
-                    notifyDataSetChanged();
-                }
-            }
-        } catch (Exception e) {
+        TextUtils.toast(context, "删除成功！");
+        if (myInterface != null) {
+            myInterface.deleteCallBack();
+        }
+        if (list.size() == 1) {
+            list.remove(0);
+            notifyDataSetChanged();
         }
     }
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            TextUtils.toast(context, jsonObject.getString("message"));
+        } catch (Exception e) {
 
+        }
     }
 
     @Override
     public void dialogClick(int type) {
         if (type != -1) {
-            Map<String, String> map = new HashMap<String, String>();
+            Map<String, String> map = new HashMap<String, String>(16);
             map.put("token", sharedUtils.getData(context, "token"));
             map.put("id", list.get(position).getId());
             BaseActivity.deleteAsyn(context, API.RELEASE_MSG, map, this, 1, false);

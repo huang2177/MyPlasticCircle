@@ -53,7 +53,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         setTitle("注册塑料圈");
         setLeftIVResId(R.drawable.btn_back_black);
         setTitleBarBackground(R.color.color_white);
-        setTitleBarTextColor(R.color.color_transparent);
+        setTitleBarTextColor(R.color.color_black1);
         initView();
         initStepView(getStepBeans());
     }

@@ -105,7 +105,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
 
         layoutZx.setOnClickListener(this);
         layoutWx.setOnClickListener(this);
-        mIVConact.setOnClickListener(this);
+        mIVRight.setOnClickListener(this);
         layoutFind.setOnClickListener(this);
         layoutTell.setOnClickListener(this);
         layoutZxMore.setOnClickListener(this);

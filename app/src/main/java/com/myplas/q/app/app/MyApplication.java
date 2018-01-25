@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -21,7 +22,6 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.LoadingDialog;
 
 import cn.jpush.android.api.JPushInterface;
-import me.panpf.sketch.Sketch;
 
 /**
  * 作者：  黄双
@@ -90,21 +90,5 @@ public class MyApplication extends MultiDexApplication {
                 }
             }
         });
-    }
-
-    @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            Sketch.with(getBaseContext()).onTrimMemory(level);
-        }
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            Sketch.with(getBaseContext()).onLowMemory();
-        }
     }
 }

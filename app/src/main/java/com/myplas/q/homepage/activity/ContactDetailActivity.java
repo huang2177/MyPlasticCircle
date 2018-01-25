@@ -116,7 +116,7 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
 
         mCall.setOnClickListener(this);
         mFollow.setOnClickListener(this);
-        mIVConact.setOnClickListener(this);
+        mIVRight.setOnClickListener(this);
         imageClose.setOnClickListener(this);
         imageStore.setOnClickListener(this);
         mLayoutBack.setOnClickListener(this);

@@ -25,6 +25,9 @@ import com.myplas.q.myself.login.LoginActivity;
 
 import java.util.List;
 
+import dalvik.system.DexClassLoader;
+import dalvik.system.PathClassLoader;
+
 /**
  * 编写： 黄双
  * 电话：15378412400
@@ -48,15 +51,15 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter implements CommonDi
         this.list = list;
         this.context = context;
         array = new SparseArray<>();
+
 //        InputStream is = getResources().openRawResource(R.drawable.icon);
-//
 //        Bitmap mBitmap = BitmapFactory.decodeStream(is);
     }
 
 
     @Override
     public int getCount() {
-        return list.size() != 0 ? list.size() : 0;
+        return list != null ? list.size() : 0;
     }
 
     @Override

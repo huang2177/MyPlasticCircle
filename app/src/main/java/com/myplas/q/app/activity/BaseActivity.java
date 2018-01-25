@@ -1,6 +1,5 @@
 package com.myplas.q.app.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -35,7 +34,7 @@ public class BaseActivity extends FragmentActivity {
     private View mView;
     public LinearLayout mLayoutBack;
     private FrameLayout mFrameLayout;
-    public ImageView mIVConact, mIVLeft;
+    public ImageView mIVRight, mIVLeft;
     public TextView mTextView, mTVLeft, mTVRight;
 
     private String type;
@@ -47,7 +46,7 @@ public class BaseActivity extends FragmentActivity {
         mFrameLayout = F(R.id.title_bar);
         mIVLeft = F(R.id.titlebar_img_left);
         mTVLeft = F(R.id.titlebar_text_left);
-        mIVConact = F(R.id.titlebar_img_right);
+        mIVRight = F(R.id.titlebar_img_right);
         mTVRight = F(R.id.titlebar_text_right);
         mTextView = F(R.id.titlebar_text_title);
         mLayoutBack = F(R.id.titlebar_img_back);
@@ -59,7 +58,7 @@ public class BaseActivity extends FragmentActivity {
     }
 
     public void setRightIVVisibility(int isShow) {
-        mIVConact.setVisibility(isShow);
+        mIVRight.setVisibility(isShow);
     }
 
     public void setTitleBarBackground(int resId) {
@@ -94,8 +93,8 @@ public class BaseActivity extends FragmentActivity {
      */
 
     public void setRightIVResId(int resId) {
-        mIVConact.setImageResource(resId);
-        mIVConact.setVisibility(View.VISIBLE);
+        mIVRight.setImageResource(resId);
+        mIVRight.setVisibility(View.VISIBLE);
     }
 
     /**

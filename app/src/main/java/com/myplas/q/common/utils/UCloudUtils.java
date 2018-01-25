@@ -72,7 +72,6 @@ public class UCloudUtils {
         httpAsyncTask = uFileSDK.putFile(request, file, keyName, new Callback() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.e(TAG, "onSuccess " + response);
                 if (uCloudListener != null) {
                     StringBuffer stringBuffer = new StringBuffer();
                     stringBuffer.append("http://")

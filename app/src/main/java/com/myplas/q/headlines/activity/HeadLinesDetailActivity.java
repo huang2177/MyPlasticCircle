@@ -1,9 +1,7 @@
 package com.myplas.q.headlines.activity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +15,18 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.appcontext.ActivityManager;
-import com.myplas.q.common.view.CommonDialog;
-import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.app.activity.ShareActivity;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
 import com.myplas.q.headlines.adapter.HeadLinesDetail_More_LVAdapetr;
-import com.myplas.q.common.api.API;
 import com.myplas.q.headlines.bean.SucribleDetailBean;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
 
@@ -47,16 +45,14 @@ import java.util.Map;
 public class HeadLinesDetailActivity extends BaseActivity implements ResultCallBack
         , View.OnClickListener, CommonDialog.DialogShowInterface {
     private WebView webView;
-    private Resources resources;
+    private TextView textviewShj;
     private WebSettings webSettings;
     private SharedUtils sharedUtils;
     private LinearLayout mlayoutWebView;
-    private LinearLayout linearLayout_share;
     private SucribleDetailBean sucribleDetailBean;
     private MyListview mListviewHot, mListviewAbout;
-    private TextView textView_tt_title, textView_shj;
-    private TextView textView_title, textView_content;
-    private TextView imageView_btn_next, imageView_btn_last;
+    private TextView textviewTitle, textviewContent;
+    private TextView imageviewBtnNext, imageviewBtnLast;
 
     private ScrollView mScrollView;
 
@@ -69,27 +65,28 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         setContentView(R.layout.layout_topline_detail_activity);
         StatusUtils.setStatusBar(this, true, true);
         StatusUtils.setStatusTextColor(true, this);
-        goBack(findViewById(R.id.img_back));
+        initTileBar();
+        setLeftIVResId(R.drawable.btn_back_black);
+        setTitleBarBackground(R.color.colorAccent);
+        setTitleBarTextColor(R.color.color_black1);
+        setRightIVResId(R.drawable.btn_share_black);
 
-        resources = getResources();
         sharedUtils = SharedUtils.getSharedUtils();
         mMainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
 
-        textView_content = F(R.id.hot_search);
-        imageView_btn_last = F(R.id.btn_last);
-        imageView_btn_next = F(R.id.btn_next);
-        textView_title = F(R.id.fx_ttxq_title);
-        textView_shj = F(R.id.fx_tt_title_shj);
+        textviewContent = F(R.id.hot_search);
+        imageviewBtnLast = F(R.id.btn_last);
+        imageviewBtnNext = F(R.id.btn_next);
+        textviewShj = F(R.id.fx_tt_title_shj);
         mlayoutWebView = F(R.id.find_detail_ll);
+        textviewTitle = F(R.id.fx_tt_title_text);
         mScrollView = F(R.id.headline_sceollview);
         mListviewHot = F(R.id.find_detail_mliatview);
-        textView_tt_title = F(R.id.fx_tt_title_text);
-        linearLayout_share = F(R.id.wd_linear_share);
         mListviewAbout = F(R.id.find_detail_about_mlv);
 
-        imageView_btn_last.setOnClickListener(this);
-        imageView_btn_next.setOnClickListener(this);
-        linearLayout_share.setOnClickListener(this);
+        mIVRight.setOnClickListener(this);
+        imageviewBtnLast.setOnClickListener(this);
+        imageviewBtnNext.setOnClickListener(this);
 
         webView = new WebView(getApplicationContext());
         mlayoutWebView.addView(webView);
@@ -172,7 +169,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 } else {
                     String content = new JSONObject(object.toString()).getString("message");
                     CommonDialog commonDialog = new CommonDialog();
-                    commonDialog.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
+                    commonDialog.showDialog(this, content, ("2".equals(err)) ? (1) : (3), this);
                 }
             }
         } catch (Exception e) {
@@ -180,10 +177,10 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     }
 
     public void showInfo(SucribleDetailBean sucribleDetailBean) {
-        textView_title.setText(sucribleDetailBean.getData().getCate_name());
-        textView_tt_title.setText("[" + sucribleDetailBean.getData().getType() + "]"
+        setTitle(sucribleDetailBean.getData().getCate_name());
+        textviewTitle.setText("[" + sucribleDetailBean.getData().getType() + "]"
                 + sucribleDetailBean.getData().getTitle());
-        textView_shj.setText(Html.fromHtml(sucribleDetailBean.getData().getAuthor()
+        textviewShj.setText(Html.fromHtml(sucribleDetailBean.getData().getAuthor()
                 + "   " + sucribleDetailBean.getData().getInput_time()
                 + "   " + sucribleDetailBean.getData().getPv()));
 
@@ -193,7 +190,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
 
         List<SucribleDetailBean.DataBean.SubscribeBean> subscribeBeanList = sucribleDetailBean.getData().getSubscribe();
         List<SucribleDetailBean.DataBean.HotBean> hotBeanList = sucribleDetailBean.getData().getHot();
-        textView_content.setVisibility((subscribeBeanList == null) ? (View.GONE) : (View.VISIBLE));
+        textviewContent.setVisibility((subscribeBeanList == null) ? (View.GONE) : (View.VISIBLE));
         HeadLinesDetail_More_LVAdapetr adapetrHot = new HeadLinesDetail_More_LVAdapetr(this, null, subscribeBeanList);
         mListviewAbout.setAdapter(adapetrHot);
 
@@ -237,7 +234,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                     TextUtils.toast(this, "没有更多了！");
                 }
                 break;
-            case R.id.wd_linear_share:
+            case R.id.titlebar_img_right:
                 Intent intent = new Intent(this, ShareActivity.class);
                 intent.putExtra("type", "2");
                 intent.putExtra("id", sucribleDetailBean.getData().getId());

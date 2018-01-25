@@ -82,6 +82,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     private String sign, id, pur_id, send_id;
 
+    private OnKeyboardChangeListener keyboardChangeListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +132,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTVRight.setOnClickListener(this);
         mIVFollow.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
-        mLayoutRoot.addOnLayoutChangeListener(new OnKeyboardChangeListener(this, this));
+        keyboardChangeListener = new OnKeyboardChangeListener(this, this);
+        mLayoutRoot.addOnLayoutChangeListener(keyboardChangeListener);
 
         Bundle bundle = getIntent().getBundleExtra("bundle");
         position = (bundle == null) ? 0 : bundle.getInt("position");
@@ -415,4 +418,9 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLayoutRoot.removeOnLayoutChangeListener(keyboardChangeListener);
+    }
 }

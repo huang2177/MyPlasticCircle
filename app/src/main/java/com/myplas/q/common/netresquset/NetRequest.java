@@ -204,7 +204,7 @@ public class NetRequest implements Callback {
     public void onResponse(Call call, Response response) {
         try {
             String result = Utils.decode(response.body().string());
-            boolean successful = response.isSuccessful() && TextUtils.notEmpty(result);
+            boolean successful = response.isSuccessful();
             message.what = successful ? 1 : 2;
             message.arg1 = type;
             message.obj = resultCallBack;

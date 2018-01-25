@@ -121,7 +121,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
         mCall.setOnClickListener(this);
         mShare.setOnClickListener(this);
         mFollow.setOnClickListener(this);
-        mIVConact.setOnClickListener(this);
+        mIVRight.setOnClickListener(this);
         imageClose.setOnClickListener(this);
         imageStore.setOnClickListener(this);
         mLayoutBack.setOnClickListener(this);
@@ -292,7 +292,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
             address.setText("地址：" + contactBean.getData().getAddress().replace("|", ""));
 
             mFans.setText(contactBean.getData().getFans());
-            mHeat.setText(contactBean.getData().getHeat());
+            mHeat.setText(contactBean.getData().getHeat_score());
             mfollow.setText(contactBean.getData().getFollowers());
             mIntrudtion.setText(contactBean.getData().getRecommendation());
 
@@ -300,7 +300,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
                     .load(contactBean.getData().getThumb())
                     .into(mHead);
 
-            if ("1".equals(contactBean.getData().getMerge_three())) {
+            if ("1".equals(contactBean.getData().getIsshop())) {
                 Glide.with(this).load(R.drawable.icon_identity_hl).into(mStart);
             }
 
@@ -308,7 +308,7 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
                     ? R.drawable.btn_contact_follow
                     : R.drawable.btn_contact_followed);
 
-            if ("1".equals(contactBean.getData().getMerge_three())) {
+            if ("1".equals(contactBean.getData().getIsshop())) {
                 mIndentify.setVisibility(View.VISIBLE);
             }
             if ("1".equals(contactBean.getData().getType())) {

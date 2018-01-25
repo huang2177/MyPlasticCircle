@@ -80,8 +80,8 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
                 viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
                 viewHolder.mTVTime.setText(demandList.get(position).getInput_time());
-                viewHolder.deliver.setText("出价:" + demandList.get(position).getBid());
-                viewHolder.reply.setText("回复:" + demandList.get(position).getReply());
+                viewHolder.deliver.setText("出价:" + demandList.get(position).getOffers());
+                viewHolder.reply.setText("回复:" + demandList.get(position).getComments());
 
 
                 viewHolder.mIVType.setImageResource(("1".equals(demandList.get(position).getCargo_type()))
@@ -95,8 +95,8 @@ public class Contact_Detail_LV_Adapter extends BaseAdapter {
                 viewHolder.mTVContent.setText(Html.fromHtml(html1));
 
                 viewHolder.mTVTime.setText(suppliesList.get(position).getInput_time());
-                viewHolder.deliver.setText("出价:" + suppliesList.get(position).getBid());
-                viewHolder.reply.setText("回复:" + suppliesList.get(position).getReply());
+                viewHolder.deliver.setText("出价:" + suppliesList.get(position).getOffers());
+                viewHolder.reply.setText("回复:" + suppliesList.get(position).getComments());
 
 
                 viewHolder.mIVType.setImageResource(("1".equals(suppliesList.get(position).getCargo_type()))

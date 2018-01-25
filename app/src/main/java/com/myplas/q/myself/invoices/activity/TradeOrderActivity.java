@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,7 +25,6 @@ import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -73,7 +71,7 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);//设置为一个1列的纵向网格布局
         mListView.setLayoutManager(mLayoutManager);
 
-        mIVConact.setOnClickListener(this);
+        mIVRight.setOnClickListener(this);
         //edittext 回车监听
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 

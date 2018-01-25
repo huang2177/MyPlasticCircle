@@ -1,47 +1,25 @@
 package com.myplas.q.app.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.Preference;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.myplas.q.R;
-import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.StatusUtils;
-import com.myplas.q.common.utils.TextUtils;
-import com.sobot.chat.widget.photoview.PhotoView;
-import com.sobot.chat.widget.photoview.PhotoViewAttacher;
-
-import me.panpf.sketch.SketchImageView;
-import me.panpf.sketch.decode.ImageAttrs;
-import me.panpf.sketch.request.CancelCause;
-import me.panpf.sketch.request.DisplayListener;
-import me.panpf.sketch.request.DownloadProgressListener;
-import me.panpf.sketch.request.ErrorCause;
-import me.panpf.sketch.request.ImageFrom;
 
 
 /**

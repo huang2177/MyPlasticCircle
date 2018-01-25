@@ -22,13 +22,14 @@ android {
 
     buildTypes {
         debug {
+            //minifyEnabled true
             signingConfig signingConfigs.sign
             buildConfigField("boolean", "API_ENV", "false")
             buildConfigField("boolean", "LOGABLE", "true")
             buildConfigField("boolean", "USE_STETHO", "true")
         }
         release {
-            minifyEnabled false
+            //minifyEnabled true
             signingConfig signingConfigs.sign
             buildConfigField("boolean", "API_ENV", "true")
             buildConfigField("boolean", "LOGABLE", "false")
@@ -95,18 +96,14 @@ dependencies {
     compile files('libs/glide-3.6.1.jar')
     compile 'io.github.openfeign:feign-gson:9.4.0'
 
-
-
     /*其他第三方框架*/
-    compile 'me.panpf:sketch:2.6.0'
     compile 'com.yanzhenjie:album:1.0.7'
     compile 'com.yanzhenjie:durban:1.0.1'
     compile 'com.mengfei:AddSubUtils:1.5.0'
     compile 'com.androidkun:XTabLayout:1.1.3'
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
-    //    compile 'com.androidadvance:topsnackbar:1.1.1'
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     compile 'com.github.huangbryant210707:MyBanner:2.6.1'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     compile 'com.github.huangbryant210707:HCalendarView:1.2.0'
     compile 'com.github.huangbryant210707:HIndicatorDialog:2.2.0'
     compile project(path: ':ufilesdk')

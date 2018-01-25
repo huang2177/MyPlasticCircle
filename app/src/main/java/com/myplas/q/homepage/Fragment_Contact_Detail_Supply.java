@@ -33,8 +33,7 @@ import java.util.Map;
  * 邮箱： 15378412400@163.com
  */
 
-public class Fragment_Contact_Detail_Supply extends Fragment implements ResultCallBack
-        , MyNestedScrollView.onScrollIterface {
+public class Fragment_Contact_Detail_Supply extends Fragment implements ResultCallBack {
 
     private View mView;
     private ListView mMyListview;
@@ -43,7 +42,6 @@ public class Fragment_Contact_Detail_Supply extends Fragment implements ResultCa
     private Intent mIntent;
     private SharedUtils mSharedUtils;
     private Contact_Detail_LV_Adapter mAdapter;
-    private List<ContactSupDemBean.DataBean> mBeanList;
 
     public int page;
     private List<ContactInfoBean.DataBean.SuppliesBean> suppliesList;
@@ -59,13 +57,11 @@ public class Fragment_Contact_Detail_Supply extends Fragment implements ResultCa
         mMyListview = (ListView) mView.findViewById(R.id.fragment_supdem_detail_lv);
         mScrollView = (MyNestedScrollView) mView.findViewById(R.id.scrollview);
 
-        mScrollView.setOnScrollIterface(this);
 
-        //getTaPur(type, type, page);
         mMyListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                goToDetail(null, null, position);
+                goToDetail(position);
             }
         });
 
@@ -77,31 +73,14 @@ public class Fragment_Contact_Detail_Supply extends Fragment implements ResultCa
         return mView;
     }
 
-    public void getTaPur(int type, int _type, int page) {
-        Map<String, String> map = new HashMap<>();
-        map.put("size", "15");
-        map.put("page", page + "");
-        map.put("type", type + "");
-        map.put("userid", mIntent.getStringExtra("userid"));
-        String url = API.BASEURL + API.GET_TA_PUR;
-        BaseActivity.postAsyn(getActivity(), url, map, this, _type, false);
-    }
 
-
-    @Override
-    public void loadMore() {
-//        page++;
-//        getTaPur(type, type, page);
-    }
-
-    //跳转至详情
-    public void goToDetail(String id_, String userid, int position) {
-        id_ = suppliesList.get(position).getPur_id();
-        userid = suppliesList.get(position).getUser_id();
-
+    /**
+     * 跳转至详情
+     */
+    public void goToDetail(int position) {
         Intent intent = new Intent(getActivity(), SupDem_Detail_Activity.class);
-        intent.putExtra("id", id_);
-        intent.putExtra("userid", userid);
+        intent.putExtra("id", suppliesList.get(position).getId());
+        intent.putExtra("userid", suppliesList.get(position).getUser_id());
         startActivity(intent);
     }
 

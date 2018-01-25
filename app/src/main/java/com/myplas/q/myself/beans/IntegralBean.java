@@ -217,185 +217,140 @@ public class IntegralBean {
              * deliverPriceCount : 0
              */
 
-            private String id;
-            private String p_id;
-            private String user_id;
-            private String model;
-            private String unit_price;
-            private String store_house;
-            private String f_name;
-            private String input_time;
-            private String type;
-            private String content;
             private String c_name;
+            private String cargo_type;
+            private String f_name;
+            private String id;
+            private String img;
+            private String input_time;
+            private String model;
             private String name;
-            private String thumb;
-            private String thumbqq;
-            private String sex;
-            private String mobile_province;
-            private String is_pass;
-            private String contents;
-            private String saysCount;
-            private String deliverPriceCount;
+            private String p_id;
+            private String release_offer_total;
+            private String release_reply_total;
+            private String store_house;
+            private String type;
+            private String unit_price;
+            private String user_id;
 
-            public String getId() {
-                return id;
+            public void setC_name(String c_name) {
+                this.c_name = c_name;
             }
 
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getP_id() {
-                return p_id;
-            }
-
-            public void setP_id(String p_id) {
-                this.p_id = p_id;
-            }
-
-            public String getUser_id() {
-                return user_id;
-            }
-
-            public void setUser_id(String user_id) {
-                this.user_id = user_id;
-            }
-
-            public Object getModel() {
-                return model;
-            }
-
-            public void setModel(String model) {
-                this.model = model;
-            }
-
-            public String getUnit_price() {
-                return unit_price;
-            }
-
-            public void setUnit_price(String unit_price) {
-                this.unit_price = unit_price;
-            }
-
-            public String getStore_house() {
-                return store_house;
-            }
-
-            public void setStore_house(String store_house) {
-                this.store_house = store_house;
-            }
-
-            public Object getF_name() {
-                return f_name;
+            public void setCargo_type(String cargo_type) {
+                this.cargo_type = cargo_type;
             }
 
             public void setF_name(String f_name) {
                 this.f_name = f_name;
             }
 
-            public String getInput_time() {
-                return input_time;
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public void setImg(String img) {
+                this.img = img;
             }
 
             public void setInput_time(String input_time) {
                 this.input_time = input_time;
             }
 
-            public String getType() {
-                return type;
-            }
-
-            public void setType(String type) {
-                this.type = type;
-            }
-
-            public String getContent() {
-                return content;
-            }
-
-            public void setContent(String content) {
-                this.content = content;
-            }
-
-            public String getC_name() {
-                return c_name;
-            }
-
-            public void setC_name(String c_name) {
-                this.c_name = c_name;
-            }
-
-            public String getName() {
-                return name;
+            public void setModel(String model) {
+                this.model = model;
             }
 
             public void setName(String name) {
                 this.name = name;
             }
 
-            public String getThumb() {
-                return thumb;
+            public void setP_id(String p_id) {
+                this.p_id = p_id;
             }
 
-            public void setThumb(String thumb) {
-                this.thumb = thumb;
+            public void setRelease_offer_total(String release_offer_total) {
+                this.release_offer_total = release_offer_total;
             }
 
-            public String getThumbqq() {
-                return thumbqq;
+            public void setRelease_reply_total(String release_reply_total) {
+                this.release_reply_total = release_reply_total;
             }
 
-            public void setThumbqq(String thumbqq) {
-                this.thumbqq = thumbqq;
+            public void setStore_house(String store_house) {
+                this.store_house = store_house;
             }
 
-            public String getSex() {
-                return sex;
+            public void setType(String type) {
+                this.type = type;
             }
 
-            public void setSex(String sex) {
-                this.sex = sex;
+            public void setUnit_price(String unit_price) {
+                this.unit_price = unit_price;
             }
 
-            public String getMobile_province() {
-                return mobile_province;
+            public void setUser_id(String user_id) {
+                this.user_id = user_id;
             }
 
-            public void setMobile_province(String mobile_province) {
-                this.mobile_province = mobile_province;
+            public String getC_name() {
+                return c_name;
             }
 
-            public String getIs_pass() {
-                return is_pass;
+            public String getCargo_type() {
+                return cargo_type;
             }
 
-            public void setIs_pass(String is_pass) {
-                this.is_pass = is_pass;
+            public String getF_name() {
+                return f_name;
             }
 
-            public String getContents() {
-                return contents;
+            public String getId() {
+                return id;
             }
 
-            public void setContents(String contents) {
-                this.contents = contents;
+            public String getImg() {
+                return img;
             }
 
-            public String getSaysCount() {
-                return saysCount;
+            public String getInput_time() {
+                return input_time;
             }
 
-            public void setSaysCount(String saysCount) {
-                this.saysCount = saysCount;
+            public String getModel() {
+                return model;
             }
 
-            public String getDeliverPriceCount() {
-                return deliverPriceCount;
+            public String getName() {
+                return name;
             }
 
-            public void setDeliverPriceCount(String deliverPriceCount) {
-                this.deliverPriceCount = deliverPriceCount;
+            public String getP_id() {
+                return p_id;
+            }
+
+            public String getRelease_offer_total() {
+                return release_offer_total;
+            }
+
+            public String getRelease_reply_total() {
+                return release_reply_total;
+            }
+
+            public String getStore_house() {
+                return store_house;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public String getUnit_price() {
+                return unit_price;
+            }
+
+            public String getUser_id() {
+                return user_id;
             }
         }
     }

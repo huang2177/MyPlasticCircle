@@ -526,10 +526,16 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         this.num = position;
         mHolderMap.get(supDemPosition).supplyDemandShm.setVisibility(View.GONE);
         mHolderMap.get(supDemPosition).linearSupdemIsselected.setVisibility(View.VISIBLE);
-        String html = (list_msg.get(position).getType().equals("1")) ?
-                ("<font color='#EEAD0E'>" + "求购:" + "</font>" + list_msg.get(position).getContents()) :
-                ("<font color='#9AC0CD'>" + "供给:" + "</font>" + list_msg.get(position).getContents());
-        mHolderMap.get(supDemPosition).textView.setText(Html.fromHtml(html));
+        String type = (list_msg.get(position).getType().equals("1"))
+                ? ("<font color='#EEAD0E'>" + "求购:" + "</font>")
+                : ("<font color='#9AC0CD'>" + "供给:" + "</font>");
+
+        String content = type + "价格" + list_msg.get(position).getUnit_price()
+                + "/" + list_msg.get(position).getModel()
+                + "/" + list_msg.get(position).getF_name()
+                + "/" + list_msg.get(position).getC_name();
+
+        mHolderMap.get(supDemPosition).textView.setText(Html.fromHtml(content));
         mHolderMap.get(supDemPosition).time.setText(list_msg.get(position).getInput_time());
     }
 

@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
-import com.myplas.q.common.view.MyListview;
 import com.myplas.q.common.listener.MyOnItemClickListener;
+import com.myplas.q.common.view.MyListview;
 import com.myplas.q.supdem.beans.ReplyBean;
 
 import java.util.HashMap;
@@ -65,7 +65,7 @@ public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
 
             Glide.with(context).load(list.get(position).getThumb()).into(viewHolder.mIVHead);
 
-            List<ReplyBean.DataBean.ReplayBean> childList = list.get(position).getReplay();
+            List<ReplyBean.DataBean.CommentsBean> childList = list.get(position).getComments();
 
             if (childList != null && childList.size() != 0) {
                 mChildAdapter.setList(childList);
@@ -133,7 +133,7 @@ public class SupDem_Detail_LV_HFAdapter extends RecyclerView.Adapter {
             mRecyclerView = (MyListview) convertView.findViewById(R.id.item_rv);
 
             mChildAdapter = new SupDem_Detail_LV_HF_Child_Adapter(context, mMyOnItemClickListener);
-            List<ReplyBean.DataBean.ReplayBean> childList = list.get(position).getReplay();
+            List<ReplyBean.DataBean.CommentsBean> childList = list.get(position).getComments();
 //            LinearLayoutManager manager = new LinearLayoutManager(context);
 //            mRecyclerView.setLayoutManager(manager);
         }
