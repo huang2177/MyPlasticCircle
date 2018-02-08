@@ -58,7 +58,7 @@
             android:id="@+id/blacklist_img"
             android:layout_width="100dp"
             android:layout_height="65dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="centerCrop" />
 
     </LinearLayout>
 

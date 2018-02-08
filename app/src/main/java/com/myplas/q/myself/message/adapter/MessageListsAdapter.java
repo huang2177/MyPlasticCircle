@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.myplas.q.R;
 import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.ACache;
+import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.myself.beans.MyMessageBean;
@@ -34,14 +35,14 @@ public class MessageListsAdapter extends BaseAdapter {
     Map<Integer, View> mViewMap;
     List<MyMessageBean.DataBean> list;
 
-    private ACache mAcache;
+    private SharedUtils sharedUtils;
 
     @SuppressLint("UseSparseArrays")
     public MessageListsAdapter(Context context, List<MyMessageBean.DataBean> list) {
         this.list = list;
         this.context = context;
         mViewMap = new HashMap<>();
-        mAcache = ACache.get(context);
+        sharedUtils = SharedUtils.getSharedUtils();
     }
 
     @Override
@@ -84,32 +85,32 @@ public class MessageListsAdapter extends BaseAdapter {
             if (list.get(position).getType().equals("1")) {
                 title = "供求消息";
                 imgRes = R.drawable.icon_supply_and_demand_news;
-                viewHolder.mDragView.setText(mAcache.getAsString(Constant.R_SUPDEM_MSG));
+                viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_SUPDEM_MSG) + "");
 
-                viewHolder.mDragView.setVisibility(mAcache.getAsString(Constant.R_SUPDEM_MSG).equals("0")
+                viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_SUPDEM_MSG) == 0
                         ? View.GONE
                         : View.VISIBLE);
             } else if (list.get(position).getType().equals("2")) {
                 title = "出价消息";
                 imgRes = R.drawable.icon_bid_message;
-                viewHolder.mDragView.setText(mAcache.getAsString(Constant.R_PUR_MSG));
-                viewHolder.mDragView.setVisibility(mAcache.getAsString(Constant.R_PUR_MSG).equals("0")
+                viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_PUR_MSG) + "");
+                viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_PUR_MSG) == 0
                         ? View.GONE
                         : View.VISIBLE);
             } else if (list.get(position).getType().equals("3")) {
                 title = "回复消息";
                 imgRes = R.drawable.icon_reply_message;
-                viewHolder.mDragView.setText(mAcache.getAsString(Constant.R_REPLY_MSG));
+                viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_REPLY_MSG) + "");
 
-                viewHolder.mDragView.setVisibility(mAcache.getAsString(Constant.R_REPLY_MSG).equals("0")
+                viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_REPLY_MSG) == 0
                         ? View.GONE
                         : View.VISIBLE);
             } else {
                 title = "互动消息";
                 imgRes = R.drawable.icon_interaction_message;
-                viewHolder.mDragView.setText(mAcache.getAsString(Constant.R_INTER_MSG));
+                viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_INTER_MSG) + "");
 
-                viewHolder.mDragView.setVisibility(mAcache.getAsString(Constant.R_INTER_MSG).equals("0")
+                viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_INTER_MSG) == 0
                         ? View.GONE
                         : View.VISIBLE);
             }

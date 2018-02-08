@@ -9,9 +9,10 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.utils.ContactAccessUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.myself.fans.adapter.MyIntroductionAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myself.beans.MyIntroductionBean;
@@ -54,7 +55,7 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 utils.checkPremissions(mList.get(position).getUser_id()
-                        , mList.get(position).getMerge_three());
+                        , mList.get(position).getIs_shop());
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -102,12 +103,6 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
                         wdyjAdapter.setList(mList);
                         wdyjAdapter.notifyDataSetChanged();
                     }
-                } else {
-                    EmptyView emptyView = new EmptyView(this);
-                    emptyView.mustCallInitWay(listView);
-                    emptyView.setMyManager(R.drawable.icon_null);
-                    emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
-                    listView.setEmptyView(emptyView);
                 }
             }
 
@@ -117,6 +112,22 @@ public class MyIntroductionActivity extends BaseActivity implements ResultCallBa
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            if (httpCode == 404) {
+                if (page == 1) {
+                    EmptyView emptyView = new EmptyView(this);
+                    emptyView.mustCallInitWay(listView);
+                    emptyView.setNoMessageText(jsonObject.getString("message"));
+                    emptyView.setMyManager(R.drawable.icon_null);
+                    listView.setEmptyView(emptyView);
+                } else {
+                    TextUtils.toast(this, "没有更多数据！");
+                }
+            }
+        } catch (Exception e) {
+
+        }
     }
 
 }

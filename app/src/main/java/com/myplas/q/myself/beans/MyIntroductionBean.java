@@ -59,14 +59,14 @@ public class MyIntroductionBean {
         private String type;
         private String buy;
         private String sale;
-        private String merge_three;
+        private String is_shop;
 
-        public void setMerge_three(String merge_three) {
-            this.merge_three = merge_three;
+        public void setIs_shop(String is_shop) {
+            this.is_shop = is_shop;
         }
 
-        public String getMerge_three() {
-            return merge_three;
+        public String getIs_shop() {
+            return is_shop;
         }
 
         public String getUser_id() {

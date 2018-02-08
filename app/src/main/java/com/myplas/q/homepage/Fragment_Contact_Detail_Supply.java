@@ -12,20 +12,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyNestedScrollView;
 import com.myplas.q.homepage.adapter.Contact_Detail_LV_Adapter;
 import com.myplas.q.homepage.beans.ContactInfoBean;
-import com.myplas.q.homepage.beans.ContactSupDemBean;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 作者:huangshuang

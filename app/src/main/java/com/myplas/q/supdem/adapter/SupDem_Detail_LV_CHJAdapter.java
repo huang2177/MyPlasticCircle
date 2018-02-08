@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.supdem.beans.DeliverPriceBean;
 
 import java.util.List;
@@ -87,11 +88,14 @@ public class SupDem_Detail_LV_CHJAdapter extends BaseAdapter {
             });
         } catch (Exception e) {
         }
-
         return convertView;
     }
 
     private void call(String tel) {
+        if (tel.contains("*") || tel == null) {
+            TextUtils.toast(context, "对方暂未公开电话号码！");
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

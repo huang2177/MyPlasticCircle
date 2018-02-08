@@ -72,7 +72,7 @@ public class TheirFansFollowAdapter extends BaseAdapter {
             viewHolder.mz.setText(list.get(position).getName());
             viewHolder.gj.setText(list.get(position).getC_name());
 
-            viewHolder.rz.setImageResource("1".equals(list.get(position).getMerge_three())
+            viewHolder.rz.setImageResource("1".equals(list.get(position).getIsshop())
                     ? R.drawable.icon_identity_hl
                     : 0);
 

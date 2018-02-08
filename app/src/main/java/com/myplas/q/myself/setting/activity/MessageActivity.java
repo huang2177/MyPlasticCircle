@@ -1,18 +1,18 @@
 package com.myplas.q.myself.setting.activity;
 
-import android.app.Service;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.util.Log;
 
+import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.view.SwitchButton;
 import com.myplas.q.myself.beans.MySelfInfo;
 import com.sobot.chat.api.model.Information;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,14 +28,13 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
-    private SwitchButton switch_gz, switch_hf;
+    private SwitchButton switchGz, switchHf;
 
     private Map<String, String> map;
-    private MySelfInfo.DataBean.AllowSendBean mBean;
     private SharedUtils sharedUtils;
-    private String allow_sendmsg_gz, allow_sendmsg_hf;
+    private String allowSendmsgGz, allowSendmsgHf;
 
-    private Vibrator mVibrator;
+    private MySelfInfo.DataBean.AllowSendBean allowSendBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,24 +43,21 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
         initTileBar();
         setTitle("短信设置");
         init();
+
+        getData();
     }
 
     private void init() {
-        map = new HashMap<>();
+        map = new HashMap<>(16);
         sharedUtils = SharedUtils.getSharedUtils();
 
-        switch_gz = F(R.id.message_switch_gz);
-        switch_hf = F(R.id.message_switch_hf);
+        switchGz = F(R.id.message_switch_gz);
+        switchHf = F(R.id.message_switch_hf);
 
-        switch_hf.setOnCheckedChangeListener(this);
-        switch_gz.setOnCheckedChangeListener(this);
-        mVibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
+        switchHf.setOnCheckedChangeListener(this);
+        switchGz.setOnCheckedChangeListener(this);
+        //mVibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
 
-        mBean = (MySelfInfo.DataBean.AllowSendBean) getIntent().getSerializableExtra("Allow_send");
-        if (mBean != null) {
-            switch_gz.setChecked((mBean.getFocus().equals("1")) ? (false) : (true));
-            switch_hf.setChecked(mBean.getRepeat().equals("1") ? false : true);
-        }
     }
 
     @Override
@@ -69,36 +65,57 @@ public class MessageActivity extends BaseActivity implements SwitchButton.OnChec
         switch (buttonView.getId()) {
             case R.id.message_switch_gz:
 //                mVibrator.vibrate(new long[]{0,100}, -1);
-                allow_sendmsg_gz = (isChecked) ? "0" : "1";
+                allowSendmsgGz = (isChecked) ? "0" : "1";
                 map.put("type", "0");
-                map.put("is_allow", allow_sendmsg_gz);
-                saveSelfInfo(API.FAVORATE_SET, map, 1);
+                map.put("is_allow", allowSendmsgGz);
+                saveSelfInfo(1);
                 break;
             case R.id.message_switch_hf:
 //                mVibrator.vibrate(new long[]{0,100}, -1);
-                allow_sendmsg_hf = (isChecked) ? "0" : "1";
+                allowSendmsgHf = (isChecked) ? "0" : "1";
                 map.put("type", "1");
-                map.put("is_allow", allow_sendmsg_hf);
-                saveSelfInfo(API.FAVORATE_SET, map, 2);
+                map.put("is_allow", allowSendmsgHf);
+                saveSelfInfo(2);
                 break;
             default:
                 break;
         }
     }
 
-    public void saveSelfInfo(String method, Map map, int type) {
-        postAsyn(this, method, map, this, type);
+    public void getData() {
+        getAsyn(this, API.GET_SELF_INFO, null, this, 3, false);
+    }
+
+    public void saveSelfInfo(int type) {
+        postAsyn(this, API.FAVORATE_SET, map, this, type, false);
     }
 
 
     @Override
     protected void onStop() {
         super.onStop();
-        mVibrator.cancel();
+        //mVibrator.cancel();
     }
 
     @Override
     public void callBack(Object object, int type) {
+        try {
+            Gson gson = new Gson();
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String err = jsonObject.getString("code");
+            if (type == 3) {
+                if ("0".equals(err)) {
+                    MySelfInfo mySelfInfo = gson.fromJson(object.toString(), MySelfInfo.class);
+                    allowSendBean = mySelfInfo.getData().getAllow_send();
+                    if (allowSendBean != null) {
+                        switchHf.setChecked("1".equals(allowSendBean.getRepeat()) ? false : true);
+                        switchGz.setChecked(("1".equals(allowSendBean.getFocus())) ? (false) : (true));
+                    }
+                }
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     @Override

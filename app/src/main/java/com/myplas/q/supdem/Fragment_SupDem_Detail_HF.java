@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,12 @@ import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.listener.MyOnItemClickListener;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.supdem.beans.ReplyBean;
 import com.myplas.q.supdem.adapter.SupDem_Detail_LV_HFAdapter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;

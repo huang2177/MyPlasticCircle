@@ -3,20 +3,18 @@ package com.myplas.q.myself.integral.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.myself.beans.RecordBean;
 import com.myplas.q.myself.integral.adapter.Integral_Record_Adapter;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -34,13 +32,11 @@ import java.util.Map;
 public class IntegralRecordActivtity extends BaseActivity implements ResultCallBack {
     boolean hasMoerData = true;
     private ListView listView;
+    private EmptyView emptyView;
     private SharedUtils sharedUtils;
     private int page = 1, visibleItemCount;
     private List<RecordBean.DataBean> list;
     private Integral_Record_Adapter record_adapter;
-
-    private TextView textView;
-    private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +46,9 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
         setTitle("兑换记录");
 
         list = new ArrayList<>();
-        textView = F(R.id.integral_text);
-        layout = F(R.id.integral_prompt);
         sharedUtils = SharedUtils.getSharedUtils();
         listView = F(R.id.integral_record_listview);
+        emptyView = F(R.id.integral_record_empty);
 
         //加载更多
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -93,10 +88,10 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
             RecordBean recordBean = null;
             if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
                 Gson gson = new Gson();
-                layout.setVisibility(View.GONE);
-                listView.setVisibility(View.VISIBLE);
                 recordBean = gson.fromJson(object.toString(), RecordBean.class);
                 if (page == 1) {
+                    emptyView.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
                     record_adapter = new Integral_Record_Adapter(this, recordBean.getData());
                     listView.setAdapter(record_adapter);
                     list.addAll(recordBean.getData());
@@ -105,13 +100,6 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
                     record_adapter.setList(list);
                     record_adapter.notifyDataSetChanged();
                 }
-            } else {
-                hasMoerData = false;
-                if (page == 1) {
-                    listView.setVisibility(View.GONE);
-                    layout.setVisibility(View.VISIBLE);
-                    textView.setText(new JSONObject(object.toString()).getString("message"));
-                }
             }
         } catch (Exception e) {
         }
@@ -119,7 +107,20 @@ public class IntegralRecordActivtity extends BaseActivity implements ResultCallB
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            if (httpCode == 404) {
+                if (page == 1) {
+                    listView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    emptyView.setNoMessageText(jsonObject.getString("message"));
+                    emptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
+                } else {
+                    TextUtils.toast(this, "没有更多数据！");
+                }
+            }
+        } catch (Exception e) {
 
+        }
     }
-
 }

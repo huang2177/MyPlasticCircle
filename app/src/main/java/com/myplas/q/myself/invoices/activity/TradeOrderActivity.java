@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.app.activity.BaseActivity;
@@ -169,8 +169,8 @@ public class TradeOrderActivity extends BaseActivity implements OnClickListener,
                 mListView.setVisibility(View.GONE);
                 mBarLayout.setVisibility(View.GONE);
                 String msg = new JSONObject(message).getString("message");
-                //mEmptyView.setNoMessageText(msg);
-                mEmptyView.setMyManager(R.drawable.icon_invoices_null);
+                mEmptyView.setNoMessageText("您还没有相关订单~");
+                mEmptyView.setMyManager(R.drawable.headline_icon_null);
             }
         } catch (Exception e) {
 

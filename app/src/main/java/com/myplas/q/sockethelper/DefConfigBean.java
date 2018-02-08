@@ -48,7 +48,7 @@ public class DefConfigBean implements Serializable {
         this.notice = notice;
     }
 
-    public static class ConfigBean {
+    public static class ConfigBean implements Serializable {
         /**
          * host : 116.62.179.6
          * port : 15674
@@ -441,103 +441,103 @@ public class DefConfigBean implements Serializable {
          * communicate_content : []
          */
 
-        private String is_socket_connected;
-        private String unread_supply_and_demand;
-        private String unread_customer;
-        private String unread_myorder;
-        private String unread_who_saw_me;
-        private String unread_recommend_update;
-        private String unread_reply_user_msg;
-        private String unread_reply_purchase_msg;
-        private String unread_plastic_msg;
-        private String unread_purchase_msg;
-        private String unread_mymsg;
+        private int is_socket_connected;
+        private int unread_supply_and_demand;
+        private int unread_customer;
+        private int unread_myorder;
+        private int unread_who_saw_me;
+        private int unread_recommend_update;
+        private int unread_reply_user_msg;
+        private int unread_reply_purchase_msg;
+        private int unread_plastic_msg;
+        private int unread_purchase_msg;
+        private int unread_mymsg;
 
-        public String getIs_socket_connected() {
+        public int getIs_socket_connected() {
             return is_socket_connected;
         }
 
-        public void setIs_socket_connected(String is_socket_connected) {
+        public void setIs_socket_connected(int is_socket_connected) {
             this.is_socket_connected = is_socket_connected;
         }
 
-        public String getUnread_supply_and_demand() {
+        public int getUnread_supply_and_demand() {
             return unread_supply_and_demand;
         }
 
-        public void setUnread_supply_and_demand(String unread_supply_and_demand) {
+        public void setUnread_supply_and_demand(int unread_supply_and_demand) {
             this.unread_supply_and_demand = unread_supply_and_demand;
         }
 
-        public String getUnread_customer() {
+        public int getUnread_customer() {
             return unread_customer;
         }
 
-        public void setUnread_customer(String unread_customer) {
+        public void setUnread_customer(int unread_customer) {
             this.unread_customer = unread_customer;
         }
 
-        public String getUnread_myorder() {
+        public int getUnread_myorder() {
             return unread_myorder;
         }
 
-        public void setUnread_myorder(String unread_myorder) {
+        public void setUnread_myorder(int unread_myorder) {
             this.unread_myorder = unread_myorder;
         }
 
-        public String getUnread_who_saw_me() {
+        public int getUnread_who_saw_me() {
             return unread_who_saw_me;
         }
 
-        public void setUnread_who_saw_me(String unread_who_saw_me) {
+        public void setUnread_who_saw_me(int unread_who_saw_me) {
             this.unread_who_saw_me = unread_who_saw_me;
         }
 
-        public String getUnread_recommend_update() {
+        public int getUnread_recommend_update() {
             return unread_recommend_update;
         }
 
-        public void setUnread_recommend_update(String unread_recommend_update) {
+        public void setUnread_recommend_update(int unread_recommend_update) {
             this.unread_recommend_update = unread_recommend_update;
         }
 
-        public String getUnread_reply_user_msg() {
+        public int getUnread_reply_user_msg() {
             return unread_reply_user_msg;
         }
 
-        public void setUnread_reply_user_msg(String unread_reply_user_msg) {
+        public void setUnread_reply_user_msg(int unread_reply_user_msg) {
             this.unread_reply_user_msg = unread_reply_user_msg;
         }
 
-        public String getUnread_reply_purchase_msg() {
+        public int getUnread_reply_purchase_msg() {
             return unread_reply_purchase_msg;
         }
 
-        public void setUnread_reply_purchase_msg(String unread_reply_purchase_msg) {
+        public void setUnread_reply_purchase_msg(int unread_reply_purchase_msg) {
             this.unread_reply_purchase_msg = unread_reply_purchase_msg;
         }
 
-        public String getUnread_plastic_msg() {
+        public int getUnread_plastic_msg() {
             return unread_plastic_msg;
         }
 
-        public void setUnread_plastic_msg(String unread_plastic_msg) {
+        public void setUnread_plastic_msg(int unread_plastic_msg) {
             this.unread_plastic_msg = unread_plastic_msg;
         }
 
-        public String getUnread_purchase_msg() {
+        public int getUnread_purchase_msg() {
             return unread_purchase_msg;
         }
 
-        public void setUnread_purchase_msg(String unread_purchase_msg) {
+        public void setUnread_purchase_msg(int unread_purchase_msg) {
             this.unread_purchase_msg = unread_purchase_msg;
         }
 
-        public String getUnread_mymsg() {
+        public int getUnread_mymsg() {
             return unread_mymsg;
         }
 
-        public void setUnread_mymsg(String unread_mymsg) {
+        public void setUnread_mymsg(int unread_mymsg) {
             this.unread_mymsg = unread_mymsg;
         }
 

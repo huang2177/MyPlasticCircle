@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/common_layout_titlebar"/>
+    <include layout="@layout/common_layout_titlebar" />
 
-    <com.myplas.q.common.view.pinnedheadlistview.PinnedHeaderListView
+    <!--<com.myplas.q.common.view.pinnedheadlistview.PinnedHeaderListView-->
+    <!--android:id="@+id/integral_detial_listview"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:divider="@color/color_gray_divider_in"-->
+    <!--android:dividerHeight="1px"-->
+    <!--android:scrollbars="none" />-->
+
+    <ListView
         android:id="@+id/integral_detial_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@color/color_gray_divider_in"
-        android:dividerHeight="1px"
-        android:scrollbars="none"/>
+        android:layout_height="match_parent" />
 
     <com.myplas.q.common.view.EmptyView
         android:id="@+id/integral_detial_nrll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal" />
 
 </LinearLayout>

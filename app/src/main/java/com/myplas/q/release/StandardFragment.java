@@ -3,7 +3,6 @@ package com.myplas.q.release;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +15,16 @@ import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyBottomSheetDialog;
-import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.release.bean.SecondPurBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
+import com.myplas.q.supdem.beans.SupDemDetailBean;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -62,17 +60,17 @@ public class StandardFragment extends BaseFragment implements View.OnClickListen
         id = getActivity().getIntent().getStringExtra("id");
         view = View.inflate(getActivity(), R.layout.fragment_layout_release_standard, null);
 
-        mEdit_JH = f(R.id.release_ev_jh);
-        mTV_Type = f(R.id.release_ev_type);
-        mEditModel = f(R.id.release_ev_mode);
-        mEditPirce = f(R.id.release_ev_pirce);
-        mTV_NF = f(R.id.release_ev_nowfutrue);
-        mEditF_Name = f(R.id.release_ev_production);
+        mEdit_JH = F(view, R.id.release_ev_jh);
+        mTV_Type = F(view, R.id.release_ev_type);
+        mEditModel = F(view, R.id.release_ev_mode);
+        mEditPirce = F(view, R.id.release_ev_pirce);
+        mTV_NF = F(view, R.id.release_ev_nowfutrue);
+        mEditF_Name = F(view, R.id.release_ev_production);
 
         mTV_NF.setOnClickListener(this);
         mTV_Type.setOnClickListener(this);
         if (id != null) {
-            mode = "3";
+            mode = "2";
             secondPub();
         }
     }
@@ -83,9 +81,6 @@ public class StandardFragment extends BaseFragment implements View.OnClickListen
         return view;
     }
 
-    public <T extends View> T f(int id) {
-        return (T) view.findViewById(id);
-    }
 
     public void pub() {
         if (!isInputContent(2)) {
@@ -111,7 +106,7 @@ public class StandardFragment extends BaseFragment implements View.OnClickListen
     public void secondPub() {
         Map<String, String> map = new HashMap<String, String>(8);
         map.put("id", id);
-        postAsyn(getActivity(), API.SECOND_PUB, map, this, 2);
+        getAsyn(getActivity(), API.RELEASEMSGDETAIL, map, this, 2);
     }
 
     @Override
@@ -183,23 +178,21 @@ public class StandardFragment extends BaseFragment implements View.OnClickListen
                     if (id != null) {
                         ActivityManager.finishActivity(MySupDemActivity.class);
                     }
-                } else {
-                    TextUtils.toast(getActivity(), new JSONObject(object.toString()).getString("message"));
                 }
             }
             if (type == 2) {
-                if (err.equals("0")) {
-                    SecondPurBean secondPurBean = gson.fromJson(object.toString(), SecondPurBean.class);
+                if ("0".equals(err)) {
+                    SupDemDetailBean secondPurBean = gson.fromJson(object.toString(), SupDemDetailBean.class);
                     this.type = secondPurBean.getData().getType();
-                    mEditPirce.setText(secondPurBean.getData().getPrice());
+                    mEditPirce.setText(secondPurBean.getData().getUnit_price());
                     mEditModel.setText(secondPurBean.getData().getModel());
-                    mEditF_Name.setText(secondPurBean.getData().getVendor());
-                    mEdit_JH.setText(secondPurBean.getData().getStorehouse());
+                    mEditF_Name.setText(secondPurBean.getData().getF_name());
+                    mEdit_JH.setText(secondPurBean.getData().getStore_house());
 
                     mTV_Type.setText("2".equals(secondPurBean.getData().getType())
                             ? "供给"
                             : "求购");
-                    mTV_NF.setText("0".equals(secondPurBean.getData().getTransaction_type())
+                    mTV_NF.setText("1".equals(secondPurBean.getData().getCargo_type())
                             ? "现货"
                             : "期货");
 

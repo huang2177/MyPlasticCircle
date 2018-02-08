@@ -3,7 +3,6 @@ package com.myplas.q.headlines.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,11 +12,10 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.ShareActivity;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.headlines.bean.MySelfBean;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 
@@ -64,16 +62,16 @@ public class MySelfActivity extends BaseActivity implements ResultCallBack, View
             setTitle("企业信用信息");
             share_btn.setVisibility(View.GONE);
             map.put("link_id", getIntent().getStringExtra("id"));
-            getSelectCate();
+            getSelectCate(map);
         } else if ("1".equals(getIntent().getStringExtra("data"))) {
             setTitle("我的信用信息");
             share_btn.setVisibility(View.VISIBLE);
-            getSelectCate();
+            getSelectCate(null);
         }
     }
 
-    public void getSelectCate() {
-        getAsyn(this, API.CREDIT_CERTIFICATE, null, this, 1);
+    public void getSelectCate(Map<String, String> map) {
+        getAsyn(this, API.CREDIT_CERTIFICATE, map, this, 1);
     }
 
     @Override

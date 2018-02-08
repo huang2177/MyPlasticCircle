@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.supdem.beans.DeliverPriceBean;

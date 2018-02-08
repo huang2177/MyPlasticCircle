@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EditTextField;
@@ -27,10 +27,12 @@ import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.headlines.adapter.HeadSearch_LV_Adapter;
 import com.myplas.q.headlines.bean.HeadSearchBean;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
+import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 import com.myplas.q.supdem.beans.HistoryBean;
 import com.myplas.q.headlines.bean.SearchNoResultBean;
 import com.myplas.q.supdem.adapter.SupDem_Search_Grid_Adapter;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -60,12 +62,14 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     private HistoryBean historyBean;
     private SearchNoResultBean bean;
-    private List<HeadSearchBean.DataBean> list;
+    private List<HeadSearchBean.NewsBean> list;
     private HeadSearch_LV_Adapter mSearchLvAdapter;
     private SupDem_Search_Grid_Adapter mSearchGridAdapter;
 
+    private String code;
     private String keywords;
     private int page, visibleItemCount, position;
+    private String clickId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +84,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         String data = getIntent().getStringExtra("data");
         if (TextUtils.notEmpty(data)) {//从供求qq页面跳转过来
             getData(data);
-        } else {                            //从头条跳转过来
+        } else {                      //从头条跳转过来
             getSearch_Record();
         }
     }
@@ -196,6 +200,19 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
         getAsyn(this, API.IS_PAID_SUBSCRIPTION, map, this, 4);
     }
 
+    /**
+     * 获取详情 检查塑豆
+     *
+     * @param id
+     * @param type
+     */
+    public void getNetData(String id) {
+        Map<String, String> map = new HashMap<String, String>(8);
+        map.put("id", id);
+        map.put("ispass", code);
+        getAsyn(this, API.GET_DETAIL_INFO, map, this, 7);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -234,6 +251,7 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 getData(keywords);
                 break;
             case R.id.search_listview_result1:
+                clickId = list.get(position).getId();
                 HeadLineSearchActivity.this.position = position;
                 isPaidSubscription(list.get(position).getId());
                 break;
@@ -256,8 +274,16 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
     @Override
     public void callBack(Object object, int type) {
         try {
+
+            if (type == 3) {
+                TextUtils.toast(this, "删除成功！");
+                mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
+                mgvHistory.setAdapter(mSearchGridAdapter);
+            }
+
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
+
             if (type == 1 && "0".equals(err)) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
@@ -274,23 +300,29 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 if ("0".equals(err)) {
                     HeadSearchBean searchBean = gson.fromJson(object.toString(), HeadSearchBean.class);
                     if (page == 1) {
-                        listView.setVisibility(View.VISIBLE);
-                        mLayoutEmpty.setVisibility(View.GONE);
-                        mSearchLvAdapter = new HeadSearch_LV_Adapter(this, searchBean.getData());
+                        if (listView.getVisibility() == View.GONE) {
+                            listView.setVisibility(View.VISIBLE);
+                            mLayoutEmpty.setVisibility(View.GONE);
+                        }
+                        mSearchLvAdapter = new HeadSearch_LV_Adapter(this, searchBean.getNews());
                         listView.setAdapter(mSearchLvAdapter);
 
                         list.clear();
-                        list.addAll(searchBean.getData());
-                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + searchBean.getTotal() + "条信息");
+                        list.addAll(searchBean.getNews());
+                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + searchBean.getTotal_found() + "条信息");
                     } else {
-                        list.addAll(searchBean.getData());
+                        list.addAll(searchBean.getNews());
                         mSearchLvAdapter.setList(list);
                         mSearchLvAdapter.notifyDataSetChanged();
                     }
                 } else {
                     if (page == 1) {
-                        listView.setVisibility(View.GONE);
-                        mLayoutEmpty.setVisibility(View.VISIBLE);
+
+                        if (mLayoutEmpty.getVisibility() == View.GONE) {
+                            listView.setVisibility(View.GONE);
+                            mLayoutEmpty.setVisibility(View.VISIBLE);
+                        }
+
                         textviewNo.setText("抱歉，未能找到相关搜索！");
                         bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
                         mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
@@ -300,12 +332,9 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                     }
                 }
             }
-            if (type == 3 && "0".equals(err)) {
-                TextUtils.toast(this, "删除成功！");
-                mSearchGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
-                mgvHistory.setAdapter(mSearchGridAdapter);
-            }
+
             if (type == 4) {
+                code = err;
                 if ("0".equals(err)) {
                     Intent intent = new Intent(this, HeadLinesDetailActivity.class);
                     intent.putExtra("id", list.get(position).getId());
@@ -313,7 +342,14 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
                 } else {
                     String content = new JSONObject(object.toString()).getString("message");
                     CommonDialog commonDialog = new CommonDialog();
-                    commonDialog.showDialog(this, content, (err.equals("2")) ? (1) : (3), this);
+                    commonDialog.showDialog(this, content, ("2".equals(err)) ? (1) : (3), this);
+                }
+            }
+            if (type == 7) {
+                if ("0".equals(err)) {
+                    Intent intent = new Intent(this, HeadLinesDetailActivity.class);
+                    intent.putExtra("id", clickId);
+                    startActivity(intent);
                 }
             }
         } catch (Exception e) {
@@ -322,15 +358,30 @@ public class HeadLineSearchActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void dialogClick(int type) {
-        if (type != -1) {
-            Intent intent = new Intent(this, IntegralActivity.class);
-            intent.putExtra("type", "0");
+        if (type == 1) {
+            getNetData(clickId);
+        }
+        if (type == 10) {
+            Intent intent = new Intent(this, IntegralPayActivtity.class);
             startActivity(intent);
         }
     }
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        if (type == 7 && httpCode == 412) {
+            try {
+                JSONObject jsonObject = new JSONObject(message);
+                String code = jsonObject.getString("code");
+                if ("100".equals(code)) {
+                    String content = jsonObject.getString("message");
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(this, content, 10, this);
+                }
+            } catch (JSONException e) {
+
+            }
+        }
     }
 
 

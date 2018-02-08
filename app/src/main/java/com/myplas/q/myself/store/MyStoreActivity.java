@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -17,7 +16,7 @@ import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.UCloudUtils;
@@ -92,6 +91,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         color = getResources().getColor(R.color.color_red);
         stauts = getIntent().getStringExtra(Constant.STAUTS);
 
+        if ("2".equals(stauts)) {
+            loadAnimation(false);
+        }
     }
 
     @Override
@@ -228,21 +230,25 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (requestCode == ICODE) {
+                ArrayList<String> mList = Album.parseResult(data);
+                if (mList.size() == 0) {
+                    return;
+                }
                 imageLicence.setUseProgress(true);
-                Glide.with(this).load(Album.parseResult(data).get(0)).into(imageLicence);
-                uCloudUtils.putFile(new File(Album.parseResult(data).get(0)), 1);
+                Glide.with(this).load(mList.get(0)).into(imageLicence);
+                uCloudUtils.putFile(new File(mList.get(0)), 1);
 
                 changeBtnColor();
             } else if (requestCode == HCODE) {
                 cutPhoto(Album.parseResult(data), HCODE * 10);
             } else {
-                ArrayList<String> mImageList = Durban.parseResult(data);
-                if (mImageList.size() == 0) {
+                ArrayList<String> mList = Durban.parseResult(data);
+                if (mList.size() == 0) {
                     return;
                 }
                 imageHead.setUseProgress(true);
-                Glide.with(this).load(mImageList.get(0)).into(imageHead);
-                uCloudUtils.putFile(new File(mImageList.get(0)), 2);
+                Glide.with(this).load(mList.get(0)).into(imageHead);
+                uCloudUtils.putFile(new File(mList.get(0)), 2);
 
                 changeBtnColor();
             }
@@ -260,19 +266,17 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
             if (type == 1 && "0".equals(err)) {
                 TextUtils.toast(this, jsonObject.getString("message"));
             }
-
             if (type == 2 && "0".equals(err)) {
                 TextUtils.toast(this, jsonObject.getString("message"));
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editName.getWindowToken(), 0);
 
-                loadAnimation();
+                loadAnimation(true);
             } else {
                 button.setClickable(true);
                 button.setBackgroundResource(R.drawable.login_btn_shape_hl);
                 TextUtils.toast(this, jsonObject.getString("message"));
             }
-
         } catch (Exception e) {
 
         }
@@ -315,17 +319,24 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    @Override
+    public void uCloudFail(int type) {
+
+    }
+
     /**
      * 保存成功后显示审核中
      */
-    private void loadAnimation() {
+    private void loadAnimation(boolean animateEnable) {
+        emptyView.setVisibility(View.VISIBLE);
         emptyView.setMyManager(R.drawable.icon_auditing);
-        emptyView.setVisibility("2".equals(stauts) ? View.VISIBLE : View.GONE);
 
         emptyView.setNoMessageText1("提交成功，请等待客服人员审核！");
         emptyView.setNoMessageText("预计3个工作日内审核完毕，审核结果会短信通知到您的注册手机。");
 
-        emptyView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_top));
+        if (animateEnable) {
+            emptyView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_top));
+        }
     }
 
     @Override

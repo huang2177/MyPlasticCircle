@@ -1,15 +1,10 @@
-package com.myplas.q.common.netresquset;
+package com.myplas.q.common.net;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.SystemUtils;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.utils.VersionUtils;
 import com.myplas.q.common.view.LoadingDialog;
 
 import java.io.File;
@@ -17,7 +12,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;

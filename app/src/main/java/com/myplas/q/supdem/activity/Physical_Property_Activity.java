@@ -10,7 +10,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.supdem.beans.PhysicalBean;
 import com.myplas.q.supdem.adapter.Physical_Property_Adapter;
@@ -44,7 +44,7 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Physical_Property_Activity.this, Physical_Detail_Activity.class);
-                intent.putExtra("lid", list.get(position).getLid());
+                intent.putExtra("id", list.get(position).getLid());
                 startActivity(intent);
             }
         });
@@ -60,15 +60,15 @@ public class Physical_Property_Activity extends BaseActivity implements ResultCa
 
     //获取数据
     public void getPhysical_Search() {
-        Map map = new HashMap();
-        map.put("keywords", getIntent().getStringExtra("plastic_number"));
+        Map map = new HashMap(8);
+        map.put("model", getIntent().getStringExtra("plastic_number"));
         postAsyn(this, API.BASEURL + API.PHYSICAL_SEARCH, map, this, 1);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            if (new JSONObject(object.toString()).getString("err").equals("0")) {
+            if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
                 Gson gson = new Gson();
                 PhysicalBean bean = gson.fromJson(object.toString(), PhysicalBean.class);
                 list = bean.getData();

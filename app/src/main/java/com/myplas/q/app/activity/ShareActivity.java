@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ScreenUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
@@ -112,9 +112,16 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
                         shareLog(getIntent().getStringExtra("supdemType")
                                 , getIntent().getStringExtra("id"));//加积分
                         break;
+                    case "6"://黑名单
+                        isShareed = shareToWX(API.PLASTIC_BLACKLIST + getIntent().getStringExtra("id")
+                                , getIntent().getStringExtra("title")
+                                , getIntent().getStringExtra("des")
+                                , R.drawable.blacklist);
+                        break;
                     default:
                         break;
                 }
+                finish();
                 break;
             case R.id.share_view:
                 finish();
@@ -173,11 +180,10 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener,
      */
     public void shareLog(String type, String id) {
         if (isShareed) {
-            Map<String, String> map = new HashMap<String, String>();
+            Map<String, String> map = new HashMap<String, String>(8);
             map.put("id", id);
             map.put("type", type);
-            map.put("token", SharedUtils.getSharedUtils().getData(this, "token"));
-            postAsyn(this, API.BASEURL + API.SAVE_SHARE_LOG, map, this, 1);
+            postAsyn(this, API.SAVE_SHARE_LOG, map, this, 1);
         }
     }
 

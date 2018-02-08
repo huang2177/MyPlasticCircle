@@ -119,8 +119,6 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
             commonDialog.showDialog(context, "确认删除？", 1, null);
             return true;
         }
-
-
     }
 
     public class MyOnClickListener implements View.OnClickListener {
@@ -134,7 +132,7 @@ public class MessageCHJAdapter extends RecyclerView.Adapter {
         public void onClick(View v) {
             if ("2".equals(mListChJ.get(position).getPur_sign())) {
                 Intent intent = new Intent(context, NoInfoActivity.class);
-                intent.putExtra("msg", mListChJ.get(position).getPur_sign());
+                intent.putExtra("msg", "该消息不存在或者已被删除！");
                 context.startActivity(intent);
             } else {
                 Intent intent = new Intent(context, SupDem_Detail_Activity.class);

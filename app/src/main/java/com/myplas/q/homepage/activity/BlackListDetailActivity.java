@@ -29,10 +29,11 @@ import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.listener.MyOnItemClickListener;
 import com.myplas.q.common.listener.OnKeyboardChangeListener;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.KeyboardHelper;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.MyBottomSheetDialog;
 import com.myplas.q.homepage.adapter.BlackListDetailAdapter;
 import com.myplas.q.homepage.beans.BlackListsDetailBean;
 
@@ -54,6 +55,7 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         , OnHBannerClickListener {
 
     private int color;
+    private boolean isShowKeyboard;
     private String id, content, commentId;
 
     private View root;
@@ -68,6 +70,8 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
     private KeyboardHelper mKeyboardHelper;
     private BlackListDetailAdapter mAdapter;
     private OnKeyboardChangeListener mKeyboardChangeListener;
+    private MyBottomSheetDialog mButtomDialog;
+    private BlackListsDetailBean bean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +82,7 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         initTileBar();
         setTitle("详细信息");
         setLeftIVResId(R.drawable.btn_back_black);
-        setTitleBarBackground(R.color.color_white);
+        setTitleBarBackground(R.color.colorAccent);
         setTitleBarTextColor(R.color.color_black1);
         setRightIVResId(R.drawable.btn_share_black);
 
@@ -165,13 +169,14 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
             case R.id.blacklist_detail_btn:
                 reply();
                 break;
-//            case R.id.blacklist_detail_btn:
-//                break;
             case R.id.titlebar_img_right:
                 Intent intent = new Intent(this, ShareActivity.class);
-//                intent.putExtra("type", "2");
-//                intent.putExtra("id", sucribleDetailBean.getData().getId());
-//                intent.putExtra("title", sucribleDetailBean.getData().getTitle());
+                intent.putExtra("type", "6");
+                intent.putExtra("id", bean.getBlacklist().getId());
+                intent.putExtra("title", bean.getBlacklist().getSubject());
+                intent.putExtra("des", bean.getBlacklist().getContent().length() > 25
+                        ? bean.getBlacklist().getContent().substring(0, 24) + "..."
+                        : bean.getBlacklist().getContent());
                 startActivity(intent);
                 break;
             default:
@@ -192,9 +197,15 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
+    public void onKeyboardShow() {
+        isShowKeyboard = true;
+    }
+
+    @Override
     public void onKeyboardHidden() {
         commentId = "0";
         editText.setHint("写留言");
+        isShowKeyboard = false;
     }
 
     /**
@@ -228,7 +239,7 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
             Gson gson = new Gson();
             JSONObject jsonObject = new JSONObject(object.toString());
             if (type == 1 && "0".equals(jsonObject.getString("code"))) {
-                BlackListsDetailBean bean = gson.fromJson(object.toString(), BlackListsDetailBean.class);
+                bean = gson.fromJson(object.toString(), BlackListsDetailBean.class);
                 showDetail(bean.getBlacklist());
             }
             if (type == 2 && "0".equals(jsonObject.getString("code"))) {
@@ -281,6 +292,7 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
                 ? View.GONE
                 : View.VISIBLE);
     }
+
 
     @Override
     public void onResume() {

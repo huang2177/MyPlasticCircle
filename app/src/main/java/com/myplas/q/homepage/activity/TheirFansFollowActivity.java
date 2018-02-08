@@ -8,7 +8,8 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
@@ -34,8 +35,8 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     private ListView listView;
     private TheirFansFollowAdapter mFansAdapter;
 
+    private String userid, type;
     private ContactAccessUtils utils;
-    private String userid, function;
     private int page = 1, visibleItemCount;
 
     private List<TheirFansBean.DataBean> mList;
@@ -56,14 +57,14 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
 
         mList = new ArrayList<>();
         utils = new ContactAccessUtils(this);
+        type = getIntent().getStringExtra("type");
         userid = getIntent().getStringExtra("userid");
-        function = getIntent().getStringExtra("function");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 utils.checkPremissions(mList.get(position).getUser_id()
-                        , mList.get(position).getMerge_three());
+                        , mList.get(position).getIsshop());
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -85,10 +86,13 @@ public class TheirFansFollowActivity extends BaseActivity implements ResultCallB
     }
 
     public void getMyFans(String page, boolean isShow) {
-        Map<String, String> map = new HashMap<String, String>(8);
+        Map<String, String> map = new HashMap<String, String>(16);
         map.put("user_id", userid);
+        map.put("type", type);
         map.put("page", page);
-        getAsyn(this, function, map, this, 1, isShow);
+        getAsyn(this, "3".equals(type)
+                ? API.GET_MY_INTRODUCTION
+                : API.GET_MY_FUNS, map, this, 1, isShow);
     }
 
 

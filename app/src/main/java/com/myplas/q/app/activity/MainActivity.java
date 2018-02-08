@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -18,7 +17,7 @@ import com.myplas.q.app.adapter.ViewPager_Adapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.SharedUtils;
@@ -39,7 +38,7 @@ import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 import com.myplas.q.sockethelper.RabbitMQHelper;
 import com.myplas.q.supdem.Fragment_SupplyDemand;
-import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
+import com.myplas.q.versionhelper.VersionUpdateDialogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -181,7 +180,7 @@ public class MainActivity extends BaseActivity implements ResultCallBack
             }
 
             if (type == 3 && "0".equals(err)) {
-                setCacheData(object, gson, jsonObject);
+                setCacheData(object, gson);
                 rCallback(true, true);
                 onConnect();
             }
@@ -194,23 +193,22 @@ public class MainActivity extends BaseActivity implements ResultCallBack
      *
      * @param object
      * @param gson
-     * @param jsonObject
      */
-    private void setCacheData(Object object, Gson gson, JSONObject jsonObject) {
+    private void setCacheData(Object object, Gson gson) {
         try {
-            mACache.put(Constant.R_CONFIG, object.toString());
             DefConfigBean bean = gson.fromJson(object.toString(), DefConfigBean.class);
-
-            mACache.put(Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
-            mACache.put(Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
-            mACache.put(Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
-            mACache.put(Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
-            mACache.put(Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
-            mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
-            mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
-            mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
-
             mACache.put(Constant.R_MARQUEE_CONTENT, bean.getNotice());
+            mACache.put(Constant.R_CONFIG, gson.toJson(bean.getConfig()));
+
+            sharedUtils.setInt(this, Constant.R_MYORDER, bean.getRedDot().getUnread_myorder());
+            sharedUtils.setInt(this, Constant.R_SEEME, bean.getRedDot().getUnread_who_saw_me());
+            sharedUtils.setInt(this, Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
+            sharedUtils.setInt(this, Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
+            sharedUtils.setInt(this, Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
+            sharedUtils.setInt(this, Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
+            sharedUtils.setInt(this, Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
+            sharedUtils.setInt(this, Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
+
         } catch (Exception e) {
         }
     }
@@ -267,15 +265,16 @@ public class MainActivity extends BaseActivity implements ResultCallBack
     @Override
     public void onItemSelected(int position, View view) {
         if (position == -1) {
-            Intent intent = new Intent(this, ReleaseActivity.class);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this
-                        , view
-                        , "sharedView_Release");
-                startActivity(intent, options.toBundle());
-            } else {
-                startActivity(intent);
-            }
+//            Intent intent = new Intent(this, ReleaseActivity.class);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this
+//                        , view
+//                        , "sharedView_Release");
+//                startActivity(intent, options.toBundle());
+//            } else {
+//                startActivity(intent);
+//            }
+            getVersion();
         } else {
             viewPager.setCurrentItem(position);
         }
@@ -364,9 +363,8 @@ public class MainActivity extends BaseActivity implements ResultCallBack
         Map<String, String> map = new HashMap<String, String>(8);
         map.put("version", VersionUtils.getVersionName(this));
         map.put("platform", "android");
-        postAsyn(MainActivity.this, API.CHECK_VERSION, map, this, 1, false);
+        getAsyn(MainActivity.this, API.CHECK_VERSION, map, this, 1, false);
     }
-
 
     /**
      * rabbitMQ Gets config.

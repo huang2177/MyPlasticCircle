@@ -9,7 +9,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -60,7 +60,7 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 utils.checkPremissions(mList.get(position).getUser_id()
-                        , mList.get(position).getMerge_three());
+                        , mList.get(position).getIsshop());
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -113,16 +113,6 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
                         mFansAdapter.setList(mList);
                         mFansAdapter.notifyDataSetChanged();
                     }
-                } else {
-                    if (page == 1) {
-                        EmptyView emptyView = new EmptyView(this);
-                        emptyView.mustCallInitWay(listView);
-                        emptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
-                        emptyView.setMyManager(R.drawable.icon_null);
-                        listView.setEmptyView(emptyView);
-                    } else {
-                        TextUtils.toast(this, "没有更多数据了！");
-                    }
                 }
             }
         } catch (Exception e) {
@@ -131,7 +121,22 @@ public class MyFansFollowActivity extends BaseActivity implements ResultCallBack
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            if (httpCode == 404) {
+                if (page == 1) {
+                    EmptyView emptyView = new EmptyView(this);
+                    emptyView.mustCallInitWay(listView);
+                    emptyView.setNoMessageText(jsonObject.getString("message"));
+                    emptyView.setMyManager(R.drawable.icon_null);
+                    listView.setEmptyView(emptyView);
+                } else {
+                    TextUtils.toast(this, "没有更多数据！");
+                }
+            }
+        } catch (Exception e) {
 
+        }
     }
 
 }

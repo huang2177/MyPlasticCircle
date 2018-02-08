@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.KeyboardHelper;
 import com.myplas.q.common.utils.SharedUtils;
@@ -306,12 +305,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 mButtonPhone.setBackgroundResource(isPhoneNull ? R.drawable.login_btn_shape_hl : R.drawable.login_btn_shape);
 
             }
-            if (httpCode == 412) {
-                if (type == 3) {
-                    getVCode();
-                }
-                TextUtils.toast(this, new JSONObject(message).getString("message"));
+            if (httpCode == 412 && type == 3) {
+                getVCode();
             }
+            TextUtils.toast(this, new JSONObject(message).getString("message"));
         } catch (Exception e) {
 
         }

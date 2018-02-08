@@ -6,9 +6,10 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.myplas.q.common.netresquset.NetRequest;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.NetRequest;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -115,6 +116,10 @@ public class BaseFragment extends Fragment {
 
 
     public void call(String tel) {
+        if (tel.contains("*") || tel == null) {
+            TextUtils.toast(getActivity(), "对方暂未公开电话号码！");
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

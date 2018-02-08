@@ -19,10 +19,9 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.utils.NumUtils;
-import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.IntegralBean;
@@ -352,7 +351,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
         try {
             if (type == 0) {//通讯录
                 String err = new JSONObject(object.toString()).getString("code");
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     list_date_conact.clear();
                     myInterface.refreshData();
                     mHolderMap.get(datePosition).linearDateIsselected.setVisibility(View.VISIBLE);
@@ -375,7 +374,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
             }
             if (type == 1) {//供求
                 String err = new JSONObject(object.toString()).getString("code");
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     list_date_supdem.clear();
                     myInterface.refreshData();
                     mHolderMap.get(supDemPosition).supplyDemandShm.setVisibility(View.VISIBLE);
@@ -387,15 +386,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mCommonDialog.showDialog(context, "兑换成功!", 2, this);
 
                     changeTextShow(list_date_supdem);
-                } else if (err.equals("15")) {
-                    mCommonDialog = new CommonDialog();
-                    mCommonDialog.setCanceledOnTouchOutside(false);
-                    mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
-                } else {
-                    String content = new JSONObject(object.toString()).getString("message");
-                    mCommonDialog = new CommonDialog();
-                    mCommonDialog.setCanceledOnTouchOutside(false);
-                    mCommonDialog.showDialog(context, content, 3, this);
                 }
             }
             if (type == 3) {//分类
@@ -409,15 +399,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                     mCommonDialog = new CommonDialog();
                     mCommonDialog.setCanceledOnTouchOutside(false);
                     mCommonDialog.showDialog(context, "兑换成功!", 2, this);
-                } else if (err.equals("15")) {
-                    mCommonDialog = new CommonDialog();
-                    mCommonDialog.setCanceledOnTouchOutside(false);
-                    mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
-                } else {
-                    String content = new JSONObject(object.toString()).getString("message");
-                    mCommonDialog = new CommonDialog();
-                    mCommonDialog.setCanceledOnTouchOutside(false);
-                    mCommonDialog.showDialog(context, content, 3, this);
                 }
             }
             //展示时间dialog
@@ -426,7 +407,7 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 if ("0".equals(err)) {
                     Gson gson = new Gson();
                     tookDateBean = gson.fromJson(object.toString(), TookDateBean.class);
-                    List<Date> list1 = (list.get(datePosition).getType().equals("1")) ? (list_date_supdem) : (list_date_conact);
+                    List<Date> list1 = ("1".equals(list.get(datePosition).getType())) ? (list_date_supdem) : (list_date_conact);
                     DateDialogShowUtils dialogShowUtils = new DateDialogShowUtils(list1, this);
                     dialogShowUtils.showDialog(context
                             , tookDateBean.getTook_date()
@@ -435,6 +416,32 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 }
             }
         } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void failCallBack(int type, String message, int httpCode) {
+        try {
+            if (type == 3) {
+                setIsPay();
+            }
+            JSONObject jsonObject = new JSONObject(message);
+            String code = new JSONObject(message).getString("code");
+            String msg = new JSONObject(message).getString("message");
+            if (type == 0 || type == 1 || type == 3) {
+                if (httpCode == 412 && "100".equals(code)) {
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, "塑豆不足!", 1, this);
+                } else {
+                    mCommonDialog = new CommonDialog();
+                    mCommonDialog.setCanceledOnTouchOutside(false);
+                    mCommonDialog.showDialog(context, msg, 3, this);
+                }
+
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -461,13 +468,6 @@ public class IntegralAdapter extends RecyclerView.Adapter implements ResultCallB
                 break;
             default:
                 break;
-        }
-    }
-
-    @Override
-    public void failCallBack(int type, String message, int httpCode) {
-        if (type == 3) {
-            setIsPay();
         }
     }
 

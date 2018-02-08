@@ -1,13 +1,9 @@
 package com.myplas.q.homepage;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,18 +17,19 @@ import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyOnPageChangeListener;
+import com.myplas.q.common.view.MyViewPager;
 import com.myplas.q.homepage.activity.ContactDaliySignActivity;
 import com.myplas.q.homepage.activity.Contact_Search_Activity;
 import com.myplas.q.homepage.adapter.HomePageViewPagerAdapter;
+import com.myplas.q.myself.login.LoginActivity;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author 黄双
@@ -40,13 +37,15 @@ import java.util.List;
  */
 
 public class FragmentHomePage extends BaseFragment implements View.OnClickListener
-        , MyOnPageChangeListener.OnPageChangeListener, ResultCallBack {
+        , MyOnPageChangeListener.OnPageChangeListener
+        , ResultCallBack
+        , CommonDialog.DialogShowInterface {
 
     private View view;
 
     private ImageView mSign;
     private TextView mTVTab;
-    private ViewPager viewPager;
+    private MyViewPager viewPager;
     private SegmentTabLayout mTabLayout;
     private LinearLayout mLayoutSearch;
 
@@ -70,6 +69,7 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
 
         mSign.setOnClickListener(this);
         mLayoutSearch.setOnClickListener(this);
+        viewPager.setEnableScroll(true);
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener(this));
 
         initViewPager();
@@ -179,8 +179,17 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
     }
 
     @Override
+    public void dialogClick(int type) {
+        if (type == 4) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            getActivity().startActivity(intent);
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        //validations();
+//        validations();
+//        boolean isLogin = SharedUtils.getSharedUtils().getBoolean(getContext(), Constant.LOGINED);
     }
 }

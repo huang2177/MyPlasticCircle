@@ -10,16 +10,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.versionupdate.VersionUpdateDialogUtils;
+import com.myplas.q.versionhelper.VersionUpdateDialogUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.NumUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -46,9 +45,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 作者:huangshuang
  * 事件 2017/7/31 0031.
  * 邮箱： 15378412400@163.com
+ * @author huangshuang
  */
 
 public class SettingActivity extends BaseActivity implements ResultCallBack
@@ -155,7 +154,6 @@ public class SettingActivity extends BaseActivity implements ResultCallBack
                             return;
                         }
                         Intent intent2 = new Intent(SettingActivity.this, MessageActivity.class);
-                        intent2.putExtra("Allow_send", mySelfInfo.getData().getAllow_send());
                         startActivity(intent2);
                         break;
                     case 3:

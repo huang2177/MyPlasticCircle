@@ -1,4 +1,4 @@
-package com.myplas.q.versionupdate;
+package com.myplas.q.versionhelper;
 
 import android.app.DownloadManager;
 import android.content.Context;

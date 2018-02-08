@@ -18,12 +18,14 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.homepage.activity.BrokeNewsActivtiy;
 import com.myplas.q.homepage.adapter.BlackListAdapter;
 import com.myplas.q.homepage.beans.BlackListsBean;
+import com.myplas.q.myself.login.LoginActivity;
 
 import org.json.JSONObject;
 
@@ -39,7 +41,8 @@ import java.util.Map;
 
 public class FragmentHomePageBlackList extends BaseFragment implements View.OnClickListener
         , ResultCallBack
-        , SwipeRefreshLayout.OnRefreshListener {
+        , SwipeRefreshLayout.OnRefreshListener
+        , CommonDialog.DialogShowInterface {
 
     private View view;
     private EmptyView emptyView;
@@ -142,8 +145,10 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), BrokeNewsActivtiy.class);
-        getActivity().startActivity(intent);
+        if (TextUtils.isLogin(getActivity(), this)) {
+            Intent intent = new Intent(getActivity(), BrokeNewsActivtiy.class);
+            getActivity().startActivity(intent);
+        }
     }
 
     @Override
@@ -183,6 +188,7 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
 
                     mAdapter = new BlackListAdapter(getActivity(), bean.getBlacklists());
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setlistener(this);
 
                     list.clear();
                     list.addAll(bean.getBlacklists());
@@ -204,8 +210,8 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
             JSONObject jsonObject = new JSONObject(message);
             if (page == 1) {
                 if (httpCode == 404) {
-//                    emptyView.setVisibility(View.VISIBLE);
-//                    mRefreshLayout.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                    mRefreshLayout.setVisibility(View.GONE);
                     emptyView.setNoMessageText("没有相关数据！");
                     emptyView.setMyManager(R.drawable.icon_intelligent_recommendation2);
                 }
@@ -232,5 +238,13 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
     public void onPause() {
         super.onPause();
         setUserVisible(false);
+    }
+
+    @Override
+    public void dialogClick(int type) {
+        if (type == 4) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            getActivity().startActivity(intent);
+        }
     }
 }

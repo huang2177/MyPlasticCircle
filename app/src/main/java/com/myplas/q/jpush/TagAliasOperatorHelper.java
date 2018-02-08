@@ -17,6 +17,8 @@ import cn.jpush.android.api.JPushMessage;
 
 /**
  * 处理tagalias相关的逻辑
+ *
+ * @author Administrator
  */
 public class TagAliasOperatorHelper {
     private static final String TAG = "JIGUANG-TagAliasHelper";

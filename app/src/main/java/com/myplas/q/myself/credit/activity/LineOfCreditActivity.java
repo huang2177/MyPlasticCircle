@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyListview;
@@ -33,7 +33,6 @@ import com.myplas.q.myself.credit.adapter.EDu_Listview_ADapter;
 import com.myplas.q.myself.beans.EDuBean;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
-import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
 

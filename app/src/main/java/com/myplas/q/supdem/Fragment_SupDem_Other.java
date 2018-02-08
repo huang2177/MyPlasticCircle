@@ -18,7 +18,7 @@ import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
 import com.myplas.q.common.listener.MyOnItemClickListener;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -45,18 +45,19 @@ import java.util.Map;
  */
 public class Fragment_SupDem_Other extends BaseFragment implements
         ResultCallBack, View.OnClickListener, MyOnItemClickListener {
+    private boolean isLoading;
     private SharedUtils sharedUtils;
     public int page, visibleItemCount, position;
 
     private String mLastData;
     private SupDemBean mSupDemBean;
     private SupDem_LV_Adapter mSupDemLVAdapter;
-    public String follow_release, user_id, type, mergeThere;
+    public String followRelease, user_id, type, mergeThere;
 
     private View view;
     private ListView mListView;
     private MainActivity mainActivity;
-    private LinearLayout linearLayout_prompt;
+    private LinearLayout linearlayoutPrompt;
     private List<SupDemBean.DataBean> mDataBeanList;
 
     private ContactAccessUtils utils;
@@ -76,7 +77,7 @@ public class Fragment_SupDem_Other extends BaseFragment implements
 
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_supdem_other, null, false);
         mListView = F(R.id.fragment_other_listview);
-        linearLayout_prompt = F(R.id.supply_demand_prompt_linear);
+        linearlayoutPrompt = F(R.id.supply_demand_prompt_linear);
 
         mListView.setHeaderDividersEnabled(false);
         mListView.setFooterDividersEnabled(false);
@@ -96,8 +97,9 @@ public class Fragment_SupDem_Other extends BaseFragment implements
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && mListView.getCount() > visibleItemCount) {
-                    if (view.getLastVisiblePosition() == view.getCount() - 1) {
+                    if (view.getLastVisiblePosition() == view.getCount() - 1 && !isLoading) {
                         page++;
+                        isLoading = true;
                         getNetData(page + "", false);
                     }
                 }
@@ -153,7 +155,7 @@ public class Fragment_SupDem_Other extends BaseFragment implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.supply_demand_follow:
-                if (follow_release.equals("follow")) {
+                if (followRelease.equals("follow")) {
                     mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
                     mainActivity.firstInto();
                 } else {
@@ -171,31 +173,22 @@ public class Fragment_SupDem_Other extends BaseFragment implements
             Gson gson = new Gson();
             String result = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
-                if (result.equals("0")) {
+                if ("0".equals(result)) {
                     mSupDemBean = gson.fromJson(object.toString(), SupDemBean.class);
                     mListView.setVisibility(View.VISIBLE);
-                    linearLayout_prompt.setVisibility(View.GONE);
+                    linearlayoutPrompt.setVisibility(View.GONE);
                     if (page == 1) {
                         mSupDemLVAdapter = new SupDem_LV_Adapter(getActivity(), mSupDemBean.getData());
                         mSupDemLVAdapter.setListener(this);
                         mListView.setAdapter(mSupDemLVAdapter);
                         mDataBeanList.clear();
                         mDataBeanList.addAll(mSupDemBean.getData());
-                        //加载更多
-                    } else {
+
+                    } else {//加载更多
+                        isLoading = false;
                         mDataBeanList.addAll(mSupDemBean.getData());
                         mSupDemLVAdapter.setList(mDataBeanList);
                         mSupDemLVAdapter.notifyDataSetChanged();
-                    }
-
-                } else {//显示提示信息：
-                    if (page == 1) {
-                        mListView.setVisibility(View.GONE);
-                        linearLayout_prompt.setVisibility(View.VISIBLE);
-                        linearLayout_prompt.removeAllViews();
-
-                    } else {
-                        TextUtils.toast(getContext(), "没有更多数据了！");
                     }
                 }
             }
@@ -207,53 +200,37 @@ public class Fragment_SupDem_Other extends BaseFragment implements
     public void failCallBack(int type, String message, int httpCode) {
         try {
             if (type == 1) {
-                String result = new JSONObject(message).getString("code");
-                String msg = new JSONObject(message).getString("message");
-                if (mDataBeanList.size() == 0) {
-                    mListView.setVisibility(View.GONE);
-                    linearLayout_prompt.setVisibility(View.VISIBLE);
-                    linearLayout_prompt.removeAllViews();
+                JSONObject jsonObject = new JSONObject(message);
+                String result = jsonObject.getString("code");
+                String msg = jsonObject.getString("message");
 
-//                    ImageButton imageButton = new ImageButton(getActivity());
-//                    imageButton.setImageResource(R.drawable.img_reload);
-//                    linearLayout_prompt.addView(imageButton);
-//                    imageButton.setBackgroundColor(getResources().getColor(R.color.color_white));
-//                    imageButton.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            page = 1;
-//                            getNetData("1", true);
-//                        }
-//                    });
+                if (mDataBeanList.size() == 0 && page == 1) {
+                    mListView.setVisibility(View.GONE);
+                    linearlayoutPrompt.removeAllViews();
+                    linearlayoutPrompt.setVisibility(View.VISIBLE);
+
                     switch (httpCode) {
                         case 404:
                             switch (result) {
-                                //没有更多数据
-                                case "3":
-                                    View v = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null);
-                                    linearLayout_prompt.addView(v);
-                                    TextView text = (TextView) v.findViewById(R.id.supply_demand_text);
-                                    text.setText(msg);
-                                    break;
                                 //未匹配
                                 case "26":
-                                    linearLayout_prompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null));
+                                    linearlayoutPrompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release2, null));
                                     break;
                                 case "23"://去关注
-                                    follow_release = "follow";
+                                    followRelease = "follow";
                                     View view = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care1, null);
-                                    linearLayout_prompt.addView(view);
+                                    linearlayoutPrompt.addView(view);
                                     view.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
                                     break;
                                 //关注 ——未发布
                                 case "27":
-                                    linearLayout_prompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care2, null));
+                                    linearlayoutPrompt.addView(View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_care2, null));
                                     break;
                                 //职能推荐——区发布
                                 case "24":
-                                    follow_release = "release";
+                                    followRelease = "release";
                                     View view3 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
-                                    linearLayout_prompt.addView(view3);
+                                    linearlayoutPrompt.addView(view3);
                                     TextView t = (TextView) view3.findViewById(R.id.supply_demand_text);
                                     t.setText(msg);
                                     view3.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
@@ -261,9 +238,9 @@ public class Fragment_SupDem_Other extends BaseFragment implements
                                     break;
                                 //我的供求——去发布
                                 case "28":
-                                    follow_release = "release";
+                                    followRelease = "release";
                                     View view2 = View.inflate(getActivity(), R.layout.layout_supplydemand_prompt_release1, null);
-                                    linearLayout_prompt.addView(view2);
+                                    linearlayoutPrompt.addView(view2);
                                     TextView textView = (TextView) view2.findViewById(R.id.supply_demand_text);
                                     textView.setText(msg);
                                     view2.findViewById(R.id.supply_demand_follow).setOnClickListener(this);
@@ -284,7 +261,10 @@ public class Fragment_SupDem_Other extends BaseFragment implements
                         default:
                             break;
                     }
-
+                }
+                if (type == 1 && page != 1 && "3".equals(result)) {
+                    isLoading = false;
+                    TextUtils.toast(getActivity(), msg);
                 }
             }
         } catch (Exception e) {

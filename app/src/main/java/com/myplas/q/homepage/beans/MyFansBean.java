@@ -58,14 +58,14 @@ public class MyFansBean {
         private String sale;
         private String thumb;
         private String type;
-        private String merge_three;
+        private String isshop;
 
-        public void setMerge_three(String merge_three) {
-            this.merge_three = merge_three;
+        public void setIsshop(String isshop) {
+            this.isshop = isshop;
         }
 
-        public String getMerge_three() {
-            return merge_three;
+        public String getIsshop() {
+            return isshop;
         }
 
         public String getUser_id() {

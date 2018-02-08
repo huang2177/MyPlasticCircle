@@ -1,9 +1,8 @@
-package com.myplas.q.common.netresquset;
+package com.myplas.q.common.net;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.RecoverySystem;
 
 import java.io.IOException;
 

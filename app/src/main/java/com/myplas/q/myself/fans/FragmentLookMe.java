@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
@@ -22,7 +22,6 @@ import com.myplas.q.sockethelper.RabbitMQConfig;
 
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,7 +132,7 @@ public class FragmentLookMe extends BaseFragment implements ResultCallBack, Look
         try {
             Gson gson = new Gson();
             JSONObject jsonObject = new JSONObject(message);
-            if ("2".equals(0)) {
+            if (httpCode == 412) {
                 String msg = jsonObject.getString("message");
                 if (page == 1) {
                     EmptyView emptyView = new EmptyView(getActivity());
@@ -143,7 +142,7 @@ public class FragmentLookMe extends BaseFragment implements ResultCallBack, Look
                     listView.setEmptyView(emptyView);
 
                     if (listener != null) {
-                        listener.onResult(position, jsonObject.getString(""), jsonObject.getString(""));
+                        listener.onResult(position, "0", "0");
                     }
                 } else {
                     TextUtils.toast(getActivity(), msg);

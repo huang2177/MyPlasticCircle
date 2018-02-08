@@ -38,7 +38,6 @@ public class NavegationBar extends LinearLayout implements View.OnClickListener
     private LinearLayout layoutGq, layoutTxl, layoutJia, layoutFx, layoutWd;
 
 
-    private ACache mACache;
     private Context context;
     private Resources resources;
     private SharedUtils sharedUtils;
@@ -63,7 +62,6 @@ public class NavegationBar extends LinearLayout implements View.OnClickListener
     }
 
     public void init() {
-        mACache = ACache.get(context);
         resources = context.getResources();
         sharedUtils = SharedUtils.getSharedUtils();
         LayoutInflater.from(context).inflate(R.layout.layout_navegationbar, this, true);
@@ -208,14 +206,14 @@ public class NavegationBar extends LinearLayout implements View.OnClickListener
         try {
             boolean showDot = !isShowRedDot || !(sharedUtils.getBoolean(context, Constant.LOGINED));
 
-            int numContact = Integer.parseInt(mACache.getAsString(Constant.R_CONTACT));
-            int numSupDem = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM));
-            int numMySelf = Integer.parseInt(mACache.getAsString(Constant.R_SEEME))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_MYORDER))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM_MSG))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_PUR_MSG))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_REPLY_MSG))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_INTER_MSG));
+            int numContact = sharedUtils.getInt(context, Constant.R_CONTACT);
+            int numSupDem = sharedUtils.getInt(context, Constant.R_SUPDEM);
+            int numMySelf = sharedUtils.getInt(context, Constant.R_SEEME)
+                    + sharedUtils.getInt(context, Constant.R_MYORDER)
+                    + sharedUtils.getInt(context, Constant.R_PUR_MSG)
+                    + sharedUtils.getInt(context, Constant.R_REPLY_MSG)
+                    + sharedUtils.getInt(context, Constant.R_INTER_MSG)
+                    + sharedUtils.getInt(context, Constant.R_SUPDEM_MSG);
 
             mMsgSupDem.setVisibility(showDot || 0 == numSupDem
                     ? View.GONE
@@ -232,7 +230,7 @@ public class NavegationBar extends LinearLayout implements View.OnClickListener
                 mMsgSupDem.setText(numSupDem > 99 ? "..." : numSupDem + "");
             }
         } catch (Exception e) {
-
+            e.toString();
         }
     }
 

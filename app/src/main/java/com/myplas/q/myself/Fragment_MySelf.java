@@ -21,7 +21,7 @@ import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
@@ -34,7 +34,7 @@ import com.myplas.q.myself.credit.activity.PlasticMoneyActivity;
 import com.myplas.q.myself.fans.activity.LookMeActivity;
 import com.myplas.q.myself.fans.activity.MyFansFollowActivity;
 import com.myplas.q.myself.fans.activity.MyIntroductionActivity;
-import com.myplas.q.myself.integral.activity.IntegralActivity;
+import com.myplas.q.myself.integral.activity.NewIntegralActivity;
 import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
 import com.myplas.q.myself.message.activity.MessageActivity;
 import com.myplas.q.myself.setting.SettingActivity;
@@ -211,7 +211,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 startActivity(intent0);
                 break;
             case R.id.wd_linear_jf:
-                startActivity(new Intent(getActivity(), IntegralActivity.class));
+                startActivity(new Intent(getActivity(), NewIntegralActivity.class));
                 break;
             case R.id.wd_text_edu:
                 startActivity(new Intent(getActivity(), LineOfCreditActivity.class));
@@ -246,6 +246,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 break;
         }
     }
+
     /**
      * Gets logininfo.
      *
@@ -374,12 +375,12 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
     @Override
     public void rCallback(boolean showRedDot, boolean isShowNotify) {
         try {
-            int numSeeMe = Integer.parseInt(mACache.getAsString(Constant.R_SEEME));
-            int numMyOrder = Integer.parseInt(mACache.getAsString(Constant.R_MYORDER));
-            int numMyMsg = Integer.parseInt(mACache.getAsString(Constant.R_SUPDEM_MSG))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_PUR_MSG))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_REPLY_MSG))
-                    + Integer.parseInt(mACache.getAsString(Constant.R_INTER_MSG));
+            int numSeeMe = sharedUtils.getInt(getActivity(), Constant.R_SEEME);
+            int numMyOrder = sharedUtils.getInt(getActivity(), Constant.R_MYORDER);
+            int numMyMsg = sharedUtils.getInt(getActivity(), Constant.R_SUPDEM_MSG)
+                    + sharedUtils.getInt(getActivity(), Constant.R_PUR_MSG)
+                    + sharedUtils.getInt(getActivity(), Constant.R_REPLY_MSG)
+                    + sharedUtils.getInt(getActivity(), Constant.R_INTER_MSG);
 
             mDragViewMsg.setVisibility(!showRedDot || 0 == numMyMsg
                     ? View.GONE

@@ -14,21 +14,21 @@ public class SearchResultBean {
     /**
      * err : 0
      * list : [{"id":"24","c_name":"上海中信有限公司","store_house":"上海","user_id":"53405","f_name":"伊朗石化","cargo_type":"1","model":"7000F","unit_price":"6800.00","thumbqq":"http://pic.myplas.com/upload/17/09/05/59ae0cd00dd3e.PNG","thumb":"17/08/10/598c2e0a42725.jpg","qq":"2865085207","input_time":"1507875068","type":"1","qq_name":"","from":"1","name":"小胖"}]
-     * total : 1
+     * totals : 1
      * search : 7000F
      */
 
-    private String total;
+    private String totals;
     private String search;
     private List<ListBean> list;
 
 
-    public String getTotal() {
-        return total;
+    public String getTotals() {
+        return totals;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setTotals(String totals) {
+        this.totals = totals;
     }
 
     public String getSearch() {

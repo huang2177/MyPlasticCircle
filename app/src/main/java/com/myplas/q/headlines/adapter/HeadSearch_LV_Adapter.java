@@ -23,17 +23,18 @@ import java.util.List;
  */
 public class HeadSearch_LV_Adapter extends BaseAdapter {
     Context context;
-    List<HeadSearchBean.DataBean> list;
+    List<HeadSearchBean.NewsBean> list;
 
-    public HeadSearch_LV_Adapter(Context context, List<HeadSearchBean.DataBean> list) {
+    public HeadSearch_LV_Adapter(Context context, List<HeadSearchBean.NewsBean> list) {
         this.context = context;
         this.list = list;
     }
 
     @Override
     public int getCount() {
-        if (list != null)
+        if (list != null) {
             return list.size();
+        }
         return 0;
     }
 
@@ -64,15 +65,15 @@ public class HeadSearch_LV_Adapter extends BaseAdapter {
         }
         viewHolder.num.setText(list.get(position).getPv());
         viewHolder.time.setText(list.get(position).getInput_time());
-        viewHolder.author.setText(replaceContent(list.get(position).getType()));
         viewHolder.title2.setText(replaceContent(list.get(position).getTitle()));
-        viewHolder.mImgFree.setVisibility(list.get(position).getIs_free().equals("1")
+        viewHolder.author.setText(replaceContent(list.get(position).getPhysical_label()));
+        viewHolder.mImgFree.setVisibility("1".equals(list.get(position).getIs_free())
                 ? View.VISIBLE
                 : View.GONE);
         return convertView;
     }
 
-    public void setList(List<HeadSearchBean.DataBean> list) {
+    public void setList(List<HeadSearchBean.NewsBean> list) {
         this.list = list;
     }
 

@@ -1,4 +1,4 @@
-package com.myplas.q.common.netresquset;
+package com.myplas.q.common.net;
 
 import android.content.Context;
 

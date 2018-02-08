@@ -15,20 +15,19 @@ import com.androidkun.xtablayout.XTabLayout;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.net.ResultCallBack;
+import com.myplas.q.common.utils.SharedUtils;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyOnPageChangeListener;
+import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.homepage.Fragment_Contact_Detail_Demand;
 import com.myplas.q.homepage.Fragment_Contact_Detail_Supply;
 import com.myplas.q.homepage.adapter.Contact_Detail_ViewPager_Adapter;
 import com.myplas.q.homepage.beans.ContactInfoBean;
 import com.myplas.q.homepage.beans.ContactSupDemBean;
-import com.myplas.q.common.api.API;
-import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
-import com.myplas.q.common.utils.SharedUtils;
-import com.myplas.q.common.utils.TextUtils;
-import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.myself.setting.activity.MyInfomationActivity;
 import com.myplas.q.myself.store.MyStoreActivity;
 import com.sobot.chat.widget.gif.GifView;
 
@@ -167,29 +166,28 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
                 call(contactBean.getData().getMobile());
                 break;
             case R.id.contact_info_ll:
-                Intent intent = new Intent(this, MyInfomationActivity.class);
+                Intent intent = new Intent(this, TheirInfomationActivity.class);
                 intent.putExtra("userid", contactBean.getData().getUser_id());
-                intent.putExtra("from", "1");
                 startActivity(intent);
                 break;
             case R.id.wd_linear_fans:
                 Intent intent1 = new Intent(this, TheirFansFollowActivity.class);
                 intent1.putExtra("userid", contactBean.getData().getUser_id());
-                intent1.putExtra("function", API.GETFANS);
+                intent1.putExtra("type", "1");
                 intent1.putExtra("title", "Ta的粉丝");
                 startActivity(intent1);
                 break;
             case R.id.wd_linear_follow:
                 Intent intent2 = new Intent(this, TheirFansFollowActivity.class);
                 intent2.putExtra("userid", contactBean.getData().getUser_id());
-                intent2.putExtra("function", API.GETFOLLOWERS);
+                intent2.putExtra("type", "2");
                 intent2.putExtra("title", "Ta的关注");
                 startActivity(intent2);
                 break;
             case R.id.wd_linear_introdus:
                 Intent intent3 = new Intent(this, TheirFansFollowActivity.class);
                 intent3.putExtra("userid", contactBean.getData().getUser_id());
-                intent3.putExtra("function", API.GETRECOMMENDATION);
+                intent3.putExtra("type", "3");
                 intent3.putExtra("title", "Ta的引荐");
                 startActivity(intent3);
                 break;

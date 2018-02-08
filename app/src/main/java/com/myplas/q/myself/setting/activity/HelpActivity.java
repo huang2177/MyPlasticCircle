@@ -24,7 +24,7 @@ public class HelpActivity extends BaseActivity {
     private Information information;
     private String appkey = "c1ff771c06254db796cd7ce1433d2004";
 
-    private LargeImageView imageView;
+    private ImageView imageView;
     private BitmapRegionDecoder decoder;
 
 

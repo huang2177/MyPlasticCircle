@@ -10,50 +10,59 @@ import java.util.List;
 
 public class HeadSearchBean {
 
+
     /**
-     * err : 0
-     * data : [{"id":"50493","cateId":"13","title":"交易收评：贸易商今天啥都没干，就跟着别人涨价了！","type":"低压注塑","input_time":"2017-09-01","pv":"1531","is_free":0},{"id":"50492","cateId":"13","title":"日评：涨价不可怕！可怕的是涨价还没货","type":"均聚拉丝","input_time":"2017-09-01","pv":"1182","is_free":0},{"id":"44419","cateId":"32","title":"神华PE竞拍结果（20170721）","type":"高压吹膜","input_time":"2017-07-21","pv":"1798","is_free":0},{"id":"44228","cateId":"32","title":"神华PE竞拍结果（20170720）","type":"高压吹膜","input_time":"2017-07-20","pv":"1669","is_free":0},{"id":"29526","cateId":"15","title":"月报：期货反弹涨逾4% PP月末又见利好","type":"","input_time":"2017-04-28","pv":"6483","is_free":0},{"id":"25131","cateId":"53","title":"期货周报：美元加息预期，塑料期货步步走低","type":"","input_time":"2017-04-05","pv":"891","is_free":0},{"id":"24695","cateId":"15","title":"本月收评：塑市整体势弱，空头压制难言反弹","type":"","input_time":"2017-03-31","pv":"5231","is_free":0},{"id":"21984","cateId":"14","title":"本周收评：期货/石化联手唱空 塑市跌势难止","type":"","input_time":"2017-03-10","pv":"4453","is_free":0},{"id":"21981","cateId":"76","title":"期货周报：美元加息预期，塑料期货步步走低","type":"","input_time":"2017-03-10","pv":"1393","is_free":0},{"id":"13603","cateId":"14","title":"周报：西北氯碱联合体保价，PVC市场深跌后反弹","type":"","input_time":"2016-12-23","pv":"2490","is_free":0}]
-     * total : 14
+     * code : 0
+     * news : [{"id":25669,"title":"PE塑料震荡收涨 建议依托五日线做多","cate_id":21,"input_time":"2017-4-7","pv":4098,"is_free":0,"physical_label":""},{"id":25664,"title":"本周收评：上涨or下跌，塑料魔鬼般的步伐","cate_id":12,"input_time":"2017-4-7","pv":6052,"is_free":0,"physical_label":""},{"id":25658,"title":"周报：多方利好支撑  PE市场否极泰来","cate_id":12,"input_time":"2017-4-7","pv":3825,"is_free":0,"physical_label":""},{"id":25602,"title":"兰州石化PE装置生产动态","cate_id":11,"input_time":"2017-4-7","pv":3425,"is_free":0,"physical_label":""},{"id":25571,"title":"神华PE竞拍结果（20170407）","cate_id":22,"input_time":"2017-4-7","pv":1484,"is_free":0,"physical_label":""},{"id":25570,"title":"神华PE竞拍结果（20170407）","cate_id":6,"input_time":"2017-4-7","pv":1459,"is_free":0,"physical_label":""},{"id":25563,"title":"广州PE塑料市场价格小幅上涨","cate_id":8,"input_time":"2017-4-7","pv":1481,"is_free":0,"physical_label":""},{"id":25556,"title":"武汉PE塑料价格部分小涨","cate_id":8,"input_time":"2017-4-7","pv":1441,"is_free":0,"physical_label":""},{"id":25489,"title":"独山子石化装置生产动态","cate_id":11,"input_time":"2017-4-7","pv":3596,"is_free":0,"physical_label":""},{"id":25476,"title":"四川石化PE装置生产动态","cate_id":7,"input_time":"2017-4-7","pv":1362,"is_free":0,"physical_label":""},{"id":25449,"title":"多伦煤制烯烃项目复产工作最新进展","cate_id":19,"input_time":"2017-4-7","pv":1701,"is_free":0,"physical_label":""},{"id":25448,"title":"燕山石化低压1线装置转产动态","cate_id":11,"input_time":"2017-4-7","pv":1431,"is_free":0,"physical_label":""},{"id":25414,"title":"交易收评：带动因素不同，塑料市场走势不一","cate_id":12,"input_time":"2017-4-6","pv":5140,"is_free":0,"physical_label":""},{"id":25405,"title":"日评：期货和石化合力助推  PE市场能否如虎添翼？","cate_id":12,"input_time":"2017-4-6","pv":3690,"is_free":0,"physical_label":""},{"id":25332,"title":"神华PE竞拍结果（20170406）","cate_id":6,"input_time":"2017-4-6","pv":1184,"is_free":0,"physical_label":""}]
+     * total_found : 1000
      */
 
-    private String total;
-    private List<DataBean> data;
+    private String code;
+    private String total_found;
+    private List<NewsBean> news;
 
-
-    public String getTotal() {
-        return total;
+    public String getCode() {
+        return code;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public List<DataBean> getData() {
-        return data;
+    public String getTotal_found() {
+        return total_found;
     }
 
-    public void setData(List<DataBean> data) {
-        this.data = data;
+    public void setTotal_found(String total_found) {
+        this.total_found = total_found;
     }
 
-    public static class DataBean {
+    public List<NewsBean> getNews() {
+        return news;
+    }
+
+    public void setNews(List<NewsBean> news) {
+        this.news = news;
+    }
+
+    public static class NewsBean {
         /**
-         * id : 50493
-         * cateId : 13
-         * title : 交易收评：贸易商今天啥都没干，就跟着别人涨价了！
-         * type : 低压注塑
-         * input_time : 2017-09-01
-         * pv : 1531
+         * id : 25669
+         * title : PE塑料震荡收涨 建议依托五日线做多
+         * cate_id : 21
+         * input_time : 2017-4-7
+         * pv : 4098
          * is_free : 0
+         * physical_label : 
          */
 
         private String id;
-        private String cate_id;
         private String title;
-        private String type;
+        private String cate_id;
         private String input_time;
         private String pv;
         private String is_free;
+        private String physical_label;
 
         public String getId() {
             return id;
@@ -61,14 +70,6 @@ public class HeadSearchBean {
 
         public void setId(String id) {
             this.id = id;
-        }
-
-        public String getCate_id() {
-            return cate_id;
-        }
-
-        public void setCate_id(String cate_id) {
-            this.cate_id = cate_id;
         }
 
         public String getTitle() {
@@ -79,12 +80,12 @@ public class HeadSearchBean {
             this.title = title;
         }
 
-        public String getType() {
-            return type;
+        public String getCate_id() {
+            return cate_id;
         }
 
-        public void setType(String type) {
-            this.type = type;
+        public void setCate_id(String cate_id) {
+            this.cate_id = cate_id;
         }
 
         public String getInput_time() {
@@ -109,6 +110,14 @@ public class HeadSearchBean {
 
         public void setIs_free(String is_free) {
             this.is_free = is_free;
+        }
+
+        public String getPhysical_label() {
+            return physical_label;
+        }
+
+        public void setPhysical_label(String physical_label) {
+            this.physical_label = physical_label;
         }
     }
 }

@@ -12,14 +12,22 @@ public class SupDemDetailBean {
 
 
     /**
-     * err : 0
-     * data : {"id":"195914","p_id":"3595","mobile":"18817392631","from":"1","user_id":"2062","stype":"1","model":"BL3","unit_price":"10500.00","store_house":"宁波","cargo_type":"2","f_name":"伊朗石化","type":"2","input_time":"11-03 13:58","top":"0","status":0,"name":"胖墩","fans":"218","thumb":"http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg","c_name":"上海中信有限公司","is_pass":"","mobile1":"18817392631","member_level":"列兵"}
+     * code : 0
+     * data : {"id":197833,"user_id":81088,"model":"7000F","unit_price":"12500.00","store_house":"上海","cargo_type":1,"f_name":"神华","type":1,"input_time":"02-06 17:48","member_level":"列兵","is_pass":0,"name":"郑成功","c_name":"上海测试封装有限公司","status":1,"mobile":"18817392655","mobile1":"18817392655","thumb":"http://myplas.ufile.ucloud.com.cn/upload/18/01/17/V41CW99H1F.jpg","fans":2}
      * qapp_status : ["common_user"]
      */
 
+    private String code;
     private DataBean data;
     private List<String> qapp_status;
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public DataBean getData() {
         return data;
@@ -39,36 +47,28 @@ public class SupDemDetailBean {
 
     public static class DataBean {
         /**
-         * id : 195914
-         * p_id : 3595
-         * mobile : 18817392631
-         * from : 1
-         * user_id : 2062
-         * stype : 1
-         * model : BL3
-         * unit_price : 10500.00
-         * store_house : 宁波
-         * cargo_type : 2
-         * f_name : 伊朗石化
-         * type : 2
-         * input_time : 11-03 13:58
-         * top : 0
-         * status : 0
-         * name : 胖墩
-         * fans : 218
-         * thumb : http://pic.myplas.com/upload/17/07/12/5965b7ff066cf.jpg
-         * c_name : 上海中信有限公司
-         * is_pass :
-         * mobile1 : 18817392631
+         * id : 197833
+         * user_id : 81088
+         * model : 7000F
+         * unit_price : 12500.00
+         * store_house : 上海
+         * cargo_type : 1
+         * f_name : 神华
+         * type : 1
+         * input_time : 02-06 17:48
          * member_level : 列兵
+         * is_pass : 0
+         * name : 郑成功
+         * c_name : 上海测试封装有限公司
+         * status : 1
+         * mobile : 18817392655
+         * mobile1 : 18817392655
+         * thumb : http://myplas.ufile.ucloud.com.cn/upload/18/01/17/V41CW99H1F.jpg
+         * fans : 2
          */
 
         private String id;
-        private String p_id;
-        private String mobile;
-        private String from;
         private String user_id;
-        private String stype;
         private String model;
         private String unit_price;
         private String store_house;
@@ -76,23 +76,32 @@ public class SupDemDetailBean {
         private String f_name;
         private String type;
         private String input_time;
-        private String top;
-        private String status;
-        private String name;
-        private String fans;
-        private String thumb;
-        private String c_name;
-        private String is_pass;
-        private String mobile1;
         private String member_level;
-        private String merge_three;
+        private String is_pass;
+        private String name;
+        private String c_name;
+        private String status;
+        private String mobile;
+        private String mobile1;
+        private String thumb;
+        private String fans;
+        private String isshop;
+        private String company_type;
 
-        public void setMerge_three(String merge_three) {
-            this.merge_three = merge_three;
+        public void setCompany_type(String company_type) {
+            this.company_type = company_type;
         }
 
-        public String getMerge_three() {
-            return merge_three;
+        public String getCompany_type() {
+            return company_type;
+        }
+
+        public void setIsshop(String isshop) {
+            this.isshop = isshop;
+        }
+
+        public String getIsshop() {
+            return isshop;
         }
 
         public String getId() {
@@ -103,44 +112,12 @@ public class SupDemDetailBean {
             this.id = id;
         }
 
-        public String getP_id() {
-            return p_id;
-        }
-
-        public void setP_id(String p_id) {
-            this.p_id = p_id;
-        }
-
-        public String getMobile() {
-            return mobile;
-        }
-
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
-        }
-
-        public String getFrom() {
-            return from;
-        }
-
-        public void setFrom(String from) {
-            this.from = from;
-        }
-
         public String getUser_id() {
             return user_id;
         }
 
         public void setUser_id(String user_id) {
             this.user_id = user_id;
-        }
-
-        public String getStype() {
-            return stype;
-        }
-
-        public void setStype(String stype) {
-            this.stype = stype;
         }
 
         public String getModel() {
@@ -199,52 +176,12 @@ public class SupDemDetailBean {
             this.input_time = input_time;
         }
 
-        public String getTop() {
-            return top;
+        public String getMember_level() {
+            return member_level;
         }
 
-        public void setTop(String top) {
-            this.top = top;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getFans() {
-            return fans;
-        }
-
-        public void setFans(String fans) {
-            this.fans = fans;
-        }
-
-        public String getThumb() {
-            return thumb;
-        }
-
-        public void setThumb(String thumb) {
-            this.thumb = thumb;
-        }
-
-        public String getC_name() {
-            return c_name;
-        }
-
-        public void setC_name(String c_name) {
-            this.c_name = c_name;
+        public void setMember_level(String member_level) {
+            this.member_level = member_level;
         }
 
         public String getIs_pass() {
@@ -255,6 +192,38 @@ public class SupDemDetailBean {
             this.is_pass = is_pass;
         }
 
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getC_name() {
+            return c_name;
+        }
+
+        public void setC_name(String c_name) {
+            this.c_name = c_name;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
         public String getMobile1() {
             return mobile1;
         }
@@ -263,12 +232,20 @@ public class SupDemDetailBean {
             this.mobile1 = mobile1;
         }
 
-        public String getMember_level() {
-            return member_level;
+        public String getThumb() {
+            return thumb;
         }
 
-        public void setMember_level(String member_level) {
-            this.member_level = member_level;
+        public void setThumb(String thumb) {
+            this.thumb = thumb;
+        }
+
+        public String getFans() {
+            return fans;
+        }
+
+        public void setFans(String fans) {
+            this.fans = fans;
         }
     }
 }

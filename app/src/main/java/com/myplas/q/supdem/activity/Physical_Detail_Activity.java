@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
-import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.api.API;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.supdem.beans.PhysicalDetailBean;
 import com.umeng.analytics.MobclickAgent;
 
@@ -82,15 +82,15 @@ public class Physical_Detail_Activity extends BaseActivity implements ResultCall
 
     //获取数据
     public void getPhysical_Detail() {
-        Map map = new HashMap();
-        map.put("lid", getIntent().getStringExtra("lid"));
-        postAsyn(this, API.BASEURL + API.PHYSICAL_DETAIL, map, this, 1);
+        Map map = new HashMap(8);
+        map.put("id", getIntent().getStringExtra("id"));
+        getAsyn(this, API.PHYSICAL_DETAIL, map, this, 1);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            if (new JSONObject(object.toString()).getString("err").equals("0")) {
+            if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
                 Gson gson = new Gson();
                 PhysicalDetailBean bean = gson.fromJson(object.toString(), PhysicalDetailBean.class);
                 showInfo(bean);

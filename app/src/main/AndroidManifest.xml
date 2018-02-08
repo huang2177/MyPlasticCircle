@@ -130,6 +130,9 @@
         <activity
             android:name=".homepage.activity.BlackListDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".homepage.activity.TheirInfomationActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--headline-->
@@ -310,6 +313,9 @@
             android:name="com.myplas.q.myself.store.MyStoreActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".myself.integral.activity.NewIntegralActivity"
+            android:screenOrientation="portrait" />
 
         <!--适配6.0以上的系统安装apk-->
         <provider

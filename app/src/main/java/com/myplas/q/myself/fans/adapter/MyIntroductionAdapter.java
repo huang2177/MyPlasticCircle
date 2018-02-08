@@ -22,6 +22,7 @@ import java.util.List;
  * 时间：2017/3/23 16:29
  */
 public class MyIntroductionAdapter extends BaseAdapter {
+
     Context context;
     List<MyIntroductionBean.DataBean> list;
 
@@ -36,8 +37,9 @@ public class MyIntroductionAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (list != null)
+        if (list != null) {
             return list.size();
+        }
         return 0;
     }
 
@@ -75,7 +77,7 @@ public class MyIntroductionAdapter extends BaseAdapter {
             viewHolder.mz.setText(list.get(position).getName());
             viewHolder.gj.setText("发布供给：" + list.get(position).getSale() + "条");
             viewHolder.qg.setText("发布求购：" + list.get(position).getBuy() + "条");
-            if ("1".equals(list.get(position).getMerge_three())) {
+            if ("1".equals(list.get(position).getIs_shop())) {
                 viewHolder.rz.setImageResource(R.drawable.icon_identity_hl);
             }
             Glide.with(context)

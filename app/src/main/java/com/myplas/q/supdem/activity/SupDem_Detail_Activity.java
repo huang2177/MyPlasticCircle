@@ -1,6 +1,5 @@
 package com.myplas.q.supdem.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -26,7 +24,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.listener.OnKeyboardChangeListener;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.ShareActivity;
@@ -61,7 +59,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
 
     private SharedUtils sharedUtils;
     private int currentItem, position;
-    private boolean isSelf, isWeChatOperation;
+    private boolean isSelf, isOperation;
 
     private Button mButton;
     private EditText mEditText;
@@ -80,7 +78,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     private Fragment_SupDem_Detail_CHJ detail_chj;
     private SupDem_Detail_ViewPager_Adapter mPagerAdapter;
 
-    private String sign, id, pur_id, send_id;
+    private String sign, reply_id, pur_id, send_id;
 
     private OnKeyboardChangeListener keyboardChangeListener;
 
@@ -169,7 +167,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
      */
 
     public void getNetData() {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
         map.put("id", getIntent().getStringExtra("id"));
         getAsyn(this, API.RELEASEMSGDETAIL, map, this, 1);
     }
@@ -177,9 +175,8 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     /**
      * 关注
      */
-
     public void follow() {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
         map.put("token", sharedUtils.getData(this, "token"));
         map.put("focused_id", getIntent().getStringExtra("userid"));
         postAsyn(this, API.FOCUS_OR_CANCEL, map, this, 2);
@@ -188,7 +185,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
     /**
      * 出价或者回复
      */
-
     public void deliverOrReply() {
         String s = mEditText.getText().toString();
         if (!TextUtils.notEmpty(s)) {
@@ -197,21 +193,19 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         }
 
         Map<String, String> map = new HashMap<>(16);
-        map.put("type", mDetailBean.getData().getType());
-        map.put("token", sharedUtils.getData(this, "token"));
 
         if (currentItem == 0) {//出价
             map.put("price", s);
             map.put("id", getIntent().getStringExtra("id"));
-            map.put("rev_id", getIntent().getStringExtra("userid"));
+            //map.put("rev_id", getIntent().getStringExtra("userid"));
             postAsyn(this, API.OFFERS, map, this, 4);
 
         } else {               //回复
-            map.put("id", id);
             map.put("sign", sign);
             map.put("content", s);
             map.put("pur_id", pur_id);
             map.put("send_id", send_id);
+            map.put("reply_id", reply_id);
             postAsyn(this, API.COMMENTS, map, this, 3);
         }
     }
@@ -261,18 +255,6 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
             default:
                 break;
         }
-    }
-
-    /*出价或者回复的点击事件*/
-    @Override
-    public void onItemClick(String sign, String name, String id, String pur_id, String user_id) {
-        this.id = id;
-        this.sign = sign;
-        this.pur_id = pur_id;
-        this.send_id = user_id;
-        mEditText.setHint("回复" + name);
-        mBarLayout.setExpanded(false, true);
-        showInPutKeybord(mEditText);
     }
 
     @Override
@@ -345,7 +327,7 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTVFans.setText("粉丝：" + mDetailBean.getData().getFans()
                 + "   等级：" + mDetailBean.getData().getMember_level());
 
-        if ("1".equals(mDetailBean.getData().getMerge_three())) {
+        if ("1".equals(mDetailBean.getData().getIsshop())) {
             Glide.with(this).load(R.drawable.icon_identity_hl).into(mIVStart);
         }
 
@@ -357,17 +339,17 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 ? R.drawable.img_supdem_detail_follow
                 : R.drawable.img_supdem_detail_followed);
 
-        if ("1".equals(mDetailBean.getData().getStype())) {
+        if ("1".equals(mDetailBean.getData().getCompany_type())) {
             mSign.setImageResource(R.drawable.icon_factory);
         }
-        if ("2".equals(mDetailBean.getData().getStype())) {
+        if ("2".equals(mDetailBean.getData().getCompany_type())) {
             mSign.setImageResource(R.drawable.icon_raw_material);
         }
-        if ("4".equals(mDetailBean.getData().getStype())) {
+        if ("4".equals(mDetailBean.getData().getCompany_type())) {
             mSign.setImageResource(R.drawable.icon_logistics);
         }
 
-        mTVType.setText(mDetailBean.getData().getType().equals("1")
+        mTVType.setText("1".equals(mDetailBean.getData().getType())
                 ? "求购"
                 : "供给");
 
@@ -384,14 +366,15 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         mTVNf.setText("1".equals(mDetailBean.getData().getCargo_type())
                 ? "现货"
                 : "期货");
-        id = "";
+
         sign = "0";
+        reply_id = "0";
         pur_id = mDetailBean.getData().getId();
         send_id = mDetailBean.getData().getUser_id();
 
         isSelf = (mDetailBean.getData().getUser_id())
                 .equals(sharedUtils.getData(this, Constant.USERID));
-        isWeChatOperation = mDetailBean.getQapp_status().contains("operator");
+        isOperation = mDetailBean.getQapp_status().contains("operator");
 
         setRightTVText("");
         mLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
@@ -401,21 +384,37 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
         lp.rightMargin = 130;
         mTVRight.setLayoutParams(lp);
 
-        mTVRight.setVisibility(isSelf | isWeChatOperation ? View.VISIBLE : View.GONE);
+        mTVRight.setVisibility(isSelf | isOperation ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onKeyboardShow() {
+
     }
 
     @Override
     public void onKeyboardHidden() {
         if (currentItem == 1) {
-            id = "";
             sign = "0";
+            reply_id = "0";
             pur_id = mDetailBean.getData().getId();
             send_id = mDetailBean.getData().getUser_id();
-
             mEditText.setHint("期待您的回复...");
         } else {
             mEditText.setHint("期待您的出价...");
         }
+    }
+
+    /*出价或者回复的点击事件*/
+    @Override
+    public void onItemClick(String sign, String name, String id, String pur_id, String user_id) {
+        this.sign = "2";
+        this.reply_id = id;
+        this.pur_id = pur_id;
+        this.send_id = user_id;
+        mEditText.setHint("回复" + name);
+        mBarLayout.setExpanded(false, true);
+        showInPutKeybord(mEditText);
     }
 
     @Override

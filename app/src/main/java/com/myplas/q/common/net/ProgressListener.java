@@ -1,4 +1,4 @@
-package com.myplas.q.common.netresquset;
+package com.myplas.q.common.net;
 
 /**
  * Created by 黄双 on 2017/12/25 0025.

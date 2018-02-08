@@ -20,7 +20,7 @@ import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.app.activity.ShareActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -29,7 +29,9 @@ import com.myplas.q.common.view.MyListview;
 import com.myplas.q.headlines.adapter.HeadLinesDetail_More_LVAdapetr;
 import com.myplas.q.headlines.bean.SucribleDetailBean;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
+import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -56,6 +58,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
 
     private ScrollView mScrollView;
 
+    private String code;
     private String clickId;
     private MainActivity mMainActivity;
 
@@ -131,9 +134,9 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
     }
 
     public void getNetData(String id, int type) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("id", id);
-        map.put("token", sharedUtils.getData(this, "token"));
+        map.put("ispass", code);
         getAsyn(this, API.GET_DETAIL_INFO, map, this, type);
     }
 
@@ -149,7 +152,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         try {
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("code");
-            if (type == 1 || type == 2 && err.equals("0")) {
+            if (type == 1 || type == 2 && "0".equals(err)) {
                 Gson gson = new Gson();
                 sucribleDetailBean = gson.fromJson(object.toString(), SucribleDetailBean.class);
                 showInfo(sucribleDetailBean);
@@ -164,6 +167,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
                 }, 300);
             }
             if (type == 3) {
+                code = err;
                 if ("0".equals(err)) {
                     getNetData(clickId, 2);
                 } else {
@@ -200,14 +204,28 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        if (type == 2 && httpCode == 412) {
+            try {
+                JSONObject jsonObject = new JSONObject(message);
+                String code = jsonObject.getString("code");
+                if ("100".equals(code)) {
+                    String content = jsonObject.getString("message");
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(this, content, 10, this);
+                }
+            } catch (JSONException e) {
 
+            }
+        }
     }
 
     @Override
     public void dialogClick(int type) {
-        if (type != -1) {
-            Intent intent = new Intent(this, IntegralActivity.class);
-            intent.putExtra("type", "5");
+        if (type == 1) {
+            getNetData(clickId, 2);
+        }
+        if (type == 10) {
+            Intent intent = new Intent(this, IntegralPayActivtity.class);
             startActivity(intent);
         }
     }

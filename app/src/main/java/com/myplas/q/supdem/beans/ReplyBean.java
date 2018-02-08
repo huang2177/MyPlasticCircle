@@ -65,7 +65,17 @@ public class ReplyBean {
         private String c_name;
         private String name;
         private String is_pass;
+        private String reply_to_user_name;
+
         private List<CommentsBean> comments;
+
+        public void setReply_to_user_name(String reply_to_user_name) {
+            this.reply_to_user_name = reply_to_user_name;
+        }
+
+        public String getReply_to_user_name() {
+            return reply_to_user_name;
+        }
 
         public String getId() {
             return id;
@@ -193,7 +203,7 @@ public class ReplyBean {
              * thumb : http://statics.myplas.com/upload/17/06/05/593501f1bd99b.jpg
              * c_name : 嘉兴鼎辉信息科技有限公司
              * name : 王铭
-             * is_pass : 
+             * is_pass :
              */
 
             private String id;
@@ -209,6 +219,17 @@ public class ReplyBean {
             private String c_name;
             private String name;
             private String is_pass;
+
+            private String reply_to_user_name;
+
+            public void setReply_to_user_name(String reply_to_user_name) {
+                this.reply_to_user_name = reply_to_user_name;
+            }
+
+            public String getReply_to_user_name() {
+                return reply_to_user_name;
+            }
+
 
             public String getId() {
                 return id;

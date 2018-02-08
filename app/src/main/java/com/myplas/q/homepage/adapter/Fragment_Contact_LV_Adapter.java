@@ -161,7 +161,7 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter implements CommonDi
     }
 
     public Spanned replace(String s) {
-        s = s.replace("<strong style='color: #ff5000;'>", "<font color='#ff5000'><b>");
+        s = s.replace("<strong style='color: #FF0000;'>", "<font color='#ff0000'><b>");
         s = s.replace("</strong>", "</b></font>");
         Spanned s1 = Html.fromHtml(s);
         return s1;

@@ -9,7 +9,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.myself.beans.MyMessageBean;
 import com.myplas.q.myself.message.adapter.MessageListsAdapter;

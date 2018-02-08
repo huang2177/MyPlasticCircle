@@ -2,10 +2,11 @@ package com.myplas.q.common.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.homepage.activity.ContactDetailActivity;
 import com.myplas.q.homepage.activity.NewContactDetailActivity;
@@ -108,7 +109,6 @@ public class ContactAccessUtils extends BaseActivity implements ResultCallBack,
             String err = jsonObject.getString("code");
             switch (httpCode) {
                 case 412:
-                    //是否消耗积分
                     if (type == 2 && "100".equals(err)) {
                         String content = jsonObject.getString("message");
                         CommonDialog commonDialog = new CommonDialog();

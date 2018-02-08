@@ -23,7 +23,7 @@ import com.huangbryant.hindicator.HIndicatorDialog;
 import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EditTextField;
@@ -59,8 +59,8 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     private ImageView imageView;
     private EditTextField editText;
     private RefreshPopou mRefreshPopou;
-    private MyGridview mGV_History, mGV_Empty, mGV_Subcribe;
-    private TextView textView, textView_classify, textView_region, textView_no;
+    private MyGridview mgvHistory, mgvEmpty, mgvSubcribe;
+    private TextView textView, textviewClassify, textviewRegion, textviewNo;
     private LinearLayout mLayoutDefault, mLayoutResult, mLayoutEmpty, mLayoutConfig;
 
     private RecordBean mRecordBean;
@@ -101,28 +101,28 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
         transition = getIntent().getStringExtra("transition");
 
         imageView = F(R.id.img_search_delete);
-        mGV_Empty = F(R.id.mygrid_search_null);
-        textView_region = F(R.id.contact_region);
+        mgvEmpty = F(R.id.mygrid_search_null);
+        textviewRegion = F(R.id.contact_region);
         listView = F(R.id.search_listview_result);
         mLayoutConfig = F(R.id.contact_config_ll);
         textView = F(R.id.supplydemand_btn_search);
         editText = F(R.id.supplydemand_search_edit);
-        mGV_History = F(R.id.mygrid_search_history);
-        textView_classify = F(R.id.contact_classify);
+        mgvHistory = F(R.id.mygrid_search_history);
+        textviewClassify = F(R.id.contact_classify);
         mLayoutResult = F(R.id.search_result_linear);
-        textView_no = F(R.id.search_result_text_null);
-        mGV_Subcribe = F(R.id.mygrid_search_subcribe);
+        textviewNo = F(R.id.search_result_text_null);
+        mgvSubcribe = F(R.id.mygrid_search_subcribe);
         mLayoutDefault = F(R.id.search_default_linear);
         mLayoutEmpty = F(R.id.search_result_linear_null);
 
         textView.setOnClickListener(this);
         imageView.setOnClickListener(this);
         listView.setOnItemClickListener(this);
-        mGV_Empty.setOnItemClickListener(this);
-        textView_region.setOnClickListener(this);
-        mGV_History.setOnItemClickListener(this);
-        mGV_Subcribe.setOnItemClickListener(this);
-        textView_classify.setOnClickListener(this);
+        mgvEmpty.setOnItemClickListener(this);
+        textviewRegion.setOnClickListener(this);
+        mgvHistory.setOnItemClickListener(this);
+        mgvSubcribe.setOnItemClickListener(this);
+        textviewClassify.setOnClickListener(this);
 
         editText.setHintTextColor(getResources().getColor(R.color.color_gray));
 
@@ -191,7 +191,7 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
      * 删除历史记录
      */
     public void delsearchRecord() {
-        deleteAsyn(this, API.DELETEF_RECORD, null, this, 4, false);
+        deleteAsyn(this, API.DELETEF_RECORD, null, this, 3, false);
     }
 
     @Override
@@ -209,10 +209,10 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 delsearchRecord();
                 break;
             case R.id.contact_classify:
-                openDialog(1, textView_classify);
+                openDialog(1, textviewClassify);
                 break;
             case R.id.contact_region:
-                openDialog(2, textView_region);
+                openDialog(2, textviewRegion);
                 break;
             default:
                 break;
@@ -257,14 +257,21 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     @Override
     public void callBack(Object object, int type) {
         try {
+            if (type == 3) {
+                TextUtils.toast(this, "删除成功！");
+                mGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
+                mgvHistory.setAdapter(mGridAdapter);
+            }
+
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
+
             if (type == 1 && "0".equals(err)) {
                 mRecordBean = gson.fromJson(object.toString(), RecordBean.class);
                 mGridAdapter = new SupDem_Search_Grid_Adapter(this, mRecordBean.getSearch_records());
-                mGV_History.setAdapter(mGridAdapter);
+                mgvHistory.setAdapter(mGridAdapter);
                 SupDem_Search_Grid_Adapter mGridAdapter1 = new SupDem_Search_Grid_Adapter(this, mRecordBean.getRecommendation());
-                mGV_Subcribe.setAdapter(mGridAdapter1);
+                mgvSubcribe.setAdapter(mGridAdapter1);
 
 //                keywords = historyBean.getHot_search().getContent();
 //                editText.setHint(keywords);
@@ -276,6 +283,11 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                 if ("0".equals(err)) {
                     mContactBean = gson.fromJson(object.toString(), ContactBean.class);
                     if (page == 1) {
+                        if (listView.getVisibility() == View.GONE) {
+                            listView.setVisibility(View.VISIBLE);
+                            mLayoutEmpty.setVisibility(View.GONE);
+                        }
+
                         mLVAdapter = new Fragment_Contact_LV_Adapter(this, mContactBean.getPersons());
                         listView.setAdapter(mLVAdapter);
 
@@ -290,29 +302,29 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
                     }
                 } else {
                     if (page == 1) {
-                        listView.setVisibility(View.GONE);
-                        mLayoutEmpty.setVisibility(View.VISIBLE);
-                        textView_no.setText("抱歉，未能找到相关搜索！");
+
+                        if (mLayoutEmpty.getVisibility() == View.GONE) {
+                            listView.setVisibility(View.GONE);
+                            mLayoutEmpty.setVisibility(View.VISIBLE);
+                        }
+
+                        textviewNo.setText("抱歉，未能找到相关搜索！");
                         mInfoBean = gson.fromJson(object.toString(), NoSearchInfoBean.class);
                         mGridAdapter = new SupDem_Search_Grid_Adapter(this, mInfoBean.getRecommendation());
-                        mGV_Empty.setAdapter(mGridAdapter);
+                        mgvEmpty.setAdapter(mGridAdapter);
                     } else {
                         TextUtils.toast(this, "没有更多数据了！");
                     }
                 }
             }
 
-            if (type == 4 && "0".equals(err)) {
-                TextUtils.toast(this, "删除成功！");
-                mGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
-                mGV_History.setAdapter(mGridAdapter);
-            }
         } catch (Exception e) {
         }
     }
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+
     }
 
     private void openDialog(final int type, final TextView textView) {

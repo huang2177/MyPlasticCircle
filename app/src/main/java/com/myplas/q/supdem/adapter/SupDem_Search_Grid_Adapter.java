@@ -8,10 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.netresquset.ResultCallBack;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 

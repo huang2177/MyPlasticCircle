@@ -12,12 +12,20 @@ public class MySelfInfo implements Serializable {
 
 
     /**
-     * err : 0
-     * data : {"user_id":"53402","name":"hh","c_id":"5041","mobile":"15378412400","adistinct":"华北","sex":"男","member_level":"列兵","thumb":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG","thumbcard":"http://pic.myplas.com/upload/17/08/14/599116f59415e.jpg","allow_send":{"focus":1,"repeat":0,"show":0},"c_name":"上海中晨电子商务股份有限公司","need_product":"5000F|2179","address":"北京北京东城区|上海","type":"1","month_consum":"100","main_product":"5000","origin":"|","buy":"1","sale":0,"total":3349,"rank":"22","fans":"7","concern_model":"500"}
+     * code : 0
+     * data : {"user_id":41497,"name":"黄双","c_id":607629,"mobile":"15378412400","adistinct":"华南","sex":"男","member_level":"列兵","thumb":"http://myplas.ufile.ucloud.com.cn/upload/2018/1/whnpugd6qj.jpg","thumbcard":"//newstatics.myplas.com/upload/17/12/26/5a41c4b1abf78.PNG","allow_send":{"focus":0,"repeat":1,"show":0},"is_allow_jpush":1,"c_name":"打得过","need_product":"","address":"","type":7,"month_consum":"","main_product":"pp","origin":"","business_licence_pic":"http://newstatics.myplas.com/upload/18/01/09/5a5423025159b.PNG","buy":2,"sale":10,"total":4401,"rank":7012,"fans":8,"concern_model":""}
      */
 
+    private String code;
     private DataBean data;
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public DataBean getData() {
         return data;
@@ -29,30 +37,31 @@ public class MySelfInfo implements Serializable {
 
     public static class DataBean {
         /**
-         * user_id : 53402
-         * name : hh
-         * c_id : 5041
+         * user_id : 41497
+         * name : 黄双
+         * c_id : 607629
          * mobile : 15378412400
-         * adistinct : 华北
+         * adistinct : 华南
          * sex : 男
          * member_level : 列兵
-         * thumb : http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG
-         * thumbqq : http://pic.myplas.com/upload/17/08/22/599bb87bd79ef.PNG
-         * thumbcard : http://pic.myplas.com/upload/17/08/14/599116f59415e.jpg
-         * allow_send : {"focus":1,"repeat":0,"show":0}
-         * c_name : 上海中晨电子商务股份有限公司
-         * need_product : 5000F|2179
-         * address : 北京北京东城区|上海
-         * type : 1
-         * month_consum : 100
-         * main_product : 5000
-         * origin : |
-         * buy : 1
-         * sale : 0
-         * total : 3349
-         * rank : 22
-         * fans : 7
-         * concern_model : 500
+         * thumb : http://myplas.ufile.ucloud.com.cn/upload/2018/1/whnpugd6qj.jpg
+         * thumbcard : //newstatics.myplas.com/upload/17/12/26/5a41c4b1abf78.PNG
+         * allow_send : {"focus":0,"repeat":1,"show":0}
+         * is_allow_jpush : 1
+         * c_name : 打得过
+         * need_product : 
+         * address : 
+         * type : 7
+         * month_consum : 
+         * main_product : pp
+         * origin : 
+         * business_licence_pic : http://newstatics.myplas.com/upload/18/01/09/5a5423025159b.PNG
+         * buy : 2
+         * sale : 10
+         * total : 4401
+         * rank : 7012
+         * fans : 8
+         * concern_model : 
          */
 
         private String user_id;
@@ -65,6 +74,7 @@ public class MySelfInfo implements Serializable {
         private String thumb;
         private String thumbcard;
         private AllowSendBean allow_send;
+        private String is_allow_jpush;
         private String c_name;
         private String need_product;
         private String address;
@@ -72,20 +82,13 @@ public class MySelfInfo implements Serializable {
         private String month_consum;
         private String main_product;
         private String origin;
+        private String business_licence_pic;
         private String buy;
         private String sale;
         private String total;
         private String rank;
         private String fans;
-        private String business_licence_pic;
-
-        public void setBusiness_licence_pic(String business_licence_pic) {
-            this.business_licence_pic = business_licence_pic;
-        }
-
-        public String getBusiness_licence_pic() {
-            return business_licence_pic;
-        }
+        private String concern_model;
 
         public String getUser_id() {
             return user_id;
@@ -167,6 +170,14 @@ public class MySelfInfo implements Serializable {
             this.allow_send = allow_send;
         }
 
+        public String getIs_allow_jpush() {
+            return is_allow_jpush;
+        }
+
+        public void setIs_allow_jpush(String is_allow_jpush) {
+            this.is_allow_jpush = is_allow_jpush;
+        }
+
         public String getC_name() {
             return c_name;
         }
@@ -223,6 +234,14 @@ public class MySelfInfo implements Serializable {
             this.origin = origin;
         }
 
+        public String getBusiness_licence_pic() {
+            return business_licence_pic;
+        }
+
+        public void setBusiness_licence_pic(String business_licence_pic) {
+            this.business_licence_pic = business_licence_pic;
+        }
+
         public String getBuy() {
             return buy;
         }
@@ -263,10 +282,18 @@ public class MySelfInfo implements Serializable {
             this.fans = fans;
         }
 
-        public static class AllowSendBean implements Serializable {
+        public String getConcern_model() {
+            return concern_model;
+        }
+
+        public void setConcern_model(String concern_model) {
+            this.concern_model = concern_model;
+        }
+
+        public static class AllowSendBean {
             /**
-             * focus : 1
-             * repeat : 0
+             * focus : 0
+             * repeat : 1
              * show : 0
              */
 

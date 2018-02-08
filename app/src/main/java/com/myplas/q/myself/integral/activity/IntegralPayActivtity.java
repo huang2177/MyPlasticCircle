@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyGridview;
@@ -191,7 +191,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
      * 获取固定充值金额
      */
     public void getExactAmount(String money) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(8);
         map.put("money", money);
         getAsyn(this, API.GET_EXACT_AMOUNT, map, this, 2);
     }
@@ -199,12 +199,9 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     /**
      * 创建订单：
      */
-    public void
-
-
-    getOrder() {
+    public void getOrder() {
         if (isSelected_money) {
-            Map<String, String> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>(16);
             map.put("type", "1");
             map.put("goods_id", "99");
             map.put("total_fee", money + "");
@@ -219,16 +216,16 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
      * 微信（服务器） 回调
      */
     public void callWeChat(String order_id, String type) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(8);
         map.put("order_id", order_id);
+        map.put("type", "1");
         map.put("status", type);
-        postAsyn(this, API.BASEURL + API.UPDATE_ORDER_STATUS, map, this, 4);
+        putAsyn(this, API.UPDATE_ORDER_STATUS, map, this, 4, false);
     }
 
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("-----", object.toString());
             Gson gson = new Gson();
             boolean err = "0".equals(new JSONObject(object.toString()).getString("code"));
             if (type == 1 && err) {
@@ -242,7 +239,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
             }
 
             if (type == 2 && err) {
-                plasticBean = Integer.parseInt(new JSONObject(object.toString()).getString("plasticBean"));
+                plasticBean = Integer.parseInt(new JSONObject(object.toString()).getString("points"));
                 textView_show1.setText(plasticBean + "塑豆");
             }
 
@@ -269,7 +266,6 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
      */
     @Override
     public void failCallBack(int type, String message, int httpCode) {
-        Log.e("-----", message);
     }
 
     @Override
@@ -277,6 +273,7 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         super.onDestroy();
         unregisterReceiver(myBroadcastReceiver);
     }
+
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -301,6 +298,5 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                 callWeChat(order_id, type + "");
             }
         }
-
     }
 }

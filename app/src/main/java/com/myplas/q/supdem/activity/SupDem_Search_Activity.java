@@ -26,7 +26,7 @@ import com.huangbryant.hindicator.HIndicatorDialog;
 import com.huangbryant.hindicator.OnDismissListener;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.HLog;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
@@ -98,7 +98,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 
     public void initView() {
         page = 1;
-        isBuy = "0";
+        isBuy = "2";
         keywords = "7000F";
         handler = new Handler();
         list = new ArrayList<>();
@@ -195,13 +195,12 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
      * 查询
      */
     public void getphysicalSearch(int page, String keyWords, String time, String is_buy, String area, boolean isShowLoading) {
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap(16);
         map.put("keywords", keyWords);
         map.put("page", page + "");
         map.put("size", "10");
         map.put("time", time);
         map.put("type", is_buy);
-        map.put("cargo_type", "0");
         map.put("area_id", area);
         getAsyn(this, API.PLASTIC_SEARCH, map, this, 2, isShowLoading);
     }
@@ -290,7 +289,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 getData(keywords);
                 break;
             case R.id.mygrid_search_null://相关搜索
-                keywords = bean.getCombine().get(position);
+                keywords = bean.getRecommendation().get(position);
                 getData(keywords);
                 break;
             case R.id.search_listview_result:
@@ -303,7 +302,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                     Intent intent = new Intent(SupDem_Search_Activity.this, SupDem_QQ_DetailActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("company", list.get(position).getC_name());
-                    intent.putExtra("plastic_number", list.get(position).getData_model());
+                    intent.putExtra("plastic_number", keywords);
                     startActivity(intent);
                 }
                 break;
@@ -327,9 +326,16 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
     @Override
     public void callBack(Object object, int type) {
         try {
+            if (type == 4) {
+                TextUtils.toast(this, "删除成功！");
+                adapterGrid = new SupDem_Search_Grid_Adapter(this, null);
+                gridviewHistory.setAdapter(adapterGrid);
+            }
+
             Gson gson = new Gson();
-            boolean err = new JSONObject(object.toString()).getString("code").equals("0");
-            if (type == 1 && err) {
+            String err = new JSONObject(object.toString()).getString("code");
+
+            if (type == 1 && "0".equals(err)) {
                 historyBean = gson.fromJson(object.toString(), HistoryBean.class);
                 adapterGrid = new SupDem_Search_Grid_Adapter(this, historyBean.getHistory());
                 gridviewHistory.setAdapter(adapterGrid);
@@ -340,24 +346,27 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 //                editText.setHint(keywords);
             }
             if (type == 2) {
-                isLoading = false;
                 mLayoutDefault.setVisibility(View.GONE);
                 mLayoutResult.setVisibility(View.VISIBLE);
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 SearchResultBean resultBean = null;
-                if (err) {
-                    listView.setVisibility(View.VISIBLE);
-                    mLayoutEmpty.setVisibility(View.GONE);
+                if ("0".equals(err)) {
                     resultBean = gson.fromJson(object.toString(), SearchResultBean.class);
                     if (page == 1) {
+                        if (listView.getVisibility() == View.GONE) {
+                            listView.setVisibility(View.VISIBLE);
+                            mLayoutEmpty.setVisibility(View.GONE);
+                        }
+
                         adapterList = new SupDem_Search_List_Adapter(this, resultBean.getList());
                         listView.setAdapter(adapterList);
 
                         list.clear();
                         list.addAll(resultBean.getList());
-                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + resultBean.getTotal() + "条信息");
+                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + resultBean.getTotals() + "条信息");
                     } else {
+                        isLoading = false;
                         list.addAll(resultBean.getList());
                         adapterList.setList(list);
                         adapterList.notifyDataSetChanged();
@@ -365,18 +374,22 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 } else {
                     hasMoerData = false;
                     if (page == 1) {
-                        listView.setVisibility(View.GONE);
-                        mLayoutEmpty.setVisibility(View.VISIBLE);
+
+                        if (mLayoutEmpty.getVisibility() == View.GONE) {
+                            listView.setVisibility(View.GONE);
+                            mLayoutEmpty.setVisibility(View.VISIBLE);
+                        }
+
                         textviewNo.setText("抱歉，未能找到相关搜索！");
                         bean = gson.fromJson(object.toString(), SearchNoResultBean.class);
-                        adapterGrid = new SupDem_Search_Grid_Adapter(this, bean.getCombine());
+                        adapterGrid = new SupDem_Search_Grid_Adapter(this, bean.getRecommendation());
                         gridviewSubcribeNo.setAdapter(adapterGrid);
                     } else {
                         TextUtils.toast(this, "没有更多数据！");
                     }
                 }
             }
-            if (type == 3 && err) {
+            if (type == 3 && "0".equals(err)) {
                 tabCofigBean = gson.fromJson(object.toString(), TabCofigBean.class);
                 listArea = tabCofigBean.getData().getArea().getData();
                 listTime = tabCofigBean.getData().getTime().getData();
@@ -392,13 +405,7 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
                 SharedUtils.getSharedUtils().setData(this, "position_pro", currentItem + "");
                 SharedUtils.getSharedUtils().setData(this, "position_city", 0 + "");
             }
-            if (type == 4 && err) {
-                TextUtils.toast(this, "删除成功！");
-                adapterGrid = new SupDem_Search_Grid_Adapter(this, null);
-                gridviewHistory.setAdapter(adapterGrid);
-            }
         } catch (Exception e) {
-            HLog.e(this, e.toString());
         }
     }
 
@@ -482,8 +489,8 @@ public class SupDem_Search_Activity extends BaseActivity implements View.OnClick
 
             page = 1;
             hasMoerData = true;
-            isBuy = position == 0 ? "0" : "1";
-            keywords = (editText.getText().toString().equals("")) ? ("7000f") : (editText.getText().toString());
+            isBuy = position == 0 ? "2" : "1";
+            keywords = ("".equals(editText.getText().toString())) ? ("7000f") : (editText.getText().toString());
             getphysicalSearch(1, keywords, time, isBuy, area, true);
         }
 

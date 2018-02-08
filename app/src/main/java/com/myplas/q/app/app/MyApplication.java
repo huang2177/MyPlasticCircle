@@ -49,7 +49,6 @@ public class MyApplication extends MultiDexApplication {
                     StatusUtils.setStatusBar(activity, false, false);
                     StatusUtils.setStatusTextColor(false, activity);
                 }
-
             }
 
             @Override

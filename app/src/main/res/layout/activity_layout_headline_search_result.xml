@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/search_result_linear"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:id="@+id/search_result_linear"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/divider_result"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/transparent" />
 
     <ListView
         android:id="@+id/search_listview_result1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"/>
+        android:divider="@null" />
 
     <LinearLayout
         android:id="@+id/search_result_linear_null"
@@ -26,7 +31,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textColor="@color/color_black"
-            android:textSize="16.0sp"/>
+            android:textSize="16.0sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -34,7 +39,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:text="相关搜索:"
-            android:textSize="16.0sp"/>
+            android:textSize="16.0sp" />
 
         <com.myplas.q.common.view.MyGridview
             android:id="@+id/mygrid_search_null"
@@ -44,6 +49,6 @@
             android:layout_marginRight="20dp"
             android:horizontalSpacing="8dp"
             android:numColumns="3"
-            android:verticalSpacing="10dp"/>
+            android:verticalSpacing="10dp" />
     </LinearLayout>
 </LinearLayout>

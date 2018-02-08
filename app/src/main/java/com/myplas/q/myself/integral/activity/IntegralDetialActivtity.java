@@ -10,22 +10,22 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CustomPopupWindow;
 import com.myplas.q.common.view.EmptyView;
-import com.myplas.q.common.view.pinnedheadlistview.PinnedHeaderListView;
-import com.myplas.q.myself.beans.Integraldetialbean;
+import com.myplas.q.myself.beans.NewIntergralBean;
 import com.myplas.q.myself.integral.adapter.Integral_Detial_GV_Adapter;
 import com.myplas.q.myself.integral.adapter.Integral_Detial_LV_Adapter;
-import com.umeng.analytics.MobclickAgent;
+import com.myplas.q.myself.integral.adapter.NewIntegralDetialLVAdapter;
 
 import org.json.JSONObject;
 
@@ -49,14 +49,16 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
 
     private GridView mGridView;
     private List<String> listString;
-    private PinnedHeaderListView listView;
-    private List<Integraldetialbean.DataBean.RecordsBean> list;
+    private ListView listView;
+    //    private List<Integraldetialbean.DataBean.RecordsBean> list;
+    private List<NewIntergralBean.DataBean> list;
     private Integral_Detial_LV_Adapter mLVAdapter;
     private Integral_Detial_GV_Adapter mGVAdapter;
 
     private View view;
     private EmptyView mEmptyView;
     private CustomPopupWindow popupWindow;
+    private NewIntegralDetialLVAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +88,8 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE &&
                         listView.getCount() > visibleItemCount) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        if (hasMoreData) {
-                            page++;
-                            getData(String.valueOf(page), type);
-                        } else {
-                            TextUtils.toast(IntegralDetialActivtity.this, "没有更多数据！");
-                        }
+                        page++;
+                        getData(String.valueOf(page), type);
                     }
                 }
             }
@@ -140,23 +138,37 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                     default:
                         break;
                 }
+                page = 1;
                 getData("1", type);
             }
         });
         getData("1", type);
     }
 
-
     @Override
     public void onClick(View v) {
         showPopou();
     }
 
-    public void getData(String page, String type) {
-        Map<String, String> map = new HashMap<String, String>(8);
-        map.put("page", page);
+//    public void getData(String page, String type) {
+//        Map<String, String> map = new HashMap<String, String>(8);
+//        map.put("page", page);
+//        map.put("type", type);
+//        getAsyn(this, API.SCORE_RECORD, map, this, 1);
+//    }
+
+    /**
+     * 新版 我的塑豆
+     *
+     * @param page
+     * @param type
+     */
+    private void getData(String page, String type) {
+        Map<String, String> map = new HashMap<>(16);
+        map.put("page", page + "");
+        map.put("size", "15");
         map.put("type", type);
-        getAsyn(this, API.SCORE_RECORD, map, this, 1);
+        getAsyn(this, API.POINTSBILLLOG, map, this, 1, false);
     }
 
     public void showPopou() {
@@ -179,7 +191,7 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
                 setBackgroundAlpha(1f);
             }
         });
-        listString = Arrays.asList("全部", "分享", "充值", "拉新", "发布", "每日登录", "查看通讯录", "兑换卡片");
+        listString = Arrays.asList("全部", "分享", "充值", "拉新", "发布", "每日登录", "查看通讯录", "查看头条");
         mGVAdapter = new Integral_Detial_GV_Adapter(this, listString, positionItem);
         mGridView.setAdapter(mGVAdapter);
     }
@@ -187,21 +199,37 @@ public class IntegralDetialActivtity extends BaseActivity implements ResultCallB
     @Override
     public void callBack(Object object, int type) {
         try {
-            Integraldetialbean integraldetialbean = null;
-            if ("0".equals(new JSONObject(object.toString()).getString("code"))) {
-                Gson gson = new Gson();
-                mEmptyView.setVisibility(View.GONE);
-                listView.setVisibility(View.VISIBLE);
-                integraldetialbean = gson.fromJson(object.toString(), Integraldetialbean.class);
+            Gson gson = new Gson();
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String code = jsonObject.getString("code");
+//            if ("0".equals(code)) {
+//                Integraldetialbean integraldetialbean = null;
+//                mEmptyView.setVisibility(View.GONE);
+//                listView.setVisibility(View.VISIBLE);
+//                integraldetialbean = gson.fromJson(object.toString(), Integraldetialbean.class);
+//                if (page == 1) {
+//                    list.clear();
+//                    list.addAll(integraldetialbean.getData().getRecords());
+//                    mLVAdapter = new Integral_Detial_LV_Adapter(this, list);
+//                    listView.setAdapter(mLVAdapter);
+//                } else {
+//                    list.addAll(integraldetialbean.getData().getRecords());
+//                    mLVAdapter.setList(list);
+//                    mLVAdapter.notifyDataSetChanged();
+//                }
+//            }
+
+            if ("0".equals(code)) {
+                NewIntergralBean bean = gson.fromJson(object.toString(), NewIntergralBean.class);
                 if (page == 1) {
-                    list.clear();
-                    list.addAll(integraldetialbean.getData().getRecords());
-                    mLVAdapter = new Integral_Detial_LV_Adapter(this, list);
-                    listView.setAdapter(mLVAdapter);
+                    mEmptyView.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
+                    adapter = new NewIntegralDetialLVAdapter(this, bean.getData());
+                    listView.setAdapter(adapter);
                 } else {
-                    list.addAll(integraldetialbean.getData().getRecords());
-                    mLVAdapter.setList(list);
-                    mLVAdapter.notifyDataSetChanged();
+                    list.addAll(bean.getData());
+                    adapter.setList(list);
+                    adapter.notifyDataSetChanged();
                 }
             }
         } catch (Exception e) {

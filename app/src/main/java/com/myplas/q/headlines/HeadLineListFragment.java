@@ -28,7 +28,7 @@ import com.huangbryant.hbanner.view.TagImageView;
 import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ACache;
 import com.myplas.q.common.utils.AndroidUtil;
 import com.myplas.q.common.utils.NetUtils;
@@ -44,7 +44,9 @@ import com.myplas.q.headlines.activity.HeadLinesDetailActivity;
 import com.myplas.q.headlines.adapter.SubcribleAdapter;
 import com.myplas.q.headlines.bean.SubcribleBean;
 import com.myplas.q.myself.integral.activity.IntegralActivity;
+import com.myplas.q.myself.integral.activity.IntegralPayActivtity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -83,6 +85,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
     private List<String> mListTitle;
     public Myinterface mMyInterface;
 
+    private String code;
     private ACache mACache;
     private Handler mHandler;
 
@@ -256,9 +259,23 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
      * 检查权限
      */
     public void isPaidSubscription(String cate_id) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("id", cate_id);
         getAsyn(getActivity(), API.IS_PAID_SUBSCRIPTION, map, this, 6, false);
+    }
+
+
+    /**
+     * 获取详情 检查塑豆
+     *
+     * @param id
+     * @param type
+     */
+    public void getNetData(String id) {
+        Map<String, String> map = new HashMap<String, String>(8);
+        map.put("id", id);
+        map.put("ispass", code);
+        getAsyn(getActivity(), API.GET_DETAIL_INFO, map, this, 7);
     }
 
     @Override
@@ -272,6 +289,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
             }
 
             if (type == 6) {
+                code = err;
                 if ("0".equals(err)) {
                     Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
                     intent.putExtra("id", clickId);
@@ -282,8 +300,15 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
                     commonDialog.showDialog(getActivity(), content, ("2".equals(err)) ? (1) : (3), this);
                 }
             }
+            if (type == 7) {
+                if ("0".equals(err)) {
+                    Intent intent = new Intent(getActivity(), HeadLinesDetailActivity.class);
+                    intent.putExtra("id", clickId);
+                    startActivity(intent);
+                }
+            }
         } catch (Exception e) {
-            e.toString();
+
         }
     }
 
@@ -337,21 +362,39 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
     }
 
     @Override
-    public void dialogClick(int type) {
-        if (type != -1) {
-            Intent intent = new Intent(getActivity(), IntegralActivity.class);
-            intent.putExtra("type", cateId);
-            startActivity(intent);
-        }
-    }
-
-    @Override
     public void failCallBack(int type, String message, int httpCode) {
-        mRefreshLayout.setRefreshing(false);
+        if (mRefreshLayout.isRefreshing()) {
+            mRefreshLayout.setRefreshing(false);
+        }
         if (currentItem != 0) {
             if (mCateList.size() == 0) {
                 imageButton.setVisibility(View.VISIBLE);
             }
+        }
+
+        if (type == 7 && httpCode == 412) {
+            try {
+                JSONObject jsonObject = new JSONObject(message);
+                String code = jsonObject.getString("code");
+                if ("100".equals(code)) {
+                    String content = jsonObject.getString("message");
+                    CommonDialog commonDialog = new CommonDialog();
+                    commonDialog.showDialog(getActivity(), content, 10, this);
+                }
+            } catch (JSONException e) {
+
+            }
+        }
+    }
+
+    @Override
+    public void dialogClick(int type) {
+        if (type == 1) {
+            getNetData(clickId);
+        }
+        if (type == 10) {
+            Intent intent = new Intent(getActivity(), IntegralPayActivtity.class);
+            startActivity(intent);
         }
     }
 

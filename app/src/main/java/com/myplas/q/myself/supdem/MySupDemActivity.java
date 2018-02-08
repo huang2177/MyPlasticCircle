@@ -7,7 +7,6 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -19,7 +18,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.ActivityManager;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.BaseActivity;
@@ -138,8 +137,7 @@ public class MySupDemActivity extends BaseActivity implements ResultCallBack
     public void failCallBack(int type, String message, int httpCode) {
         try {
             JSONObject jsonObject = new JSONObject(message);
-            String errCode = jsonObject.getString("code");
-            if (httpCode == 404 && "404".equals(errCode)) {
+            if (httpCode == 404) {
                 if (page == 1) {
                     listView.setVisibility(View.GONE);
                     mLayout.setVisibility(View.VISIBLE);

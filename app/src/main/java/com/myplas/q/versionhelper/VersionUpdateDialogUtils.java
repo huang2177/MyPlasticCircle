@@ -1,4 +1,4 @@
-package com.myplas.q.versionupdate;
+package com.myplas.q.versionhelper;
 
 import android.app.Dialog;
 import android.app.DownloadManager;
@@ -36,9 +36,9 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
     private Context mContext;
     private String url, title;
 
-    private Button button_ok;
+    private Button buttonOk;
     private Dialog normalDialog;
-    private TextView textView_content;
+    private TextView textviewContent;
     private ProgressBar mNumberProgressBar;
 
     private long downloadId;
@@ -61,11 +61,10 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
     /**
      * 弹出dialog 点击安装
      */
-
     public void showDialog(final boolean isForce) {
         View view = View.inflate(mContext, R.layout.dialog_layout_appupdate, null);
-        button_ok = (Button) view.findViewById(R.id.btn_ok);
-        textView_content = (TextView) view.findViewById(R.id.dialog_message);
+        buttonOk = (Button) view.findViewById(R.id.btn_ok);
+        textviewContent = (TextView) view.findViewById(R.id.dialog_message);
         mNumberProgressBar = (ProgressBar) view.findViewById(R.id.versionupdate_numberbar);
 
         normalDialog = new Dialog(mContext, R.style.commondialog_style);
@@ -73,21 +72,21 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         normalDialog.setContentView(view);
         normalDialog.show();
 
-        button_ok.setClickable(true);
-        textView_content.setText(title);
+        buttonOk.setClickable(true);
+        textviewContent.setText(title);
         setDialogWindowAttr(normalDialog, mContext);
 
-        button_ok.setOnClickListener(new View.OnClickListener() {
+        buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) button_ok.getLayoutParams();
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) buttonOk.getLayoutParams();
                 lp.bottomMargin = 70;
-                button_ok.setLayoutParams(lp);
+                buttonOk.setLayoutParams(lp);
 
-                button_ok.setClickable(false);
+                buttonOk.setClickable(false);
                 mNumberProgressBar.setProgress(0);
                 mNumberProgressBar.setVisibility(View.VISIBLE);
-                button_ok.setBackgroundResource(R.drawable.btn_download);
+                buttonOk.setBackgroundResource(R.drawable.btn_download);
 
                 downloadApk = new DownloadApk(VersionUpdateDialogUtils.this);
                 downloadId = DownloadApk.downloadApk(mContext, url, "塑料圈通讯录更新", "塑料圈通讯录");
@@ -113,22 +112,17 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
 
     @Override
     public void install() {
-        if (button_ok != null) {
-            button_ok.setClickable(true);
-            button_ok.setBackgroundResource(R.drawable.btn_refresh);
+        if (buttonOk != null) {
+            buttonOk.setClickable(true);
+            buttonOk.setBackgroundResource(R.drawable.btn_refresh);
         }
         DownLoadUtils.installApk(mContext);
     }
 
-    public interface VersionUpdateInterface {
-        void exitCallBack();
-    }
 
-    public void setVersionUpdateInterface(VersionUpdateInterface versionUpdateInterface) {
-        this.versionUpdateInterface = versionUpdateInterface;
-    }
-
-    //设置dialog属性
+    /**
+     * 设置dialog属性
+     */
     public void setDialogWindowAttr(Dialog dlg, Context ctx) {
         WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -148,7 +142,6 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
 
         public DownloadChangeObserver(Handler handler) {
             super(handler);
-            // TODO Auto-generated constructor stub
         }
 
         @Override
@@ -157,6 +150,9 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         }
     }
 
+    /**
+     * 更新状态
+     */
     private void queryDownloadStatus() {
         DownloadManager.Query query = new DownloadManager.Query();
         query.setFilterById(downloadId);
@@ -215,13 +211,13 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
-                if (button_ok != null) {
-                    button_ok.setClickable(true);
-                    button_ok.setBackgroundResource(R.drawable.btn_refresh);
+                if (buttonOk != null) {
+                    buttonOk.setClickable(true);
+                    buttonOk.setBackgroundResource(R.drawable.btn_refresh);
 
-                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) button_ok.getLayoutParams();
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) buttonOk.getLayoutParams();
                     lp.bottomMargin = 40;
-                    button_ok.setLayoutParams(lp);
+                    buttonOk.setLayoutParams(lp);
 
                     mNumberProgressBar.setVisibility(View.GONE);
                 }
@@ -230,8 +226,19 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         }
     }
 
+    /**
+     * 注销广播
+     */
     public void unregisterReceiver() {
         mContext.unregisterReceiver(myReceiver);
         mContext.getContentResolver().unregisterContentObserver(downloadObserver);
+    }
+
+    public interface VersionUpdateInterface {
+        void exitCallBack();
+    }
+
+    public void setVersionUpdateInterface(VersionUpdateInterface versionUpdateInterface) {
+        this.versionUpdateInterface = versionUpdateInterface;
     }
 }

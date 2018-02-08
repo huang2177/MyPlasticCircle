@@ -1,5 +1,6 @@
 package com.myplas.q.common.view;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,10 +28,12 @@ public class CommonDialog {
     private DialogShowInterface dialogShowInterface;
     private TextView textView_content, textView_title;
 
+
     private boolean isCanceledOnTouchOutside = true;
 
     public CommonDialog() {
     }
+
 
     public void showDialog(Context context, String content, int type, final DialogShowInterface dialogShowInterface) {
         this.type = type;
@@ -101,7 +104,9 @@ public class CommonDialog {
         this.isCanceledOnTouchOutside = isCanceledOnTouchOutside;
     }
 
-    //设置dialog属性
+    /**
+     * 设置dialog属性
+     */
     private void setDialogWindowAttr(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();

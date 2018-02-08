@@ -30,7 +30,6 @@ public class FragmentRegister3 extends Fragment implements View.OnClickListener 
     private ImageView mImgSuccess;
     private TextView mTVSuccess, mTVLevel, mTVInfo, mTVLook;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -54,11 +53,15 @@ public class FragmentRegister3 extends Fragment implements View.OnClickListener 
                 Intent intent = new Intent(getActivity(), MyInfomationActivity.class);
                 intent.putExtra("from", "0");
                 startActivity(intent);
+
+                getActivity().finish();
                 break;
             case R.id.register_look:
                 Intent intent1 = new Intent(getActivity(), MainActivity.class);
                 intent1.putExtra("type", Constant.LOGINED);
                 startActivity(intent1);
+
+                getActivity().finish();
                 break;
             default:
                 break;
@@ -70,6 +73,7 @@ public class FragmentRegister3 extends Fragment implements View.OnClickListener 
             mTVLevel.setText("终于等到您，您是我们第" + agrs.get(0) + "名用户！");
         }
     }
+
     public void showImg() {
         if (mImgSuccess != null) {
             Glide.with(this)

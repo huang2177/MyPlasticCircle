@@ -3,6 +3,7 @@
     android:id="@+id/detail_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -119,46 +120,6 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/shape_shande" />
-
-    <LinearLayout
-        android:id="@+id/detail_layout_input"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp">
-
-        <EditText
-            android:id="@+id/blacklist_detail_ev"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/corner_titlebar"
-            android:drawableLeft="@drawable/icon_pencil"
-            android:drawablePadding="3dp"
-            android:paddingLeft="5dp"
-            android:textCursorDrawable="@drawable/text_cursor_shape"
-            android:textSelectHandle="@drawable/textselecthandle"
-            android:textSelectHandleLeft="@drawable/textselecthandle"
-            android:textSelectHandleRight="@drawable/textselecthandle"
-            android:textSize="14.0sp" />
-
-        <Button
-            android:id="@+id/blacklist_detail_btn"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="1dp"
-            android:layout_marginTop="1dp"
-            android:background="@drawable/btn_shape_red_coners"
-            android:text="回复"
-            android:textColor="@color/color_white" />
-    </LinearLayout>
+    <include layout="@layout/layout_input" />
 
 </LinearLayout>

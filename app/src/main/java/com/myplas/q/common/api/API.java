@@ -1,5 +1,7 @@
 package com.myplas.q.common.api;
 
+import android.widget.BaseAdapter;
+
 import com.myplas.q.BuildConfig;
 import com.myplas.q.app.fragment.BaseFragment;
 
@@ -13,8 +15,8 @@ public class API {
     /**
      * base url
      */
-    public final static String BASEURL = (BuildConfig.API_ENV)
-            ? ("http://api.91su.cn/")
+    public final static String BASEURL = (!BuildConfig.API_ENV)
+            ? ("https://api2.myplas.com/")
             : ("http://api.91su.cn/");
 
     /*common*/
@@ -41,7 +43,7 @@ public class API {
     /**
      * 分享成功日志
      */
-    public final static String SAVE_SHARE_LOG = "wechat/saveShareLog";
+    public final static String SAVE_SHARE_LOG = BASEURL + "records";
 
     /**
      * 分享店铺
@@ -68,6 +70,12 @@ public class API {
             ? "http://q.myplas.com/plasticzone/plastic#/qqinfo?id="
             : "http://test.myplas.com/plasticzone/plastic#/qqinfo?id=";
     /**
+     * 分享黑名单
+     */
+    public final static String PLASTIC_BLACKLIST = (BuildConfig.API_ENV)
+            ? "http://q.myplas.com/plasticzone/plastic?#/blackdetail/"
+            : "http://test.myplas.com/plasticzone/plastic?#/blackdetail/";
+    /**
      * 极光推送用户个人偏好设置
      */
     public final static String JPUSHSET = BASEURL + "JpushSet";
@@ -87,10 +95,6 @@ public class API {
      */
     public final static String CONNECTED = BASEURL + "socket/queue";
     /**
-     * 更新已读的红点推送
-     */
-    public final static String READ = BASEURL + "socket/read";
-    /**
      * 推送后获取数据
      */
     public final static String GETREDDOTINFO = BASEURL + "socket/getRedDotInfo";
@@ -100,7 +104,7 @@ public class API {
     /**
      * 获取证书
      */
-    public final static String CREDIT_CERTIFICATE = BASEURL + "CreditCertificate";
+    public final static String CREDIT_CERTIFICATE = BASEURL + "creditCertificate";
     /**
      * 塑料配资
      */
@@ -189,19 +193,6 @@ public class API {
      * 获取用户资料
      */
     public final static String GETINFORMATION = BASEURL + "Information";
-    /**
-     * 获取用户关注
-     */
-    public final static String GETFOLLOWERS = BASEURL + "Followers";
-    /**
-     * 获取用户粉丝
-     */
-    public final static String GETRECOMMENDATION = BASEURL + "Recommendation";
-    /**
-     * 获取用户引荐
-     */
-    public final static String GETFANS = BASEURL + "Fans";
-
 
 
     /*myInfo*/
@@ -294,6 +285,10 @@ public class API {
      * 塑料圈app之购买头条
      */
     public final static String NEW_EXCHANGE_TOUTIAO = BASEURL + "exchanges/mall/goods/toutiao";
+    /**
+     * 新塑料商城
+     */
+    public final static String POINTSBILLLOG = BASEURL + "user/pointsbilllog";
 
 
     /*pay*/
@@ -308,11 +303,11 @@ public class API {
     /**
      * 塑料圈app之获取固定金额
      */
-    public final static String GET_EXACT_AMOUNT = "pay/getExactAmount";
+    public final static String GET_EXACT_AMOUNT = BASEURL + "points/relations";
     /**
      * 塑料圈app之订单状态
      */
-    public final static String UPDATE_ORDER_STATUS = BASEURL + "OrderStatus";
+    public final static String UPDATE_ORDER_STATUS = BASEURL + "payments/orders";
 
 
     /*score*/
@@ -320,8 +315,6 @@ public class API {
      * 塑料圈app之积分记录
      */
     public final static String SCORE_RECORD = BASEURL + "histories/points";
-
-
 
 
     /*releaseMsg*/
@@ -337,10 +330,6 @@ public class API {
      * 获取供求发布(详情)的消息回复
      */
     public final static String COMMENTS = BASEURL + "requirements/comments";
-    /**
-     * 二次发布
-     */
-    public final static String SECOND_PUB = "releaseMsg/repeatRelease";
     /**
      * 获取解析内容
      */
@@ -361,7 +350,7 @@ public class API {
     /**
      * 物性表查询列表
      */
-    public final static String PHYSICAL_SEARCH = "releaseMsg/physicalSearch";
+    public final static String PHYSICAL_SEARCH = BASEURL + "properties";
     /**
      * 搜塑料app接口
      */
@@ -375,13 +364,9 @@ public class API {
      */
     public final static String DEL_SEARCH_RECORD = BASEURL + "histories/requirements/search";
     /**
-     * 搜塑料app接口
-     */
-    public final static String PLASTIC_SEARCH_DETAIL = "releaseMsg/plasticSearchDetail";
-    /**
      * 物性表查询详情
      */
-    public final static String PHYSICAL_DETAIL = "releaseMsg/physicalDetail";
+    public final static String PHYSICAL_DETAIL = BASEURL + "properties/tables";
 
 
 

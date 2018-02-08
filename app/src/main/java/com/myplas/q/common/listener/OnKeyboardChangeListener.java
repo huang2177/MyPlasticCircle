@@ -32,7 +32,7 @@ public class OnKeyboardChangeListener implements View.OnLayoutChangeListener {
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
         if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-            //mOnChangerListener.onKeyboardShow();
+            mOnChangerListener.onKeyboardShow();
         } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             mOnChangerListener.onKeyboardHidden();
         }
@@ -42,7 +42,7 @@ public class OnKeyboardChangeListener implements View.OnLayoutChangeListener {
      * 软键盘监听变化接口
      */
     public interface OnChangeListener {
-        //void onKeyboardShow();//显示接口
+        void onKeyboardShow();//显示接口
 
         void onKeyboardHidden();//隐藏接口
     }

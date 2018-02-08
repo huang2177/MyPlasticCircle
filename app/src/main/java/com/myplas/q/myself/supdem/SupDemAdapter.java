@@ -16,13 +16,12 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.app.activity.ShareActivity;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myself.beans.MySupDemBean;
 import com.myplas.q.release.ReleaseActivity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;

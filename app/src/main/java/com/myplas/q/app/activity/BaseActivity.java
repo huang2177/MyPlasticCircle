@@ -14,9 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.myplas.q.R;
-import com.myplas.q.common.netresquset.NetRequest;
-import com.myplas.q.common.netresquset.ProgressListener;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.NetRequest;
+import com.myplas.q.common.net.ProgressListener;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.LoadingDialog;
@@ -241,13 +241,13 @@ public class BaseActivity extends FragmentActivity {
     }
 
     public void call(String tel) {
-        if (!tel.contains("*")) {
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } else {
-            TextUtils.toast(this, "该用户还未公开电话号码！");
+        if (tel.contains("*") || tel == null) {
+            TextUtils.toast(this, "对方暂未公开电话号码！");
+            return;
         }
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tel));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     /**

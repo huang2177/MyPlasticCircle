@@ -10,29 +10,38 @@ import java.util.List;
 
 public class SearchNoResultBean {
 
+
     /**
-     * err : 130
-     * msg : 抱歉，未找到相关信息
-     * combine : ["7000f","2119","218wj","7000","q281","5000S"]
+     * code : 404
+     * message : 没有相关信息
+     * recommendation : ["7000F","2119","负荷开关","5000s","7042"]
      */
 
-    private String msg;
-    private List<String> combine;
+    private int code;
+    private String message;
+    private List<String> recommendation;
 
-
-    public String getMsg() {
-        return msg;
+    public int getCode() {
+        return code;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public List<String> getCombine() {
-        return combine;
+    public String getMessage() {
+        return message;
     }
 
-    public void setCombine(List<String> combine) {
-        this.combine = combine;
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<String> getRecommendation() {
+        return recommendation;
+    }
+
+    public void setRecommendation(List<String> recommendation) {
+        this.recommendation = recommendation;
     }
 }

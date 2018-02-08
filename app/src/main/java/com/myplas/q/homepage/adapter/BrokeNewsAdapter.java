@@ -15,6 +15,8 @@ import com.myplas.q.R;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.ProgressImageView;
 import com.yanzhenjie.album.Album;
+import com.yanzhenjie.durban.Controller;
+import com.yanzhenjie.durban.Durban;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,10 +145,45 @@ public class BrokeNewsAdapter extends BaseAdapter {
                 TextUtils.toast(context, "最多只能上传10张图片！");
             }
         }
-
     }
 
     class ViewHolder {
         ProgressImageView imageView;
+    }
+
+    /**
+     * 裁剪
+     *
+     * @param pathList
+     * @param i
+     */
+    public void cutPhoto(ArrayList<String> pathList) {
+        Durban.with(context)
+                // 裁剪界面的标题。
+                .title("裁剪")
+                .statusBarColor(color)
+                .toolBarColor(color)
+                // 图片路径list或者数组。
+                .inputImagePaths(pathList)
+                // 图片输出文件夹路径。
+                // 裁剪图片输出的最大宽高。
+                .maxWidthHeight(400, 250)
+                // 设置裁剪比例
+                .aspectRatio(8, 5)
+                // 图片压缩格式：JPEG、PNG。
+                .compressFormat(Durban.COMPRESS_JPEG)
+                // 图片压缩质量，请参考：Bitmap#compress(Bitmap.CompressFormat, int, OutputStream)
+                .compressQuality(100)
+                // 裁剪时的手势支持：ROTATE, SCALE, ALL, NONE.
+                .gesture(Durban.GESTURE_SCALE)
+                .controller(Controller.newBuilder()
+                        .enable(true) // 是否开启控制面板。
+                        .rotation(true) // 是否有旋转按钮。
+                        .rotationTitle(true) // 旋转控制按钮上面的标题。
+                        .scale(true) // 是否有缩放按钮。
+                        .scaleTitle(true) // 缩放控制按钮上面的标题。
+                        .build()) // 创建控制面板配置。
+                .requestCode(200)
+                .start();
     }
 }

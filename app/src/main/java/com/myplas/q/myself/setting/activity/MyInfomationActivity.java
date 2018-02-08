@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,16 +16,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.app.activity.MainActivity;
+import com.myplas.q.app.activity.PreImageViewActivity;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.UCloudUtils;
 import com.myplas.q.common.view.RoundCornerImageView;
-import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.app.activity.MainActivity;
-import com.myplas.q.app.activity.PreImageViewActivity;
 import com.myplas.q.myself.beans.MySelfInfo;
 
 import org.json.JSONObject;
@@ -58,7 +57,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
     private ImageView imageCard, cardArrow, headArrow, licenceArrow, imageLicence;
     private LinearLayout llMonthUse, llAdd, llSex, llRegion, llProduct, llMothonuse, llMainsell, llMode, llLicence;
     private TextView textXb, tvLocation, textGs, tvPhone, tvNeedProduct, tvCareModel, tvMonthUse, tvProduct, tvAddress,
-            tvCompany, _tvNeedProduct, mName;
+            tvCompany, needProductType, mName;
 
     private String from, imgCard, imgHead, imgLicence;
     private final String ACTION = "com.broadcast.databack";
@@ -90,7 +89,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
         licenceArrow = F(R.id.data_img_licence);
 
         textXb = F(R.id.wd_zl_text_xb);
-        _tvNeedProduct = F(R.id.textView8);
+        needProductType = F(R.id.textView8);
         tvAddress = F(R.id.wd_zl_text_address);
         tvCompany = F(R.id.wd_zl_text_company);
         tvProduct = F(R.id.wd_zl_text_products);
@@ -115,45 +114,42 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
      * 判断是从哪里跳转
      */
     private void judgeFrom() {
-        if ("1".equals(from)) {  //从通讯录跳转
-            setTitle("个人资料");
-            getPersonInfo();
-        } else {
-            requestNetData();
-            setTitle("个人信息");
 
-            //注册广播；
-            myReceiver = new MyReceiver();
-            mFilter = new IntentFilter(ACTION);
-            registerReceiver(myReceiver, mFilter);
+        getMyInfo();
+        setTitle("个人信息");
 
-            llSex.setOnClickListener(this);
-            llAdd.setOnClickListener(this);
-            llMode.setOnClickListener(this);
-            mIVLeft.setOnClickListener(this);
-            llRegion.setOnClickListener(this);
-            llProduct.setOnClickListener(this);
-            llMainsell.setOnClickListener(this);
-            llMonthUse.setOnClickListener(this);
-            llMothonuse.setOnClickListener(this);
+        //注册广播；
+        myReceiver = new MyReceiver();
+        mFilter = new IntentFilter(ACTION);
+        registerReceiver(myReceiver, mFilter);
 
-            cardArrow.setVisibility(View.VISIBLE);
-            headArrow.setVisibility(View.VISIBLE);
-            licenceArrow.setVisibility(View.VISIBLE);
-            textXb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvMonthUse.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvLocation.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvCareModel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
-            tvNeedProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+        llSex.setOnClickListener(this);
+        llAdd.setOnClickListener(this);
+        llMode.setOnClickListener(this);
+        mIVLeft.setOnClickListener(this);
+        llRegion.setOnClickListener(this);
+        llProduct.setOnClickListener(this);
+        llMainsell.setOnClickListener(this);
+        llMonthUse.setOnClickListener(this);
+        llMothonuse.setOnClickListener(this);
 
-            licenceArrow.setImageResource(R.drawable.btn_more);
-            mName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            textGs.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            tvPhone.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-            tvCompany.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
-        }
+        cardArrow.setVisibility(View.VISIBLE);
+        headArrow.setVisibility(View.VISIBLE);
+        licenceArrow.setVisibility(View.VISIBLE);
+        textXb.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+        tvAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+        tvProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+        tvMonthUse.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+        tvLocation.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+        tvCareModel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+        tvNeedProduct.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more_small, 0);
+
+        licenceArrow.setImageResource(R.drawable.btn_more);
+        mName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+        textGs.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+        tvPhone.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+        tvCompany.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_more, 0);
+
         imageHead.setOnClickListener(this);
         imageCard.setOnClickListener(this);
         imageLicence.setOnClickListener(this);
@@ -221,8 +217,8 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
                         ? (MyMainPro_LogisticsActivity.class)
                         : (DataCommonActivity.class));
                 intent8.putExtra("type", "2");
-                intent8.putExtra("hint", (type.equals("1") ? needProduct : mainProduct));
-                intent8.putExtra("title", (type.equals("1")) ? ("我的需求") : ("我的主营"));
+                intent8.putExtra("hint", ("1".equals(type) ? needProduct : mainProduct));
+                intent8.putExtra("title", ("1".equals(type)) ? ("我的需求") : ("我的主营"));
                 startActivityForResult(intent8, 8);
                 break;
             case R.id.wd_zl_linear_caremodel:
@@ -249,7 +245,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
      */
 
     private void preViewOrUpLoad(String type, String imgurl, int requestCode) {
-        if ("1".equals(from) || "5".equals(type)) {
+        if ("5".equals(type)) {
             Intent intent1 = new Intent(this, PreImageViewActivity.class);
             intent1.putExtra("imgurl", imgurl);
             intent1.putExtra("type", "1".equals(type) ? sexInPut : type);
@@ -277,19 +273,10 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    public void requestNetData() {
+    public void getMyInfo() {
         getAsyn(this, API.GET_SELF_INFO, null, this, 1);
     }
 
-
-    /**
-     * 从通讯录跳转过来 -- 请求数据
-     */
-    public void getPersonInfo() {
-        Map<String, String> map = new HashMap<>();
-        map.put("user_id", getIntent().getStringExtra("userid"));
-        getAsyn(this, API.GETINFORMATION, map, this, 1);
-    }
 
     /**
      * 保存资料
@@ -325,7 +312,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
                 }
             }
             if (type == 3 && "0".equals(err)) {
-                requestNetData();
+                getMyInfo();
                 TextUtils.toast(this, jsonObject.getString("message"));
             }
             if (type == 5 || type == 6) {
@@ -389,7 +376,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
                     //llMode.setVisibility(View.VISIBLE);       //"‘关注的牌号’是否显示"
                     llMonthUse.setVisibility(View.VISIBLE); //"‘月用量与生产产品’是否显示"
                     tvCompany.setText("塑料制品厂");
-                    _tvNeedProduct.setText("我的需求：");
+                    needProductType.setText("我的需求：");
 
                     tvProduct.setText(mainProduct);//生产产品
                     tvMonthUse.setText(monthUse);
@@ -400,7 +387,7 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
                     llMonthUse.setVisibility(View.GONE);
                     break;
                 case "4":
-                    _tvNeedProduct.setText("我的主营：");
+                    needProductType.setText("我的主营：");
                     tvCompany.setText("物流商");
                     break;
                 case "5":
@@ -519,6 +506,11 @@ public class MyInfomationActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void uCloudProcess(int type, int value) {
+
+    }
+
+    @Override
+    public void uCloudFail(int type) {
 
     }
 

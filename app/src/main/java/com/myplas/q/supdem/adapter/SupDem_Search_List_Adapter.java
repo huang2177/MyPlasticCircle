@@ -77,8 +77,7 @@ public class SupDem_Search_List_Adapter extends BaseAdapter {
             viewHolder = (viewHolder) convertView.getTag();
         }
         try {
-            viewHolder.company.setText(replace(list.get(position).getC_name()) + "  "
-                    + list.get(position).getName());
+            viewHolder.company.setText(replace(list.get(position).getC_name()) + "  " + list.get(position).getName());
 
             viewHolder.time.setText(list.get(position).getInput_time());
             if ("1".equals(list.get(position).getFrom())) {
@@ -93,11 +92,11 @@ public class SupDem_Search_List_Adapter extends BaseAdapter {
                 viewHolder.deliver.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             }
 
-            String html1 = "<font color='#9c9c9c'>" + " 交货地:" + "</font>" + list.get(position).getStore_house()
+            String content = "<font color='#9c9c9c'>" + " 交货地:" + "</font>" + list.get(position).getStore_house()
                     + "<font color='#9c9c9c'>" + " 牌号:" + "</font>" + list.get(position).getModel()
                     + "<font color='#9c9c9c'>" + " 厂家:" + "</font>" + list.get(position).getF_name()
                     + "<font color='#9c9c9c'>" + " 价格:" + "</font>" + list.get(position).getUnit_price();
-            viewHolder.content.setText(replace(html1));
+            viewHolder.content.setText(replace(content));
 
             viewHolder.typeSupDem.setImageResource(list.get(position).getType().equals("1")
                     ? R.drawable.icon_supdem_purchase
@@ -129,7 +128,7 @@ public class SupDem_Search_List_Adapter extends BaseAdapter {
 
 
     public Spanned replace(String s) {
-        s = s.replace("<strong style='color: #ff5000;'>", "<font color='#ff5000'><b>");
+        s = s.replace("<strong style='color: #FF0000;'>", "<font color='#ff5000'><b>");
         s = s.replace("</strong>", "</b></font>");
         Spanned s1 = Html.fromHtml(s);
         return s1;

@@ -94,6 +94,9 @@ public class UCloudUtils {
             @Override
             public void onFail(JSONObject response) {
                 TextUtils.toast(context, "图片上传失败！");
+                if (uCloudListener != null) {
+                    uCloudListener.uCloudFail(type);
+                }
             }
         });
 
@@ -126,6 +129,15 @@ public class UCloudUtils {
          * @param flieName
          */
         void uCloudProcess(int type, int value);
+
+        /**
+         * 失败回调
+         *
+         * @param value
+         * @param type
+         * @param flieName
+         */
+        void uCloudFail(int type);
     }
 
 
@@ -147,7 +159,7 @@ public class UCloudUtils {
                 .append(strMonth)
                 .append("/")
                 .append(str)
-                .append(".jpg").toString();
+                .append(".png").toString();
     }
 
     /**

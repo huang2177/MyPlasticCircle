@@ -1,4 +1,4 @@
-package com.myplas.q.versionupdate;
+package com.myplas.q.versionhelper;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.util.DisplayMetrics;
@@ -34,8 +35,8 @@ import java.util.jar.JarFile;
  * 邮箱： 15378412400@163.com
  */
 
-public class APPUtil {
-    private APPUtil() {
+public class AppUtils {
+    private AppUtils() {
     }
 
     /**
@@ -173,11 +174,6 @@ public class APPUtil {
      * @param apkPath 安装包的路径
      */
     public static void installApk(Context context, Uri apkPath) {
-//        Intent intent = new Intent();
-//        intent.setAction(Intent.ACTION_VIEW);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.setDataAndType(apkPath, "application/vnd.android.package-archive");
-//        context.startActivity(intent);
         try {
             Intent install = new Intent(Intent.ACTION_VIEW);
             Uri downloadFileUri;
@@ -185,7 +181,7 @@ public class APPUtil {
             if (file != null) {
                 String path = file.getAbsolutePath();
                 downloadFileUri = Uri.parse("file://" + path);
-                if (SystemUtils.getSystemInfo() <= 23) {
+                if (SystemUtils.getSystemInfo() <= Build.VERSION_CODES.M) {
                     install.setDataAndType(downloadFileUri, "application/vnd.android.package-archive");
                     install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 } else {

@@ -71,7 +71,7 @@ public class SupDem_Detail_LV_HF_Child_Adapter extends BaseAdapter {
         }
         try {
             viewHolder.mTVContent.setText("回复"
-                    + list.get(position).getName()
+                    + list.get(position).getReply_to_user_name()
                     + "："
                     + list.get(position).getContent());
             viewHolder.mTVTime.setText(list.get(position).getInput_time());

@@ -3,35 +3,28 @@ package com.myplas.q.homepage.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.utils.UCloudUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.common.view.MyGridview;
-import com.myplas.q.homepage.adapter.BlackListAdapter;
 import com.myplas.q.homepage.adapter.BrokeNewsAdapter;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.durban.Durban;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -102,7 +95,12 @@ public class BrokeNewsActivtiy extends BaseActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (requestCode == 100) {
-                list.addAll(Album.parseResult(data));
+                adapter.cutPhoto(Album.parseResult(data));
+            } else if (requestCode == 200) {
+                if (Durban.parseResult(data).size() == 0) {
+                    return;
+                }
+                list.addAll(Durban.parseResult(data));
                 adapter.setList(list);
                 adapter.notifyDataSetChanged();
 
@@ -185,6 +183,15 @@ public class BrokeNewsActivtiy extends BaseActivity implements View.OnClickListe
     @Override
     public void uCloudProcess(int type, int value) {
         adapter.setProgress(type, value);
+    }
+
+    @Override
+    public void uCloudFail(int type) {
+        if (list.size() != 0) {
+            list.remove(type);
+            adapter.setList(list);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

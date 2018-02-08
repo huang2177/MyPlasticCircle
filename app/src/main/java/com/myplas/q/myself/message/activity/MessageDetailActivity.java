@@ -11,7 +11,7 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.app.activity.BaseActivity;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.myself.beans.MsgChJBean;
 import com.myplas.q.myself.beans.MsgHFBean;
 import com.myplas.q.myself.beans.MsgSupDemBean;
@@ -21,6 +21,7 @@ import com.myplas.q.common.api.API;
 import com.myplas.q.myself.message.adapter.MessageSupDemAdapter;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
             if (type == 1) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     mEmptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     MsgSupDemBean msgSupDemBean = gson.fromJson(object.toString(), MsgSupDemBean.class);
@@ -116,20 +117,10 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                     }
                     count = mListSupDem.size() - 1;
                     RabbitMQConfig.getInstance(this).readMsg(Constant.R_SUPDEM_MSG, 15);
-                } else {
-                    if (page == 1) {
-                        mRecyclerView.setVisibility(View.GONE);
-                        mEmptyView.setVisibility(View.VISIBLE);
-                        mEmptyView.setMyManager(R.drawable.icon_follow1);
-                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
-
-                    } else {
-                        TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
-                    }
                 }
             }
             if (type == 2) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     mEmptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     MsgChJBean msgChJBean = gson.fromJson(object.toString(), MsgChJBean.class);
@@ -145,20 +136,11 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                         mCHJAdapter.notifyDataSetChanged();
                     }
                     RabbitMQConfig.getInstance(this).readMsg(Constant.R_PUR_MSG, 16);
-                } else {
-                    if (page == 1) {
-                        mRecyclerView.setVisibility(View.GONE);
-                        mEmptyView.setVisibility(View.VISIBLE);
-                        mEmptyView.setMyManager(R.drawable.icon_follow1);
-                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
-                    } else {
-                        TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
-                    }
                 }
 
             }
             if (type == 3 || type == 4) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     mEmptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     MsgHFBean msgHFBean = gson.fromJson(object.toString(), MsgHFBean.class);
@@ -176,15 +158,6 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                     count = mListHF.size() - 1;
                     RabbitMQConfig.getInstance(this).readMsg(type == 3 ? Constant.R_REPLY_MSG : Constant.R_INTER_MSG
                             , (type == 3 ? 17 : 18));
-                } else {
-                    if (page == 1) {
-                        mRecyclerView.setVisibility(View.GONE);
-                        mEmptyView.setVisibility(View.VISIBLE);
-                        mEmptyView.setMyManager(R.drawable.icon_follow1);
-                        mEmptyView.setNoMessageText(new JSONObject(object.toString()).getString("message"));
-                    } else {
-                        TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
-                    }
                 }
             }
         } catch (Exception e) {
@@ -193,7 +166,19 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            String msg = jsonObject.getString("message");
+            if (page == 1 && httpCode == 412) {
+                mRecyclerView.setVisibility(View.GONE);
+                mEmptyView.setVisibility(View.VISIBLE);
+                mEmptyView.setMyManager(R.drawable.icon_follow1);
+                mEmptyView.setNoMessageText(msg);
+            } else if (page != 1) {
+                TextUtils.toast(this, msg);
+            }
+        } catch (JSONException e) {
 
+        }
     }
-
 }

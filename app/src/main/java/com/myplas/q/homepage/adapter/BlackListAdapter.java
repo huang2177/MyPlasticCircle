@@ -3,22 +3,20 @@ package com.myplas.q.homepage.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
+import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.homepage.activity.BlackListDetailActivity;
 import com.myplas.q.homepage.beans.BlackListsBean;
 
-import java.io.FileOutputStream;
 import java.util.List;
 
 /**
@@ -30,6 +28,7 @@ public class BlackListAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List<BlackListsBean.BlacklistsBean> blacklists;
+    private CommonDialog.DialogShowInterface listener;
 
     public BlackListAdapter(Context context, List<BlackListsBean.BlacklistsBean> blacklists) {
         this.context = context;
@@ -72,6 +71,10 @@ public class BlackListAdapter extends RecyclerView.Adapter {
         this.blacklists = list;
     }
 
+    public void setlistener(CommonDialog.DialogShowInterface listener) {
+        this.listener = listener;
+    }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
@@ -89,10 +92,12 @@ public class BlackListAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            int position = (int) v.getTag();
-            Intent intent = new Intent(context, BlackListDetailActivity.class);
-            intent.putExtra("id", blacklists.get(position).getId());
-            context.startActivity(intent);
+            if (TextUtils.isLogin(context, listener)) {
+                int position = (int) v.getTag();
+                Intent intent = new Intent(context, BlackListDetailActivity.class);
+                intent.putExtra("id", blacklists.get(position).getId());
+                context.startActivity(intent);
+            }
         }
     }
 }

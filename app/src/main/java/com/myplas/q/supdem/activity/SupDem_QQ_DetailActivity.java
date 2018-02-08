@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.PreImageViewActivity;
 import com.myplas.q.common.api.API;
-import com.myplas.q.common.netresquset.ResultCallBack;
+import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyListview;
@@ -114,26 +114,31 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
         listviewTell.setOnItemClickListener(this);
     }
 
-    //获取数据
+    /**
+     * 获取数据
+     */
     public void getSearch_Detail() {
-        Map map = new HashMap();
-        map.put("id", getIntent().getStringExtra("id"));
-        map.put("status", "1");
-        postAsyn(this, API.BASEURL + API.PLASTIC_SEARCH_DETAIL, map, this, 1);
+        String id = getIntent().getStringExtra("id");
+        String url = API.RELEASEMSGDETAIL + "/" + id + "?from=2";
+        getAsyn(this, url, null, this, 1);
     }
 
-    //获取物性列表数据
+    /**
+     * 获取物性列表数据
+     */
     public void getPhysical_Search() {
-        Map map = new HashMap();
-        map.put("keywords", getIntent().getStringExtra("plastic_number"));
-        postAsyn(this, API.BASEURL + API.PHYSICAL_SEARCH, map, this, 2);
+        Map map = new HashMap(8);
+        map.put("model", getIntent().getStringExtra("plastic_number"));
+        getAsyn(this, API.PHYSICAL_SEARCH, map, this, 2);
     }
 
-    //检查文章权限
+    /**
+     * 检查文章权限
+     */
     public void isPaidSubscription(String cate_id) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("id", cate_id);
-        postAsyn(this, API.BASEURL + API.IS_PAID_SUBSCRIPTION, map, this, 3, false);
+        getAsyn(this, API.IS_PAID_SUBSCRIPTION, map, this, 3, false);
     }
 
     @Override
@@ -184,7 +189,7 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                     }
                     if (bean != null && bean.getData().size() == 1) {
                         Intent intent = new Intent(this, Physical_Detail_Activity.class);
-                        intent.putExtra("lid", bean.getData().get(0).getLid());
+                        intent.putExtra("id", bean.getData().get(0).getLid());
                         startActivity(intent);
                     }
                     if (bean != null && bean.getData().size() > 1) {
@@ -278,8 +283,8 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("err");
-            if (type == 1 && err.equals("0")) {
+            String err = new JSONObject(object.toString()).getString("code");
+            if (type == 1 && "0".equals(err)) {
                 SearchResultDetailBean bean = gson.fromJson(object.toString(), SearchResultDetailBean.class);
                 detailBean = bean.getData();
                 showInfo(detailBean);
@@ -288,11 +293,11 @@ public class SupDem_QQ_DetailActivity extends BaseActivity implements View.OnCli
                 adapter.setList_showinfo(detailBean.getShow_information());
                 listviewZx.setAdapter(adapter);
             }
-            if (type == 2 && err.equals("0")) {
+            if (type == 2 && "0".equals(err)) {
                 bean = gson.fromJson(object.toString(), PhysicalBean.class);
             }
             if (type == 3) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     Intent intent = new Intent(this, HeadLinesDetailActivity.class);
                     intent.putExtra("id", clickId);
                     startActivity(intent);
