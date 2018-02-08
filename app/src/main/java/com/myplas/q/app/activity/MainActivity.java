@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -265,16 +266,15 @@ public class MainActivity extends BaseActivity implements ResultCallBack
     @Override
     public void onItemSelected(int position, View view) {
         if (position == -1) {
-//            Intent intent = new Intent(this, ReleaseActivity.class);
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this
-//                        , view
-//                        , "sharedView_Release");
-//                startActivity(intent, options.toBundle());
-//            } else {
-//                startActivity(intent);
-//            }
-            getVersion();
+            Intent intent = new Intent(this, ReleaseActivity.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this
+                        , view
+                        , "sharedView_Release");
+                startActivity(intent, options.toBundle());
+            } else {
+                startActivity(intent);
+            }
         } else {
             viewPager.setCurrentItem(position);
         }

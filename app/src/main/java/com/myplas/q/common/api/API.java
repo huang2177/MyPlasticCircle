@@ -15,7 +15,7 @@ public class API {
     /**
      * base url
      */
-    public final static String BASEURL = (!BuildConfig.API_ENV)
+    public final static String BASEURL = (BuildConfig.API_ENV)
             ? ("https://api2.myplas.com/")
             : ("http://api.91su.cn/");
 
