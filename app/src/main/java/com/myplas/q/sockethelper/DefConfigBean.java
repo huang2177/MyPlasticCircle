@@ -452,6 +452,7 @@ public class DefConfigBean implements Serializable {
         private int unread_plastic_msg;
         private int unread_purchase_msg;
         private int unread_mymsg;
+        private int unread_system_msg;
 
         public int getIs_socket_connected() {
             return is_socket_connected;
@@ -541,6 +542,13 @@ public class DefConfigBean implements Serializable {
             this.unread_mymsg = unread_mymsg;
         }
 
+        public int getUnread_system_msg() {
+            return unread_system_msg;
+        }
+
+        public void setUnread_system_msg(int unread_system_msg) {
+            this.unread_system_msg = unread_system_msg;
+        }
     }
 
     public static class NoticeBean implements Serializable {

@@ -191,7 +191,7 @@ public class FragmentRegister2 extends BaseFragment implements View.OnClickListe
                     RegisterBean bean = gson.fromJson(object.toString(), RegisterBean.class);
                     setRedDots(bean);
                     if (mBaseInterface != null) {
-                        mBaseInterface.complete(2);
+                        mBaseInterface.complete(2, null);
                         mBaseInterface.dataBack(this, Arrays.asList(bean.getRegister_ranking()));
                     }
                 }

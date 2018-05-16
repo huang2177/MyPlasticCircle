@@ -95,12 +95,11 @@ public class BrokeNewsActivtiy extends BaseActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (requestCode == 100) {
-                adapter.cutPhoto(Album.parseResult(data));
-            } else if (requestCode == 200) {
-                if (Durban.parseResult(data).size() == 0) {
+                adapter.cutPhoto(null);
+                if (Album.parseResult(data).size() == 0) {
                     return;
                 }
-                list.addAll(Durban.parseResult(data));
+                list.addAll(Album.parseResult(data));
                 adapter.setList(list);
                 adapter.notifyDataSetChanged();
 
@@ -111,7 +110,6 @@ public class BrokeNewsActivtiy extends BaseActivity implements View.OnClickListe
 
         }
     }
-
 
     /**
      * 实时改变button颜色
@@ -130,7 +128,6 @@ public class BrokeNewsActivtiy extends BaseActivity implements View.OnClickListe
     private boolean isWriteInfo() {
         mTheme = editTheme.getText().toString();
         mDetail = editDetail.getText().toString();
-
         return TextUtils.notEmpty(mTheme) && TextUtils.notEmpty(mDetail) && list.size() != 0;
     }
 

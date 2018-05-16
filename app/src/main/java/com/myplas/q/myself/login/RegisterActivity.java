@@ -135,8 +135,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         return stepsBeanList;
     }
 
+
     @Override
-    public void complete(int position) {
+    public void complete(int position, String msg) {
         try {
             mViewPager.setCurrentItem(position);
             setLeftIVVisibility(position == 2 ? View.GONE : View.VISIBLE);

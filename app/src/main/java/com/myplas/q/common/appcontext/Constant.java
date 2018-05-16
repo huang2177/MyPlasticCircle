@@ -35,6 +35,8 @@ public class Constant {
 
     public static final String R_PUR_MSG = "unread_plastic_msg";
 
+    public static final String R_SYSTEM_MSG = "unread_system_msg";
+
     public static final String R_MYORDER = "unread_myorder";
 
     public static final String R_SEEME = "unread_who_saw_me";
@@ -53,4 +55,9 @@ public class Constant {
     public static String BUCKET;
     public static String AUTHSERVER;
     public static String PROXYSUFFIX;
+
+    /**
+     * 支付宝appid
+     */
+    public static String ALIPAY_APPID = "2014100900013222";
 }

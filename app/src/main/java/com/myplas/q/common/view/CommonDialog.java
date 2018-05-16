@@ -24,7 +24,7 @@ import com.myplas.q.R;
 public class CommonDialog {
     private int type;
     private Dialog normalDialog;
-    private Button button_cancle, button_ok;
+    private TextView button_cancle, button_ok;
     private DialogShowInterface dialogShowInterface;
     private TextView textView_content, textView_title;
 
@@ -51,8 +51,8 @@ public class CommonDialog {
         }
         textView_title = (TextView) view.findViewById(R.id.dialog_title);
         textView_content = (TextView) view.findViewById(R.id.dialog_message);
-        button_cancle = (Button) view.findViewById(R.id.btn_cancle);
-        button_ok = (Button) view.findViewById(R.id.btn_ok);
+        button_cancle = (TextView) view.findViewById(R.id.btn_cancle);
+        button_ok = (TextView) view.findViewById(R.id.btn_ok);
         if (type == 2) {
             textView_title.setText("塑料圈通讯录");
             button_cancle.setVisibility(View.GONE);

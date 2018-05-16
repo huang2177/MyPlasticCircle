@@ -81,7 +81,6 @@ public class Fragment_SupDem_Detail_CHJ extends BaseFragment implements ResultCa
     @Override
     public void callBack(Object object, int type) {
         try {
-            Log.e("------", object.toString());
             Gson gson = new Gson();
             String err = new JSONObject(object.toString()).getString("code");
             if ("0".equals(err)) {
@@ -98,7 +97,6 @@ public class Fragment_SupDem_Detail_CHJ extends BaseFragment implements ResultCa
     @Override
     public void failCallBack(int type, String message, int httpCode) {
         try {
-            Log.e("===", message);
             String err = new JSONObject(message).getString("code");
             if ("404".equals(err) && httpCode == 404) {
                 setListener(true);

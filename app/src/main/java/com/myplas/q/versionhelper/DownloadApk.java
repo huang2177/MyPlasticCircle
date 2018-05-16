@@ -12,14 +12,11 @@ import java.io.File;
 
 /**
  * Apk下载
- * Created by Song on 2016/11/2.
+ *
+ * @author Administrator
+ * @date 2016/11/2
  */
 public class DownloadApk {
-    private static InstallInterface installInterface;
-
-    public DownloadApk(InstallInterface installInterface) {
-        DownloadApk.installInterface = installInterface;
-    }
 
     /**
      * 下载APK文件
@@ -35,9 +32,20 @@ public class DownloadApk {
         path = file.getAbsolutePath();
         Uri downloadFileUri = Uri.parse("file://" + path);
 
-        //删除下载任务以及文件
         DownloadApk.removeFile(path);
         return start(context, url, title, appName);
+    }
+
+    /**
+     * 删除已下载的文件
+     */
+    public static void removeFile(String path) {
+        if (null != path) {
+            File downloadFile = new File(path);
+            if (null != downloadFile && downloadFile.exists()) {
+                downloadFile.delete();
+            }
+        }
     }
 
     /**
@@ -65,37 +73,5 @@ public class DownloadApk {
      */
     private static boolean hasSDKCard() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-    }
-
-    /**
-     * 删除已下载的文件
-     */
-    public static void removeFile(String path) {
-        //String filePath = SystemParam.getInstance().getString("downloadApk", null);
-        if (null != path) {
-            File downloadFile = new File(path);
-            if (null != downloadFile && downloadFile.exists()) {
-                //删除之前先判断用户是否已经安装了，安装了才删除。
-                downloadFile.delete();
-            }
-        }
-    }
-
-    public static boolean fileIsExists(String path) {
-        try {
-            File f = new File(path);
-            if (f.exists()) {
-                return f.isFile();
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    //如果有安装包则直接安装
-    public interface InstallInterface {
-        void install();
     }
 }

@@ -213,7 +213,8 @@ public class NavegationBar extends LinearLayout implements View.OnClickListener
                     + sharedUtils.getInt(context, Constant.R_PUR_MSG)
                     + sharedUtils.getInt(context, Constant.R_REPLY_MSG)
                     + sharedUtils.getInt(context, Constant.R_INTER_MSG)
-                    + sharedUtils.getInt(context, Constant.R_SUPDEM_MSG);
+                    + sharedUtils.getInt(context, Constant.R_SUPDEM_MSG)
+                    + sharedUtils.getInt(context, Constant.R_SYSTEM_MSG);
 
             mMsgSupDem.setVisibility(showDot || 0 == numSupDem
                     ? View.GONE

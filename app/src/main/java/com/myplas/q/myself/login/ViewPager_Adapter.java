@@ -13,11 +13,13 @@ import java.util.List;
  * 时间：2017/3/17 14:52
  */
 public class ViewPager_Adapter extends FragmentPagerAdapter {
-    List<Fragment> list;
+    private List<Fragment> list;
+
 
     public ViewPager_Adapter(FragmentManager fm, List<Fragment> list) {
         super(fm);
         this.list = list;
+
     }
 
     @Override
@@ -36,4 +38,6 @@ public class ViewPager_Adapter extends FragmentPagerAdapter {
         }
         return 0;
     }
+
+
 }

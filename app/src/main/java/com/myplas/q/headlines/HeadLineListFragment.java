@@ -261,7 +261,7 @@ public class HeadLineListFragment extends BaseFragment implements ResultCallBack
     public void isPaidSubscription(String cate_id) {
         Map<String, String> map = new HashMap<String, String>(8);
         map.put("id", cate_id);
-        getAsyn(getActivity(), API.IS_PAID_SUBSCRIPTION, map, this, 6, false);
+        getAsyn(getActivity(), API.IS_PAID_SUBSCRIPTION, map, this, 6, true);
     }
 
 

@@ -3,6 +3,7 @@ package com.myplas.q.release;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyBottomSheetDialog;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
+import com.myplas.q.myself.vip.UnEstablishedVipActivity;
 import com.myplas.q.release.bean.SecondPurBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 import com.myplas.q.supdem.beans.SupDemDetailBean;
@@ -37,7 +40,7 @@ import java.util.Map;
  */
 
 public class StandardFragment extends BaseFragment implements View.OnClickListener
-        , ResultCallBack {
+        , ResultCallBack, CommonDialog.DialogShowInterface {
     private View view;
     private MyBottomSheetDialog dialog;
     private EditText mEditModel, mEditF_Name, mEdit_JH, mEditPirce, mTV_NF, mTV_Type;
@@ -75,12 +78,17 @@ public class StandardFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
+    public void secondPub() {
+        Map<String, String> map = new HashMap<String, String>(8);
+        map.put("id", id);
+        getAsyn(getActivity(), API.RELEASEMSGDETAIL, map, this, 2);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return view;
     }
-
 
     public void pub() {
         if (!isInputContent(2)) {
@@ -103,10 +111,38 @@ public class StandardFragment extends BaseFragment implements View.OnClickListen
         postAsyn(getActivity(), API.RELEASE_MSG, map, this, 1);
     }
 
-    public void secondPub() {
-        Map<String, String> map = new HashMap<String, String>(8);
-        map.put("id", id);
-        getAsyn(getActivity(), API.RELEASEMSGDETAIL, map, this, 2);
+    public boolean isInputContent(int _type) {
+        jhd = mEdit_JH.getText().toString();
+        model = mEditModel.getText().toString();
+        pirce = mEditPirce.getText().toString();
+        String t = mTV_Type.getText().toString();
+        String nowF = mTV_NF.getText().toString();
+        production = mEditF_Name.getText().toString();
+        nf = ("现货".equals(nowF)) ? ("0") : ("1");
+        type = ("供给".equals(t)) ? ("2") : ("1");
+
+        if (_type == 1) {
+            return !TextUtils.notEmpty(jhd)
+                    && !TextUtils.notEmpty(t)
+                    && !TextUtils.notEmpty(nowF)
+                    && !TextUtils.notEmpty(model)
+                    && !TextUtils.notEmpty(pirce)
+                    && !TextUtils.notEmpty(production) ? false : true;
+
+        } else {
+            if (!TextUtils.notEmpty(jhd)
+                    || !TextUtils.notEmpty(t)
+                    || !TextUtils.notEmpty(nowF)
+                    || !TextUtils.notEmpty(model)
+                    || !TextUtils.notEmpty(pirce)
+                    || !TextUtils.notEmpty(production)) {
+                TextUtils.toast(getActivity(), "请输入完整的数据！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
     }
 
     @Override
@@ -210,45 +246,24 @@ public class StandardFragment extends BaseFragment implements View.OnClickListen
     public void failCallBack(int type, String message, int httpCode) {
         try {
             JSONObject jsonObject = new JSONObject(message);
-            if (type == 1 && httpCode == 400) {
-                TextUtils.toast(getActivity(), jsonObject.getString("message"));
+            String msg = jsonObject.getString("message");
+            if (type == 1) {
+                if (httpCode == 403) {
+                    CommonDialog dialog = new CommonDialog();
+                    dialog.showDialog(getActivity(), msg, 3, this);
+                } else {
+                    TextUtils.toast(getActivity(), msg);
+                }
             }
         } catch (Exception e) {
 
         }
     }
 
-    public boolean isInputContent(int _type) {
-        jhd = mEdit_JH.getText().toString();
-        model = mEditModel.getText().toString();
-        pirce = mEditPirce.getText().toString();
-        String t = mTV_Type.getText().toString();
-        String nowF = mTV_NF.getText().toString();
-        production = mEditF_Name.getText().toString();
-        nf = ("现货".equals(nowF)) ? ("0") : ("1");
-        type = ("供给".equals(t)) ? ("2") : ("1");
-
-        if (_type == 1) {
-            return !TextUtils.notEmpty(jhd)
-                    && !TextUtils.notEmpty(t)
-                    && !TextUtils.notEmpty(nowF)
-                    && !TextUtils.notEmpty(model)
-                    && !TextUtils.notEmpty(pirce)
-                    && !TextUtils.notEmpty(production) ? false : true;
-
-        } else {
-            if (!TextUtils.notEmpty(jhd)
-                    || !TextUtils.notEmpty(t)
-                    || !TextUtils.notEmpty(nowF)
-                    || !TextUtils.notEmpty(model)
-                    || !TextUtils.notEmpty(pirce)
-                    || !TextUtils.notEmpty(production)) {
-                TextUtils.toast(getActivity(), "请输入完整的数据！");
-                return false;
-            } else {
-                return true;
-            }
+    @Override
+    public void dialogClick(int type) {
+        if (type == 3) {
+            startActivity(new Intent(getActivity(), UnEstablishedVipActivity.class));
         }
-
     }
 }

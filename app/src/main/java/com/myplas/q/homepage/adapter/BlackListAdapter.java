@@ -51,7 +51,10 @@ public class BlackListAdapter extends RecyclerView.Adapter {
             viewHolder.tvTitle.setText(blacklists.get(position).getSubject());
             viewHolder.tvTime.setText(blacklists.get(position).getCreated_at());
 
-            Glide.with(context).load(blacklists.get(position).getIllustration()).into(viewHolder.imageView);
+            Glide.with(context)
+                    .load(blacklists.get(position).getIllustration())
+                    .placeholder(R.drawable.ic_waiting)
+                    .into(viewHolder.imageView);
         } catch (Exception e) {
 
         }

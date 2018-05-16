@@ -82,7 +82,7 @@ public class MessageListsAdapter extends BaseAdapter {
             if (position == list.size() - 1) {
                 viewHolder.mView.setVisibility(View.GONE);
             }
-            if (list.get(position).getType().equals("1")) {
+            if ("1".equals(list.get(position).getType())) {
                 title = "供求消息";
                 imgRes = R.drawable.icon_supply_and_demand_news;
                 viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_SUPDEM_MSG) + "");
@@ -90,14 +90,14 @@ public class MessageListsAdapter extends BaseAdapter {
                 viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_SUPDEM_MSG) == 0
                         ? View.GONE
                         : View.VISIBLE);
-            } else if (list.get(position).getType().equals("2")) {
+            } else if ("2".equals(list.get(position).getType())) {
                 title = "出价消息";
                 imgRes = R.drawable.icon_bid_message;
                 viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_PUR_MSG) + "");
                 viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_PUR_MSG) == 0
                         ? View.GONE
                         : View.VISIBLE);
-            } else if (list.get(position).getType().equals("3")) {
+            } else if ("3".equals(list.get(position).getType())) {
                 title = "回复消息";
                 imgRes = R.drawable.icon_reply_message;
                 viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_REPLY_MSG) + "");
@@ -105,7 +105,7 @@ public class MessageListsAdapter extends BaseAdapter {
                 viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_REPLY_MSG) == 0
                         ? View.GONE
                         : View.VISIBLE);
-            } else {
+            } else if ("4".equals(list.get(position).getType())) {
                 title = "互动消息";
                 imgRes = R.drawable.icon_interaction_message;
                 viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_INTER_MSG) + "");
@@ -113,7 +113,16 @@ public class MessageListsAdapter extends BaseAdapter {
                 viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_INTER_MSG) == 0
                         ? View.GONE
                         : View.VISIBLE);
+            } else {
+                title = "系统消息";
+                imgRes = R.drawable.icon_system_message;
+                viewHolder.mDragView.setText(sharedUtils.getInt(context, Constant.R_SYSTEM_MSG) + "");
+
+                viewHolder.mDragView.setVisibility(sharedUtils.getInt(context, Constant.R_SYSTEM_MSG) == 0
+                        ? View.GONE
+                        : View.VISIBLE);
             }
+
             viewHolder.type.setText(title);
             viewHolder.mImageView.setImageResource(imgRes);
             viewHolder.dis.setText(list.get(position).getMessage());

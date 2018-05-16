@@ -11,6 +11,7 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,12 +27,12 @@ import android.widget.TextView;
 import com.myplas.q.R;
 
 /**
- * 编写： 黄双
  * 电话：15378412400
  * 邮箱：15378412400@163.com
  * 时间：2017/5/16 20:05
+ * @author 黄双
  */
-public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
+public class VersionUpdateDialogUtils {
     private int type;
     private Context mContext;
     private String url, title;
@@ -43,7 +44,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
 
     private long downloadId;
     private DownloadApk downloadApk;
-    private MyReceiver_DownLoad myReceiver;
+    private MyReceiverDownLoad myReceiver;
     private DownloadChangeObserver downloadObserver;
     private VersionUpdateInterface versionUpdateInterface;
 
@@ -54,7 +55,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         this.title = title;
         this.mContext = context;
         //注册app更新广播；
-        myReceiver = new MyReceiver_DownLoad();
+        myReceiver = new MyReceiverDownLoad();
         context.registerReceiver(myReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
@@ -88,7 +89,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
                 mNumberProgressBar.setVisibility(View.VISIBLE);
                 buttonOk.setBackgroundResource(R.drawable.btn_download);
 
-                downloadApk = new DownloadApk(VersionUpdateDialogUtils.this);
+                downloadApk = new DownloadApk();
                 downloadId = DownloadApk.downloadApk(mContext, url, "塑料圈通讯录更新", "塑料圈通讯录");
                 downloadObserver = new DownloadChangeObserver(null);
                 mContext.getContentResolver()
@@ -106,18 +107,6 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
         });
     }
 
-    /**
-     * 如果存在安装包就直接安装
-     */
-
-    @Override
-    public void install() {
-        if (buttonOk != null) {
-            buttonOk.setClickable(true);
-            buttonOk.setBackgroundResource(R.drawable.btn_refresh);
-        }
-        DownLoadUtils.installApk(mContext);
-    }
 
 
     /**
@@ -179,22 +168,8 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
             float precent = (float) bytesDL / fileSize * 100;
             mNumberProgressBar.setProgress((int) precent);
             switch (status) {
-                case DownloadManager.STATUS_PAUSED:
-                    Log.v("tag", "STATUS_PAUSED");
-                case DownloadManager.STATUS_PENDING:
-                    Log.v("tag", "STATUS_PENDING");
-                case DownloadManager.STATUS_RUNNING:
-                    //正在下载，不做任何事情
-                    Log.v("tag", "STATUS_RUNNING");
-                    break;
-                case DownloadManager.STATUS_SUCCESSFUL:
-                    //完成
-                    Log.v("tag", "下载完成");
-//                  dowanloadmanager.remove(lastDownloadId);
-                    break;
                 case DownloadManager.STATUS_FAILED:
                     //清除已下载的内容，重新下载
-                    Log.v("tag", "STATUS_FAILED");
                     DownLoadUtils.getInstance(mContext).getDownloadManager().remove(downloadId);
                     break;
                 default:
@@ -207,7 +182,7 @@ public class VersionUpdateDialogUtils implements DownloadApk.InstallInterface {
      * 下载完成后点安装
      */
 
-    public class MyReceiver_DownLoad extends BroadcastReceiver {
+    public class MyReceiverDownLoad extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {

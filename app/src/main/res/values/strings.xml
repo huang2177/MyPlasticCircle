@@ -22,8 +22,13 @@
     <string name="hint_name"><font size="14">请填写姓名</font></string>
     <string name="font_color_red1"><font color="#ff0000">*</font>请上传清晰营业执照</string>
     <string name="font_color_red2"><font color="#ff0000">*</font>请上传本人头像</string>
-    <string name="font_color_red3"><font color="#ff0000">*</font>请填写公司名称</string>
-    <string name="font_color_red5"><font color="#ff0000">*</font>请填写统一社会信用代码</string>
-    <string name="font_color_red4"><font color="#ff0000">*</font>请填写公司简介</string>
+    <string name="font_color_red3"><font color="#ff0000">*</font>公司名称</string>
+    <string name="font_color_red5"><font color="#ff0000">*</font>统一社会信用代码</string>
+    <string name="font_color_red4"><font color="#ff0000">*</font>公司简介</string>
+
+    <string name="vip_store_introduction">店铺会员为塑料圈开通店铺用户，开通店铺后用户可免费查看通讯录、头条、无限发布供求信息。</string>
+    <string name="vip_news_introduction">店铺会员为塑料圈购买塑料圈头条用户，购买后享有免费查看通讯录、头条、无限发布供求信息。</string>
+    <string name="vip_tried_introduction">试用会员用户可免费开通，开通之后一个月内可享有免费查看通讯录、头条、无限发布供求信息，店铺功能，每个用户仅一次。</string>
+
 
 </resources>

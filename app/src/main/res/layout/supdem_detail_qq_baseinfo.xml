@@ -47,7 +47,7 @@
                 android:layout_marginLeft="13dp"
                 android:layout_marginTop="13dp"
                 android:layout_weight="1"
-                android:text="交货地"
+                android:text="货物位置"
                 android:textColor="#171717"
                 android:textSize="16.0sp" />
 

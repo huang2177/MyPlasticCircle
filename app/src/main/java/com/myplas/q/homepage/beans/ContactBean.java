@@ -13,28 +13,27 @@ public class ContactBean {
 
     /**
      * code : 0
-     * persons : [{"user_id":"53621","name":"江秀丽","c_id":"53437","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG","thumbqq":"http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG","c_name":"上海诚信木业有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>|2119","month_consum":"30","main_product":"保鲜膜","type":"1","fans":"4","gender":"1","buy_count":"0","sale_count":"0"},{"user_id":"53580","name":"哈嘿","c_id":"53426","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海城市建设银行","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"0.00","main_product":"","type":"1","fans":"3","gender":"0","buy_count":"28","sale_count":"0"},{"user_id":"53537","name":"王华","c_id":"53416","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海华力微电子有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"13","main_product":"7000f","type":"1","fans":"1","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53497","name":"李洁","c_id":"50417","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海承德载物有限责任公司","need_product":"74GP <strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"56","main_product":"飞机大炮的","type":"1","fans":0,"gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53496","name":"张婷","c_id":"50417","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海承德载物有限责任公司","need_product":"74GP <strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"56","main_product":"飞机大炮的","type":"1","fans":"1","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53475","name":"欧阳震华","c_id":"50402","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"香港TVB塑料塑料","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>|2089","month_consum":"10吨","main_product":"2119，5000S","type":"1","fans":"6","gender":"0","buy_count":"4","sale_count":"1"},{"user_id":"53452","name":"小李23456","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"4","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53451","name":"小李234","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"2","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53446","name":"小李","c_id":"50382","sex":"男","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/male.jpg","thumbqq":"","c_name":"上海新村电子商务股份有限公司","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"129","main_product":"2119","type":"1","fans":"2","gender":"0","buy_count":"0","sale_count":"0"},{"user_id":"53441","name":"韩梅梅","c_id":"50377","sex":"女","member_level":"列兵","is_pass":"0","thumb":"http://pic.myplas.com/myapp/img/female.jpg","thumbqq":"","c_name":"中国能之光新材料科技股份有限公司（宁波分公司）","need_product":"<strong style='color: #ff5000;'>7000F<\/strong>","month_consum":"120吨","main_product":"2769","type":"1","fans":"6","gender":"1","buy_count":"0","sale_count":"0"}]
-     * hot_search : 7000F
-     * member : 3357
+     * persons : [{"user_id":82981,"name":"关宏峰","c_id":608867,"sex":"男","member_level":1,"c_name":"上海双双环保塑料企业","mobile":18817392603,"isshop":1,"need_product":"","month_consum":0,"main_product":"","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn/upload/18/11/28/1LUE6VMKNT.JPG","thumbqq":"","input_time":1519809794,"isNewUser":1,"heat":13597,"customerVip":0,"headingVip":1,"applyCustomerVip":0},{"user_id":82983,"name":"张婷","c_id":608868,"sex":"男","member_level":1,"c_name":"广东快塑信息科技有限公司","mobile":18817392605,"isshop":1,"need_product":"","month_consum":0,"main_product":"","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn/upload/18/21/6/XSJH6IACN2.JPG","thumbqq":"","input_time":1519809951,"isNewUser":1,"heat":989,"customerVip":0,"headingVip":1,"applyCustomerVip":0},{"user_id":82982,"name":"关宏宇","c_id":608867,"sex":"男","member_level":1,"c_name":"上海双双环保塑料企业","mobile":18817392604,"isshop":1,"need_product":"","month_consum":0,"main_product":"","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn//myapp/img/male.jpg","thumbqq":"","input_time":1519809871,"isNewUser":1,"heat":716,"customerVip":0,"headingVip":1,"applyCustomerVip":0},{"user_id":82966,"name":"黑猫","c_id":608845,"sex":"男","member_level":1,"c_name":"上海测试塑料有限公司","mobile":18817391112,"isshop":1,"need_product":"","month_consum":0,"main_product":"","type":1,"thumb":"http://myplas.ufile.ucloud.com.cn/upload/18/11/28/UE8YLOI59L.jpg","thumbqq":"http://myplas.ufile.ucloud.com.cn/upload/18/11/28/UE8YLOI59L.jpg","input_time":1519694579,"isNewUser":1,"heat":693,"customerVip":0,"headingVip":0,"applyCustomerVip":1},{"user_id":5258,"name":"李一星","c_id":9,"sex":"男","member_level":1,"c_name":"上海八通石化有限公司","mobile":13817953938,"isshop":1,"need_product":"","month_consum":150,"main_product":"贸易pppe","type":4,"thumb":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1608597298&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","thumbqq":"http://q2.qlogo.cn/headimg_dl?bs=qq&dst_uin=1608597298&src_uin=*&fid=*&spec=100&url_enc=0&referer=bu_interface&term_type=PC","input_time":1444288557,"isNewUser":0,"heat":352,"customerVip":0,"headingVip":0,"applyCustomerVip":0},{"user_id":82958,"name":"彭哥","c_id":608838,"sex":"男","member_level":1,"c_name":"上海全资答股份有限公司","mobile":15921211761,"isshop":1,"need_product":"BJ550W378","month_consum":0,"main_product":"PE PVC","type":4,"thumb":"http://myplas.ufile.ucloud.com.cn/upload/18/11/27/BPDSEMI6EG.PNG","thumbqq":"","input_time":1512547396,"isNewUser":0,"heat":268,"customerVip":0,"headingVip":0,"applyCustomerVip":0},{"user_id":82980,"name":"李宏","c_id":608866,"sex":"男","member_level":1,"c_name":"上海宏达塑料制品公司","mobile":18817392602,"isshop":1,"need_product":"","month_consum":0,"main_product":"呃呃","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn/upload/2018/03/01/user31.png.png","thumbqq":"http://myplas.ufile.ucloud.com.cn/upload/2018/03/01/user31.png.png","input_time":1519809736,"isNewUser":1,"heat":198,"customerVip":0,"headingVip":0,"applyCustomerVip":0},{"user_id":82984,"name":"赵都","c_id":608869,"sex":"男","member_level":1,"c_name":"山东青岛塑料制品企业","mobile":18817392606,"isshop":1,"need_product":"HD5609AA","month_consum":0,"main_product":"aaaa","type":1,"thumb":"http://myplas.ufile.ucloud.com.cn/upload/18/11/28/SOVNB3GRP1.jpg","thumbqq":"","input_time":1519810005,"isNewUser":1,"heat":141,"customerVip":1,"headingVip":0,"applyCustomerVip":0},{"user_id":29371,"name":"杭州合塑化工有限","c_id":17,"sex":"男","member_level":1,"c_name":"杭州合塑化工有限公司","mobile":13957116035,"isshop":1,"need_product":"1-21HN,4810,TR144,HM5000,2426H,218WJ","month_consum":50,"main_product":"贸易商","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn//myapp/img/male.jpg","thumbqq":"","input_time":0,"isNewUser":0,"heat":112,"customerVip":1,"headingVip":0,"applyCustomerVip":0},{"user_id":82978,"name":"张扬","c_id":608870,"sex":"男","member_level":1,"c_name":"上海市民文化中心1","mobile":18817392600,"isshop":1,"need_product":"","month_consum":0,"main_product":"","type":2,"thumb":"http://statics.plas.com/upload/http://myplas.ufile.ucloud.com.cn/upload/18/11/27/J2JY7289XJ.JPG","thumbqq":"","input_time":1519726909,"isNewUser":1,"heat":106,"customerVip":1,"headingVip":0,"applyCustomerVip":0},{"user_id":63293,"name":"万景锋","c_id":18,"sex":"男","member_level":1,"c_name":"苏州天则化工有限公司","mobile":15851425381,"isshop":1,"need_product":"7042,T30S,1-DFDA-7042,LLF1802,LLF2220BS,7050H,7042H,FB1460,HD5000S,EX5,HF5110,7000F,2911,2427K,1002KW,2047A,2426H,N125Y,7050,1050","month_consum":"10-30","main_product":"贸易商 PP PE","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn//myapp/img/male.jpg","thumbqq":"","input_time":1495168529,"isNewUser":0,"heat":28,"customerVip":0,"headingVip":0,"applyCustomerVip":0},{"user_id":36202,"name":"仝祥海","c_id":22,"sex":"男","member_level":1,"c_name":"淄博合创塑胶有限公司","mobile":18560381678,"isshop":1,"need_product":"","month_consum":1000,"main_product":"聚丙拉丝低压高压","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn//myapp/img/male.jpg","thumbqq":"","input_time":1480042286,"isNewUser":0,"heat":21,"customerVip":0,"headingVip":0,"applyCustomerVip":0},{"user_id":36328,"name":"仝","c_id":22,"sex":"男","member_level":1,"c_name":"淄博合创塑胶有限公司","mobile":13001502496,"isshop":1,"need_product":"","month_consum":1000,"main_product":"聚丙拉丝低压高压","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn//myapp/img/male.jpg","thumbqq":"","input_time":1480298713,"isNewUser":0,"heat":21,"customerVip":0,"headingVip":0,"applyCustomerVip":0},{"user_id":41865,"name":"艾立彬","c_id":22,"sex":"男","member_level":1,"c_name":"淄博合创塑胶有限公司","mobile":15653316720,"isshop":1,"need_product":"","month_consum":1000,"main_product":"聚丙拉丝低压高压","type":2,"thumb":"http://myplas.ufile.ucloud.com.cn//myapp/img/male.jpg","thumbqq":"","input_time":1489738243,"isNewUser":0,"heat":21,"customerVip":0,"headingVip":0,"applyCustomerVip":0},{"user_id":32670,"name":"仝相文","c_id":22,"sex":"男","member_level":1,"c_name":"淄博合创塑胶有限公司","mobile":18678106353,"isshop":1,"need_product":"","month_consum":1000,"main_product":"聚丙拉丝低压高压","type":2,"thumb":"http://statics.myplas.com/myapp/weixin/1476452120.jpg","thumbqq":"http://statics.myplas.com/myapp/weixin/1476452120.jpg","input_time":1476451752,"isNewUser":0,"heat":14,"customerVip":0,"headingVip":0,"applyCustomerVip":0}]
+     * member : 22249
      * is_show_banner : 1
      * is_show_focus : 0
      * is_show_cover : 0
-     * banner_url : http://statics.myplas.com/activity/619/img/619_banner01.png
-     * banner_jump_url : http://test.myplas.com/activity/a619/vote?a_token=NwTdMs0lMwD1J283fDE1MDg4MTA2NzY%5B%7B%7C%5D%7D&platform=weixin
-     * banner_jump_url_title : 6月父亲节暖心晒家庭合照
-     * is_banner_jump_native : 0
-     * banner_jump_native_address :
-     * cover_url :
-     * cover_jump_url :
-     * cover_jump_url_title :
-     * data : 1508810676
-     * show_ctype : 0
-     * show_msg :
-     * top : {"member_level":"列兵","user_id":"53402","name":"hh","c_id":"5041","is_pass":"0","mobile":"15378412400","sex":"男","thumb":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","thumbqq":"http://pic.myplas.com/upload/17/09/06/59af96a6a157f.PNG","thumbcard":"http://pic.myplas.com/upload/17/09/04/59ad181e30a20.jpg","c_name":"上海中晨电子商务股份有限公司","need_product":"GHJ","address":"上海上海虹口区|欧阳路","main_product":"5005","month_consum":"36","type":"1","buy_count":"2","sale_count":0,"fans":"9"}
-     * totals : 12
+     * banner_url : http://statics.myplas.com/myapp/img/banner_for_shop.jpg
+     * banner_jump_url : 
+     * banner_jump_url_title : 
+     * is_banner_jump_native : 1
+     * banner_jump_native_address : myInfo:myPlasticBean
+     * cover_url : 
+     * cover_jump_url : 
+     * cover_jump_url_title : 
+     * show_msg : 
+     * totals : 73
+     * selected_type : 店铺
+     * shop_audit_status : 0
+     * top : {}
      */
 
-    private String hot_search;
+    private String code;
     private String member;
     private String is_show_banner;
     private String is_show_focus;
@@ -47,29 +46,19 @@ public class ContactBean {
     private String cover_url;
     private String cover_jump_url;
     private String cover_jump_url_title;
-    private String data;
-    private String selected_type;
     private String show_msg;
-    private TopBean top;
     private String totals;
+    private String selected_type;
     private String shop_audit_status;
+    private TopBean top;
     private List<PersonsBean> persons;
 
-    public void setShop_audit_status(String shop_audit_status) {
-        this.shop_audit_status = shop_audit_status;
+    public String getCode() {
+        return code;
     }
 
-    public String getShop_audit_status() {
-        return shop_audit_status;
-    }
-
-
-    public String getHot_search() {
-        return hot_search;
-    }
-
-    public void setHot_search(String hot_search) {
-        this.hot_search = hot_search;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getMember() {
@@ -168,12 +157,20 @@ public class ContactBean {
         this.cover_jump_url_title = cover_jump_url_title;
     }
 
-    public String getData() {
-        return data;
+    public String getShow_msg() {
+        return show_msg;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setShow_msg(String show_msg) {
+        this.show_msg = show_msg;
+    }
+
+    public String getTotals() {
+        return totals;
+    }
+
+    public void setTotals(String totals) {
+        this.totals = totals;
     }
 
     public String getSelected_type() {
@@ -184,12 +181,12 @@ public class ContactBean {
         this.selected_type = selected_type;
     }
 
-    public String getShow_msg() {
-        return show_msg;
+    public String getShop_audit_status() {
+        return shop_audit_status;
     }
 
-    public void setShow_msg(String show_msg) {
-        this.show_msg = show_msg;
+    public void setShop_audit_status(String shop_audit_status) {
+        this.shop_audit_status = shop_audit_status;
     }
 
     public TopBean getTop() {
@@ -198,14 +195,6 @@ public class ContactBean {
 
     public void setTop(TopBean top) {
         this.top = top;
-    }
-
-    public String getTotals() {
-        return totals;
-    }
-
-    public void setTotals(String totals) {
-        this.totals = totals;
     }
 
     public List<PersonsBean> getPersons() {
@@ -412,25 +401,29 @@ public class ContactBean {
         }
     }
 
+
     public static class PersonsBean {
         /**
-         * user_id : 53621
-         * name : 江秀丽
-         * c_id : 53437
-         * sex : 女
-         * member_level : 列兵
-         * is_pass : 0
-         * thumb : http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG
-         * thumbqq : http://pic.myplas.com/upload/17/08/04/5984927869f72.PNG
-         * c_name : 上海诚信木业有限公司
-         * need_product : <strong style='color: #ff5000;'>7000F</strong>|2119
-         * month_consum : 30
-         * main_product : 保鲜膜
-         * type : 1
-         * fans : 4
-         * gender : 1
-         * buy_count : 0
-         * sale_count : 0
+         * user_id : 82981
+         * name : 关宏峰
+         * c_id : 608867
+         * sex : 男
+         * member_level : 1
+         * c_name : 上海双双环保塑料企业
+         * mobile : 18817392603
+         * isshop : 1
+         * need_product : 
+         * month_consum : 0
+         * main_product : 
+         * type : 2
+         * thumb : http://myplas.ufile.ucloud.com.cn/upload/18/11/28/1LUE6VMKNT.JPG
+         * thumbqq : 
+         * input_time : 1519809794
+         * isNewUser : 1
+         * heat : 13597
+         * customerVip : 0
+         * headingVip : 1
+         * applyCustomerVip : 0
          */
 
         private String user_id;
@@ -438,20 +431,21 @@ public class ContactBean {
         private String c_id;
         private String sex;
         private String member_level;
-        private String isshop;
-        private String thumb;
-        private String thumbqq;
         private String c_name;
+        private String mobile;
+        private String isshop;
         private String need_product;
         private String month_consum;
         private String main_product;
         private String type;
-        private String fans;
-        private String gender;
-        private String buy_count;
-        private String sale_count;
-        private String mobile;
-
+        private String thumb;
+        private String thumbqq;
+        private String input_time;
+        private String isNewUser;
+        private String heat;
+        private String customerVip;
+        private String headingVip;
+        private String applyCustomerVip;
 
         public String getUser_id() {
             return user_id;
@@ -493,36 +487,28 @@ public class ContactBean {
             this.member_level = member_level;
         }
 
-        public String getIsshop() {
-            return isshop;
-        }
-
-        public void setIsshop(String isshop) {
-            this.isshop = isshop;
-        }
-
-        public String getThumb() {
-            return thumb;
-        }
-
-        public void setThumb(String thumb) {
-            this.thumb = thumb;
-        }
-
-        public String getThumbqq() {
-            return thumbqq;
-        }
-
-        public void setThumbqq(String thumbqq) {
-            this.thumbqq = thumbqq;
-        }
-
         public String getC_name() {
             return c_name;
         }
 
         public void setC_name(String c_name) {
             this.c_name = c_name;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getIsshop() {
+            return isshop;
+        }
+
+        public void setIsshop(String isshop) {
+            this.isshop = isshop;
         }
 
         public String getNeed_product() {
@@ -557,44 +543,68 @@ public class ContactBean {
             this.type = type;
         }
 
-        public String getFans() {
-            return fans;
+        public String getThumb() {
+            return thumb;
         }
 
-        public void setFans(String fans) {
-            this.fans = fans;
+        public void setThumb(String thumb) {
+            this.thumb = thumb;
         }
 
-        public String getGender() {
-            return gender;
+        public String getThumbqq() {
+            return thumbqq;
         }
 
-        public void setGender(String gender) {
-            this.gender = gender;
+        public void setThumbqq(String thumbqq) {
+            this.thumbqq = thumbqq;
         }
 
-        public String getBuy_count() {
-            return buy_count;
+        public String getInput_time() {
+            return input_time;
         }
 
-        public void setBuy_count(String buy_count) {
-            this.buy_count = buy_count;
+        public void setInput_time(String input_time) {
+            this.input_time = input_time;
         }
 
-        public String getSale_count() {
-            return sale_count;
+        public String getIsNewUser() {
+            return isNewUser;
         }
 
-        public void setSale_count(String sale_count) {
-            this.sale_count = sale_count;
+        public void setIsNewUser(String isNewUser) {
+            this.isNewUser = isNewUser;
         }
 
-        public String getMobile() {
-            return mobile;
+        public String getHeat() {
+            return heat;
         }
 
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
+        public void setHeat(String heat) {
+            this.heat = heat;
+        }
+
+        public String getCustomerVip() {
+            return customerVip;
+        }
+
+        public void setCustomerVip(String customerVip) {
+            this.customerVip = customerVip;
+        }
+
+        public String getHeadingVip() {
+            return headingVip;
+        }
+
+        public void setHeadingVip(String headingVip) {
+            this.headingVip = headingVip;
+        }
+
+        public String getApplyCustomerVip() {
+            return applyCustomerVip;
+        }
+
+        public void setApplyCustomerVip(String applyCustomerVip) {
+            this.applyCustomerVip = applyCustomerVip;
         }
     }
 }

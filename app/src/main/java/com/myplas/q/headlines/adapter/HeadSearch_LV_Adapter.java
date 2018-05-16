@@ -82,16 +82,9 @@ public class HeadSearch_LV_Adapter extends BaseAdapter {
         TextView title2, time, num, author;
     }
 
-    public Spanned replace(String s) {
-        s = s.replace("<span style='color: #ff5000;'>", "<font color='#ff5000'><b>");
-        s = s.replace("</span>", "</b></font>");
-        Spanned s1 = Html.fromHtml(s);
-        return s1;
-    }
-
     public Spanned replaceContent(String s) {
-        s = s.replace("<span style='color: #FF0000;'>", "<font color='#FF0000'><b>");
-        s = s.replace("</span>", "</b></font>");
+        s = s.replace("<strong style='color: #FF0000;'>", "<font color='#FF0000'><b>");
+        s = s.replace("</strong>", "</b></font>");
         Spanned s1 = Html.fromHtml(s);
         return s1;
     }

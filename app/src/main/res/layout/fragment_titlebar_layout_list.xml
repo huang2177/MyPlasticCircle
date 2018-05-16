@@ -12,8 +12,21 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/color_gray_divider_out" />
+
+    <ImageView
+        android:id="@+id/img_vip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/vip_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="8dp"
+        android:background="@color/color_gray_divider_out"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,7 +66,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/color_gray_divider_out" />
 
     <LinearLayout
@@ -120,7 +133,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/color_gray_divider_out" />
 
     <LinearLayout
@@ -149,10 +162,11 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/color_gray_divider_out" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/color_gray_divider_out" />
 
 
@@ -201,7 +215,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/color_gray_divider_out" />
 
 
@@ -212,8 +226,8 @@
         android:background="@color/colorAccent">
 
         <TextView
-            style="@style/myself_text_style"
             android:id="@+id/wd_text_look"
+            style="@style/myself_text_style"
             android:layout_marginLeft="8dp"
             android:drawableLeft="@drawable/icon_who_see_me"
             android:padding="10dp"
@@ -243,7 +257,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/color_gray_divider_out" />
 
     <LinearLayout
@@ -307,7 +321,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/color_gray_divider_out" />
 
     <LinearLayout

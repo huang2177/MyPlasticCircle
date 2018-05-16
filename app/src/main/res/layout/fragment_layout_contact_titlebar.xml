@@ -13,7 +13,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:paddingRight="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -26,7 +26,8 @@
         android:id="@+id/homepage_tablayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:layout_weight="1"
         tl:tl_bar_color="@android:color/transparent"
         tl:tl_indicator_anim_enable="true"
@@ -34,16 +35,16 @@
         tl:tl_indicator_corner_radius="5dp"
         tl:tl_tab_padding="5dp"
         tl:tl_tab_space_equal="true"
-        tl:tl_textBold="SELECT"
         tl:tl_textSelectColor="@color/color_red"
-        tl:tl_textsize="16.0sp" />
+        tl:tl_textBold="SELECT"
+        tl:tl_textsize="12.0sp" />
 
     <ImageView
         android:id="@+id/contact_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
-        android:paddingLeft="12dp"
+        android:paddingLeft="10dp"
         android:paddingRight="12dp"
         android:src="@drawable/btn_sign_data"
         android:visibility="invisible" />

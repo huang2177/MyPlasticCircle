@@ -66,7 +66,7 @@ public class RoundCornerImageView extends ImageView {
 
     private void init(Context context, AttributeSet attrs) {
         //初始化默认值
-        borderWidth = 3;
+        borderWidth = 0;
         borderColor = context.getResources().getColor(R.color.color_white);
         radius = 16;
         shapeType = 2;

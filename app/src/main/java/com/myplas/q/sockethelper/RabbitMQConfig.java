@@ -109,6 +109,9 @@ public class RabbitMQConfig implements com.myplas.q.common.net.ResultCallBack {
                 case 18:
                     sharedUtils.setInt(context, Constant.R_INTER_MSG, 0);
                     break;
+                case 19:
+                    sharedUtils.setInt(context, Constant.R_SYSTEM_MSG, 0);
+                    break;
                 default:
                     break;
 
@@ -125,7 +128,6 @@ public class RabbitMQConfig implements com.myplas.q.common.net.ResultCallBack {
      */
     public void changeRedDots(String msg) {
         try {
-            Log.e("----->RabbitMQ", msg);
             JSONObject jsonObject = new JSONObject(msg);
             JSONObject data = jsonObject.getJSONObject("data");
             if (data.has("key")) {
@@ -147,6 +149,9 @@ public class RabbitMQConfig implements com.myplas.q.common.net.ResultCallBack {
                         break;
                     case "unread_purchase_msg":
                         sharedUtils.setInt(context, Constant.R_SUPDEM_MSG, data.getInt("value"));
+                        break;
+                    case "unread_syatem_msg":
+                        sharedUtils.setInt(context, Constant.R_SYSTEM_MSG, data.getInt("value"));
                         break;
                     default:
                         break;

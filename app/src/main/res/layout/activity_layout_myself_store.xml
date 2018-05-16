@@ -197,7 +197,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:background="@null"
-                        android:hint="请输入您公司的完整名称"
+                        android:clickable="false"
+                        android:focusable="false"
                         android:padding="5dp"
                         android:textSize="14.0sp" />
                 </LinearLayout>
@@ -229,7 +230,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:background="@null"
-                        android:hint="请输入统一社会信用代码"
+                        android:clickable="false"
+                        android:focusable="false"
                         android:padding="5dp"
                         android:textSize="14.0sp" />
                 </LinearLayout>
@@ -263,7 +265,6 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/corner_edittext_gray"
                         android:gravity="start"
-                        android:hint="请输入你的公司简介"
                         android:paddingLeft="5dp"
                         android:paddingTop="5dp"
                         android:textSize="14.0sp" />

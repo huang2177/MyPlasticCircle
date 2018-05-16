@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.myplas.q.R;
+import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.supdem.beans.SearchResultDetailBean;
 
 import java.util.List;
@@ -23,8 +24,7 @@ import java.util.List;
 public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
     int type;
     Context context;
-    List<SearchResultDetailBean.DataBean.MobileListBean> list_phone;
-    List<SearchResultDetailBean.DataBean.FindRelevantBean> list_friend;
+    String phone;
     List<SearchResultDetailBean.DataBean.ShowInformationBean> list_showinfo;
 
     public SupDem_Search_QQ_Detail_Adapter(Context context, int type) {
@@ -32,12 +32,8 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
         this.type = type;
     }
 
-    public void setList_phone(List<SearchResultDetailBean.DataBean.MobileListBean> list_phone) {
-        this.list_phone = list_phone;
-    }
-
-    public void setList_friend(List<SearchResultDetailBean.DataBean.FindRelevantBean> list_friend) {
-        this.list_friend = list_friend;
+    public void setList_phone(String phone) {
+        this.phone = phone;
     }
 
     public void setList_showinfo(List<SearchResultDetailBean.DataBean.ShowInformationBean> list_showinfo) {
@@ -49,10 +45,12 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
         switch (type) {
             case 1:
                 return (list_showinfo != null) ? (list_showinfo.size()) : (0);
-            case 2:
-                return (list_friend != null) ? (list_friend.size()) : (0);
+//            case 2:
+//                return (list_friend != null) ? (list_friend.size()) : (0);
             case 3:
-                return (list_phone != null) ? (list_phone.size()) : (0);
+                return (TextUtils.notEmpty(phone)) ? (1) : (0);
+            default:
+                break;
         }
         return 0;
     }
@@ -94,12 +92,12 @@ public class SupDem_Search_QQ_Detail_Adapter extends BaseAdapter {
             viewHolder.textView_zx_content.setText(list_showinfo.get(position).getTitle());
             viewHolder.textView_zx_title.setText(list_showinfo.get(position).getCate_name());
         } else if (type == 2) {
-            viewHolder.textView_find1.setText(list_friend.get(position).getC_name());
-            viewHolder.textView_find2.setText(list_friend.get(position).getMobile());
-            viewHolder.textView_find3.setText(list_friend.get(position).getModel());
-            Glide.with(context).load(list_friend.get(position).getThumbqq()).into(viewHolder.imageView);
+//            viewHolder.textView_find1.setText(list_friend.get(position).getC_name());
+//            viewHolder.textView_find2.setText(list_friend.get(position).getMobile());
+//            viewHolder.textView_find3.setText(list_friend.get(position).getModel());
+//            Glide.with(context).load(list_friend.get(position).getThumbqq()).into(viewHolder.imageView);
         } else {
-            viewHolder.textView_tell.setText(list_phone.get(position).getName() + "  " + list_phone.get(position).getMobile());
+            viewHolder.textView_tell.setText(phone);
         }
         return convertView;
     }

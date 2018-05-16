@@ -14,8 +14,8 @@ import java.io.File;
 
 
 /**
- * 封装 DownLoadManager 下载
- * Created by Song on 2016/11/2.
+ *
+ * @author Administrator
  */
 public class DownLoadUtils {
     private long downloadId;
@@ -57,7 +57,6 @@ public class DownLoadUtils {
      * @param title
      * @param description
      * @param appName
-     * @return downloadId
      */
     public long download(String uri, String title, String description, String appName) {
         DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(uri));
@@ -74,7 +73,9 @@ public class DownLoadUtils {
     }
 
 
-    //安装
+    /**
+     * 安装
+     */
     public static void installApk(Context context) {
         try {
             Intent install = new Intent(Intent.ACTION_VIEW);

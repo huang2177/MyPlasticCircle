@@ -44,27 +44,23 @@ public class MessageActivity extends BaseActivity implements ResultCallBack {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 StringBuffer stringBuffer = null;
-                if (list.get(position).getType().equals("1")) {
+                String type = list.get(position).getType();
+                if ("1".equals(type)) {
                     stringBuffer = new StringBuffer("供求消息");
-                } else if (list.get(position).getType().equals("2")) {
+                } else if ("2".equals(type)) {
                     stringBuffer = new StringBuffer("出价消息");
-                } else if (list.get(position).getType().equals("3")) {
+                } else if ("3".equals(type)) {
                     stringBuffer = new StringBuffer("回复消息");
-                } else {
+                } else if ("4".equals(type)) {
                     stringBuffer = new StringBuffer("互动消息");
+                } else {
+                    stringBuffer = new StringBuffer("系统消息");
                 }
                 Intent intent = new Intent(MessageActivity.this, MessageDetailActivity.class);
                 intent.putExtra("title", stringBuffer.toString());
                 startActivity(intent);
             }
         });
-    }
-
-    public void getMyMsg() {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("page", "1");
-        map.put("size", "10");
-        getAsyn(this, API.MYMSG, map, this, 1, false);
     }
 
     @Override
@@ -92,5 +88,12 @@ public class MessageActivity extends BaseActivity implements ResultCallBack {
     public void onResume() {
         super.onResume();
         getMyMsg();
+    }
+
+    public void getMyMsg() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("page", "1");
+        map.put("size", "10");
+        getAsyn(this, API.MYMSG, map, this, 1, false);
     }
 }

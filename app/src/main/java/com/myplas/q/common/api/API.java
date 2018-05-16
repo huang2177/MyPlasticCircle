@@ -73,8 +73,8 @@ public class API {
      * 分享黑名单
      */
     public final static String PLASTIC_BLACKLIST = (BuildConfig.API_ENV)
-            ? "http://q.myplas.com/plasticzone/plastic?#/blackdetail/"
-            : "http://test.myplas.com/plasticzone/plastic?#/blackdetail/";
+            ? "http://q.myplas.com/#/blackdetail/"
+            : "http://test.myplas.com/plasticzone/plastic#/blackdetail/";
     /**
      * 极光推送用户个人偏好设置
      */
@@ -132,7 +132,6 @@ public class API {
      * 普通登陆
      */
     public final static String LOGIN = BASEURL + "user/login";
-    //
     /**
      * 快速登陆
      */
@@ -262,6 +261,10 @@ public class API {
      * 获取我的消息--互动消息
      */
     public final static String INTERMSG = BASEURL + "interMsg";
+    /**
+     * 获取我的消息--系统消息
+     */
+    public final static String SYSTEMMSG = BASEURL + "systemMsg";
 
 
     /*product*/
@@ -297,6 +300,10 @@ public class API {
      */
     public final static String GET_PREPAY_ORDER = BASEURL + "prePayOrder";
     /**
+     * 塑料圈app之获取订单
+     */
+    public final static String ALIPAYDETAIL = BASEURL + "aliPayDetail";
+    /**
      * 塑料圈app之获取可选金额
      */
     public final static String GET_PAY_CONFIG = BASEURL + "PayConfig";
@@ -308,6 +315,10 @@ public class API {
      * 塑料圈app之订单状态
      */
     public final static String UPDATE_ORDER_STATUS = BASEURL + "payments/orders";
+    /**
+     * 塑料圈app之订单状态
+     */
+    public final static String ALIPAYFAILURE = BASEURL + "aliPayFailure";
 
 
     /*score*/
@@ -444,5 +455,9 @@ public class API {
      * 塑料黑名单用户留言接口
      */
     public final static String BLACKLISTSCOMMENTS = BASEURL + "blacklists/comments";
+    /**
+     * 开通店铺
+     */
+    public final static String MEMBERSHIP = BASEURL + "membership";
 
 }

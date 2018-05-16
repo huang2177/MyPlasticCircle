@@ -206,6 +206,7 @@ public class MainActivity extends BaseActivity implements ResultCallBack
             sharedUtils.setInt(this, Constant.R_CONTACT, bean.getRedDot().getUnread_customer());
             sharedUtils.setInt(this, Constant.R_PUR_MSG, bean.getRedDot().getUnread_plastic_msg());
             sharedUtils.setInt(this, Constant.R_SUPDEM_MSG, bean.getRedDot().getUnread_purchase_msg());
+            sharedUtils.setInt(this, Constant.R_SYSTEM_MSG, bean.getRedDot().getUnread_system_msg());
             sharedUtils.setInt(this, Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
             sharedUtils.setInt(this, Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
             sharedUtils.setInt(this, Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());

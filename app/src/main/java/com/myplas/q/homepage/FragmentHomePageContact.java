@@ -13,6 +13,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.listener.BaseInterface;
 import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.ContactAccessUtils;
 import com.myplas.q.common.utils.SharedUtils;
@@ -57,6 +59,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dalvik.system.BaseDexClassLoader;
+import dalvik.system.DexClassLoader;
+import dalvik.system.PathClassLoader;
+
 /**
  * 电话：15378412400
  * 邮箱：15378412400@163.com
@@ -70,12 +76,12 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         , MyNestedScrollView.onScrollIterface
         , SwipeRefreshLayout.OnRefreshListener, MarqueeFactory.OnItemClickListener {
 
+    public int page;
     private List<String> mList;
     private SparseArray<Integer> map;
     private MarqueeViewHelper mVHelper;
     private Fragment_Contact_LV_Adapter mLVAdapter;
     private List<ContactBean.PersonsBean> mListBean;
-
     private ListView listView;
     private ImageButton imageButton;
     private HIndicatorDialog dialog;
@@ -86,14 +92,14 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
     private View view, shareView1, shareView2;
     private SwipeRefreshLayout mRefreshLayout;
     private LinearLayout mLayoutCofig, mLayoutTop, notifyRoot;
-
-    public int page;
     private SharedUtils sharedUtils;
     private ContactBean mContactBean;
     private ContactAccessUtils accessUtils;
     private boolean isRefreshing, isLoading;
     private String region, c_type, stauts, showCType;
     private String jumpUrl, jumpToWhere, jumpTitle, isShop;
+
+    private BaseInterface onLoadDataSuccessListener;
 
 
     @Override
@@ -153,15 +159,141 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         //填充数据
         loadCacheData(new Gson(), sharedUtils.getData(getActivity(), "txlBean"), false);
 
-//        popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);//设置弹出窗体需要软键盘，
-//        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);  //再设置模式，和Activity的一样，覆盖。
     }
 
+    /**
+     * 获取数据
+     *
+     * @param page         the page
+     * @param isShowDialog 是否显示dialog
+     */
+    public void getNetData(String page, boolean isShowDialog) {
+        sharedUtils = SharedUtils.getSharedUtils();
+        Map<String, String> map = new HashMap<String, String>(16);
+        map.put("page", page);
+        map.put("size", "15");
+        map.put("keywords", "");
+        map.put("type", c_type);
+        map.put("region", region);
+        getAsyn(getActivity(), API.PLASTICPERSON, map, this, 1, isShowDialog);
+    }
+
+    /**
+     * 默认先加载缓存里面数据
+     *
+     * @param gson
+     * @param json
+     * @param isShowCover
+     */
+    private void loadCacheData(Gson gson, String json, boolean isShowCover) {
+        try {
+            mContactBean = gson.fromJson(json, ContactBean.class);
+            if (page == 1) {
+                showInfo(mContactBean);
+            } else {
+                mListBean.addAll(mContactBean.getPersons());
+                mLVAdapter.setList(mListBean);
+                mLVAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void showInfo(ContactBean bean) {
+        showCType = bean.getSelected_type();
+        mTVClass.setText(showCType);
+
+
+        //mTVTitle.setText("塑料圈通讯录(" +  + "人)");
+//        editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
+
+//        显示list数据
+        mLVAdapter = new Fragment_Contact_LV_Adapter(getActivity(), bean.getPersons());
+        listView.setAdapter(mLVAdapter);
+        mListBean.clear();
+        mListBean.addAll(bean.getPersons());
+
+        //展示已更新多少数据
+        mRefreshLayout.setRefreshing(false);
+        mRefreshPopou.show(mLayoutCofig, bean.getShow_msg());
+
+        /*展示置顶信息*/
+        showTop(bean.getTop());
+
+        //判断是否显示banner ；
+        if ("1".equals(bean.getIs_show_banner())) {
+            jumpUrl = bean.getBanner_jump_url();
+            jumpTitle = bean.getBanner_jump_url_title();
+            jumpToWhere = bean.getIs_banner_jump_native();
+            sharedUtils.setData(getActivity(), Constant.STAUTS, bean.getShop_audit_status());
+
+            mIVBanner.setVisibility(View.VISIBLE);
+            Glide.with(getActivity()).load(bean.getBanner_url()).into(mIVBanner);
+        } else {
+            mIVBanner.setVisibility(View.GONE);
+        }
+        //判断图层是否显示
+        boolean isshow = sharedUtils.getBoolean(getActivity(), "isshow");
+        if ("1".equals(bean.getIs_show_cover()) && isshow) {
+            Intent intent = new Intent(getActivity(), AD_DialogActivtiy.class);
+            intent.putExtra("imgurl", bean.getCover_url());
+            intent.putExtra("url", bean.getCover_jump_url());
+            intent.putExtra("title", bean.getCover_jump_url_title());
+            startActivity(intent);
+        }
+        if (onLoadDataSuccessListener != null) {
+            onLoadDataSuccessListener.complete(0, bean.getMember());
+        }
+    }
+
+    private void showTop(ContactBean.TopBean topBean) {
+        topBean = topBean.getC_name() == null ? null : topBean;
+        if (topBean != null) {
+            ContactBean.PersonsBean personsBean = new ContactBean.PersonsBean();
+            personsBean.setSex(topBean.getSex());
+            personsBean.setType(topBean.getType());
+            personsBean.setName(topBean.getName());
+            personsBean.setThumb(topBean.getThumb());
+            personsBean.setMobile(topBean.getMobile());
+            personsBean.setC_name(topBean.getC_name());
+            personsBean.setIsshop(topBean.getIsshop());
+            personsBean.setMain_product(topBean.getMain_product());
+            personsBean.setNeed_product(topBean.getNeed_product());
+            personsBean.setMonth_consum(topBean.getMonth_consum());
+
+            mLVAdapter.initView(mLVAdapter.getviewHolder(), mLayoutTop);
+            mLVAdapter.showInfo(mLVAdapter.getviewHolder(), personsBean);
+            mIVTop.setVisibility(View.VISIBLE);
+            mLayoutTop.setVisibility(View.VISIBLE);
+        } else {
+            mLayoutTop.setVisibility(View.GONE);
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mVHelper.start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mVHelper.stop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mVHelper != null) {
+            mVHelper.onDestroy();
+        }
     }
 
     @Override
@@ -195,6 +327,30 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
 
     }
 
+    /**
+     * Jump to where.
+     */
+    private void jumpToWhere() {
+        TextUtils.isLogin(getContext(), this);
+        if ("1".equals(jumpToWhere)) {  //原生
+            stauts = sharedUtils.getData(getActivity(), Constant.STAUTS);
+            if ("1".equals(stauts)) {
+                Intent intent = new Intent(getActivity(), NewContactDetailActivity.class);
+                intent.putExtra(Constant.USERID, sharedUtils.getData(getActivity(), Constant.USERID));
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(getActivity(), MyStoreActivity.class);
+                intent.putExtra(Constant.STAUTS, stauts);
+                startActivity(intent);
+            }
+        } else {                       //指定的url
+            Intent intent = new Intent(getActivity(), Cover_WebActivity.class);
+            intent.putExtra("url", jumpUrl);
+            intent.putExtra("title", jumpTitle);
+            startActivity(intent);
+        }
+    }
+
     private void openDialog(final int type, final TextView textView) {
 
         Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, showCType, map) {
@@ -214,6 +370,7 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
                 getNetData("1", true);
             }
         };
+
         dialog = new HIndicatorBuilder(getActivity())
                 .width(400)
                 .height(-1)
@@ -237,23 +394,6 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
                 textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
             }
         });
-    }
-
-    /**
-     * 获取数据
-     *
-     * @param page         the page
-     * @param isShowDialog 是否显示dialog
-     */
-    public void getNetData(String page, boolean isShowDialog) {
-        sharedUtils = SharedUtils.getSharedUtils();
-        Map<String, String> map = new HashMap<String, String>(16);
-        map.put("page", page);
-        map.put("size", "15");
-        map.put("keywords", "");
-        map.put("type", c_type);
-        map.put("region", region);
-        getAsyn(getActivity(), API.PLASTICPERSON, map, this, 1, isShowDialog);
     }
 
     @Override
@@ -307,94 +447,6 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         }
     }
 
-
-    /**
-     * 默认先加载缓存里面数据
-     *
-     * @param gson
-     * @param json
-     * @param isShowCover
-     */
-    private void loadCacheData(Gson gson, String json, boolean isShowCover) {
-        try {
-            mContactBean = gson.fromJson(json, ContactBean.class);
-            if (page == 1) {
-                showInfo(mContactBean);
-            } else {
-                mListBean.addAll(mContactBean.getPersons());
-                mLVAdapter.setList(mListBean);
-                mLVAdapter.notifyDataSetChanged();
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    private void showInfo(ContactBean bean) {
-        showCType = bean.getSelected_type();
-        mTVClass.setText(showCType);
-        //mTVTitle.setText("塑料圈通讯录(" + bean.getMember() + "人)");
-//        editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
-
-//        显示list数据
-        mLVAdapter = new Fragment_Contact_LV_Adapter(getActivity(), bean.getPersons());
-        listView.setAdapter(mLVAdapter);
-        mListBean.clear();
-        mListBean.addAll(bean.getPersons());
-
-        //展示已更新多少数据
-        mRefreshLayout.setRefreshing(false);
-        mRefreshPopou.show(mLayoutCofig, bean.getShow_msg());
-
-        /*展示置顶信息*/
-        showTop(bean.getTop());
-
-        //判断是否显示banner ；
-        if ("1".equals(bean.getIs_show_banner())) {
-            jumpUrl = bean.getBanner_jump_url();
-            jumpTitle = bean.getBanner_jump_url_title();
-            jumpToWhere = bean.getIs_banner_jump_native();
-            sharedUtils.setData(getActivity(), Constant.STAUTS, bean.getShop_audit_status());
-
-            mIVBanner.setVisibility(View.VISIBLE);
-            Glide.with(getActivity()).load(bean.getBanner_url()).into(mIVBanner);
-        } else {
-            mIVBanner.setVisibility(View.GONE);
-        }
-        //判断图层是否显示
-        boolean isshow = sharedUtils.getBoolean(getActivity(), "isshow");
-        if ("1".equals(bean.getIs_show_cover()) && isshow) {
-            Intent intent = new Intent(getActivity(), AD_DialogActivtiy.class);
-            intent.putExtra("imgurl", bean.getCover_url());
-            intent.putExtra("url", bean.getCover_jump_url());
-            intent.putExtra("title", bean.getCover_jump_url_title());
-            startActivity(intent);
-        }
-    }
-
-    private void showTop(ContactBean.TopBean topBean) {
-        topBean = topBean.getC_name() == null ? null : topBean;
-        if (topBean != null) {
-            ContactBean.PersonsBean personsBean = new ContactBean.PersonsBean();
-            personsBean.setSex(topBean.getSex());
-            personsBean.setType(topBean.getType());
-            personsBean.setName(topBean.getName());
-            personsBean.setThumb(topBean.getThumb());
-            personsBean.setMobile(topBean.getMobile());
-            personsBean.setC_name(topBean.getC_name());
-            personsBean.setIsshop(topBean.getIsshop());
-            personsBean.setMain_product(topBean.getMain_product());
-            personsBean.setNeed_product(topBean.getNeed_product());
-            personsBean.setMonth_consum(topBean.getMonth_consum());
-
-            mLVAdapter.initView(mLVAdapter.getviewHolder(), mLayoutTop);
-            mLVAdapter.showInfo(mLVAdapter.getviewHolder(), personsBean);
-            mIVTop.setVisibility(View.VISIBLE);
-            mLayoutTop.setVisibility(View.VISIBLE);
-        } else {
-            mLayoutTop.setVisibility(View.GONE);
-        }
-    }
-
     //dialog接口回调
     @Override
     public void dialogClick(int type) {
@@ -432,31 +484,6 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         }
     }
 
-
-    /**
-     * Jump to where.
-     */
-    private void jumpToWhere() {
-        TextUtils.isLogin(getContext(), this);
-        if ("1".equals(jumpToWhere)) {  //原生
-            stauts = sharedUtils.getData(getActivity(), Constant.STAUTS);
-            if ("1".equals(stauts)) {
-                Intent intent = new Intent(getActivity(), NewContactDetailActivity.class);
-                intent.putExtra(Constant.USERID, sharedUtils.getData(getActivity(), Constant.USERID));
-                startActivity(intent);
-            } else {
-                Intent intent = new Intent(getActivity(), MyStoreActivity.class);
-                intent.putExtra(Constant.STAUTS, stauts);
-                startActivity(intent);
-            }
-        } else {                       //指定的url
-            Intent intent = new Intent(getActivity(), Cover_WebActivity.class);
-            intent.putExtra("url", jumpUrl);
-            intent.putExtra("title", jumpTitle);
-            startActivity(intent);
-        }
-    }
-
     /**
      * 未登录情况下检查上拉加载的page是否大于4
      */
@@ -472,7 +499,6 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -480,33 +506,11 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         MobclickAgent.onPageStart("MainScreen");
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
         mRefreshPopou.dismiss();
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mVHelper.start();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mVHelper.stop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mVHelper != null) {
-            mVHelper.onDestroy();
-        }
     }
 
     /**
@@ -537,5 +541,9 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         if (bean != null && accessUtils != null) {
             accessUtils.checkPremissions(bean.getId(), bean.getMerge_three());
         }
+    }
+
+    public void setOnLoadDataSuccessListener(BaseInterface onLoadDataSuccessListener) {
+        this.onLoadDataSuccessListener = onLoadDataSuccessListener;
     }
 }

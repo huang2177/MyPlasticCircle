@@ -3,6 +3,7 @@ package com.myplas.q.myself.message.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -15,10 +16,12 @@ import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.myself.beans.MsgChJBean;
 import com.myplas.q.myself.beans.MsgHFBean;
 import com.myplas.q.myself.beans.MsgSupDemBean;
+import com.myplas.q.myself.beans.MsgSystem;
 import com.myplas.q.myself.message.adapter.MessageCHJAdapter;
 import com.myplas.q.myself.message.adapter.MessageHFAdapter;
 import com.myplas.q.common.api.API;
 import com.myplas.q.myself.message.adapter.MessageSupDemAdapter;
+import com.myplas.q.myself.message.adapter.MessageSystemAdapter;
 import com.myplas.q.sockethelper.RabbitMQConfig;
 
 import org.json.JSONException;
@@ -40,12 +43,14 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
     private String method, title;
     private List<MsgHFBean.DataBean> mListHF;
     private List<MsgChJBean.DataBean> mListChJ;
+    private List<MsgSystem.DataBean> mListSystem;
     private List<MsgSupDemBean.DataBean> mListSupDem;
 
     private EmptyView mEmptyView;
     private RecyclerView mRecyclerView;
     private MessageHFAdapter mHFAdapter;
     private MessageCHJAdapter mCHJAdapter;
+    private MessageSystemAdapter mSystemAdapter;
     private MessageSupDemAdapter mSupDemAdapter;
 
     @Override
@@ -65,6 +70,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
         mListHF = new ArrayList<>();
         mListChJ = new ArrayList<>();
         mListSupDem = new ArrayList<>();
+        mListSystem = new ArrayList<>();
         mRecyclerView = F(R.id.wd_gj_listview);
         mEmptyView = F(R.id.mysupdem_noresultlayout);
 
@@ -75,18 +81,21 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
 
     public void getMyMsg(String page, String title) {
         int type;
-        if (title.equals("供求消息")) {
+        if ("供求消息".equals(title)) {
             type = 1;
             method = API.PLASTICMSG;
-        } else if (title.equals("出价消息")) {
+        } else if ("出价消息".equals(title)) {
             type = 2;
             method = API.CHUJIAMSG;
-        } else if (title.equals("回复消息")) {
+        } else if ("回复消息".equals(title)) {
             type = 3;
             method = API.HUIFUMSG;
-        } else {
+        } else if ("互动消息".equals(title)) {
             type = 4;
             method = API.INTERMSG;
+        } else {
+            type = 5;
+            method = API.SYSTEMMSG;
         }
         Map<String, String> map = new HashMap<String, String>();
         map.put("page", page);
@@ -137,7 +146,6 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                     }
                     RabbitMQConfig.getInstance(this).readMsg(Constant.R_PUR_MSG, 16);
                 }
-
             }
             if (type == 3 || type == 4) {
                 if ("0".equals(err)) {
@@ -160,6 +168,23 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
                             , (type == 3 ? 17 : 18));
                 }
             }
+            if (type == 5 && "0".equals(err)) {
+                mEmptyView.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                MsgSystem msgSystem = gson.fromJson(object.toString(), MsgSystem.class);
+                if (page == 1) {
+                    mSystemAdapter = new MessageSystemAdapter(this, msgSystem.getData());
+                    mRecyclerView.setAdapter(mSystemAdapter);
+
+                    mListSystem.clear();
+                    mListSystem.addAll(msgSystem.getData());
+                } else {
+                    mListSystem.addAll(msgSystem.getData());
+                    mSystemAdapter.setList(mListSystem);
+                    mSystemAdapter.notifyDataSetChanged();
+                }
+                RabbitMQConfig.getInstance(this).readMsg(Constant.R_SYSTEM_MSG, 19);
+            }
         } catch (Exception e) {
         }
     }
@@ -169,7 +194,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
         try {
             JSONObject jsonObject = new JSONObject(message);
             String msg = jsonObject.getString("message");
-            if (page == 1 && httpCode == 412) {
+            if (page == 1 && httpCode == 404) {
                 mRecyclerView.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.VISIBLE);
                 mEmptyView.setMyManager(R.drawable.icon_follow1);

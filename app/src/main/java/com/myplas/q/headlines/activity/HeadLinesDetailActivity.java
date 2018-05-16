@@ -137,7 +137,7 @@ public class HeadLinesDetailActivity extends BaseActivity implements ResultCallB
         Map<String, String> map = new HashMap<String, String>(8);
         map.put("id", id);
         map.put("ispass", code);
-        getAsyn(this, API.GET_DETAIL_INFO, map, this, type);
+        getAsyn(this, API.GET_DETAIL_INFO, map, this, type, true);
     }
 
     //检查权限

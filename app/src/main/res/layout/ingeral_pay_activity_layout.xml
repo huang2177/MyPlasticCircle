@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_pay_linear"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+    android:id="@+id/ll_pay_linear"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    <include layout="@layout/common_layout_titlebar"/>
+    <include layout="@layout/common_layout_titlebar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:paddingLeft="5dp"
                 android:text="充值金额："
                 android:textColor="@color/color_black"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
 
             <com.myplas.q.common.view.MyGridview
                 android:id="@+id/chz_gridview"
@@ -36,7 +36,7 @@
                 android:horizontalSpacing="5dp"
                 android:listSelector="@color/color_red"
                 android:numColumns="3"
-                android:verticalSpacing="10dp"/>
+                android:verticalSpacing="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                     android:paddingLeft="5dp"
                     android:text="其他金额："
                     android:textColor="@color/color_black"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <EditText
                     android:id="@+id/chz_edittext"
@@ -67,7 +67,7 @@
                     android:textSelectHandle="@drawable/textselecthandle"
                     android:textSelectHandleLeft="@drawable/textselecthandle"
                     android:textSelectHandleRight="@drawable/textselecthandle"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <TextView
                     android:id="@+id/chz_text_show1"
@@ -76,7 +76,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/color_red"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <!--<TextView-->
                 <!--android:id="@+id/chz_text_show2"-->
@@ -93,7 +93,7 @@
                 android:layout_height="4px"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/color_lightgray"/>
+                android:background="@color/color_lightgray" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,26 +102,28 @@
                 android:paddingLeft="5dp"
                 android:text="选择支付方式："
                 android:textColor="@color/color_black"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp">-->
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:textSize="16.0sp"-->
-            <!--android:text="    支付宝支付"-->
-            <!--android:drawableLeft="@drawable/icon_zhifubao"-->
-            <!--android:layout_margin="5dp"/>-->
-            <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/img_zhfb"-->
-            <!--android:src="@drawable/btn_radiohl" />-->
-            <!--</LinearLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/icon_zhifubao"
+                    android:text="    支付宝支付"
+                    android:textSize="16.0sp" />
+
+                <ImageView
+                    android:id="@+id/img_zhfb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_radiohl" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,14 +137,14 @@
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/icon_weixin"
                     android:text="   微信支付"
-                    android:textSize="16.0sp"/>
+                    android:textSize="16.0sp" />
 
                 <ImageView
                     android:id="@+id/img_weixin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/btn_radiohl"/>
+                    android:src="@drawable/btn_radio" />
             </LinearLayout>
 
             <Button
@@ -155,7 +157,7 @@
                 android:background="@drawable/btn_shape_red_coners"
                 android:text="支付"
                 android:textColor="@color/color_white"
-                android:textSize="18.0sp"/>
+                android:textSize="18.0sp" />
 
             <TextView
                 android:id="@+id/chz_rules"
@@ -168,7 +170,7 @@
                 android:padding="10dp"
                 android:text="如何轻松赚塑豆，详见 "
                 android:textColor="@color/color_black"
-                android:textSize="16.0sp"/>
+                android:textSize="16.0sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -53,7 +53,7 @@ public class ContactAccessUtils extends BaseActivity implements ResultCallBack,
         this.isShop = isShop;
         Map<String, String> map = new HashMap(8);
         map.put("user_id", userId);
-        getAsyn(context, API.PERMISSIONS, map, this, 1, false);
+        getAsyn(context, API.PERMISSIONS, map, this, 1, true);
     }
 
     /**

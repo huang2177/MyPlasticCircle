@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,30 +76,6 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
         mActionButton.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
 
-
-        //添加滑动监听 加载更多
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (isSlideToBottom() && !isLoading && newState == 2) {
-                    page++;
-                    isLoading = true;
-                    getBlackLists(page);
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (isSlideToBottom() && !isLoading) {
-                    page++;
-                    isLoading = true;
-                    getBlackLists(page);
-                }
-            }
-        });
-
         getBlackLists(page);
     }
 
@@ -107,31 +85,6 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
         return view;
     }
 
-    /**
-     * 监听是否对用户可见
-     *
-     * @param isVisibleToUser
-     */
-    public void setUserVisible(boolean isVisibleToUser) {
-        if (mActionButton == null) {
-            return;
-        }
-        if (isVisibleToUser) {
-            ObjectAnimator animator = ObjectAnimator.ofFloat(mActionButton, "scaleX", 0f, 1f);
-            ObjectAnimator animator1 = ObjectAnimator.ofFloat(mActionButton, "scaleY", 0f, 1f);
-            AnimatorSet set = new AnimatorSet();
-            set.play(animator).with(animator1);
-            set.setDuration(500);
-            set.start();
-        } else {
-            ObjectAnimator animator = ObjectAnimator.ofFloat(mActionButton, "scaleX", 1f, 0f);
-            ObjectAnimator animator1 = ObjectAnimator.ofFloat(mActionButton, "scaleY", 1f, 0f);
-            AnimatorSet set = new AnimatorSet();
-            set.play(animator).with(animator1);
-            set.setDuration(500);
-            set.start();
-        }
-    }
 
     /**
      * 获取黑名单列表数据
@@ -139,7 +92,7 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
     public void getBlackLists(int page) {
         Map<String, String> map = new HashMap<>(16);
         map.put("page", page + "");
-        map.put("size", "10");
+        map.put("size", "20");
         getAsyn(getActivity(), API.BLACKLISTS, map, this, 1, false);
     }
 
@@ -155,22 +108,6 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
     public void onRefresh() {
         page = 1;
         getBlackLists(page);
-    }
-
-    /**
-     * 判断RecycleView是否滑动到底部
-     *
-     * @return
-     */
-    private boolean isSlideToBottom() {
-        if (mRecyclerView == null) {
-            return false;
-        }
-        if (mRecyclerView.computeVerticalScrollExtent() + mRecyclerView.computeVerticalScrollOffset()
-                >= mRecyclerView.computeVerticalScrollRange()) {
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -221,7 +158,6 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
             }
             if (isLoading) {
                 isLoading = false;
-                TextUtils.toast(getActivity(), jsonObject.getString("message"));
             }
         } catch (Exception e) {
 
@@ -232,6 +168,32 @@ public class FragmentHomePageBlackList extends BaseFragment implements View.OnCl
     public void onResume() {
         super.onResume();
         setUserVisible(true);
+    }
+
+    /**
+     * 监听是否对用户可见
+     *
+     * @param isVisibleToUser
+     */
+    public void setUserVisible(boolean isVisibleToUser) {
+        if (mActionButton == null) {
+            return;
+        }
+        if (isVisibleToUser) {
+            ObjectAnimator animator = ObjectAnimator.ofFloat(mActionButton, "scaleX", 0f, 1f);
+            ObjectAnimator animator1 = ObjectAnimator.ofFloat(mActionButton, "scaleY", 0f, 1f);
+            AnimatorSet set = new AnimatorSet();
+            set.play(animator).with(animator1);
+            set.setDuration(500);
+            set.start();
+        } else {
+            ObjectAnimator animator = ObjectAnimator.ofFloat(mActionButton, "scaleX", 1f, 0f);
+            ObjectAnimator animator1 = ObjectAnimator.ofFloat(mActionButton, "scaleY", 1f, 0f);
+            AnimatorSet set = new AnimatorSet();
+            set.play(animator).with(animator1);
+            set.setDuration(500);
+            set.start();
+        }
     }
 
     @Override

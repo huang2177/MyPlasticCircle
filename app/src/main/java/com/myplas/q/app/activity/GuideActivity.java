@@ -70,13 +70,4 @@ public class GuideActivity extends FragmentActivity implements ViewPager.OnPageC
     public void onPageScrollStateChanged(int state) {
 
     }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
 }

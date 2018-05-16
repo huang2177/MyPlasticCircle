@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +28,12 @@ import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
+import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.MyBottomSheetDialog;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
+import com.myplas.q.myself.vip.UnEstablishedVipActivity;
 import com.myplas.q.release.bean.PreViewBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
@@ -47,9 +50,8 @@ import java.util.Map;
 
 public class QuicklyFragment extends BaseFragment implements View.OnClickListener
         , ResultCallBack
-        , MyEditText.OnTextWatcher {
+        , MyEditText.OnTextWatcher, CommonDialog.DialogShowInterface {
     private View view;
-    private Button preButton;
     private ListView preListView;
     private ImageView preImgClose;
     private MyEditText mEditText, mtvType;
@@ -123,7 +125,37 @@ public class QuicklyFragment extends BaseFragment implements View.OnClickListene
     }
 
     /**
+     * 底部弹窗dialog
+     */
+    private void openBottom() {
+        TextView textView1, textView2;
+        View view = View.inflate(getActivity(), R.layout.release_buttom_dialog_layout, null);
+        textView1 = (TextView) view.findViewById(R.id.buttom_dialog_tv1);
+        textView2 = (TextView) view.findViewById(R.id.buttom_dialog_tv2);
+
+        textView1.setOnClickListener(this);
+        textView2.setOnClickListener(this);
+        textView1.setText("供给");
+        textView2.setText("求购");
+
+        mButtomDialog = new MyBottomSheetDialog(getActivity());
+        mButtomDialog.setContentView(view);
+        mButtomDialog.show();
+    }
+
+    /**
      * 不解析直接发布
+     */
+
+    public void analysis() {
+        Map<String, String> map = new HashMap<>(8);
+        map.put("type", type);
+        map.put("content", content);
+        getAsyn(getActivity(), API.ANALYSIS, map, this, 1);
+    }
+
+    /**
+     * 解析后发布
      */
 
     public void pub() {
@@ -141,18 +173,6 @@ public class QuicklyFragment extends BaseFragment implements View.OnClickListene
         postAsyn(getActivity(), API.RELEASE_MSG, map, this, 2);
     }
 
-    /**
-     * 不解析直接发布
-     */
-
-    public void analysis() {
-        Map<String, String> map = new HashMap<>(8);
-        map.put("type", type);
-        map.put("content", content);
-        getAsyn(getActivity(), API.ANALYSIS, map, this, 1);
-    }
-
-
     @Override
     public void onTextChanged(View v, String s) {
         String s1 = s.toString();
@@ -168,7 +188,7 @@ public class QuicklyFragment extends BaseFragment implements View.OnClickListene
             JSONObject jsonObject = new JSONObject(object.toString());
             String err = jsonObject.getString("code");
             if (type == 1) {
-                if (err.equals("0")) {
+                if ("0".equals(err)) {
                     PreViewBean preViewBean = gson.fromJson(object.toString(), PreViewBean.class);
                     if (preViewBean.getData().size() != 0) {
                         Intent intent = new Intent(getActivity(), InstantReleaseActivity.class);
@@ -211,14 +231,17 @@ public class QuicklyFragment extends BaseFragment implements View.OnClickListene
     public void failCallBack(int type, String message, int httpCode) {
         try {
             JSONObject jsonObject = new JSONObject(message);
-//            if (type == 1 && httpCode == 404) {
-            TextUtils.toast(getActivity(), jsonObject.getString("message"));
-//            }
+            String msg = jsonObject.getString("message");
+            if (httpCode == 403) {
+                CommonDialog dialog = new CommonDialog();
+                dialog.showDialog(getActivity(), msg, 3, this);
+            } else {
+                TextUtils.toast(getActivity(), msg);
+            }
         } catch (Exception e) {
 
         }
     }
-
 
     /**
      * 提示dialog
@@ -239,8 +262,8 @@ public class QuicklyFragment extends BaseFragment implements View.OnClickListene
         if (!mDialog.isShowing()) {
             mDialog.show();
         }
-        dialogOK = (Button) view.findViewById(R.id.btn_ok);
-        dialogCancle = (Button) view.findViewById(R.id.btn_cancle);
+        dialogOK = (TextView) view.findViewById(R.id.btn_ok);
+        dialogCancle = (TextView) view.findViewById(R.id.btn_cancle);
         dialogTitle = (TextView) view.findViewById(R.id.dialog_title);
         dialogContent = (TextView) view.findViewById(R.id.dialog_message);
 
@@ -253,23 +276,20 @@ public class QuicklyFragment extends BaseFragment implements View.OnClickListene
         dialogCancle.setOnClickListener(this);
     }
 
-    /**
-     * 底部弹窗dialog
-     */
-    private void openBottom() {
-        TextView textView1, textView2;
-        View view = View.inflate(getActivity(), R.layout.release_buttom_dialog_layout, null);
-        textView1 = (TextView) view.findViewById(R.id.buttom_dialog_tv1);
-        textView2 = (TextView) view.findViewById(R.id.buttom_dialog_tv2);
-
-        textView1.setOnClickListener(this);
-        textView2.setOnClickListener(this);
-        textView1.setText("供给");
-        textView2.setText("求购");
-
-        mButtomDialog = new MyBottomSheetDialog(getActivity());
-        mButtomDialog.setContentView(view);
-        mButtomDialog.show();
+    public boolean isInPutContent(int _type) {
+        String t = mtvType.getText().toString();
+        content = mEditText.getText().toString();
+        if (_type == 1) {
+            return !TextUtils.notEmpty(content)
+                    && !TextUtils.notEmpty(t) ? false : true;
+        } else {
+            if (!TextUtils.notEmpty(content) || !TextUtils.notEmpty(t)) {
+                TextUtils.toast(getActivity(), "您还未输入内容或者没有选择发布类型！");
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 
     /**
@@ -290,19 +310,10 @@ public class QuicklyFragment extends BaseFragment implements View.OnClickListene
         dialog.getWindow().setAttributes(lp);
     }
 
-    public boolean isInPutContent(int _type) {
-        String t = mtvType.getText().toString();
-        content = mEditText.getText().toString();
-        if (_type == 1) {
-            return !TextUtils.notEmpty(content)
-                    && !TextUtils.notEmpty(t) ? false : true;
-        } else {
-            if (!TextUtils.notEmpty(content) || !TextUtils.notEmpty(t)) {
-                TextUtils.toast(getActivity(), "您还未输入内容或者没有选择发布类型！");
-                return false;
-            } else {
-                return true;
-            }
+    @Override
+    public void dialogClick(int type) {
+        if (type == 3) {
+            startActivity(new Intent(getActivity(), UnEstablishedVipActivity.class));
         }
     }
 }

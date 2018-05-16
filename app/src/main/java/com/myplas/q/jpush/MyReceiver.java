@@ -15,6 +15,7 @@ import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.app.activity.MainActivity;
 import com.myplas.q.myself.fans.activity.MyFansFollowActivity;
 import com.myplas.q.myself.invoices.activity.TradeOrderActivity;
+import com.myplas.q.myself.vip.EstablishedVipActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
 
@@ -48,6 +49,29 @@ public class MyReceiver extends BroadcastReceiver {
             }
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * 获取extra/message字段
+     *
+     * @param bundle
+     * @return
+     */
+    private static JSONObject getExtra(Bundle bundle, String key) {
+        JSONObject jsonObject = null;
+
+        if (!TextUtils.notEmpty(bundle.getString(key))) {
+            Log.e(TAG, "This message has no Extra data");
+            return jsonObject;
+        }
+        try {
+            jsonObject = new JSONObject(bundle.getString(key));
+
+        } catch (Exception e) {
+            Log.e(TAG, "Get message extra JSON error!");
+        }
+
+        return jsonObject;
     }
 
     /**
@@ -100,6 +124,12 @@ public class MyReceiver extends BroadcastReceiver {
                     i4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(i4);
                     break;
+
+                case "system"://会员到期
+                    Intent i5 = new Intent(context, EstablishedVipActivity.class);
+                    i5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(i5);
+                    break;
                 default:
                     break;
             }
@@ -115,6 +145,7 @@ public class MyReceiver extends BroadcastReceiver {
                 mACache.put(Constant.R_INTER_MSG, bean.getRedDot().getUnread_reply_user_msg());
                 mACache.put(Constant.R_SUPDEM, bean.getRedDot().getUnread_supply_and_demand());
                 mACache.put(Constant.R_REPLY_MSG, bean.getRedDot().getUnread_reply_purchase_msg());
+                mACache.put(Constant.R_SYSTEM_MSG, bean.getRedDot().getUnread_system_msg());
 
                 Activity activity = ActivityManager.currentActivity();
                 if (activity != null && activity instanceof MainActivity) {
@@ -125,28 +156,5 @@ public class MyReceiver extends BroadcastReceiver {
         } catch (Exception e) {
 
         }
-    }
-
-    /**
-     * 获取extra/message字段
-     *
-     * @param bundle
-     * @return
-     */
-    private static JSONObject getExtra(Bundle bundle, String key) {
-        JSONObject jsonObject = null;
-
-        if (!TextUtils.notEmpty(bundle.getString(key))) {
-            Log.e(TAG, "This message has no Extra data");
-            return jsonObject;
-        }
-        try {
-            jsonObject = new JSONObject(bundle.getString(key));
-
-        } catch (Exception e) {
-            Log.e(TAG, "Get message extra JSON error!");
-        }
-
-        return jsonObject;
     }
 }

@@ -192,7 +192,7 @@ public class FragmentRegister1 extends BaseFragment implements View.OnClickListe
                     buttonNext.setBackgroundResource(R.drawable.login_btn_shape_hl);
                 } else {
                     if (mBaseInterface != null) {
-                        mBaseInterface.complete(1);
+                        mBaseInterface.complete(1, null);
                         mBaseInterface.dataBack(this, Arrays.asList(phone, pass, indentify));
                     }
                 }

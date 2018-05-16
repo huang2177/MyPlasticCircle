@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.util.DiffUtil;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.myplas.q.R;
+import com.myplas.q.alipay.AliPayUtil;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.TextUtils;
@@ -42,7 +44,7 @@ import java.util.Map;
  * 时间：2017/3/29 09:57
  */
 public class IntegralPayActivtity extends BaseActivity implements View.OnClickListener
-        , ResultCallBack {
+        , ResultCallBack, CommonDialog.DialogShowInterface {
     private int money;
     private Button button;
     private int plasticBean;
@@ -58,6 +60,8 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     private Integral_Pay_Adapter integralPayAdapter;
     private MyBroadcastReceiver myBroadcastReceiver;
 
+    private int flags = 4;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +75,15 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
         button = (Button) findViewById(R.id.chz_zhf);
         mTextView = (TextView) findViewById(R.id.chz_rules);
         editText = (EditText) findViewById(R.id.chz_edittext);
-//        imageView_zfb = (ImageView) findViewById(R.id.img_zhfb);
+        imageView_zfb = (ImageView) findViewById(R.id.img_zhfb);
         imageView_wx = (ImageView) findViewById(R.id.img_weixin);
         myGridview = (MyGridview) findViewById(R.id.chz_gridview);
         textView_show1 = (TextView) findViewById(R.id.chz_text_show1);
 
         button.setOnClickListener(this);
         mTextView.setOnClickListener(this);
-//        imageView_wx.setOnClickListener(this);
-//        imageView_zfb.setOnClickListener(this);
+        imageView_wx.setOnClickListener(this);
+        imageView_zfb.setOnClickListener(this);
 
         myBroadcastReceiver = new MyBroadcastReceiver();
         IntentFilter filter = new IntentFilter("wechat_pay");
@@ -162,13 +166,17 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.chz_zhf:
-                getOrder();
+                getAliOrder();
+                getWechatOrder();
+                button.setClickable(false);
                 break;
-//            case R.id.img_zhfb:
-//                imageView_wx.setImageResource(R.drawable.btn_radio);
-//                imageView_zfb.setImageResource(R.drawable.btn_radiohl);
-//                break;
+            case R.id.img_zhfb:
+                flags = 4;
+                imageView_wx.setImageResource(R.drawable.btn_radio);
+                imageView_zfb.setImageResource(R.drawable.btn_radiohl);
+                break;
             case R.id.img_weixin:
+                flags = 3;
                 imageView_zfb.setImageResource(R.drawable.btn_radio);
                 imageView_wx.setImageResource(R.drawable.btn_radiohl);
                 break;
@@ -197,9 +205,12 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     }
 
     /**
-     * 创建订单：
+     * 创建订单(微信)：
      */
-    public void getOrder() {
+    public void getWechatOrder() {
+        if (flags == 4) {
+            return;
+        }
         if (isSelected_money) {
             Map<String, String> map = new HashMap<>(16);
             map.put("type", "1");
@@ -207,6 +218,25 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
             map.put("total_fee", money + "");
             map.put("goods_num", plasticBean + "");
             postAsyn(this, API.GET_PREPAY_ORDER, map, this, 3);
+        } else {
+            TextUtils.toast(this, "请选择您需要充值的金额！");
+        }
+    }
+
+    /**
+     * 创建订单(微信)：
+     */
+    public void getAliOrder() {
+        if (flags == 3) {
+            return;
+        }
+        if (isSelected_money) {
+            Map<String, String> map = new HashMap<>(16);
+            map.put("type", "2");
+            map.put("goods_id", "99");
+            map.put("total_fee", money + "");
+            map.put("goods_num", plasticBean + "");
+            postAsyn(this, API.ALIPAYDETAIL, map, this, 4);
         } else {
             TextUtils.toast(this, "请选择您需要充值的金额！");
         }
@@ -227,7 +257,8 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
     public void callBack(Object object, int type) {
         try {
             Gson gson = new Gson();
-            boolean err = "0".equals(new JSONObject(object.toString()).getString("code"));
+            JSONObject jsonObject = new JSONObject(object.toString());
+            boolean err = "0".equals(jsonObject.getString("code"));
             if (type == 1 && err) {
                 SelectableBean selectableBean = gson.fromJson(object.toString(), SelectableBean.class);
                 list = selectableBean.getData();
@@ -239,11 +270,12 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
             }
 
             if (type == 2 && err) {
-                plasticBean = Integer.parseInt(new JSONObject(object.toString()).getString("points"));
+                plasticBean = Integer.parseInt(jsonObject.getString("points"));
                 textView_show1.setText(plasticBean + "塑豆");
             }
 
             if (type == 3 && err) {
+                button.setClickable(true);
                 OrderBean orderBean = gson.fromJson(object.toString(), OrderBean.class);
                 order_id = orderBean.getOrder_id();
                 PayUtis payUtis = new PayUtis(this);
@@ -253,12 +285,17 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                 } else {                     //唤醒微信失败
                     callWeChat(order_id, "-2");
                 }
-            } else if (type == 3) {
-                TextUtils.toast(this, new JSONObject(object.toString()).getString("message"));
+            }
+
+            if (type == 4 && err) {
+                button.setClickable(true);
+                new AliPayUtil().pay(this
+                        , this
+                        , jsonObject.getString("data")
+                        , jsonObject.getString("order_id"));
             }
         } catch (Exception e) {
         }
-
     }
 
     /**
@@ -266,12 +303,23 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
      */
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+        if (type == 3 || type == 4) {
+            button.setClickable(true);
+            //TextUtils.toast(this, "获取订单失败，请稍后重试！");
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(myBroadcastReceiver);
+    }
+
+    @Override
+    public void dialogClick(int type) {
+        if (type == 5) {
+            finish();
+        }
     }
 
     public class MyBroadcastReceiver extends BroadcastReceiver {
@@ -283,7 +331,8 @@ public class IntegralPayActivtity extends BaseActivity implements View.OnClickLi
                 if ("0".equals(data)) {//支付成功
                     type = 4;
                     CommonDialog commonDialog = new CommonDialog();
-                    commonDialog.showDialog(context, "支付成功!", 5, null);
+                    commonDialog.setCanceledOnTouchOutside(false);
+                    commonDialog.showDialog(context, "支付成功!", 5, IntegralPayActivtity.this);
                 }
                 if ("-1".equals(data)) {//支付失败
                     type = -4;

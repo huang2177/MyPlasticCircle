@@ -2,8 +2,10 @@ package com.myplas.q.myself.store;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -12,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
@@ -23,6 +26,7 @@ import com.myplas.q.common.utils.UCloudUtils;
 import com.myplas.q.common.view.EmptyView;
 import com.myplas.q.common.view.MyEditText;
 import com.myplas.q.common.view.ProgressImageView;
+import com.myplas.q.homepage.beans.ContactInfoBean;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.durban.Controller;
 import com.yanzhenjie.durban.Durban;
@@ -55,6 +59,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     private final int HCODE = 10, ICODE = 20;
     private String companyName, companyIntroduction, headPath, licencePath, stauts, business;
     private UCloudUtils uCloudUtils;
+    private String userId;
 
 
     @Override
@@ -65,6 +70,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         setTitle("我的店铺");
 
         initView();
+        getNetData();
     }
 
     private void initView() {
@@ -78,6 +84,9 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         editName = F(R.id.store_edit_company_name);
         imageLicence = F(R.id.store_img_show_licence);
         editIntroduction = F(R.id.store_edit_introduction);
+
+        sharedUtils = SharedUtils.getSharedUtils();
+        userId = sharedUtils.getData(this, Constant.USERID);
 
         button.setOnClickListener(this);
         flHead.setOnClickListener(this);
@@ -193,6 +202,15 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     }
 
     /**
+     * 获取数据
+     */
+    public void getNetData() {
+        Map<String, String> map = new HashMap(16);
+        map.put("user_id", userId);
+        getAsyn(this, API.GET_ZONE_FRIEND, map, this, 3, false);
+    }
+
+    /**
      * 改变button颜色
      */
     private void changeBtnColor() {
@@ -272,10 +290,16 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 imm.hideSoftInputFromWindow(editName.getWindowToken(), 0);
 
                 loadAnimation(true);
-            } else {
+            } else if (type == 2) {
                 button.setClickable(true);
                 button.setBackgroundResource(R.drawable.login_btn_shape_hl);
                 TextUtils.toast(this, jsonObject.getString("message"));
+            }
+            if (type == 3 && "0".equals(err)) {
+                ContactInfoBean contactInfoBean = new Gson().fromJson(object.toString(), ContactInfoBean.class);
+                editName.setText(contactInfoBean.getData().getC_name());
+                editBusiness.setText(contactInfoBean.getData().getC_id());
+                editIntroduction.setText(contactInfoBean.getData().getCom_intro());
             }
         } catch (Exception e) {
 

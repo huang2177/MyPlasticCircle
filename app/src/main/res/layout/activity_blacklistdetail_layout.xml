@@ -71,13 +71,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:textColor="@color/color_title_main" />
+                android:lineSpacingExtra="5dp"
+                android:textColor="@color/color_title_main"
+                android:textSize="16.0sp" />
 
-            <com.huangbryant.hbanner.HBanner
-                android:id="@+id/detail_banner"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/detail_mlistview"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:visibility="gone" />
 

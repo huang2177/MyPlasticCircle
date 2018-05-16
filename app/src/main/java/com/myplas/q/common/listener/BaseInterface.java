@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface BaseInterface extends Serializable {
-    void complete(int position);
+    void complete(int position, String msg);
 
     void dataBack(Fragment fragment, List agrs);
 }

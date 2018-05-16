@@ -1,6 +1,8 @@
 package com.myplas.q.jpush;
 
+import android.app.Notification;
 import android.content.Context;
+import android.support.v4.app.NotificationCompat;
 
 import cn.jpush.android.api.JPushMessage;
 import cn.jpush.android.service.JPushMessageReceiver;

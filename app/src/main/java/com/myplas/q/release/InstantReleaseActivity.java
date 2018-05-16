@@ -19,6 +19,7 @@ import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.myself.supdem.MySupDemActivity;
+import com.myplas.q.myself.vip.UnEstablishedVipActivity;
 import com.myplas.q.release.adapter.InstantReleaseLVAdapter;
 import com.myplas.q.release.bean.PreViewBean;
 import com.myplas.q.supdem.activity.SupDem_Detail_Activity;
@@ -46,6 +47,63 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
 
     private String id;
     private SharedUtils mSharedUtils;
+
+    @Override
+    public void callBack(Object object, int type) {
+        try {
+            Gson gson = new Gson();
+            JSONObject jsonObject = new JSONObject(object.toString());
+            String err = jsonObject.getString("code");
+            if ("0".equals(err)) {
+                //关闭activity
+                MainActivity mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
+                mainActivity.goToSupDem();
+
+                //跳转到供求详情
+                Intent intent1 = new Intent(this, SupDem_Detail_Activity.class);
+                intent1.putExtra("id", jsonObject.getString("id"));
+                intent1.putExtra("userid", mSharedUtils.getData(this, Constant.USERID));
+                startActivity(intent1);
+
+                finish();
+                ActivityManager.finishActivity(ReleaseActivity.class);
+                if (id != null) {
+                    ActivityManager.finishActivity(MySupDemActivity.class);
+                }
+            } else {
+                TextUtils.toast(this, jsonObject.getString("message"));
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void failCallBack(int type, String message, int httpCode) {
+        try {
+            JSONObject jsonObject = new JSONObject(message);
+            String msg = jsonObject.getString("message");
+            if (type == 1) {
+                if (httpCode == 403) {
+                    CommonDialog dialog = new CommonDialog();
+                    dialog.showDialog(this, msg, 3, this);
+                } else {
+                    TextUtils.toast(this, msg);
+                }
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 100 && data != null) {
+            mList.remove(modifyPosition);
+            mList.add((PreViewBean.DataBean) data.getSerializableExtra("bean"));
+            adapter = new InstantReleaseLVAdapter(this, mList, this);
+            listView.setAdapter(adapter);
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,57 +150,6 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
     }
 
     @Override
-    public void callBack(Object object, int type) {
-        try {
-            Gson gson = new Gson();
-            JSONObject jsonObject = new JSONObject(object.toString());
-            String err = jsonObject.getString("code");
-            if ("0".equals(err)) {
-                //关闭activity
-                MainActivity mainActivity = (MainActivity) ActivityManager.getActivity(MainActivity.class);
-                mainActivity.goToSupDem();
-
-                //跳转到供求详情
-                Intent intent1 = new Intent(this, SupDem_Detail_Activity.class);
-                intent1.putExtra("id", jsonObject.getString("id"));
-                intent1.putExtra("userid", mSharedUtils.getData(this, Constant.USERID));
-                startActivity(intent1);
-
-                finish();
-                ActivityManager.finishActivity(ReleaseActivity.class);
-                if (id != null) {
-                    ActivityManager.finishActivity(MySupDemActivity.class);
-                }
-            } else {
-                TextUtils.toast(this, jsonObject.getString("message"));
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void failCallBack(int type, String message, int httpCode) {
-        try {
-            JSONObject jsonObject = new JSONObject(message);
-            if (type == 1 && httpCode == 400) {
-                TextUtils.toast(this, jsonObject.getString("message"));
-            }
-        } catch (Exception e) {
-
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 100 && data != null) {
-            mList.remove(modifyPosition);
-            mList.add((PreViewBean.DataBean) data.getSerializableExtra("bean"));
-            adapter = new InstantReleaseLVAdapter(this, mList, this);
-            listView.setAdapter(adapter);
-        }
-    }
-
-    @Override
     public void delete(int position) {
         deletePosition = position;
         CommonDialog commonDialog = new CommonDialog();
@@ -159,7 +166,7 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
 
     @Override
     public void dialogClick(int type) {
-        if (type != -1) {
+        if (type == 1) {
             if (mList.size() == 1) {
                 finish();
             } else if (deletePosition < mList.size()) {
@@ -167,6 +174,9 @@ public class InstantReleaseActivity extends BaseActivity implements ResultCallBa
                 adapter = new InstantReleaseLVAdapter(this, mList, this);
                 listView.setAdapter(adapter);
             }
+        }
+        if (type == 3) {
+            startActivity(new Intent(this, UnEstablishedVipActivity.class));
         }
     }
 }

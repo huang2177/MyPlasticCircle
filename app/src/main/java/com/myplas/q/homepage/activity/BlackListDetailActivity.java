@@ -34,7 +34,9 @@ import com.myplas.q.common.utils.KeyboardHelper;
 import com.myplas.q.common.utils.StatusUtils;
 import com.myplas.q.common.utils.TextUtils;
 import com.myplas.q.common.view.MyBottomSheetDialog;
+import com.myplas.q.common.view.MyListview;
 import com.myplas.q.homepage.adapter.BlackListDetailAdapter;
+import com.myplas.q.homepage.adapter.BlackListDetailIMGAdapter;
 import com.myplas.q.homepage.beans.BlackListsDetailBean;
 
 import org.json.JSONObject;
@@ -60,8 +62,8 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
 
     private View root;
     private Button button;
-    private HBanner mBanner;
     private EditText editText;
+    private RecyclerView rvImg;
     private RecyclerView mRecycleView;
     private NestedScrollView scrollView;
     private LinearLayout layoutComments, layoutInput;
@@ -101,8 +103,8 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         tvTime = F(R.id.detail_time);
         tvTitle = F(R.id.detail_title);
         scrollView = F(R.id.detail_sv);
-        mBanner = F(R.id.detail_banner);
         mRecycleView = F(R.id.detail_rv);
+        rvImg = F(R.id.detail_mlistview);
         tvAuthor = F(R.id.detail_author);
         tvContent = F(R.id.detail_content);
         layoutComments = F(R.id.layout_comments);
@@ -113,7 +115,6 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
 
         editText.setHint("写留言");
         button.setOnClickListener(this);
-        mBanner.setOnBannerListener(this);
         mIVRight.setOnClickListener(this);
         mKeyboardChangeListener = new OnKeyboardChangeListener(this, this);
         layoutInput.addOnLayoutChangeListener(mKeyboardChangeListener);
@@ -121,50 +122,35 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         mKeyboardHelper = new KeyboardHelper(this, root);
         mKeyboardHelper.enable();
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        LinearLayoutManager manager1 = new LinearLayoutManager(this);
+        LinearLayoutManager manager2 = new LinearLayoutManager(this);
         mRecycleView.setNestedScrollingEnabled(false);
-        mRecycleView.setLayoutManager(manager);
-
+        rvImg.setNestedScrollingEnabled(false);
+        mRecycleView.setLayoutManager(manager1);
+        rvImg.setLayoutManager(manager2);
     }
 
     /**
-     * 初始化banner
-     *
-     * @param illustration
+     * 获取黑名单详情数据
      */
-    public void initBanner(List<String> illustration) {
-        if (illustration.size() == 0) {
-            return;
-        }
-        mBanner.setVisibility(View.VISIBLE);
-        mBanner.setBannerStyle(HBannerConfig.CIRCLE_INDICATOR);
-        //设置图片加载器
-        mBanner.setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object o, ImageView imageView, int i) {
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Glide.with(context).load(o.toString()).into(imageView);
-            }
-        });
-        //设置图片集合
-        mBanner.setImages(illustration);
-        //设置banner动画效果
-        mBanner.setBannerAnimation(Transformer.Accordion);
-        //设置标题集合（当banner样式有显示title时）
-        //mBanner.setBannerTitles(list1);
-        //设置自动轮播，默认为true
-        mBanner.isAutoPlay(false);
-        //设置轮播时间
-        mBanner.setDelayTime(3000);
-        //设置指示器位置（当banner模式中有指示器时）
-        mBanner.setIndicatorGravity(HBannerConfig.RIGHT);
-        //banner设置方法全部调用完毕时最后调用
-        mBanner.start();
+    public void getBlackLists() {
+        Map<String, String> map = new HashMap<>(16);
+        map.put("id", id);
+        getAsyn(this, API.BLACKLISTS + "/" + id, null, this, 1, false);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        layoutInput.removeOnLayoutChangeListener(mKeyboardChangeListener);
+        mKeyboardHelper.disable();
+    }
 
     @Override
     public void onClick(View v) {
+        if (bean == null) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.blacklist_detail_btn:
                 reply();
@@ -181,6 +167,22 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 回复
+     */
+    public void reply() {
+        content = editText.getText().toString();
+        if (TextUtils.notEmpty(content)) {
+            Map<String, String> map = new HashMap<>(16);
+            map.put("blacklist_id", id);
+            map.put("comments", content);
+            map.put("comment_id", commentId);
+            postAsyn(this, API.BLACKLISTSCOMMENTS, map, this, 2, false);
+        } else {
+            TextUtils.toast(this, "请输入回复内容！");
         }
     }
 
@@ -206,31 +208,6 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         commentId = "0";
         editText.setHint("写留言");
         isShowKeyboard = false;
-    }
-
-    /**
-     * 获取黑名单详情数据
-     */
-    public void getBlackLists() {
-        Map<String, String> map = new HashMap<>(16);
-        map.put("id", id);
-        getAsyn(this, API.BLACKLISTS + "/" + id, null, this, 1, false);
-    }
-
-    /**
-     * 回复
-     */
-    public void reply() {
-        content = editText.getText().toString();
-        if (TextUtils.notEmpty(content)) {
-            Map<String, String> map = new HashMap<>(16);
-            map.put("blacklist_id", id);
-            map.put("comments", content);
-            map.put("comment_id", commentId);
-            postAsyn(this, API.BLACKLISTSCOMMENTS, map, this, 2, false);
-        } else {
-            TextUtils.toast(this, "请输入回复内容！");
-        }
     }
 
     @Override
@@ -270,8 +247,11 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
      * @param bean
      */
     private void showDetail(BlackListsDetailBean.BlacklistBean bean) {
-        if (mBanner.getVisibility() == View.GONE) {
-            initBanner(bean.getIllustration());
+        if (rvImg.getVisibility() == View.GONE) {
+            rvImg.setVisibility(View.VISIBLE);
+
+            BlackListDetailIMGAdapter adapter = new BlackListDetailIMGAdapter(this, bean.getIllustration());
+            rvImg.setAdapter(adapter);
 
             tvPV.setText(bean.getPv());
             tvTitle.setText(bean.getSubject());
@@ -291,25 +271,5 @@ public class BlackListDetailActivity extends BaseActivity implements View.OnClic
         layoutComments.setVisibility(bean.getComments().size() == 0
                 ? View.GONE
                 : View.VISIBLE);
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mBanner.startAutoPlay();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mBanner.stopAutoPlay();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        layoutInput.removeOnLayoutChangeListener(mKeyboardChangeListener);
-        mKeyboardHelper.disable();
     }
 }

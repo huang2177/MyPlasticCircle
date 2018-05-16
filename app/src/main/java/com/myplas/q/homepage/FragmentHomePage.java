@@ -17,6 +17,7 @@ import com.myplas.q.R;
 import com.myplas.q.app.fragment.BaseFragment;
 import com.myplas.q.common.api.API;
 import com.myplas.q.common.appcontext.Constant;
+import com.myplas.q.common.listener.BaseInterface;
 import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.CommonDialog;
@@ -30,6 +31,7 @@ import com.myplas.q.myself.login.LoginActivity;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 黄双
@@ -39,7 +41,7 @@ import java.util.ArrayList;
 public class FragmentHomePage extends BaseFragment implements View.OnClickListener
         , MyOnPageChangeListener.OnPageChangeListener
         , ResultCallBack
-        , CommonDialog.DialogShowInterface {
+        , CommonDialog.DialogShowInterface, BaseInterface {
 
     private View view;
 
@@ -55,6 +57,38 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
     private FragmentHomePageContact contact;
     private FragmentHomePageBlackList blackList;
     private SharedUtils sharedUtils;
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.contact_sign:
+                startActivity(new Intent(getActivity(), ContactDaliySignActivity.class));
+                break;
+            case R.id.contact_search_ll:
+                startActivity(new Intent(getActivity(), Contact_Search_Activity.class));
+                getActivity().overridePendingTransition(R.anim.fade, R.anim.hold);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mTabLayout.setCurrentTab(position);
+        if (blackList != null) {
+            blackList.setUserVisible(position == 0 ? false : true);
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (blackList != null) {
+            blackList.setUserVisible(isVisibleToUser);
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,6 +124,7 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
         mTabLayout.setTabData(title);
 
         contact = new FragmentHomePageContact();
+        contact.setOnLoadDataSuccessListener(this);
         blackList = new FragmentHomePageBlackList();
         mFragments.add(contact);
         mFragments.add(blackList);
@@ -114,39 +149,6 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
 
             }
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.contact_sign:
-                startActivity(new Intent(getActivity(), ContactDaliySignActivity.class));
-                break;
-            case R.id.contact_search_ll:
-                startActivity(new Intent(getActivity(), Contact_Search_Activity.class));
-                getActivity().overridePendingTransition(R.anim.fade, R.anim.hold);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        mTabLayout.setCurrentTab(position);
-        if (blackList != null) {
-            blackList.setUserVisible(position == 0 ? false : true);
-        }
-    }
-
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (blackList != null) {
-            blackList.setUserVisible(isVisibleToUser);
-        }
     }
 
     /**
@@ -191,5 +193,15 @@ public class FragmentHomePage extends BaseFragment implements View.OnClickListen
         super.onResume();
 //        validations();
 //        boolean isLogin = SharedUtils.getSharedUtils().getBoolean(getContext(), Constant.LOGINED);
+    }
+
+    @Override
+    public void complete(int position, String msg) {
+        mTabLayout.setTabData(new String[]{"塑料圈通讯录(" + msg + "人)", "塑料黑名单"});
+    }
+
+    @Override
+    public void dataBack(Fragment fragment, List agrs) {
+
     }
 }

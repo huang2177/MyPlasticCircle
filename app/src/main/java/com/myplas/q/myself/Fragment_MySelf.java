@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.myplas.q.common.utils.NetUtils;
 import com.myplas.q.common.utils.SharedUtils;
 import com.myplas.q.common.view.DragView;
 import com.myplas.q.common.view.RoundCornerImageView;
+import com.myplas.q.homepage.activity.Cover_WebActivity;
 import com.myplas.q.homepage.activity.NewContactDetailActivity;
 import com.myplas.q.myself.beans.MyZone;
 import com.myplas.q.myself.credit.activity.LineOfCreditActivity;
@@ -41,6 +43,8 @@ import com.myplas.q.myself.setting.SettingActivity;
 import com.myplas.q.myself.setting.activity.MyInfomationActivity;
 import com.myplas.q.myself.store.MyStoreActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
+import com.myplas.q.myself.vip.EstablishedVipActivity;
+import com.myplas.q.myself.vip.UnEstablishedVipActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
@@ -59,11 +63,11 @@ import org.json.JSONObject;
 public class Fragment_MySelf extends BaseFragment implements View.OnClickListener
         , ResultCallBack
         , RabbitMQCallBack {
-    private View view;
     private MyZone myZone;
+    private View view, viewDivider;
 
-    private ImageView imageStart;
     private SharedUtils sharedUtils;
+    private ImageView imageStart, ivVip;
     private RoundCornerImageView imageTx;
     private ImageView mimageNews, mimageMore;
     private TextView textTitle, textName, textCompany, textRank;
@@ -78,6 +82,8 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
 
     private ACache mACache;
     private DefConfigBean.RedDotBean mDotBean;
+
+    private boolean isHeadVip, isStoreVip, isTrialVip;
 
 
     @Override
@@ -99,6 +105,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_layout_myself, null, false);
 
         imageTx = F(view, R.id.xq_tx);
+        ivVip = F(view, R.id.img_vip);
         imageStart = F(view, R.id.xq_rz);
         textQg = F(view, R.id.wd_text_qg);
         textGj = F(view, R.id.wd_text_gj);
@@ -117,6 +124,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         textCompany = F(view, R.id.wd_title_gs);
         textYj = F(view, R.id.wd_text_introdus);
         textTitle = F(view, R.id.toolbar_title);
+        viewDivider = F(view, R.id.vip_divider);
 
         linearFs = F(view, R.id.wd_linear_fans);
         mimageMore = F(view, R.id.wd_title_more);
@@ -134,6 +142,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         mBarLayout = F(view, R.id.app_bar_layout);
         mCollapsingToolbarLayout = F(view, R.id.collapsing_toolbar);
 
+        ivVip.setOnClickListener(this);
         textDd.setOnClickListener(this);
         textPz.setOnClickListener(this);
         textSet.setOnClickListener(this);
@@ -157,6 +166,58 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         Glide.with(getActivity()).load(R.drawable.img_defaul_male).into(imageTx);
     }
 
+    private void setAppBarListener() {
+        mBarLayout.addOnOffsetChangedListener(
+                new AppBarLayout.OnOffsetChangedListener() {
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (verticalOffset == 0) {//张开
+                            setToolbar1Alpha(255);
+                        } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {//收缩
+                            setToolbar2Alpha(255);
+                        } else {
+                            int alpha = 255 - Math.abs(verticalOffset) - 150;
+                            if (alpha <= 0) {//收缩
+                                setToolbar2Alpha(Math.abs(verticalOffset));
+                            } else {//张开
+                                setToolbar1Alpha(alpha);
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
+     * Sets toolbar 1 alpha.
+     *
+     * @param alpha the alpha
+     */
+    public void setToolbar1Alpha(int alpha) {
+        textTitle.setTextColor(Color.TRANSPARENT);
+        mimageMore.getDrawable().setAlpha(alpha);
+        mimageNews.getDrawable().setAlpha(alpha);
+        textRank.setTextColor(Color.argb(alpha, 255, 255, 255));
+        textCompany.setTextColor(Color.argb(alpha, 255, 255, 255));
+        textName.setTextColor(Color.argb(alpha, 255, 255, 255));
+        mDragViewMsg.setTextColor(Color.argb(alpha, 255, 255, 255));
+        if (imageStart.getDrawable() != null) {
+            imageStart.getDrawable().setAlpha(alpha);
+        }
+        if (imageTx.getDrawable() != null) {
+            imageTx.getDrawable().setAlpha(alpha);
+            imageTx.setBorderColor(Color.argb(alpha, 255, 255, 255));
+        }
+    }
+
+    /**
+     * Sets toolbar 2 alpha.
+     *
+     * @param alpha the alpha
+     */
+    public void setToolbar2Alpha(int alpha) {
+        textTitle.setTextColor(Color.argb(alpha, 255, 255, 255));
+        mCollapsingToolbarLayout.setContentScrimColor(Color.argb(alpha, 255, 130, 0));
+    }
 
     @Nullable
     @Override
@@ -164,20 +225,20 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         return view;
     }
 
-
     @Override
     public void onClick(View v) {
         if (!NetUtils.isNetworkStateed(getActivity())) {
             return;
         }
         switch (v.getId()) {
+            case R.id.img_vip:
+                nativeOrWebview();
+                break;
             case R.id.wd_logined_news_fl:
-                Intent i0 = new Intent(getActivity(), MessageActivity.class);
-                startActivity(i0);
+                startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.wd_text_dd:
-                Intent i1 = new Intent(getActivity(), TradeOrderActivity.class);
-                startActivity(i1);
+                startActivity(new Intent(getActivity(), TradeOrderActivity.class));
                 break;
 
             case R.id.wd_linear_gj:
@@ -247,13 +308,29 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         }
     }
 
+    private void nativeOrWebview() {
+        if ("1".equals(myZone.getPersonal_banner().getIsNative())) {
+            Class clazz = isEstablishedVip() ? EstablishedVipActivity.class : UnEstablishedVipActivity.class;
+            Intent intent5 = new Intent();
+            intent5.setClass(getActivity(), clazz);
+            startActivity(intent5);
+        } else {
+            Intent intent = new Intent(getActivity(), Cover_WebActivity.class);
+            intent.putExtra("url", myZone.getPersonal_banner().getUrl());
+            intent.putExtra("title", myZone.getPersonal_banner().getTitle());
+            startActivity(intent);
+        }
+    }
+
     /**
-     * Gets logininfo.
+     * 是否开通过会员
      *
-     * @param isShow the is show
+     * @return
      */
-    public void getLoginInfo() {
-        getAsyn(getActivity(), API.MY_ZONE, null, this, 1, false);
+    private boolean isEstablishedVip() {
+        return "1".equals(myZone.getData().getCustomerVip())
+                || "1".equals(myZone.getData().getHeadingVip())
+                || "1".equals(myZone.getData().getApplyCustomerVip());
     }
 
     @Override
@@ -295,9 +372,10 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 ("0".equals(myZone.getData().getSex()) ? ("男") : ("女"));
         textName.setText(sex);
 
-        String rank = "等级：" + myZone.getData().getMember_level()
+        String rank = "  等级：" + myZone.getData().getMember_level()
                 + "  排名：" + myZone.getData().getRank() + "位";
         textRank.setText(rank);
+        textRank.setCompoundDrawablesWithIntrinsicBounds(getResIdByVipType(), 0, 0, 0);
 
         textFs.setText(myZone.getMyfans());
         textGz.setText(myZone.getMyconcerns());
@@ -310,65 +388,51 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 .load(myZone.getData().getThumb())
                 .into(imageTx);
 
-        imageStart.setImageResource(("1".equals(myZone.getData().getIsshop()))
-                ? (R.drawable.icon_identity_hl)
-                : 0);
+//        imageStart.setImageResource(("1".equals(myZone.getData().getIsshop()))
+//                ? (R.drawable.icon_identity_hl)
+//                : 0);
+
+        viewDivider.setVisibility(View.VISIBLE);
+        Glide.with(getActivity()).load(myZone.getPersonal_banner().getImg()).into(ivVip);
 
         sharedUtils.setData(getActivity(), Constant.STAUTS, myZone.getData().getShop_audit_status());
 
+        isVip();
     }
 
-    private void setAppBarListener() {
-        mBarLayout.addOnOffsetChangedListener(
-                new AppBarLayout.OnOffsetChangedListener() {
-                    @Override
-                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                        if (verticalOffset == 0) {//张开
-                            setToolbar1Alpha(255);
-                        } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {//收缩
-                            setToolbar2Alpha(255);
-                        } else {
-                            int alpha = 255 - Math.abs(verticalOffset) - 150;
-                            if (alpha <= 0) {//收缩
-                                setToolbar2Alpha(Math.abs(verticalOffset));
-                            } else {//张开
-                                setToolbar1Alpha(alpha);
-                            }
-                        }
-                    }
-                });
+    private int getResIdByVipType() {
+        if (isStoreVip) {
+            return R.drawable.icon_store_member;
+        } else if (isHeadVip) {
+            return R.drawable.icon_news_member;
+        } else if (isTrialVip) {
+            return R.drawable.icon_ontrail_member;
+        }
+        return 0;
+    }
+
+    private void isVip() {
+        isHeadVip = TextUtils.equals("1", myZone.getData().getHeadingVip());
+        isStoreVip = TextUtils.equals("1", myZone.getData().getCustomerVip());
+        isTrialVip = TextUtils.equals("1", myZone.getData().getApplyCustomerVip());
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getLoginInfo();
+        rCallback(true, false);
+        MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
 
     /**
-     * Sets toolbar 1 alpha.
+     * Gets logininfo.
      *
-     * @param alpha the alpha
+     * @param isShow the is show
      */
-    public void setToolbar1Alpha(int alpha) {
-        textTitle.setTextColor(Color.TRANSPARENT);
-        mimageMore.getDrawable().setAlpha(alpha);
-        mimageNews.getDrawable().setAlpha(alpha);
-        textRank.setTextColor(Color.argb(alpha, 255, 255, 255));
-        textCompany.setTextColor(Color.argb(alpha, 255, 255, 255));
-        textName.setTextColor(Color.argb(alpha, 255, 255, 255));
-        mDragViewMsg.setTextColor(Color.argb(alpha, 255, 255, 255));
-        if (imageStart.getDrawable() != null) {
-            imageStart.getDrawable().setAlpha(alpha);
-        }
-        if (imageTx.getDrawable() != null) {
-            imageTx.getDrawable().setAlpha(alpha);
-            imageTx.setBorderColor(Color.argb(alpha, 255, 255, 255));
-        }
-    }
-
-    /**
-     * Sets toolbar 2 alpha.
-     *
-     * @param alpha the alpha
-     */
-    public void setToolbar2Alpha(int alpha) {
-        textTitle.setTextColor(Color.argb(alpha, 255, 255, 255));
-        mCollapsingToolbarLayout.setContentScrimColor(Color.argb(alpha, 255, 130, 0));
+    public void getLoginInfo() {
+        getAsyn(getActivity(), API.MY_ZONE, null, this, 1, false);
     }
 
     /*rabbitmq */
@@ -380,7 +444,8 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
             int numMyMsg = sharedUtils.getInt(getActivity(), Constant.R_SUPDEM_MSG)
                     + sharedUtils.getInt(getActivity(), Constant.R_PUR_MSG)
                     + sharedUtils.getInt(getActivity(), Constant.R_REPLY_MSG)
-                    + sharedUtils.getInt(getActivity(), Constant.R_INTER_MSG);
+                    + sharedUtils.getInt(getActivity(), Constant.R_INTER_MSG)
+                    + sharedUtils.getInt(getActivity(), Constant.R_SYSTEM_MSG);
 
             mDragViewMsg.setVisibility(!showRedDot || 0 == numMyMsg
                     ? View.GONE
@@ -399,14 +464,6 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
             }
         } catch (Exception e) {
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getLoginInfo();
-        rCallback(true, false);
-        MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
     }
 
     @Override

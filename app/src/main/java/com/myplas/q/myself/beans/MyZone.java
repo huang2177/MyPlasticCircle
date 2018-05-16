@@ -1,5 +1,7 @@
 package com.myplas.q.myself.beans;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,19 +16,21 @@ public class MyZone implements Serializable {
 
     /**
      * code : 0
-     * s_in_count : 91
-     * s_out_count : 85
-     * points : {"quan_points":5955}
-     * leaveword : 0
+     * s_in_count : 2
+     * s_out_count : 0
+     * points : {"quan_points":2015}
+     * leaveword : 7
      * myviewhistory : 0
-     * message : 1
+     * message : 5
      * introduction : 0
-     * myfans : 8
-     * myconcerns : 14
-     * data : {"user_id":56656,"name":"哈妹","c_id":4016,"mobile":"18817391111","is_pass":0,"thumb":"http://pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG","thumbcard":"//pic.myplas.com/upload/17/11/23/5a16869109a4f.PNG","c_name":"嘉兴鼎辉信息科技有限公司","credit_level":"AAAAA","credit_limit":"160.00","is_credit":1,"pre_credit_limit":"160.00","credit_time":1488004267,"sex":1,"rank":18479,"memberlevel":1}
+     * myfans : 2
+     * myconcerns : 12
+     * data : {"user_id":41497,"name":"黄双","c_id":5041,"mobile":"15378412400","is_pass":0,"thumb":"http://myplas.ufile.ucloud.com.cn/upload/2018/04/teqsxs1mat.png","thumbcard":"http://myplas.ufile.ucloud.com.cn/upload/2018/04/rz0l3dfrew.png","c_name":"上海中晨电子商务股份有限公司","credit_level":"AAAAA","credit_limit":"600.00","is_credit":1,"pre_credit_limit":"600.00","credit_time":1488357059,"sex":0,"isshop":1,"rank":5275,"member_level":"列兵","shop_audit_status":0,"customerVip":0,"applyCustomerVip":0,"headingVip":0}
+     * personal_banner : {"show":0,"img":"http://statics.myplas.com/myapp/img/banner_for_shop.jpg","native":1,"title":"标题","url":"m.myplas.com","type":"shop","id":0,"membership":0,"customer":0}
      * help : ["http://statics.myplas.com/myapp/img/h1.jpg","http://statics.myplas.com/myapp/img/h2.jpg","http://statics.myplas.com/myapp/img/h3.jpg","http://statics.myplas.com/myapp/img/h4.jpg","http://statics.myplas.com/myapp/img/h5.jpg"]
      */
 
+    private String code;
     private String s_in_count;
     private String s_out_count;
     private PointsBean points;
@@ -37,8 +41,16 @@ public class MyZone implements Serializable {
     private String myfans;
     private String myconcerns;
     private DataBean data;
+    private PersonalBannerBean personal_banner;
     private List<String> help;
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getS_in_count() {
         return s_in_count;
@@ -120,6 +132,14 @@ public class MyZone implements Serializable {
         this.data = data;
     }
 
+    public PersonalBannerBean getPersonal_banner() {
+        return personal_banner;
+    }
+
+    public void setPersonal_banner(PersonalBannerBean personal_banner) {
+        this.personal_banner = personal_banner;
+    }
+
     public List<String> getHelp() {
         return help;
     }
@@ -130,7 +150,7 @@ public class MyZone implements Serializable {
 
     public static class PointsBean {
         /**
-         * quan_points : 5955
+         * quan_points : 2015
          */
 
         private String quan_points;
@@ -144,24 +164,29 @@ public class MyZone implements Serializable {
         }
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
-         * user_id : 56656
-         * name : 哈妹
-         * c_id : 4016
-         * mobile : 18817391111
+         * user_id : 41497
+         * name : 黄双
+         * c_id : 5041
+         * mobile : 15378412400
          * is_pass : 0
-         * thumb : http://pic.myplas.com/upload/17/11/23/5a1686a0151be.PNG
-         * thumbcard : //pic.myplas.com/upload/17/11/23/5a16869109a4f.PNG
-         * c_name : 嘉兴鼎辉信息科技有限公司
+         * thumb : http://myplas.ufile.ucloud.com.cn/upload/2018/04/teqsxs1mat.png
+         * thumbcard : http://myplas.ufile.ucloud.com.cn/upload/2018/04/rz0l3dfrew.png
+         * c_name : 上海中晨电子商务股份有限公司
          * credit_level : AAAAA
-         * credit_limit : 160.00
+         * credit_limit : 600.00
          * is_credit : 1
-         * pre_credit_limit : 160.00
-         * credit_time : 1488004267
-         * sex : 1
-         * rank : 18479
-         * memberlevel : 1
+         * pre_credit_limit : 600.00
+         * credit_time : 1488357059
+         * sex : 0
+         * isshop : 1
+         * rank : 5275
+         * member_level : 列兵
+         * shop_audit_status : 0
+         * customerVip : 0
+         * applyCustomerVip : 0
+         * headingVip : 0
          */
 
         private String user_id;
@@ -178,26 +203,13 @@ public class MyZone implements Serializable {
         private String pre_credit_limit;
         private String credit_time;
         private String sex;
+        private String isshop;
         private String rank;
         private String member_level;
-        private String isshop;
         private String shop_audit_status;
-
-        public void setShop_audit_status(String shop_audit_status) {
-            this.shop_audit_status = shop_audit_status;
-        }
-
-        public String getShop_audit_status() {
-            return shop_audit_status;
-        }
-
-        public void setIsshop(String isshop) {
-            this.isshop = isshop;
-        }
-
-        public String getIsshop() {
-            return isshop;
-        }
+        private String customerVip;
+        private String applyCustomerVip;
+        private String headingVip;
 
         public String getUser_id() {
             return user_id;
@@ -311,6 +323,14 @@ public class MyZone implements Serializable {
             this.sex = sex;
         }
 
+        public String getIsshop() {
+            return isshop;
+        }
+
+        public void setIsshop(String isshop) {
+            this.isshop = isshop;
+        }
+
         public String getRank() {
             return rank;
         }
@@ -323,8 +343,136 @@ public class MyZone implements Serializable {
             return member_level;
         }
 
-        public void setMember_level(String memberlevel) {
-            this.member_level = memberlevel;
+        public void setMember_level(String member_level) {
+            this.member_level = member_level;
+        }
+
+        public String getShop_audit_status() {
+            return shop_audit_status;
+        }
+
+        public void setShop_audit_status(String shop_audit_status) {
+            this.shop_audit_status = shop_audit_status;
+        }
+
+        public String getCustomerVip() {
+            return customerVip;
+        }
+
+        public void setCustomerVip(String customerVip) {
+            this.customerVip = customerVip;
+        }
+
+        public String getApplyCustomerVip() {
+            return applyCustomerVip;
+        }
+
+        public void setApplyCustomerVip(String applyCustomerVip) {
+            this.applyCustomerVip = applyCustomerVip;
+        }
+
+        public String getHeadingVip() {
+            return headingVip;
+        }
+
+        public void setHeadingVip(String headingVip) {
+            this.headingVip = headingVip;
+        }
+    }
+
+    public static class PersonalBannerBean {
+        /**
+         * show : 0
+         * img : http://statics.myplas.com/myapp/img/banner_for_shop.jpg
+         * native : 1
+         * title : 标题
+         * url : m.myplas.com
+         * type : shop
+         * id : 0
+         * membership : 0
+         * customer : 0
+         */
+
+        private String show;
+        private String img;
+        private String isNative;
+        private String title;
+        private String url;
+        private String type;
+        private String id;
+        private String membership;
+        private String customer;
+
+        public String getShow() {
+            return show;
+        }
+
+        public void setShow(String show) {
+            this.show = show;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public String getIsNative() {
+            return isNative == null ? "" : isNative;
+        }
+
+        public void setIsNative(String isNative) {
+            this.isNative = isNative;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getMembership() {
+            return membership;
+        }
+
+        public void setMembership(String membership) {
+            this.membership = membership;
+        }
+
+        public String getCustomer() {
+            return customer;
+        }
+
+        public void setCustomer(String customer) {
+            this.customer = customer;
         }
     }
 }

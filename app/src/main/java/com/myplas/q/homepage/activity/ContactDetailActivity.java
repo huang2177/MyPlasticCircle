@@ -220,7 +220,7 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
         Map<String, String> map = new HashMap<>(8);
         map.put("permission", "1");
         map.put("user_id", getIntent().getStringExtra("userid"));
-        getAsyn(this, API.GET_ZONE_FRIEND, map, this, 1, false);
+        getAsyn(this, API.GET_ZONE_FRIEND, map, this, 1, true);
     }
 
     @Override

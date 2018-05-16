@@ -39,12 +39,12 @@
         android:layout_height="wrap_content"
         android:gravity="bottom">
 
-        <Button
+        <TextView
             android:id="@+id/btn_cancle"
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:layout_weight="1"
-            android:background="@null"
+            android:gravity="center"
             android:text="取消"
             android:textColor="#03be54"
             android:textSize="18.0sp" />
@@ -54,11 +54,12 @@
             android:layout_height="match_parent"
             android:background="@color/color_lightgray" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_ok"
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:background="@null"
             android:text="确定"
             android:textColor="#03be54"
