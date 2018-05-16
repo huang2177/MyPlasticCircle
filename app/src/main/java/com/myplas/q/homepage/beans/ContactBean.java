@@ -1,5 +1,6 @@
 package com.myplas.q.homepage.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,18 +20,19 @@ public class ContactBean {
      * is_show_focus : 0
      * is_show_cover : 0
      * banner_url : http://statics.myplas.com/myapp/img/banner_for_shop.jpg
-     * banner_jump_url : 
-     * banner_jump_url_title : 
+     * banner_jump_url :
+     * banner_jump_url_title :
      * is_banner_jump_native : 1
      * banner_jump_native_address : myInfo:myPlasticBean
-     * cover_url : 
-     * cover_jump_url : 
-     * cover_jump_url_title : 
-     * show_msg : 
+     * cover_url :
+     * cover_jump_url :
+     * cover_jump_url_title :
+     * show_msg :
      * totals : 73
      * selected_type : 店铺
      * shop_audit_status : 0
      * top : {}
+     * total:[{},{}]
      */
 
     private String code;
@@ -52,6 +54,7 @@ public class ContactBean {
     private String shop_audit_status;
     private TopBean top;
     private List<PersonsBean> persons;
+    private List<TotalBean> total;
 
     public String getCode() {
         return code;
@@ -203,6 +206,17 @@ public class ContactBean {
 
     public void setPersons(List<PersonsBean> persons) {
         this.persons = persons;
+    }
+
+    public List<TotalBean> getTotalBeans() {
+        if (total == null) {
+            return new ArrayList<>();
+        }
+        return total;
+    }
+
+    public void setTotalBeans(List<TotalBean> total) {
+        this.total = total;
     }
 
     public static class TopBean {
@@ -401,7 +415,6 @@ public class ContactBean {
         }
     }
 
-
     public static class PersonsBean {
         /**
          * user_id : 82981
@@ -412,12 +425,12 @@ public class ContactBean {
          * c_name : 上海双双环保塑料企业
          * mobile : 18817392603
          * isshop : 1
-         * need_product : 
+         * need_product :
          * month_consum : 0
-         * main_product : 
+         * main_product :
          * type : 2
          * thumb : http://myplas.ufile.ucloud.com.cn/upload/18/11/28/1LUE6VMKNT.JPG
-         * thumbqq : 
+         * thumbqq :
          * input_time : 1519809794
          * isNewUser : 1
          * heat : 13597
@@ -605,6 +618,36 @@ public class ContactBean {
 
         public void setApplyCustomerVip(String applyCustomerVip) {
             this.applyCustomerVip = applyCustomerVip;
+        }
+    }
+
+    public static class TotalBean {
+        private String type;
+        private String msg;
+        private String count;
+
+        public String getType() {
+            return type == null ? "" : type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getMsg() {
+            return msg == null ? "" : msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
+
+        public String getCount() {
+            return count == null ? "" : count;
+        }
+
+        public void setCount(String count) {
+            this.count = count;
         }
     }
 }

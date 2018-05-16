@@ -1,6 +1,7 @@
 package com.myplas.q.homepage.adapter;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.huangbryant.hindicator.HIndicatorAdapter;
 import com.myplas.q.R;
+import com.myplas.q.homepage.beans.ContactBean;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,10 +26,12 @@ public abstract class Fragment_Dialog_Adapter extends HIndicatorAdapter {
     private List<String> mListShow;
     private List<String> mListValue;
     private SparseArray<Integer> map;
+    private List<ContactBean.TotalBean> list;
 
-    public Fragment_Dialog_Adapter(int type, String showCType, SparseArray<Integer> map) {
+    public Fragment_Dialog_Adapter(int type, String showCType, SparseArray<Integer> map, List<ContactBean.TotalBean> list) {
         this.map = map;
         this.type = type;
+        this.list = list;
         mListValue = (type == 1) ? Arrays.asList("0", "7", "1", "2", "4", "5")
                 : Arrays.asList("0", "1", "3", "2", "4");
         mListShow = (type == 1) ? Arrays.asList("全部分类", "店铺", "塑料制品厂", "原料供应商", "物流服务商", "其他")
@@ -42,7 +46,12 @@ public abstract class Fragment_Dialog_Adapter extends HIndicatorAdapter {
         try {
             TextView tv = holder.getView(R.id.item_tv);
             ImageView iv = holder.getView(R.id.item_iv);
-            tv.setText(mListShow.get(position));
+
+            String str = type == 1
+                    ? mListShow.get(position) + " (" + list.get(position).getCount() + ")"
+                    : mListShow.get(position);
+
+            tv.setText(str);
             tv.setGravity(Gravity.LEFT);
             tv.setTextColor(Color.BLACK);
             boolean checked = map.get(type) != null && position == map.get(type)
@@ -74,11 +83,11 @@ public abstract class Fragment_Dialog_Adapter extends HIndicatorAdapter {
         onItemSelected(mListShow.get(position), mListValue.get(position));
     }
 
+    public void onItemSelected(String show, String value) {
+    }
+
     @Override
     public int getItemCount() {
         return mListShow.size();
-    }
-
-    public void onItemSelected(String show, String value) {
     }
 }

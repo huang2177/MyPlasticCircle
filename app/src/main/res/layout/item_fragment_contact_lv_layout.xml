@@ -21,7 +21,9 @@
                 android:id="@+id/xq_tx"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:layout_marginTop="4dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_defaul_male"
@@ -31,9 +33,9 @@
                 android:id="@+id/contact_sign_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:layout_marginTop="4dp" />
 
             <ImageView

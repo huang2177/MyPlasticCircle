@@ -77,6 +77,212 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
     private Fragment_Contact_LV_Adapter mLVAdapter;
     private List<ContactBean.PersonsBean> mListBean;
     private String keywords, is_buy, showCType;
+    private ContactBean mContactBean;
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.supplydemand_btn_search:
+                page = 1;
+                mRefreshPopou.setCanShowPopou(true);
+                mLayoutDefault.setVisibility(View.GONE);
+                mLayoutResult.setVisibility(View.VISIBLE);
+                keywords = ("".equals(editText.getText().toString())) ? ("7000f") : (editText.getText().toString());
+                getNetData("1", true);
+                break;
+            case R.id.img_search_delete:
+                delsearchRecord();
+                break;
+            case R.id.contact_classify:
+                openDialog(1, textviewClassify);
+                break;
+            case R.id.contact_region:
+                openDialog(2, textviewRegion);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 查询
+     */
+    private void getNetData(String page, boolean isShowDialog) {
+        Map<String, String> map = new HashMap<String, String>(16);
+        map.put("page", page);
+        map.put("size", "15");
+        map.put("keywords", keywords);
+        map.put("type", c_type.toString());
+        map.put("region", region.toString());
+        getAsyn(this, API.PLASTICPERSON, map, this, 2, isShowDialog);
+    }
+
+    /**
+     * 删除历史记录
+     */
+    public void delsearchRecord() {
+        deleteAsyn(this, API.DELETEF_RECORD, null, this, 3, false);
+    }
+
+    private void openDialog(final int type, final TextView textView) {
+        if (mContactBean == null) {
+            return;
+        }
+
+        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, showCType, map, mContactBean.getTotalBeans()) {
+            @Override
+            public void onItemSelected(String show, String value) {
+                dialog.dismiss();
+                showCType = show;
+                textView.setText(show);
+                textView.setTextColor(getResources().getColor(R.color.color_red));
+                textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
+                if (type == 1) {
+                    c_type = new StringBuffer(value);
+                } else {
+                    region = new StringBuffer(value);
+                }
+                page = 1;
+                mRefreshPopou.setCanShowPopou(true);
+                getNetData("1", true);
+            }
+        };
+        dialog = new HIndicatorBuilder(this)
+                .width(400)
+                .height(-1)
+                .ArrowDirection(HIndicatorBuilder.TOP)
+                .bgColor(Color.parseColor("#ffffff"))
+                .gravity(HIndicatorBuilder.GRAVITY_LEFT)
+                .radius(10)
+                .arrowWidth(20)
+                .ArrowRectage(0.5f)
+                .layoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+                .dimEnabled(true)
+                .dimAmount(0.2f)
+                .adapter(adapter)
+                .create();
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show(textView);
+        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up, 0);
+        dialog.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(Dialog dialog) {
+                textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
+            }
+        });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()) {
+            case R.id.mygrid_search_history://历史搜索
+                keywords = mRecordBean.getSearch_records().get(position);
+                getData(keywords);
+                break;
+            case R.id.mygrid_search_subcribe://猜你所想
+                keywords = mRecordBean.getRecommendation().get(position);
+                getData(keywords);
+                break;
+            case R.id.mygrid_search_null://相关搜索
+                keywords = mInfoBean.getRecommendation().get(position);
+                getData(keywords);
+                break;
+            case R.id.search_listview_result:
+                utils.checkPremissions(mListBean.get(position));
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void getData(String keywords) {
+        page = 1;
+        mRefreshPopou.setCanShowPopou(true);
+
+        editText.setText(keywords);
+        editText.setSelection(keywords.length());
+        mLayoutDefault.setVisibility(View.GONE);
+        mLayoutResult.setVisibility(View.VISIBLE);
+        getNetData("1", true);
+    }
+
+    @Override
+    public void callBack(Object object, int type) {
+        try {
+            if (type == 3) {
+                TextUtils.toast(this, "删除成功！");
+                mGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
+                mgvHistory.setAdapter(mGridAdapter);
+            }
+
+            Gson gson = new Gson();
+            String err = new JSONObject(object.toString()).getString("code");
+
+            if (type == 1 && "0".equals(err)) {
+                mRecordBean = gson.fromJson(object.toString(), RecordBean.class);
+                mGridAdapter = new SupDem_Search_Grid_Adapter(this, mRecordBean.getSearch_records());
+                mgvHistory.setAdapter(mGridAdapter);
+                SupDem_Search_Grid_Adapter mGridAdapter1 = new SupDem_Search_Grid_Adapter(this, mRecordBean.getRecommendation());
+                mgvSubcribe.setAdapter(mGridAdapter1);
+
+//                keywords = historyBean.getHot_search().getContent();
+//                editText.setHint(keywords);
+            }
+            if (type == 2) {
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                if ("0".equals(err)) {
+                    mContactBean = gson.fromJson(object.toString(), ContactBean.class);
+                    if (page == 1) {
+                        if (listView.getVisibility() == View.GONE) {
+                            listView.setVisibility(View.VISIBLE);
+                            mLayoutEmpty.setVisibility(View.GONE);
+                        }
+
+                        mLVAdapter = new Fragment_Contact_LV_Adapter(this, mContactBean.getPersons());
+                        listView.setAdapter(mLVAdapter);
+
+                        mListBean.clear();
+                        mListBean.addAll(mContactBean.getPersons());
+                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + mContactBean.getTotals() + "条信息");
+                    } else {
+                        isLoading = false;
+                        mListBean.addAll(mContactBean.getPersons());
+                        mLVAdapter.setList(mListBean);
+                        mLVAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    if (page == 1) {
+
+                        if (mLayoutEmpty.getVisibility() == View.GONE) {
+                            listView.setVisibility(View.GONE);
+                            mLayoutEmpty.setVisibility(View.VISIBLE);
+                        }
+
+                        textviewNo.setText("抱歉，未能找到相关搜索！");
+                        mInfoBean = gson.fromJson(object.toString(), NoSearchInfoBean.class);
+                        mGridAdapter = new SupDem_Search_Grid_Adapter(this, mInfoBean.getRecommendation());
+                        mgvEmpty.setAdapter(mGridAdapter);
+                    } else {
+                        TextUtils.toast(this, "没有更多数据了！");
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void failCallBack(int type, String message, int httpCode) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade, R.anim.hold);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,209 +378,5 @@ public class Contact_Search_Activity extends BaseActivity implements View.OnClic
      */
     public void getsearchRecord() {
         getAsyn(this, API.GETF_RECORD, null, this, 1);
-    }
-
-    /**
-     * 查询
-     */
-    private void getNetData(String page, boolean isShowDialog) {
-        Map<String, String> map = new HashMap<String, String>(16);
-        map.put("page", page);
-        map.put("size", "15");
-        map.put("keywords", keywords);
-        map.put("type", c_type.toString());
-        map.put("region", region.toString());
-        getAsyn(this, API.PLASTICPERSON, map, this, 2, isShowDialog);
-    }
-
-    /**
-     * 删除历史记录
-     */
-    public void delsearchRecord() {
-        deleteAsyn(this, API.DELETEF_RECORD, null, this, 3, false);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.supplydemand_btn_search:
-                page = 1;
-                mRefreshPopou.setCanShowPopou(true);
-                mLayoutDefault.setVisibility(View.GONE);
-                mLayoutResult.setVisibility(View.VISIBLE);
-                keywords = ("".equals(editText.getText().toString())) ? ("7000f") : (editText.getText().toString());
-                getNetData("1", true);
-                break;
-            case R.id.img_search_delete:
-                delsearchRecord();
-                break;
-            case R.id.contact_classify:
-                openDialog(1, textviewClassify);
-                break;
-            case R.id.contact_region:
-                openDialog(2, textviewRegion);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getId()) {
-            case R.id.mygrid_search_history://历史搜索
-                keywords = mRecordBean.getSearch_records().get(position);
-                getData(keywords);
-                break;
-            case R.id.mygrid_search_subcribe://猜你所想
-                keywords = mRecordBean.getRecommendation().get(position);
-                getData(keywords);
-                break;
-            case R.id.mygrid_search_null://相关搜索
-                keywords = mInfoBean.getRecommendation().get(position);
-                getData(keywords);
-                break;
-            case R.id.search_listview_result:
-                utils.checkPremissions(mListBean.get(position));
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void getData(String keywords) {
-        page = 1;
-        mRefreshPopou.setCanShowPopou(true);
-
-        editText.setText(keywords);
-        editText.setSelection(keywords.length());
-        mLayoutDefault.setVisibility(View.GONE);
-        mLayoutResult.setVisibility(View.VISIBLE);
-        getNetData("1", true);
-    }
-
-
-    @Override
-    public void callBack(Object object, int type) {
-        try {
-            if (type == 3) {
-                TextUtils.toast(this, "删除成功！");
-                mGridAdapter = new SupDem_Search_Grid_Adapter(this, null);
-                mgvHistory.setAdapter(mGridAdapter);
-            }
-
-            Gson gson = new Gson();
-            String err = new JSONObject(object.toString()).getString("code");
-
-            if (type == 1 && "0".equals(err)) {
-                mRecordBean = gson.fromJson(object.toString(), RecordBean.class);
-                mGridAdapter = new SupDem_Search_Grid_Adapter(this, mRecordBean.getSearch_records());
-                mgvHistory.setAdapter(mGridAdapter);
-                SupDem_Search_Grid_Adapter mGridAdapter1 = new SupDem_Search_Grid_Adapter(this, mRecordBean.getRecommendation());
-                mgvSubcribe.setAdapter(mGridAdapter1);
-
-//                keywords = historyBean.getHot_search().getContent();
-//                editText.setHint(keywords);
-            }
-            if (type == 2) {
-                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                ContactBean mContactBean = null;
-                if ("0".equals(err)) {
-                    mContactBean = gson.fromJson(object.toString(), ContactBean.class);
-                    if (page == 1) {
-                        if (listView.getVisibility() == View.GONE) {
-                            listView.setVisibility(View.VISIBLE);
-                            mLayoutEmpty.setVisibility(View.GONE);
-                        }
-
-                        mLVAdapter = new Fragment_Contact_LV_Adapter(this, mContactBean.getPersons());
-                        listView.setAdapter(mLVAdapter);
-
-                        mListBean.clear();
-                        mListBean.addAll(mContactBean.getPersons());
-                        mRefreshPopou.show(F(R.id.divider_result), "为你搜索" + mContactBean.getTotals() + "条信息");
-                    } else {
-                        isLoading = false;
-                        mListBean.addAll(mContactBean.getPersons());
-                        mLVAdapter.setList(mListBean);
-                        mLVAdapter.notifyDataSetChanged();
-                    }
-                } else {
-                    if (page == 1) {
-
-                        if (mLayoutEmpty.getVisibility() == View.GONE) {
-                            listView.setVisibility(View.GONE);
-                            mLayoutEmpty.setVisibility(View.VISIBLE);
-                        }
-
-                        textviewNo.setText("抱歉，未能找到相关搜索！");
-                        mInfoBean = gson.fromJson(object.toString(), NoSearchInfoBean.class);
-                        mGridAdapter = new SupDem_Search_Grid_Adapter(this, mInfoBean.getRecommendation());
-                        mgvEmpty.setAdapter(mGridAdapter);
-                    } else {
-                        TextUtils.toast(this, "没有更多数据了！");
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void failCallBack(int type, String message, int httpCode) {
-
-    }
-
-    private void openDialog(final int type, final TextView textView) {
-        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, showCType, map) {
-            @Override
-            public void onItemSelected(String show, String value) {
-                dialog.dismiss();
-                showCType = show;
-                textView.setText(show);
-                textView.setTextColor(getResources().getColor(R.color.color_red));
-                textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
-                if (type == 1) {
-                    c_type = new StringBuffer(value);
-                } else {
-                    region = new StringBuffer(value);
-                }
-                page = 1;
-                mRefreshPopou.setCanShowPopou(true);
-                getNetData("1", true);
-            }
-        };
-        dialog = new HIndicatorBuilder(this)
-                .width(400)
-                .height(-1)
-                .ArrowDirection(HIndicatorBuilder.TOP)
-                .bgColor(Color.parseColor("#ffffff"))
-                .gravity(HIndicatorBuilder.GRAVITY_LEFT)
-                .radius(10)
-                .arrowWidth(20)
-                .ArrowRectage(0.5f)
-                .layoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-                .dimEnabled(true)
-                .dimAmount(0.2f)
-                .adapter(adapter)
-                .create();
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show(textView);
-        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up, 0);
-        dialog.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(Dialog dialog) {
-                textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down, 0);
-            }
-        });
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.fade, R.anim.hold);
     }
 }

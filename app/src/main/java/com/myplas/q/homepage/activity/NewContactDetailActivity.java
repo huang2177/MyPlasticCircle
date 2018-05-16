@@ -306,18 +306,18 @@ public class NewContactDetailActivity extends BaseActivity implements View.OnCli
                     ? R.drawable.btn_contact_follow
                     : R.drawable.btn_contact_followed);
 
-            if ("1".equals(contactBean.getData().getIsshop())) {
-                mIndentify.setVisibility(View.VISIBLE);
-            }
-            if ("1".equals(contactBean.getData().getType())) {
-                mSign.setImageResource(R.drawable.icon_factory);
-            }
-            if ("2".equals(contactBean.getData().getType())) {
-                mSign.setImageResource(R.drawable.icon_raw_material);
-            }
-            if ("4".equals(contactBean.getData().getType())) {
-                mSign.setImageResource(R.drawable.icon_logistics);
-            }
+//            if ("1".equals(contactBean.getData().getIsshop())) {
+//                mIndentify.setVisibility(View.VISIBLE);
+//            }
+//            if ("1".equals(contactBean.getData().getType())) {
+//                mSign.setImageResource(R.drawable.icon_factory);
+//            }
+//            if ("2".equals(contactBean.getData().getType())) {
+//                mSign.setImageResource(R.drawable.icon_raw_material);
+//            }
+//            if ("4".equals(contactBean.getData().getType())) {
+//                mSign.setImageResource(R.drawable.icon_logistics);
+//            }
 
             mfragmentDemand.showDemand(contactBean.getData().getDemand());
             mfragmentSupply.showSupplies(contactBean.getData().getSupplies());

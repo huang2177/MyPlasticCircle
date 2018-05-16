@@ -112,7 +112,7 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
     private void initView() {
         page = 1;
         region = "0";
-        c_type = "8"; //传‘8’表示 默认数据由后台控制
+        c_type = "8";   //传‘8’表示 默认数据由后台控制
         map = new SparseArray<>();
         mListBean = new ArrayList<>();
         mVHelper = new MarqueeViewHelper();
@@ -203,11 +203,7 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
         showCType = bean.getSelected_type();
         mTVClass.setText(showCType);
 
-
-        //mTVTitle.setText("塑料圈通讯录(" +  + "人)");
-//        editText.setHint(txlBean.getHot_search().equals("") ? "大家都在搜：" + txlBean.getHot_search() : "大家都在搜：7000F");
-
-//        显示list数据
+        //显示list数据
         mLVAdapter = new Fragment_Contact_LV_Adapter(getActivity(), bean.getPersons());
         listView.setAdapter(mLVAdapter);
         mListBean.clear();
@@ -353,7 +349,11 @@ public class FragmentHomePageContact extends BaseFragment implements View.OnClic
 
     private void openDialog(final int type, final TextView textView) {
 
-        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, showCType, map) {
+        if (mContactBean == null) {
+            return;
+        }
+
+        Fragment_Dialog_Adapter adapter = new Fragment_Dialog_Adapter(type, showCType, map, mContactBean.getTotalBeans()) {
             @Override
             public void onItemSelected(String show, String value) {
                 dialog.dismiss();

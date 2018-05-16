@@ -329,8 +329,8 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
      */
     private boolean isEstablishedVip() {
         return "1".equals(myZone.getData().getCustomerVip())
-                || "1".equals(myZone.getData().getHeadingVip())
-                || "1".equals(myZone.getData().getApplyCustomerVip());
+                || "1".equals(myZone.getData().getHeadingVip());
+//                || "1".equals(myZone.getData().getApplyCustomerVip());
     }
 
     @Override
@@ -375,7 +375,6 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         String rank = "  等级：" + myZone.getData().getMember_level()
                 + "  排名：" + myZone.getData().getRank() + "位";
         textRank.setText(rank);
-        textRank.setCompoundDrawablesWithIntrinsicBounds(getResIdByVipType(), 0, 0, 0);
 
         textFs.setText(myZone.getMyfans());
         textGz.setText(myZone.getMyconcerns());
@@ -388,9 +387,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 .load(myZone.getData().getThumb())
                 .into(imageTx);
 
-//        imageStart.setImageResource(("1".equals(myZone.getData().getIsshop()))
-//                ? (R.drawable.icon_identity_hl)
-//                : 0);
+        imageStart.setImageResource(getResIdByVipType());
 
         viewDivider.setVisibility(View.VISIBLE);
         Glide.with(getActivity()).load(myZone.getPersonal_banner().getImg()).into(ivVip);
@@ -402,12 +399,13 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
 
     private int getResIdByVipType() {
         if (isStoreVip) {
-            return R.drawable.icon_store_member;
+            return R.drawable.icon_member_store;
         } else if (isHeadVip) {
-            return R.drawable.icon_news_member;
-        } else if (isTrialVip) {
-            return R.drawable.icon_ontrail_member;
+            return R.drawable.icon_member_news;
         }
+//        else if (isTrialVip) {
+//            return R.drawable.icon_ontrail_member;
+//        }
         return 0;
     }
 
@@ -415,7 +413,6 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         isHeadVip = TextUtils.equals("1", myZone.getData().getHeadingVip());
         isStoreVip = TextUtils.equals("1", myZone.getData().getCustomerVip());
         isTrialVip = TextUtils.equals("1", myZone.getData().getApplyCustomerVip());
-
     }
 
     @Override

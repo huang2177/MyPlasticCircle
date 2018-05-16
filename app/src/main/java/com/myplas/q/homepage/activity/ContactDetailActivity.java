@@ -272,15 +272,15 @@ public class ContactDetailActivity extends BaseActivity implements View.OnClickL
                     : R.drawable.img_supdem_detail_followed);
 
 
-            if ("1".equals(contactBean.getData().getType())) {
-                mSign.setImageResource(R.drawable.icon_factory);
-            }
-            if ("2".equals(contactBean.getData().getType())) {
-                mSign.setImageResource(R.drawable.icon_raw_material);
-            }
-            if ("4".equals(contactBean.getData().getType())) {
-                mSign.setImageResource(R.drawable.icon_logistics);
-            }
+//            if ("1".equals(contactBean.getData().getType())) {
+//                mSign.setImageResource(R.drawable.icon_factory);
+//            }
+//            if ("2".equals(contactBean.getData().getType())) {
+//                mSign.setImageResource(R.drawable.icon_raw_material);
+//            }
+//            if ("4".equals(contactBean.getData().getType())) {
+//                mSign.setImageResource(R.drawable.icon_logistics);
+//            }
 
             mfragmentDemand.showDemand(contactBean.getData().getDemand());
             mfragmentSupply.showSupplies(contactBean.getData().getSupplies());

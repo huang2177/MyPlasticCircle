@@ -19,8 +19,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="4dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/img_defaul_male"
-            android:transitionName="shareView1" />
+            android:src="@drawable/img_defaul_male" />
 
         <ImageView
             android:id="@+id/contact_sign_img"

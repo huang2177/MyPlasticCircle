@@ -110,6 +110,11 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter implements CommonDi
             /*设值*/
             detail(viewHolder, personsBean);
 
+            /*判断是否是店铺*/
+            if ("1".equals(personsBean.getIsshop())){
+                viewHolder.mStart.setImageResource(R.drawable.icon_identity_hl);
+            }
+
             /*判断是否是新用户*/
 //            if ("1".equals(personsBean.getIsNewUser())) {
 //                Glide.with(context)
@@ -188,15 +193,6 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter implements CommonDi
         // viewHolder.mSign.setImageResource(resId);
     }
 
-    @NonNull
-    private String getHeat(String heat) {
-//        int target = Integer.parseInt(heat);
-//        return "人气值:" + (heat.length() > 4
-//                ? Math.round((float) (target / 10000.00)) + "万"
-//                : heat);
-        return "人气值:" + heat;
-    }
-
     public void call(String tel) {
         if (isLogin()) {
             if (!tel.contains("*")) {
@@ -230,6 +226,15 @@ public class Fragment_Contact_LV_Adapter extends BaseAdapter implements CommonDi
                     , this);
         }
         return logined;
+    }
+
+    @NonNull
+    private String getHeat(String heat) {
+//        int target = Integer.parseInt(heat);
+//        return "人气值:" + (heat.length() > 4
+//                ? Math.round((float) (target / 10000.00)) + "万"
+//                : heat);
+        return "人气值:" + heat;
     }
 
     public viewHolder getviewHolder() {

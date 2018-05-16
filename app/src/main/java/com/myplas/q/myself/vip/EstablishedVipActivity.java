@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 public class EstablishedVipActivity extends BaseActivity implements View.OnClickListener, ResultCallBack, CommonDialog.DialogShowInterface {
 
-    private ImageView ivNews, ivStore, ivTried;
+    private ImageView ivNews, ivStore, ivTried, ivTag;
 
     private RoundCornerImageView ivHead;
     private TextView tvName, tvC_Name, tvRank;
@@ -45,6 +45,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
+        ivTag = F(R.id.xq_rz);
         ivHead = F(R.id.xq_tx);
         tvRank = F(R.id.wd_title_pm);
         ivNews = F(R.id.img_vip_news);
@@ -114,6 +115,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
         tvRank.setText("  " + dataBean.getEnd_time() + "  到期");
         tvRank.setCompoundDrawablesWithIntrinsicBounds(getResIdByVipType(), 0, 0, 0);
 
+        ivTag.setImageResource(getResIdByVipType());
         showBtnResByVipType();
     }
 
@@ -132,9 +134,10 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
             return R.drawable.icon_store_member;
         } else if (isHeadVip) {
             return R.drawable.icon_news_member;
-        } else if (isTrialVip) {
-            return R.drawable.icon_ontrail_member;
         }
+//        else if (isTrialVip) {
+//            return R.drawable.icon_ontrail_member;
+//        }
         return 0;
     }
 

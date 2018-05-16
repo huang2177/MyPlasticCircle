@@ -88,15 +88,15 @@ public class LookMeAdapter extends SectionedBaseAdapter {
                     ? R.drawable.icon_identity_hl
                     : 0);
 
-            if ("1".equals(listPerson.get(position).getType())) {
-                viewHolder.mSign.setImageResource(R.drawable.icon_factory);
-            }
-            if ("2".equals(listPerson.get(position).getType())) {
-                viewHolder.mSign.setImageResource(R.drawable.icon_raw_material);
-            }
-            if ("4".equals(listPerson.get(position).getType())) {
-                viewHolder.mSign.setImageResource(R.drawable.icon_logistics);
-            }
+//            if ("1".equals(listPerson.get(position).getType())) {
+//                viewHolder.mSign.setImageResource(R.drawable.icon_factory);
+//            }
+//            if ("2".equals(listPerson.get(position).getType())) {
+//                viewHolder.mSign.setImageResource(R.drawable.icon_raw_material);
+//            }
+//            if ("4".equals(listPerson.get(position).getType())) {
+//                viewHolder.mSign.setImageResource(R.drawable.icon_logistics);
+//            }
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -87,15 +87,15 @@ public class MyIntroductionAdapter extends BaseAdapter {
 
             viewHolder.tx.setBorderColor(context.getResources().getColor(R.color.color_white));
 
-            if ("1".equals(list.get(position).getType())) {
-                viewHolder.sign.setImageResource(R.drawable.icon_factory);
-            }
-            if ("2".equals(list.get(position).getType())) {
-                viewHolder.sign.setImageResource(R.drawable.icon_raw_material);
-            }
-            if ("4".equals(list.get(position).getType())) {
-                viewHolder.sign.setImageResource(R.drawable.icon_logistics);
-            }
+//            if ("1".equals(list.get(position).getType())) {
+//                viewHolder.sign.setImageResource(R.drawable.icon_factory);
+//            }
+//            if ("2".equals(list.get(position).getType())) {
+//                viewHolder.sign.setImageResource(R.drawable.icon_raw_material);
+//            }
+//            if ("4".equals(list.get(position).getType())) {
+//                viewHolder.sign.setImageResource(R.drawable.icon_logistics);
+//            }
         } catch (Exception e) {
         }
         return convertView;

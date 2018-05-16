@@ -47,7 +47,25 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical">
 
-            <include layout="@layout/vimageview_layout" />
+            <FrameLayout
+                android:id="@+id/head_fl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.myplas.q.common.view.RoundCornerImageView
+                    android:id="@+id/xq_tx"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_defaul_male" />
+
+                <ImageView
+                    android:id="@+id/xq_rz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right" />
+
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="0dp"

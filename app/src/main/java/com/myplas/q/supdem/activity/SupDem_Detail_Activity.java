@@ -339,15 +339,15 @@ public class SupDem_Detail_Activity extends BaseActivity implements View.OnClick
                 ? R.drawable.img_supdem_detail_follow
                 : R.drawable.img_supdem_detail_followed);
 
-        if ("1".equals(mDetailBean.getData().getCompany_type())) {
-            mSign.setImageResource(R.drawable.icon_factory);
-        }
-        if ("2".equals(mDetailBean.getData().getCompany_type())) {
-            mSign.setImageResource(R.drawable.icon_raw_material);
-        }
-        if ("4".equals(mDetailBean.getData().getCompany_type())) {
-            mSign.setImageResource(R.drawable.icon_logistics);
-        }
+//        if ("1".equals(mDetailBean.getData().getCompany_type())) {
+//            mSign.setImageResource(R.drawable.icon_factory);
+//        }
+//        if ("2".equals(mDetailBean.getData().getCompany_type())) {
+//            mSign.setImageResource(R.drawable.icon_raw_material);
+//        }
+//        if ("4".equals(mDetailBean.getData().getCompany_type())) {
+//            mSign.setImageResource(R.drawable.icon_logistics);
+//        }
 
         mTVType.setText("1".equals(mDetailBean.getData().getType())
                 ? "求购"

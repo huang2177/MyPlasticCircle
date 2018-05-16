@@ -76,15 +76,15 @@ public class TheirFansFollowAdapter extends BaseAdapter {
                     ? R.drawable.icon_identity_hl
                     : 0);
 
-            if ("1".equals(list.get(position).getType())) {
-                viewHolder.sign.setImageResource(R.drawable.icon_factory);
-            }
-            if ("2".equals(list.get(position).getType())) {
-                viewHolder.sign.setImageResource(R.drawable.icon_raw_material);
-            }
-            if ("4".equals(list.get(position).getType())) {
-                viewHolder.sign.setImageResource(R.drawable.icon_logistics);
-            }
+//            if ("1".equals(list.get(position).getType())) {
+//                viewHolder.sign.setImageResource(R.drawable.icon_factory);
+//            }
+//            if ("2".equals(list.get(position).getType())) {
+//                viewHolder.sign.setImageResource(R.drawable.icon_raw_material);
+//            }
+//            if ("4".equals(list.get(position).getType())) {
+//                viewHolder.sign.setImageResource(R.drawable.icon_logistics);
+//            }
             Glide.with(context)
                     .load(list.get(position).getThumb())
                     .placeholder(R.drawable.img_defaul_male)
