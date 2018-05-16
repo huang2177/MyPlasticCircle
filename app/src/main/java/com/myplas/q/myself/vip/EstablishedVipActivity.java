@@ -113,7 +113,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
         tvName.setText(sex);
 
         tvRank.setText("  " + dataBean.getEnd_time() + "  到期");
-        tvRank.setCompoundDrawablesWithIntrinsicBounds(getResIdByVipType(), 0, 0, 0);
+        //tvRank.setCompoundDrawablesWithIntrinsicBounds(getResIdByVipType(), 0, 0, 0);
 
         ivTag.setImageResource(getResIdByVipType());
         showBtnResByVipType();

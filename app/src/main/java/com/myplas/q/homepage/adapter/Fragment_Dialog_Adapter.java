@@ -64,6 +64,7 @@ public abstract class Fragment_Dialog_Adapter extends HIndicatorAdapter {
                     : BaseViewHolder.VISIBLE);
         } catch (Exception e) {
 
+
         }
     }
 
