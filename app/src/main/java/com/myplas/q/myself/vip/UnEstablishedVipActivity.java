@@ -1,5 +1,6 @@
 package com.myplas.q.myself.vip;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.myself.beans.Member;
 import com.myplas.q.myself.beans.MyZone;
+import com.myplas.q.myself.store.MyStoreActivity;
 
 import org.json.JSONObject;
 
@@ -59,18 +61,20 @@ public class UnEstablishedVipActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_vip_news:
+                openDialog(100);
+                break;
             case R.id.img_vip_store:
-            case R.id.img_vip_ontrial:
-                openDialog();
+                startActivity(new Intent(this, MyStoreActivity.class));
+                finish();
                 break;
             default:
                 break;
         }
     }
 
-    private void openDialog() {
+    private void openDialog(int type) {
         CommonDialog dialog = new CommonDialog();
-        dialog.showDialog(this, "您好，开通会员请拨打400-6129-965", 3, this);
+        dialog.showDialog(this, "您好，开通会员请拨打0553-7859005", type, this);
     }
 
     @Override
@@ -128,8 +132,8 @@ public class UnEstablishedVipActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void dialogClick(int type) {
-        if (type == 3) {
-            call("4006129965");
+        if (type == 100) {
+            call("05537859005");
         }
     }
 }
