@@ -50,6 +50,7 @@ public class BaseActivity extends FragmentActivity {
         mTVRight = F(R.id.titlebar_text_right);
         mTextView = F(R.id.titlebar_text_title);
         mLayoutBack = F(R.id.titlebar_img_back);
+
         goBack(mLayoutBack);
     }
 
@@ -140,6 +141,7 @@ public class BaseActivity extends FragmentActivity {
             }
         });
     }
+
 
 
     /**
