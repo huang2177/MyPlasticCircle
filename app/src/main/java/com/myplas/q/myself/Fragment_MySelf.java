@@ -45,6 +45,7 @@ import com.myplas.q.myself.store.MyStoreActivity;
 import com.myplas.q.myself.supdem.MySupDemActivity;
 import com.myplas.q.myself.vip.EstablishedVipActivity;
 import com.myplas.q.myself.vip.UnEstablishedVipActivity;
+import com.myplas.q.myself.vip.VipExpiredActivity;
 import com.myplas.q.sockethelper.DefConfigBean;
 import com.myplas.q.sockethelper.RabbitMQCallBack;
 import com.myplas.q.sockethelper.RabbitMQConfig;
@@ -297,6 +298,9 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                     Intent i = new Intent(getActivity(), NewContactDetailActivity.class);
                     i.putExtra("userid", myZone.getData().getUser_id());
                     startActivity(i);
+                } else if ("4".equals(myZone.getData().getShop_audit_status())) {
+                    Intent i = new Intent(getActivity(), VipExpiredActivity.class);
+                    startActivity(i);
                 } else {
                     Intent i = new Intent(getActivity(), MyStoreActivity.class);
                     i.putExtra(Constant.STAUTS, myZone.getData().getShop_audit_status());
@@ -372,7 +376,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
                 ("0".equals(myZone.getData().getSex()) ? ("男") : ("女"));
         textName.setText(sex);
 
-        String rank = "  等级：" + myZone.getData().getMember_level()
+        String rank = "等级：" + myZone.getData().getMember_level()
                 + "  排名：" + myZone.getData().getRank() + "位";
         textRank.setText(rank);
 

@@ -52,10 +52,19 @@ public class Member {
         private String c_name;
         private String thumb;
         private String type;
+        private String status;
         private String customerVip;
         private String headingVip;
         private String applyCustomerVip;
         private String end_time;
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
 
         public String getUser_id() {
             return user_id;

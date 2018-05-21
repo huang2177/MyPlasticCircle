@@ -97,7 +97,7 @@ public class MessageSystemAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            context.startActivity(new Intent(context, EstablishedVipActivity.class));
+          //  context.startActivity(new Intent(context, EstablishedVipActivity.class));
         }
     }
 }

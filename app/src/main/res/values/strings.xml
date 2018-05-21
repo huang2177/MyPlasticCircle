@@ -29,6 +29,7 @@
     <string name="vip_store_introduction">店铺会员为塑料圈开通店铺用户，开通店铺后用户可免费查看通讯录、头条、无限发布供求信息。</string>
     <string name="vip_news_introduction">店铺会员为塑料圈购买塑料圈头条用户，购买后享有免费查看通讯录、头条、无限发布供求信息。</string>
     <string name="vip_tried_introduction">新注册会员为普通会员，免费查看通讯录、头条、无限发布供求信息，权限有效期7日。</string>
+    <string name="text_vip_expired">请拨打客服电话<font color="#FF8200">0533-7859005</font>进行续费</string>
 
 
 </resources>

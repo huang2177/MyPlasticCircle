@@ -415,6 +415,7 @@
         </activity>
         <activity android:name=".myself.vip.UnEstablishedVipActivity" />
         <activity android:name=".myself.vip.EstablishedVipActivity" />
+        <activity android:name=".myself.vip.VipExpiredActivity" />
 
 
         <!-- Required SDK核心功能-->

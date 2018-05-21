@@ -43,6 +43,11 @@ public class MyZone implements Serializable {
     private DataBean data;
     private PersonalBannerBean personal_banner;
     private List<String> help;
+    private String mStatus;
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
 
     public String getCode() {
         return code;
@@ -146,6 +151,10 @@ public class MyZone implements Serializable {
 
     public void setHelp(List<String> help) {
         this.help = help;
+    }
+
+    public CharSequence getStatus() {
+        return mStatus;
     }
 
     public static class PointsBean {

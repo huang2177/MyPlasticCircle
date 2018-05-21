@@ -9,6 +9,7 @@ import android.webkit.WebView;
 
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
+import com.myplas.q.common.api.API;
 import com.myplas.q.common.utils.SharedUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -48,7 +49,7 @@ public class IntegralRuleActivtity extends BaseActivity {
 
         //webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
-        webView.loadUrl("http://q.myplas.com/#/pointsrule");
+        webView.loadUrl(API.PLASTIC_RULE);
 
         webView.setWebChromeClient(new WebChromeClient());
     }

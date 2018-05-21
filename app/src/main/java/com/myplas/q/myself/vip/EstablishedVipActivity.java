@@ -1,5 +1,6 @@
 package com.myplas.q.myself.vip;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -13,11 +14,13 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.common.view.RoundCornerImageView;
 import com.myplas.q.myself.beans.Member;
 import com.myplas.q.myself.beans.MyZone;
+import com.myplas.q.myself.store.MyStoreActivity;
 
 import org.json.JSONObject;
 
@@ -32,6 +35,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
     private RoundCornerImageView ivHead;
     private TextView tvName, tvC_Name, tvRank;
     private boolean isHeadVip, isStoreVip, isTrialVip;
+    private Member member;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,9 +74,28 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_vip_news:
-            case R.id.img_vip_store:
-            case R.id.img_vip_ontrial:
                 openDialog();
+                break;
+            case R.id.img_vip_store:
+                if (member == null) {
+                    return;
+                }
+                if (TextUtils.equals(member.getData().getStatus(), "1") && TextUtils.equals(member.getData().getCustomerVip(), "0")) {
+                    openDialog();
+                } else {
+                    Intent intent = new Intent(this, MyStoreActivity.class);
+                    if (TextUtils.equals(member.getData().getStatus(), "2")) {
+                        intent.putExtra(Constant.STAUTS, "1");
+                        startActivity(intent);
+                        finish();
+                    } else if (TextUtils.equals(member.getData().getStatus(), "3")) {
+                        intent.putExtra(Constant.STAUTS, "2");
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        openDialog();
+                    }
+                }
                 break;
             default:
                 break;
@@ -81,7 +104,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
 
     private void openDialog() {
         CommonDialog dialog = new CommonDialog();
-        dialog.showDialog(this, "您好，开通会员请拨打400-6129-965", 3, this);
+        dialog.showDialog(this, "您好，开通会员请拨打0533-7859005", 3, this);
     }
 
     @Override
@@ -90,7 +113,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
             JSONObject jsonObject = new JSONObject(object.toString());
             String code = jsonObject.getString("code");
             if ("0".equals(code)) {
-                Member member = new Gson().fromJson(object.toString(), Member.class);
+                member = new Gson().fromJson(object.toString(), Member.class);
                 showInfo(member.getData());
             }
         } catch (Exception e) {
@@ -112,10 +135,11 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
                 + dataBean.getMobile();
         tvName.setText(sex);
 
-        tvRank.setText("  " + dataBean.getEnd_time() + "  到期");
+        tvRank.setText(dataBean.getEnd_time() + "  到期");
         //tvRank.setCompoundDrawablesWithIntrinsicBounds(getResIdByVipType(), 0, 0, 0);
 
         ivTag.setImageResource(getResIdByVipType());
+
         showBtnResByVipType();
     }
 
@@ -123,17 +147,17 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
         if (dataBean == null) {
             return;
         }
-        isHeadVip = TextUtils.equals("1", dataBean.getHeadingVip());
         isStoreVip = TextUtils.equals("1", dataBean.getCustomerVip());
         isTrialVip = TextUtils.equals("1", dataBean.getApplyCustomerVip());
+        isHeadVip = TextUtils.equals("1", dataBean.getHeadingVip()) || TextUtils.equals("0", dataBean.getHeadingVip());
 
     }
 
     private int getResIdByVipType() {
         if (isStoreVip) {
-            return R.drawable.icon_store_member;
+            return R.drawable.icon_member_store;
         } else if (isHeadVip) {
-            return R.drawable.icon_news_member;
+            return R.drawable.icon_member_news;
         }
 //        else if (isTrialVip) {
 //            return R.drawable.icon_ontrail_member;
@@ -145,12 +169,6 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
      * 根据已开通Vip类型显示button样式
      */
     private void showBtnResByVipType() {
-
-        if (isTrialVip) {
-            ivTried.setClickable(false);
-            ivTried.setImageResource(R.drawable.btn_open_disabled);
-        }
-
         if (isHeadVip) {
             ivNews.setClickable(false);
             ivTried.setClickable(false);
@@ -162,8 +180,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
             ivNews.setClickable(false);
             ivTried.setClickable(false);
             ivStore.setClickable(false);
-            ivNews.setImageResource(R.drawable.btn_rightnow);
-            ivTried.setImageResource(R.drawable.btn_rightnow);
+            ivNews.setImageResource(R.drawable.btn_open_disabled);
             ivStore.setImageResource(R.drawable.btn_open_disabled);
         }
     }
@@ -176,7 +193,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
     @Override
     public void dialogClick(int type) {
         if (type == 3) {
-            call("4006129965");
+            call("05337859005");
         }
     }
 }

@@ -75,6 +75,14 @@ public class API {
     public final static String PLASTIC_BLACKLIST = (BuildConfig.API_ENV)
             ? "http://q.myplas.com/#/blackdetail/"
             : "http://test.myplas.com/plasticzone/plastic#/blackdetail/";
+
+    /**
+     * 塑豆规则
+     */
+    public final static String PLASTIC_RULE = (BuildConfig.API_ENV)
+            ? "http://q.myplas.com/#/pointsrule"
+            : "http://q.myplas.com/#/pointsrule";
+
     /**
      * 极光推送用户个人偏好设置
      */

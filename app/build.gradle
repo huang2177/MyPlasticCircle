@@ -4,12 +4,12 @@ android {
         sign {
             keyAlias 'hbuilder'
             keyPassword '123456'
-            storeFile file('C:/Users/Administrator/Desktop/H5Sign/HBuilder.jks')
+            storeFile file('D:/AndroidStudioProjects/MyPlasticCircle/HBuilder.jks')
             storePassword '123456'
         }
     }
     compileSdkVersion 25
-    buildToolsVersion '26.0.0'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.myplas.q"
         minSdkVersion 16

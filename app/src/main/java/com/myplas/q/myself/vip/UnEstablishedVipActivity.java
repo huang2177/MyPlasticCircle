@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.myplas.q.R;
 import com.myplas.q.app.activity.BaseActivity;
 import com.myplas.q.common.api.API;
+import com.myplas.q.common.appcontext.Constant;
 import com.myplas.q.common.net.ResultCallBack;
 import com.myplas.q.common.view.CommonDialog;
 import com.myplas.q.myself.beans.Member;
@@ -28,6 +29,7 @@ public class UnEstablishedVipActivity extends BaseActivity implements View.OnCli
     private ImageView ivNews, ivStore, ivTried;
 
     private boolean isHeadVip, isStoreVip, isTrialVip;
+    private Member member;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,8 +66,21 @@ public class UnEstablishedVipActivity extends BaseActivity implements View.OnCli
                 openDialog(100);
                 break;
             case R.id.img_vip_store:
-                startActivity(new Intent(this, MyStoreActivity.class));
-                finish();
+//                if (member == null) {
+//                    return;
+//                }
+//                if (TextUtils.equals(member.getData().getStatus(), "1") && TextUtils.equals(member.getData().getCustomerVip(), "0")) {
+//                    openDialog(100);
+//                } else {
+                    Intent intent = new Intent(this, MyStoreActivity.class);
+//                    if (TextUtils.equals(member.getData().getStatus(), "2")) {
+//                        intent.putExtra(Constant.STAUTS, "1");
+//                    } else if (TextUtils.equals(member.getData().getStatus(), "3")) {
+//                        intent.putExtra(Constant.STAUTS, "2");
+//                    }
+                    startActivity(intent);
+                    finish();
+//                }
                 break;
             default:
                 break;
@@ -83,7 +98,7 @@ public class UnEstablishedVipActivity extends BaseActivity implements View.OnCli
             JSONObject jsonObject = new JSONObject(object.toString());
             String code = jsonObject.getString("code");
             if ("0".equals(code)) {
-                Member member = new Gson().fromJson(object.toString(), Member.class);
+                member = new Gson().fromJson(object.toString(), Member.class);
                 isVip(member.getData());
                 showBtnResByVipType();
             }
