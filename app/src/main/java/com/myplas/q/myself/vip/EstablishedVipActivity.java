@@ -72,29 +72,31 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        if (member == null) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.img_vip_news:
                 openDialog();
                 break;
             case R.id.img_vip_store:
-                if (member == null) {
-                    return;
-                }
-                if (TextUtils.equals(member.getData().getStatus(), "1") && TextUtils.equals(member.getData().getCustomerVip(), "0")) {
-                    openDialog();
-                } else {
+                //未审核
+                if (TextUtils.equals(member.getData().getStatus(), "0")) {
                     Intent intent = new Intent(this, MyStoreActivity.class);
-                    if (TextUtils.equals(member.getData().getStatus(), "2")) {
-                        intent.putExtra(Constant.STAUTS, "1");
-                        startActivity(intent);
-                        finish();
-                    } else if (TextUtils.equals(member.getData().getStatus(), "3")) {
-                        intent.putExtra(Constant.STAUTS, "2");
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        openDialog();
-                    }
+                    intent.putExtra(Constant.STAUTS, "1");
+                    startActivity(intent);
+                    finish();
+                }
+                //审核中
+                else if (TextUtils.equals(member.getData().getStatus(), "2")) {
+                    Intent intent = new Intent(this, MyStoreActivity.class);
+                    intent.putExtra(Constant.STAUTS, "2");
+                    startActivity(intent);
+                    finish();
+                }
+                //过期
+                else if (TextUtils.equals(member.getData().getStatus(), "4")) {
+                    openDialog();
                 }
                 break;
             default:
@@ -136,8 +138,6 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
         tvName.setText(sex);
 
         tvRank.setText(dataBean.getEnd_time() + "  到期");
-        //tvRank.setCompoundDrawablesWithIntrinsicBounds(getResIdByVipType(), 0, 0, 0);
-
         ivTag.setImageResource(getResIdByVipType());
 
         showBtnResByVipType();
@@ -159,9 +159,6 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
         } else if (isHeadVip) {
             return R.drawable.icon_member_news;
         }
-//        else if (isTrialVip) {
-//            return R.drawable.icon_ontrail_member;
-//        }
         return 0;
     }
 

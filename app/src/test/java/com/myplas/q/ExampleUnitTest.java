@@ -7,6 +7,9 @@ import android.widget.ImageView;
 
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
 import static org.junit.Assert.*;
 
 /**
@@ -18,4 +21,18 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
+    @Test
+    public void test() {
+        String className = "com.myplas.q.myself.vip.EstablishedVipActivity";
+        try {
+            Class<?> aClass = Class.forName(className);
+            Constructor<?> constructor = aClass.getConstructor();
+            Object o = constructor.newInstance();
+
+            Method test = o.getClass().getMethod("test",String.class);
+            test.invoke(o,"123");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -142,8 +142,6 @@ public class BaseActivity extends FragmentActivity {
         });
     }
 
-
-
     /**
      * get请求
      *
@@ -228,7 +226,6 @@ public class BaseActivity extends FragmentActivity {
             NetRequest netRequest = new NetRequest(context, url, map, resultCallBack, type);
             netRequest.putAsyn();
         }
-
     }
 
     /**

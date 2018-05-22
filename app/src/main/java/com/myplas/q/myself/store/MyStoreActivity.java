@@ -71,6 +71,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
         initView();
         getNetData();
+
     }
 
     private void initView() {
@@ -368,4 +369,5 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
         super.onDestroy();
         uCloudUtils.cancleRequest();
     }
+
 }
