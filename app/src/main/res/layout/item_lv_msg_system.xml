@@ -48,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/shape_dashedline"
-            android:layerType="software" />
+            android:layerType="software"
+            android:visibility="gone" />
 
 
         <TextView
@@ -58,7 +59,8 @@
             android:drawableRight="@drawable/btn_more_small"
             android:padding="10dp"
             android:text="详情"
-            android:textColor="@color/color_black1" />
+            android:textColor="@color/color_black1"
+            android:visibility="gone" />
 
 
     </LinearLayout>

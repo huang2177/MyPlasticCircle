@@ -80,7 +80,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
                 openDialog();
                 break;
             case R.id.img_vip_store:
-                //未审核
+                //未提交资料
                 if (TextUtils.equals(member.getData().getStatus(), "0")) {
                     Intent intent = new Intent(this, MyStoreActivity.class);
                     intent.putExtra(Constant.STAUTS, "1");
@@ -95,7 +95,14 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
                     finish();
                 }
                 //过期
-                else if (TextUtils.equals(member.getData().getStatus(), "4")) {
+                else if (TextUtils.equals(member.getData().getStatus(), "4")
+                        || TextUtils.equals(member.getData().getStatus(), "4")
+                        && TextUtils.equals(member.getData().getCustomerVip(), "0")) {
+                    openDialog();
+                }
+                // 已提交资料
+                else if (TextUtils.equals(member.getData().getStatus(), "1")
+                        && TextUtils.equals(member.getData().getCustomerVip(), "0")) {
                     openDialog();
                 }
                 break;
@@ -147,9 +154,8 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
         if (dataBean == null) {
             return;
         }
+        isHeadVip = TextUtils.equals("1", dataBean.getHeadingVip());
         isStoreVip = TextUtils.equals("1", dataBean.getCustomerVip());
-        isTrialVip = TextUtils.equals("1", dataBean.getApplyCustomerVip());
-        isHeadVip = TextUtils.equals("1", dataBean.getHeadingVip()) || TextUtils.equals("0", dataBean.getHeadingVip());
 
     }
 
@@ -184,6 +190,7 @@ public class EstablishedVipActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void failCallBack(int type, String message, int httpCode) {
+
 
     }
 

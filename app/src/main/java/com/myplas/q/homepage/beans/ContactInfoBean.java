@@ -92,6 +92,15 @@ public class ContactInfoBean implements Serializable {
         private String shop_audit_status;
         private List<SuppliesBean> supplies;
         private List<DemandBean> demand;
+        private String business_licence;
+
+        public void setBusiness_licence(String business_licence) {
+            this.business_licence = business_licence;
+        }
+
+        public String getBusiness_licence() {
+            return business_licence;
+        }
 
         public String getUser_id() {
             return user_id;

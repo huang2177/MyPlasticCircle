@@ -233,7 +233,7 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         }
         switch (v.getId()) {
             case R.id.img_vip:
-                nativeOrWebview();
+                nativeOrWebView();
                 break;
             case R.id.wd_logined_news_fl:
                 startActivity(new Intent(getActivity(), MessageActivity.class));
@@ -312,9 +312,11 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         }
     }
 
-    private void nativeOrWebview() {
+    private void nativeOrWebView() {
         if ("1".equals(myZone.getPersonal_banner().getIsNative())) {
-            Class clazz = isEstablishedVip() ? EstablishedVipActivity.class : UnEstablishedVipActivity.class;
+            Class clazz = TextUtils.equals(myZone.getPersonal_banner().getMembership(), "1")
+                    ? EstablishedVipActivity.class
+                    : UnEstablishedVipActivity.class;
             Intent intent5 = new Intent();
             intent5.setClass(getActivity(), clazz);
             startActivity(intent5);
@@ -333,8 +335,8 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
      */
     private boolean isEstablishedVip() {
         return "1".equals(myZone.getData().getCustomerVip())
-                || "1".equals(myZone.getData().getHeadingVip());
-//                || "1".equals(myZone.getData().getApplyCustomerVip());
+                || "1".equals(myZone.getData().getHeadingVip())
+                || "4".equals(myZone.getData().getShop_audit_status());
     }
 
     @Override
@@ -407,9 +409,6 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
         } else if (isHeadVip) {
             return R.drawable.icon_member_news;
         }
-//        else if (isTrialVip) {
-//            return R.drawable.icon_ontrail_member;
-//        }
         return 0;
     }
 
@@ -429,8 +428,6 @@ public class Fragment_MySelf extends BaseFragment implements View.OnClickListene
 
     /**
      * Gets logininfo.
-     *
-     * @param isShow the is show
      */
     public void getLoginInfo() {
         getAsyn(getActivity(), API.MY_ZONE, null, this, 1, false);

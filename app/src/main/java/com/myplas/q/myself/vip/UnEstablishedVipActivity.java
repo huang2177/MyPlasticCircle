@@ -63,33 +63,43 @@ public class UnEstablishedVipActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_vip_news:
-                openDialog(100);
+                openDialog();
                 break;
             case R.id.img_vip_store:
-//                if (member == null) {
-//                    return;
-//                }
-//                if (TextUtils.equals(member.getData().getStatus(), "1") && TextUtils.equals(member.getData().getCustomerVip(), "0")) {
-//                    openDialog(100);
-//                } else {
+                //未提交资料
+                if (TextUtils.equals(member.getData().getStatus(), "0")) {
                     Intent intent = new Intent(this, MyStoreActivity.class);
-//                    if (TextUtils.equals(member.getData().getStatus(), "2")) {
-//                        intent.putExtra(Constant.STAUTS, "1");
-//                    } else if (TextUtils.equals(member.getData().getStatus(), "3")) {
-//                        intent.putExtra(Constant.STAUTS, "2");
-//                    }
+                    intent.putExtra(Constant.STAUTS, "1");
                     startActivity(intent);
                     finish();
-//                }
+                }
+                //审核中
+                else if (TextUtils.equals(member.getData().getStatus(), "2")) {
+                    Intent intent = new Intent(this, MyStoreActivity.class);
+                    intent.putExtra(Constant.STAUTS, "2");
+                    startActivity(intent);
+                    finish();
+                }
+                //过期
+                else if (TextUtils.equals(member.getData().getStatus(), "4")
+                        || TextUtils.equals(member.getData().getStatus(), "4")
+                        && TextUtils.equals(member.getData().getCustomerVip(), "0")) {
+                    openDialog();
+                }
+                // 已提交资料
+                else if (TextUtils.equals(member.getData().getStatus(), "1")
+                        && TextUtils.equals(member.getData().getCustomerVip(), "0")) {
+                    openDialog();
+                }
                 break;
             default:
                 break;
         }
     }
 
-    private void openDialog(int type) {
+    private void openDialog() {
         CommonDialog dialog = new CommonDialog();
-        dialog.showDialog(this, "您好，开通会员请拨打0553-7859005", type, this);
+        dialog.showDialog(this, "您好，开通会员请拨打0553-7859005", 100, this);
     }
 
     @Override
@@ -110,18 +120,12 @@ public class UnEstablishedVipActivity extends BaseActivity implements View.OnCli
     private void isVip(Member.DataBean dataBean) {
         isHeadVip = TextUtils.equals("1", dataBean.getHeadingVip());
         isStoreVip = TextUtils.equals("1", dataBean.getCustomerVip());
-        isTrialVip = TextUtils.equals("1", dataBean.getApplyCustomerVip());
     }
 
     /**
      * 根据已开通Vip类型显示button样式
      */
     private void showBtnResByVipType() {
-
-        if (isTrialVip) {
-            ivTried.setClickable(false);
-            ivTried.setImageResource(R.drawable.btn_open_disabled);
-        }
 
         if (isHeadVip) {
             ivNews.setClickable(false);

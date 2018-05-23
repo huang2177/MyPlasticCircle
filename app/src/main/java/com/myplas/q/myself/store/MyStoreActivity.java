@@ -118,7 +118,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
             case R.id.store_button:
                 commit();
                 button.setClickable(false);
-                button.setBackgroundResource(R.drawable.login_btn_shape);
+                //button.setBackgroundResource(R.drawable.login_btn_shape);
                 break;
             default:
                 break;
@@ -143,7 +143,6 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
      * 裁剪
      *
      * @param pathList
-     * @param i
      */
     private void cutPhoto(ArrayList<String> pathList, int code) {
         Durban.with(this)
@@ -215,11 +214,11 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
      * 改变button颜色
      */
     private void changeBtnColor() {
-        if (isWriteInfo()) {
-            button.setBackgroundResource(R.drawable.login_btn_shape_hl);
-        } else {
-            button.setBackgroundResource(R.drawable.login_btn_shape);
-        }
+//        if (isWriteInfo()) {
+//            button.setBackgroundResource(R.drawable.login_btn_shape_hl);
+//        } else {
+//            button.setBackgroundResource(R.drawable.login_btn_shape);
+//        }
     }
 
     /**
@@ -293,14 +292,15 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
                 loadAnimation(true);
             } else if (type == 2) {
                 button.setClickable(true);
-                button.setBackgroundResource(R.drawable.login_btn_shape_hl);
+                //button.setBackgroundResource(R.drawable.login_btn_shape_hl);
                 TextUtils.toast(this, jsonObject.getString("message"));
             }
             if (type == 3 && "0".equals(err)) {
                 ContactInfoBean contactInfoBean = new Gson().fromJson(object.toString(), ContactInfoBean.class);
                 editName.setText(contactInfoBean.getData().getC_name());
-                editBusiness.setText(contactInfoBean.getData().getC_id());
+                editBusiness.setText(contactInfoBean.getData().getBusiness_licence());
                 editIntroduction.setText(contactInfoBean.getData().getCom_intro());
+                changeBtnColor();
             }
         } catch (Exception e) {
 
@@ -314,7 +314,7 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
 
             if (type == 2) {
                 button.setClickable(true);
-                button.setBackgroundResource(R.drawable.login_btn_shape_hl);
+                //button.setBackgroundResource(R.drawable.login_btn_shape_hl);
             }
             TextUtils.toast(this, jsonObject.getString("message"));
 
@@ -368,6 +368,6 @@ public class MyStoreActivity extends BaseActivity implements View.OnClickListene
     protected void onDestroy() {
         super.onDestroy();
         uCloudUtils.cancleRequest();
+        //getResources().getDisplayMetrics().density;
     }
-
 }

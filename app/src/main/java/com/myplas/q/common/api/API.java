@@ -80,8 +80,8 @@ public class API {
      * 塑豆规则
      */
     public final static String PLASTIC_RULE = (BuildConfig.API_ENV)
-            ? "http://q.myplas.com/#/pointsrule"
-            : "http://q.myplas.com/#/pointsrule";
+            ? "http://q.myplas.com/#/pointsruleandroid"
+            : "http://test.myplas.com/plasticzone/plastic#/pointsruleandroid";
 
     /**
      * 极光推送用户个人偏好设置

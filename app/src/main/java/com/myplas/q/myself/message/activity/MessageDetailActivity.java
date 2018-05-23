@@ -194,7 +194,7 @@ public class MessageDetailActivity extends BaseActivity implements ResultCallBac
         try {
             JSONObject jsonObject = new JSONObject(message);
             String msg = jsonObject.getString("message");
-            if (page == 1 && httpCode == 404) {
+            if (page == 1 && httpCode == 412 || httpCode == 404) {
                 mRecyclerView.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.VISIBLE);
                 mEmptyView.setMyManager(R.drawable.icon_follow1);

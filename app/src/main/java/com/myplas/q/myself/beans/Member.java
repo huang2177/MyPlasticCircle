@@ -55,7 +55,6 @@ public class Member {
         private String status;
         private String customerVip;
         private String headingVip;
-        private String applyCustomerVip;
         private String end_time;
 
         public void setStatus(String status) {
@@ -136,14 +135,6 @@ public class Member {
 
         public void setHeadingVip(String headingVip) {
             this.headingVip = headingVip;
-        }
-
-        public String getApplyCustomerVip() {
-            return applyCustomerVip;
-        }
-
-        public void setApplyCustomerVip(String applyCustomerVip) {
-            this.applyCustomerVip = applyCustomerVip;
         }
 
         public String getEnd_time() {

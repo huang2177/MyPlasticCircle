@@ -197,8 +197,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:background="@null"
-                        android:clickable="false"
-                        android:focusable="false"
                         android:padding="5dp"
                         android:textSize="14.0sp" />
                 </LinearLayout>
@@ -230,8 +228,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:background="@null"
-                        android:clickable="false"
-                        android:focusable="false"
                         android:padding="5dp"
                         android:textSize="14.0sp" />
                 </LinearLayout>
@@ -277,7 +273,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="30dp"
-                android:background="@drawable/login_btn_shape"
+                android:background="@drawable/login_btn_shape_hl"
                 android:text="提交"
                 android:textColor="@color/color_white"
                 android:textSize="16.0sp" />
